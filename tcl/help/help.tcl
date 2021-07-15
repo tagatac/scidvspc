@@ -1590,6 +1590,11 @@ is done from the Maintenance window.</i></p>
 
 <p><i>The default database (Clipbase) cannot be compacted</i>.</p>
 
+<h3>Moving Games</h3>
+<p>Scid vs PC now enables basic game moving/reordering (on single games) via the gamelist context menu.
+<br><br>
+<red>Please use with caution, and backup databases before use. Reordering games involves writing the index file in an non-atomic manor. For short distances, only a few writes are made, but longer moves involve rewriting much of the index file in-place, and interuption may cause data loss.</p>
+
 <h3>Buttons</h3>
 <ul>
 <li><img tb_save> - replace current game</li>
@@ -1648,7 +1653,7 @@ is done from the Maintenance window.</i></p>
 <p><i>The current gamelist may be exported as text from ScidvsPC's Tools-<gt>ExportFilter menu.</i></p>
   
 
-  <p><footer>Updated: Scid vs. PC 4.21, August 2019</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.22, July 2021</footer></p>
 }
 
 

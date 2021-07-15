@@ -6075,7 +6075,7 @@ sc_game (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         "firstMoves", "flag",       "import",     "info",
         "load",       "list",       "merge",      "moves",
         "new",        "novelty",    "number",     "pgn",
-        "pop",        "push",       "save",       "scores",	"values",
+        "pop",        "push",       "reorder",    "save",       "scores",   "values",
         "startBoard", "startPos",   "strip",      "summary",    "tags",
         "truncate", "truncatefree", "undo",      "undoPoint",   "redo",  NULL
     };
@@ -6084,7 +6084,7 @@ sc_game (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         GAME_FIRSTMOVES, GAME_FLAG,       GAME_IMPORT,     GAME_INFO,
         GAME_LOAD,       GAME_LIST,       GAME_MERGE,      GAME_MOVES,
         GAME_NEW,        GAME_NOVELTY,    GAME_NUMBER,     GAME_PGN,
-        GAME_POP,        GAME_PUSH,       GAME_SAVE,       GAME_SCORES,     GAME_VALUES,
+        GAME_POP,        GAME_PUSH,       GAME_REORDER,    GAME_SAVE,       GAME_SCORES,     GAME_VALUES,
         GAME_STARTBOARD, GAME_STARTPOS,   GAME_STRIP,      GAME_SUMMARY,    GAME_TAGS,
         GAME_TRUNCATE, GAME_TRUNCATEANDFREE, GAME_UNDO,    GAME_MAKE_UNDO_POINT,  GAME_REDO
     };
@@ -6164,6 +6164,9 @@ sc_game (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     case GAME_PUSH:
         return sc_game_push (cd, ti, argc, argv);
+
+    case GAME_REORDER:
+        return sc_game_reorder (cd, ti, argc, argv);
 
     case GAME_SAVE:
         return sc_game_save (cd, ti, argc, argv);
@@ -8642,6 +8645,99 @@ sc_game_push (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     db->game = g;
     db->gameAltered = false;
+
+    return TCL_OK;
+}
+
+// Do a minor shuffle of the si4 index file to reorder a single game. Author stevenaaus
+// NB this is not atomic - ie, interuptions to scid or system in the process can be bad
+// TODO - maybe enable reordering of a group of consecutive games
+
+int
+sc_game_reorder (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
+{
+    const char * usage = "Usage: sc_game reorder GameNum GameDest.";
+
+    if ( argc != 4 ) {
+        Tcl_AppendResult (ti, usage, NULL);
+        return TCL_ERROR;
+    }
+
+    // unneeded  / wrong ?
+    if (!db->idx->AllInMemory()) {
+      Tcl_AppendResult (ti, "NOT in memory", NULL);
+      return TCL_ERROR;
+    }
+
+    uint gnum,newgame,temp;
+    int direction;
+
+    if (sscanf (argv[2], "%u", &gnum ) != 1 || gnum == 0) {
+	Tcl_AppendResult (ti, "sc_game reorder: invalid game number.", NULL);
+        return TCL_ERROR;
+    }
+    gnum--;
+
+    if (sscanf (argv[3], "%u", &newgame ) != 1 || newgame == 0 || newgame > db->numGames ) {
+	Tcl_AppendResult (ti, "sc_game reorder: invalid destination.", NULL);
+        return TCL_ERROR;
+    }
+    newgame--;
+
+    if (newgame == gnum) {
+	Tcl_AppendResult (ti, "sc_game reorder: game and destination are the same.", NULL);
+        return TCL_ERROR;
+    }
+
+    if (newgame < gnum)
+      direction = -1;
+    else
+      direction = 1;
+
+    IndexEntry ie_gnum, *ie, *ie_next;
+
+    uint ie_gnum_Filter, ie_next_Filter;
+
+    // save source game, filter
+    ie = db->idx->FetchEntry (gnum);
+    ie_gnum = *ie;
+    ie_gnum_Filter = db->filter->Get(gnum);
+
+    //// Shuffle games in the index file.
+    // WriteEntries also updates the in-memory data structs
+    // Is there a better way to do this ?
+
+    for (uint i = gnum; i != newgame; i = i + direction) {
+
+	ie_next = db->idx->FetchEntry(i + direction);
+	ie_next_Filter = db->filter->Get(i + direction);
+
+	if (ie_next == NULL) {
+	  Tcl_AppendResult (ti, "sc_game reorder: game out of bounds, bad.", NULL);
+	  return TCL_ERROR;
+	}
+
+        if (db->idx->WriteEntries (ie_next, i, 1) != OK) {
+          Tcl_AppendResult (ti, "Error writing index file.", NULL);
+          return TCL_ERROR;
+        }
+
+	db->filter->Set(i,ie_next_Filter);
+    }
+
+    // Write original game to new position
+
+    if (db->idx->WriteEntries (&ie_gnum, newgame, 1) != OK) {
+      Tcl_AppendResult (ti, "Error writing source game into index file.", NULL);
+      return TCL_ERROR;
+    }
+
+    db->filter->Set(newgame, ie_gnum_Filter);
+
+    db->treeCache->Clear();
+    db->backupCache->Clear();
+
+printf ("ok!\n");
 
     return TCL_OK;
 }

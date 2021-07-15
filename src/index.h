@@ -575,7 +575,7 @@ IndexEntry::SetRound (idNumberT id)
 
 
 
-// Total on-disk size per index entry: currently 46 bytes.
+// Total on-disk size per index entry
 const uint  INDEX_ENTRY_SIZE = 47;
 const uint  OLD_INDEX_ENTRY_SIZE = 46;
 

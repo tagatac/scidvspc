@@ -700,7 +700,7 @@ proc ::windows::gamelist::setColumnTitles {} {
 
 proc ::windows::gamelist::Popup {w x y X Y} {
 
-  global maintFlags maintFlaglist glistHeaders
+  global maintFlags maintFlaglist glistHeaders tr
 
   # Identify region requires at least tk 8.5.9 (?)
 
@@ -730,23 +730,23 @@ proc ::windows::gamelist::Popup {w x y X Y} {
     $menu.addcol delete 0 end
     set i 0
     foreach h $::glistHeaders {
-        $menu.addcol add command -label $::tr(Glist$h) -command "::windows::gamelist::insertCol $w $i $col"
+        $menu.addcol add command -label $tr(Glist$h) -command "::windows::gamelist::insertCol $w $i $col"
       incr i
     }
-    $menu add cascade -label $::tr(GlistAddField) -menu $menu.addcol
-    $menu add command -label $::tr(GlistRemoveThisGameFromFilter) -command "::windows::gamelist::removeCol $w $col"
+    $menu add cascade -label $tr(GlistAddField) -menu $menu.addcol
+    $menu add command -label $tr(GlistRemoveThisGameFromFilter) -command "::windows::gamelist::removeCol $w $col"
 
     $menu add separator
 
-    $menu add command -label $::tr(GlistAlignL) \
+    $menu add command -label $tr(GlistAlignL) \
 		   -command "$w column $col -anchor w; lset ::glistColAnchor $col_idx w"
-    $menu add command -label $::tr(GlistAlignR) \
+    $menu add command -label $tr(GlistAlignR) \
 		   -command "$w column $col -anchor e; lset ::glistColAnchor $col_idx e"
-    $menu add command -label $::tr(GlistAlignC) \
+    $menu add command -label $tr(GlistAlignC) \
 		   -command "$w column $col -anchor c; lset ::glistColAnchor $col_idx c"
 
     $menu add separator
-    $menu add command -label $::tr(Reset) -command "::windows::gamelist::resetCols $w"
+    $menu add command -label $tr(Reset) -command "::windows::gamelist::resetCols $w"
 
     tk_popup $menu $X $Y
 
@@ -784,34 +784,37 @@ proc ::windows::gamelist::Popup {w x y X Y} {
     set f $w.b.f
 
     if {$menutype == "short"} {
-    $menu add command -label $::tr(GlistRemoveThisGameFromFilter) -command ::windows::gamelist::Remove
-    $menu add command -label $::tr(GlistDeleteField) -command ::windows::gamelist::Delete
-    $menu add cascade -label $::tr(Flag)      -menu $menu.flags
-    $menu add command -label $::tr(SetFilter) -command ::windows::gamelist::Select
+    $menu add command -label $tr(GlistRemoveThisGameFromFilter) -command ::windows::gamelist::Remove
+    $menu add command -label $tr(GlistDeleteField) -command ::windows::gamelist::Delete
+    $menu add cascade -label $tr(Flag)      -menu $menu.flags
+    $menu add command -label $tr(SetFilter) -command ::windows::gamelist::Select
     $menu add separator
-    $menu add command -label $::tr(Reset) -command "$f.reset invoke"
+    $menu add command -label $tr(Reset) -command "$f.reset invoke"
     } else {
-    $menu add command -label $::tr(LoadGame) -command ::windows::gamelist::LoadSelection
-    $menu add command -label $::tr(Browse) -command ::windows::gamelist::Browse
-    $menu add command -label $::tr(GlistDeleteField) -command ::windows::gamelist::Delete
-    $menu add cascade -label $::tr(Flag)      -menu $menu.flags
-    $menu add command -label $::tr(SetFilter) -command ::windows::gamelist::Select
+    $menu add command -label $tr(LoadGame) -command ::windows::gamelist::LoadSelection
+    $menu add command -label $tr(Browse) -command ::windows::gamelist::Browse
+    $menu add command -label $tr(GlistDeleteField) -command ::windows::gamelist::Delete
+    $menu add cascade -label $tr(Flag)      -menu $menu.flags
+    $menu add command -label $tr(SetFilter) -command ::windows::gamelist::Select
     $menu add separator
-    $menu add command -label $::tr(GlistRemoveThisGameFromFilter) -command ::windows::gamelist::Remove
-    $menu add command -label $::tr(GlistRemoveGameAndAboveFromFilter) -command {::windows::gamelist::removeFromFilter up}
-    $menu add command -label $::tr(GlistRemoveGameAndBelowFromFilter) -command {::windows::gamelist::removeFromFilter down}
-    $menu add command -label $::tr(Reset) -command "$f.reset invoke"
+    $menu add command -label $tr(GlistRemoveThisGameFromFilter) -command ::windows::gamelist::Remove
+    $menu add command -label $tr(GlistRemoveGameAndAboveFromFilter) -command {::windows::gamelist::removeFromFilter up}
+    $menu add command -label $tr(GlistRemoveGameAndBelowFromFilter) -command {::windows::gamelist::removeFromFilter down}
+    $menu add command -label $tr(Reset) -command "$f.reset invoke"
+    $menu add separator
+    $menu add cascade -label $tr(GlistMoveField)      -menu $menu.move
     }
     if {[sc_base isReadOnly]} {
-      $menu entryconfigure $::tr(GlistDeleteField) -state disabled
-      $menu entryconfigure $::tr(Flag) -state disabled
+      $menu entryconfigure $tr(GlistDeleteField) -state disabled
+      $menu entryconfigure $tr(Flag) -state disabled
+      $menu entryconfigure $tr(GlistMoveField) -state disabled
     }
 
     menu $menu.flags -tearoff -1
     foreach flag $maintFlaglist  {
       # dont translate CustomFlag (todo)
       if {$flag ni {1 2 3 4 5 6}} {
-	set tmp $::tr($maintFlags($flag))
+	set tmp $tr($maintFlags($flag))
       } else {
 	set tmp [sc_game flag $flag description]
 	if {$tmp == "" } {
@@ -822,6 +825,14 @@ proc ::windows::gamelist::Popup {w x y X Y} {
       }
       $menu.flags add command -label "$tmp" -command "::windows::gamelist::ToggleFlag $flag"
     }
+
+
+    menu $menu.move
+    $menu.move add command -label "$tr(GlistMoveField) $tr(FinderUpDir)" -command {::windows::gamelist::Reorder up}
+    $menu.move add command -label "$tr(GlistMoveField) down"     -command {::windows::gamelist::Reorder down}
+    $menu.move add command -label "$tr(GlistMoveField) to [string tolower $tr(First)]" -command {::windows::gamelist::Reorder start}
+    $menu.move add command -label "$tr(GlistMoveField) to [string tolower $tr(Last)]"  -command {::windows::gamelist::Reorder end}
+    $menu.move add command -label "$tr(GlistMoveField) to N"    -command {::windows::gamelist::ReorderGameN}
 
     tk_popup $menu [winfo pointerx .] [winfo pointery .]
   }
@@ -1309,6 +1320,111 @@ proc ::windows::gamelist::removeFromFilter {dir} {
 
   ::windows::stats::Refresh
   ::windows::gamelist::showNum $gl_num nobell
+}
+
+proc ::windows::gamelist::Reorder {dir} {
+  set i [.glistWin.tree selection]
+
+  # todo - handle llength($) > 1
+
+  set gl_num [.glistWin.tree set $i Number]
+
+  if {$gl_num < 1} { return }
+  if {$gl_num > [sc_base numGames]} { return }
+
+  set confirm [::game::ConfirmDiscard]
+  if {$confirm == 2} { return }
+  if {$confirm == 0} {
+    ::game::Save
+  }
+
+  set current [sc_game number]
+
+
+  switch -- $dir {
+    up      { set newgame [expr $gl_num - 1] }
+    down    { set newgame [expr $gl_num + 1] }
+    start   { set newgame 1 }
+    end     { set newgame [sc_base numGames] }
+    default { set newgame $dir }
+  }
+
+  set useBusyCursor [expr {abs($gl_num - $newgame)} > 10000]
+  if {$useBusyCursor} {
+    busyCursor .
+    update
+  }
+
+  sc_game reorder $gl_num $newgame
+
+  if {$useBusyCursor} {
+    unbusyCursor .
+    update
+  }
+
+  ### Do we want to clear game or reload ??
+  # ::game::Clear
+  # refreshWindows
+  # return
+
+  if {$newgame < $gl_num} {
+    if {$current == $gl_num} {
+      ::windows::gamelist::LoadReorder $newgame
+      ::windows::gamelist::showCurrent
+    } elseif {$current >= $newgame && $current < $gl_num} {
+      ::windows::gamelist::LoadReorder [expr $current + 1]
+    } else {
+      refreshWindows
+    }
+  } else {
+    if {$current == $gl_num} {
+      ::windows::gamelist::LoadReorder $newgame
+      ::windows::gamelist::showCurrent
+    } elseif {$current <= $newgame && $current > $gl_num} {
+      ::windows::gamelist::LoadReorder [expr $current - 1]
+    } else {
+      refreshWindows
+    }
+  }
+}
+
+proc ::windows::gamelist::LoadReorder {game} {
+  setTrialMode 0
+  sc_game load $game
+  updateBoard -pgn
+  refreshWindows
+}
+
+proc ::windows::gamelist::ReorderGameN {} {
+  set w [toplevel .glreorderDialog]
+  wm title $w "Scid: Move to Game N"
+  wm state $w withdrawn
+
+  label $w.label -text {Move to Game N}
+  pack $w.label -side top -pady 5 -padx 5
+
+  entry $w.entry  -width 10 -textvariable ::game::entryLoadNumber
+  bind $w.entry <Escape> { .glreorderDialog.buttons.cancel invoke }
+  bind $w.entry <Return> { .glreorderDialog.buttons.load invoke }
+  pack $w.entry -side top -pady 5
+
+  set b [frame $w.buttons]
+  pack $b -side top -fill x
+  dialogbutton $b.load -text OK -command {
+    focus .glistWin
+    destroy .glreorderDialog
+    ::windows::gamelist::Reorder $::game::entryLoadNumber
+  }
+  dialogbutton $b.cancel -text $::tr(Cancel) -command {
+    destroy .glreorderDialog
+    focus .glistWin
+  }
+  packbuttons right $b.cancel $b.load
+  placeWinOverParent $w .glistWin
+  update
+   wm state $w normal
+  focus $w.entry
+
 }
 
 
