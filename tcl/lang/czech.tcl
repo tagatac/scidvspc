@@ -1068,6 +1068,16 @@ translate C GlistAlignL {Align left}
 translate C GlistAlignR {Align right}
 # ====== TODO To be translated ======
 translate C GlistAlignC {Align center}
+# ====== TODO To be translated ======
+translate C GlistMoveFieldUp {Move up}
+# ====== TODO To be translated ======
+translate C GlistMoveFieldDown {Move down}
+# ====== TODO To be translated ======
+translate C GlistMoveFieldFirst {Move to first}
+# ====== TODO To be translated ======
+translate C GlistMoveFieldLast {Move to last}
+# ====== TODO To be translated ======
+translate C GlistMoveFieldN {Move to N}
 
 # Maintenance window:
 translate C DatabaseName {Jméno databáze:}

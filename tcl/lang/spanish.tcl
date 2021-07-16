@@ -978,6 +978,16 @@ translate S GlistUndeleteAllGames {Recupera todas las partidas borradas de la ba
 translate S GlistAlignL {Alinear a la izquierda}
 translate S GlistAlignR {Alinear a la derecha}
 translate S GlistAlignC {Alinear al centro}
+# ====== TODO To be translated ======
+translate S GlistMoveFieldUp {Move up}
+# ====== TODO To be translated ======
+translate S GlistMoveFieldDown {Move down}
+# ====== TODO To be translated ======
+translate S GlistMoveFieldFirst {Move to first}
+# ====== TODO To be translated ======
+translate S GlistMoveFieldLast {Move to last}
+# ====== TODO To be translated ======
+translate S GlistMoveFieldN {Move to N}
 
 # Maintenance window:
 translate S DatabaseName {Nombre de la base:}

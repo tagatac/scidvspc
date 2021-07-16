@@ -915,6 +915,12 @@ translate E GlistAlignL {Align left}
 translate E GlistAlignR {Align right}
 translate E GlistAlignC {Align center}
 
+translate E GlistMoveFieldUp {Move up}
+translate E GlistMoveFieldDown {Move down}
+translate E GlistMoveFieldFirst {Move to first}
+translate E GlistMoveFieldLast {Move to last}
+translate E GlistMoveFieldN {Move to N}
+
 # Maintenance window:
 translate E DatabaseName {Database Name:}
 translate E TypeIcon {Database Type}

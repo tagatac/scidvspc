@@ -968,6 +968,16 @@ translate R GlistAlignL {Align left}
 translate R GlistAlignR {Align right}
 # ====== TODO To be translated ======
 translate R GlistAlignC {Align center}
+# ====== TODO To be translated ======
+translate R GlistMoveFieldUp {Move up}
+# ====== TODO To be translated ======
+translate R GlistMoveFieldDown {Move down}
+# ====== TODO To be translated ======
+translate R GlistMoveFieldFirst {Move to first}
+# ====== TODO To be translated ======
+translate R GlistMoveFieldLast {Move to last}
+# ====== TODO To be translated ======
+translate R GlistMoveFieldN {Move to N}
 
 # Maintenance window:
 translate R DatabaseName {Название базы данных:}

@@ -1001,6 +1001,16 @@ translate N GlistAlignL {Align left}
 translate N GlistAlignR {Align right}
 # ====== TODO To be translated ======
 translate N GlistAlignC {Align center}
+# ====== TODO To be translated ======
+translate N GlistMoveFieldUp {Move up}
+# ====== TODO To be translated ======
+translate N GlistMoveFieldDown {Move down}
+# ====== TODO To be translated ======
+translate N GlistMoveFieldFirst {Move to first}
+# ====== TODO To be translated ======
+translate N GlistMoveFieldLast {Move to last}
+# ====== TODO To be translated ======
+translate N GlistMoveFieldN {Move to N}
 
 # Maintenance windows
 translate N DatabaseName {Naam database:}

@@ -569,7 +569,7 @@ proc usage {} {
     puts {Install in /usr}
     puts {  ./configure BINDIR=/usr/bin/ SHAREDIR=/usr/share/scid/}
     puts {Debug, without languages}
-    puts {  ./configure LANGUAGES="" DEBUG="-DASSERTIONS"}
+    puts {  ./configure LANGUAGES="" DEBUG="-DASSERTIONS -g"}
     puts {Optimize for Core2}
     puts {  ./configure "CFLAGS=-O2 -march=core2" "LDFLAGS=-march=core2"}
     puts {Make a universal binary for OSX (i386 and PPC)}

@@ -1014,6 +1014,16 @@ translate G GlistAlignL {Align left}
 translate G GlistAlignR {Align right}
 # ====== TODO To be translated ======
 translate G GlistAlignC {Align center}
+# ====== TODO To be translated ======
+translate G GlistMoveFieldUp {Move up}
+# ====== TODO To be translated ======
+translate G GlistMoveFieldDown {Move down}
+# ====== TODO To be translated ======
+translate G GlistMoveFieldFirst {Move to first}
+# ====== TODO To be translated ======
+translate G GlistMoveFieldLast {Move to last}
+# ====== TODO To be translated ======
+translate G GlistMoveFieldN {Move to N}
 
 # Maintenance window:
 translate G DatabaseName {Όνομα Βάσης:}

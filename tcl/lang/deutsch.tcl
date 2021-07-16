@@ -936,6 +936,11 @@ translate D GlistUndeleteAllGames {Entlösche alle Partien im Filter}
 translate D GlistAlignL {Ausrichtung links}
 translate D GlistAlignR {Ausrichtung rechts}
 translate D GlistAlignC {Ausrichtung zentriert}
+translate D GlistMoveFieldUp {Verschieben aufwärts}
+translate D GlistMoveFieldDown {Verschieben abwärts}
+translate D GlistMoveFieldFirst {Verschieben nach erste}
+translate D GlistMoveFieldLast {Verschieben nach letzte}
+translate D GlistMoveFieldN {Verschieben nach N}
 
 # Maintenance window:
 translate D DatabaseName {Datenbankname:}

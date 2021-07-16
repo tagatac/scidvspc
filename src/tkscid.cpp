@@ -8673,19 +8673,19 @@ sc_game_reorder (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     int direction;
 
     if (sscanf (argv[2], "%u", &gnum ) != 1 || gnum == 0) {
-	Tcl_AppendResult (ti, "sc_game reorder: invalid game number.", NULL);
+	Tcl_AppendResult (ti, "Game Reorder: invalid game number.", NULL);
         return TCL_ERROR;
     }
     gnum--;
 
     if (sscanf (argv[3], "%u", &newgame ) != 1 || newgame == 0 || newgame > db->numGames ) {
-	Tcl_AppendResult (ti, "sc_game reorder: invalid destination.", NULL);
+	Tcl_AppendResult (ti, "Game Reorder: invalid destination.", NULL);
         return TCL_ERROR;
     }
     newgame--;
 
     if (newgame == gnum) {
-	Tcl_AppendResult (ti, "sc_game reorder: game and destination are the same.", NULL);
+	Tcl_AppendResult (ti, "Game Reorder: game and destination are the same.", NULL);
         return TCL_ERROR;
     }
 
@@ -8713,12 +8713,12 @@ sc_game_reorder (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 	ie_next_Filter = db->filter->Get(i + direction);
 
 	if (ie_next == NULL) {
-	  Tcl_AppendResult (ti, "sc_game reorder: game out of bounds, bad.", NULL);
+	  Tcl_AppendResult (ti, "Game Reorder: game out of bounds, bad.", NULL);
 	  return TCL_ERROR;
 	}
 
         if (db->idx->WriteEntries (ie_next, i, 1) != OK) {
-          Tcl_AppendResult (ti, "Error writing index file.", NULL);
+          Tcl_AppendResult (ti, "Game Reorder: error writing index file.", NULL);
           return TCL_ERROR;
         }
 
@@ -8728,7 +8728,7 @@ sc_game_reorder (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     // Write original game to new position
 
     if (db->idx->WriteEntries (&ie_gnum, newgame, 1) != OK) {
-      Tcl_AppendResult (ti, "Error writing source game into index file.", NULL);
+      Tcl_AppendResult (ti, "Game Reorder: error writing source game into index file.", NULL);
       return TCL_ERROR;
     }
 
@@ -8736,8 +8736,6 @@ sc_game_reorder (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     db->treeCache->Clear();
     db->backupCache->Clear();
-
-printf ("ok!\n");
 
     return TCL_OK;
 }

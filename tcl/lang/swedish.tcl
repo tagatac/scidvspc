@@ -996,6 +996,16 @@ translate W GlistAlignL {Align left}
 translate W GlistAlignR {Align right}
 # ====== TODO To be translated ======
 translate W GlistAlignC {Align center}
+# ====== TODO To be translated ======
+translate W GlistMoveFieldUp {Move up}
+# ====== TODO To be translated ======
+translate W GlistMoveFieldDown {Move down}
+# ====== TODO To be translated ======
+translate W GlistMoveFieldFirst {Move to first}
+# ====== TODO To be translated ======
+translate W GlistMoveFieldLast {Move to last}
+# ====== TODO To be translated ======
+translate W GlistMoveFieldN {Move to N}
 
 # Maintenance window:
 translate W DatabaseName {Databasnamn:}

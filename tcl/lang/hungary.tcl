@@ -1076,6 +1076,16 @@ translate H GlistAlignL {Align left}
 translate H GlistAlignR {Align right}
 # ====== TODO To be translated ======
 translate H GlistAlignC {Align center}
+# ====== TODO To be translated ======
+translate H GlistMoveFieldUp {Move up}
+# ====== TODO To be translated ======
+translate H GlistMoveFieldDown {Move down}
+# ====== TODO To be translated ======
+translate H GlistMoveFieldFirst {Move to first}
+# ====== TODO To be translated ======
+translate H GlistMoveFieldLast {Move to last}
+# ====== TODO To be translated ======
+translate H GlistMoveFieldN {Move to N}
 
 # Maintenance window:
 translate H DatabaseName {Az adatbázis neve:}

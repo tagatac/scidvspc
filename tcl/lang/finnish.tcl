@@ -908,6 +908,16 @@ translate L GlistUndeleteAllGames {Palauta suodattimen kaikki pelit}
 translate L GlistAlignL {Tasaa vasemmalle}
 translate L GlistAlignR {Tasaa oikealle}
 translate L GlistAlignC {Tasaa keskelle}
+# ====== TODO To be translated ======
+translate L GlistMoveFieldUp {Move up}
+# ====== TODO To be translated ======
+translate L GlistMoveFieldDown {Move down}
+# ====== TODO To be translated ======
+translate L GlistMoveFieldFirst {Move to first}
+# ====== TODO To be translated ======
+translate L GlistMoveFieldLast {Move to last}
+# ====== TODO To be translated ======
+translate L GlistMoveFieldN {Move to N}
 
 # Maintenance window:
 translate L DatabaseName {Tietokannan nimi:}

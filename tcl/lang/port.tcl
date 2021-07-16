@@ -911,6 +911,16 @@ translate U GlistUndeleteAllGames {Recuperar todos os jogos no filtro}
 translate U GlistAlignL {Alinhar à esquerda}
 translate U GlistAlignR {Alinhar à direita}
 translate U GlistAlignC {Alinhar ao centro}
+# ====== TODO To be translated ======
+translate U GlistMoveFieldUp {Move up}
+# ====== TODO To be translated ======
+translate U GlistMoveFieldDown {Move down}
+# ====== TODO To be translated ======
+translate U GlistMoveFieldFirst {Move to first}
+# ====== TODO To be translated ======
+translate U GlistMoveFieldLast {Move to last}
+# ====== TODO To be translated ======
+translate U GlistMoveFieldN {Move to N}
 
 # Maintenance window:
 translate U DatabaseName {Nome da base de dados:}

@@ -925,6 +925,16 @@ translate O GlistUndeleteAllGames {Gjenopprett alle partier i filteret}
 translate O GlistAlignL {Venstrejuster}
 translate O GlistAlignR {Høyrejuster}
 translate O GlistAlignC {Sentrer}
+# ====== TODO To be translated ======
+translate O GlistMoveFieldUp {Move up}
+# ====== TODO To be translated ======
+translate O GlistMoveFieldDown {Move down}
+# ====== TODO To be translated ======
+translate O GlistMoveFieldFirst {Move to first}
+# ====== TODO To be translated ======
+translate O GlistMoveFieldLast {Move to last}
+# ====== TODO To be translated ======
+translate O GlistMoveFieldN {Move to N}
 
 # Maintenance window:
 translate O DatabaseName {Databasenavn:}

@@ -828,11 +828,11 @@ proc ::windows::gamelist::Popup {w x y X Y} {
 
 
     menu $menu.move
-    $menu.move add command -label "$tr(GlistMoveField) $tr(FinderUpDir)" -command {::windows::gamelist::Reorder up}
-    $menu.move add command -label "$tr(GlistMoveField) down"     -command {::windows::gamelist::Reorder down}
-    $menu.move add command -label "$tr(GlistMoveField) to [string tolower $tr(First)]" -command {::windows::gamelist::Reorder start}
-    $menu.move add command -label "$tr(GlistMoveField) to [string tolower $tr(Last)]"  -command {::windows::gamelist::Reorder end}
-    $menu.move add command -label "$tr(GlistMoveField) to N"    -command {::windows::gamelist::ReorderGameN}
+    $menu.move add command -label $tr(GlistMoveFieldUp)    -command {::windows::gamelist::Reorder up}
+    $menu.move add command -label $tr(GlistMoveFieldDown)  -command {::windows::gamelist::Reorder down}
+    $menu.move add command -label $tr(GlistMoveFieldFirst) -command {::windows::gamelist::Reorder start}
+    $menu.move add command -label $tr(GlistMoveFieldLast)  -command {::windows::gamelist::Reorder end}
+    $menu.move add command -label $tr(GlistMoveFieldN)     -command {::windows::gamelist::ReorderGameN}
 
     tk_popup $menu [winfo pointerx .] [winfo pointery .]
   }

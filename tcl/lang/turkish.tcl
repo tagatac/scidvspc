@@ -906,6 +906,16 @@ translate T GlistUndeleteAllGames {Tüm oyunları süzgeçte geri al}
 translate T GlistAlignL {Sola hizala}
 translate T GlistAlignR {sağa hizala}
 translate T GlistAlignC {Ortayı hizalayın}
+# ====== TODO To be translated ======
+translate T GlistMoveFieldUp {Move up}
+# ====== TODO To be translated ======
+translate T GlistMoveFieldDown {Move down}
+# ====== TODO To be translated ======
+translate T GlistMoveFieldFirst {Move to first}
+# ====== TODO To be translated ======
+translate T GlistMoveFieldLast {Move to last}
+# ====== TODO To be translated ======
+translate T GlistMoveFieldN {Move to N}
 
 # Maintenance window:
 translate T DatabaseName {Veritabanı ismi:}

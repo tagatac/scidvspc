@@ -1103,6 +1103,16 @@ translate B GlistAlignL {Alinhar: esquerda}
 translate B GlistAlignR {Alinhar: direita}
 
 translate B GlistAlignC {Alinhar: centro}
+# ====== TODO To be translated ======
+translate B GlistMoveFieldUp {Move up}
+# ====== TODO To be translated ======
+translate B GlistMoveFieldDown {Move down}
+# ====== TODO To be translated ======
+translate B GlistMoveFieldFirst {Move to first}
+# ====== TODO To be translated ======
+translate B GlistMoveFieldLast {Move to last}
+# ====== TODO To be translated ======
+translate B GlistMoveFieldN {Move to N}
 
 # Maintenance window:
 translate B DatabaseName {Nome da base de dados:}
