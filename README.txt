@@ -164,13 +164,8 @@
 
   3.0.1.  Other resources
 
-  Fedora Packages (unofficial)
-  <https://copr.fedorainfracloud.org/coprs/awood/scid_vs_pc/>
-
-  The latest code is available from subversion - svn checkout
-  http://svn.code.sf.net/p/scidvspc/code/ scidvspc-code or as a tarball
-  https://sourceforge.net/p/scidvspc/code/HEAD/tarball
-  <https://sourceforge.net/p/scidvspc/code/HEAD/tarball>
+  The latest code is available from subversion
+  <https://sourceforge.net/p/scidvspc/code/HEAD/tree/>
 
   Other project files
   <https://sourceforge.net/project/showfiles.php?group_id=263836>
@@ -179,12 +174,11 @@
 
   4.0.1.  Linux , Unix
 
+  Installing from source is reccommended, though there exists deb
+  packages (from third parties) in the linux packages
+  <https://sourceforge.net/projects/scidvspc/files/linux%20packages/>
+
   Scid vs. PC requires Wish (Tcl/Tk) 8.5 or later and a C++ compiler.
-
-  Note Wish 8.5.10 has severe bugs, and many versions of Tk-8.6.x have
-  *severe* memory leaks.  To avoid, compile with Gregor's tk::text
-  (patches/gregors_tktext_inline.patch).
-
   Example packages required include "tcl, tk, tcl-devel, tk-devel" and
   "gcc-c++ , libstdc++"; but of course will vary with your distribution.
 
@@ -205,10 +199,6 @@
   ______________________________________________________________________
 
 
-  Debian / Mint / Ubuntu users may be interested in this link
-  <http://www.linuxx.eu/2012/11/scid-vs-pc-installation-guide-
-  ubuntu.html>.
-
   Extra chess pieces (such as Berlin) are now enabled by default for
   Wish 8.6, but 8.5 requires installing TkImg. Sound support requires
   Snack.
@@ -219,6 +209,11 @@
   <https://sourceforge.net/project/downloading.php?group_id=263836&filename=tkimg1.3.scidvspc.tar.bz2>,
   Snack
   <http://sourceforge.net/projects/scidvspc/files/support%20files/snack2.2.10.scidvspc.tgz/download>.
+
+  Note Wish 8.5.10 has severe bugs, and many versions of Tk-8.6.x have
+  *severe* memory leaks.  To avoid many of these leaks, or simply for a
+  performance boost, compile with Gregor's tk::text
+  (patches/gregors_tktext_inline.patch).
 
   4.0.2.  Windows
 
@@ -232,8 +227,9 @@
   C:\Users\[USERNAME]\AppData\Local\VirtualStore\Program Files\Scid vs
   PC
 
-  People with Visual Studio 11 should now be able to compile the project
-  fairly easily (see Makefile.vc for more details).
+  Our main windows build system is MinGW and Makefile.mingw. We also
+  have a Makefile.vc for visual studio, but it does not get updated too
+  often.
 
   4.0.3.  Mac OS X
 

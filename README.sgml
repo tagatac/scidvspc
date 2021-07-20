@@ -81,11 +81,8 @@ Mac <url url="http://sourceforge.net/projects/scidvspc/files/mac/ScidvsMac-4.22.
 Mac 64bit (beta) <url url="https://sourceforge.net/projects/scidvspc/files/mac-64bit-unsupported/ScidvsMac-4.22.x64.dmg/download" name="ScidvsMac-4.22.x64.dmg">
 
 <sect2> Other resources<p>
-<P>Fedora Packages (unofficial) <url url="https://copr.fedorainfracloud.org/coprs/awood/scid_vs_pc/">
-</P>
 
-<P>The latest code is available from subversion - <bf>svn checkout http://svn.code.sf.net/p/scidvspc/code/ scidvspc-code</bf>
-or as a tarball <url url="https://sourceforge.net/p/scidvspc/code/HEAD/tarball" name="https://sourceforge.net/p/scidvspc/code/HEAD/tarball">
+<P>The latest code is available from subversion <url url="https://sourceforge.net/p/scidvspc/code/HEAD/tree/">
 </P>
 
 <P>Other project <url url="https://sourceforge.net/project/showfiles.php?group_id=263836" name="files">
@@ -95,19 +92,16 @@ or as a tarball <url url="https://sourceforge.net/p/scidvspc/code/HEAD/tarball" 
 <sect> installation <p>
 
 <sect2> Linux , Unix<p>
+<p><em>Installing from source is reccommended, though there exists deb packages (from third parties) in the <url url="https://sourceforge.net/projects/scidvspc/files/linux%20packages/" name="linux packages"></em></p>
   <p>
   Scid vs. PC requires Wish (Tcl/Tk) 8.5 or later and a C++ compiler. 
-  </p>
-  <p><em>Note Wish 8.5.10 has severe bugs, and many versions of Tk-8.6.x have *severe* memory leaks.
-  To avoid, compile with Gregor's tk::text (patches/gregors_tktext_inline.patch).</em>
-  </p><p>
   Example packages required include "tcl, tk, tcl-devel, tk-devel" and
   "gcc-c++ , libstdc++"; but of course will vary with your distribution.
   </p>
 
-<p><em>The default installation directory is <bf>/usr/local</bf>, which is generally empty, but any
+<p>The default installation directory is <bf>/usr/local</bf>, which is generally empty, but any
 version of Scid here will be overwritten. To install into <bf>/usr</bf> (for eg)
-use <bf>./configure BINDIR=/usr/bin/ SHAREDIR=/usr/share/scid/</bf></em></p>
+use <bf>./configure BINDIR=/usr/bin/ SHAREDIR=/usr/share/scid/</bf></p>
 
   <p>Installing from source:</p>
 
@@ -120,8 +114,6 @@ sudo make install
 scid
 </code>
 
-<p>Debian / Mint / Ubuntu users may be interested in this <url name="link" url="http://www.linuxx.eu/2012/11/scid-vs-pc-installation-guide-ubuntu.html">.</p>
-
   <p>
   Extra chess pieces (such as Berlin) are now enabled by default for Wish 8.6, but 8.5 requires installing TkImg. Sound support requires Snack.
 <newline>
@@ -130,6 +122,9 @@ scid
 <url name="TkImg" url="https://sourceforge.net/project/downloading.php?group_id=263836&amp;filename=tkimg1.3.scidvspc.tar.bz2">, 
 <url name="Snack" url="http://sourceforge.net/projects/scidvspc/files/support%20files/snack2.2.10.scidvspc.tgz/download">.
 </p>
+  <p><em>Note Wish 8.5.10 has severe bugs, and many versions of Tk-8.6.x have *severe* memory leaks.
+  To avoid many of these leaks, or simply for a performance boost, compile with Gregor's tk::text (patches/gregors_tktext_inline.patch).</em>
+  </p>
 
 <sect2> Windows <p>
 Windows installation simply requires downloading the <ref name="executable" id="download_">, and following the prompts.
@@ -140,7 +135,7 @@ in the <bf>Scid-vs-PC\bin\config</bf> directory, and may be copied over from
 old versions to make upgrading easier. If the app is installed in "Program Files" On Windows 7, the config files are mirrored in
 C:\Users\[USERNAME]\AppData\Local\VirtualStore\Program Files\Scid vs PC
 </p>
-<p>People with Visual Studio 11 should now be able to compile the project fairly easily (see Makefile.vc for more details).</p>
+<p>Our main windows build system is MinGW and Makefile.mingw. We also have a Makefile.vc for visual studio, but it does not get updated too often.</p>
 
 <sect2> Mac OS X <p>
 
