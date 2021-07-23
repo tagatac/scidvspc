@@ -57,16 +57,16 @@ proc ::utils::validate::Integer {maxValue allowQuestionMarks name el op} {
   set $old [set $name]
 }
 
+#    Check for valid date (and allow "*" in editDate)
 
-
-# ::utils::validate::Date
-#
-#    Used to check the validity of a date string as it is entered.
-#
 proc ::utils::validate::Date {name el op} {
   global $name ${name}_old
   set old ${name}_old
-  if {![sc_info validDate [set $name]]} {
+  if {![info exists $old]} {
+    set $old {}
+  }
+  set value [set $name]
+  if {!($name == "editDate" && $value == "*") && ![sc_info validDate $value]} {
     set $name [set $old]
     bell
     return
@@ -74,11 +74,9 @@ proc ::utils::validate::Date {name el op} {
   set $old [set $name]
 }
 
-# ::utils::validate::Result
-#
 #    Used to check the validity of a result entrybox value.
 #    Result can be empty, "1", "0", "=", or "*".
-#
+
 proc ::utils::validate::Result {name el op} {
   global $name ${name}_old
   set old ${name}_old

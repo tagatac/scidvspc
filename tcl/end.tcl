@@ -996,7 +996,7 @@ proc nameEditor {} {
 
 proc checkNeditReplace {} {
   global editNameNew editNameType
-  if {$editNameType == "rating" || $editNameNew != ""} {
+  if {$editNameType == "rating" || $editNameType == "date"  || $editNameType == "edate" || $editNameNew != ""} {
     .nedit.buttons.replace configure -state normal
   } else {
     .nedit.buttons.replace configure -state disabled

@@ -2455,7 +2455,7 @@ set helpText(Maintenance) {<h1>Database Maintenance</h1>
   <p>
   The 
   <run nameEditor><green>Name Editor</green></run>
-  is a tool to selectively edit entity names (eg Player names).
+  is a tool to selectively edit entity names (eg Player names) and also edit any player's rating.
   </p>
   <p>
   Each unique name is only stored once in the <a Formats>name file</a>, so changing a name
@@ -2464,10 +2464,10 @@ perform a <a Compact>namebase compaction</a>.
   </p>
   <p>
   An single asterisk '*' may be used to match <b>any</b> name. This global substitution is only available for 
-  the Event, Site and Round names - not the Player, Elo or Date names.
+  the Event, Site, Round and date names - not the Player, Elo.
   </p>
   <p>
-  Date and Eventdate fields must be of the form YYYY.MM.DD (year, month, day)
+  Date and Eventdate fields must be of the form YYYY.MM.DD (year, month, day), and Eventdates cannot exist without a valid Date entry.
   </p>
   <p>
   <i>Please take care when using the Name Editor. Changes are not properly undoable if the new name already exists. There is also a safety mechanism - Using '*' or '?' is not allowed with 'All games in database'.</i>
@@ -2598,7 +2598,7 @@ For example - the first two examples remove four digit ELOs from player names. T
   back in a consistent and usable state.
   </p>
 
-  <p><footer>Updated: Scid vs. PC 4.22, September 2020</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.23, July 2021</footer></p>
 }
 
 set helpTitle(Sorting) "Sorting a database"

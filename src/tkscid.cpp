@@ -12019,12 +12019,10 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     }
 
     const char * options[] = {
-        "player", "event", "site", "round", "rating",
-        "date", "edate", NULL
+        "player",   "event",   "site",   "round",   "rating",   "date",   "edate", NULL
     };
     enum {
-        OPT_PLAYER, OPT_EVENT, OPT_SITE, OPT_ROUND, OPT_RATING,
-        OPT_DATE, OPT_EVENTDATE
+        OPT_PLAYER, OPT_EVENT, OPT_SITE, OPT_ROUND, OPT_RATING, OPT_DATE, OPT_EVENTDATE
     };
 
     int option = -1;
@@ -12075,7 +12073,7 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     }
 
     // "*" will match anything in EVENT, SITE and a few others
-    bool glob = (oldName[0]=='*' && oldName[1]==0 && (option == OPT_EVENT || option == OPT_SITE || option == OPT_ROUND));
+    bool glob = (oldName[0]=='*' && oldName[1]==0 && (option == OPT_EVENT || option == OPT_SITE || option == OPT_ROUND || option == OPT_DATE || option == OPT_EVENTDATE));
 
     // Find the existing name in the namebase:
     idNumberT oldID = 0;
@@ -12191,14 +12189,14 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             break;
 
         case OPT_DATE:
-            if (ie->GetDate() == oldDate) {
+            if (glob || ie->GetDate() == oldDate) {
                 newIE.SetDate (newDate);
                 edits++;
             }
             break;
 
         case OPT_EVENTDATE:
-            if (ie->GetEventDate() == oldDate) {
+            if (glob || ie->GetEventDate() == oldDate) {
                 newIE.SetEventDate (newDate);
                 edits++;
             }

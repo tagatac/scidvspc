@@ -279,9 +279,9 @@ proc ::maint::Open {} {
 
   button $w.db.stripcom -text "[tr EditStrip] [tr Comments]" -command "stripCommentsVars comments $w"
   button $w.db.stripvar -text "[tr EditStrip] [tr Variations]"   -command "stripCommentsVars variations $w"
-  button $w.db.zero -textvar ::tr(StripTag)   -command "zeroTags $w"
+  button $w.db.nameeditor -text [tr ToolsMaintNameEditor]   -command "nameEditor"
 
-  foreach i {check eco compact sort elo dups cleaner autoload strip stripcom stripvar zero} {
+  foreach i {check eco compact sort elo dups cleaner autoload strip stripcom stripvar nameeditor} {
     $w.db.$i configure -font $font
   }
   bind $w <Alt-d> "$w.db.dups invoke"
@@ -293,7 +293,7 @@ proc ::maint::Open {} {
   grid $w.db.dups -row 2 -column 1 -sticky we -padx 1 -pady 1
   grid $w.db.cleaner -row 2 -column 2 -sticky we -padx 1 -pady 1
   grid $w.db.autoload -row 3 -column 0 -sticky we -padx 1 -pady 1
-  grid $w.db.zero  -row 3 -column 1 -sticky we -padx 1 -pady 1
+  grid $w.db.nameeditor  -row 3 -column 1 -sticky we -padx 1 -pady 1
   grid $w.db.strip -row 3 -column 2 -sticky we -padx 1 -pady 1
   grid $w.db.check -row 4 -column 0 -sticky we -padx 1 -pady 1
   grid $w.db.stripcom -row 4 -column 1 -sticky we -padx 1 -pady 1
@@ -440,7 +440,7 @@ proc ::maint::Refresh {} {
     $w.delete.$button configure -state $state
     $w.mark.$button configure -state $state
   }
-  foreach button {dups elo autoload stripcom stripvar zero strip} {
+  foreach button {dups elo autoload stripcom stripvar nameeditor strip} {
     $w.db.$button configure -state $state
   }
   # Looks nicer enabled
@@ -2121,82 +2121,6 @@ proc stripExtraTags {{parent .}} {
   }
 
   dialogbutton $w.buttons.cancel -text $::tr(Close) -command "destroy $w"
-  pack $w.buttons.find $w.buttons.strip -side left -padx 5 -pady 3
-  pack $w.buttons.cancel -side right -padx 5 -pady 3
-  bind $w <Escape> "$w.buttons.cancel invoke"
-
-  # raise $parent 
-
-  placeWinOverParent $w $parent
-  wm state $w normal
-}
-
-proc zeroTags {{parent .}} {
-  # todo
-
-  set w .striptags
-
-  if {[winfo exists $w]} {
-    destroy $w
-  }
-
-  set ::interrupt 0
-
-  set Tags {Event Site Date Round WhiteElo BlackElo EventDate}
-
-  toplevel $w
-  wm withdraw $w
-  wm title $w $::tr(StripTag)
-
-  bind $w <F1> {helpWindow Maintenance Tags}
-
-  label $w.title -text "$::tr(StripTag) (Unimplemented)" -font font_Bold
-  # label $w.title -text "$::tr(StripTag) ([file tail [sc_base filename]])" -font font_Bold
-  pack $w.title -side top
-  frame $w.tags
-  pack $w.tags -side top -fill both -expand yes
-  addHorizontalRule $w
-
-  frame $w.filter
-  radiobutton $w.filter.all -textvar ::tr(SelectAllGames) -variable checkOption(AllGames) -value all
-  radiobutton $w.filter.filter -textvar ::tr(SelectFilterGames) -variable checkOption(AllGames) -value filter
-
-  pack $w.filter.all $w.filter.filter -side left  -padx 5
-  pack $w.filter -side top -expand 1
-  addHorizontalRule $w
-
-  frame $w.buttons
-  pack $w.buttons -side bottom -fill x -before $w.tags
-
-  listbox $w.tags.list -yscrollcommand "$w.tags.scroll set" \
-      -exportselection 1 -font font_Fixed -width 32
-  scrollbar $w.tags.scroll -command "$w.tags.list yview"
-  pack $w.tags.list -side left -fill both -expand yes
-  pack $w.tags.scroll -side right -fill y
-
-  foreach i $Tags {
-    .striptags.tags.list insert end $i
-  }
-
-  bind $w.tags.list <Double-ButtonRelease-1> "$w.buttons.find invoke; break"
-
-  button $w.buttons.find -text $::tr(SetFilter) -command {
-    if {[catch {set tag [lindex [.striptags.tags.list get [.striptags.tags.list cursel]] 0]}] || \
-         $tag == {}} {
-      return
-    }
-    puts todo:$tag
-  }
-
-  button $w.buttons.strip -text $::tr(StripTag) -command {
-    if {[catch {set tag [lindex [.striptags.tags.list get [.striptags.tags.list cursel]] 0]}] || \
-         $tag == {}} {
-      return
-    }
-    puts todo:$tag
-  }
-
-  button $w.buttons.cancel -text $::tr(Close) -command "destroy $w"
   pack $w.buttons.find $w.buttons.strip -side left -padx 5 -pady 3
   pack $w.buttons.cancel -side right -padx 5 -pady 3
   bind $w <Escape> "$w.buttons.cancel invoke"
