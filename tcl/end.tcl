@@ -856,6 +856,7 @@ proc nameEditor {} {
           grid remove .nedit.g.fromD
           grid remove .nedit.g.toD
           grid .nedit.g.toL -row 1 -column 1 -sticky e
+          .nedit.g.fromL configure -textvar ::tr(NameEditReplace)
           grid .nedit.g.fromE -row 0 -column 2 -sticky w
           grid .nedit.g.toE -row 1 -column 2 -sticky w
           set editName {}
@@ -870,6 +871,7 @@ proc nameEditor {} {
         grid remove .nedit.g.toL
         grid remove .nedit.g.fromD
         grid remove .nedit.g.toD
+        .nedit.g.fromL configure -textvar ::tr(Player)
         grid .nedit.g.fromE -row 0 -column 2 -sticky w
         grid .nedit.g.rtype -row 1 -column 0 -columnspan 2 -sticky e -padx 5
         grid .nedit.g.ratingE -row 1 -column 2 -sticky w
@@ -881,6 +883,7 @@ proc nameEditor {} {
         grid remove .nedit.g.fromE
         grid remove .nedit.g.ratingE
         grid remove .nedit.g.rtype
+        .nedit.g.fromL configure -textvar ::tr(NameEditReplace)
         grid .nedit.g.fromD -row 0 -column 2 -sticky w
         grid .nedit.g.toL -row 1 -column 1 -sticky e
         grid .nedit.g.toD -row 1 -column 2 -sticky w
@@ -893,6 +896,7 @@ proc nameEditor {} {
         grid remove .nedit.g.fromE
         grid remove .nedit.g.ratingE
         grid remove .nedit.g.rtype
+        .nedit.g.fromL configure -textvar ::tr(NameEditReplace)
         grid .nedit.g.fromD -row 0 -column 2 -sticky w
         grid .nedit.g.toL -row 1 -column 1 -sticky e
         grid .nedit.g.toD -row 1 -column 2 -sticky w

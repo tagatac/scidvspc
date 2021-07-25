@@ -286,18 +286,18 @@ proc ::maint::Open {} {
   }
   bind $w <Alt-d> "$w.db.dups invoke"
 
-  grid $w.db.eco -row 1 -column 0 -sticky we -padx 1 -pady 1
-  grid $w.db.compact -row 1 -column 1 -sticky we -padx 1 -pady 1
-  grid $w.db.sort -row 1 -column 2 -sticky we -padx 1 -pady 1
-  grid $w.db.elo -row 2 -column 0 -sticky we -padx 1 -pady 1
-  grid $w.db.dups -row 2 -column 1 -sticky we -padx 1 -pady 1
-  grid $w.db.cleaner -row 2 -column 2 -sticky we -padx 1 -pady 1
-  grid $w.db.autoload -row 3 -column 0 -sticky we -padx 1 -pady 1
-  grid $w.db.nameeditor  -row 3 -column 1 -sticky we -padx 1 -pady 1
-  grid $w.db.strip -row 3 -column 2 -sticky we -padx 1 -pady 1
-  grid $w.db.check -row 4 -column 0 -sticky we -padx 1 -pady 1
-  grid $w.db.stripcom -row 4 -column 1 -sticky we -padx 1 -pady 1
-  grid $w.db.stripvar -row 4 -column 2 -sticky we -padx 1 -pady 1
+  grid $w.db.compact	-row 1 -column 0 -sticky we -padx 1 -pady 1
+  grid $w.db.sort	-row 1 -column 1 -sticky we -padx 1 -pady 1
+  grid $w.db.nameeditor	-row 1 -column 2 -sticky we -padx 1 -pady 1
+  grid $w.db.eco	-row 2 -column 0 -sticky we -padx 1 -pady 1
+  grid $w.db.elo	-row 2 -column 1 -sticky we -padx 1 -pady 1
+  grid $w.db.dups	-row 2 -column 2 -sticky we -padx 1 -pady 1
+  grid $w.db.autoload	-row 3 -column 0 -sticky we -padx 1 -pady 1
+  grid $w.db.check	-row 3 -column 1 -sticky we -padx 1 -pady 1
+  grid $w.db.cleaner	-row 3 -column 2 -sticky we -padx 1 -pady 1
+  grid $w.db.stripcom	-row 4 -column 0 -sticky we -padx 1 -pady 1
+  grid $w.db.stripvar	-row 4 -column 1 -sticky we -padx 1 -pady 1
+  grid $w.db.strip	-row 4 -column 2 -sticky we -padx 1 -pady 1
 
   ### Buttons
 
