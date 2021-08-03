@@ -49,7 +49,7 @@ proc playerInfo {{player ""} {raise 0}} {
       }
     } -width 10
     button $w.b.nedit -text [tr PinfoEditName] -command {
-      nameEditor
+      nameEditor .playerInfoWin
       setNameEditorType player
       set editName $playerInfoName
       set editNameNew $playerInfoName

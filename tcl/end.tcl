@@ -830,7 +830,7 @@ proc setNameEditorType {type} {
   catch {.nedit.typeButtons.$type invoke}
 }
 
-proc nameEditor {} {
+proc nameEditor {{parent {}}} {
   global editName editNameType editNameNew editNameSelect
   global editNameRating editDate editDateNew
 
@@ -841,7 +841,12 @@ proc nameEditor {} {
   }
   toplevel $w
   wm title $w "[tr ToolsMaintNameEditor]"
-  setWinLocation $w
+
+  if {$parent == {}} {
+    setWinLocation $w
+  } else {
+    placeWinOverParent $w $parent
+  }
   bind $w <Configure> "recordWinSize $w"
 
   label $w.typeLabel -textvar ::tr(NameEditType) -font font_Bold

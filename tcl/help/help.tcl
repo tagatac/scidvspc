@@ -438,6 +438,7 @@ append helpText(Index) {
   <h3><name R>R</name></h3>
   <ul>
   <li><a Graphs Rating>Rating graph</a></li>
+  <li>Adding Player <a Maintenance Editing>Ratings</a></li>
   <li><a Moves Undo>Redo</a></li>
   <li><a Repertoire>Repertoire editor</a></li>
   <li><a Reports>Reports</a></li>
@@ -2455,7 +2456,7 @@ set helpText(Maintenance) {<h1>Database Maintenance</h1>
   <p>
   The 
   <run nameEditor><green>Name Editor</green></run>
-  is a tool to selectively edit entity names (eg Player names) and also edit any player's rating.
+  is a tool to selectively edit entity names (eg Player names and Dates) and also edit any Player's rating (for a selection of games. See also <a Maintenance Ratings>below</a>).
   </p>
   <p>
   Each unique name is only stored once in the <a Formats>name file</a>, so changing a name
