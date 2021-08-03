@@ -88,7 +88,7 @@ Index: Makefile.conf
 +
 +TKTEXT_CFLAGS  = $(WARNINGS) $(DEBUG)
 +TKTEXT_CFLAGS += -Isrc/tktext/tcl$(TCL_VERSION) -Isrc/tktext/tk$(TCL_VERSION)
-+TKTEXT_CFLAGS += -std=c99 -Wno-maybe-uninitialized -DMODULE_SCOPE=""
++TKTEXT_CFLAGS += -std=c99 -Wno-maybe-uninitialized # -DMODULE_SCOPE=""
 +TKTEXT_CFLAGS += -O -g # NOTE: currently only -O, and with debug code
 +
 +src/tktext/%.o: src/tktext/%.c
@@ -163,7 +163,7 @@ Index: Makefile.conf.darwin
 +
 +TKTEXT_CFLAGS  = $(WARNINGS) $(DEBUG)
 +TKTEXT_CFLAGS += -Isrc/tktext/tcl$(TCL_VERSION) -Isrc/tktext/tk$(TCL_VERSION)
-+TKTEXT_CFLAGS += -std=c99 -Wno-maybe-uninitialized -DMODULE_SCOPE=""
++TKTEXT_CFLAGS += -std=c99 -Wno-maybe-uninitialized # -DMODULE_SCOPE=""
 +TKTEXT_CFLAGS += -O -g # NOTE: currently only -O, and with debug code
 +TKTEXT_CFLAGS += -DTK_LAYOUT_WITH_BASE_CHUNKS=1 -DTK_DRAW_IN_CONTEXT=1
 +
@@ -235,7 +235,7 @@ Index: Makefile.mingw
 +### Rule for compiling TkText sources :
 +TKTEXT_CFLAGS  = $(WARNINGS) $(DEBUG)
 +TKTEXT_CFLAGS += -Isrc/tktext/tcl$(TCL_VERSION) -Isrc/tktext/tk$(TCL_VERSION) -I$(TCL_DIR)/include
-+TKTEXT_CFLAGS += -std=c99 -Wno-maybe-uninitialized -DMODULE_SCOPE=""
++TKTEXT_CFLAGS += -std=c99 -Wno-maybe-uninitialized # -DMODULE_SCOPE=""
 +TKTEXT_CFLAGS += -O # NOTE: currently only -O, and with debug code
 +src/tktext/%.o: src/tktext/%.c
 +	$(CC) $(TKTEXT_CFLAGS) -o $@ -c $<
