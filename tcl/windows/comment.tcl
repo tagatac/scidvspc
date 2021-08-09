@@ -71,6 +71,12 @@ proc ::commenteditor::Open {} {
 
   set mark [frame $w.markFrame]
 
+  set buttonPadding [expr {$::macOS ? 2 : 4}]
+
+  # Magic a frame to house widgets (using "-in") so we can resize/pack nicely
+  frame $w.left
+  pack $w.left -side left -fill both -expand 1
+
   ### NAG frame
 
   frame $w.nf
@@ -116,7 +122,7 @@ proc ::commenteditor::Open {} {
   # --+ BlackCrushing
 
   # label $w.nf.label -font font_Regular -textvar ::tr(AnnotationSymbols)
-  pack $w.nf -side top -pady 2 -padx 5 -fill x 
+  pack $w.nf -in $w.left -side top -pady 2 -padx 5 -fill x 
   #addHorizontalRule $w
 
   button $w.nf.tf.help -textvar ::tr(Help) -font font_Small -pady 1 -command {helpWindow Comment Annotation}
@@ -126,8 +132,8 @@ proc ::commenteditor::Open {} {
   set helpMessage(E,$w.nf.tf.clear) {Clear all symbols for this move}
   # pack $w.nf.label -side top -expand 0
   pack $w.nf.tf -side top -fill x -expand 1
-  pack $w.nf.tf.text -side left -fill x -expand 1 -padx 4
-  pack $w.nf.tf.help $w.nf.tf.clear -side right -padx 4
+  pack $w.nf.tf.text -side left -fill x -expand 1 -padx $buttonPadding
+  pack $w.nf.tf.help $w.nf.tf.clear -side right -padx $buttonPadding
   pack $w.nf.b -side top
 
   # label $w.cflabel -font font_Regular -textvar ::tr(Comment)
@@ -155,7 +161,7 @@ proc ::commenteditor::Open {} {
   bind $w.cf.text <Control-y> {catch {.commentWin.cf.text edit redo} ; break}; # but the others are not
   bind $w.cf.text <Control-r> {catch {.commentWin.cf.text edit redo} ; break}
 
-  pack $w.cf -side top -padx 5 -expand 1 -fill both
+  pack $w.cf -in $w.left -side top -padx 5 -expand 1 -fill both
 
   pack $w.cf.scroll -side right -fill y
   pack $w.cf.text -side left -expand 1 -fill both
@@ -167,7 +173,7 @@ proc ::commenteditor::Open {} {
 
   frame $w.b
   # todo: make this frame more persistant than others
-  pack $w.b -side top -padx 2 -pady 3 -fill x
+  pack $w.b -in $w.left -side top -padx 2 -pady 3 -fill x
 
   button $w.b.hide -image bookmark_down -command {
     set ::commenteditor::showBoard [expr {($::commenteditor::showBoard + 1) % 3}]
@@ -188,13 +194,12 @@ proc ::commenteditor::Open {} {
       focus $w.cf.text"
   set helpMessage(E,$w.b.apply) {Apply Changes}
 
-  frame $w.b.space -width 20
+  # frame $w.b.space -width 20
   dialogbutton $w.b.cancel -textvar ::tr(Cancel) -font font_Small \
-      -command "focus .main
-                destroy .commentWin"
+      -command "focus .main ; destroy .commentWin"
   set helpMessage(E,$w.b.cancel) {Close comment editor window}
 
-  pack $w.b.hide $w.b.clear $w.b.ok $w.b.apply $w.b.cancel -side left -padx 5
+  pack $w.b.hide $w.b.clear $w.b.ok $w.b.apply $w.b.cancel -side left -padx $buttonPadding
 
   ### Insert-mark frame
 
@@ -202,18 +207,13 @@ proc ::commenteditor::Open {} {
   # pack $mark.header -side top -ipady 1 -fill x -padx 1
 
   # pack [frame [set usage $mark.usage]] -side bottom -pady 1 -expand true
-  # pack [label [set usage $usage.text] \
-      -text [string trim $::tr(InsertMarkHelp)] -justify left]
+  # pack [label [set usage $usage.text] -text [string trim $::tr(InsertMarkHelp)] -justify left]
 
   # Subframes for insert board , two button rows and arrow options
-  pack [frame [set colorButtons $mark.colorButtons]] \
-      -side top -pady 1 -anchor n
-  pack [frame [set insertBoard $mark.insertBoard]] \
-      -side top -pady 1
-  pack [frame [set typeButtons $mark.typeButtons]] \
-      -side top -pady 5 -anchor s
-  pack [frame [set arrowOptions $mark.arrowOptions]] \
-      -side top -pady 5 -anchor s
+  pack [frame [set colorButtons $mark.colorButtons]] -side top -pady 1 -anchor n
+  pack [frame [set insertBoard $mark.insertBoard]]   -side top -pady 1
+  pack [frame [set typeButtons $mark.typeButtons]]   -side top -pady 5 -anchor s
+  pack [frame [set arrowOptions $mark.arrowOptions]] -side top -pady 5 -anchor s
 
   ### Color (radio)buttons
 
@@ -317,8 +317,8 @@ proc ::commenteditor::toggleBoard {} {
     if {[winfo exists $w.markFrame.insertBoard.board]} {
       ::board::update $w.markFrame.insertBoard.board [sc_pos board]
     }
-    pack $w.nf -side top -pady 2 -padx 5 -fill x -before $w.cf
-    pack $w.markFrame -side right -fill both -padx 5 -anchor n -before .commentWin.nf
+    pack $w.nf -in $w.left -side top -pady 2 -padx 5 -fill x -before $w.cf
+    pack $w.markFrame -side right -fill both -padx 5 -anchor n
   } else {
     if { $::commenteditor::showBoard == 1} {
       # hide board
