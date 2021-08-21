@@ -466,7 +466,7 @@ namespace eval fics {
     button $w.bottom.buttons.takeback2 -textvar tr(FICSTakeback2) -command {
       ::fics::writechan {takeback 2}
       set ::fics::takebackMoves 2
-      catch { ::commenteditor::appendComment "$::fics::reallogin requests takeback $::fics::playerslastmove" }
+      catch { ::commenteditor::appendComment "$::fics::reallogin requests takeback 2 ($::fics::lastmove)" }
     }
     button $w.bottom.buttons.censor -textvar tr(FICSCensor) -command {
       if {$::fics::opponent != ""} {
