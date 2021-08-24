@@ -541,6 +541,20 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
         set blackSeconds $initialSeconds
         set whiteSeconds $initialSeconds
 
+        # See if we have a TimeControl tag, and figure out the increment
+        set tags [split [sc_game tags get Extra] "\n"]
+        set timecontrol [lsearch -index 0 -inline $tags TimeControl]
+        set timecontrol [string map {\" {}} [lindex $timecontrol 1]]
+        if {$timecontrol == {}} {
+          set incr 0
+        } else {
+          if {[scan $timecontrol "%i+%i" temp incr] != 2} {
+            if {[scan $timecontrol "%i/%i" temp incr] != 2} {
+              set incr 0
+            }
+          }
+        }
+        
 	foreach {i wClk j bClk} $clkData {
           # If a single white | black %clk is missing, end graph here
           if {![string match *.0 $i] || ($j != "" && ![string match *.5 $j])} {
@@ -549,7 +563,7 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
           }
 	  if {[scan $wClk "%f:%f:%f" ho mi sec] != 3} {continue}
 	  set secs [expr {$ho*3600 + $mi*60 + $sec}]
-	  set emt [expr {$whiteSeconds - $secs}]
+	  set emt [expr {$whiteSeconds - $secs + $incr}]
           set whiteSeconds $secs
           # Increments/40-move-reached may give negative values :( So display %emt as zero
           if {$emt < 0} {set emt 0}
@@ -557,7 +571,7 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
 
 	  if {[scan $bClk "%f:%f:%f" ho mi sec] != 3} {continue}
 	  set secs [expr {$ho*3600 + $mi*60 + $sec}]
-	  set emt [expr {$blackSeconds - $secs}]
+	  set emt [expr {$blackSeconds - $secs + $incr}]
           set blackSeconds $secs
           if {$emt < 0} {set emt 0}
           lappend emtValues $j [expr {int($emt)}]
