@@ -549,8 +549,10 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
           set incr 0
         } else {
           if {[scan $timecontrol "%i+%i" temp incr] != 2} {
-            if {[scan $timecontrol "%i/%i" temp incr] != 2} {
-              set incr 0
+            if {[scan $timecontrol "%i:%i" temp incr] != 2} {
+              if {[scan $timecontrol "%i/%i" temp incr] != 2} {
+                set incr 0
+              }
             }
           }
         }
