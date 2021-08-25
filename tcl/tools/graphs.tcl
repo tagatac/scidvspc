@@ -542,17 +542,13 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
         set whiteSeconds $initialSeconds
 
         # See if we have a TimeControl tag, and figure out the increment
-        set tags [split [sc_game tags get Extra] "\n"]
-        set timecontrol [lsearch -index 0 -inline $tags TimeControl]
-        set timecontrol [string map {\" {}} [lindex $timecontrol 1]]
+        set timecontrol [getExtraTag TimeControl]
         if {$timecontrol == {}} {
           set incr 0
         } else {
           if {[scan $timecontrol "%i+%i" temp incr] != 2} {
-            if {[scan $timecontrol "%i:%i" temp incr] != 2} {
-              if {[scan $timecontrol "%i/%i" temp incr] != 2} {
-                set incr 0
-              }
+            if {[scan $timecontrol "%i/%i" temp incr] != 2} {
+              set incr 0
             }
           }
         }

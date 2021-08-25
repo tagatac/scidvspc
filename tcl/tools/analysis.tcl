@@ -1709,44 +1709,6 @@ proc scoreToNag {score} {
   }
 }
 
-### Add an extra tag to the game tags
-#
-# Notably, tag will be Annotator or OpeningBlunder
-
-proc appendTag {tag value} {
-  set s [string trim $value]
-  set tags [sc_game tags get Extra]
-
-  ### See below for the format of tags
-
-  ### The extra tags are very tough on newlines and lists. Prepare for pain
-
-  set found 0
-  set new {}
-
-  foreach {t v} $tags {
-    if {$t == $tag} {
-      set found 1
-      # dont rewrite if value already matches
-      if {[string match "*$value*" $v]} {
-	append new "$t \"$v\"\n"
-      } else {
-	append new "$t \"$v , $s\"\n"
-      }
-    } else {
-      append new "$t \"$v\"\n"
-    }
-  }
-
-  if {!$found} {
-      append new "$tag \"$s\"\n"
-  }
-
-  ### dog know why this is needed S.A
-
-  sc_game tags set -extra [split $new "\n"]
-}
-
 ################################################################################
 #
 ################################################################################

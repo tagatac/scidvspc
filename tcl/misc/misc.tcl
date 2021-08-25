@@ -2,7 +2,7 @@
 ### misc.tcl: part of Scid.
 ### Copyright (C) 2001  Shane Hudson.
 ### Copyright (C) 2007  Pascal Georges
-###
+### Copyright (C) 2021  stevenaaus
 ### Miscellaneous routines called by other Tcl functions
 
 ################################################################################
@@ -640,6 +640,52 @@ namespace eval gameclock {
   }
 }
 
+### Add an extra tag to the game tags (eg another Annotator)
+
+proc appendTag {tag value} {
+  set s [string trim $value]
+  set tags [sc_game tags get Extra]
+
+  set found 0
+  set new {}
+
+  ### Note 'tags get Extra' and 'tags set -extra' deal with different data structures - S.A.
+ 
+  foreach {t v} $tags {
+    if {$t == $tag} {
+      set found 1
+      # dont add new value if value already matches
+      if {[string match "*$value*" $v]} {
+	lappend new "$t \"$v\""
+      } else {
+	lappend new "$t \"$v , $s\""
+      }
+    } else {
+      lappend new "$t \"$v\""
+    }
+  }
+
+  if {!$found} {
+      lappend new "$tag \"$s\""
+  }
+
+  sc_game tags set -extra $new
+
+}
+
+### Extract a specific Extra tag, removing the quotes
+### returns {} if not found
+
+proc getExtraTag {t} {
+  set tags [split [sc_game tags get Extra] "\n"]
+  if {[catch {
+    set result [lsearch -index 0 -inline $tags $t]
+  }]} {
+    return {}
+  }
+  return [string map {\" {}} [lindex $result 1]]
+}
+
 ################################################################################
 # html generation
 ################################################################################
@@ -1193,6 +1239,5 @@ proc gradient {rgb factor {window .}} {
     ### Return the new rgb string
     return $rgb
 }
-
 
 # end of misc.tcl
