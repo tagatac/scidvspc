@@ -1802,6 +1802,9 @@ proc nextgameAutoplay {n} {
 
     if {$annotate(addTag)} {
       appendTag Annotator " $analysis(name$n)"
+      if  {$annotate(Depth)} {
+	appendTag Depth "$annotate(WantedDepth)"
+      }
     }
     set ::wentOutOfBook [sc_pos isAt end]
     updateMenuStates
