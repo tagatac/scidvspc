@@ -12,10 +12,13 @@ set ::tb::online_available [expr ! [catch {
 } ] ]
 
 namespace eval ::tb {
-  set url "http://www.lokasoft.nl/tbweb/tbapi.asp"
-  # proxy configuration
-  set proxyhost "127.0.0.1"
-  set proxyport 3128
+  set url {}
+
+  # Proxy unused for new lichess tablebases
+  # # proxy configuration
+  # set proxyhost "127.0.0.1"
+  # set proxyport 3128
+
   set token {}
   # caching results of queries
   set afterid(update) {}
@@ -187,7 +190,6 @@ proc ::tb::Open {} {
   pack [label $f.results.label -text Results] -side left
 
   if { $::tb::online_available } {
-    ### reactivated with new server: http://www.lokasoft.nl
     checkbutton $f.results.online -text Online -variable tbOnline -relief raised -command ::tb::results -padx 10 -pady 3 -justify right
     pack $f.results.online -side right -padx 6 -pady 2
   }
@@ -553,7 +555,7 @@ if { $::tb::online_available } {
     set ::tb::noresult 0
   }
 
-  proc ::tb::insertNoResult {} {
+  proc ::tb::insertNoResult {{pieceCount {}}} {
     variable noresult
 
     # This proc will be called often, so don't
@@ -562,7 +564,11 @@ if { $::tb::online_available } {
     if {!$noresult} {
       set t .tbWin.pos.text
       ::tb::zeroOnline
-      ::tb::insertText "Online: No result - check piece count is <= 7" tagonline
+      if {$pieceCount == {}} {
+	::tb::insertText "Online: No result" tagonline
+      } else {
+	::tb::insertText "Online: No result. Maximum piece count is 7" tagonline
+      }
       set noresult 1
     }
   }
@@ -583,7 +589,7 @@ if { $::tb::online_available } {
 
     set pieceCount [sc_pos pieceCount]
     if {$pieceCount <= 2 || $pieceCount > 7} {
-      ::tb::insertNoResult
+      ::tb::insertNoResult $pieceCount
       return
     }
 
@@ -748,24 +754,7 @@ regsub  -all {[\"|\"]} $answer_2 "" answer_2
 set x [string first "uci" $answer_2 1]
 set moves_2 [string range $answer_2 [expr {$x - 1}] [expr {[string length $answer_2] -2}]]
 #
-for {set j 0} {$j < 99999} {incr j} {
-set temp_1 [string range $moves_2 $j [expr {$j + 2}] ]
-set temp_2 "\},\{"
-set temp_3 "\} \{"
-if { $temp_1 == $temp_2 } {
-			set moves_2 [string replace $moves_2 $j [expr {$j + 2}]  $temp_3] 
-	}
-}
-#
-# Replace comma with a space between move elements:
- for {set i 0} {$i < 999999} {incr i} {
- set temp_1 [string range $moves_2 $i $i ]
- set temp_2 ","
- set temp_3 " "
- if { $temp_1 == $temp_2 } {
- 	set moves_2 [string replace $moves_2 $i $i  $temp_3] 
- 	}
- }
+set moves_2 [string map {, { }} $moves_2]
 
 #################################################	
 # Count won, cursed win, drawn, blessed loss, loss, :
@@ -897,7 +886,7 @@ foreach move $moves_2 {
 			if {$draw != 1 && $number_moves != "?"} {
 
 			if { $prev_number_moves == 0 } {
-				$t insert end "\n\n$move_header"
+				$t insert end "\n$move_header"
 				set move_summary "$move_sign $number_moves   $move_current "
 				}
 			if { $prev_number_moves != 0} {
@@ -905,7 +894,7 @@ foreach move $moves_2 {
 					set move_summary "$move_summary $move_current"
 					}
 				if {$number_moves != $prev_number_moves} {
-					$t insert end "\n$move_summary" {indent}
+					$t insert end "\n$move_summary" indent
 					set move_summary "$move_sign $number_moves   $move_current"
 					}
 				}
@@ -917,22 +906,22 @@ foreach move $moves_2 {
 		
 			if {$win == 1 && $win_count == $won_no 
 									&& $move_summary != "" && $number_moves != "?" } {
-				$t insert end "\n$move_summary" {indent}
+				$t insert end "\n$move_summary" indent
 				set prev_number_moves 0				
 				}
 			if {$c_win == 1 && $c_win_count  == $cursed_win_no
 									&& $move_summary != "" && $number_moves != "?" } {
-				$t insert end "\n$move_summary" {indent}
+				$t insert end "\n$move_summary" indent
 				set prev_number_moves 0
 				}
 			if {$b_loss == 1 && $b_loss_count  == $blessed_loss_no
 									&& $move_summary != "" && $number_moves != "?" } {
-				$t insert end "\n$move_summary" {indent}
+				$t insert end "\n$move_summary" indent
 				set prev_number_moves 0
 				}	
 			if {$loss == 1 && $loss_count == $loss_no 
 									&& $move_summary != "" && $number_moves != "?" } {
-				$t insert end "\n$move_summary" {indent}
+				$t insert end "\n$move_summary" indent
 				set prev_number_moves 0
 				}	
 
@@ -946,7 +935,7 @@ foreach move $moves_2 {
 			if {$draw != 1 && $number_moves == "?"} {
 			
 			if { $prev_distance_to_zero == 0 } {
-				$t insert end "\n\n$move_header\n(DTZ: 6/7 men)\n" {indent}
+				$t insert end "\n$move_header\n(DTZ: 6/7 men)\n" indent
 				set move_summary "$move_sign  $distance_to_zero   $move_current"
 				}
 			if { $prev_distance_to_zero != 0 } {
@@ -954,7 +943,7 @@ foreach move $moves_2 {
 					set move_summary "$move_summary $move_current"
 					}
 				if {$dtz_temp != $prev_distance_to_zero} {
-					$t insert end "$move_summary\n" {indent}
+					$t insert end "$move_summary\n" indent
 					set move_summary "$move_sign  $distance_to_zero   $move_current"
 					}
 				}		
@@ -968,36 +957,36 @@ foreach move $moves_2 {
 		
 			if {$win == 1 && $win_count == $won_no 
 									&& $move_summary != "" && $number_moves == "?" } {
-				$t insert end "$move_summary" {indent}
+				$t insert end "$move_summary" indent
 				set prev_distance_to_zero 0
 				}
 			if {$c_win == 1 && $c_win_count == $cursed_win_no 
 									&& $move_summary != "" && $number_moves == "?" } {
-				$t insert end "$move_summary" {indent}
+				$t insert end "$move_summary" indent
 				set prev_distance_to_zero 0
 				}
 			if {$b_loss == 1 && $b_loss_count == $blessed_loss_no 
 									&& $move_summary != "" && $number_moves == "?" } {
-				$t insert end "$move_summary" {indent}
+				$t insert end "$move_summary" indent
 				set prev_distance_to_zero 0
 				}
 			if {$loss == 1 && $loss_count == $loss_no 
 									&& $move_summary != "" && $number_moves == "?" } {
-				$t insert end "$move_summary" {indent}
+				$t insert end "$move_summary" indent
 				set prev_distance_to_zero 0
 				}
 
 ## Draw always has DTM = 0 and DTZ = 0, so treat as a special case : 
 
 			if {$draw == 1 && $draw_count == 1 } {
-				$t insert end "\n\n$move_header\n"
+				$t insert end "\n$move_header\n"
 				set move_summary "$move_sign  $number_moves   $move_current"
 				}
 			if {$draw == 1 && $draw_count > 1} {
 				set move_summary "$move_summary $move_current"
 				}
 			if {$draw == 1 && $draw_count == $drawn} {
-				$t insert end "$move_summary" {indent}
+				$t insert end "$move_summary" indent
 				set move_summary ""
 				set number_moves 0
 				set prev_number_moves 0

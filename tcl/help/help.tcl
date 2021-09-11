@@ -3122,7 +3122,7 @@ set helpText(EPD) {<h1>EPD Files</h1>
   <h3>Navigating EPD Files</h3>
   <p>
   To browse the positions in an EPD file, simply click on any position, or use the <b>Control+Down</b>,
-  <b>Control+Up</b>, <b>Control+Home</b> or <b>Control+End</b> keys.
+  <b>Control+Up</b>, <b>Control+Home</b>, <b>Control+End</b> or <b>Control+?</b> keys.
   These commands move to the next/previous or first/last position in the file, discarding any changes to
   the current game and setting the scratch game's start position.
   </p>
@@ -3559,8 +3559,8 @@ set helpText(TB) {<h1>Tablebases</h1>
   window (below the chessboard) will show the relevant information.
   </p>
   <p><i>
-  Scid vs. PC can also lookup results from <url http://www.lokasoft.nl/tbweb.aspx>www.lokasoft.nl</url> ,
-  but this information is not available in Game Information, only in the Tablebase Window, and can cause system lag.
+  Scid vs. PC can also lookup results from Lichess' Syzygy tablebases,
+  but this information is not available in Game Information, only in the tablebase Window, and may cause system lag.
   </i></p>
 
   <h3>Configuration</h3>
@@ -3618,7 +3618,7 @@ set helpText(TB) {<h1>Tablebases</h1>
   <h4>The Results Frame</h4>
   <p>
   Results may be shown from local Nalimov bases (if installed) , or generated from an online lookup to
-  lokasoft.nl.
+  Lichess.
   The results frame is updated whenever the main chessboard changes.
   </p>
   <p>
