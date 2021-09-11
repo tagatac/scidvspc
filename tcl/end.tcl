@@ -1629,6 +1629,7 @@ proc standardShortcuts {w} {
   bind $w <Control-X> ::crosstab::Open
   bind $w <Control-Z> ::tools::graphs::score::Raise
   bind $w <Control-I> importPgnGame
+  bind $w <Control-equal> ::tb::Open
 
   ### These should probably be moved to a different proc/place - S.A.
   # as we are often resolving conflicts *after* calling standardShortcuts

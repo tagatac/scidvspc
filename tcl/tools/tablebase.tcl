@@ -6,7 +6,10 @@ set tbOnline 0
 set tbBoard 0
 set tbStatus ""
 
-set ::tb::online_available [expr ! [catch {package require http} ] ]
+set ::tb::online_available [expr ! [catch {
+  package require http
+  package require tls
+} ] ]
 
 namespace eval ::tb {
   set url "http://www.lokasoft.nl/tbweb/tbapi.asp"
@@ -559,12 +562,15 @@ if { $::tb::online_available } {
     if {!$noresult} {
       set t .tbWin.pos.text
       ::tb::zeroOnline
-      ::tb::insertText "Online: No result" tagonline
+      ::tb::insertText "Online: No result - check piece count is <= 7" tagonline
       set noresult 1
     }
   }
 
   proc ::tb::updateOnline {} {
+  
+    set t .tbWin.pos.text
+    $t configure -state normal
     global env
     variable token
     variable hash
@@ -576,7 +582,7 @@ if { $::tb::online_available } {
     if {! [winfo exists $w]} { return }
 
     set pieceCount [sc_pos pieceCount]
-    if {$pieceCount > 6 || 2 >= $pieceCount} {
+    if {$pieceCount <= 2 || $pieceCount > 7} {
       ::tb::insertNoResult
       return
     }
@@ -595,45 +601,18 @@ if { $::tb::online_available } {
       set token {}
     }
 
-    if {[info exists env(http_proxy)]} {
-      set http_proxy $env(http_proxy)
-      set i [string last : $http_proxy]
-      if {$i >= 0} {
-        set host [string range $http_proxy 0 [expr {$i - 1}]]
-        set port [string range $http_proxy [expr {$i + 1}] end]
-        if {[string is integer -strict $port]} {
-          ::http::config -proxyhost $host -proxyport $port
-        }
-      }
-    }
-
-    append envelope \
-      "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" \
-      "<soapenv:Envelope" \
-      "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" \
-      "    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"" \
-      "    xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"" \
-      "    xmlns:mes=\"http://lokasoft.nl/message/\">\n" \
-      "  <soapenv:Header/>\n" \
-      "  <soapenv:Body>\n" \
-      "    <mes:GetBestMoves soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">\n" \
-      "      <fen xsi:type=\"xsd:string\">$fen</fen>\n" \
-      "    </mes:GetBestMoves>\n" \
-      "  </soapenv:Body>\n" \
-      "</soapenv:Envelope>\n" \
-      ;
-
-    lappend headers \
-      Content-Length [string length $envelope] \
-      SOAPAction http://lokasoft.nl/action/TB2ComObj.GetBestMoves \
-      ;
-
     # Delay the contacting message a bit, this avoids flickering in most cases.
     after cancel $afterid(connect)
     set afterid(connect) [after 500 ::tb::showContactMsg]
+	
+    # replace spaces in FEN with underscores to meet Lichess FEN format:
+    set fen [regsub -all { } $fen "_"]
+
+    set ::tb::url "https://tablebase.lichess.ovh/standard?fen=$fen"
+    http::register https 443 tls::socket
 
     set cmd [list ::tb::httpCallback $fen]
-    if {[catch {::http::geturl $::tb::url -timeout 5000 -headers $headers -query $envelope -command $cmd} ::tb::token]} {
+    if {[catch {::http::geturl $::tb::url -timeout 5000 -command $cmd} ::tb::token]} {
       # Cancel contact message.
       after cancel $afterid(connect)
       set afterid(connect) {}
@@ -643,7 +622,7 @@ if { $::tb::online_available } {
       ::tb::zeroOnline
       ::tb::insertText "No connection." tagonline
     }
-  }
+  } ;# end of proc ::tb::updateOnline
 
   proc ::tb::showContactMsg {} {
     variable afterid
@@ -653,7 +632,7 @@ if { $::tb::online_available } {
   }
 
   proc ::tb::httpCallback { fen token } {
-    # Cancel contact message.
+    # Cancel contact message
     variable afterid
     after cancel $afterid(connect)
     set afterid(connect) {}
@@ -684,17 +663,29 @@ if { $::tb::online_available } {
       }
     }
 
-    if {[string length $err] == 0} {
-      set i [string first "<Result>" $data]
-      set k [string first "</Result>" $data $i]
+    ### MJB Check data is present
+    set t .tbWin.pos.text
+    $t configure -state normal
+    # $t insert end $data
+    
+    ## Construct a usable moves data list "result":
+    #
+    # Get rid of curly braces and square brackets from data returned by Lichess:
+    regsub  -all {[\{|\}]} $data "" data_2
+    regsub  -all {[\[|\]]} $data "" data_2
 
-      if {$i == -1 || $k == -1} {
+    if {[string length $err] == 0} {
+      set i [string first "wdl" $data_2]
+      set k [string first "dtz" $data_2]
+	  set m [string first "dtm" $data_2]
+			
+      if {$i == -1 || $k == -1 || $m == -1} {
         set err "Bad return value"
       } else {
         variable hash
         variable history
 
-        set result [string trim [string range $data [expr {$i + 8}] [expr {$k - 1}]]]
+		set result $data_2
 
         # cache the result, but not more than 500 queries
         if {[llength $history] > 500} {
@@ -707,26 +698,26 @@ if { $::tb::online_available } {
     }
 
     return [list $err $result]
-  }
+	
+  } ;# end of procgetResult
 
   proc ::tb::showResult { fen err result } {
     ::tb::zeroOnline
     set t .tbWin.pos.text
     $t configure -state normal
-    # $t insert end \n tagonline
 
     if {[string length $err]} {
       $t insert end "Online: $err" tagonline
-    } else {
+    } else { 	
       set empty 1
-
+	# bookmark 1
+	
       foreach l [split $result "\n"] {
         if {![string match {*\?\?\?*} $l]} {
           if {$empty} {
-            $t insert end "All results\n" tagonline
+          # $t insert end "All results; empty is $empty" tagonline
             set empty 0
           }
-          $t insert end "  $l\n" tagonline
         }
       }
 
@@ -737,11 +728,307 @@ if { $::tb::online_available } {
         }
         $t insert end "Online: No result" tagonline
       }
-    }
 
-    $t configure -state disabled
-  }
+###############################################################
+# Process results (Michael Brown)
+###############################################################
+# Process the data in Lichess answer:
+#
+# Second version for moves data
+#
+# $t insert end "Result $result\n\n"
+set answer_2 $result
+# $t insert end $answer_2\n\n
+
+# Get rid of square brackets and quotation marks from data returned by Lichess:
+regsub  -all {[\[|\]]} $answer_2 "" answer_2
+regsub  -all {[\"|\"]} $answer_2 "" answer_2
+
+# Get string excluding best move data:
+set x [string first "uci" $answer_2 1]
+set moves_2 [string range $answer_2 [expr {$x - 1}] [expr {[string length $answer_2] -2}]]
+#
+for {set j 0} {$j < 99999} {incr j} {
+set temp_1 [string range $moves_2 $j [expr {$j + 2}] ]
+set temp_2 "\},\{"
+set temp_3 "\} \{"
+if { $temp_1 == $temp_2 } {
+			set moves_2 [string replace $moves_2 $j [expr {$j + 2}]  $temp_3] 
+	}
 }
+#
+# Replace comma with a space between move elements:
+ for {set i 0} {$i < 999999} {incr i} {
+ set temp_1 [string range $moves_2 $i $i ]
+ set temp_2 ","
+ set temp_3 " "
+ if { $temp_1 == $temp_2 } {
+ 	set moves_2 [string replace $moves_2 $i $i  $temp_3] 
+ 	}
+ }
+
+#################################################	
+# Count won, cursed win, drawn, blessed loss, loss, :
+#
+# new
+set won_no 0
+set drawn 0
+set cursed_win_no 0
+set blessed_loss_no 0
+set loss_no 0
+foreach move $moves_2 {
+	foreach move_element $move {
+		switch -glob $move_element {
+			{wdl:-2} 		{set won_no [expr {$won_no + 1}]}
+			{wdl:-1} 		{set cursed_win_no [expr {$cursed_win_no + 1}]}
+			{wdl:0}			{set drawn  [expr {$drawn + 1}]}
+			{wdl:1}  		{set blessed_loss_no [expr {$blessed_loss_no + 1}]}
+			{wdl:2} 			{set loss_no  [expr {$loss_no + 1}]}	
+		}
+	}
+}
+
+if {$won_no > 0} {
+	$t insert end "Won $won_no\n"
+	}
+if {$cursed_win_no > 0} {
+	$t insert end "Cursed Win $cursed_win_no\n"
+	}
+if {$drawn > 0} {
+	$t insert end "Drawn $drawn\n"
+	}
+if {$blessed_loss_no > 0} {
+	$t insert end "Blessed Loss $blessed_loss_no\n"
+	}
+if {$loss_no > 0} {
+	$t insert end "Loss $loss_no\n"
+	}
+	
+# $t insert end "Won $won_no  Cursed Win $cursed_win_no  Drawn $drawn  Blessed Loss $blessed_loss_no  Loss $loss_no"
+
+###############################################################
+#
+# All Moves
+#
+set distance_to_zero 0
+set dtz_temp 0
+set number_moves 0
+set prev_number_moves 0
+set prev_distance_to_zero 0
+set zero ""
+set win 0
+set win_count 0
+set c_win 0
+set c_win_count 0
+set draw 0
+set draw_count 0
+set loss 0
+set loss_count 0
+set b_loss 0
+set b_loss_count 0
+set move_current ""
+set move_summary ""
+set move_header ""
+set move_sign ""
+
+foreach move $moves_2 {
+	foreach move_element $move {
+		switch -glob $move_element {
+		{wdl:-2}		{set win 1 ; set win_count [expr {$win_count + 1}] ;
+								set move_header "Winning moves"
+								set move_sign " +"}
+		{wdl:-1}		{set c_win 1 ; set c_win_count [expr {$c_win_count + 1}] ;
+								set move_header "Cursed Win moves\n(distance to 0 >50)"
+								set move_sign " ="}
+		{wdl:0}			{set draw 1 ; set draw_count [expr {$draw_count + 1}] ;
+								set move_header "Drawing moves"
+								set move_sign " ="}
+		{wdl:2}			{set loss 1 ; set loss_count [expr {$loss_count + 1}]
+								set move_header "Losing moves"
+								set move_sign " -"}
+		{wdl:1}			{set b_loss 1 ; set b_loss_count [expr {$b_loss_count + 1}] ;
+								set move_header "Blessed Loss moves\n(distance to 0 >50)"
+								set move_sign " ="}	
+		{dtm:*}			{set number_moves \
+									[string range $move_element [expr {[string first ":" $move_element] + 1}] \
+									[string length $move_element] ] \
+									}	
+		{san:*} 		{set move_current \
+									[string range $move_element [expr {[string first ":" $move_element] + 1}] \
+									[string length $move_element] ] \
+									}
+		{dtz:*} 			{set distance_to_zero \
+									[ expr { round ( double (
+									[string range $move_element [expr {[string first ":" $move_element] + 1}] \
+									[string length $move_element] ] \
+									) / 2) } ]
+									}
+		{zeroing:*} 		{set zero \
+									[string range $move_element [expr {[string first ":" $move_element] + 1}] \
+									[string length $move_element] ] \
+									}									
+		
+		} ;# end of switch
+		
+	} ;# end of move element loop
+			
+### General data processing ###	
+
+			if {$zero == "true"} {
+									set distance_to_zero 0
+										}
+			if {$distance_to_zero < 0} {
+									set distance_to_zero [expr {$distance_to_zero / -1}]
+										}								
+			if {$number_moves == "null"} {
+										set number_moves "?"
+										}
+			if {$draw == 1} { set number_moves "?"
+										}
+			if { $number_moves != "?" && $number_moves < 0} {
+										set number_moves [expr {$number_moves * -1 +1}]
+										}
+			if { $number_moves != "?"} {
+ 										set number_moves [expr {round(double($number_moves) / 2)}]
+										}
+
+### Section 1 - Processing for 5 men and fewer where DTM is not "null" and not a draw:
+										
+			if {$draw != 1 && $number_moves != "?"} {
+
+			if { $prev_number_moves == 0 } {
+				$t insert end "\n\n$move_header"
+				set move_summary "$move_sign $number_moves   $move_current "
+				}
+			if { $prev_number_moves != 0} {
+				if {$number_moves == $prev_number_moves} {
+					set move_summary "$move_summary $move_current"
+					}
+				if {$number_moves != $prev_number_moves} {
+					$t insert end "\n$move_summary" {indent}
+					set move_summary "$move_sign $number_moves   $move_current"
+					}
+				}
+			set prev_number_moves $number_moves
+			set number_moves 0		
+			}
+		
+# Display final move if moves exceed 1 :
+		
+			if {$win == 1 && $win_count == $won_no 
+									&& $move_summary != "" && $number_moves != "?" } {
+				$t insert end "\n$move_summary" {indent}
+				set prev_number_moves 0				
+				}
+			if {$c_win == 1 && $c_win_count  == $cursed_win_no
+									&& $move_summary != "" && $number_moves != "?" } {
+				$t insert end "\n$move_summary" {indent}
+				set prev_number_moves 0
+				}
+			if {$b_loss == 1 && $b_loss_count  == $blessed_loss_no
+									&& $move_summary != "" && $number_moves != "?" } {
+				$t insert end "\n$move_summary" {indent}
+				set prev_number_moves 0
+				}	
+			if {$loss == 1 && $loss_count == $loss_no 
+									&& $move_summary != "" && $number_moves != "?" } {
+				$t insert end "\n$move_summary" {indent}
+				set prev_number_moves 0
+				}	
+
+### Section 2 - Processing for 6 or 7 men where DTM is "null"
+
+			
+#			This variable is necessary because the following process will not work 
+#			if a move has "zeroing" and so $distance_to_zero is 0. 			
+			set dtz_temp [expr {$distance_to_zero + 1}]
+
+			if {$draw != 1 && $number_moves == "?"} {
+			
+			if { $prev_distance_to_zero == 0 } {
+				$t insert end "\n\n$move_header\n(DTZ: 6/7 men)\n" {indent}
+				set move_summary "$move_sign  $distance_to_zero   $move_current"
+				}
+			if { $prev_distance_to_zero != 0 } {
+				if {$dtz_temp == $prev_distance_to_zero} {
+					set move_summary "$move_summary $move_current"
+					}
+				if {$dtz_temp != $prev_distance_to_zero} {
+					$t insert end "$move_summary\n" {indent}
+					set move_summary "$move_sign  $distance_to_zero   $move_current"
+					}
+				}		
+					
+			set prev_distance_to_zero $dtz_temp
+			set distance_to_zero 0
+			set dtz_temp 0
+			}
+		
+# Display final move if moves exceed 1 :
+		
+			if {$win == 1 && $win_count == $won_no 
+									&& $move_summary != "" && $number_moves == "?" } {
+				$t insert end "$move_summary" {indent}
+				set prev_distance_to_zero 0
+				}
+			if {$c_win == 1 && $c_win_count == $cursed_win_no 
+									&& $move_summary != "" && $number_moves == "?" } {
+				$t insert end "$move_summary" {indent}
+				set prev_distance_to_zero 0
+				}
+			if {$b_loss == 1 && $b_loss_count == $blessed_loss_no 
+									&& $move_summary != "" && $number_moves == "?" } {
+				$t insert end "$move_summary" {indent}
+				set prev_distance_to_zero 0
+				}
+			if {$loss == 1 && $loss_count == $loss_no 
+									&& $move_summary != "" && $number_moves == "?" } {
+				$t insert end "$move_summary" {indent}
+				set prev_distance_to_zero 0
+				}
+
+## Draw always has DTM = 0 and DTZ = 0, so treat as a special case : 
+
+			if {$draw == 1 && $draw_count == 1 } {
+				$t insert end "\n\n$move_header\n"
+				set move_summary "$move_sign  $number_moves   $move_current"
+				}
+			if {$draw == 1 && $draw_count > 1} {
+				set move_summary "$move_summary $move_current"
+				}
+			if {$draw == 1 && $draw_count == $drawn} {
+				$t insert end "$move_summary" {indent}
+				set move_summary ""
+				set number_moves 0
+				set prev_number_moves 0
+				}
+
+			# end of move update for the move element
+			
+# Clean up after move processing
+
+			set win 0
+			set c_win 0
+			set draw 0
+			set b_loss 0
+			set loss 0
+			set distance_to_zero 0
+			set move_current ""
+			set move_sign ""
+			set move_header ""
+
+} ;# end of move loop
+#########################################################	
+	
+    } ;# end of bookmark 1 section showing results in TB window
+
+    $t configure -state disabled	
+	
+  } ;# end of proc ::tb::showResult
+  
+} ;# end of if ::tb::online_available
+
+############################################################################
 
 # ::tb::random
 #   Sets up a random position with the material of the tablebase
