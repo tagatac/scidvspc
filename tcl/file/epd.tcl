@@ -236,6 +236,7 @@ namespace eval epd {
 
     bind $w <Control-Down> "::epd::nextEpd $id"
     bind $w <Control-Up> "::epd::prevEpd $id"
+    bind $w <Control-question> "::epd::randomEpd $id"
     bind $w <Control-P> "::epd::pasteAnalysis $id ; break"
     bind $w <Control-S> "::epd::sortEpdText $id"
     bind $w <Control-A> "::epd::addPosition $id"
@@ -499,6 +500,17 @@ namespace eval epd {
       $w.lb see $idx
       loadEpd $id
     }
+  }
+
+  proc randomEpd {id} {
+    if { [sc_epd size $id] == 0 } { return }
+    set w .epd$id
+
+    set idx [expr {(int (rand() * [$w.lb index end]))}]
+    $w.lb selection clear 0 end
+    $w.lb selection set $idx
+    $w.lb see $idx
+    loadEpd $id
   }
 
   ################################################################################
