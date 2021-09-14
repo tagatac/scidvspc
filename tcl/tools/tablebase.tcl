@@ -681,7 +681,7 @@ if { $::tb::online_available } {
     regsub  -all {[\[|\]]} $data "" data_2
 
     if {[string length $err] == 0} {
-      set i [string first "wdl" $data_2]
+      set i [string first "category" $data_2]
       set k [string first "dtz" $data_2]
 	  set m [string first "dtm" $data_2]
 			
@@ -765,14 +765,16 @@ set drawn 0
 set cursed_win_no 0
 set blessed_loss_no 0
 set loss_no 0
+# NB Lichess result is shown from the view of the opposing colour, so this has been inverted in order
+# to conform to the ScidvsPC convention of showing the result from the perspective of the colour to move.
 foreach move $moves_2 {
 	foreach move_element $move {
 		switch -glob $move_element {
-			{wdl:-2} 		{set won_no [expr {$won_no + 1}]}
-			{wdl:-1} 		{set cursed_win_no [expr {$cursed_win_no + 1}]}
-			{wdl:0}			{set drawn  [expr {$drawn + 1}]}
-			{wdl:1}  		{set blessed_loss_no [expr {$blessed_loss_no + 1}]}
-			{wdl:2} 			{set loss_no  [expr {$loss_no + 1}]}	
+			{category:loss} 					{set won_no [expr {$won_no + 1}]}
+			{category:blessed-loss} 		{set cursed_win_no [expr {$cursed_win_no + 1}]}
+			{category:draw}				{set drawn  [expr {$drawn + 1}]}
+			{category:cursed-win}  	{set blessed_loss_no [expr {$blessed_loss_no + 1}]}			
+			{category:win} 				{set loss_no  [expr {$loss_no + 1}]}
 		}
 	}
 }
@@ -819,25 +821,26 @@ set move_current ""
 set move_summary ""
 set move_header ""
 set move_sign ""
-
+# NB Lichess result is shown from the view of the opposing colour, so this has been inverted in order
+# to conform to the ScidvsPC convention of showing the result from the perspective of the colour to move.
 foreach move $moves_2 {
 	foreach move_element $move {
 		switch -glob $move_element {
-		{wdl:-2}		{set win 1 ; set win_count [expr {$win_count + 1}] ;
-								set move_header "Winning moves"
-								set move_sign " +"}
-		{wdl:-1}		{set c_win 1 ; set c_win_count [expr {$c_win_count + 1}] ;
-								set move_header "Cursed Win moves\n(distance to 0 >50)"
-								set move_sign " ="}
-		{wdl:0}			{set draw 1 ; set draw_count [expr {$draw_count + 1}] ;
-								set move_header "Drawing moves"
-								set move_sign " ="}
-		{wdl:2}			{set loss 1 ; set loss_count [expr {$loss_count + 1}]
-								set move_header "Losing moves"
-								set move_sign " -"}
-		{wdl:1}			{set b_loss 1 ; set b_loss_count [expr {$b_loss_count + 1}] ;
-								set move_header "Blessed Loss moves\n(distance to 0 >50)"
-								set move_sign " ="}	
+		{category:loss}					{set win 1 ; set win_count [expr {$win_count + 1}] ;
+													set move_header "Winning moves"
+													set move_sign "+"}
+		{category:blessed-loss}		{set c_win 1 ; set c_win_count [expr {$c_win_count + 1}] ;
+													set move_header "Cursed Win moves\n(distance to zero > 50 moves)"
+													set move_sign "="}
+		{category:draw}				{set draw 1 ; set draw_count [expr {$draw_count + 1}] ;
+													set move_header "Draw moves"
+													set move_sign "="}
+		{category:win}					{set loss 1 ; set loss_count [expr {$loss_count + 1}]
+													set move_header "Losing moves"
+													set move_sign "-"}
+		{category:cursed-win}		{set b_loss 1 ; set b_loss_count [expr {$b_loss_count + 1}] ;
+													set move_header "Blessed Loss moves\n(distance to zero > 50 moves)"
+													set move_sign "="}	
 		{dtm:*}			{set number_moves \
 									[string range $move_element [expr {[string first ":" $move_element] + 1}] \
 									[string length $move_element] ] \
