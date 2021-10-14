@@ -3541,15 +3541,15 @@ set helpTitle(TB) "Tablebases"
 set helpText(TB) {<h1>Tablebases</h1>
 
   <p>
-  <i>A Tablebase is a file containing the </i><b>perfect result
-  information</b><i> about all positions of a particular material setup,
-  such as King and Rook versus King and Pawn. Tablebases for all
-  positions up to five pieces (including the Kings) have been
-  generated, and some simple six piece tablebases are also available.</i>
+  A Tablebase is a file containing the perfect result information about all positions of a particular material setup,
+  such as King and Rook versus King and Pawn. 
   </p>
   <p>
-  Scid uses <b>Nalimov</b> tablebases, which are also used by many
-  chess engines. The filenames often end with the suffix <b>.nbw.emd</b>
+  Scid vs. PC can use <b>Nalimov</b> and (online) <b>Lichess</b> and <b>Shredder</b> tablebases.
+  <i>Online support requires Tcl packages http and tls.</i>
+  </p>
+  <p>
+  Nalimov bases are used by many chess engines. The filenames often end with the suffix <b>.nbw.emd</b>
   or <b>.nbb.emd</b> (for <b>N</b>alimov <b>B</b>ases <b>W</b>hite/<b>B</b>lack).
   All 3, 4 and 5 piece Nalimov tablebases can be
   used in Scid.
@@ -3558,14 +3558,10 @@ set helpText(TB) {<h1>Tablebases</h1>
   When a position found in a tablebase file is reached, the Game Information
   window (below the chessboard) will show the relevant information.
   </p>
-  <p><i>
-  Scid vs. PC can also lookup results from Lichess' Syzygy tablebases,
-  but this information is not available in Game Information, only in the tablebase Window, and may cause system lag.
-  </i></p>
 
   <h3>Configuration</h3>
   <p>
-  To load the tablebases, select their directory(s) via
+  To load Nalimov tablebases, select their directory(s) via
   the <b>Options--<gt>Tablebase Directory</b> menu item.
   Up to 4 directories may be selected.
   </p>
@@ -3575,6 +3571,9 @@ set helpText(TB) {<h1>Tablebases</h1>
   gives the most information, but is often much slower than
   <b>Result Only</b>.
   </p>
+  <p><i>
+  Online tablebase infos (Shredder and Lichess) are not available in the Game Info window.
+  <i></p>
 
   <h3>The Tablebase Window</h3>
   <p>
@@ -3584,7 +3583,7 @@ set helpText(TB) {<h1>Tablebases</h1>
   of all legal moves from the current position.
   </p>
   <p>
-  The window has two main parts. The Summary Frame (on the left) shows
+  If Nalimov is selected, the Summary Frame (on the left) shows
   which tablebases Scid has found, and a summary for each
   tablebase. The Results Frame (on the right) shows optimal results for
   all moves from the current position displayed in the main window.
@@ -3618,7 +3617,7 @@ set helpText(TB) {<h1>Tablebases</h1>
   <h4>The Results Frame</h4>
   <p>
   Results may be shown from local Nalimov bases (if installed) , or generated from an online lookup to
-  Lichess.
+  Lichess or Shredder.
   The results frame is updated whenever the main chessboard changes.
   </p>
   <p>
@@ -3665,7 +3664,7 @@ and (previously)
 <url http://www.playwitharena.de/download/4-pieces-tbs.zip>single file</url>
   </p>
 
-  <p><footer>Updated: Scid vs. PC 4.12, March 2014</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.23, Oct 2021</footer></p>
 }
 
 set helpTitle(Bookmarks) "Bookmarks"

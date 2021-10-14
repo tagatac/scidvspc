@@ -2,13 +2,12 @@
 ###   Tablebase display routines for Scid.
 
 set tbTraining 0
-set tbOnline Nalimov
 set tbBoard 0
 set tbStatus ""
 
 set ::tb::online_available [expr ! [catch {
   package require http
-  package require tls
+  ::splash::add "tls package [package require tls] found"
 } ] ]
 
 namespace eval ::tb {
@@ -129,7 +128,7 @@ proc ::tb::isopen {} {
 }
 
 proc ::tb::Open {} {
-  global tbInfo
+  global tbInfo tbOnline
 
   set w .tbWin
   if {[winfo exists $w]} {
@@ -190,12 +189,13 @@ proc ::tb::Open {} {
   pack [label $f.results.label -text Results] -side left -padx 30
 
   if { $::tb::online_available } {
-    menubutton $f.results.online -text Nalimov -menu $f.results.online.menu -relief raised -indicatoron 1
+    menubutton $f.results.online -text $tbOnline -menu $f.results.online.menu -relief raised -indicatoron 1
     menu $f.results.online.menu -tearoff 0
-    foreach i {Nalimov Lichess Shredder} {
+    foreach i {Nalimov Shredder Lichess} {
       $f.results.online.menu add command -label $i -command "
         $f.results.online configure -text $i
         set tbOnline $i 
+        update_tbWidgets $w $i
         ::tb::results
       "
     }
@@ -245,10 +245,24 @@ proc ::tb::Open {} {
   ::tb::section
   ::tb::summary
   ::tb::results
-
+  if {$::tb::online_available} {
+    update_tbWidgets $w $tbOnline
+  } else {
+    set tbOnline Nalimov
+  }
   update
   catch {wm state $w normal}
   ::createToplevelFinalize $w
+}
+
+proc update_tbWidgets {w tb} {
+  if {$tb != "Nalimov"} {
+    pack forget $w.info
+    pack forget $w.b.random
+  } else {
+    pack $w.info -side left -fill y -before $w.pos
+    pack $w.b.random -side left -padx 8 -pady 2 -after $w.b.training
+  }
 }
 
 ###  Toggle the results board.
@@ -524,7 +538,7 @@ proc ::tb::results {} {
     ::tb::clearText $t
     ::tb::insertText "\n (Training mode; results are hidden)"
   } else {
-    if { $tbOnline == "Lichess" || $::tbOnline == "Shredder"} {
+    if { $tbOnline == "Lichess" || $tbOnline == "Shredder"} {
       if {!$::tb::noresult} {
         ::tb::clearText $t
       }
@@ -579,11 +593,11 @@ if { $::tb::online_available } {
       if {$pieceCount == {}} {
 	::tb::insertText "Online: No result" tagonline
       } else {
-			if {[string first "Lichess" $::tbOnline] != -1}  {   
-			::tb::insertText "Online: No result. Maximum piece count for Lichess is 7" tagonline
+			if {$::tbOnline == "Lichess"}  {   
+			::tb::insertText "Online: No result\nMaximum piece count for Lichess is 7" tagonline
 			}
-			if {[string first "Shredder" $::tbOnline] != -1}  {   
-			::tb::insertText "Online: No result. Maximum piece count for Shredder is 6" tagonline
+			if {$::tbOnline == "Shredder"}  {   
+			::tb::insertText "Online: No result\nMaximum piece count for Shredder is 6" tagonline
 			}	
 		}
       set noresult 1
@@ -606,13 +620,13 @@ if { $::tb::online_available } {
 
     set pieceCount [sc_pos pieceCount]
 
-	if {[string first "Lichess" $::tbOnline] != -1} {
+	if {$::tbOnline == "Lichess"}  {   
 		if {$pieceCount <= 2 || $pieceCount > 7} {
       ::tb::insertNoResult $pieceCount
 	  return
 		}
 	} 
-	if {[string first "Shredder" $::tbOnline] != -1} {   
+	if {$::tbOnline == "Shredder"}  {   
 		if {$pieceCount <= 2 || $pieceCount > 6} {
       ::tb::insertNoResult $pieceCount
       return
@@ -643,10 +657,10 @@ if { $::tb::online_available } {
 
 # $t insert end $::tbOnline
 
-	if {[string first "Shredder" $::tbOnline] != -1} {
-	set ::tb::url https://www.shredderchess.com/online/playshredder/fetch.php?action=egtb&fen=$fen
+	if {$::tbOnline == "Shredder"}  {   
+	set ::tb::url "https://www.shredderchess.com/online/playshredder/fetch.php?action=egtb&fen=$fen"
 	}
-	if {[string first "Lichess" $::tbOnline] != -1} {
+	if {$::tbOnline == "Lichess"}  {   
 	set ::tb::url "https://tablebase.lichess.ovh/standard?fen=$fen"
 	}
 	
@@ -708,12 +722,12 @@ if { $::tb::online_available } {
     }
    
     if {[string length $err] == 0} {
-		if {[string first "Lichess" $::tbOnline] != -1} {   
+		if {$::tbOnline == "Lichess"}  {   
 			set i [string first "category" $data]
 			set k [string first "dtz" $data]
 			set m [string first "dtm" $data]
 		}	
-		if {[string first "Shredder" $::tbOnline] != -1}  {   
+		if {$::tbOnline == "Shredder"}  {   
 			set i [string first "value" $data]
 			set k [string first "NEXTCOLOR" $data]
 			set m 1 ;# There are no other special characteristics in the Shredder data
@@ -774,13 +788,11 @@ if { $::tb::online_available } {
 ###############################################################
 # Process the data in the Shredder answer:
 
-if {[string first "Shredder" $::tbOnline] != -1} {
+if {$::tbOnline == "Shredder"}  {   
 
 # NB Don't change the following because it splits the result on an invisible CRLF  
-# set test_result [split $answer {\n}] ;# does not work
-set result [split $result {
-}]
-#
+set result [split $result "\n"]
+
 if {[string first "_w_" $fen 0] != -1} {
 	set turn "w"
 	} else {
@@ -796,11 +808,7 @@ set result_stat [string range $result [expr {[string first "NEXTCOLOR" $result] 
 set result [string range $result [expr {[string first "NEXTCOLOR" $result] + 10}] [expr {[string length $result] - 3}] ]
 }			
  
-if {[string first "Not found" $result] != -1} {
-	set not_found 1
-	} else {
-	set not_found 0
-	}
+set not_found [expr {$result == "Not found"}]
  
 # Eliminate info only non-moves:
 set count -1
@@ -967,13 +975,13 @@ foreach move $result_stat {
 # Stastics Output:
 if {$not_found == 0} {
 if {$w_won_no > 0} {
-	$t insert end "Won $w_won_no\n"
+	$t insert end "Won   $w_won_no\n"
 	}
 if {$w_draw_no > 0} {
 	$t insert end "Drawn $w_draw_no\n"
 	}
 if {$w_loss_no > 0} {
-	$t insert end "Loss $w_loss_no\n"
+	$t insert end "Loss  $w_loss_no\n"
 	}
 } else {
 $t insert end "Online: Result(s) not found\n"
@@ -1161,9 +1169,6 @@ if {[string first "=" $move_numbers] == -1} {
 		}
 			
 ### SAN Move Conversion from square numbers to SAN notation:
-#
-# Board square numbers, per Shredder, and SAN equivalent:
-set trans_move [list "00:a1 01:b1 02:c1 03:d1 04:e1 05:f1 06:g1 07:h1 08:a2 09:b2 10:c2 11:d2 12:e2 13:f2 14:g2 15:h2 16:a3 17:b3 18:c3 19:d3 20:e3 21:f3 22:g3 23:h3 24:a4 25:b4 26:c4 27:d4 28:e4 29:f4 30:g4 31:h4 32:a5 33:b5 34:c5 35:d5 36:e5 37:f5 38:g5 39:h5 40:a6 41:b6 42:c6 43:d6 44:e6 45:f6 46:g6 47:h6 48:a7 49:b7 50:c7 51:d7 52:e7 53:f7 54:g7 55:h7 56:a8 57:b8 58:c8 59:d8 60:e8 61:f8 62:g8 63:h8"]
 
 # Move from
 if {$move_from < 10} {
@@ -1190,31 +1195,14 @@ set san_1 ""
 set temp ""
 set temp_1 ""
 set temp_p ""
-if {[string first "=" move_to] == -1} {
-	if {$move_to < 10 && [string first "=" $trans_move] == -1} {
-	set temp "0$move_to:"
-	set san_2 [string range $trans_move \
-										[expr {[string first $temp $trans_move] + 3}] \
-										[expr {[string first $temp $trans_move] + 4}] ]
-	} else {
-	set san_2 [string range $trans_move \
-										[expr {[string first $move_to $trans_move] + 3}] \
-										[expr {[string first $move_to $trans_move] + 4}] ]
-	}
-}
-if {[string first "=" $move_to] != -1} {
-set temp [string range $move_to 0 [expr {[string first "=" $move_to] -1}] ]
-set temp_p [string range $move_to [string first "=" $move_to] [expr {[string first "=" $move_to] +1}] ]
-	if {$temp < 10} {
-		set temp_1 "0$temp:"
-		set san_2 [concat [string range $trans_move \
-										[expr {[string first $temp_1 $trans_move] + 3}] \
-										[expr {[string first $temp_1 $trans_move] + 4}] ]$temp_p]
-	} else {
-	set san_2 [concat [string range $trans_move \
-										[expr {[string first $temp $trans_move] + 3}] \
-										[expr {[string first $temp $trans_move] + 4}] ]$temp_p]
-	}
+
+if {[string first "=" $move_to] == -1} {
+    set san_2 [lindex $::board::squareIndex $move_to]
+} else {
+    # Promotion
+    set temp [string range $move_to 0 [expr {[string first "=" $move_to] -1}] ]
+    set temp_p [string range $move_to [string first "=" $move_to] [expr {[string first "=" $move_to] +1}] ]
+    set san_2 "[lindex $::board::squareIndex $temp]$temp_p"
 }
 
 set san_move "$san_1$san_2"		
@@ -1227,15 +1215,7 @@ set move_san "$move  ,$san_move,"
 set san [string range $move_san [expr {[string first "," $move_san] +1}] [expr {[string last "," $move_san] -1}] ]
 # Get the move from square number:
 set move_from [string range $move_san 0 [expr {[string first "-" $move_san] -1}] ] 
-if {$move_from < 10} {
-	set move_temp "0$move_from:" 
-	} else {
-	set move_temp "$move_from:"
-	}
-
-set move_from_square [string range $trans_move \
-			[expr {[string first $move_temp $trans_move] + 3}] \
-			[expr {[string first $move_temp $trans_move] + 4}] ]
+set move_from_square [lindex $::board::squareIndex $move_from]
 
 ## Next few lines are connected with making move on board to see if there is check
 # Change normal SAN format for pawn move back to P or p
@@ -1323,13 +1303,10 @@ if {[string first "\{" $temp_piece_1] != -1} {
 set temp_piece_1 [string range $result [expr {[string first $temp $result] - 1}] [expr {[string first $temp $result] - 1}] ]
 }
 # SAN square of first piece:
-if {$temp_piece_1 < 10} {
-	set san_square_1 [string range  $trans_move [expr {[string first "0$temp_piece_1" $trans_move] + 3}] \
-																		[expr {[string first "0$temp_piece_1" $trans_move] + 4}]	]
-	} else {
-	set san_square_1 [string range  $trans_move [expr {[string first "$temp_piece_1" $trans_move] + 3}] \
-																		[expr {[string first "$temp_piece_1" $trans_move] + 4}] ]	
-	}
+# S.A. handle blank $temp_piece_1
+if {$temp_piece_1 == ""} {set temp_piece_1 0}
+set san_square_1 [lindex $::board::squareIndex $temp_piece_1]
+
 # piece (first):
 if {$temp_piece_1 < 10} {
 set temp_piece_1 [string index $piece_list [expr {[string first "0$temp_piece_1" $piece_list] + 3}] ] 
@@ -1343,13 +1320,9 @@ if {[string first "\{" $temp_piece_2] != -1} {
 set temp_piece_2 [string range $result [expr {[string last $temp $result] - 1}] [expr {[string last $temp $result] - 1}] ]
 }
 # SAN square of second piece
-if {$temp_piece_2 < 10} {
-	set san_square_2 [string range  $trans_move [expr {[string first "0$temp_piece_2" $trans_move] + 3}] \
-																		[expr {[string first "0$temp_piece_2" $trans_move] + 4}]	]
-	} else {
-	set san_square_2 [string range  $trans_move [expr {[string first "$temp_piece_2" $trans_move] + 3}] \
-																		[expr {[string first "$temp_piece_2" $trans_move] + 4}] ]		
-			}
+if {$temp_piece_2 == ""} {set temp_piece_2 0}
+set san_square_2 [lindex $::board::squareIndex $temp_piece_2]
+
 # piece (second):
 if {$temp_piece_2 < 10} {
 set temp_piece_2 [string index $piece_list [expr {[string first "0$temp_piece_2" $piece_list] + 3}] ] 
@@ -1538,7 +1511,7 @@ if {$fen_6 != ""} {
 set fen_6 [concat [string range $fen_6 0 [expr {[string last  "/" $fen_6] - 1}] ] $turn_next " - -"] 
 }
 
-# Verifying the in check status; this code is based on Steve Austin's suggestion:
+# Verifying the in check status; this code is based on Steve Austin's (!!! - S.A) suggestion:
 set isCheck 0
 if {$fen_6 != ""} { 
  sc_game push
@@ -1689,7 +1662,7 @@ foreach move $moves_2 {
 }
 # $t insert end "Lichess\n"
 if {$won_no > 0} {
-	$t insert end "Won $won_no\n"
+	$t insert end "Won   $won_no\n"
 	}
 if {$cursed_win_no > 0} {
 	$t insert end "Cursed Win $cursed_win_no\n"
@@ -1701,7 +1674,7 @@ if {$blessed_loss_no > 0} {
 	$t insert end "Blessed Loss $blessed_loss_no\n"
 	}
 if {$loss_no > 0} {
-	$t insert end "Loss $loss_no\n"
+	$t insert end "Loss  $loss_no\n"
 	}
 
 if {$pieceCount > 5} {

@@ -202,6 +202,7 @@ set epdAnnotateMode 0
 set epdDelay 3
 
 set defaultDBs {}
+set tbOnline Nalimov
 
 proc ::docking::init_layout_list {{recover 0}} {
   # Default window docking layouts
