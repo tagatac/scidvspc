@@ -3764,6 +3764,18 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
 
   <p><i>Die Ablagedatenbank kann nicht komprimiert werden.</i></p>
 
+  <h3>Partien verschieben</h3>
+
+  <p>Scid vs PC ermöglicht jetzt im Kontextmenü der Partienliste das
+  grundlegende Verschieben/Umordnen von einzelnen Partien.</p>
+
+  <p><red>Bitte mit Vorsicht verwenden und die Datenbanken vorher
+  sichern. Das Umordnen von Partien bewirkt ein Schreiben der
+  Indexdatei in einen nichtatomaren Zustand. Für kurze Abstände werden
+  nur ein paar Schreibarbeiten durchgeführt, aber größere
+  Verschiebungen erfordern ein direktes Schreiben eines Großteils der
+  Indexdatei und Störungen könnten zu Datenverlust führen.</red></p>
+
   <h3>Die Schaltflächen</h3>
   <ul>
   <li><img tb_save> - ersetzt die aktuelle Partie</li>
@@ -3830,7 +3842,7 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
   exportieren--<gt>Partienliste in eine Textdatei
   exportieren</green></i>.</p>
 
-  <p><footer>Aktualisiert: Scid vs. PC 4.21, August 2019</footer></p>
+  <p><footer>Aktualisiert: Scid vs. PC 4.22, Juli 2021</footer></p>
 }
 
 
@@ -4723,7 +4735,9 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
 
   <h3><name Editing>Namen bearbeiten</name></h3>
   <p>Der <run nameEditor><green>Namenseditor</green></run> ist ein
-  Werkzeug, um ausgewählte Namen (z.B. Spielernamen) zu bearbeiten.
+  Werkzeug, um selektiv Einheitennamen (z.B. Spielername und Datum) und auch
+  beliebige Spielerwertungen zu bearbeiten (für eine Auswahl von
+  Partien, siehe auch <a Maintenance Ratings>weiter unten</a>).
   </p>
   <p>Jeder eindeutige Name wird nur einmal in
   der <a Formats>Namensdatei</a> gespeichert, so daß die Änderung
@@ -4732,10 +4746,10 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   solche Namen zu entfernen, führen Sie eine <a Compact>Komprimierung
   der Namendatenbank</a> durch.
   </p>
-<p>Ein einzelnes Sternchen '*' kann benutzt werden, um
+  <p>Ein einzelnes Sternchen '*' kann benutzt werden, um
   auf <b>jeden</b> Namen zu passen. Diese globale Ersetzung ist nur
-  für Veranstaltungs-, Ort- und Rundenbezeichnungen verfügbar - nicht
-  für Spielernamen, Elo- oder Datumsangaben.
+  für Veranstaltungs-, Ort-, Runden- und Datumsbezeichnungen verfügbar
+  - nicht für Spielernamen und Eloangaben.
   </p>
   <p>Datums- und Turnierdatumsfelder müssen die Form JJJJ.MM.TT (Jahr,
   Monat, Tag) haben.
@@ -4883,7 +4897,7 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   zurückzubringen.
   </p>
 
-  <p><footer>Aktualisiert: Scid vs. PC 4.22, September 2020</footer></p>
+  <p><footer>Aktualisiert: Scid vs. PC 4.23, Juli 2021</footer></p>
 }
 
 set helpTitle(D,Sorting) "Sortieren einer Datenbank"
@@ -5513,12 +5527,12 @@ set helpText(D,EPD) {<h1>EPD-Dateien</h1>
   <h3>Durch EPD-Dateien navigieren</h3>
 
   <p>Um durch die Stellungen in einer EPD-Datei zu stöbern, klicken
-  Sie einfach auf eine beliebige Stellung oderbenutzen Sie die Tasten
+  Sie einfach auf eine beliebige Stellung oder benutzen Sie die Tasten
   <b>Strg+Pfeil abwärts</b>, <b>Strg+Pfeil aufwärts</b>,
-  <b>Strg+Pos1</b> oder <b>Strg+Ende</b>. Diese Befehle bewegen zur
-  nächsten bzw. vorhergehenden oder ersten bzw. letzten Stellung in
-  der Datei, verwerfen etwaige Änderungen an der aktuellen Partie und
-  setzen die Anfangsstellung der Testpartie.</p>
+  <b>Strg+Pos1</b>, <b>Strg+Ende</b> oder <b>Strg+?</b>. Diese Befehle
+  bewegen zur nächsten bzw. vorhergehenden oder ersten bzw. letzten
+  Stellung in der Datei, verwerfen etwaige Änderungen an der aktuellen
+  Partie und setzen die Anfangsstellung der Testpartie.</p>
 
   <h3>EPD-Dateien analysieren</h3>
 	
@@ -6017,17 +6031,18 @@ set helpText(D,Graphs) {<h1>Grafikfenster</h1>
 set helpTitle(D,TB) "Endspieldatenbanken"
 set helpText(D,TB) {<h1>Endspieldatenbanken</h1>
 
-  <p><i>Eine Endspieldatenbank ist eine Datei, die </i><b>vollständige
-  Ergebnisinformationen</b><i> über alle Stellungen bei bestimmtem
+  <p>Eine Endspieldatenbank ist eine Datei, die vollständige
+  Ergebnisinformationen über alle Stellungen bei bestimmtem
   vorhandenem Material enthält, wie König und Turm gegen König und
-  Bauer. Endspieldatenbanken wurden für alle Stellungen mit bis zu
-  fünf Spielsteinen erstellt (einschließlich den Königen). Einige
-  einfache Endspieldatenbanken mit sechs Steinen sind ebenfalls
-  verfügbar.</i>
+  Bauer.
   </p>
-  <p>Scid benutzt die <b>Nalimov</b>-Endspieldatenbanken, die auch von
-  vielen Schachprogrammen verwendet werden. Die Dateinamen enden oft
-  auf <b>.nbw.emd</b> oder <b>.nbb.emd</b>
+  <p>Scid vs. PC kann die Endspieldatenbanken von <b>Nalimov</b>,
+  <b>Lichess</b> (online) und <b>Shredder</b> verwenden. <i>Die
+  Online-Unterstützung benötigt die Tcl-Pakete http und tls.</i>
+  </p>
+  <p>Nalimov-Datenbanken werden von vielen Schach-Engines
+  verwendet. Die Dateinamen enden oft auf <b>.nbw.emd</b>
+  oder <b>.nbb.emd</b>
   (für <b>N</b>alimov <b>B</b>ases <b>W</b>hite/<b>B</b>lack). In Scid
   können alle Nalimov-Endspieldatenbanken mit drei, vier oder fünf
   Steinen verwendet werden.
@@ -6037,15 +6052,9 @@ set helpText(D,TB) {<h1>Endspieldatenbanken</h1>
   Partieinformationsfenster (unterhalb des Schachbretts) die
   betreffenden Informationen angezeigt.
   </p>
-  <p><i>Scid vs. PC kann auch Ergebnisse bei
-  <url http://www.lokasoft.nl/tbweb.aspx>www.lokasoft.nl</url>
-  nachschlagen, aber diese Informationen sind nicht im
-  Partieinformationsfenster verfügbar, sondern nur im
-  Endspieldatenbankfenster und sie können Systemverzögerungen mit sich
-  bringen.</i></p>
 
   <h3>Konfiguration</h3>
-  <p>Um die Endspieldatenbanken zu laden, wählen Sie Ihr(e)
+  <p>Um die Nalimov-Endspieldatenbanken zu laden, wählen Sie Ihr(e)
   Verzeichnis(se) über das
   Menü <green><b>Optionen--<gt>Endspieltabellenverzeichnis</b></green>
   aus. Es können bis zu vier Verzeichnisse ausgewählt werden.
@@ -6057,6 +6066,10 @@ set helpText(D,TB) {<h1>Endspieldatenbanken</h1>
   bester Zug</b> liefert die meisten Informationen, sie ist aber oft
   deutlich langsamer als <b>Endspieltabellen: nur Ergebnis</b>.
   </p>
+  <p><i>
+  Die Online-Datenbankinformationen (Shredder und Lichess) sind nicht im
+  Partieinformationsfenster verfügbar.
+  <i></p>
 
   <h3>Das Fenster Endspieltabellen</h3>
   <p>Sie können
@@ -6065,9 +6078,9 @@ set helpText(D,TB) {<h1>Endspieldatenbanken</h1>
   aktuellen Stellung bei bestem Spiel mit allen legalen Zügen das
   Ergebnis an.
   </p>
-  <p>Das Fenster hat zwei Hauptbereiche. Der Zusammenfassungsteil
-  (links) zeigt, welche Endspieldatenbanken Scid gefunden hat sowie
-  eine Zusammenfassung für jede Endspieldatenbank. Der Ergebnisbereich
+  <p>Wenn Nalimov ausgewählt ist, zeigt der Zusammenfassungsteil
+  (links), welche Endspieldatenbanken Scid gefunden hat sowie eine
+  Zusammenfassung für jede Endspieldatenbank. Der Ergebnisbereich
   (rechts) zeigt die besten Resultate für alle Züge ab der aktuellen
   Stellung, die im Hauptfenster angezeigt wird.
   </p>
@@ -6098,8 +6111,8 @@ set helpText(D,TB) {<h1>Endspieldatenbanken</h1>
   <h4>Der Ergebnisbereich</h4>
   <p>Die Resultate können von den lokalen Nalimov-Datenbanken
   angezeigt werden (falls installiert) oder über ein
-  Online-Nachschlagen bei lokasoft.nl. Der Ergebnisbereich wird immer
-  dann aktualisiert, wenn sich das Hauptschachbrett ändert.
+  Online-Nachschlagen bei Lichess oder Shredder. Der Ergebnisbereich
+  wird immer dann aktualisiert, wenn sich das Hauptschachbrett ändert.
   </p>
   <p>Die erste Zeile der lokalen Datenbanken zeigt, wieviele Züge
   gewinnen (+), remis enden (=), verlieren (-) oder ein unbekanntes
@@ -6146,7 +6159,7 @@ set helpText(D,TB) {<h1>Endspieldatenbanken</h1>
   <url http://www.playwitharena.de/download/4-pieces-tbs.zip>(http://www.playwitharena.de/download/4-pieces-tbs.zip)</url>.
   </p>
 
-  <p><footer>Aktualisiert: Scid vs. PC 4.12, März 2014</footer></p>
+  <p><footer>Aktualisiert: Scid vs. PC 4.23, Oktober 2021</footer></p>
 }
 
 set helpTitle(D,Bookmarks) "Lesezeichen"
