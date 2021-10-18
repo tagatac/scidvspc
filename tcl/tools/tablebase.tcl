@@ -808,7 +808,11 @@ set result_stat [string range $result [expr {[string first "NEXTCOLOR" $result] 
 set result [string range $result [expr {[string first "NEXTCOLOR" $result] + 10}] [expr {[string length $result] - 3}] ]
 }			
  
-set not_found [expr {$result == "Not found"}]
+if {[string first "Not found" $result] != -1} {
+  set not_found 1
+} else {
+  set not_found 0
+}
  
 # Eliminate info only non-moves:
 set count -1
@@ -1294,7 +1298,13 @@ if {[string first "=" $san] == -1 && [string length $san] > 3 && [string first "
 # NB exclude pawn and king moves 
 if {[string length $san] > 2 && [string first "K" $san] == -1 && [string first "k" $san] == -1 
 	&& [string first [string index $san 0] "a b c d e f g h"] == -1} {
-set temp "-$move_to"
+
+if {[string index $move_to 0] == 0} {
+  set temp "-[string index $move_to 1]"
+} else {
+  set temp "-$move_to"
+}
+
 # Get pieces to compare,  from square number:
 #
 # square number of first piece:
@@ -1303,8 +1313,7 @@ if {[string first "\{" $temp_piece_1] != -1} {
 set temp_piece_1 [string range $result [expr {[string first $temp $result] - 1}] [expr {[string first $temp $result] - 1}] ]
 }
 # SAN square of first piece:
-# S.A. handle blank $temp_piece_1
-if {$temp_piece_1 == ""} {set temp_piece_1 0}
+
 set san_square_1 [lindex $::board::squareIndex $temp_piece_1]
 
 # piece (first):

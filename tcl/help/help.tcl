@@ -3545,8 +3545,7 @@ set helpText(TB) {<h1>Tablebases</h1>
   such as King and Rook versus King and Pawn. 
   </p>
   <p>
-  Scid vs. PC can use <b>Nalimov</b> and (online) <b>Lichess</b> and <b>Shredder</b> tablebases.
-  <i>Online support requires Tcl packages http and tls.</i>
+  Scid vs. PC can use <b>Nalimov</b> and <a TB Online>Online Lichess and Shredder</a> tablebases.
   </p>
   <p>
   Nalimov bases are used by many chess engines. The filenames often end with the suffix <b>.nbw.emd</b>
@@ -3559,7 +3558,7 @@ set helpText(TB) {<h1>Tablebases</h1>
   window (below the chessboard) will show the relevant information.
   </p>
 
-  <h3>Configuration</h3>
+  <h3>Nalimov Configuration</h3>
   <p>
   To load Nalimov tablebases, select their directory(s) via
   the <b>Options--<gt>Tablebase Directory</b> menu item.
@@ -3571,9 +3570,6 @@ set helpText(TB) {<h1>Tablebases</h1>
   gives the most information, but is often much slower than
   <b>Result Only</b>.
   </p>
-  <p><i>
-  Online tablebase infos (Shredder and Lichess) are not available in the Game Info window.
-  <i></p>
 
   <h3>The Tablebase Window</h3>
   <p>
@@ -3651,18 +3647,31 @@ set helpText(TB) {<h1>Tablebases</h1>
   </ul>
   <p>
 <i>The Result Board cannot make use of online tablebases.</i>
+</p>
+
+  <h4>Obtaining Tablebase Files</h4>
+  <p>
+
+<url http://oics.olympuschess.com/tracker/index.php>Olympuschess.com</url>.  (BitTorrent tracker, only 6 pieces) 
+<br>
+<url http://tablebase.sesse.net/>http://tablebase.sesse.net</url> (fastest mirror, EU) 
+<br>
+<url https://tablebase.lichess.ovh/tables/>Lichess Tables</url> (mirror hosted by Lichess, EU)
+<br>
+<url https://web.archive.org/web/20140131015443/http://www.cis.uab.edu/hyatt/crafty/TB/3-4-5/>Bob Hyatt's Ftp (Archive.org)</url>
   </p>
 
-  <h3>Obtaining Tablebase Files</h3>
+
+  <h2><name Online>Online Tablebases</name></h2>
+  <p><i>Online tablebase support requires Tcl packages http and tls, and are not available in the Game Info window.
+  </i></p>
   <p>
-  The tablebases are available from 
-<url http://oics.olympuschess.com/tracker/index.php>Olympuschess.com</url>.
-and (previously)
-<url ftp://ftp.cis.uab.edu/pub/hyatt/TB/3-4-5/>Bob Hyatt's Ftp</url>
-<br>
-  Play With Arena distribute the 4 piece tablebases as a 
-<url http://www.playwitharena.de/download/4-pieces-tbs.zip>single file</url>
-  </p>
+  Scid vs. PC can use the online tablebases from Lichess and Shredder.
+</p><p>
+The <b>Shredder</b> tablebase gives the true value of a position for up to 6 men, showing the depth to mate where relevant.
+</p><p>
+The <b>Lichess Syzygy</b> tablebase shows the depth to mate for up to 5 men and the DTZ for 6 to 7 men. DTZ means distance to zeroing of the counter for the 50-move drawing rule. Syzygy tablebases do not aim for the fastest way to mate, but rather for the fastest way to make a winning capture or pawn move or give mate. This can be a bit unintuitive, but it allows perfect play, regarding outcome, even under the 50-move rule. Lichess will in a few cases give the depth to mate for 6 or 7 men, which is shown in braces next to the move. 
+</p>
 
   <p><footer>Updated: Scid vs. PC 4.23, Oct 2021</footer></p>
 }
