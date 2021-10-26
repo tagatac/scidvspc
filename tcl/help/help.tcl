@@ -3670,8 +3670,16 @@ set helpText(TB) {<h1>Tablebases</h1>
 </p><p>
 The <b>Shredder</b> tablebase gives the true value of a position for up to 6 men, showing the depth to mate where relevant.
 </p><p>
-The <b>Lichess Syzygy</b> tablebase shows the depth to mate for up to 5 men and the DTZ for 6 to 7 men. DTZ means distance to zeroing of the counter for the 50-move drawing rule. Syzygy tablebases do not aim for the fastest way to mate, but rather for the fastest way to make a winning capture or pawn move or give mate. This can be a bit unintuitive, but it allows perfect play, regarding outcome, even under the 50-move rule. Lichess will in a few cases give the depth to mate for 6 or 7 men, which is shown in braces next to the move. 
-</p>
+  The <b>Lichess Syzygy</b> tablebase shows the depth to mate for up to 5 men and
+  the DTZ for 6 to 7 men. DTZ means 'distance to zeroing' of the counter for the
+  50-move drawing rule. Syzygy tablebases do not aim for the fastest way to mate,
+  but rather for the fastest way to make a winning capture or pawn move or give
+  mate. This can be a bit unintuitive, but it allows perfect play, regarding
+  outcome, even under the 50-move rule. If a win or loss occurs more than 50
+  moves after the 50-move-counter was last reset to zero, it is called a 'cursed
+  win' or 'blessed loss', because under FIDE law 9.3 the result is a draw.
+  Lichess will in a few cases give the depth to mate for 6 or 7 men, which is
+  shown in braces next to the move.  </p>
 
   <p><footer>Updated: Scid vs. PC 4.23, Oct 2021</footer></p>
 }

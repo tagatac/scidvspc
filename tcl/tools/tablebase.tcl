@@ -195,6 +195,7 @@ proc ::tb::Open {} {
       $f.results.online.menu add command -label $i -command "
         $f.results.online configure -text $i
         set tbOnline $i 
+        set ::tb::noresult 0
         update_tbWidgets $w $i
         ::tb::results
       "
@@ -1001,8 +1002,8 @@ if {$white_count == 5 && $black_count ==1 || $white_count == 1 && $black_count =
 	$t insert end "Online: Result not found\n"
 	}
 }
+
 ########## Move Processing #################
-#
 
 set move_summary ""
 set move_header ""
@@ -1654,9 +1655,13 @@ set pieceCount [sc_pos pieceCount]
 
 # Get string excluding best move data:
 set x [string first "uci" $answer_2 1]
-set moves_2 [string range $answer_2 [expr {$x - 1}] [expr {[string length $answer_2] - 2}]]
-#
-set moves_2 [string map {, { }} $moves_2]
+if {$x < 0} {
+  # checkmate, stalemate
+  set moves_2 {}
+} else {
+  set moves_2 [string range $answer_2 [expr {$x - 1}] [expr {[string length $answer_2] - 2}]]
+  set moves_2 [string map {, { }} $moves_2]
+}
 
 #################################################	
 # Count won, cursed win, drawn, blessed loss, loss, :
