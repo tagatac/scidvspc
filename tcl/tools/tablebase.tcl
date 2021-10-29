@@ -346,7 +346,6 @@ proc ::tb::section {{sec 0}} {
   if {! [info exists tbInfo($sec)]} { return }
   set t $w.info.list.text
   ::tb::clearText $t
-  set ::tb::tagonline 0
   $t configure -state normal
   $t configure -height 10
   set count 0
@@ -569,17 +568,9 @@ proc ::tb::insertText {s {tag {}}} {
 
 if { $::tb::online_available } {
 
+  # todo - remove this procedure
   proc ::tb::zeroOnline {} {
-    set t .tbWin.pos.text
-    $t configure -state normal
-    # delete previous online output
-    while {1} {
-      set del [$t tag nextrange tagonline 1.0]
-      if {$del == ""} {break}
-      catch {$t delete [lindex $del 0] [lindex $del 1]}
-    }
-    $t configure -state disabled
-    set ::tb::noresult 0
+    ::tb::clearText .tbWin.pos.text
   }
 
   proc ::tb::insertNoResult {{pieceCount {}}} {
@@ -592,13 +583,13 @@ if { $::tb::online_available } {
       set t .tbWin.pos.text
       ::tb::zeroOnline
       if {$pieceCount == {}} {
-	::tb::insertText "Online: No result" tagonline
+	::tb::insertText "Online: No result"
       } else {
 			if {$::tbOnline == "Lichess"}  {   
-			::tb::insertText "Online: No result\nMaximum piece count for Lichess is 7" tagonline
+			::tb::insertText "Online: No result\nMaximum piece count for Lichess is 7"
 			}
 			if {$::tbOnline == "Shredder"}  {   
-			::tb::insertText "Online: No result\nMaximum piece count for Shredder is 6" tagonline
+			::tb::insertText "Online: No result\nMaximum piece count for Shredder is 6"
 			}	
 		}
       set noresult 1
@@ -676,7 +667,7 @@ if { $::tb::online_available } {
       # Connection failed, flash old message before issuing "No connection"
       after 100
       ::tb::zeroOnline
-      ::tb::insertText "No connection." tagonline
+      ::tb::insertText "No connection."
     }
   } ;# end of proc ::tb::updateOnline
 
@@ -684,7 +675,7 @@ if { $::tb::online_available } {
     variable afterid
     set afterid(connect) {}
     ::tb::zeroOnline
-    ::tb::insertText "Contacting server" tagonline
+    ::tb::insertText "Contacting server"
   }
 
   proc ::tb::httpCallback { fen token } {
@@ -761,7 +752,7 @@ if { $::tb::online_available } {
     $t configure -state normal
 
     if {[string length $err]} {
-      $t insert end "Online: $err" tagonline
+      $t insert end "Online: $err"
     } else { 	
       set empty 1
 							# bookmark 1
@@ -769,7 +760,7 @@ if { $::tb::online_available } {
       foreach l [split $result "\n"] {
         if {![string match {*\?\?\?*} $l]} {
           if {$empty} {
-          # $t insert end "All results; empty is $empty" tagonline
+          # $t insert end "All results; empty is $empty"
             set empty 0
           }
         }
@@ -780,7 +771,7 @@ if { $::tb::online_available } {
         if {[info exists hash($fen)]} {
           set hash($fen) [list "No Result" ""]
         }
-        $t insert end "Online: No result" tagonline
+        $t insert end "Online: No result"
       }
 
 ####################################################################
@@ -1785,6 +1776,7 @@ foreach move $moves_2 {
 
 if {$mate == "true"} {
 	set distance_to_zero 0
+	set number_moves 1
 	}
 	
 # The Lichess move count does not match Nalimov and Shredder, 
