@@ -5872,6 +5872,7 @@ sc_filter_value (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
     scidBaseT * base = db;
     uint gnum = base->gameNumber;
+    uint ply;
 
     if (argc >= 3) {
         int baseNum = strGetInteger (argv[2]);
@@ -5890,8 +5891,8 @@ sc_filter_value (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     }
     gnum--;
 
-    if(base->treeFilter)
-	return setUintResult (ti, base->treeFilter->Get (gnum));
+    if (base->treeFilter && (ply = setUintResult (ti, base->treeFilter->Get (gnum))) > 0)
+        return ply;
     else
 	return setUintResult (ti, base->filter->Get (gnum));
 }
