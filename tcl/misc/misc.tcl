@@ -721,7 +721,7 @@ namespace eval html {
     set dirtarget [file dirname $fName]
     set sourcedir [file join $::scidShareDir html]
     ### catch copies to ignore overwrite directory errors
-    catch { file copy -force [file join $sourcedir bitmaps] $dirtarget }
+    catch { copyBitmapsDir [file join $sourcedir bitmaps] $dirtarget }
     catch { file copy -force [file join $sourcedir scid.js] $dirtarget }
     catch { file copy -force [file join $sourcedir scid.css] $dirtarget }
     writeIndex "[file join $dirtarget $prefix].html" $prefix
@@ -775,7 +775,7 @@ namespace eval html {
     set dirtarget [file dirname $fName]
     set sourcedir [file join $::scidShareDir html]
     ### catch copies to ignore overwrite directory errors
-    catch { file copy -force [file join $sourcedir bitmaps] $dirtarget }
+    catch { copyBitmapsDir [file join $sourcedir bitmaps] $dirtarget }
     catch { file copy -force [file join $sourcedir scid.js] $dirtarget }
     catch { file copy -force [file join $sourcedir scid.css] $dirtarget }
     writeIndex "[file join $dirtarget $prefix].html" $prefix
@@ -1107,6 +1107,22 @@ namespace eval html {
   }  
 } 
 # end of html namespace
+
+### Resolve the conflict between the html/javascript and pure html export bitmap directory copies
+#   as "file copy -force" fails if the dest directory already exists.
+
+proc copyBitmapsDir {srcDir destDir} {
+  set bitmapDir [file tail $srcDir]
+  set bitmapDestDir [file join $destDir $bitmapDir]
+  if {[file exists $bitmapDestDir]} {
+    # Directory exists, so do a glob copy
+    foreach file [glob $srcDir/*] {
+      file copy -force $file $bitmapDestDir
+    }
+  } else {
+    file copy -force $srcDir $destDir
+  }
+}
 
 ### Merges ::optable::previewLaTeX and ::preport::previewLaTeX
 #   TODO : test on windows and OS X

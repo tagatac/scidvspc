@@ -606,8 +606,13 @@ proc exportGames {selection exportType {fName {}}} {
   }
 
   if {$exportType == "HTML"} {
-    set sourcedir [file nativename $::scidShareDir/bitmaps/]
-    catch { file copy -force $sourcedir [file dirname $fName] }
+    # this is kindof munted S.A
+    if {$exportFlags(htmldiag)} {
+      set sourcedir [file nativename $::scidShareDir/bitmaps2/]
+    } else {
+      set sourcedir [file nativename $::scidShareDir/bitmaps/]
+    }
+    copyBitmapsDir $sourcedir [file dirname $fName]
   }
 
 }
