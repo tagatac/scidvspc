@@ -385,6 +385,14 @@ namespace eval pgn {
     ::commenteditor::Open
   }
 
+  # This is a bit of a hack and will try to delete initial comment if right-clicking on free pgn window space
+  proc deleteComment {} {
+    sc_game undoPoint
+    # NB only works because we have bound right click to ::pgn::move in htext.tcl
+    sc_pos setComment {}
+    updateBoard -pgn
+  }
+
   proc contextMenu {win x y xc yc} {
     # x y xc yc -  unused
 
@@ -406,10 +414,11 @@ namespace eval pgn {
     $mctxt add command -label "[tr EditStrip] [tr EditStripBegin]" -command ::game::TruncateBegin
     $mctxt add command -label "[tr EditStrip] [tr EditStripEnd]" -command ::game::Truncate
     $mctxt add separator
+    $mctxt add command -label "[tr EditDeleteComment]" -command ::pgn::deleteComment
+    $mctxt add command -label "[tr WindowsComment]" -command ::commenteditor::Open
+    $mctxt add separator
     $mctxt add command -label "[tr EditStrip] [tr EditStripComments]" -command {::game::Strip comments .pgnWin}
     $mctxt add command -label "[tr EditStrip] [tr EditStripVars]" -command {::game::Strip variations .pgnWin}
-    $mctxt add separator
-    $mctxt add command -label "[tr WindowsComment]" -command ::commenteditor::Open
 
     ### Offset the menu a little so as to not obstruct move
     # [expr [winfo pointerx .] + 15] [expr [winfo pointery .] + 0]

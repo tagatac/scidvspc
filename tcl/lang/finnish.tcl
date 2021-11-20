@@ -40,6 +40,8 @@ menuText L Edit "Muokkaa" 0
 menuText L EditAdd "Lis‰‰ muunnelma" 0 {Lis‰‰ muunnelma pelin t‰h‰n siirtoon}
 menuText L EditPasteVar "Liit‰ muunnelma" 0
 menuText L EditDelete "Poista muunnelma" 0 {Poista t‰t‰ siirtoa varten oleva muunnelma}
+# ====== TODO To be translated ======
+menuText L EditDeleteComment "Delete Comment" 0
 menuText L EditFirst "Tee ensimm‰inen muunnelma" 5 \
   {Ylenn‰ muunnelma listan ensimm‰iseksi}
 menuText L EditMain "Ylenn‰ muunnelma" 21 \

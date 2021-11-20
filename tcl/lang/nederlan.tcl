@@ -44,6 +44,8 @@ menuText N EditAdd "Nieuwe variant" 4 \
 menuText N EditPasteVar "Plakken variant" 1
 menuText N EditDelete "Verwijderen variant" 6 \
  {Verwijder een variant voor deze zet}
+# ====== TODO To be translated ======
+menuText N EditDeleteComment "Delete Comment" 0
 menuText N EditFirst "Maak hoofdvariant" 5 \
   {Maak deze variant de eerste in de lijst}
 menuText N EditMain "Variant op hoofdvariant" 1 \

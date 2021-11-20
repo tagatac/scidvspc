@@ -72,6 +72,8 @@ menuText O Edit "Rediger" 0
 menuText O EditAdd "Legg til variasjon" 0 {Legg til en variasjon av dette trekket i partiet}
 menuText O EditPasteVar "Lim inn variasjon" 0
 menuText O EditDelete "Slett variasjon" 0 {Slett en variasjon av dette trekket}
+# ====== TODO To be translated ======
+menuText O EditDeleteComment "Delete Comment" 0
 menuText O EditFirst "Flytt variasjon øverst" 0 \
   {Gjør variasjonen til den øverste på listen}
 menuText O EditMain "Gjør variasjon til hovedlinje" 0 \

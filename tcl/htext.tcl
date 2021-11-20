@@ -426,7 +426,10 @@ proc ::htext::display {w helptext {section {}} {fixed 1}} {
         } else {
           $w tag configure $commentTag -fore $::pgnColor(Comment)
         }
-        $w tag bind $commentTag <ButtonRelease-1> [list ::pgn::comment $commentTag]
+        $w tag bind $commentTag <ButtonPress-1> "::pgn::comment $commentTag"
+        # needed for ::pgn::deleteComment to work
+        $w tag bind $commentTag <ButtonPress-3> "::pgn::move $commentTag"
+
         $w tag bind $commentTag <Any-Enter> [list u1 $w $commentTag]
         $w tag bind $commentTag <Any-Leave> [list u0 $w $commentTag]
       } elseif {[string match ip* $tagName] && [string is integer [set margin [string range $tagName 2 end]]]} {

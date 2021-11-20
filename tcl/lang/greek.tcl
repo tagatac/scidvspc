@@ -66,6 +66,8 @@ menuText G Edit "Επεξεργασία" 3
 menuText G EditAdd "Προσθήκη Βαριάντας" 4 {Προσθήκη Βαριάντας στη συγκεκριμένη θέση}
 menuText G EditPasteVar "Επικόλληση Βαριάντας" 1
 menuText G EditDelete "Διαγραφή Βαριάντας" 6 {Διαγραφή της Βαριάντας για αυτή την κίνηση}
+# ====== TODO To be translated ======
+menuText G EditDeleteComment "Delete Comment" 0
 menuText G EditFirst "Προαγωγή Βαριάντας ως Πρώτης" 2 \
   {Προαγωγή της Βαριάντας στην πρώτη θέση της λίστας}
 menuText G EditMain "Προαγωγή Βαριάντας ως Κύριας" 5 \

@@ -41,6 +41,8 @@ menuText S EditAdd "Añadir variación" 0 \
   {Añade una variación a este movimiento en la partida}
 menuText S EditPasteVar "Pegar Variación" 0
 menuText S EditDelete "Borrar variación" 0 {Borra variación para este movimiento}
+# ====== TODO To be translated ======
+menuText S EditDeleteComment "Delete Comment" 0
 menuText S EditFirst "Convertir en primera variación" 0 \
   {Hace que una variación sea la primera en la lista}
 menuText S EditMain "Variación a línea principal" 0 \

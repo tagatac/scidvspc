@@ -38,6 +38,8 @@ menuText U Edit "Editar" 0
 menuText U EditAdd "Adicionar variante" 0 {Adiciona variante da partida}
 menuText U EditPasteVar "Colar variante" 0
 menuText U EditDelete "Apagar variante" 0 {Exclui variante da partida}
+# ====== TODO To be translated ======
+menuText U EditDeleteComment "Delete Comment" 0
 menuText U EditFirst "Converte para Primeira Variante" 14 \
   {Faz com que uma variante seja a primeira da lista}
 menuText U EditMain "Converte variante para Linha Principal" 24 \

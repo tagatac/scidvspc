@@ -42,6 +42,8 @@ menuText B Edit "Editar" 0
 menuText B EditAdd "Adiciona variante" 0 {Adiciona variante do movimento}
 menuText B EditPasteVar "Colar Variante" 0
 menuText B EditDelete "Deleta Variante" 0 {Exclui variante do movimento}
+# ====== TODO To be translated ======
+menuText B EditDeleteComment "Delete Comment" 0
 menuText B EditFirst "Converte para Primeira Variante" 14 \
   {Faz com que uma variante seja a primeira da lista}
 menuText B EditMain "Converte variante para Linha Principal" 24 \

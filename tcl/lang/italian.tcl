@@ -40,6 +40,8 @@ menuText I Edit "Edita" 0
 menuText I EditAdd "Aggiunge una variante" 0 {Aggiunge una variante a questa mossa nella partita}
 menuText I EditPasteVar "Variazione pasta" 0
 menuText I EditDelete "Cancella Variante" 0 {Cancella una variante per questa mossa}
+# ====== TODO To be translated ======
+menuText I EditDeleteComment "Delete Comment" 0
 menuText I EditFirst "Variante principale" 5 \
   {Promuove a variante principale nella lista}
 menuText I EditMain "Promuove una Variante a Linea Principale" 0 \

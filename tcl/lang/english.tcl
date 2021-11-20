@@ -65,6 +65,7 @@ menuText E Edit "Edit" 0
 menuText E EditAdd "Add Variation" 0 {Add a variation at this move in the game}
 menuText E EditPasteVar "Paste Variation" 0
 menuText E EditDelete "Delete Variation" 0 {Delete a variation for this move}
+menuText E EditDeleteComment "Delete Comment" 0
 menuText E EditFirst "Make First Variation" 5 \
   {Promote a variation to be first in the list}
 menuText E EditMain "Promote Variation" 21 \

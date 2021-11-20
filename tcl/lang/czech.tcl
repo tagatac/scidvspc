@@ -39,6 +39,8 @@ menuText C Edit "Editace" 0
 menuText C EditAdd "Pøidat variantu" 0 {Pøidat variantu k tomuto tahu v partii}
 menuText C EditPasteVar "Vlozit variace" 0
 menuText C EditDelete "Vymazat variantu" 0 {Vymazat variantu k tomuto tahu}
+# ====== TODO To be translated ======
+menuText C EditDeleteComment "Delete Comment" 0
 menuText C EditFirst "Zaøadit jako první variantu" 0 \
   {Zaøadit variantu na první místo v seznamu variant}
 menuText C EditMain "Pový¹it stávající variantu na hlavní" 30 \

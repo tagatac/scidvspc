@@ -39,6 +39,8 @@ menuText H Edit "Szerkesztés" 1
 menuText H EditAdd "Új változat" 0 {Ennél a lépésnél új változatot szúr be a játszmába.}
 menuText H EditPasteVar "Beillesztés változása" 0
 menuText H EditDelete "Változat törlése" 9 {Töröl egy változatot ennél a lépésnél.}
+# ====== TODO To be translated ======
+menuText H EditDeleteComment "Delete Comment" 0
 menuText H EditFirst "Elsõ változattá tesz" 0 \
   {Elsõ helyre teszi a változatot a listán.}
 menuText H EditMain "Fõváltozattá tesz" 0 \

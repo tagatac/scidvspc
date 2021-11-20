@@ -40,6 +40,8 @@ menuText R Edit "Правка" 0
 menuText R EditAdd "Добавить вариант" 0 {Добавить вариант к этому ходу партии}
 menuText R EditPasteVar "Вставить вариант" 0
 menuText R EditDelete "Удалить вариант" 0 {Удалить вариант для этого хода}
+# ====== TODO To be translated ======
+menuText R EditDeleteComment "Delete Comment" 0
 menuText R EditFirst "Сделать вариант первым" 0 \
   {Продвинуть вариант на первое место в списке}
 menuText R EditMain "Заменить главный план вариантом" 0 \

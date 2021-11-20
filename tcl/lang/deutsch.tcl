@@ -53,6 +53,8 @@ menuText D EditAdd "Variante hinzufügen" 0 \
 menuText D EditPasteVar "Variante einfügen" 0
 menuText D EditDelete "Variante löschen" 9 \
   {Lösche eine Variante zu diesen Zug}
+# ====== TODO To be translated ======
+menuText D EditDeleteComment "Delete Comment" 0
 menuText D EditFirst "Als erste Variante setzen" 4 \
   {Variante an erste Stelle in der Liste setzten}
 menuText D EditMain "Variante als Partiefortsetzung" 13 \

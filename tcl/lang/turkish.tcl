@@ -40,6 +40,8 @@ menuText T Edit "Düzenle" 0
 menuText T EditAdd "Varyant ekle" 0 {Oyuna bu harekette bir varyat ekleyin}
 menuText T EditPasteVar " Varyasyantı Yapıştır" 0
 menuText T EditDelete "Varyantı Sil" 0 {Delete a variation for this move}
+# ====== TODO To be translated ======
+menuText T EditDeleteComment "Delete Comment" 0
 menuText T EditFirst "İlk Değişiklik Yap" 5 \
   {Promote a variation to be first in the list}
 menuText T EditMain "Varyantı Tanıtın" 21 \

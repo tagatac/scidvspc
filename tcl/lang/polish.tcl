@@ -36,6 +36,8 @@ menuText P Edit "Edytuj" 0
 menuText P EditAdd "Dodaj wariant" 0 {Dodaj wariant do ruchu w partii}
 menuText P EditPasteVar "Wklej wariant" 0
 menuText P EditDelete "Usuń wariant" 0 {Usuń wariant dla tego posunięcia}
+# ====== TODO To be translated ======
+menuText P EditDeleteComment "Delete Comment" 0
 menuText P EditFirst "Twórz pierwszy wariant" 0 \
   {Przesuń wariant na pierwsze miejsce na liście}
 menuText P EditMain "Zmień wariant na tekst partii" 0 \

@@ -39,6 +39,8 @@ menuText Y Edit "Izmene" 0
 menuText Y EditAdd "Dodaj varijantu" 0 {Dodaj varijantu potezu u partiji}
 menuText Y EditPasteVar "Paste Vraiation" 0
 menuText Y EditDelete "Obri¹i varijantu" 0 {Obri¹i varijantu za ovaj potez}
+# ====== TODO To be translated ======
+menuText Y EditDeleteComment "Delete Comment" 0
 menuText Y EditFirst "Postavi prvu varijantu" 5 \
   {Postavi varijantu kao prvu u listi}
 menuText Y EditMain "Postavi varijantu na glavnu liniju" 21 \

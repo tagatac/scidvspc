@@ -41,6 +41,8 @@ menuText F Edit "Éditer" 0
 menuText F EditAdd "Ajouter variante" 0 {Ajouter une variante}
 menuText F EditPasteVar "Coller variante" 0
 menuText F EditDelete "Effacer variante" 0 {Effacer cette variante}
+# ====== TODO To be translated ======
+menuText F EditDeleteComment "Delete Comment" 0
 menuText F EditFirst "Déplacer en tête" 0 \
   {Déplacer cette variante en tête de liste}
 menuText F EditMain "Variante vers ligne principale" 13 \

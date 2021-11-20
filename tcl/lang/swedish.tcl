@@ -39,6 +39,8 @@ menuText W Edit "Redigera" 0
 menuText W EditAdd "Lägg till variant" 0 {Skapa en variant vid denna ställning}
 menuText W EditPasteVar "Klistra Variation" 0
 menuText W EditDelete "Radera variant" 0 {Radera en variant vid denna ställning}
+# ====== TODO To be translated ======
+menuText W EditDeleteComment "Delete Comment" 0
 menuText W EditFirst "Skapa huvudvariant" 6 \
   {Gör en av varianterna till huvudvariant}
 menuText W EditMain "Skapa nytt textdrag" 11 \
