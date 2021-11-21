@@ -1921,26 +1921,26 @@ set helpTitle(PGN) "PGN Window"
 set helpText(PGN) {<h1>PGN Window</h1>
 
   <p>
-  This section explains how to use Scid's <run ::pgn::Open><green>PGN Window</green></run>.
-  </p>
-
-  <p> <i>Other help subjects include <a BrowsingPGN>PGN files and Scid</a>,
-  <a Export>Exporting</a>, and <a Import>Importing games</a></i> </p>
-
-  <p>
-  <i>Portable Game Notation is a common 
+  <b>Portable Game Notation</b> is a common 
   <url http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm>standard</url>
   for representing chess games.  A PGN file consists of two
   sections - a 'Header' containing tags such as
   [White "Kasparov, Gary"] and
   [Result "1/2-1/2"], and a 'Body' containing the actual moves in standard
   algebraic notation (SAN) along with any <a Variations>variations</a>, <a NAGs>annotation
-  symbols</a> and <a Comment>comments</a></i>.
+  symbols</a> and <a Comment>comments</a>.
   </p>
+
+  <p> <i>See also <a BrowsingPGN>PGN files and Scid</a>, <a Export>Exporting</a>, and <a Import>Importing games</a></i> </p>
+
+  <p><i>
+  The PGN window can be the cause of system slowdown on very large games due to a bug in the tktext widget.
+  Linux users are recommended to recompile using Gregor's tktext patch (in the patches directory) - but this patch may not be stable for Windows users.
+  </i></p>
 
   <h3>General Use</h3>
   <p>
-  The PGN Window allows one to navigate around the game. Clicking 
+  The <run ::pgn::Open><green>PGN Window</green> allows one to navigate around the game. Clicking 
   on moves will jump to them, clicking on comments edits them.
   (And just like the main window, the <b>arrow keys</b>, <b>v</b> and <b>z</b> allow for
   game navigation).  Using the middle button displays a small
@@ -1974,20 +1974,6 @@ set helpText(PGN) {<h1>PGN Window</h1>
   You can also alter the format of comments and variations, choosing
   to display them indented on a separate line for greater visibility.
   </p>
-
-  <h3>Context Menu</h3>
-  <ul>
-     <li><term>Delete Variation:</term> Deletes the current variation </li>
-     <li><term>Make First Variation:</term>
-     Moves the current variation to the first position of all variations on that level </li>
-     <li><term>Promote Variation to Mainline</term>
-     Promotes the current variation to the mainline and demotes the
-     current mainline to a variation.  </li>
-     <li><term>Strip:Comments</term> Removes all comments </li>
-     <li><term>Strip:Variations</term> Removes all variations </li>
-     <li><term>Strip:Moves from the beginning</term> </li>
-     <li><term>Strip:Moves to the End</term> </li>
-  </ul>
 
   <p><footer>Updated: Scid vs. PC 4.10, July 2013</footer></p>
 }

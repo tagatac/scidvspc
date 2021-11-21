@@ -413,12 +413,11 @@ namespace eval pgn {
     $mctxt add separator
     $mctxt add command -label "[tr EditStrip] [tr EditStripBegin]" -command ::game::TruncateBegin
     $mctxt add command -label "[tr EditStrip] [tr EditStripEnd]" -command ::game::Truncate
+    $mctxt add command -label "[tr EditStrip] [tr EditStripComments]" -command {::game::Strip comments .pgnWin}
+    $mctxt add command -label "[tr EditStrip] [tr EditStripVars]" -command {::game::Strip variations .pgnWin}
     $mctxt add separator
     $mctxt add command -label "[tr EditDeleteComment]" -command ::pgn::deleteComment
     $mctxt add command -label "[tr WindowsComment]" -command ::commenteditor::Open
-    $mctxt add separator
-    $mctxt add command -label "[tr EditStrip] [tr EditStripComments]" -command {::game::Strip comments .pgnWin}
-    $mctxt add command -label "[tr EditStrip] [tr EditStripVars]" -command {::game::Strip variations .pgnWin}
 
     ### Offset the menu a little so as to not obstruct move
     # [expr [winfo pointerx .] + 15] [expr [winfo pointery .] + 0]
