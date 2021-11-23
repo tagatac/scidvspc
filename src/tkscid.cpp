@@ -5891,8 +5891,8 @@ sc_filter_value (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     }
     gnum--;
 
-    if (base->treeFilter && (ply = setUintResult (ti, base->treeFilter->Get (gnum))) > 0)
-        return ply;
+    if (base->treeFilter && (ply = base->treeFilter->Get (gnum)) > 0)
+        return setUintResult (ti, ply);
     else
 	return setUintResult (ti, base->filter->Get (gnum));
 }
