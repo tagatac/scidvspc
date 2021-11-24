@@ -1296,7 +1296,8 @@ Game::TruncateAndFreeMove (moveT * thisMove)
 }
 
 
-//      Truncate all moves leading to current position.
+// Truncate all moves leading to current position.
+// Like Strip Variation it uses PGN export and import, and has a few hiccups eg Comment newlines are discarded etc
 
 void
 Game::TruncateStart (void)
@@ -1318,8 +1319,9 @@ Game::TruncateStart (void)
     uint  old_style = GetPgnStyle ();
     if (PgnStyle & PGN_STYLE_SHORT_HEADER)
       SetPgnStyle (PGN_STYLE_SHORT_HEADER, false);
-    // hmmm - why do we have to set this explicitly here S.A
+    // hmmm - why do we have to set these explicitly here S.A
     SetPgnStyle (PGN_STYLE_COMMENTS, true);
+    SetPgnStyle (PGN_STYLE_TAGS, true);
     WriteToPGN (&tb);
     Init();
     PgnParser parser (tb.GetBuffer());
@@ -3643,10 +3645,10 @@ Game::ClearStandardTags ()
     ScidFlags[0] = 0;
 }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Game::WriteExtraTags():
 //      Print the nonstandard tags in PGN notation to a file.
-//
+//      Unused - S.A
+
 errorT
 Game::WriteExtraTags (FILE * fp)
 {
