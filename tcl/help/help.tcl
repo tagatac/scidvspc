@@ -381,11 +381,11 @@ append helpText(Index) {
   <li>Tree <a TreeMasks>Masks</a></li>
   <li><a TacticsTrainer>Mate in ..N..</a> puzzle</li>
   <li><a Searches Material>Material/pattern searches</a></li>
-  <li><a Searches Move>Move searches</a></li>
   <li><a Formats>Maximum</a> number of games</li>
   <li><a Menus>Menus</a></li>
   <li><a GameList Browsing>Merging games</a></li>
   <li><a Moves>Move entry</a> and options</li>
+  <li><a Searches Move>Move searches</a></li>
   <li><a Options MyPlayerNames>My Player Names</a>
   </ul>
 
@@ -1638,6 +1638,8 @@ is done from the Maintenance window.</i></p>
 <li>Drag and Drop between switcher icons to copy files.</li>
 <li>Middle-click the Game List to hide the button bar.</li>
 </ul>
+<p><i>The current gamelist may be exported as text from ScidvsPC's Tools-<gt>ExportFilter menu.</i></p>
+  
 
   <h3><name Browsing>Browsing and Merging Games</name></h3>
   <p>
@@ -1650,11 +1652,10 @@ is done from the Maintenance window.</i></p>
   and you can change the last move number to be merged, according to whether
   you are interested in adding the whole game or just its next few moves.
   </p>
-<p><i>The board size can be resized by Control+Wheelmouse or Control+Shift+Left/Right.</i></p>
-<p><i>The current gamelist may be exported as text from ScidvsPC's Tools-<gt>ExportFilter menu.</i></p>
-  
+<p>Next/Previous games can be loaded by Control+Down/Up keys. The board size <b>can be resized</b> by Control+Wheelmouse or Control+Shift+Left/Right.</p>
+<p>To automatically <b>show the last move</b>, select Search-<gt>FilterToLastMove - though the shown ply is also affected by the Tree Window (if open).</p>
 
-  <p><footer>Updated: Scid vs. PC 4.22, July 2021</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.23, Nov 2021</footer></p>
 }
 
 

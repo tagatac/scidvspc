@@ -136,6 +136,11 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
     pack $w.b.close $w.b.last $w.b.next $w.b.prev $w.b.first -side right -padx 1 -pady 1
     pack $w.b.merge $w.b.load -side right -padx 1 -pady 1
 
+    bind $w <Control-Up> "$w.b.prev invoke"
+    bind $w <Control-Down> "$w.b.next invoke"
+    bind $w <Control-Home> "$w.b.first invoke"
+    bind $w <Control-End> "$w.b.last invoke"
+
     # bind $w <Configure> "recordWinSize $w"
     wm state $w normal
 
@@ -162,6 +167,8 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
     $w.b.merge configure -command "mergeGame $base $gnum"
   }
 
+# no longer flip for ::myPlayerNames
+if {0} {
   foreach pattern $::myPlayerNames {
     if {[string match $pattern $white]} {
       ::board::flip $w.bd 0
@@ -172,6 +179,7 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
       break
     }
   }
+}
 
   # The gnum is stored in title, and also used later 
   wm title $w "game $gnum ($filename)"
@@ -300,6 +308,9 @@ proc ::gbrowser::load {w base gnum ply n} {
   # Only load newgame if different to oldgame
   # (old game number is stored in wm title)
   if { [scan [wm title $w] {game %d}] != $newgame } {
+    set ply [sc_filter value $base $gnum]
+    if {$ply > 0} { incr ply -1 }
+
     ::gbrowser::new $base $newgame $ply $w
   }
 }
