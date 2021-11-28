@@ -619,10 +619,7 @@ namespace eval sergame {
       set index 0
       # Warn if the user went out of the opening line chosen
       if { !$outOfOpening } {
-        set ply [ expr [sc_pos moveNumber] * 2 - 1]
-        if { [sc_pos side] == "white" } {
-          set ply [expr $ply - 1]
-        }
+        set ply [sc_pos location]
         
         if { [lsearch $openingMovesHash [sc_pos hash]] == -1 && [llength $openingMovesList] >= $ply} {
 	  ::gameclock::pauseGameClock

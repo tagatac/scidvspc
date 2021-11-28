@@ -2832,28 +2832,16 @@ namespace eval CorrespondenceChess {
 
 			set Mode [::CorrespondenceChess::CheckMode]
 
+			# Number of moves in the current DB game (minus 2 - S.A.)
 			sc_move end
-			# Number of moves in the current DB game
-			set mnCorr [expr {[sc_pos moveNumber]-1}]
-			set side   [sc_pos side]
+                        set plyStart [sc_pos location]
+                        incr plyStart -2
+
+			sc_base switch "clipbase"
 
 			# Number of moves in the new game in Clipbase
-			sc_base switch "clipbase"
 			sc_move end
-			set mnClip [sc_pos moveNumber]
-
-			if {$side == "white"} {
-				set plyStart [expr {$mnCorr*2-1}]
-			} else {
-				set plyStart [expr {$mnCorr*2}]
-			}
-
-			set side   [sc_pos side]
-			if {$side == "white"} {
-				set plyEnd [expr {$mnClip*2-1}]
-			} else {
-				set plyEnd [expr {$mnClip*2}]
-			}
+                        set plyEnd [sc_pos location]
 
 			# Check if the games mainline in DB contains more ply than
 			# the game in the clipbase. If so inform the user.
@@ -2861,7 +2849,7 @@ namespace eval CorrespondenceChess {
 				set Title [::tr CCDlgDBGameToLong]
 				set Error [::tr CCDlgDBGameToLongError]
 				tk_messageBox -icon warning -type ok \
-					-title $Title -message "$Error $mnClip (= ply $plyEnd)"
+					-title $Title -message "$Error (ply $plyEnd)"
 			}
 
 			# Add moves from the relayed games if the mode is not Postal.
