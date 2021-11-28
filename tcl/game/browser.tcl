@@ -95,7 +95,7 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
     button $w.b.forward -image tb_next -command "::gbrowser::update $n +1" -relief flat
     button $w.b.end -image tb_end -command "::gbrowser::update $n end" -relief flat
     button $w.b.autoplay -image autoplay_off -command "::gbrowser::autoplay $n" -relief flat
-    button $w.b.flip -image tb_flip -command "::gbrowser::flip $n" -relief flat
+    button $w.b.flip -image tb_flip -command "::board::flip .gb$n.bd" -relief flat
 
     # hack to center the lower button bar
     # set width [expr [winfo reqwidth $w.bd] - [winfo reqwidth $w.b.start]*6]
@@ -115,15 +115,16 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
 
     dialogbutton $w.b.merge -textvar ::tr(MergeGame) -command "mergeGame $base $gnum"
 
-    # Behaviour of ply is a little confusing.
+    # Behaviour of ply is a little confusing, but we need it for when we want to 'Load' the current position into the main board
     # It is generally "-1", and gets its value from sc_filter
     # The gnext/gprev buttons below will also set it explicitly
 
     if {$ply < 0} {
-      set ply 0
       if {$gnum > 0} {
 	set ply [sc_filter value $base $gnum]
 	if {$ply > 0} { incr ply -1 }
+      } else {
+        set ply 0
       }
     }
 
@@ -313,10 +314,6 @@ proc ::gbrowser::load {w base gnum ply n} {
 
     ::gbrowser::new $base $newgame $ply $w
   }
-}
-
-proc ::gbrowser::flip {n} {
-  ::board::flip .gb$n.bd
 }
 
 proc ::gbrowser::update {n ply} {
