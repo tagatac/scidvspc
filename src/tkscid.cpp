@@ -8670,7 +8670,7 @@ sc_game_reorder (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
       return TCL_ERROR;
     }
 
-    uint gnum,newgame,temp;
+    uint gnum,newgame;
     int direction;
 
     if (sscanf (argv[2], "%u", &gnum ) != 1 || gnum == 0) {
