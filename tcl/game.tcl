@@ -285,7 +285,11 @@ proc ::game::LoadMenu {w base gnum x y} {
     $m add command -label $::tr(MergeGame)
   }
   $m entryconfigure 0 -command "::gbrowser::new $base $gnum"
+
   $m entryconfigure 1 -command "
+    if {!\[checkBaseInUse $base $w\]} {
+      return
+    }
     if {\[sc_base current\] != $base} {
       sc_base switch $base
       # These two not now refreshed with game::Load below
@@ -293,7 +297,9 @@ proc ::game::LoadMenu {w base gnum x y} {
       ::tourney::refresh
     }
     ::game::Load $gnum"
+
   $m entryconfigure 2 -command "mergeGame $base $gnum"
+
   ### Use tk_popup, amd remove the event hacks
   ### Wish8.7a0 menu's "post" doesn't allow for any way to cancel the menu for some reason - S.A.
   tk_popup $m $x $y

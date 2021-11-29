@@ -108,6 +108,11 @@ set merge(ply) 40
 
 proc mergeGame {{base 0} {gnum 0}} {
   global merge glNumber
+
+  if {![checkBaseInUse $base]} {
+    return
+  }
+
   if {$base == 0} {
     if {$glNumber < 1} { return }
     if {$glNumber > [sc_base numGames]} { return }
@@ -192,6 +197,19 @@ proc updateMergeGame {args} {
   $w.f.text tag add red 1.0 4.0
   #$w.f.text insert end $pgn
   $w.f.text configure -state disabled
+}
+
+proc checkBaseInUse {base {w {}}} {
+  if {[sc_base inUse $base]} {
+    return 1
+  } else {
+    if {[winfo exists $w]} {
+      tk_messageBox -type ok -icon error -title "Error" -message "Base $base is no longer open." -parent $w
+    } else {
+      tk_messageBox -type ok -icon error -title "Error" -message "Base $base is no longer open."
+    }
+    return 0
+  }
 }
 
 #   Set Export options for PGN, HTML and LaTeX laugh

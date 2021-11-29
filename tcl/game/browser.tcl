@@ -19,6 +19,10 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
   if {$base < 1} { set base [sc_base current] }
   if {$gnum < 1} { set gnum [sc_game number] }
 
+  if {![checkBaseInUse $base $w]} {
+    return
+  }
+
   ### if too large, load the last game
   if {$gnum > [sc_base numGames $base]} {
     set gnum [sc_base numGames $base]
@@ -106,6 +110,9 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
     set ::gbrowser::autoplay($n) 0
 
     dialogbutton $w.b.load -textvar ::tr(LoadGame) -command "
+      if {!\[checkBaseInUse $base $w\]} {
+	return
+      }
       sc_base switch $base
       if {\[::game::Load $gnum 0\] != -1} {
 	destroy $w
@@ -160,6 +167,9 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
     $w.b.last configure -command   "::gbrowser::load $w $base $gnum $ply end"
 
     $w.b.load configure -command "
+      if {!\[checkBaseInUse $base $w\]} {
+        return
+      }
       sc_base switch $base
       ::game::Load $gnum 0
       destroy $w
@@ -231,9 +241,7 @@ proc ::gbrowser::load {w base gnum ply n} {
   global tree
 
   # The behaviour changes according to whether .treeBest$base exists or not
-  if {![sc_base inUse $base]} {
-    tk_messageBox -type ok -icon error -title "Browser Error" -message "Base $base is no longer open." -parent $w
-    destroy $w
+  if {![checkBaseInUse $base $w]} {
     return
   }
 
