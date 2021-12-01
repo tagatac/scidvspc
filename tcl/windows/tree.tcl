@@ -1314,6 +1314,7 @@ proc ::tree::best {baseNumber} {
     ::createToplevelFinalize $w
     bind $w <Configure> "::tree::bestConfigure $w %W"
     bind $w <Destroy> "+::tree::bestWidths $w"
+    bind $w <Control-a> "$w.tree selection set \[$w.tree children {}\]"
   }
   $w.tree delete [$w.tree children {}]
 
@@ -1457,7 +1458,7 @@ proc ::tree::toggleRefresh { baseNumber } {
 }
 proc ::tree::bestPopup {baseNumber w x y X Y} {
 
-  global blistHeaders
+  global blistHeaders tr
 
   # Identify region requires at least tk 8.5.9 (?)
 
@@ -1487,23 +1488,23 @@ proc ::tree::bestPopup {baseNumber w x y X Y} {
     $menu.addcol delete 0 end
     set i 0
     foreach h $::blistHeaders {
-        $menu.addcol add command -label $::tr(Glist$h) -command "::tree::bestInsertCol $w $i $col"
+        $menu.addcol add command -label $tr(Glist$h) -command "::tree::bestInsertCol $w $i $col"
       incr i
     }
-    $menu add cascade -label $::tr(GlistAddField) -menu $menu.addcol
-    $menu add command -label $::tr(GlistRemoveThisGameFromFilter) -command "::tree::bestRemoveCol $w $col"
+    $menu add cascade -label $tr(GlistAddField) -menu $menu.addcol
+    $menu add command -label $tr(GlistRemoveThisGameFromFilter) -command "::tree::bestRemoveCol $w $col"
 
     $menu add separator
 
-    $menu add command -label $::tr(GlistAlignL) \
+    $menu add command -label $tr(GlistAlignL) \
 		   -command "$w column $col -anchor w; lset ::blistColAnchor $col_idx w"
-    $menu add command -label $::tr(GlistAlignR) \
+    $menu add command -label $tr(GlistAlignR) \
 		   -command "$w column $col -anchor e; lset ::blistColAnchor $col_idx e"
-    $menu add command -label $::tr(GlistAlignC) \
+    $menu add command -label $tr(GlistAlignC) \
 		   -command "$w column $col -anchor c; lset ::blistColAnchor $col_idx c"
 
     $menu add separator
-    $menu add command -label $::tr(Reset) -command "::tree::bestResetCols $w"
+    $menu add command -label $tr(Reset) -command "::tree::bestResetCols $w"
 
     tk_popup $menu $X $Y
 
@@ -1519,9 +1520,10 @@ proc ::tree::bestPopup {baseNumber w x y X Y} {
     }
 
     if {[lsearch $selection $row] == -1 || [llength $selection] == 1} {
+      set menutype full
       event generate $w <ButtonPress-1> -x $x -y $y
     } else {
-      puts "OOPS!"
+      set menutype short
     }
 
     # set number [$w set [$w focus] Number]
@@ -1538,10 +1540,13 @@ proc ::tree::bestPopup {baseNumber w x y X Y} {
 
     menu $menu -tearoff 0
 
-    $menu add command -label $::tr(Browse) -command "::tree::bestBrowse $baseNumber"
-    $menu add command -label $::tr(LoadGame) -command "::tree::bestLoadSelection $baseNumber"
-    $menu add command -label $::tr(MergeGame) -command "::tree::bestMerge $baseNumber"
-
+    if {$menutype == "full"} {
+      $menu add command -label $tr(Browse) -command "::tree::bestBrowse $baseNumber"
+      $menu add command -label $tr(LoadGame) -command "::tree::bestLoadSelection $baseNumber"
+      $menu add command -label $tr(MergeGame) -command "::tree::bestMerge $baseNumber"
+    } else {
+      $menu add command -label $tr(Browse) -command "browseGames $w.tree"
+    }
     tk_popup $menu [winfo pointerx .] [winfo pointery .]
   }
 }

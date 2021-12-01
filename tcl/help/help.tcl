@@ -1641,7 +1641,7 @@ is done from the Maintenance window.</i></p>
 <p><i>The current gamelist may be exported as text from ScidvsPC's Tools-<gt>ExportFilter menu.</i></p>
   
 
-  <h3><name Browsing>Browsing and Merging Games</name></h3>
+  <h3><name Browsing>Browsing and Merging Single Games</name></h3>
   <p>
   From the Gamelist context menu, one may <b>Browse</b> a game. This is a game
   preview which displays in a separate window, without comments or variations.
@@ -1655,7 +1655,22 @@ is done from the Maintenance window.</i></p>
 <p>Next/Previous games can be loaded by Control+Down/Up keys. The board size <b>can be resized</b> by Control+Wheelmouse or Control+Shift+Left/Right.</p>
 <p>To automatically <b>show the last move</b>, select Search-<gt>FilterToLastMove - though the shown ply is also affected by the Tree Window (if open).</p>
 
-  <p><footer>Updated: Scid vs. PC 4.23, Nov 2021</footer></p>
+  <h3>Browsing Multiple Games</h3>
+  <p>
+  Scid vs PC can also browse multiple games (in a grid format) via right-clicking a selection of games.
+  The idea is similar to browsing a single game, but with a reduced interface, and more emphasis on the wheel mouse
+  - which is used to progress through games, and also resize the boards (using Control+Wheel). This feature is similar to the
+  small observation boards in FICS (and the default board size is also determined by Options-<gt>FICS-<gt>BoardSize).
+  Beside the normal Left/Right/Home/End key bindings, Control+Enter will load the active (mouseover) game.
+  </p>
+  <p>
+  Pressing Control-Left/Right will progress <b>all</b> boards forward or back, and similarly Control+Home/End will show all start/end positions.
+  </p>
+  <p>
+  This feature is also available for the Tree Best Games widget.
+  </p>
+
+  <p><footer>Updated: Scid vs. PC 4.23, Dec 2021</footer></p>
 }
 
 
@@ -4499,7 +4514,7 @@ limited the coach is allowed to think in the background.</i></p>
 
      <li><b>Nodes</b> is similar to limiting the search depth,
      but here the engine has to move after the evaluation of a certain
-     number of positions. (The default is 10,000.)
+     number of positions.
      </li>
 
   <li><b>Permanent thinking</b> (sometimes also called ponder)

@@ -826,6 +826,10 @@ proc ::windows::gamelist::Popup {w x y X Y} {
       $menu.flags add command -label "$tmp" -command "::windows::gamelist::ToggleFlag $flag"
     }
 
+    if {$menutype == "short"} {
+      $menu add separator
+      $menu add command -label $tr(Browse) -command browseGames
+    }
 
     menu $menu.move
     $menu.move add command -label $tr(GlistMoveFieldUp)    -command {::windows::gamelist::Reorder up}
@@ -1422,10 +1426,234 @@ proc ::windows::gamelist::ReorderGameN {} {
   packbuttons right $b.cancel $b.load
   placeWinOverParent $w .glistWin
   update
-   wm state $w normal
+  wm state $w normal
   focus $w.entry
-
 }
 
+
+proc browseGames {{tree .glistWin.tree}} {
+  global tr browse myPlayerNames
+  array set browse {}
+
+  set w .preview
+  if {[winfo exists $w]} {
+    destroy $w
+  }
+
+  toplevel $w
+  wm resizable $w 0 0
+  bind $w <F1> {helpWindow GameList Browsing}
+
+  if {$tree == ".glistWin.tree"} {
+    wm title $w "$tr(Browse) $tr(FICSGames)"
+  } else {
+    wm title $w "$tr(Browse) $tr(TreeBestGames)"
+  }
+
+  wm state $w withdrawn
+  bind $w <Escape> "destroy $w"
+  bind $w <Control-Right> "browseGamesMoveAll +1"
+  bind $w <Control-Left>  "browseGamesMoveAll -1"
+  bind $w <Control-Home>  "browseGamesMoveAll start"
+  bind $w <Control-End>   "browseGamesMoveAll end"
+
+  if {$::windowsOS || $::macOS} {
+    bind $w <Control-MouseWheel> "
+     if {\[expr -%D\] < 0} \"browseGamesResize +1\"
+     if {\[expr -%D\] > 0} \"browseGamesResize -1\"
+    "
+  } else {
+    bind $w <Control-Button-4> "browseGamesResize +1"
+    bind $w <Control-Button-5> "browseGamesResize -1"
+  }
+
+  set base  [sc_base current]
+  set items [$tree selection]
+  set browse(games) {}
+  set x 1
+  set y 1
+
+  set length [llength $items]
+
+  # Quick hack to proportion the grid
+  if {$length > 36} {
+    set width 7
+  } elseif {$length > 24} {
+    set width 6
+  } elseif {$length > 12} {
+    set width 5
+  } elseif {$length > 6 || $length == 4} {
+    set width 4
+  } else {
+    set width 3
+  }
+
+  foreach i $items {
+    set game [string trim [$tree set $i Number]]
+    lappend browse(games) $game
+    set g $w.game$game
+
+    frame $g
+    grid $g -row $y -column $x
+    if {$x == $width} {
+      set x 1
+      incr y
+    } else {
+      incr x
+    }
+
+    ::board::new $g.bd [expr {$::fics::size * 5 + 20}] 1
+
+    set header [sc_game summary -game $game header]
+    set offset [string first { -- } $header]
+    set white [string trim [string range $header 0 $offset]]
+    incr offset 4
+    set black [string trim [string range $header $offset [string first "\n" $header $offset]]]
+    # hmm - treating this text as a list may be bad S.A.
+    set result [lindex $header end]
+    set boards [sc_game summary -game $game boards]
+
+    set browse(white$game) $white
+    set browse(black$game) $black
+    set browse(boards$game) $boards
+
+    set ply [sc_filter value $game]
+    if {$ply > 0} { incr ply -1 }
+    set max [expr {[llength $boards] - 1} ]
+    if {$ply > $max || $ply == 0} {set ply $max}
+
+    set browse(ply$game) $ply
+
+    ::board::update $g.bd [lindex $boards $ply] 1
+
+    frame $g.w
+    label $g.w.white  -font font_Small -text $white
+    label $g.w.result -font font_Small -text "$game ($result)"
+
+    # At top we have Black and Buttons
+    frame $g.b
+    label $g.b.black -font font_Small -text $black
+    button $g.b.flip -image arrow_updown -font font_Small -relief flat -command "
+      # flip player names and bindings
+      set temp1 \[$g.b.black cget -text\]
+      set temp2 \[$g.w.white cget -text\]
+      set bind1 \[bind $g.b.black <ButtonRelease-1>\]
+      set bind2 \[bind $g.w.white <ButtonRelease-1>\]
+      ::board::flip $g.bd
+      $g.b.black configure -text \$temp2
+      $g.w.white configure -text \$temp1
+      bind $g.b.black <ButtonRelease-1> \$bind2
+      bind $g.w.white <ButtonRelease-1> \$bind1
+    "
+
+    button $g.b.load -image arrow_up -font font_Small -relief flat -command "
+    if {!\[checkBaseInUse $base $w\]} {
+      return
+    }
+    sc_base switch $base
+    if {\[::game::Load $game 0\] != -1} {
+      sc_move ply \$::browse(ply$game)
+      updateBoard -pgn
+    }"
+
+    button $g.b.close -image arrow_close -font font_Small -relief flat -command "destroy $g"
+
+    bind $g.w.white <ButtonRelease-1> [list playerInfo $white raise]
+    bind $g.w.white <Any-Enter> "$g configure -cursor hand2"
+    bind $g.w.white <Any-Leave> "$g configure -cursor {}"
+
+    bind $g.b.black <ButtonRelease-1> [list playerInfo $black raise]
+    bind $g.b.black <Any-Enter> "$g configure -cursor hand2"
+    bind $g.b.black <Any-Leave> "$g configure -cursor {}"
+
+    bind $g.bd <Home>  "browseGamesMove $game start"
+    bind $g.bd <End>   "browseGamesMove $game end"
+    bind $g.bd <Left>  "browseGamesMove $game -1"
+    bind $g.bd <Right> "browseGamesMove $game +1"
+    bind $g.bd <Control-Return>  "$g.b.load invoke"
+    bind $g.bd <Control-Right> " "
+    bind $g.bd <Control-Left>  " "
+    # mouse enter set focus
+    bind $g.bd <Enter> "focus $g.bd"
+
+    if {$::windowsOS || $::macOS} {
+      bind $g.bd.bd <MouseWheel> "
+        if {\[expr -%D\] < 0} \"browseGamesMove $game -1\"
+        if {\[expr -%D\] > 0} \"browseGamesMove $game +1\"
+      "
+      # These bindings are not quite null.. " " so they don't also trigger  the above binding
+      bind $g.bd.bd <Control-MouseWheel> "
+       if {\[expr -%D\] < 0} \" \"
+       if {\[expr -%D\] > 0} \" \"
+      "
+    } else {
+      bind $g.bd.bd <Button-4> "browseGamesMove $game -1"
+      bind $g.bd.bd <Button-5> "browseGamesMove $game +1"
+      bind $g.bd.bd <Control-Button-4> " "
+      bind $g.bd.bd <Control-Button-5> " "
+    }
+
+    pack $g.b  -side top -anchor w -expand 1 -fill x
+    pack $g.b.black -side left
+    pack [frame $g.b.space -width 24] $g.b.close $g.b.load $g.b.flip -side right
+    pack $g.bd -side top
+    pack $g.w -side top -expand 1 -fill x
+    pack $g.w.white -side left
+    pack [frame $g.w.space -width 20] $g.w.result -side right
+
+    foreach pattern $myPlayerNames {
+      if {[string match $pattern $black]} {
+	$g.b.flip invoke
+	break
+      }
+    }
+
+  } ; # foreach items
+
+  update
+  wm state $w normal
+}
+
+proc browseGamesResize {x} {
+  foreach g $::browse(games) {
+    if {[winfo exists .preview.game$g]} {
+      ::board::resize .preview.game$g.bd $x
+    }
+  }
+  incr ::fics::size $x
+  if {$::fics::size < 1} {set ::fics::size 1}
+  if {$::fics::size > 5} {set ::fics::size 5}
+}
+
+proc browseGamesMove {game x} {
+  global browse
+  set g .preview.game$game
+  set max [expr {[llength $browse(boards$game)] - 1} ]
+
+  if {$x == "start"} {
+    set ply 0
+  } elseif {$x == "end"} {
+    set ply $max
+  } else {
+    set ply [expr {$browse(ply$game) + $x}]
+    if {$ply < 0} {
+      set ply 0
+    }
+    if {$ply > $max} {
+      set ply $max
+    }
+  }
+
+  ::board::update $g.bd [lindex $browse(boards$game) $ply] 1
+  set browse(ply$game) $ply
+}
+
+proc browseGamesMoveAll {x} {
+  foreach g $::browse(games) {
+    if {[winfo exists .preview.game$g]} {
+      browseGamesMove $g $x
+    }
+  }
+}
 
 ### end of gamelist.tcl
