@@ -159,21 +159,21 @@ namespace eval sergame {
 
     # Fixed depth
     radiobutton $w.ftime.depthbutton -text $tr(FixedDepth) -value "depth" -variable ::sergame::timeMode
-    spinbox $w.ftime.depthvalue  -width 4 -from 1 -to 20 -increment 1 -validate all -vcmd {string is int %P}
+    spinbox $w.ftime.depthvalue  -width 7 -from 1 -to 20 -increment 1 -validate all -vcmd {string is int %P}
     $w.ftime.depthvalue set 3
 
     grid $w.ftime.depthbutton -row 1 -column 0 -sticky w
     grid $w.ftime.depthvalue -row 1 -column 1 -sticky w
 
-    radiobutton $w.ftime.nodesbutton -text "$tr(Nodes) (x1000)" -value "nodes" -variable ::sergame::timeMode
-    spinbox $w.ftime.nodesvalue  -width 4 -from 5 -to 10000 -increment 5 -validate all -vcmd {string is int %P}
-    $w.ftime.nodesvalue set 10
+    radiobutton $w.ftime.nodesbutton -text "$tr(Nodes)" -value "nodes" -variable ::sergame::timeMode
+    spinbox $w.ftime.nodesvalue  -width 7 -from 100 -to 2000 -increment 100 -validate all -vcmd {string is int %P}
+    $w.ftime.nodesvalue set 1000
 
     grid $w.ftime.nodesbutton -row 2 -column 0 -sticky w
     grid $w.ftime.nodesvalue -row 2 -column 1 -sticky w
 
     radiobutton $w.ftime.movetimebutton -text $tr(SecondsPerMove) -value "movetime" -variable ::sergame::timeMode
-    spinbox $w.ftime.movetimevalue  -width 4 -from 1 -to 120 -increment 1 -validate all -vcmd {string is int %P}
+    spinbox $w.ftime.movetimevalue  -width 7 -from 1 -to 120 -increment 1 -validate all -vcmd {string is int %P}
     $w.ftime.movetimevalue set $::sergame::movetime
 
     grid $w.ftime.movetimebutton -row 3 -column 0 -sticky w
@@ -297,7 +297,7 @@ namespace eval sergame {
       set ::sergame::winc [.configSerGameWin.ftime.timebonus.whitespseconds get]
       set ::sergame::binc [.configSerGameWin.ftime.timebonus.blackspseconds get]
       set ::sergame::fixeddepth [.configSerGameWin.ftime.depthvalue get]
-      set ::sergame::fixednodes [expr [.configSerGameWin.ftime.nodesvalue get]*1000]
+      set ::sergame::fixednodes [.configSerGameWin.ftime.nodesvalue get]
       set ::sergame::movetime [.configSerGameWin.ftime.movetimevalue get]
       
       destroy .configSerGameWin
