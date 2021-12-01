@@ -1478,7 +1478,7 @@ proc browseGames {{tree .glistWin.tree}} {
   # Quick hack to proportion the grid
   if {$length > 36} {
     set width 7
-  } elseif {$length > 24} {
+  } elseif {$length > 20} {
     set width 6
   } elseif {$length > 12} {
     set width 5

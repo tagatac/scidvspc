@@ -5871,24 +5871,25 @@ int
 sc_filter_value (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
     scidBaseT * base = db;
-    uint gnum = base->gameNumber;
+    uint gnum = db->gameNumber + 1;
     uint ply;
 
     if (argc > 4)
 	return errorResult (ti, "Usage : sc_filter_value [game [base]]");
 
     if (argc >= 3) {
+	if (argc == 4) {
+	    int baseNum = strGetInteger (argv[3]);
+	    if (baseNum < 1  ||  baseNum > MAX_BASES || !((base = &(dbList[baseNum - 1]))->inUse) )
+	      return errorResult (ti, "sc_filter_value: Illegal base");
+	}
         gnum = strGetUnsigned (argv[2]);
-	if (gnum < 1  ||  gnum > base->numGames)
-	  return errorResult (ti, "sc_filter_value: game out of range");
-	gnum--;
     } 
 
-    if (argc == 4) {
-        int baseNum = strGetInteger (argv[3]);
-        if (baseNum < 1  ||  baseNum > MAX_BASES || !((base = &(dbList[baseNum - 1]))->inUse) )
-	  return errorResult (ti, "sc_filter_value: Illegal base");
-    }
+    if (gnum < 1  ||  gnum > base->numGames)
+      return errorResult (ti, "sc_filter_value: game out of range");
+
+    gnum--;
 
     if (base->treeFilter && (ply = base->treeFilter->Get (gnum)) > 0)
         return setUintResult (ti, ply);
