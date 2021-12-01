@@ -9557,12 +9557,6 @@ sc_game_summary (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         if (dateStr[7] == '.'  &&  dateStr[8] == '?') { dateStr[7] = 0; }
         dstr->Append (dateStr, "  ");
         dstr->Append (RESULT_LONGSTR[g->GetResult()]);
-        ecoT eco = g->GetEco();
-        if (eco != 0) {
-            ecoStringT ecoStr;
-            eco_ToExtendedString (eco, ecoStr);
-            dstr->Append ("  ", ecoStr);
-        }
         Tcl_AppendResult (ti, dstr->Data(), NULL);
         delete dstr;
         return TCL_OK;
