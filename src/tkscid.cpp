@@ -5864,8 +5864,8 @@ sc_filter_textfilter (ClientData cd, Tcl_Interp * ti, int argc, const char ** ar
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// sc_filter_value:
-//    Returns the filter value/ply of the specified base and game
+// sc_filter_value [game [base]]
+//    Returns the filter value/ply of the specified game [and base]
 //    Currently used only by game/browser.tcl - so if tree is open, use this value
 int
 sc_filter_value (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
@@ -5874,22 +5874,21 @@ sc_filter_value (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     uint gnum = base->gameNumber;
     uint ply;
 
-    if (argc >= 3) {
-        int baseNum = strGetInteger (argv[2]);
-        if (baseNum >= 1  &&  baseNum <= MAX_BASES) {
-            base = &(dbList[baseNum - 1]);
-        }
-    }
-    if (argc >= 4) {
-        gnum = strGetUnsigned (argv[3]);
-    } else {
-        gnum = base->gameNumber + 1;
-    }
+    if (argc > 4)
+	return errorResult (ti, "Usage : sc_filter_value [game [base]]");
 
-    if (!base->inUse  ||  gnum < 1  ||  gnum > base->numGames) {
-        return setUintResult (ti, 0);
+    if (argc >= 3) {
+        gnum = strGetUnsigned (argv[2]);
+	if (gnum < 1  ||  gnum > base->numGames)
+	  return errorResult (ti, "sc_filter_value: game out of range");
+	gnum--;
+    } 
+
+    if (argc == 4) {
+        int baseNum = strGetInteger (argv[3]);
+        if (baseNum < 1  ||  baseNum > MAX_BASES || !((base = &(dbList[baseNum - 1]))->inUse) )
+	  return errorResult (ti, "sc_filter_value: Illegal base");
     }
-    gnum--;
 
     if (base->treeFilter && (ply = base->treeFilter->Get (gnum)) > 0)
         return setUintResult (ti, ply);
