@@ -1494,7 +1494,7 @@ proc browseGames {{tree .glistWin.tree}} {
     set g $w.game$game
 
     frame $g
-    grid $g -row $y -column $x
+    grid $g -row $y -column $x -padx 10 -pady 5
     if {$x == $width} {
       set x 1
       incr y
@@ -1511,6 +1511,7 @@ proc browseGames {{tree .glistWin.tree}} {
     set black [string trim [string range $header $offset [string first "\n" $header $offset]]]
     # hmm - treating this text as a list may be bad S.A.
     set result [lindex $header end]
+    set halfmoves [lindex $header end-2]
     set boards [sc_game summary -game $game boards]
 
     set browse(white$game) $white
@@ -1526,13 +1527,16 @@ proc browseGames {{tree .glistWin.tree}} {
 
     ::board::update $g.bd [lindex $boards $ply] 1
 
+    # At bottom, White, length, result
     frame $g.w
     label $g.w.white  -font font_Small -text $white
-    label $g.w.result -font font_Small -text "$game ($result)"
+    label $g.w.result -font font_Small -text "$halfmoves $result"
 
-    # At top we have Black and Buttons
+    # At top we have Black , game number and Buttons
     frame $g.b
     label $g.b.black -font font_Small -text $black
+    label $g.b.game  -font font_Small -text $game
+
     button $g.b.flip -image arrow_updown -font font_Small -relief flat -command "
       # flip player names and bindings
       set temp1 \[$g.b.black cget -text\]
@@ -1571,6 +1575,8 @@ proc browseGames {{tree .glistWin.tree}} {
     bind $g.bd <Left>  "browseGamesMove $game -1"
     bind $g.bd <Right> "browseGamesMove $game +1"
     bind $g.bd <Control-Return>  "$g.b.load invoke"
+    bind $g.bd.bd <Double-Button-1> "$g.b.load invoke"
+    bind $g.bd.bd <Button-3> "::game::LoadMenu $g.bd $base $game %X %Y"
     bind $g.bd <Control-Right> " "
     bind $g.bd <Control-Left>  " "
     # mouse enter set focus
@@ -1599,7 +1605,7 @@ proc browseGames {{tree .glistWin.tree}} {
     pack $g.bd -side top
     pack $g.w -side top -expand 1 -fill x
     pack $g.w.white -side left
-    pack [frame $g.w.space -width 20] $g.w.result -side right
+    pack [frame $g.w.space -width 20] $g.w.result $g.b.game -side right
 
     foreach pattern $myPlayerNames {
       if {[string match $pattern $black]} {

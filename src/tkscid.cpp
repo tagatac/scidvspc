@@ -9524,8 +9524,7 @@ sc_game_summary (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         gnum--;
         IndexEntry * ie = base->idx->FetchEntry (gnum);
         base->bbuf->Empty();
-        if (base->gfile->ReadGame (base->bbuf, ie->GetOffset(),
-                                   ie->GetLength()) != OK) {
+        if (base->gfile->ReadGame (base->bbuf, ie->GetOffset(), ie->GetLength()) != OK) {
             return errorResult (ti, "Error loading game.");
         }
         g->Clear();
@@ -9545,18 +9544,26 @@ sc_game_summary (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         elo = g->GetBlackElo();
         if (elo > 0) { dstr->Append (" (", elo, ")"); }
         dstr->Append ("\n", g->GetEventStr());
+
         const char * round = g->GetRoundStr();
-        if (! strIsUnknownName(round)) {
-            dstr->Append (" (", round, ")");
-        }
-        dstr->Append ("  ", g->GetSiteStr(), "\n");
+        if (! strIsUnknownName(round))
+            dstr->Append (" (", translate (ti,"Round")," ", round, ")");
+
+        const char * site = g->GetSiteStr();
+        if (! strIsUnknownName(site))
+	  dstr->Append ("  ", site);
+
         char dateStr [20];
         date_DecodeToString (g->GetDate(), dateStr);
         // Remove ".??" or ".??.??" from end of date:
         if (dateStr[4] == '.'  &&  dateStr[5] == '?') { dateStr[4] = 0; }
         if (dateStr[7] == '.'  &&  dateStr[8] == '?') { dateStr[7] = 0; }
-        dstr->Append (dateStr, "  ");
-        dstr->Append (RESULT_LONGSTR[g->GetResult()]);
+        dstr->Append ("\n",dateStr, "  ");
+
+	uint m = (g->GetNumHalfMoves() + 1) / 2;
+        dstr->Append ("  ", m , " ", translate (ti,"Moves"));
+
+        dstr->Append ("   (" , RESULT_LONGSTR[g->GetResult()] , ")");
         Tcl_AppendResult (ti, dstr->Data(), NULL);
         delete dstr;
         return TCL_OK;
