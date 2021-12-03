@@ -115,8 +115,10 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
       }
       sc_base switch $base
       if {\[::game::Load $gnum 0\] != -1} {
+        set flipped \[::board::isFlipped $w.bd\]
 	destroy $w
 	sc_move ply \$::gbrowser::ply($n)
+        ::board::flip .main.board \$flipped
 	updateBoard -pgn
       }"
 

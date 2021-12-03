@@ -1456,6 +1456,7 @@ proc browseGames {{tree .glistWin.tree}} {
   bind $w <Control-Left>  "browseGamesMoveAll -1"
   bind $w <Control-Home>  "browseGamesMoveAll start"
   bind $w <Control-End>   "browseGamesMoveAll end"
+  bind $w <Control-f>     "browseGamesFlipAll"
 
   if {$::windowsOS || $::macOS} {
     bind $w <Control-MouseWheel> "
@@ -1551,14 +1552,15 @@ proc browseGames {{tree .glistWin.tree}} {
     "
 
     button $g.b.load -image arrow_up -font font_Small -relief flat -command "
-    if {!\[checkBaseInUse $base $w\]} {
-      return
-    }
-    sc_base switch $base
-    if {\[::game::Load $game 0\] != -1} {
-      sc_move ply \$::browse(ply$game)
-      updateBoard -pgn
-    }"
+      if {!\[checkBaseInUse $base $w\]} {
+	return
+      }
+      sc_base switch $base
+      if {\[::game::Load $game 0\] != -1} {
+	sc_move ply \$::browse(ply$game)
+	::board::flip .main.board \[::board::isFlipped $g.bd\]
+	updateBoard -pgn
+      }"
 
     button $g.b.close -image arrow_close -font font_Small -relief flat -command "destroy $g"
 
@@ -1574,6 +1576,7 @@ proc browseGames {{tree .glistWin.tree}} {
     bind $g.bd <End>   "browseGamesMove $game end"
     bind $g.bd <Left>  "browseGamesMove $game -1"
     bind $g.bd <Right> "browseGamesMove $game +1"
+    bind $g.bd <f> "$g.b.flip invoke"
     bind $g.bd <Control-Return>  "$g.b.load invoke"
     bind $g.bd.bd <Double-Button-1> "$g.b.load invoke"
     bind $g.bd.bd <Button-3> "::game::LoadMenu $g.bd $base $game %X %Y"
@@ -1658,6 +1661,14 @@ proc browseGamesMoveAll {x} {
   foreach g $::browse(games) {
     if {[winfo exists .preview.game$g]} {
       browseGamesMove $g $x
+    }
+  }
+}
+
+proc browseGamesFlipAll {} {
+  foreach g $::browse(games) {
+    if {[winfo exists .preview.game$g]} {
+      .preview.game$g.b.flip invoke
     }
   }
 }
