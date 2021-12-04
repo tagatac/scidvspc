@@ -1467,6 +1467,11 @@ proc browseGames {{tree .glistWin.tree}} {
     bind $w <Control-Button-4> "browseGamesResize +1"
     bind $w <Control-Button-5> "browseGamesResize -1"
   }
+  if {$::macOS} {
+    set key BackSpace
+  } else {
+    set key Delete
+  }
 
   set base  [sc_base current]
   set items [$tree selection]
@@ -1537,6 +1542,9 @@ proc browseGames {{tree .glistWin.tree}} {
     frame $g.b
     label $g.b.black -font font_Small -text $black
     label $g.b.game  -font font_Small -text $game
+    if {[string match *D* [sc_flags $game]]} {
+      $g.b.game configure -bg grey70
+    }
 
     button $g.b.flip -image arrow_updown -font font_Small -relief flat -command "
       # flip player names and bindings
@@ -1572,6 +1580,16 @@ proc browseGames {{tree .glistWin.tree}} {
     bind $g.b.black <Any-Enter> "$g configure -cursor hand2"
     bind $g.b.black <Any-Leave> "$g configure -cursor {}"
 
+    bind $g.bd <Control-$key>  "
+      sc_game flag delete $game invert
+      if {\[string match *D* \[sc_flags $game\]\]} {
+        $g.b.game configure -bg grey70
+      } else {
+        $g.b.game configure -bg \[$g.b.black cget -bg\]
+      }
+      updateStatusBar
+      ::windows::gamelist::Refresh
+    "
     bind $g.bd <Home>  "browseGamesMove $game start"
     bind $g.bd <End>   "browseGamesMove $game end"
     bind $g.bd <Left>  "browseGamesMove $game -1"
@@ -1580,8 +1598,10 @@ proc browseGames {{tree .glistWin.tree}} {
     bind $g.bd <Control-Return>  "$g.b.load invoke"
     bind $g.bd.bd <Double-Button-1> "$g.b.load invoke"
     bind $g.bd.bd <Button-3> "::game::LoadMenu $g.bd $base $game %X %Y"
+    # Have to zero these bindings to stop them being processed (again) as per above
     bind $g.bd <Control-Right> " "
     bind $g.bd <Control-Left>  " "
+    bind $g.bd <Control-f>  " "
     # mouse enter set focus
     bind $g.bd <Enter> "focus $g.bd"
 

@@ -1659,7 +1659,8 @@ is done from the Maintenance window.</i></p>
   <p>
   Scid vs PC can also browse multiple games (in a grid format) via right-clicking a selection of games.
   Left/Right/Home/End keys will walk through a game. Double-click or Control+Enter will load the game.
-  Control+Wheel mouse resizes the boards (default board size is determined by Options-<gt>FICS-<gt>BoardSize).
+  'f' flips the board. Control+Wheel mouse resizes the boards (default board size is determined by
+  Options-<gt>FICS-<gt>BoardSize). Control+Delete toggles Delete (indicated by a greyed Game Number).
   </p>
   <p>
   Pressing Control-Left/Right will progress <b>all</b> boards forward or back, similarly Control+Home/End will show all start/end positions.

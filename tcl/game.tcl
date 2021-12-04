@@ -116,7 +116,7 @@ proc ::game::Truncate {} {
 
 proc ::game::Delete {} {
   sc_game flag delete [sc_game number] invert
-  updateBoard
+  updateStatusBar
   ::windows::gamelist::Refresh
 }
 
