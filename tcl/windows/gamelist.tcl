@@ -1445,9 +1445,9 @@ proc browseGames {{tree .glistWin.tree}} {
   bind $w <F1> {helpWindow GameList Browsing}
 
   if {$tree == ".glistWin.tree"} {
-    wm title $w "$tr(Browse) $tr(FICSGames)"
+    wm title $w "$tr(Browse) $tr(FICSGames): [file tail [sc_base filename]]"
   } else {
-    wm title $w "$tr(Browse) $tr(TreeBestGames)"
+    wm title $w "$tr(Browse) $tr(TreeBestGames): [file tail [sc_base filename]]"
   }
 
   wm state $w withdrawn
@@ -1475,6 +1475,7 @@ proc browseGames {{tree .glistWin.tree}} {
 
   set base  [sc_base current]
   set items [$tree selection]
+  set browse(items) $items
   set browse(games) {}
   set x 1
   set y 1
@@ -1570,7 +1571,12 @@ proc browseGames {{tree .glistWin.tree}} {
 	updateBoard -pgn
       }"
 
-    button $g.b.close -image arrow_close -font font_Small -relief flat -command "destroy $g"
+    button $g.b.close -image arrow_close -font font_Small -relief flat -command "
+      destroy $g
+      catch {
+        $tree selection remove \[lindex \$browse(items) \[lsearch \$browse(games) $game\]\]
+      }
+    "
 
     bind $g.w.white <ButtonRelease-1> [list playerInfo $white raise]
     bind $g.w.white <Any-Enter> "$g configure -cursor hand2"
@@ -1630,11 +1636,14 @@ proc browseGames {{tree .glistWin.tree}} {
     pack $g.w.white -side left
     pack [frame $g.w.space -width 20] $g.w.result $g.b.game -side right
 
+    # Probably sane to have all these games flipped the same color, so don't myPlayerNames them
+    if {0} {
     foreach pattern $myPlayerNames {
       if {[string match $pattern $black]} {
 	$g.b.flip invoke
 	break
       }
+    }
     }
 
   } ; # foreach items
