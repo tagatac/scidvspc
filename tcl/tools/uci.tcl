@@ -562,6 +562,7 @@ namespace eval uci {
   proc uciConfigWin {n} {
     global ::uci::uciOptions ::uci::optList ::uci::optionToken ::uci::oldOptions ::uci::optionImportant
 
+    # note $w gets reassigned in this proc
     set w .uciConfigWin
 
     if { [winfo exists $w]} {
@@ -716,6 +717,7 @@ namespace eval uci {
     set row 0
     set col 0
     set isImportantParam 1
+    set ::uci::spins {}
     foreach l $optList {
       array set elt $l
       set name $elt(name)
@@ -753,11 +755,19 @@ namespace eval uci {
       }
       if { $elt(type) == "spin"} {
         label $w.fopt.label$optnbr -text "$name$default"
-        if { $elt(name) == "UCI_Elo" } {
-          spinbox $w.fopt.opt$optnbr -from $elt(min) -to $elt(max) -width 5 -increment 50 -validate all -vcmd {string is int %P}
-        } else  {
-          spinbox $w.fopt.opt$optnbr -from $elt(min) -to $elt(max) -width 5 -validate all -vcmd {string is int %P}
-        }
+        set diff [expr {abs($elt(max) - $elt(min))}]
+        set incr 1
+        if {$name != $::tr(MultiPV) && $name != "Threads"} {
+	  if {$diff > 1000} {
+	    set incr 50
+	  } elseif {$diff > 100} {
+	    set incr 10
+	  }
+	}
+
+	spinbox $w.fopt.opt$optnbr -from $elt(min) -to $elt(max) -width 5 -increment $incr -validate all -vcmd "string is int %P"
+        lappend ::uci::spins "$name" $w.fopt.opt$optnbr $elt(min) $elt(max)
+
         $w.fopt.opt$optnbr set $value
         grid $w.fopt.label$optnbr -row $row -column $col -sticky e \
             -padx 10 -pady 10
@@ -809,8 +819,12 @@ namespace eval uci {
     set w .uciConfigWin
 
     dialogbutton $w.buttons.save -text $::tr(Save) -command "
-      ::uci::saveConfig $n
-      destroy .uciConfigWin"
+      if {\[::uci::saveConfig $n\]} {
+        destroy $w
+      } else {
+        raiseWin $w
+      }
+    "
 
     dialogbutton $w.buttons.help -text $::tr(Help) -command {helpWindow Analysis UCI}
     dialogbutton $w.buttons.cancel -text $::tr(Cancel) -command {destroy .uciConfigWin}
@@ -832,11 +846,22 @@ namespace eval uci {
   ### Generate a list of list {{name}/value} pairs and save the new ::engines(list) to file engines.dat
 
   proc saveConfig {n} {
-    global ::uci::optList ::uci::newOptions
+    global ::uci::optList ::uci::newOptions tr
 
     set newOptions {}
     set w .uciConfigWin.wtf.sf.scrolled
     set optnbr 0
+
+    foreach {name spinbox min max} $::uci::spins {
+      set v [$spinbox get]
+      if {$v < $min || $v > $max} {
+	set ans [tk_dialog .uciError Oops "$name value $v out of bounds $min - $max" question {} $tr(Cancel) $tr(Continue)]
+	switch -- $ans {
+	  0 {return 0}
+	  1 {continue}
+	}
+      }
+    }
 
     foreach l $optList {
       array set elt $l
@@ -866,6 +891,7 @@ namespace eval uci {
       set ::engines(list) [lreplace $::engines(list) $n $n $enginedata]
 
       ::enginelist::write
+      return 1
     }
 }
 
