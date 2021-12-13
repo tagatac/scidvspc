@@ -821,9 +821,7 @@ namespace eval uci {
     dialogbutton $w.buttons.save -text $::tr(Save) -command "
       if {\[::uci::saveConfig $n\]} {
         destroy $w
-      } else {
-        raiseWin $w
-      }
+      } 
     "
 
     dialogbutton $w.buttons.help -text $::tr(Help) -command {helpWindow Analysis UCI}
@@ -855,7 +853,7 @@ namespace eval uci {
     foreach {name spinbox min max} $::uci::spins {
       set v [$spinbox get]
       if {$v < $min || $v > $max} {
-	set ans [tk_dialog .uciError Oops "$name value $v out of bounds $min - $max" question {} $tr(Cancel) $tr(Continue)]
+	set ans [tk_dialog $w.uciError Warning "\"$name\" value $v out of bounds.\nValid values are $min to $max" question {} $tr(Cancel) $tr(Continue)]
 	switch -- $ans {
 	  0 {return 0}
 	  1 {continue}

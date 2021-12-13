@@ -407,7 +407,7 @@ proc ::optable::previewHTML {} {
 #   "type" is the report type: report, table, or both.
 
 proc ::optable::saveReport {fmt} {
-  set t [tk_dialog .dialog "Select report type" \
+  set t [tk_dialog .oprepWin.dialog "Select report type" \
       "Select Report Type\n\nFull report (includes theory table), Compact report (no theory table) or theory table by itself." \
       question 0 "Full report" "Compact report" \
       "Theory table" "Cancel"]
