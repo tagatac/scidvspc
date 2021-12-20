@@ -249,6 +249,115 @@ CHARSETCONVOBJS= $(TMP_DIR)\charsetdetector.obj \
       $(TMP_DIR)\universalchardet\nsUniversalDetector.obj \
       $(TMP_DIR)\universalchardet\nsUTF8Prober.obj
 
+# Integrated CQL objects. Added by S.A. from a diff against 4.18 
+# Untested
+
+CQLOBJS_I= $(TMP_DIR)\cql\i_countsquaresnode.o \
+      $(TMP_DIR)\cql\i_cqlassert.o \
+      $(TMP_DIR)\cql\i_cqlexit.o \
+      $(TMP_DIR)\cql\i_cqlglobals.o \
+      $(TMP_DIR)\cql\i_linearize.o \
+      $(TMP_DIR)\cql\i_deleteable.o \
+      $(TMP_DIR)\cql\i_repeatconstituent.o \
+      $(TMP_DIR)\cql\i_sequencenest.o \
+      $(TMP_DIR)\cql\i_assignnode.o \
+      $(TMP_DIR)\cql\i_attacknode.o \
+      $(TMP_DIR)\cql\i_beginvariationnode.o \
+      $(TMP_DIR)\cql\i_betweennode.o \
+      $(TMP_DIR)\cql\i_chesstypes.o \
+      $(TMP_DIR)\cql\i_clone.o \
+      $(TMP_DIR)\cql\i_colortransform.o \
+      $(TMP_DIR)\cql\i_commentbase.o \
+      $(TMP_DIR)\cql\i_composetransform.o \
+      $(TMP_DIR)\cql\i_cqlinitialize.o \
+      $(TMP_DIR)\cql\i_cqlnodematch.o \
+      $(TMP_DIR)\cql\i_cqlnode.o \
+      $(TMP_DIR)\cql\i_dihedraltransform.o \
+      $(TMP_DIR)\cql\i_directionmatch.o \
+      $(TMP_DIR)\cql\i_direction.o \
+      $(TMP_DIR)\cql\i_directionparameter.o \
+      $(TMP_DIR)\cql\i_echodistancespec.o \
+      $(TMP_DIR)\cql\i_echolcaspec.o \
+      $(TMP_DIR)\cql\i_echolongestsubstringspec.o \
+      $(TMP_DIR)\cql\i_echomatchinfo.o \
+      $(TMP_DIR)\cql\i_echonode.o \
+      $(TMP_DIR)\cql\i_echoparse.o \
+      $(TMP_DIR)\cql\i_echosidetomovespec.o \
+      $(TMP_DIR)\cql\i_echospec.o \
+      $(TMP_DIR)\cql\i_echosquarespec.o \
+      $(TMP_DIR)\cql\i_echosquarespec-transform.o \
+      $(TMP_DIR)\cql\i_echotransformspec.o \
+      $(TMP_DIR)\cql\i_elonode.o \
+      $(TMP_DIR)\cql\i_eventnode.o \
+      $(TMP_DIR)\cql\i_existsnode.o \
+      $(TMP_DIR)\cql\i_extensionnode.o \
+      $(TMP_DIR)\cql\i_filename.o \
+      $(TMP_DIR)\cql\i_forallnode.o \
+      $(TMP_DIR)\cql\i_futurenode.o \
+      $(TMP_DIR)\cql\i_futurestarnode.o \
+      $(TMP_DIR)\cql\i_gamesortinfo.o \
+      $(TMP_DIR)\cql\i_holderconstituent.o \
+      $(TMP_DIR)\cql\i_keywords.o \
+      $(TMP_DIR)\cql\i_lexer.o \
+      $(TMP_DIR)\cql\i_longestcommonsubstring.o \
+      $(TMP_DIR)\cql\i_markboardmap.o \
+      $(TMP_DIR)\cql\i_markboard.o \
+      $(TMP_DIR)\cql\i_markboardstatic.o \
+      $(TMP_DIR)\cql\i_matchcommentnode.o \
+      $(TMP_DIR)\cql\i_matchcountnode.o \
+      $(TMP_DIR)\cql\i_match.o \
+      $(TMP_DIR)\cql\i_movebase.o \
+      $(TMP_DIR)\cql\i_movenumbernode.o \
+      $(TMP_DIR)\cql\i_nodematch.o \
+      $(TMP_DIR)\cql\i_node.o \
+      $(TMP_DIR)\cql\i_nodetransform.o \
+      $(TMP_DIR)\cql\i_notnode.o \
+      $(TMP_DIR)\cql\i_numericvariable.o \
+      $(TMP_DIR)\cql\i_onnode.o \
+      $(TMP_DIR)\cql\i_optionalconstituent.o \
+      $(TMP_DIR)\cql\i_origChanges.o \
+      $(TMP_DIR)\cql\i_originnode.o \
+      $(TMP_DIR)\cql\i_ornode.o \
+      $(TMP_DIR)\cql\i_parser.o \
+      $(TMP_DIR)\cql\i_pastnode.o \
+      $(TMP_DIR)\cql\i_paststarnode.o \
+      $(TMP_DIR)\cql\i_pieceidnode.o \
+      $(TMP_DIR)\cql\i_piecelocmatch.o \
+      $(TMP_DIR)\cql\i_pieceloc.o \
+      $(TMP_DIR)\cql\i_piecelocparse.o \
+      $(TMP_DIR)\cql\i_piover4transform.o \
+      $(TMP_DIR)\cql\i_playernode.o \
+      $(TMP_DIR)\cql\i_plusconstituent.o \
+      $(TMP_DIR)\cql\i_positionnode.o \
+      $(TMP_DIR)\cql\i_powerdifferencenode.o \
+      $(TMP_DIR)\cql\i_powernode.o \
+      $(TMP_DIR)\cql\i_raynode.o \
+      $(TMP_DIR)\cql\i_seqconstituent.o \
+      $(TMP_DIR)\cql\i_seqret.o \
+      $(TMP_DIR)\cql\i_sequencebase.o \
+      $(TMP_DIR)\cql\i_sequencematch.o \
+      $(TMP_DIR)\cql\i_setbase.o \
+      $(TMP_DIR)\cql\i_shifttransform.o \
+      $(TMP_DIR)\cql\i_sitenode.o \
+      $(TMP_DIR)\cql\i_sortvalue.o \
+      $(TMP_DIR)\cql\i_squaremask.o \
+      $(TMP_DIR)\cql\i_squarevariable.o \
+      $(TMP_DIR)\cql\i_starconstituent.o \
+      $(TMP_DIR)\cql\i_tagvariable.o \
+      $(TMP_DIR)\cql\i_token.o \
+      $(TMP_DIR)\cql\i_tokenstream.o \
+      $(TMP_DIR)\cql\i_transform_members.o \
+      $(TMP_DIR)\cql\i_transformnode.o \
+      $(TMP_DIR)\cql\i_transform.o \
+      $(TMP_DIR)\cql\i_transform-parse.o \
+      $(TMP_DIR)\cql\i_util.o \
+      $(TMP_DIR)\cql\i_variable.o \
+      $(TMP_DIR)\cql\i_variations.o \
+      $(TMP_DIR)\cql\i_vectorconstituent.o \
+      $(TMP_DIR)\cql\i_vectornode.o \
+      $(TMP_DIR)\cql\i_version.o \
+      $(TMP_DIR)\cql\i_yearnode.o
+
 ##	SCID_XOBJS: all the extra .obj files that make up Scid.
 
 SCID_XOBJS = \
@@ -356,10 +465,13 @@ PROFILE		= $(PROFILE) -DWIN32 -DWIN32_LEAN_AND_MEAN
 ##	CFLAGS: C++ compiler flags
 #	-c	:Compile Without linking
 
+# (Do we need) -std=c++11 
+
 CFLAGS		= $(PROFILE) $(OPTIMIZE) $(EHFLAGS) $(WARNINGS) $(SCID_FLAGS) \
 			$(SCID_INCLUDES) -c -nologo \
 			-I"$(VS_DIR)\VC\include" \
 			-I"$(VS_SDK_DIR)\include"
+
 
 ##	LDFLAGS: C++ linker flags
 #	-LTCG	:Link-time Code Generation
@@ -416,16 +528,16 @@ scid.exe: setup $(TMP_DIR)\scid.obj $(SCID_XOBJS) $(CHARSETCONVOBJS) $(SCID_TK_O
 		/out:$(OUT_DIR)\scid.exe \
 		/subsystem:windows /entry:mainCRTStartup
 
-tcscid.exe: $(TMP_DIR)\tcscid.obj $(SCID_XOBJS) $(CHARSETCONVOBJS)
+tcscid.exe: $(TMP_DIR)\tcscid.obj $(SCID_XOBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS)
 	@echo *** tcscid.exe
-	$(LD) $(LDFLAGS) $(TMP_DIR)\tcscid.obj $(SCID_XOBJS) $(CHARSETCONVOBJS) $(TCL_LIB) \
+	$(LD) $(LDFLAGS) $(TMP_DIR)\tcscid.obj $(SCID_XOBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS) $(TCL_LIB) \
 		/out:$(OUT_DIR)\tcscid.exe
 
-## Currently unused ?
+## Currently unused ? (surely not! - S.A.)
 
-tkscid.exe: $(TMP_DIR)\tkscid.obj $(SCID_XOBJS) $(CHARSETCONVOBJS) $(SCID_TK_OBJS) 
+tkscid.exe: $(TMP_DIR)\tkscid.obj $(SCID_XOBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS) $(SCID_TK_OBJS) 
 	@echo *** tkscid.exe
-	$(LD) $(LDFLAGS) $(TMP_DIR)\tkscid.obj $(SCID_XOBJS) $(CHARSETCONVOBJS) $(SCID_TK_OBJS) $(TK_LIB) $(DND_LIBS) \
+	$(LD) $(LDFLAGS) $(TMP_DIR)\tkscid.obj $(SCID_XOBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS) $(SCID_TK_OBJS) $(TK_LIB) $(DND_LIBS) \
 		/out:$(OUT_DIR)\tkscid.exe
 
 eco2epd.exe: $(TMP_DIR)\eco2epd.obj $(TMP_DIR)\pbook.obj $(SCID_OBJS) $(CHARSETCONVOBJS)
@@ -462,6 +574,13 @@ $(TMP_DIR)\probe.obj: src\probe.cpp src\egtb\tbindex.cpp src\egtb\tbdecode.c
 
 {src\universalchardet}.cpp{$(TMP_DIR)\universalchardet}.obj:
 	$(CC) $(CFLAGS) -Fo$(TMP_DIR)\universalchardet\ $<
+
+# We actually only need to compile the Integrated CQL objects modules: src/cql/i_*  (not src/cql/s_*)
+# Do we need any of these Linux flags ? - S.A.
+# -std=c++11 -Wall -Wno-write-strings -Wno-char-subscripts  -Wno-parentheses -Wno-sign-compare -fdiagnostics-show-option -DINTEGRATED $(CQL_INCLUDE) $(TCL_INCLUDE) -o $@ -c $<
+
+{src\cql}.cpp{$(TMP_DIR)\cql}.obj:
+	$(CC) $(CFLAGS) -Fo$(TMP_DIR)\cql\ $<
 
 {src\polyglot}.cpp{$(TMP_DIR)\pol}.obj:
 	$(CC) $(CFLAGS) -Fo$(TMP_DIR)\pol\ $<
