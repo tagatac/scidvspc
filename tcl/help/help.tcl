@@ -6032,8 +6032,8 @@ at <url https://goneill.co.nz/chess.php>Graham's Chess page</url>, where he has 
 set helpTitle(HardwareStatus) "Status of External Hardware"
 set helpText(HardwareStatus) {<h1>Status of External Hardware</h1>
    <p>
-   This button is located on the right of Scid's toolbar. Depending on
-   the status of the external hardware it shows different icons:
+   This button (if enabled) is located on the right of Scid's toolbar and shows
+   the status of the external hardware.
    </p>
    <ul>
    <li><button tb_eng_disconnected>
@@ -6047,11 +6047,11 @@ set helpText(HardwareStatus) {<h1>Status of External Hardware</h1>
    connected, it may take some seconds for things to settle.
    </li>
    <li><button tb_eng_error>
-   While communicating withe the external hardware some error
-   occurred. Usual sources of problems are e.g. another program
+   While communicating with the external hardware some error
+   occurred. Usual problems are e.g. another program
    accessing the external hardware, the hardware is not connected to
    the PC or simply is not switched on. In rare cases an external
-   hardware may also behave unexpected. Trying to connect again might
+   hardware may also behave unexpectedly. Trying to connect again might
    cure the problem as the hardware is usually reset upon disconnect.
    Also unplugging and/or switching off the device is an option in
    this case. Pressing the button will try again to hook up the
@@ -6063,9 +6063,8 @@ set helpText(HardwareStatus) {<h1>Status of External Hardware</h1>
    external hardware.
    </li>
    <li><button tb_eng_dgt>
-   In case a DGT Electronic Chess board is connected and ready, this
-   button shows up. Pressing the button will disconnect the
-   external hardware.
+   Shows the presences of a connected DGT Electronic Chess board.
+   Pressing the button will disconnect the external hardware.
    </li>
    <li><button tb_eng_query>
    The <a HardwareConfig</a> dialogue is open. Finish configuration
@@ -6073,7 +6072,9 @@ set helpText(HardwareStatus) {<h1>Status of External Hardware</h1>
    </li>
    </ul>
 
-  <p><footer>(Updated: Scid 3.6.27, October 2008)</footer></p>
+   <p><i>Right-clicking the Button displays the Configuration Window.</i></p>
+
+  <p><footer>(Updated: Scid vs PC 4.22)</footer></p>
 }
 
 set helpTitle(InputEngine) "DGT / Input Engine console"
@@ -6192,7 +6193,6 @@ set helpText(InputEngine) {<h1>DGT / Input Engine console</h1>
    colored in blue showing the white king and the string
    <term>OK</term>.
    </p>
-
 
   <p><footer>(Updated: Scid 3.6.27, October 2008)</footer></p>
 }

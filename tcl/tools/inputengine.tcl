@@ -12,13 +12,11 @@
 ###    Author     : Alexander Wagner
 ###    Language   : TCL
 
-# Hacked by stevenaaus Dec 2012, August 2017
+# Hacked by stevenaaus 2017, 2021
 #
 # This file handles the configuration widgets for Novag and Input Engine
 # and also connect for the Input Engine. Namespaces 'ExtHardware' and 'inputengine'.
 # Connect and addMove for the Novag is handled in 'novag.tcl', namespace 'novag'
-# Configuration file 'hardware.dat' is written *only* when config widget is OK-ed
-# Todo: write a helpfile and properly test and sort this code out.
 
 # Engine is connecting (searching the board, initialising)
 image create photo tb_eng_connecting -data {
@@ -198,8 +196,7 @@ namespace eval ExtHardware {
   ### Set the hardware connect button image
 
   proc HWbuttonImg {img} {
-
-    if { $::ExtHardware::showbutton == 1 } {
+    if {$::ExtHardware::showbutton} {
       .main.button.exthardware configure -image $img -relief flat
     }
   }
@@ -207,8 +204,7 @@ namespace eval ExtHardware {
   ### Set the hardware connect button command binding
 
   proc HWbuttonBind {cmd} {
-
-    if { $::ExtHardware::showbutton == 1 } {
+    if {$::ExtHardware::showbutton} {
        set ::ExtHardware::bindbutton $cmd
     }
   }
@@ -227,23 +223,24 @@ namespace eval ExtHardware {
       raiseWin $w
       return
     }
+
     toplevel $w
     wm state $w withdrawn
-    wm title $w [::tr ExtHWConfigConnection]
+    wm title $w $tr(ExtHWConfigConnection)
 
-    label $w.lport -text  [::tr ExtHWPort]
+    label $w.lport -textvar tr(ExtHWPort)
     entry $w.eport -width 40 -textvariable ::ExtHardware::port
 
-    label $w.lengine -text [::tr ExtHWEngineCmd]
+    label $w.lengine -textvar tr(ExtHWEngineCmd)
     entry $w.eengine -width 40 -textvariable ::ExtHardware::engine
 
-    label $w.lparam -text  [::tr ExtHWEngineParam]
+    label $w.lparam -textvar tr(ExtHWEngineParam)
     entry $w.eparam -width 40 -textvariable ::ExtHardware::param
 
-    label $w.options -text [::tr ExtHWHardware]
+    label $w.options -textvar tr(ExtHWHardware)
     
-    checkbutton $w.showbutton -text [::tr ExtHWShowButton] -variable ::ExtHardware::showbutton -command {
-      if { $::ExtHardware::showbutton} { 
+    checkbutton $w.showbutton -textvar  tr(ExtHWShowButton) -variable ::ExtHardware::showbutton -command {
+      if {$::ExtHardware::showbutton} { 
 	 pack .main.button.space4 .main.button.exthardware -side left -pady 1 -padx 0 -ipadx 2 -ipady 2 
       } else { 
 	 pack forget .main.button.space4 .main.button.exthardware
@@ -252,13 +249,13 @@ namespace eval ExtHardware {
 
     # Add a new radio button for subsequent new hardware here:
 
-    radiobutton $w.novag -text [::tr ExtHWNovag] -variable ::ExtHardware::hardware -value 1 -command {
+    radiobutton $w.novag -textvar tr(ExtHWNovag) -variable ::ExtHardware::hardware -value 1 -command {
        set ::ExtHardware::bindbutton "::novag::connect"
        .exthardwareConfig.eengine configure -state disabled
        .exthardwareConfig.eparam  configure -state disabled
     }
 
-    radiobutton $w.inputeng -text [::tr ExtHWInputEngine] -variable ::ExtHardware::hardware -value 2 -command {
+    radiobutton $w.inputeng -textvar tr(ExtHWInputEngine) -variable ::ExtHardware::hardware -value 2 -command {
        set ::ExtHardware::bindbutton "::inputengine::connectdisconnect"
        .exthardwareConfig.eengine configure -state normal
        .exthardwareConfig.eparam  configure -state normal
@@ -286,6 +283,7 @@ namespace eval ExtHardware {
 
     grid [frame $w.buttons]         -row 6 -column 0 -columnspan 2 -pady 10 
 
+    # Connect button
     dialogbutton $w.buttons.ok -textvar tr(FICSConnect) -command {
        ::ExtHardware::saveHardwareOptions
        ::ExtHardware::HWbuttonBind $::ExtHardware::bindbutton
@@ -295,13 +293,13 @@ namespace eval ExtHardware {
 
     dialogbutton $w.buttons.help -textvar tr(Help) -command {helpWindow HardwareConfig}
 
-    dialogbutton $w.buttons.cancel -textvar tr(Close) -command "
+    dialogbutton $w.buttons.close -textvar tr(Close) -command {
       ::ExtHardware::saveHardwareOptions
       ::ExtHardware::HWbuttonImg tb_eng_disconnected
-      destroy $w
-    "
+      destroy .exthardwareConfig
+    }
 
-    pack $w.buttons.ok $w.buttons.help $w.buttons.cancel -side left -padx 20
+    pack $w.buttons.ok $w.buttons.help $w.buttons.close -side left -padx 20
 
     bind $w <F1> {helpWindow HardwareConfig}
 
@@ -315,11 +313,14 @@ namespace eval ExtHardware {
 set scidConfigFiles(ExtHardware) hardware.dat
 
 frame .main.button.space4 -width 15
+
+# Same padding as '.main.button.$i configure' in main.tcl
 button .main.button.exthardware -image tb_eng_disconnected -relief flat -border 1 \
   -highlightthickness 0 -takefocus 0 -command "$::ExtHardware::bindbutton"
-# same as '.main.button.$i configure' in main.tcl
+bind .main.button.exthardware <Button-3> ::ExtHardware::config
 
 # Source ExtHardware options file
+
 if {[catch {source [scidConfigFile ExtHardware]} ]} {
   # don't spam splash because this file normally doesnt exist
   # ::splash::add "Unable to read External Hardware options file: $scidConfigFiles(ExtHardware)"
@@ -623,14 +624,6 @@ namespace eval inputengine {
     ::inputengine::sendToEngine "getclock"
   }
 
-  # unused. debugging only
-  proc strreverse {str} {
-     set res {}
-     set i [string length $str]
-     while {$i > 0} {append res [string index $str [incr i -1]]}
-     set res
-  }
-
   #----------------------------------------------------------------------
   # readFromEngine()
   #     Event Handler for commands and moves sent from the input
@@ -756,7 +749,7 @@ namespace eval inputengine {
               ###---### regsub -all {1} $extpos "." extpos
               ###---### regsub -all {/} $extpos "" extpos
               ###---### puts stderr [sc_pos board]
-              ###---### puts stderr [strreverse "$extpos"]
+              ###---### puts stderr [string reverse "$extpos"]
               ###---### set extpos "$extpos w"
               ###---### ::board::update .inputengineconsole.bd "$extpos w"
             }
@@ -914,7 +907,6 @@ namespace eval inputengine {
         ::board::update .inputengineconsole.bd [sc_pos board]
   }
 
-
   proc setPieceImage {image} {
     if {$::macOS} {
       # Mac wish 8.5 does not like transparent images on some widgets (in this
@@ -929,7 +921,6 @@ namespace eval inputengine {
   }
 
 }
-
 
 ###
 ### End of file: inputengine.tcl
