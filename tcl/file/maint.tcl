@@ -2012,11 +2012,13 @@ proc doAllocateRatings {parent} {
   busyCursor .
   if {[catch {sc_name ratings -change $addRatings(overwrite) -filter $addRatings(filter)} result]} {
     closeProgressWindow
+    unbusyCursor .
     raiseWin $parent
     tk_messageBox -type ok -icon warning -parent $parent \
         -title Scid -message $result
   } else {
     closeProgressWindow
+    unbusyCursor .
     set r [::utils::thousands [lindex $result 0]]
     set g [::utils::thousands [lindex $result 1]]
 
@@ -2031,7 +2033,6 @@ proc doAllocateRatings {parent} {
     tk_messageBox -type ok -icon info -parent $parent \
         -title Scid -message [subst $::tr(AddedRatings)]
   }
-  unbusyCursor .
 }
 
 
