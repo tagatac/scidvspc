@@ -3511,8 +3511,8 @@ in the <a PInfo>Player Information</a> window, or by selecting "Player Ratings"
 from the Tools menu. Right-clicking the graph will refresh it.
   </p>
   <p>
-  There are several options in the Graph menus, including the ability to use Elo from the Spelling (Ratings.ssp) File.
-  This is handy when the database doesn't contain many games, but the downside is that the Player's name has to match *exactly* one in Ratings.ssp.
+  There are several options in the Graph menus, including the ability to use Elo from the spelling file (Ratings.ssp),
+  which is handy when the database doesn't contain many games.
   </p>
 
   <h3><name Score>Score/Time Graph</name></h3>
