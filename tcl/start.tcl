@@ -164,6 +164,8 @@ set ::tools::graphs::showpoints 1
 set ::tools::graphs::spelling 0
 set ::tools::graphs::showbar [expr ! $::macOS] ; # too slow on macs
 set ::tools::graphs::type Auto
+set ::tools::graphs::rating::year 1900
+set ::tools::graphs::rating::elo 0
 set macWheelMouse 1
 set annotate(addTag) 1
 set annotate(Moves) all

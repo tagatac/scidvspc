@@ -852,8 +852,6 @@ proc ::tools::graphs::score::ShowBoard {x y xc yc} {
   }
 
 
-set ::tools::graphs::rating::year 1900
-set ::tools::graphs::rating::elo 0
 set ::tools::graphs::rating::type both
 set ::tools::graphs::rating::players {} 
 set ::tools::graphs::rating::colors {steelblue seagreen rosybrown violet sandybrown skyblue indianred slateblue orange}
