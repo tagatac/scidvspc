@@ -12332,10 +12332,10 @@ sc_name_info (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         if (strIsPrefix ("-r", opt)) {
             // minimum YEAR
             ratingsOnly = true;
-            if (strIsPrefix ("-ratings:", opt)) {
+            if (strIsPrefix ("-ratings:", opt) || strIsPrefix ("-rateAll:", opt)) {
                 startYear = strGetUnsigned (opt + 9);
             }
-            if (strIsPrefix ("-ratingsAll", opt)) {
+            if (strIsPrefix ("-rateAll:", opt)) {
                 ratingsAll = true;
             }
         } else if (strIsPrefix ("-h", opt)  &&  strIsPrefix (opt, "-htext")) {
@@ -12411,14 +12411,13 @@ sc_name_info (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     errorT found = db->nb->FindExactName (NAME_PLAYER, playerName, &id);
 
+    if (ratingsAll) {
+      Tcl_AppendResult (ti, spellChecker[NAME_PLAYER]->GetAllElo(playerName, startYear, startElo),NULL);
+      return TCL_OK;
+    }
+
     if (found != OK && ratingsOnly)
        return TCL_OK;
-
-    if (ratingsAll) {
-printf ("Ratings for %s\n", db->nb->GetName (NAME_PLAYER, id));
-Tcl_AppendResult (ti, spellChecker[NAME_PLAYER]->GetAllElo(playerName),NULL);
-       return TCL_OK;
-    }
 
     char temp  [500];
     const char * newline = (htextOutput ? "<br>" : "\n");

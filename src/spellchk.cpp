@@ -882,23 +882,59 @@ SpellChecker::GetElo (const char * name, dateT date, bool exact)
 }
 
 // Return all Elo data for a player in format suitable for graphing
+
 const char *
-SpellChecker::GetAllElo (const char * name)
+SpellChecker::GetAllElo (const char * name, uint startYear, uint startElo)
 {
     DString * result = new DString;
-
     char searchName [512];
     strCopyExclude (searchName, name, ExcludeChars);
     spellCheckNodeT * node = Names[(byte) *searchName];
     while (node != NULL) {
-        // If the match is exact, return Elo data:
+        // match must be exact
         if (strEqual (name, node->correctName)) {
-printf ("SpellChecker::GetAllElo %s\n",node->correctName);
-result->Append("Some coords!");
-return result->Data();
+            eloT * eloArray = node->eloData;
+
+            if (eloArray) {
+                uint year, month, x;
+                char temp[500];
+
+                for (uint i=0; i < ELO_ARRAY_SIZE; i++) {
+                    year = i / 12 + ELO_YEAR_FIRST;
+                    month = i % 12;
+
+                    if (*eloArray && *eloArray >= startElo && year >= startYear) {
+                        if ( year >= ELO_FIRST_MONTHLY_YEAR ) {
+                            x =  month * 100 / 12;
+                        }
+                        else if ( year >= ELO_FIRST_NINEMONTHS ) {
+                            x =  month * 100 / 9;
+                        }
+                        else if ( year >= ELO_FIRST_BIMONTHLY_YEAR ) {
+                            x =  month * 100 / 6;
+                        }
+                        else if ( year >= ELO_TRANSITIONAL_YEAR ) {
+                            x =  month * 100 / 5;
+                        }
+                        else if ( year >= ELO_FIRST_QUARTERLY_YEAR ) {
+                            x =  month * 100 / 4;
+                        }
+                        else {
+                            x =  month * 100 / 2;
+                        }
+                        sprintf (temp, "%4u.%02u ", year, x);
+                        result->Append(temp);
+                        sprintf (temp, "%4u ", *eloArray);
+                        result->Append(temp);
+                    }
+                    eloArray++;
+                }
+             }
+             return result->Data();
         }
         node = node->next;
     }
+    // No match
     return "";
 }
 

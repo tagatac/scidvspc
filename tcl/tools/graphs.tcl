@@ -987,14 +987,13 @@ proc ::tools::graphs::rating::Refresh {{player {}}} {
     set color [lindex $::tools::graphs::rating::colors [expr ($i - 1) % [llength $::tools::graphs::rating::colors]]]
     if {$::tools::graphs::spelling} {
       # new feature to get data from ratings.ssp
-      set coords [sc_name info -ratingsAll $p]
+      set coords [sc_name info -rateAll:$year -elo:$elo $p]
     } else {
       set coords [sc_name info -ratings:$year -elo:$elo $p]
     }
     catch {
       ::utils::graph::data ratings d$i -color $color -points $::tools::graphs::showpoints -lines 1 \
 	       -linewidth $lwidth -radius $psize -outline $color -key $key -coords $coords
-puts "coords: $coords"
     }
     incr i
   }
