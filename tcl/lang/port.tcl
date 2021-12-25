@@ -673,6 +673,8 @@ menuText U GraphOptions "Opções" 0
 menuText U GraphOptionsWhite "Branco" 0
 menuText U GraphOptionsBlack "Preto" 0
 menuText U GraphOptionsDots "Mostrar Pontos" 0
+# ====== TODO To be translated ======
+menuText U GraphOptionsSpelling "Elo from Spelling File" 0
 menuText U GraphOptionsBar "Destacar Lance atual" 0
 menuText U GraphOptionsBoth "Ambos" 0
 menuText U GraphOptionsPInfo "Informação do Jogador" 0

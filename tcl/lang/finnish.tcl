@@ -660,6 +660,8 @@ menuText L GraphOptions "Vaihtoehdot" 0
 menuText L GraphOptionsWhite "Valkoinen" 0
 menuText L GraphOptionsBlack "Musta" 0
 menuText L GraphOptionsDots "Näytä pisteet" 0
+# ====== TODO To be translated ======
+menuText L GraphOptionsSpelling "Elo from Spelling File" 0
 menuText L GraphOptionsBar "Korosta nykyinen siirto" 0
 menuText L GraphOptionsBoth "Molemmat" 1
 menuText L GraphOptionsPInfo "Pelaaja Tieto pelaaja" 0

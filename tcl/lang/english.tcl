@@ -671,6 +671,7 @@ menuText E GraphOptions "Options" 0
 menuText E GraphOptionsWhite "Invert White" 0
 menuText E GraphOptionsBlack "Invert Black" 0
 menuText E GraphOptionsDots "Show Dots" 0
+menuText E GraphOptionsSpelling "Elo from Spelling File" 0
 menuText E GraphOptionsBar "Highlight Current Move" 0
 menuText E GraphOptionsBoth "Both" 1
 menuText E GraphOptionsPInfo "Player Info player" 0

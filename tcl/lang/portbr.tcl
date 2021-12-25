@@ -801,6 +801,8 @@ menuText B GraphOptionsWhite "Branco" 0
 menuText B GraphOptionsBlack "Preto" 0
 
 menuText B GraphOptionsDots "Mostrar Pontos" 0
+# ====== TODO To be translated ======
+menuText B GraphOptionsSpelling "Elo from Spelling File" 0
 
 menuText B GraphOptionsBar "Destacar movimento atual" 0
 menuText B GraphOptionsBoth "Ambos" 0

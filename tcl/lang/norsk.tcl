@@ -682,6 +682,8 @@ menuText O GraphOptions "Innstillinger" 0
 menuText O GraphOptionsWhite "Hvit" 0
 menuText O GraphOptionsBlack "Sort" 0
 menuText O GraphOptionsDots "Vis punkter" 0
+# ====== TODO To be translated ======
+menuText O GraphOptionsSpelling "Elo from Spelling File" 0
 menuText O GraphOptionsBar "Marker gjeldende trekk" 0
 menuText O GraphOptionsBoth "Begge" 0
 menuText O GraphOptionsPInfo "Spiller Info spiller" 0

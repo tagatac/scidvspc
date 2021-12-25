@@ -297,8 +297,7 @@ recalcEstimatedRatings (NameBase * nb)
         if (nb->GetElo(id) == 0  &&  nb->GetFrequency(NAME_PLAYER, id) > 0) {
             const char * name = nb->GetName (NAME_PLAYER, id);
             if (! strIsSurnameOnly (name)) {
-                const char * text = \
-                    spellChecker[NAME_PLAYER]->GetCommentExact (name);
+                const char * text = spellChecker[NAME_PLAYER]->GetCommentExact (name);
                 if (text != NULL) {
                     nb->SetElo (id, SpellChecker::GetPeakRating (text));
                 }
@@ -12307,6 +12306,7 @@ sc_name_info (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     }
 
     bool ratingsOnly = false;
+    bool ratingsAll  = false;
     bool htextOutput = false;
     bool setFilter = false;   // Set filter to games by this player
     bool setRefine = false; // Refine filter to games by this player
@@ -12334,6 +12334,9 @@ sc_name_info (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             ratingsOnly = true;
             if (strIsPrefix ("-ratings:", opt)) {
                 startYear = strGetUnsigned (opt + 9);
+            }
+            if (strIsPrefix ("-ratingsAll", opt)) {
+                ratingsAll = true;
             }
         } else if (strIsPrefix ("-h", opt)  &&  strIsPrefix (opt, "-htext")) {
             htextOutput = true;
@@ -12410,6 +12413,12 @@ sc_name_info (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     if (found != OK && ratingsOnly)
        return TCL_OK;
+
+    if (ratingsAll) {
+printf ("Ratings for %s\n", db->nb->GetName (NAME_PLAYER, id));
+Tcl_AppendResult (ti, spellChecker[NAME_PLAYER]->GetAllElo(playerName),NULL);
+       return TCL_OK;
+    }
 
     char temp  [500];
     const char * newline = (htextOutput ? "<br>" : "\n");

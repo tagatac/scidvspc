@@ -882,15 +882,17 @@ proc ::tools::graphs::rating::Refresh {{player {}}} {
     $w.menu.file add separator
     $w.menu.file add command -label GraphFileClose -command "destroy $w"
 
-    $w.menu add cascade -label GraphOptions -menu $w.menu.showdots
-    menu $w.menu.showdots
-    $w.menu.showdots add checkbutton -label GraphOptionsDots \
-      -variable ::tools::graphs::showpoints -command ::tools::graphs::rating::Refresh
-
-    $w.menu add cascade -label {Start Year} -menu $w.menu.options
+    $w.menu add cascade -label GraphOptions -menu $w.menu.options
     menu $w.menu.options
+    $w.menu.options add checkbutton -label GraphOptionsDots \
+      -variable ::tools::graphs::showpoints -command ::tools::graphs::rating::Refresh
+    $w.menu.options add checkbutton -label GraphOptionsSpelling \
+      -variable ::tools::graphs::spelling -command ::tools::graphs::rating::Refresh
+
+    $w.menu add cascade -label {Start Year} -menu $w.menu.year
+    menu $w.menu.year
     foreach i {1900 1980 1985 1990 1995 2000 2005 2010 2015 } {
-      $w.menu.options add radiobutton -label "Since $i" \
+      $w.menu.year add radiobutton -label "Since $i" \
         -variable ::tools::graphs::rating::year -value $i \
         -command ::tools::graphs::rating::Refresh
     }
@@ -945,7 +947,11 @@ proc ::tools::graphs::rating::Refresh {{player {}}} {
     -vline {{gray90 1 each 1} {steelBlue 1 each 5}}
   ::utils::graph::redraw ratings
 
-  set title "[tr ToolsRating] \[[file tail [sc_base filename]]\]"
+  if {$::tools::graphs::spelling} {
+    set title "[tr ToolsRating] \[Spelling\]"
+  } else {
+    set title "[tr ToolsRating] \[[file tail [sc_base filename]]\]"
+  }
 
   set year $::tools::graphs::rating::year
   set elo $::tools::graphs::rating::elo
@@ -979,10 +985,16 @@ proc ::tools::graphs::rating::Refresh {{player {}}} {
   foreach p $::tools::graphs::rating::players {
     set key [::utils::string::Surname $p]
     set color [lindex $::tools::graphs::rating::colors [expr ($i - 1) % [llength $::tools::graphs::rating::colors]]]
+    if {$::tools::graphs::spelling} {
+      # new feature to get data from ratings.ssp
+      set coords [sc_name info -ratingsAll $p]
+    } else {
+      set coords [sc_name info -ratings:$year -elo:$elo $p]
+    }
     catch {
       ::utils::graph::data ratings d$i -color $color -points $::tools::graphs::showpoints -lines 1 \
-	       -linewidth $lwidth -radius $psize -outline $color \
-	       -key $key -coords [sc_name info -ratings:$year -elo:$elo $p]
+	       -linewidth $lwidth -radius $psize -outline $color -key $key -coords $coords
+puts "coords: $coords"
     }
     incr i
   }
@@ -1022,7 +1034,8 @@ proc ::tools::graphs::rating::ConfigMenus {{lang ""}} {
     configMenuText $m $idx Graph$tag $lang
   }
   configMenuText $m 1 GraphOptions $lang
-  configMenuText $m.showdots 0 GraphOptionsDots $lang
+  configMenuText $m.options 0 GraphOptionsDots $lang
+  configMenuText $m.options 1 GraphOptionsSpelling $lang
 
   foreach idx {0 1 3} tag {Color Grey Close} {
     configMenuText $m.file $idx GraphFile$tag $lang

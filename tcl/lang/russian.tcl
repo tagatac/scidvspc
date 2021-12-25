@@ -707,6 +707,8 @@ menuText R GraphOptionsBlack "Чёрные" 0
 # ====== TODO To be translated ======
 menuText R GraphOptionsDots "Show Dots" 0
 # ====== TODO To be translated ======
+menuText R GraphOptionsSpelling "Elo from Spelling File" 0
+# ====== TODO To be translated ======
 menuText R GraphOptionsBar "Highlight Current Move" 0
 menuText R GraphOptionsBoth "Оба" 0
 menuText R GraphOptionsPInfo "Игрок - информация об игроке" 0

@@ -776,6 +776,8 @@ menuText H GraphOptionsBlack "Sötét" 0
 # ====== TODO To be translated ======
 menuText H GraphOptionsDots "Show Dots" 0
 # ====== TODO To be translated ======
+menuText H GraphOptionsSpelling "Elo from Spelling File" 0
+# ====== TODO To be translated ======
 menuText H GraphOptionsBar "Highlight Current Move" 0
 menuText H GraphOptionsBoth "Mindkettõ" 1
 menuText H GraphOptionsPInfo "A játékosinformáció játékosa" 0

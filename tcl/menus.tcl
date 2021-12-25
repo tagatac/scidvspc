@@ -999,7 +999,8 @@ $m add command -label OptionsSave -command {
     FilterMaxYear FilterMinYear FilterStepYear FilterGuessELO lookTheme autoResizeBoard
     comp(timecontrol) comp(seconds) comp(base) comp(incr) comp(timeout) comp(name) comp(usebook) comp(book)
     comp(rounds) comp(showclock) comp(debug) comp(animate) comp(type) comp(ponder) comp(scoreType)
-    ::tools::graphs::filter::type  ::tools::graphs::absfilter::type ::tools::graphs::showpoints ::tools::graphs::showbar ::tools::graphs::type
+    ::tools::graphs::filter::type  ::tools::graphs::absfilter::type ::tools::graphs::showpoints ::tools::graphs::spelling 
+    ::tools::graphs::showbar ::tools::graphs::type
     maintFlag useGraphFigurine photosMinimized bookmarks(gamehistory) playerInfoHistory defaultDBs tbOnline
     glistSize glexport glistColOrder glistColWidth glistColAnchor addRatings(overwrite) addRatings(filter)
     ::board::arrowWidth ::board::arrowLength

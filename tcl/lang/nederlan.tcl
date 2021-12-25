@@ -737,6 +737,8 @@ menuText N GraphOptionsBlack "Zwart" 0
 # ====== TODO To be translated ======
 menuText N GraphOptionsDots "Show Dots" 0
 # ====== TODO To be translated ======
+menuText N GraphOptionsSpelling "Elo from Spelling File" 0
+# ====== TODO To be translated ======
 menuText N GraphOptionsBar "Highlight Current Move" 0
 menuText N GraphOptionsBoth "Beide" 1
 menuText N GraphOptionsPInfo "Speler informatie" 0

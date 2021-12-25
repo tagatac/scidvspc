@@ -127,6 +127,7 @@ class SpellChecker
     void AddEloData (spellCheckNodeT * node, const char * str);
     void SetElo (spellCheckNodeT * node, uint year, uint quarter, eloT elo);
     eloT GetElo (const char * name, dateT date, bool exact);
+    const char * GetAllElo (const char * name);
 
     static const char * GetTitle (const char * comment);
     static const char * GetLastCountry (const char * comment);

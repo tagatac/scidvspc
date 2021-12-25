@@ -161,6 +161,7 @@ set ::file::finder::data(Old) 1
 set ::tools::graphs::absfilter::type year
 set ::tools::graphs::filter::type year
 set ::tools::graphs::showpoints 1
+set ::tools::graphs::spelling 0
 set ::tools::graphs::showbar [expr ! $::macOS] ; # too slow on macs
 set ::tools::graphs::type Auto
 set macWheelMouse 1

@@ -847,6 +847,8 @@ menuText Y GraphOptionsBlack "Crni" 0
 # ====== TODO To be translated ======
 menuText Y GraphOptionsDots "Show Dots" 0
 # ====== TODO To be translated ======
+menuText Y GraphOptionsSpelling "Elo from Spelling File" 0
+# ====== TODO To be translated ======
 menuText Y GraphOptionsBar "Highlight Current Move" 0
 menuText Y GraphOptionsBoth "Oba" 1
 menuText Y GraphOptionsPInfo "Informacije o igraèu" 0

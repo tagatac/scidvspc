@@ -737,6 +737,8 @@ menuText S GraphOptions "Opciones" 0
 menuText S GraphOptionsWhite "Blancas" 0
 menuText S GraphOptionsBlack "Negras" 0
 menuText S GraphOptionsDots "Mostrar puntos" 0
+# ====== TODO To be translated ======
+menuText S GraphOptionsSpelling "Elo from Spelling File" 0
 menuText S GraphOptionsBar "Destacar movimiento actual" 0
 menuText S GraphOptionsBoth "Ambos" 0
 menuText S GraphOptionsPInfo "Información jugador" 0

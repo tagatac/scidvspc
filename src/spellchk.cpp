@@ -649,7 +649,7 @@ SpellChecker::GetBioData (const char * name)
 }
 
 
-static const uint ELO_YEAR_LAST  = 2018; // end of current ELO scheme, could be increased in case the rating period does not change
+static const uint ELO_YEAR_LAST  = 2021; // end of current ELO scheme. OMG S.A.
 static const uint ELO_YEAR_FIRST = 1970;
 
 static const uint ELO_YEAR_RANGE = ELO_YEAR_LAST + 1 - ELO_YEAR_FIRST;
@@ -732,6 +732,8 @@ static const uint ELO_FIRST_MONTHLY_YEAR = 2013;
 // The (external) algorithm to map ratings to actual periods must be able to cope with
 // the holes that - as a consequence - will appear in the rating graph constructed here!
 //
+// ^^^ What he means is that this is shite. The eloData array is totally wasteful (loosely populated)
+//     and the ELO_YEAR_LAST year is currently hard coded :( - S.A.
 void
 SpellChecker::AddEloData (spellCheckNodeT * node, const char * str)
 {
@@ -877,6 +879,27 @@ SpellChecker::GetElo (const char * name, dateT date, bool exact)
     }
     // If we reach here, no exact name match with Elo data was found:
     return 0;
+}
+
+// Return all Elo data for a player in format suitable for graphing
+const char *
+SpellChecker::GetAllElo (const char * name)
+{
+    DString * result = new DString;
+
+    char searchName [512];
+    strCopyExclude (searchName, name, ExcludeChars);
+    spellCheckNodeT * node = Names[(byte) *searchName];
+    while (node != NULL) {
+        // If the match is exact, return Elo data:
+        if (strEqual (name, node->correctName)) {
+printf ("SpellChecker::GetAllElo %s\n",node->correctName);
+result->Append("Some coords!");
+return result->Data();
+        }
+        node = node->next;
+    }
+    return "";
 }
 
 

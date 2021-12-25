@@ -801,6 +801,8 @@ menuText I GraphOptionsBlack "Nero" 0
 # ====== TODO To be translated ======
 menuText I GraphOptionsDots "Show Dots" 0
 # ====== TODO To be translated ======
+menuText I GraphOptionsSpelling "Elo from Spelling File" 0
+# ====== TODO To be translated ======
 menuText I GraphOptionsBar "Highlight Current Move" 0
 menuText I GraphOptionsBoth "Entrambi" 1
 menuText I GraphOptionsPInfo "Info sul giocatore" 0

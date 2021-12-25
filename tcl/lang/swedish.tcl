@@ -732,6 +732,8 @@ menuText W GraphOptionsBlack "Svart" 0
 # ====== TODO To be translated ======
 menuText W GraphOptionsDots "Show Dots" 0
 # ====== TODO To be translated ======
+menuText W GraphOptionsSpelling "Elo from Spelling File" 0
+# ====== TODO To be translated ======
 menuText W GraphOptionsBar "Highlight Current Move" 0
 menuText W GraphOptionsBoth "Båda" 1
 menuText W GraphOptionsPInfo "Spelarinformation" 0

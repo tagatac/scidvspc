@@ -697,6 +697,8 @@ menuText D GraphOptions "Optionen" 0
 menuText D GraphOptionsWhite "Weiß invertieren" 0
 menuText D GraphOptionsBlack "Schwarz invertieren" 0
 menuText D GraphOptionsDots "Zeige Punkte" 0
+# ====== TODO To be translated ======
+menuText D GraphOptionsSpelling "Elo from Spelling File" 0
 menuText D GraphOptionsBar "Aktuellen Zug hervorheben" 0
 menuText D GraphOptionsBoth "Beide" 0
 menuText D GraphOptionsPInfo "Spielerinfo" 1
