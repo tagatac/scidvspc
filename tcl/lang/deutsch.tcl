@@ -52,11 +52,10 @@ menuText D EditAdd "Variante hinzufügen" 0 \
   {Füge zu diesem Zug eine Variante hinzu}
 menuText D EditPasteVar "Variante einfügen" 0
 menuText D EditDelete "Variante löschen" 9 \
-  {Lösche eine Variante zu diesen Zug}
-# ====== TODO To be translated ======
-menuText D EditDeleteComment "Delete Comment" 0
+  {Lösche eine Variante zu diesem Zug}
+menuText D EditDeleteComment "Kommentar löschen" 0
 menuText D EditFirst "Als erste Variante setzen" 4 \
-  {Variante an erste Stelle in der Liste setzten}
+  {Variante an erste Stelle in der Liste setzen}
 menuText D EditMain "Variante als Partiefortsetzung" 13 \
   {Variante zur Partiefolge machen (und umgekehrt)}
 menuText D EditTrial "Variante testen" 9 \
@@ -697,8 +696,7 @@ menuText D GraphOptions "Optionen" 0
 menuText D GraphOptionsWhite "Weiß invertieren" 0
 menuText D GraphOptionsBlack "Schwarz invertieren" 0
 menuText D GraphOptionsDots "Zeige Punkte" 0
-# ====== TODO To be translated ======
-menuText D GraphOptionsSpelling "Elo from Spelling File" 0
+menuText D GraphOptionsSpelling "Elo aus der Rechtschreibdatei" 0
 menuText D GraphOptionsBar "Aktuellen Zug hervorheben" 0
 menuText D GraphOptionsBoth "Beide" 0
 menuText D GraphOptionsPInfo "Spielerinfo" 1
@@ -3826,8 +3824,11 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
   werden.</li>
   <li>Drücken der Mausradtaste verbirgt die Symbolleiste.</li>
   </ul>
+  <p><i>Die aktuelle Partienliste kann als Text über das Menü
+  Werkzeuge<gt>Alles im Filter exportieren exportiert werden</i></p>
 
-  <h3><name Browsing>Partien durchsuchen und zusammen</name></h3>
+  <h3><name Browsing>Einzelne Partien durchsuchen und
+  zusammenführen</name></h3>
   <p>Aus dem Kontextmenü der Partienliste können Sie eine
   Partie <b>durchstöbern</b>. Das ist eine Partievorschau, die in
   einem separaten Fenster ohne Kommentare oder Varianten angezeigt wird.
@@ -3839,14 +3840,33 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
   Zugnummer, die hinzugefügt werden soll, ändern, je nachdem, ob Sie
   die ganze Partie oder nur ihre nächsten paar Züge hinzufügen wollen.
   </p>
-  <p><i>Die Brettgröße kann mittels Strg+Mausrad oder
-  Strg+Umschalt+Links-/Rechtspfeil verändert werden.</i></p>
-  <p><i>Die aktuelle Partienliste kann als Text exportiert werden über
-  das Menü <green>Werkzeuge--<gt>Alles im Filter
-  exportieren--<gt>Partienliste in eine Textdatei
-  exportieren</green></i>.</p>
+  <p>Nächste/vorherige Partien können mittels der Tasten
+  Strg+runter/hoch geladen werden. Die Brettgröße kann mit
+  Strg+Mausrad oder mit Strg+Umschalt+Links/Rechts <b>angepaßt<b>
+  werden.</p>
+  <p>Um automatisch <b>den letzten Zug zu zeigen<b>, wählen Sie
+  Suchen-<gt>Filterpartien mit Schlußstellung laden - obgleich der
+  angezeigte Halbzug auch vom Baumfenster (falls geöffnet) betroffen ist.</p>
 
-  <p><footer>Aktualisiert: Scid vs. PC 4.22, Juli 2021</footer></p>
+  <h3>Mehrere Partien durchsuchen</h3>
+
+  <p>Scid vs PC kann auch (in einem Rasterformat) mehrere Partien
+  mittels Rechtsklick aus einer Auswahl von Partien durchsuchen. Die
+  Tasten Links/Rechts/Pos1/Ende wandern durch eine Partie. Ein
+  Doppelklick oder Strg+Enter lädt eine Partie. Die Taste 'f' dreht
+  das Brett. Strg+Mausrad ändert die Größe der Bretter (die
+  standardmäßige Brettgröße wird durch
+  Optionen-<gt>FICS-<gt>Brettgröße festgelegt). Strg+Entf schaltet das
+  Löschen um (angezeigt durch eine ausgegraute Partienummer).
+
+  <p>Das Drücken von Strg-Links/Rechts bewegt <b>alle</b> Bretter
+  vorwärts oder zurück und in gleicher Weise zeigt Strg+Pos1/Ende alle
+  Anfangs-/Endstellungen.</p>
+
+  <p>Diese Eigenschaft ist auch für das Steuerelement
+  "Beste Zugbaumpartien" verfügbar.</p>
+
+  <p><footer>Aktualisiert: Scid vs. PC 4.23, Dezember 2021</footer></p>
 }
 
 
@@ -4143,17 +4163,7 @@ set helpText(D,LaTeX) {<h1>LaTeX mit Scid benutzen</h1>
 set helpTitle(D,PGN) "PGN-Fenster"
 set helpText(D,PGN) {<h1>PGN-Fenster</h1>
 
-  <p>Dieser Abschnitt beschreibt, wie
-  das <run ::pgn::Open><green>PGN-Fenster</green></run> zu benutzen
-  ist.
-  </p>
-
-  <p><i>Andere Hilfethemen beinhalten <a BrowsingPGN>PGN-Dateien und
-  Scid</a>, <a Export>Partien exportieren</a> und <a Import>Partien
-  importieren</a></i>
-  </p>
-
-  <p><i>Die "portable Partienotation" (PGN - Portable Game Notation)
+  <p><b>Die "Portable Partienotation" (PGN - Portable Game Notation)</b>
   ist ein üblicher
   <url http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm>Standard</url>
   für die Darstellung von Schachpartien. Eine PGN-Datei besteht aus
@@ -4162,15 +4172,21 @@ set helpText(D,PGN) {<h1>PGN-Fenster</h1>
   Hauptteil, der die Partiezüge in algebraischer Notation (SAN,
   Standard Algebraic Notation) zusammen mit
   irgendwelchen <a Variations>Varianten</a>, <a NAGs>Kommentarzeichen</a>
-  und <a Comment>Kommentaren</a> enthält</i>.
+  und <a Comment>Kommentaren</a> enthält.
   </p>
 
+  <p><i>Siehe auch <a BrowsingPGN>PGN-Dateien und
+  Scid</a>, <a Export>Partien exportieren</a> und <a Import>Partien
+  importieren</a></i>.
+  </p>
+  
   <h3>Allgemeine Benutzung</h3>
-  <p>Das PGN-Fenster erlaubt das Navigieren durch die Partie. Ein
-  Klick auf einen Zug springt zur betreffenden Stellung. Ein Klick auf
-  einen Kommentar öffnet das Editorfenster (und genau wie im
-  Hauptfenster kann man mit <b>Pfeiltasten</b> navigieren). Ein
-  Rechtsklick zeigt ein Kontextmenü.
+  <p>Das <run ::pgn::Open><green>PGN-Fenster</green></run> erlaubt das
+  Navigieren durch die Partie. Ein Klick auf einen Zug springt zur
+  betreffenden Stellung. Ein Klick auf einen Kommentar öffnet das
+  Editorfenster (und genau wie im Hauptfenster kann man
+  mit <b>Pfeiltasten</b> navigieren). Ein Rechtsklick zeigt ein
+  Kontextmenü.
   </p>
 
   <h3><name ttf>Schachfiguren</name></h3>
@@ -4211,21 +4227,6 @@ set helpText(D,PGN) {<h1>PGN-Fenster</h1>
   Varianten ändern, indem Sie sie für eine bessere Lesbarkeit auf
   einer eigenen Zeile eingerückt anzeigen lassen.
   </p>
-
-  <h3>Das Kontextmenu</h3>
-  <ul>
-   <li><term>Variante löschen:</term> löscht die aktuelle Variante</li>
-   <li><term>Als erste Variante setzen:</term> verschiebt die aktuelle
-     Variante an die erste Position aller Varianten auf dieser Ebene</li>
-   <li><term>Variante als Partiefortsetzung:</term> macht die
-   aktuelle Variante zur Partiefortsetzung und kennzeichnet die
-   momentane Hauptfortsetzung als Variante</li>
-   <li><term>Entfernen Züge ab Anfang</term> löscht alle Partiezüge</li>
-   <li><term>Entfernen Züge bis Ende</term> löscht alle Züge ab dem
-   aktuellen Zug</li>
-   <li><term>Entfernen Kommentare</term> löscht alle Kommentare</li>
-   <li><term>Entfernen Varianten</term> löscht alle Varianten </li>
-  </ul>
 
   <p><footer>Aktualisiert: Scid vs. PC 4.10, Juli 2013</footer></p>
 }
@@ -5980,6 +5981,12 @@ set helpText(D,Graphs) {<h1>Grafikfenster</h1>
   "Ratingveränderung" im Menü Werkzeuge. Ein Rechtsklick auf die
   Grafik erneuert sie.
   </p>
+  <p>
+  In den Grafikmenüs gibt es mehrere Optionen, einschließlich die
+  Möglichkeit, Elo-Werte aus der Rechtschreibdatei (Ratings.ssp) zu
+  verwenden. Dies ist praktisch, wenn die Datenbank nicht viele
+  Partien enthält.
+  </p>
 
   <h3><name Score>Grafik für Bewertung/Zeit</name></h3>
   <p>Die <green><run ::tools::graphs::score::Raise>Grafik für Bewertung/Zeit
@@ -6040,9 +6047,10 @@ set helpText(D,TB) {<h1>Endspieldatenbanken</h1>
   vorhandenem Material enthält, wie König und Turm gegen König und
   Bauer.
   </p>
-  <p>Scid vs. PC kann die Endspieldatenbanken von <b>Nalimov</b>,
-  <b>Lichess</b> (online) und <b>Shredder</b> verwenden. <i>Die
-  Online-Unterstützung benötigt die Tcl-Pakete http und tls.</i>
+  <p>Scid vs. PC kann die Endspieldatenbanken von <b>Nalimov</b>
+  und online <a TB Online>Lichess und Shredder</a> verwenden.
+  <i>Die Online-Unterstützung benötigt die Tcl-Pakete http und
+  tls.</i>
   </p>
   <p>Nalimov-Datenbanken werden von vielen Schach-Engines
   verwendet. Die Dateinamen enden oft auf <b>.nbw.emd</b>
@@ -6154,14 +6162,42 @@ set helpText(D,TB) {<h1>Endspieldatenbanken</h1>
   verwenden.</i>
   </p>
 
-  <h3>Endspieldatenbankdateien beziehen</h3>
-  <p>Die Endspieldatenbanken sind verfügbar bei
-  <url ftp://ftp.cis.uab.edu/pub/hyatt/TB/3-4-5/>Bob Hyatt's Ftp</url>
-  und <url http://folk.uib.no/pfvaf/chesslib/Nalimov.htm>Chesslib</url>.
-  <br>"Play With Arena" verteilt die Endspieldatenbanken für vier
-  Steine als eine einzige Datei
-  <url http://www.playwitharena.de/download/4-pieces-tbs.zip>(http://www.playwitharena.de/download/4-pieces-tbs.zip)</url>.
-  </p>
+  <h4>Endspieldatenbankdateien beziehen</h4>
+  <p><url http://oics.olympuschess.com/tracker/index.php>http://oics.olympuschess.com/tracker/index.php</url>.
+  (BitTorrent-Tracker, nur sechs Steine)
+  <br><url http://tablebase.sesse.net/>http://tablebase.sesse.net</url>
+  (schnellster Spiegelserver, EU)
+  <br><url https://tablebase.lichess.ovh/tables/>https://tablebase.lichess.ovh/tables</url>
+  (Spiegelserver von Lichess gehostet, EU)
+  <br><url https://web.archive.org/web/20140131015443/http://www.cis.uab.edu/hyatt/crafty/TB/3-4-5/>https://web.archive.org/web/20140131015443/http://www.cis.uab.edu/hyatt/crafty/TB/3-4-5/</url>
+  (Bob Hyatt's Ftp)</p>
+
+  <h2><name Online>Online-Endspieldatenbanken</name></h2>
+  <p><i>Die Unterstützung für Online-Endspieldatenbanken benötigt die
+  tcl-Pakete http und tls und ist nicht im Partieinformationsfenster
+  verfügbar.
+  </i></p>
+  <p>Scid vs. PC kann die Online-Endspieldatenbanken von Lichess und
+  Shredder benutzen.</p>
+
+  <p>Die Endspieldatenbank von <b>Shredder</b> liefert den wahren Wert
+  einer Stellung bis zu sechs Steinen und zeigt, falls zutreffend, die
+  Tiefe bis zum Matt.</p>
+
+  <p>Die Endspieldatenbank von <b>Lichess Syzygy</b> zeigt die Tiefe
+  bis zum Matt für bis zu fünf Steine und die DTZ für sechs bis sieben
+  Steine. DTZ bedeutet "distance to zeroing" und ist der Zähler für
+  die 50-Züge-Remisregel. Syzygy-Endspieldatenbanken streben nicht
+  nach dem schnellsten Weg zum Matt, sondern nach dem schnellsten Weg
+  für ein siegreiches Schlagen oder nach einem Bauernzug. Dies kann
+  ein wenig unintuitiv sein, es erlaubt aber perfektes Spiel
+  betreffend das Ergebnis unter Berücksichtigung der 50-Züge-Regel.
+  Wenn ein Gewinn oder eine Niederlage nach mehr als 50 Zügen
+  vorkommt, nachdem der 50-Züge-Zähler zuletzt auf Null zurückgesetzt
+  wurde, nennt man dies einen "cursed win" oder "blessed loss", weil
+  nach der FIDE-Regel 9.3 das Ergebnis ein Remis ist. Lichess zeigt in
+  einigen wenigen Fällen für sechs oder sieben Steine die Tiefe bis
+  zum Matt. Sie wird in Klammern beim Partiezug angezeigt.</p>
 
   <p><footer>Aktualisiert: Scid vs. PC 4.23, Oktober 2021</footer></p>
 }
@@ -7044,7 +7080,7 @@ set helpText(D,ComputerGame) {
   </li>
   <li><b>Knoten (Nodes)</b> ist ähnlich wie die Suchtiefe, aber hier
   muß das Schachprogramm nach der Bewertung einer bestimmten Anzahl an
-  Stellungen ziehen (Voreinstellung ist 10.000).
+  Stellungen ziehen.
   </li>
   <li><b>Ständiges Berechnen (Permanent thinking)</b> (manchmal auch
   als "nachdenken" (ponder) bezeichnet) ermöglicht dem Schachprogramm
@@ -8680,9 +8716,9 @@ set helpText(D,HardwareConfig) {<h1>Mit externer Hardware verbinden</h1>
 set helpTitle(D,HardwareStatus) "Status externer Hardware"
 set helpText(D,HardwareStatus) {<h1>Status externer Hardware</h1>
 
-  <p>Diese Schaltfläche befindet sich rechts auf der Werkzeugleiste
-  von Scid. Abhängig vom Status der externen Hardware werden
-  unterschiedliche Symbole angezeigt:</p>
+  <p>Diese Schaltfläche (falls aktiviert) befindet sich rechts auf der
+  Werkzeugleiste und zeigt den Status der externen Hardware an.
+  </p>
   <ul>
   <li><button tb_eng_disconnected> Dies ist der normale Zustand nach
   Programmstart und zeigt, daß im Augenblick keine externe Hardware
@@ -8706,15 +8742,18 @@ set helpText(D,HardwareStatus) {<h1>Status externer Hardware</h1>
   <li><button tb_eng_ok> Die Kommunikation ist eingerichtet, das Gerät
   ist bereit und kann für Zugeingaben benutzt werden. Das Drücken der
   Schaltfläche unterbricht die Verbindung zur externen Hardware.</li>
-  <li><button tb_eng_dgt> Falls ein DGT Electronic Chess Board
-  verbunden und bereit ist, erscheint diese Schaltfläche. Das Drücken
-  der Schaltfläche beendet die Verbindung zur externen Hardware.</li>
+  <li><button tb_eng_dgt> Zeigt die Anwesenheit eines verbundenen
+  DGT-Electronic-Schachbretts. Das Drücken der Schaltfläche beendet
+  die Verbindung zur externen Hardware.</li>
   <li><button tb_eng_query> Der Dialog über
   die <a HardwareConfig>Hardwarekonfiguration</a> ist offen. Beenden
   Sie die Konfiguration, bevor Sie die Hardware verbinden.</li>
   </ul>
 
-  <p><footer>(Aktualisiert: Scid 3.6.27, Oktober 2008)</footer></p>
+  <p><i>Ein Rechtsklick auf der Schaltfläche zeigt das
+  Konfigurationsfenster an.</i></p>
+
+  <p><footer>(Aktualisiert: Scid vs PC 4.22)</footer></p>
 }
 
 set helpTitle(D,InputEngine) "Konsole DGT/Input Engine"
