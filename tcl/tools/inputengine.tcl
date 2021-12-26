@@ -166,9 +166,13 @@ namespace eval ExtHardware {
   # Hardware configured by default:
   #  1 : Novag Citrine
   #  2 : Input Engine
-  set hardware   1
+  if {![info exists hardware]} {
+    set hardware   1
+  }
 
-  set bindbutton ::novag::connect
+  if {![info exists bindbutton]} {
+    set bindbutton ::novag::connect
+  }
   set showbutton 0
 
   proc saveHardwareOptions {} {
@@ -201,13 +205,6 @@ namespace eval ExtHardware {
     }
   }
 
-  ### Set the hardware connect button command binding
-
-  proc HWbuttonBind {cmd} {
-    if {$::ExtHardware::showbutton} {
-       set ::ExtHardware::bindbutton $cmd
-    }
-  }
 
   ###  Configure both novag and 'input engine'
   #    Opens the configuration dialog to input driver engines binary
@@ -250,13 +247,13 @@ namespace eval ExtHardware {
     # Add a new radio button for subsequent new hardware here:
 
     radiobutton $w.novag -textvar tr(ExtHWNovag) -variable ::ExtHardware::hardware -value 1 -command {
-       set ::ExtHardware::bindbutton "::novag::connect"
+       set ::ExtHardware::bindbutton ::novag::connect
        .exthardwareConfig.eengine configure -state disabled
        .exthardwareConfig.eparam  configure -state disabled
     }
 
     radiobutton $w.inputeng -textvar tr(ExtHWInputEngine) -variable ::ExtHardware::hardware -value 2 -command {
-       set ::ExtHardware::bindbutton "::inputengine::connectdisconnect"
+       set ::ExtHardware::bindbutton ::inputengine::connectdisconnect
        .exthardwareConfig.eengine configure -state normal
        .exthardwareConfig.eparam  configure -state normal
     }
@@ -283,10 +280,9 @@ namespace eval ExtHardware {
 
     grid [frame $w.buttons]         -row 6 -column 0 -columnspan 2 -pady 10 
 
-    # Connect button
-    dialogbutton $w.buttons.ok -textvar tr(FICSConnect) -command {
+    # Connect 
+    dialogbutton $w.buttons.connect -textvar tr(FICSConnect) -command {
        ::ExtHardware::saveHardwareOptions
-       ::ExtHardware::HWbuttonBind $::ExtHardware::bindbutton
        destroy .exthardwareConfig
        $::ExtHardware::bindbutton
     }
@@ -299,7 +295,7 @@ namespace eval ExtHardware {
       destroy .exthardwareConfig
     }
 
-    pack $w.buttons.ok $w.buttons.help $w.buttons.close -side left -padx 20
+    pack $w.buttons.connect $w.buttons.help $w.buttons.close -side left -padx 20
 
     bind $w <F1> {helpWindow HardwareConfig}
 
@@ -316,7 +312,7 @@ frame .main.button.space4 -width 15
 
 # Same padding as '.main.button.$i configure' in main.tcl
 button .main.button.exthardware -image tb_eng_disconnected -relief flat -border 1 \
-  -highlightthickness 0 -takefocus 0 -command "$::ExtHardware::bindbutton"
+  -highlightthickness 0 -takefocus 0
 bind .main.button.exthardware <Button-3> ::ExtHardware::config
 
 # Source ExtHardware options file
@@ -330,6 +326,8 @@ if {[catch {source [scidConfigFile ExtHardware]} ]} {
    }
   ::splash::add "External hardware configuration was found and loaded."
 }
+
+.main.button.exthardware configure -command $::ExtHardware::bindbutton
 
 namespace eval inputengine {
 
@@ -390,7 +388,11 @@ namespace eval inputengine {
     button $w.bRotate        -text [::tr IERotate]      -command { ::inputengine::rotateboard }
 
     button $w.bSync          -text [::tr IESynchronise] -command { ::inputengine::synchronise }
-    button $w.bClose         -text [::tr Close]         -command "destroy $w"
+    button $w.bClose         -text [::tr Close]         -command "
+      ::inputengine::disconnect
+      bind $w <Destroy> {}
+      destroy $w"
+
 
     # Buttons for visual move announcement
     button $w.bPiece -image $inputengine::MovingPieceImg
@@ -439,11 +441,20 @@ namespace eval inputengine {
 
     grid $w.bd         -stick nw    -column 9  -row 2 -rowspan 9 -columnspan 7 -padx 12
 
-    bind $w <Destroy> {
-	if {"%W" == ".inputengineconsole"} {
-	    catch ::inputengine::disconnect
-	}
-    }
+frame $w.comms
+grid $w.comms -sticky ew -column 1 -columnspan 12 -row 12
+
+pack [entry $w.comms.command -width 60] -side left -padx 20
+
+pack [button $w.comms.send -text Send -command {
+  ::inputengine::sendToEngine [.inputengineconsole.comms.command get]
+  .inputengineconsole.comms.command delete 0 end
+}] -side right -padx 20
+
+bind $w.comms.command <Return> "$w.comms.send invoke"
+
+    bind $w <Destroy> "$w.bClose invoke"
+
     bind $w <F1> { helpWindow InputEngine}
   }
 
@@ -490,18 +501,11 @@ namespace eval inputengine {
     ::inputengine::Init
   }
 
-  #----------------------------------------------------------------------
-  # disconnect()
-  #    Disconnect and close the input engine
-  #----------------------------------------------------------------------
   proc disconnect {} {
     global ::inputengine::InputEngine
-    set pipe $::inputengine::InputEngine(pipe)
-
     set ::inputengine::connectimg tb_eng_connecting 
-
-    ::inputengine::sendToEngine "stop"
-    ::inputengine::sendToEngine "quit"
+    ::inputengine::sendToEngine stop
+    ::inputengine::sendToEngine quit
     set ::inputengine::connectimg tb_eng_disconnected
   }
 

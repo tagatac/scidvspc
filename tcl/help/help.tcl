@@ -3511,8 +3511,8 @@ in the <a PInfo>Player Information</a> window, or by selecting "Player Ratings"
 from the Tools menu. Right-clicking the graph will refresh it.
   </p>
   <p>
-  There are several options in the Graph menus, including the ability to use Elo from the spelling file (Ratings.ssp),
-  which is handy when the database doesn't contain many games.
+  There are several options in the Graph menus, including the ability to use Elo from the <a Maintenance Spellfile>ratings.ssp</a> file,
+  which is handy when the database doesn't contain many games, or when blitz/rapid games are showing conflicting ratings.
   </p>
 
   <h3><name Score>Score/Time Graph</name></h3>
