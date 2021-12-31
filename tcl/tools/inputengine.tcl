@@ -1,22 +1,15 @@
 ###
 ###    inputengine.tcl
-###
-###    This file adds input eninge protocol support to scid chess
-###    database. It adds menue with subitems to the tools-menue and
-###    additionally a button to enable the engine from within the GUI.
-###    This module is selfcontained and can just be linked into the Scid
-###    database upon built.
+###    Namespaces 'ExtHardware' and 'inputengine'
 ###
 ###    $Id: inputengine.tcl,v 1.13 2010/03/08 17:39:27 arwagner Exp $
 ###    Last change: <Mon, 2010/03/08 18:38:38 arwagner ingata>
 ###    Author     : Alexander Wagner
-###    Language   : TCL
 
-# Hacked by stevenaaus 2017, 2021
+###    Author     : stevenaaus 2017, 2021, 2022
 #
-# This file handles the configuration widgets for Novag and Input Engine
-# and also connect for the Input Engine. Namespaces 'ExtHardware' and 'inputengine'.
-# Connect and addMove for the Novag is handled in 'novag.tcl', namespace 'novag'
+# Handle configuration for Novag and Input Engine, and also Connect for the Input Engine.
+# (Connect and addMove for Novag is handled in novag.tcl. Alex's code structure is a little ordinary).
 
 # Engine is connecting (searching the board, initialising)
 image create photo tb_eng_connecting -data {
@@ -167,7 +160,7 @@ namespace eval ExtHardware {
   #  1 : Novag Citrine
   #  2 : Input Engine
   if {![info exists hardware]} {
-    set hardware   1
+    set hardware 1
   }
 
   if {![info exists bindbutton]} {
@@ -201,14 +194,11 @@ namespace eval ExtHardware {
 
   proc HWbuttonImg {img} {
     if {$::ExtHardware::showbutton} {
-      .main.button.exthardware configure -image $img -relief flat
+      .main.button.exthardware configure -image $img -relief flat -width 30 -height 30
     }
   }
 
-
   ###  Configure both novag and 'input engine'
-  #    Opens the configuration dialog to input driver engines binary
-  #    and parameters required to fire up the engine
 
   proc config {} {
     global ::ExtHardware::port ::ExtHardware::engine ::ExtHardware::param ::ExtHardware::hardware tr
@@ -263,20 +253,20 @@ namespace eval ExtHardware {
        .exthardwareConfig.eparam  configure -state disabled
     }
 
-    grid $w.options    -stick ew    -row 0 -column 0
-    grid $w.novag      -stick w     -row 0 -column 1
-    grid $w.inputeng   -stick w     -row 1 -column 1
+    grid $w.options    -sticky ew    -row 0 -column 0
+    grid $w.novag      -sticky w     -row 0 -column 1
+    grid $w.inputeng   -sticky w     -row 1 -column 1
 
-    grid $w.lport      -stick ew    -row 2 -column 0 
+    grid $w.lport      -sticky ew    -row 2 -column 0 
     grid $w.eport                   -row 2 -column 1 -padx 10
 
-    grid $w.lengine    -stick ew    -row 3 -column 0
+    grid $w.lengine    -sticky ew    -row 3 -column 0
     grid $w.eengine                 -row 3 -column 1 -padx 10
 
-    grid $w.lparam     -stick ew    -row 4 -column 0 
+    grid $w.lparam     -sticky ew    -row 4 -column 0 
     grid $w.eparam                  -row 4 -column 1 -padx 10
 
-    grid $w.showbutton -stick w     -row 5 -column 1
+    grid $w.showbutton -sticky w     -row 5 -column 1
 
     grid [frame $w.buttons]         -row 6 -column 0 -columnspan 2 -pady 10 
 
@@ -312,7 +302,7 @@ frame .main.button.space4 -width 15
 
 # Same padding as '.main.button.$i configure' in main.tcl
 button .main.button.exthardware -image tb_eng_disconnected -relief flat -border 1 \
-  -highlightthickness 0 -takefocus 0
+  -highlightthickness 0 -takefocus 0 -width 30 -height 30
 bind .main.button.exthardware <Button-3> ::ExtHardware::config
 
 # Source ExtHardware options file
@@ -321,10 +311,10 @@ if {[catch {source [scidConfigFile ExtHardware]} ]} {
   # don't spam splash because this file normally doesnt exist
   # ::splash::add "Unable to read External Hardware options file: $scidConfigFiles(ExtHardware)"
 } else {
-   if { $::ExtHardware::showbutton == 1 } {
+   if {$::ExtHardware::showbutton} {
       pack .main.button.space4 .main.button.exthardware -side left -pady 1 -padx 0 -ipadx 2 -ipady 2
    }
-  ::splash::add "External hardware configuration was found and loaded."
+  ::splash::add "External hardware configuration found and loaded."
 }
 
 .main.button.exthardware configure -command $::ExtHardware::bindbutton
@@ -363,7 +353,7 @@ namespace eval inputengine {
     wm title $w [tr IEConsole]
 
     scrollbar $w.ysc     -command { .inputengineconsole.console yview }
-    text      $w.console -height 5  -width 80 -wrap word -yscrollcommand "$w.ysc set"
+    text      $w.console -height 5 -wrap word -yscrollcommand "$w.ysc set"
 
     label     $w.lmode   -text [tr IESending]
 
@@ -372,16 +362,16 @@ namespace eval inputengine {
 
     label     $w.engine      -text "$::ExtHardware::engine $::ExtHardware::port $::ExtHardware::param"
 
-    radiobutton $w.sendboth  -text [tr Both]  -variable send -value 1 -command { ::inputengine::sendToEngine sendboth  }
-    radiobutton $w.sendwhite -text [tr White] -variable send -value 2 -command { ::inputengine::sendToEngine sendwhite }
-    radiobutton $w.sendblack -text [tr Black] -variable send -value 3 -command { ::inputengine::sendToEngine sendblack }
+    radiobutton $w.sendboth  -text [tr Both]  -variable send -value 1 -command {::inputengine::sendToEngine sendboth}
+    radiobutton $w.sendwhite -text [tr White] -variable send -value 2 -command {::inputengine::sendToEngine sendwhite}
+    radiobutton $w.sendblack -text [tr Black] -variable send -value 3 -command {::inputengine::sendToEngine sendblack}
 
-    button $w.bInfo          -text Info               -command { ::inputengine::sendToEngine sysinfo }
+    button $w.bInfo          -text Info               -command {::inputengine::sendToEngine sysinfo}
 
-    ###---### rotate does not work yet
-    button $w.bRotate        -text [tr IERotate]      -command { ::inputengine::rotateboard }
+    ### TODO rotate does not work yet
+    button $w.bRotate        -text [tr IERotate]      -command {::inputengine::rotateboard}
 
-    button $w.bSync          -text [tr IESynchronise] -command { ::inputengine::synchronise }
+    button $w.bSync          -text [tr IESynchronise] -command {::inputengine::synchronise}
     button $w.bClose         -text [tr Close]         -command "
       catch {::inputengine::disconnect}
       bind $w <Destroy> {}
@@ -409,39 +399,43 @@ namespace eval inputengine {
     grid rowconfigure $w 0 -weight 1
     grid rowconfigure $w 11 -pad 10
     grid columnconfigure $w {2 3 4 5 6} -weight 1
+    grid columnconfigure $w 11 -weight 1
+    grid columnconfigure $w 12 -weight 0
 
-    grid $w.console    -stick nsew  -column 0  -row 0 -columnspan 12
-    grid $w.ysc        -stick ns    -column 12 -row 0
+    grid $w.console    -sticky nsew  -column 0  -row 0 -columnspan 12 -padx 5 -pady 3
+    grid $w.ysc        -sticky nse    -column 12 -row 0
 
-    grid $w.engine     -stick ewns   -column 0  -row 1 -columnspan 9
+    grid $w.engine     -sticky ewns   -column 0  -row 1 -columnspan 9
 
-    grid $w.lmode      -stick ew    -column 0  -row 2 -padx 12
-    grid $w.sendboth   -stick e     -column 2  -row 2 
+    grid $w.lmode      -sticky ew    -column 0  -row 2 -padx 12
+    grid $w.sendboth   -sticky e     -column 2  -row 2 
     grid $w.sendwhite               -column 4  -row 2 
-    grid $w.sendblack  -stick w     -column 6  -row 2 
+    grid $w.sendblack  -sticky w     -column 6  -row 2 
 
-    grid $w.bInfo      -stick ew    -column 0  -row 3 -padx 12
-    ###---### grid $w.bRotate   -stick ew    -column 0  -row 4 -padx 12
-    grid $w.bSync      -stick ew    -column 0  -row 5 -padx 12
-    grid $w.bStoreClock -stick ew   -column 0  -row 6 -padx 12
-    grid $w.bClose     -stick ew    -column 0  -row 11 -padx 12
+    grid $w.bInfo      -sticky ew    -column 0  -row 3 -padx 12
+    grid $w.bRotate   -sticky ew    -column 0  -row 4 -padx 12
+    grid $w.bSync      -sticky ew    -column 0  -row 5 -padx 12
+    grid $w.bStoreClock -sticky ew   -column 0  -row 6 -padx 12
+    grid $w.bClose     -sticky ew    -column 0  -row 11 -padx 12
 
-    grid $w.bPiece     -stick nwes  -column 2  -row 3 -rowspan 7 -columnspan 3
-    grid $w.bMove      -stick nwes  -column 5  -row 3 -rowspan 7 -columnspan 3
+    grid $w.bPiece     -sticky nwes  -column 2  -row 3 -rowspan 7 -columnspan 3
+    grid $w.bMove      -sticky nwes  -column 5  -row 3 -rowspan 7 -columnspan 3
 
-    grid $w.wClock     -stick nwes  -column 9 -row 11 -columnspan 7
-    grid $w.bClock     -stick nwes  -column 9 -row 1  -columnspan 7
+    grid $w.wClock     -sticky nwes  -column 9 -row 11 -columnspan 7
+    grid $w.bClock     -sticky nwes  -column 9 -row 1  -columnspan 7
 
-    grid $w.bd         -stick nw    -column 9  -row 2 -rowspan 9 -columnspan 7 -padx 12
+    grid $w.bd         -sticky nw    -column 9  -row 2 -rowspan 9 -columnspan 7 -padx 12
 
     ### General purpose command entrybox - S.A
+
     frame $w.comms
-    grid $w.comms -sticky ew -column 1 -columnspan 12 -row 12
+    grid $w.comms -sticky ew -column 1 -columnspan 13 -row 12 -pady 10
+
     pack [entry $w.comms.command -width 60] -side left -padx 20
-    pack [button $w.comms.send -text Send -command {
+    pack [button $w.comms.send -text Send -width 10 -command {
       ::inputengine::sendToEngine [.inputengineconsole.comms.command get]
       .inputengineconsole.comms.command delete 0 end
-    }] -side right -padx 20
+    }] -side right -padx 30
     bind $w.comms.command <Return> "$w.comms.send invoke"
 
     bind $w <Control-q> "$w.bClose invoke"
@@ -498,18 +492,12 @@ namespace eval inputengine {
   }
 
   proc sendToEngine {msg} {
-    set pipe $::inputengine::InputEngine(pipe)
-
     ::inputengine::logEngine "> $msg"
-    puts $pipe $msg
-    # todo: is flushing here necessary ?
-    flush $pipe
+    puts  $::inputengine::InputEngine(pipe) $msg
+    flush $::inputengine::InputEngine(pipe)
+    # flushing here necessary ?
   }
 
-  #----------------------------------------------------------------------
-  # init()
-  #    Initialises the engine and internal data
-  #----------------------------------------------------------------------
   proc Init {} {
     global ::inputengine::InputEngine
     set pipe $::inputengine::InputEngine(pipe)
@@ -522,8 +510,6 @@ namespace eval inputengine {
 
     ::inputengine::newgame
   }
-
-  # Reset the engine's global variables and close DGT window
 
   proc resetEngine {} {
     ::ExtHardware::HWbuttonImg tb_eng_disconnected
