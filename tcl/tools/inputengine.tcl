@@ -343,62 +343,55 @@ namespace eval inputengine {
   set MovingPieceImg        $::board::letterToPiece(.)80
   set MoveText              "     "
 
-  set NoClockTime           "--:--"
+  set NoClockTime           --:--
   set StoreClock            0
 
   set WhiteClock            $::inputengine::NoClockTime
   set BlackClock            $::inputengine::NoClockTime
   set oldWhiteClock         $::inputengine::NoClockTime
   set oldBlackClock         $::inputengine::NoClockTime
-  set toMove                "White"
+  set toMove                White
 
   font create moveFont -family Helvetica -size 56 -weight bold
 
-  #----------------------------------------------------------------------
-  # Generate the console window also used for status display
-  #----------------------------------------------------------------------
-  proc consoleWindow {} {
-
+  proc createConsoleWindow {} {
     set w .inputengineconsole
-    if { [winfo exists $w]} { 
-       ::inputengine::disconnect
-       return
-    }
+    if { [winfo exists $w]} { destroy $w }
+
     toplevel $w
 
-    wm title $w [::tr IEConsole]
+    wm title $w [tr IEConsole]
 
     scrollbar $w.ysc     -command { .inputengineconsole.console yview }
     text      $w.console -height 5  -width 80 -wrap word -yscrollcommand "$w.ysc set"
 
-    label     $w.lmode   -text [::tr IESending]
+    label     $w.lmode   -text [tr IESending]
 
     ::board::new $w.bd 35
     $w.bd configure -relief solid -borderwidth 1
 
     label     $w.engine      -text "$::ExtHardware::engine $::ExtHardware::port $::ExtHardware::param"
 
-    radiobutton $w.sendboth  -text [::tr Both]  -variable send -value 1 -command { ::inputengine::sendToEngine sendboth  }
-    radiobutton $w.sendwhite -text [::tr White] -variable send -value 2 -command { ::inputengine::sendToEngine sendwhite }
-    radiobutton $w.sendblack -text [::tr Black] -variable send -value 3 -command { ::inputengine::sendToEngine sendblack }
+    radiobutton $w.sendboth  -text [tr Both]  -variable send -value 1 -command { ::inputengine::sendToEngine sendboth  }
+    radiobutton $w.sendwhite -text [tr White] -variable send -value 2 -command { ::inputengine::sendToEngine sendwhite }
+    radiobutton $w.sendblack -text [tr Black] -variable send -value 3 -command { ::inputengine::sendToEngine sendblack }
 
-    button $w.bInfo          -text Info           -command { ::inputengine::sysinfo }
+    button $w.bInfo          -text Info               -command { ::inputengine::sendToEngine sysinfo }
 
     ###---### rotate does not work yet
-    button $w.bRotate        -text [::tr IERotate]      -command { ::inputengine::rotateboard }
+    button $w.bRotate        -text [tr IERotate]      -command { ::inputengine::rotateboard }
 
-    button $w.bSync          -text [::tr IESynchronise] -command { ::inputengine::synchronise }
-    button $w.bClose         -text [::tr Close]         -command "
-      ::inputengine::disconnect
+    button $w.bSync          -text [tr IESynchronise] -command { ::inputengine::synchronise }
+    button $w.bClose         -text [tr Close]         -command "
+      catch {::inputengine::disconnect}
       bind $w <Destroy> {}
       destroy $w"
-
 
     # Buttons for visual move announcement
     button $w.bPiece -image $inputengine::MovingPieceImg
     button $w.bMove  -font moveFont -text  $inputengine::MoveText
 
-#SA ::inputengine::setPieceImage bq80
+    #SA ::inputengine::setPieceImage bq80
 
     $w.bPiece configure -relief flat -border 0 -highlightthickness 0 -takefocus 0
     $w.bMove  configure -relief flat -border 0 -highlightthickness 0 -takefocus 0
@@ -441,59 +434,49 @@ namespace eval inputengine {
 
     grid $w.bd         -stick nw    -column 9  -row 2 -rowspan 9 -columnspan 7 -padx 12
 
-frame $w.comms
-grid $w.comms -sticky ew -column 1 -columnspan 12 -row 12
+    ### General purpose command entrybox - S.A
+    frame $w.comms
+    grid $w.comms -sticky ew -column 1 -columnspan 12 -row 12
+    pack [entry $w.comms.command -width 60] -side left -padx 20
+    pack [button $w.comms.send -text Send -command {
+      ::inputengine::sendToEngine [.inputengineconsole.comms.command get]
+      .inputengineconsole.comms.command delete 0 end
+    }] -side right -padx 20
+    bind $w.comms.command <Return> "$w.comms.send invoke"
 
-pack [entry $w.comms.command -width 60] -side left -padx 20
+    bind $w <Control-q> "$w.bClose invoke"
+    bind $w <Destroy> "
+      bind $w <Destroy> {}
+      $w.bClose invoke
+    "
 
-pack [button $w.comms.send -text Send -command {
-  ::inputengine::sendToEngine [.inputengineconsole.comms.command get]
-  .inputengineconsole.comms.command delete 0 end
-}] -side right -padx 20
-
-bind $w.comms.command <Return> "$w.comms.send invoke"
-
-    bind $w <Destroy> "$w.bClose invoke"
-
-    bind $w <F1> { helpWindow InputEngine}
+    bind $w <F1> {helpWindow InputEngine}
   }
 
-  #----------------------------------------------------------------------
-  # connectdisconnect()
-  #   Connects or disconnects depending on the current status of the
-  #   external input engine
-  #----------------------------------------------------------------------
   proc connectdisconnect {} {
-    global  ::inputengine::InputEngine
-
-    set connection $::inputengine::InputEngine(pipe)
-
-    if {$connection == ""} {
-      consoleWindow
+    if {$::inputengine::InputEngine(pipe) == ""} {
+      createConsoleWindow
+      ::inputengine::resetEngine
       ::inputengine::connect
     } else {
       ::inputengine::disconnect
     }
   }
 
-  #----------------------------------------------------------------------
-  # connect():
-  #     Fire up the input engine and connect it to a local pipe.
-  #     Also register the eventhandler
-  #----------------------------------------------------------------------
   proc connect {} {
-    global ::inputengine::InputEngine ::inputengine::engine \
-        ::inputengine::port ::inputengine::param
+    global ::inputengine::InputEngine ::inputengine::engine ::inputengine::port ::inputengine::param
 
-    set ::inputengine::port $::ExtHardware::port
-    set ::inputengine::engine $::ExtHardware::engine
+    set engine $::ExtHardware::engine
+    set port   $::ExtHardware::port
+    set param  $::ExtHardware::param
 
     ::ExtHardware::HWbuttonImg tb_eng_connecting
+    set command "$engine $port $param"
 
-    if {[catch {set InputEngine(pipe) [open "| $engine $port $param" "r+"]} result]} {
+    if {[catch {set InputEngine(pipe) [open "| $command" r+]} result]} {
       ::ExtHardware::HWbuttonImg tb_eng_error
       tk_messageBox -title "Scid: Input Engine" -icon warning -type ok \
-          -message "[::tr IEUnableToStart]\n$engine $port $param"
+          -message "[tr IEUnableToStart]\n$command"
       ::inputengine::resetEngine
       return
     }
@@ -502,7 +485,6 @@ bind $w.comms.command <Return> "$w.comms.send invoke"
   }
 
   proc disconnect {} {
-    global ::inputengine::InputEngine
     set ::inputengine::connectimg tb_eng_connecting 
     ::inputengine::sendToEngine stop
     ::inputengine::sendToEngine quit
@@ -516,7 +498,6 @@ bind $w.comms.command <Return> "$w.comms.send invoke"
   }
 
   proc sendToEngine {msg} {
-    global ::inputengine::InputEngine
     set pipe $::inputengine::InputEngine(pipe)
 
     ::inputengine::logEngine "> $msg"
@@ -545,29 +526,12 @@ bind $w.comms.command <Return> "$w.comms.send invoke"
   # Reset the engine's global variables and close DGT window
 
   proc resetEngine {} {
-    global ::inputengine::InputEngine
-
     ::ExtHardware::HWbuttonImg tb_eng_disconnected
-    # puts nope - S.A.
-    # return
-    destroy .inputengineconsole
+
     set ::inputengine::InputEngine(pipe)     ""
     set ::inputengine::InputEngine(log)      ""
     set ::inputengine::InputEngine(logCount) 0
     set ::inputengine::InputEngine(init)     0
-  }
-
-
-  #----------------------------------------------------------------------
-  # sysinfo()
-  #    Initialises the engine and internal data
-  #----------------------------------------------------------------------
-  proc sysinfo {} {
-    global ::inputengine::InputEngine
-    set pipe $::inputengine::InputEngine(pipe)
-
-    # call system information
-    ::inputengine::sendToEngine "sysinfo"
   }
 
   #----------------------------------------------------------------------
@@ -600,12 +564,7 @@ bind $w.comms.command <Return> "$w.comms.send invoke"
     sc_game tags set -date [::utils::date::today]
   }
 
-  #----------------------------------------------------------------------
-  # endgame()
-  #    Handle game ending (end game event + result)
-  #----------------------------------------------------------------------
   proc endgame {result} {
-
     set filternum [sc_filter first]
 
     logEngine "  info End Game $filternum: $result"
@@ -619,10 +578,8 @@ bind $w.comms.command <Return> "$w.comms.send invoke"
   #    read board position and set scid's representation accordingly
   #----------------------------------------------------------------------
   proc synchronise {} {
-    global ::inputengine::InputEngine
-
     logEngine "  info Sync called"
-    set InputEngine(init) 0
+    set ::inputengine::InputEngine(init) 0
 
     ::inputengine::sendToEngine "getposition"
     ::inputengine::sendToEngine "getclock"
@@ -637,7 +594,7 @@ bind $w.comms.command <Return> "$w.comms.send invoke"
     global ::inputengine::InputEngine ::inputengine::connectimg
 
     set pipe $::inputengine::InputEngine(pipe)
-    set line     [string trim [gets $pipe] ]
+    set line [string trim [gets $pipe]]
 
     # Close the pipe in case the engine was stopped
     if {[eof $pipe]} {
