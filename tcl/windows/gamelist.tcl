@@ -302,11 +302,11 @@ proc ::windows::gamelist::Open {} {
   ttk::treeview $w.tree -columns $::glistHeaders -displaycolumns $::glistColOrder -show headings -xscroll "$w.hsb set"
     # -yscroll "$w.vsb set" -xscroll "$w.hsb set"
 
-  # title font isn't working &&& I don't think it's configurable !
-  $w.tree tag configure treetitle -font font_H1
+  # To mess with treeview fonts (for eg)
+  # ttk::style configure Treeview.Heading -font font_Small
+  # ttk::style configure Treeview -font font_Small
+  # ttk::style configure Treeview -rowheight [expr {[font metrics  font_Small -linespace] + 1}]
 
-  # this font is working, but doesn't affect how many entries fit on a screen, and isn't enabled
-  $w.tree tag configure treefont -font font_Regular
   bind $w.tree <Button-2> {
     set ::windows::gamelist::showButtons [expr {!$::windows::gamelist::showButtons}]
     ::windows::gamelist::displayButtons

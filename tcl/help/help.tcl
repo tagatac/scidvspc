@@ -1554,6 +1554,9 @@ set helpText(GameList) {<h1>The Game List</h1>
 
 <p>The <run ::windows::gamelist::Open><green>Game List</green></run>
 shows all filter games in the currently open database/PGN file.</p>
+
+<p><i>The Gamelist (and Bestgames) widgets do not currently have configurable fonts. See patches/treeviewFont.diff for more information.</i></p>
+
 <p>Below the Game List are various buttons and entries,
 and at the bottom you'll find the <a Switcher>Database Switcher</a>.</p>
 <p>Clicking a game will select it. Select multiple games using Control+Click and Shift+Click.
