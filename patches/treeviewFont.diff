@@ -1,0 +1,81 @@
+Index: tcl/windows/gamelist.tcl
+===================================================================
+--- tcl/windows/gamelist.tcl	(revision 3253)
++++ tcl/windows/gamelist.tcl	(working copy)
+@@ -303,9 +303,9 @@
+     # -yscroll "$w.vsb set" -xscroll "$w.hsb set"
+ 
+   # To mess with treeview fonts (for eg)
+-  # ttk::style configure Treeview.Heading -font font_Small
+-  # ttk::style configure Treeview -font font_Small
+-  # ttk::style configure Treeview -rowheight [expr {[font metrics  font_Small -linespace] + 1}]
++  ttk::style configure Treeview.Heading -font font_Small
++  ttk::style configure Treeview -font font_Small
++  # and in ::windows::gamelist::Configure
+ 
+   bind $w.tree <Button-2> {
+     set ::windows::gamelist::showButtons [expr {!$::windows::gamelist::showButtons}]
+@@ -409,18 +409,7 @@
+     }
+     ::windows::gamelist::Refresh last
+   }
+-  bind $w <Next>  {
+-    incr glstart $glistSize
+-    set totalSize [sc_filter count]
+-    set lastEntry [expr $totalSize - $glistSize]
+-    if {$lastEntry < 1} {
+-      set lastEntry 1
+-    }
+-    if {$glstart > $lastEntry} {
+-      set glstart $lastEntry
+-    }
+-    ::windows::gamelist::Refresh first
+-  }
++  bind $w <Next>  {::windows::gamelist::Scroll $glistSize}
+   # MouseWheel bindings:
+   # bind $w <MouseWheel> {::windows::gamelist::Scroll [expr {- (%D / 120)}]}
+   if {$::windowsOS || $::macOS} {
+@@ -909,6 +898,9 @@
+   if {$window == {.glistWin.tree}} {
+     recordWidths
+     recordWinSize .glistWin
++
++    ttk::style configure Treeview -rowheight [expr {[font metrics  font_Small -linespace] + 1}]
++    ::windows::gamelist::SetSize
+     ::windows::gamelist::Refresh
+   }
+   if {$window == ".glistWin.b.f"} {
+@@ -975,24 +967,17 @@
+   set w .glistWin.tree
+   if {![winfo exists $w]} {return}
+ 
+-if {0} {
+-  if {![info exists glFontHeight]} {
+-    set fontspace [font metrics [ttk::style lookup [$w cget -style] -font] -linespace]
+-    # Nasty hack to make things work
+-    if {$::windowsOS} {
+-      set glFontHeight [expr $fontspace*125/72]
+-    } elseif {$::macOS} {
+-      set glFontHeight [expr $fontspace*92/72]
+-    } else {
+-      set glFontHeight [expr $fontspace*106/72]
+-    }
++  set fontspace [font metrics  font_Small -linespace]
++  # Nasty hack to make things work
++  if {$::windowsOS} {
++    set glFontHeight [expr $fontspace*125/72]
++  } elseif {$::macOS} {
++    set glFontHeight [expr $fontspace*92/72]
++  } else {
++    set glFontHeight $fontspace
+   }
+-  # $glFontHeight ~ 22 linux
+ 
+-  # set glistSize [expr {[winfo height $w] / $glFontHeight +([winfo height $w]-300)/200}]
+-}
+-  # hardcoded in ttkTreeview.c to (20 pixels high + 1 pixel padding ) - 1 row for title.
+-  set glistSize [expr {int([winfo height $w] / 21)-1}]
++  set glistSize [expr {[winfo height $w] / $glFontHeight +([winfo height $w]-300)/200}]
+ 
+   # debugging voodoo
+   # puts "glistSize $glistSize , winfo height [winfo height $w]"
