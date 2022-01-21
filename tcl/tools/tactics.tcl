@@ -126,7 +126,7 @@ namespace eval tactics {
   # (Had some associated core dumps here, possibly when scidBasesDir is wrongly set in config S.A)
 
   proc config {} {
-    global ::tactics::basePath ::tactics::baseList ::tactics::baseDesc
+    global ::tactics::basePath ::tactics::baseList ::tactics::baseDesc tr
     set basePath $::scidBasesDir
 
     if {[winfo exists .tacticsWin]} {
@@ -141,7 +141,7 @@ namespace eval tactics {
 
     update
     toplevel $w
-    wm title $w $::tr(ConfigureTactics)
+    wm title $w $tr(ConfigureTactics)
     setWinLocation $w
 
     if {[sc_base count free] == 0} {
@@ -181,7 +181,7 @@ namespace eval tactics {
     updateTitle
 
     frame $w.fconfig -relief raised -borderwidth 1
-    label $w.fconfig.l1 -text $::tr(ChooseTrainingBase)
+    label $w.fconfig.l1 -text $tr(ChooseTrainingBase)
     pack $w.fconfig.l1 -pady 3
 
     frame $w.fconfig.flist
@@ -198,7 +198,7 @@ namespace eval tactics {
     $w.fconfig.flist.lb selection set 0
 
     frame $w.fconfig.reset
-    button $w.fconfig.reset.button -text $::tr(ResetScores) -command {
+    button $w.fconfig.reset.button -text $tr(ResetScores) -command {
       set current [.configTactics.fconfig.flist.lb curselection]
       set name [lindex $::tactics::baseList [expr $current * 2 ] ]
       set desc [lindex $::tactics::baseDesc $current]
@@ -211,7 +211,7 @@ namespace eval tactics {
 
     # in order to limit CPU usage, limit time for analysis (this prevents noise on laptops)
     frame $w.fconfig.flimit
-    label $w.fconfig.flimit.blimit -text "$::tr(limitanalysis) ($::tr(seconds))" -relief flat
+    label $w.fconfig.flimit.blimit -text "$tr(limitanalysis) ($tr(seconds))" -relief flat
     scale $w.fconfig.flimit.analysisTime -orient horizontal -from 1 -to 30 -length 120 \
       -variable ::tactics::analysisTime -resolution 1
     pack $w.fconfig.flimit.blimit -side top
@@ -219,7 +219,7 @@ namespace eval tactics {
 
     frame $w.fconfig.fbutton
     dialogbutton $w.fconfig.fbutton.ok -text Ok -command "::tactics::start $w"
-    dialogbutton $w.fconfig.fbutton.cancel -text $::tr(Cancel) -command "focus .main ; destroy $w"
+    dialogbutton $w.fconfig.fbutton.cancel -text $tr(Cancel) -command "focus .main ; destroy $w"
     pack $w.fconfig.fbutton.ok $w.fconfig.fbutton.cancel -expand yes -side left -padx 20 -pady 2
     pack $w.fconfig $w.fconfig.flist $w.fconfig.reset -side top
 
@@ -236,7 +236,7 @@ namespace eval tactics {
 
 
   proc start {parent} {
-    global ::tactics::analysisEngine ::askToReplaceMoves ::tactics::askToReplaceMoves_old
+    global ::tactics::analysisEngine ::askToReplaceMoves ::tactics::askToReplaceMoves_old tr
 
     set current [.configTactics.fconfig.flist.lb curselection]
     set base [lindex $::tactics::baseList [expr $current * 2]]
@@ -273,7 +273,7 @@ namespace eval tactics {
     wm minsize $w 170 170
     frame $w.f1 -relief groove -borderwidth 1
     label $w.f1.labelInfo -textvariable ::tactics::infoEngineLabel -bg linen
-    checkbutton $w.f1.cbWinWonGame -text $::tr(WinWonGame) -variable ::tactics::winWonGame
+    checkbutton $w.f1.cbWinWonGame -text $tr(WinWonGame) -variable ::tactics::winWonGame
     pack $w.f1.labelInfo $w.f1.cbWinWonGame -expand yes -fill both -side top
 
     frame $w.clock
@@ -282,7 +282,7 @@ namespace eval tactics {
     ::gameclock::start 1
 
     frame $w.f2 -relief groove
-    checkbutton $w.f2.solution -text $::tr(ShowSolution) -variable ::tactics::showSolution \
+    checkbutton $w.f2.solution -text $tr(ShowSolution) -variable ::tactics::showSolution \
       -command ::tactics::toggleSolution
     label $w.f2.solved -textvariable ::tactics::labelSolution -wraplength 120
     pack $w.f2.solution $w.f2.solved -expand yes -fill both -side top
@@ -292,9 +292,9 @@ namespace eval tactics {
     pack $w.clock
     pack $w.f2 $w.buttons -expand yes -fill both
 
-    setInfoEngine $::tr(LoadingBase)
+    setInfoEngine $tr(LoadingBase)
 
-    button $w.buttons.next -text $::tr(Next) -command {
+    button $w.buttons.next -textvar tr(Next) -command {
       ::tactics::stopAnalyze
       # mark game as solved if solution shown
       if {$::tactics::showSolution} {
@@ -303,7 +303,7 @@ namespace eval tactics {
       }
       ::tactics::loadNextGame
     }
-    button $w.buttons.close -text Quit -command ::tactics::endTraining
+    button $w.buttons.close -textvar tr(Quit) -command ::tactics::endTraining
     pack $w.buttons.next $w.buttons.close -expand yes -fill both -padx 20 -pady 2
     bind $w <Destroy> { ::tactics::endTraining }
     bind $w <Configure> "recordWinSize $w"
