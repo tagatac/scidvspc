@@ -8778,9 +8778,14 @@ sc_savegame (Tcl_Interp * ti, Game * game, gameNumberT gnum, scidBaseT * base)
     IndexEntry iE;
     iE.Init();
 
-
-    if (game->Encode (base->bbuf, &iE) != OK) {
-      Tcl_AppendResult (ti, "Error encoding game.", NULL);
+    errorT result;
+    if ((result = game->Encode (base->bbuf, &iE)) != OK) {
+      if (result == ERROR_GameFull) {
+	sprintf (temp, "Error encoding game. Game size %u, Max game size %u. \n", base->bbuf->GetByteCount(), MAX_GAME_LENGTH);
+        Tcl_AppendResult (ti, temp, NULL);
+      } else {
+        Tcl_AppendResult (ti, "Error encoding game.\n", NULL);
+      }
       return TCL_ERROR;
     }
 

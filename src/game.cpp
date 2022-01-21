@@ -476,7 +476,9 @@ Game::RestoreState ()
 //////////////////////////////////////////////////////////////////////
 
 
+// unused - S.A.
 #define MAX_MOVES 5000          // Maximum moves per game.
+
 #define MAX_VARS_PER_MOVE 10    // Maximum variations per move.
 
 

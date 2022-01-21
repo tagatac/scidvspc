@@ -3827,8 +3827,12 @@ set helpText(Formats) {<h1>Scid File Formats</h1>
   <p>
   Scid Databases consist of three files - an index file (file suffix .si4), a name file (.sn4) and a game file (.sg4).
 </p>
-<p><i>Scid only allocates three bytes for some data fields. This means si4's maximum number of games is 16,777,214.</i>
-</p>
+<p><i>Scid only allocates three bytes for some data fields. This means si4's maximum number of games is 16,777,214.
+<br>
+Maximum game file size (sg4) is 2gb on Windows, and 4gb on other systems.
+<br>
+Additionally, maximum size for a single game is 131,072 bytes.
+</i></p>
 
   <h3>The Index File (.si4)</h3>
   <p>
