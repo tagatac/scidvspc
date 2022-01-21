@@ -379,10 +379,12 @@ namespace eval pgn {
     updateBoard
   }
 
+  # Open calls a focus text, which (on Mac cocoa) can be upset by a mistimed FocusOut and storeComment
+  # So try/better to do this 'after idle'
   proc comment {commentTag} {
     sc_move pgn [string range $commentTag 2 end]
     updateBoard
-    ::commenteditor::Open
+    after idle ::commenteditor::Open
   }
 
   # This is a bit of a hack and will try to delete initial comment if right-clicking on free pgn window space
