@@ -1430,6 +1430,8 @@ translate L moveblunderthreshold {siirto on möhläys jos menestys on suurempi kui
 translate L limitanalysis {Valmentajan analyysiaika}
 translate L seconds {sekunnit}
 translate L Abort {Keskeytä}
+# ====== TODO To be translated ======
+translate L Quit {Quit}
 translate L Resume {Jatka}
 translate L Restart {Aloita uudelleen}
 translate L OutOfOpening {Avauksen ulkopuolella}

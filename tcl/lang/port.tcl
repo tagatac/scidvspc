@@ -1433,6 +1433,8 @@ translate U moveblunderthreshold {movimento é erro se perder mais de}
 translate U limitanalysis {limitar tempo de análise do programa}
 translate U seconds {segundos}
 translate U Abort {Abortar}
+# ====== TODO To be translated ======
+translate U Quit {Quit}
 translate U Resume {Retomar}
 translate U Restart {Recomeçar}
 translate U OutOfOpening {Fora da abertura}

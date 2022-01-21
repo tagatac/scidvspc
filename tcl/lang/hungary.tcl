@@ -1675,6 +1675,8 @@ translate H seconds {seconds}
 # ====== TODO To be translated ======
 translate H Abort {Abort}
 # ====== TODO To be translated ======
+translate H Quit {Quit}
+# ====== TODO To be translated ======
 translate H Resume {Resume}
 # ====== TODO To be translated ======
 translate H Restart {Restart}

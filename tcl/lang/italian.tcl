@@ -1609,6 +1609,8 @@ translate I limitanalysis {limita il tempo di analisi del motore}
 translate I seconds {secondi}
 translate I Abort {Annulla}
 # ====== TODO To be translated ======
+translate I Quit {Quit}
+# ====== TODO To be translated ======
 translate I Resume {Resume}
 # ====== TODO To be translated ======
 translate I Restart {Restart}

@@ -1535,6 +1535,8 @@ translate W moveblunderthreshold {drag är en blunder om förlust är större än}
 translate W limitanalysis {begränsa schackmotors analystid}
 translate W seconds {sekunder}
 translate W Abort {Avbryt}
+# ====== TODO To be translated ======
+translate W Quit {Quit}
 translate W Resume {Fortsätt}
 # TODO
 translate W Restart {Restart}

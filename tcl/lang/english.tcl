@@ -1423,6 +1423,7 @@ translate E moveblunderthreshold {move is a blunder if loss is greater than}
 translate E limitanalysis {Coach's analysis time}
 translate E seconds {seconds}
 translate E Abort {Abort}
+translate E Quit {Quit}
 translate E Resume {Resume}
 translate E Restart {Restart}
 translate E OutOfOpening {Out of opening}

@@ -1508,6 +1508,8 @@ translate S moveblunderthreshold {El movimiento es una metedura de pata si la pé
 translate S limitanalysis {Tiempo límite para análisis del motor}
 translate S seconds {segundos}
 translate S Abort {Abortar}
+# ====== TODO To be translated ======
+translate S Quit {Quit}
 translate S Resume {Reanudar}
 translate S Restart {Reiniciar}
 translate S OutOfOpening {Fuera de apertura}

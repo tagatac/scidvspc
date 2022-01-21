@@ -1508,6 +1508,8 @@ translate R moveblunderthreshold {ход ошибочен, если потеря
 translate R limitanalysis {предельное время анализа движка}
 translate R seconds {секунд}
 translate R Abort {Прервать}
+# ====== TODO To be translated ======
+translate R Quit {Quit}
 translate R Resume {Продолжить}
 translate R Restart {Перезапуск}
 translate R OutOfOpening {Выход из дебюта}

@@ -1550,6 +1550,8 @@ translate G moveblunderthreshold {η κίνηση είναι Σοβαρό Σφά
 translate G limitanalysis {Χρόνος σκέψης Προπονητή}
 translate G seconds {δευτερόλεπτα}
 translate G Abort {Ακύρωση}
+# ====== TODO To be translated ======
+translate G Quit {Quit}
 translate G Resume {Συνέχιση}
 translate G Restart {Επανεκκίνηση}
 translate G OutOfOpening {Εκτός ανοίγματος}

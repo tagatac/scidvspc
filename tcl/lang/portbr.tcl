@@ -1712,6 +1712,8 @@ translate B limitanalysis {limita tempo de analise do engine}
 translate B seconds {segundos}
 
 translate B Abort {Abortar}
+# ====== TODO To be translated ======
+translate B Quit {Quit}
 
 translate B Resume {Continuar}
 

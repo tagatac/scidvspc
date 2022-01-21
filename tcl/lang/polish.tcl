@@ -1514,6 +1514,8 @@ translate P moveblunderthreshold {posunięcie jest błędem, jeśli strata jest 
 translate P limitanalysis {ogranicz czas analizy}
 translate P seconds {sekund}
 translate P Abort {Przerwij}
+# ====== TODO To be translated ======
+translate P Quit {Quit}
 translate P Resume {Wznów}
 # TODO
 translate P Restart {Restart}

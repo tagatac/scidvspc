@@ -1443,6 +1443,8 @@ translate O moveblunderthreshold {trekk er en bukk om den taper mer enn}
 translate O limitanalysis {begrens motors analysetid}
 translate O seconds {sekunder}
 translate O Abort {Avbryt}
+# ====== TODO To be translated ======
+translate O Quit {Quit}
 translate O Resume {Fortsett}
 translate O Restart {Start på nytt}
 translate O OutOfOpening {Ute av åpning}

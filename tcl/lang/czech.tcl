@@ -1665,6 +1665,8 @@ translate C seconds {seconds}
 # ====== TODO To be translated ======
 translate C Abort {Abort}
 # ====== TODO To be translated ======
+translate C Quit {Quit}
+# ====== TODO To be translated ======
 translate C Resume {Resume}
 # ====== TODO To be translated ======
 translate C Restart {Restart}

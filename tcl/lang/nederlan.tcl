@@ -1546,6 +1546,8 @@ translate N limitanalysis {Maximum analysetijd schaakengine}
 translate N seconds {seconden}
 
 translate N Abort {Afbreken}
+# ====== TODO To be translated ======
+translate N Quit {Quit}
 translate N Resume {Hervatten}
 translate N Restart {Herstarten}
 translate N OutOfOpening {Uit de opening}

@@ -1470,6 +1470,8 @@ translate D moveblunderthreshold {fehlerhafter Zug, wenn Verlust größer als}
 translate D limitanalysis {Analysezeit der Engine begrenzen}
 translate D seconds {Sekunden}
 translate D Abort {Abbrechen}
+# ====== TODO To be translated ======
+translate D Quit {Quit}
 translate D Resume {Fortfahren}
 translate D Restart {Neustart}
 translate D OutOfOpening {Ende der Eröffnung}

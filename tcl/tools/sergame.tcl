@@ -475,7 +475,7 @@ namespace eval sergame {
     }
     pack $w.fbuttons.restart -expand yes -fill both -padx 10 -pady 2
 
-    button $w.fbuttons.abort -textvar tr(Abort) -command ::sergame::abortGame
+    button $w.fbuttons.abort -textvar tr(Quit) -command ::sergame::abortGame
     pack $w.fbuttons.abort -expand yes -fill both -padx 10 -pady 2
 
     bind $w <F1> {helpWindow ComputerGame UCIGame}

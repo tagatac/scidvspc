@@ -538,7 +538,7 @@ namespace eval tacgame {
 
     pack $w.fbuttons.restart -expand yes -fill both -padx 10 -pady 2
 
-    button $w.fbuttons.close -textvar ::tr(Abort) -command ::tacgame::abortGame
+    button $w.fbuttons.close -textvar ::tr(Quit) -command ::tacgame::abortGame
     pack $w.fbuttons.close -expand yes -fill both -padx 10 -pady 2
 
     ::tacgame::launchPhalanx $phalanx

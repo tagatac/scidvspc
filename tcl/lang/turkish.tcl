@@ -1433,6 +1433,8 @@ translate T moveblunderthreshold {hamle gaf eşik}
 translate T limitanalysis {Koçun analiz süresi}
 translate T seconds {saniye}
 translate T Abort {iptal etmek}
+# ====== TODO To be translated ======
+translate T Quit {Quit}
 translate T Resume {Devam et}
 translate T Restart {Tekrar başlat}
 translate T OutOfOpening {Açılış bittiğinde}

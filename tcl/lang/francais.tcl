@@ -1432,6 +1432,8 @@ translate F moveblunderthreshold {le coup est une erreur si les pertes sont supé
 translate F limitanalysis {limiter le temps d'analyse}
 translate F seconds {secondes}
 translate F Abort {Arrêter}
+# ====== TODO To be translated ======
+translate F Quit {Quit}
 translate F Resume {Reprendre}
 translate F Restart {Recommencer}
 translate F OutOfOpening {Hors de l'ouverture}
