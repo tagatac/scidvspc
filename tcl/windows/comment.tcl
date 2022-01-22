@@ -47,7 +47,8 @@ proc ::commenteditor::Open {} {
   set w .commentWin
   if {[winfo exists $w]} {
     raiseWin $w
-    focus $w.cf.text
+    ## Too many hassles as we have a FocusOut binding on the text widget that checks for changes
+    # focus $w.cf.text
     return
   }
 
