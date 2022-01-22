@@ -10884,14 +10884,14 @@ sc_pos (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
     static const char * options [] = {
         "addNag", "analyze", "bestSquare", "board", "clearNags",
-        "fen", "getComment", "getNags", "hash", "html",
+        "fen", "getComment", "getCleanComment", "getNags", "hash", "html",
         "isAt", "isCheck", "isInsufficient", "isLegal", "isPromotion",
         "matchMoves", "moveNumber", "pgnBoard", "pgnOffset", "pieceCount",
         "probe", "setComment", "side", "tex", "moves", "movesUci", "location", NULL
     };
     enum {
         POS_ADDNAG, POS_ANALYZE, POS_BESTSQ, POS_BOARD, POS_CLEARNAGS,
-        POS_FEN, POS_GETCOMMENT, POS_GETNAGS, POS_HASH, POS_HTML,
+        POS_FEN, POS_GETCOMMENT, POST_CLEANCOMMENT, POS_GETNAGS, POS_HASH, POS_HTML,
         POS_ISAT, POS_ISCHECK, POS_ISINSUFFICENT, POS_ISLEGAL, POS_ISPROMO, POS_MATCHMOVES, POS_MOVENUM,
         POS_PGNBOARD, POS_PGNOFFSET, POS_PIECECOUNT, POS_PROBE,
         POS_SETCOMMENT, POS_SIDE, POS_TEX, POS_MOVES, POS_MOVES_UCI, LOCATION
@@ -10900,6 +10900,9 @@ sc_pos (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     char boardStr[200];
     int index = -1;
     if (argc > 1) { index = strUniqueMatch (argv[1], options); }
+
+
+    const char * tempStr;
 
     switch (index) {
     case POS_ADDNAG:
@@ -10927,13 +10930,23 @@ sc_pos (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         break;
 
     case POS_GETCOMMENT:
-        const char * tempStr;
         tempStr = db->game->GetMoveComment();
         if (tempStr) {
             Tcl_AppendResult (ti, tempStr, NULL);
         }
         break;
 
+    case POST_CLEANCOMMENT:
+        tempStr = db->game->GetMoveComment();
+        if (tempStr) {
+	    char * tempStrClean;
+	    tempStrClean = strDuplicate(tempStr);
+	    strTrimMarkCodes (tempStrClean);
+	    if (tempStrClean && !strIsScore((const char *)tempStrClean)) {
+		Tcl_AppendResult (ti, tempStrClean, NULL);
+	    }
+        }
+        break;
 
     case POS_GETNAGS:
         return sc_pos_getNags (cd, ti, argc, argv);

@@ -2476,11 +2476,11 @@ proc ::tree::mask::fillWithBase {base} {
 ################################################################################
 # Take current position information and fill the mask (move, nag, comments, etc)
 
-proc ::tree::mask::feedMask { fen } {
+proc ::tree::mask::feedMask {fen} {
   set stdNags { "!!" "!" "!?" "?!" "??" "~"}
   set fen [toShortFen $fen]
   set move [sc_game info previousMoveNT]
-  set comment [sc_pos getComment $fen ]
+  set comment [sc_pos getCleanComment]
   
   if {$move == ""} {
     set move "null"
@@ -2497,19 +2497,21 @@ proc ::tree::mask::feedMask { fen } {
     return
   }
   
-  # NAG
-  set nag [string trim [sc_pos getNags]]
-  if {$nag == 0} { set nag "" }
-  if {$nag != ""} {
+  # Just deal with the first NAG, which will be '0' if none (wtf - S.A)
+  set nag [lindex [string trim [sc_pos getNags]] 0]
+  if {$nag == "0"} { set nag "" }
+  if {$nag != "" && $nag != "D"} {
     # append the NAGs to comment if not standard
     if {[lsearch $stdNags $nag ] == -1 } {
-      set comment "$nag $comment"
-      set nag ""
-    } else  {
-      set oldNag [getNag $move]
-      if {$oldNag != $::tree::mask::emptyNag && $oldNag != $nag} {
-        set comment "<$oldNag>(?!?) $comment"
+      if {$comment == ""} {
+        set comment "$nag"
+      } else {
+        set comment "$comment ($nag)"
       }
+    } else {
+      ### go with new nag 
+      # set oldNag [getNag $move]
+      # if {$oldNag != $::tree::mask::emptyNag && $oldNag != $nag} { set comment "<$oldNag>(?!?) $comment" }
       setNag $move $nag $fen
     }
   }
