@@ -130,7 +130,7 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
 
     if {$ply < 0} {
       if {$gnum > 0} {
-	set ply [sc_filter value $gnum $base]
+	set ply [sc_filter ply $gnum $base]
 	if {$ply > 0} { incr ply -1 }
       } else {
         set ply 0
@@ -319,7 +319,7 @@ proc ::gbrowser::load {w base gnum ply n} {
   # Only load newgame if different to oldgame
   # (old game number is stored in wm title)
   if { [scan [wm title $w] {game %d}] != $newgame } {
-    set ply [sc_filter value $gnum $base]
+    set ply [sc_filter ply $gnum $base]
     if {$ply > 0} { incr ply -1 }
 
     ::gbrowser::new $base $newgame $ply $w

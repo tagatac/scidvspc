@@ -1525,7 +1525,7 @@ proc browseGames {{tree .glistWin.tree}} {
     set browse(black$game) $black
     set browse(boards$game) $boards
 
-    set ply [sc_filter value $game]
+    set ply [sc_filter ply $game]
     if {$ply > 0} { incr ply -1 }
     set max [expr {[llength $boards] - 1} ]
     if {$ply > $max || $ply == 0} {set ply $max}

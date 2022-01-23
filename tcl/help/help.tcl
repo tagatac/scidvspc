@@ -2196,9 +2196,9 @@ search for games that do not reach this position!
   adding or replacing a game, sorting the database, or decreasing the cache size.
   </i></p>
   <p>
-  Alternatively, one may fill the cache with the contents of a
-  base or single game, including all variations. Generally, the cache will not be
-  large enough for a whole base. In this case, less common lines will be discarded for those more common.
+  Alternatively, one may fill the cache with the contents of selected games
+  or a single game, including all variations. Generally, the cache will not be
+  large enough for numerous games. In this case, less common lines will be discarded for those more common.
   This feature is useful if you have one, or more, repertoire bases that can serve as input. 
   </p>
 
@@ -2361,12 +2361,10 @@ set helpText(TreeMasks) {<h1>Tree Masks</h1>
   serveral bases into a single Mask</i>.
   </p>
   <p>
-  Now, the Mask can be filled automatically with the game content of the
+  Now, the Mask can be filled automatically with selected games of a
   database. In this process, comments within the games will be converted to move
-  comments (appending to those existing eventually) in the Mask. NAGs will be
-  added as well. To initiate this process one can chose either <b>Fill with
-  game</b> to fill the Mask with the contents of a single game, or <b>Fill with
-  Database</b> to loop over all games in the database.
+  comments (appending to those existing eventually) in the Mask, and the first NAG
+  as well. This is done by either <b>Fill with game</b>, or <b>Fill with filter</b> for selected games.
   </p>
   <p>
   <b>Note</b> filling a Mask with an entire base can be quite time consuming.
@@ -2378,7 +2376,7 @@ set helpText(TreeMasks) {<h1>Tree Masks</h1>
   games as soon as the middle game is reached.
   </p>
 
-  <p><footer>(Updated: Scid vs. PC 4.14, March 2015)</footer></p>
+  <p><footer>(Updated: Scid vs. PC 4.23, Jan 2022)</footer></p>
 }
 
 

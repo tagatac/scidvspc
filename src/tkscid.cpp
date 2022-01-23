@@ -5122,13 +5122,13 @@ sc_filter (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         "copy", "count", "first", "frequency",
         "index", "last", "locate", "negate",
 	"next", "previous", "remove", "reset", "end",
-	"size", "stats", "textfind", "textfilter", "value", "clear", NULL
+	"size", "stats", "textfind", "textfilter", "value", "ply", "clear", NULL
     };
     enum {
         FILTER_COPY, FILTER_COUNT, FILTER_FIRST, FILTER_FREQ,
         FILTER_INDEX, FILTER_LAST, FILTER_LOCATE, FILTER_NEGATE,
         FILTER_NEXT, FILTER_PREV, FILTER_REMOVE, FILTER_RESET, FILTER_END,
-        FILTER_SIZE, FILTER_STATS, FILTER_TEXTFIND, FILTER_TEXTFILTER, FILTER_VALUE,
+        FILTER_SIZE, FILTER_STATS, FILTER_TEXTFIND, FILTER_TEXTFILTER, FILTER_VALUE, FILTER_PLY,
         FILTER_CLEAR
     };
 
@@ -5188,6 +5188,9 @@ sc_filter (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     case FILTER_VALUE:
         return sc_filter_value (cd, ti, argc, argv);
+
+    case FILTER_PLY:
+        return sc_filter_ply (cd, ti, argc, argv);
 
     // --- clear filter
     case FILTER_CLEAR:
@@ -5862,12 +5865,41 @@ sc_filter_textfilter (ClientData cd, Tcl_Interp * ti, int argc, const char ** ar
     return setUintResult (ti, number_removed);
 }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// sc_filter_value [game [base]]
-//    Returns the filter value/ply of the specified game [and base]
-//    Currently used only by game/browser.tcl - so if tree is open, use this value
 int
 sc_filter_value (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
+{
+    scidBaseT * base = db;
+    uint gnum = db->gameNumber + 1;
+    uint ply;
+
+    if (argc > 4)
+        return errorResult (ti, "Usage : sc_filter_value [game [base]]");
+
+    if (argc >= 3) {
+        if (argc == 4) {
+            int baseNum = strGetInteger (argv[3]);
+            if (baseNum < 1  ||  baseNum > MAX_BASES || !((base = &(dbList[baseNum - 1]))->inUse) )
+              return errorResult (ti, "sc_filter_value: Illegal base");
+        }
+        gnum = strGetUnsigned (argv[2]);
+    }
+
+    if (gnum < 1  ||  gnum > base->numGames)
+      return errorResult (ti, "sc_filter_value: game out of range");
+
+    gnum--;
+
+    return setUintResult (ti, base->filter->Get (gnum));
+}
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// sc_filter_ply [game [base]]
+//    Returns the filter ply of the specified game [and base]
+//    Currently used only by game/browser.tcl - so if tree is open, use this value
+
+int
+sc_filter_ply (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
     scidBaseT * base = db;
     uint gnum = db->gameNumber + 1;

@@ -517,7 +517,7 @@ translate E TipAtStartup {Show tip on startup}
 
 # Tree window menus:
 menuText E TreeFile "Tree" 0
-menuText E TreeFileFillWithBase "Fill Cache with base" 0 {Fill the cache file with all games in current base}
+menuText E TreeFileFillWithBase "Fill Cache with filter" 0 {Fill the cache file with all filtered games in current base}
 menuText E TreeFileFillWithGame "Fill Cache with game" 0 {Fill the cache file with current game in current base}
 menuText E TreeFileCacheInfo "Cache info" 0 {Get info on cache usage}
 menuText E TreeFileSave "Save Cache File" 0 {Save the tree cache (.stc) file}
@@ -536,7 +536,7 @@ menuText E TreeMaskSave "Save" 0 {Save mask}
 menuText E TreeMaskClose "Close" 0 {Close mask}
 menuText E TreeMaskFillWithLine "Fill with line" 0 {Fill mask with all previous moves}
 menuText E TreeMaskFillWithGame "Fill with game" 0 {Fill mask with game}
-menuText E TreeMaskFillWithBase "Fill with base" 0 {Fill mask with all games in base}
+menuText E TreeMaskFillWithBase "Fill with filter" 0 {Fill mask with all games in filter}
 menuText E TreeMaskInfo "Info" 0 {Show statistics for current mask}
 menuText E TreeMaskDisplay "Display Mask" 0 {Show mask data in a tree form}
 menuText E TreeMaskSearch "Search mask" 0 {Search in current mask}

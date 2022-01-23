@@ -459,6 +459,7 @@ int sc_filter_stats   (TCL_ARGS);
 int sc_filter_textfind (TCL_ARGS);
 int sc_filter_textfilter (TCL_ARGS);
 int sc_filter_value   (TCL_ARGS);
+int sc_filter_ply     (TCL_ARGS);
 int sc_filter_clear   (TCL_ARGS);
 
 int sc_flags          (TCL_ARGS);

@@ -1617,35 +1617,46 @@ set ::tree::cancelPrime 0
 
 proc ::tree::primeWithBase {base {fillMask 0}} {
   set ::tree::cancelPrime 0
-  for {set g 1} { $g <= [sc_base numGames]} { incr g} {
+
+  set ::tree::totalGames [sc_filter count]
+  set ::tree::parsedGames 0
+  set ::tree::cancelPrime 0
+
+  progressWindow "Scid: [tr TreeFileFill]" "$::tree::totalGames $::tr(games)" $::tr(Cancel) {
+    set ::tree::cancelPrime 1
+    sc_progressBar
+  }
+
+  resetProgressWindow
+  leftJustifyProgressWindow
+
+  for {set g 1} { $g <= [sc_base numGames]} {incr g} {
+    if {[sc_filter value $g] == 0} {
+      continue
+    }
     sc_game load $g
     ::tree::primeWithGame $fillMask
     if {$::tree::cancelPrime} {
-      return
+      break
     }
+    incr ::tree::parsedGames
+    updateProgressWindow $::tree::parsedGames $::tree::totalGames
   }
+
+  closeProgressWindow
 }
 
 ### global control var ::tree::fillMask is set here - though it's a bit ugly S.A.
 
 proc ::tree::primeWithGame {{fillMask 0}} {
-  set ::tree::totalMoves [countBaseMoves "singleGame" ]
+
   sc_move start
   if {$fillMask} {
     set ::tree::fillMask 1
     ::tree::mask::feedMask [sc_pos fen]
   }
 
-  set ::tree::parsedMoves 0
-  set ::tree::cancelPrime 0
-  progressWindow "Scid: [tr TreeFileFill]" "$::tree::totalMoves moves" $::tr(Cancel) {
-    set ::tree::cancelPrime 1
-    sc_progressBar
-  }
-  resetProgressWindow
-  leftJustifyProgressWindow
   ::tree::parseGame
-  closeProgressWindow
   set ::tree::fillMask 0
 
   updateBoard -pgn
@@ -1680,7 +1691,6 @@ proc ::tree::parseGame {} {
   if {$::tree::cancelPrime} {return}
 
   while {![sc_pos isAt vend]} {
-    updateProgressWindow $::tree::parsedMoves $::tree::totalMoves
 
     # Go through all variants
     for {set v 0} {$v<[sc_var count]} {incr v} {
@@ -1726,56 +1736,10 @@ proc ::tree::parseVar {} {
     sc_move forward
 
     ::tree::mutex_refresh
-
     ::tree::mask::feedMask $fen
-    incr ::tree::parsedMoves
-    updateProgressWindow $::tree::parsedMoves $::tree::totalMoves
-    if {$::tree::cancelPrime} {return}
   }
 
   sc_var exit
-}
-################################################################################
-# count moves that will fill the cache
-
-proc ::tree::countBaseMoves { {args ""} } {
-  set ::tree::total 0
-
-  proc countParseGame {} {
-    sc_move start
-
-    while {![sc_pos isAt vend]} {
-      for {set v 0} {$v<[sc_var count]} {incr v} {
-        sc_var enter $v
-        countParseVar
-      }
-      sc_move forward
-      incr ::tree::total
-    }
-  }
-
-  proc countParseVar {} {
-    while {![sc_pos isAt vend]} {
-      for {set v 0} {$v<[sc_var count]} {incr v} {
-        sc_var enter $v
-        countParseVar
-        incr ::tree::total
-      }
-      sc_move forward
-      incr ::tree::total
-    }
-    sc_var exit
-  }
-
-  if {$args == "singleGame"} {
-    countParseGame
-  } else {
-    for {set g 1} { $g <= [sc_base numGames]} { incr g} {
-      sc_game load $g
-      countParseGame
-    }
-  }
-  return $::tree::total
 }
 
 ################################################################################
