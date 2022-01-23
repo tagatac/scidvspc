@@ -5,6 +5,7 @@
 ### Three coloured bar graphs , mask fixes and other code by Stevenaaus
 
 set ::tree::trainingBase 0
+set ::tree::fillMask 0
 array set ::tree::cachesize {}
 
 proc ::tree::doConfigMenus { baseNumber  { lang "" } } {
@@ -168,8 +169,7 @@ proc ::tree::Open {{baseNumber 0}} {
         -variable tree(order$baseNumber) -value $value -command " ::tree::refresh $baseNumber "
   }
 
-  $w.menu.opt add checkbutton -label TreeOptLock -variable tree(locked$baseNumber) \
-      -command "::tree::toggleLock $baseNumber"
+  $w.menu.opt add checkbutton -label TreeOptLock -variable tree(locked$baseNumber) -command "::tree::refresh $baseNumber"
   $w.menu.opt add checkbutton -label TreeOptTraining -variable tree(training$baseNumber) -command "::tree::refreshTraining $baseNumber"
   $w.menu.opt add separator
   $w.menu.opt add checkbutton -label TreeOptSortBest -variable ::tree::sortBest
@@ -458,7 +458,7 @@ proc ::tree::doTraining {{n 0}} {
     set move_done [sc_game info previousMoveNT]
     if {$move_done != ""} {
       sc_move back
-      set fen [ ::tree::mask::toShortFen [sc_pos fen] ]
+      set fen [::tree::mask::toShortFen [sc_pos fen]]
       sc_move forward
       if { [info exists ::tree::mask::mask($fen)] } {
         set moves [ lindex $::tree::mask::mask($fen) 0 ]
@@ -507,11 +507,7 @@ proc ::tree::doTraining {{n 0}} {
   updateBoard -pgn
 }
 
-proc ::tree::toggleLock { baseNumber } {
-  ::tree::refresh $baseNumber
-}
-
-proc ::tree::select { move baseNumber } {
+proc ::tree::select {move baseNumber} {
   global tree
 
   if {! [winfo exists .treeWin$baseNumber]} { return }
@@ -523,7 +519,12 @@ set tree(refresh) 0
 
 ################################################################################
 
-proc ::tree::refresh {{ baseNumber {} }} {
+proc ::tree::refresh {{baseNumber {}}} {
+
+  if {$::tree::fillMask} {
+    set ::tree::mask::cacheFenIndex [::tree::mask::toShortFen [sc_pos fen]]
+    return
+  }
 
   # set stack [lsearch -glob -inline -all [ wm stackorder . ] ".treeWin*"]
   if {$baseNumber != {} } {
@@ -628,7 +629,7 @@ proc ::tree::dorefresh { baseNumber } {
 
 ### Insert lines into the tree widget S.A.
 
-proc ::tree::displayLines { baseNumber moves } {
+proc ::tree::displayLines {baseNumber moves} {
   global ::tree::mask::maskFile
 
   set ::tree::mask::cacheFenIndex [::tree::mask::toShortFen [sc_pos fen]]
@@ -1079,11 +1080,10 @@ set tree(standardLines) {
 set scidConfigFiles(treecache) "treecache.dat"
 catch {source [scidConfigFile treecache]}
 
-# ::tree::prime
 #   Primes the tree for this database, filling it with a number of
 #   common opening positions.
 
-proc ::tree::prime { baseNumber } {
+proc ::tree::prime {baseNumber} {
   global tree
   if {! [winfo exists .treeWin$baseNumber]} { return }
 
@@ -1456,6 +1456,7 @@ proc ::tree::toggleRefresh { baseNumber } {
     ::tree::refresh $baseNumber
   }
 }
+
 proc ::tree::bestPopup {baseNumber w x y X Y} {
 
   global blistHeaders tr
@@ -1619,16 +1620,21 @@ proc ::tree::primeWithBase {base {fillMask 0}} {
   for {set g 1} { $g <= [sc_base numGames]} { incr g} {
     sc_game load $g
     ::tree::primeWithGame $fillMask
-    if {$::tree::cancelPrime } {
+    if {$::tree::cancelPrime} {
       return
     }
   }
 }
 
-proc ::tree::primeWithGame { { fillMask 0 } } {
+### global control var ::tree::fillMask is set here - though it's a bit ugly S.A.
+
+proc ::tree::primeWithGame {{fillMask 0}} {
   set ::tree::totalMoves [countBaseMoves "singleGame" ]
   sc_move start
-  if {$fillMask} { ::tree::mask::feedMask [ sc_pos fen ] }
+  if {$fillMask} {
+    set ::tree::fillMask 1
+    ::tree::mask::feedMask [sc_pos fen]
+  }
 
   set ::tree::parsedMoves 0
   set ::tree::cancelPrime 0
@@ -1638,34 +1644,41 @@ proc ::tree::primeWithGame { { fillMask 0 } } {
   }
   resetProgressWindow
   leftJustifyProgressWindow
-  ::tree::parseGame $fillMask
+  ::tree::parseGame
   closeProgressWindow
+  set ::tree::fillMask 0
+
   updateBoard -pgn
 }
 
 set processingTree 0
 
+### Disable interuptible tree when processing fills
+
 proc ::tree::mutex_refresh {} {
   global processingTree
+
+  if {$::tree::fillMask} {return}
 
   while {$processingTree} {
     vwait processingTree
   }
+
   set processingTree 1
   ::tree::refresh
   set processingTree 0
 }
 
-################################################################################
-# parse one game and fill the list
+# Parse one game and fill the list
 
-proc ::tree::parseGame {{ fillMask 0 }} {
+proc ::tree::parseGame {} {
 
-  if {$::tree::cancelPrime } { return  }
+  if {$::tree::cancelPrime} {return}
 
   ::tree::mutex_refresh
 
-  if {$::tree::cancelPrime } { return }
+  if {$::tree::cancelPrime} {return}
+
   while {![sc_pos isAt vend]} {
     updateProgressWindow $::tree::parsedMoves $::tree::totalMoves
 
@@ -1674,11 +1687,10 @@ proc ::tree::parseGame {{ fillMask 0 }} {
       # enter each var (beware the first move is played)
       set fen [ sc_pos fen ]
       sc_var enter $v
-      if {$fillMask} { ::tree::mask::feedMask $fen }
-      if {$::tree::cancelPrime } { return }
-      if {$::tree::cancelPrime } { return }
-      ::tree::parseVar $fillMask
-      if {$::tree::cancelPrime } { return }
+      ::tree::mask::feedMask $fen
+      if {$::tree::cancelPrime } {return}
+      ::tree::parseVar
+      if {$::tree::cancelPrime } {return}
     }
     # now treat the main line
     set fen [ sc_pos fen ]
@@ -1688,27 +1700,26 @@ proc ::tree::parseGame {{ fillMask 0 }} {
     ### is now asynchronous/cancelled so we must update the tree manually after each move
     ::tree::mutex_refresh
 
-    if {$fillMask} { ::tree::mask::feedMask $fen }
+    ::tree::mask::feedMask $fen
     incr ::tree::parsedMoves
-    if {$::tree::cancelPrime } { return }
-    if {$::tree::cancelPrime } { return }
+    if {$::tree::cancelPrime} {return}
   }
 }
 
 ### Recursively parse vars
 
-proc ::tree::parseVar {{ fillMask 0 }} {
+proc ::tree::parseVar {} {
   while {![sc_pos isAt vend]} {
     # Go through all variants
     for {set v 0} {$v<[sc_var count]} {incr v} {
       set fen [ sc_pos fen ]
       sc_var enter $v
-      if {$fillMask} { ::tree::mask::feedMask $fen }
+      ::tree::mask::feedMask $fen
       if {$::tree::cancelPrime } { return }
       if {$::tree::cancelPrime } { return }
       # we are at the start of a var, before the first move : start recursive calls
-      parseVar $fillMask
-      if {$::tree::cancelPrime } { return }
+      parseVar
+      if {$::tree::cancelPrime} { return }
     }
 
     set fen [ sc_pos fen ]
@@ -1716,11 +1727,10 @@ proc ::tree::parseVar {{ fillMask 0 }} {
 
     ::tree::mutex_refresh
 
-    if {$fillMask} { ::tree::mask::feedMask $fen }
+    ::tree::mask::feedMask $fen
     incr ::tree::parsedMoves
     updateProgressWindow $::tree::parsedMoves $::tree::totalMoves
-    if {$::tree::cancelPrime } { return }
-    if {$::tree::cancelPrime } { return }
+    if {$::tree::cancelPrime} {return}
   }
 
   sc_var exit
@@ -2245,10 +2255,10 @@ proc ::tree::mask::getComment { move { fen "" } } {
 
 ################################################################################
 
-proc ::tree::mask::setComment { move comment { fen "" } } {
+proc ::tree::mask::setComment {move comment {fen ""}} {
   global ::tree::mask::mask
 
-  if {$fen == ""} { set fen $::tree::mask::cacheFenIndex }
+  if {$fen == ""} {set fen $::tree::mask::cacheFenIndex}
 
   set comment [string trim $comment]
 
@@ -2258,6 +2268,7 @@ proc ::tree::mask::setComment { move comment { fen "" } } {
   set newmove [lreplace [lindex $moves $idxm] 3 3 $comment ]
   set moves [lreplace $moves $idxm $idxm $newmove ]
   set mask($fen) [ lreplace $mask($fen) 0 0 $moves ]
+
   ::tree::refresh
 }
 
@@ -2387,9 +2398,6 @@ proc ::tree::mask::updateComment { { move "" } } {
   }
 }
 
-
-################################################################################
-
 proc ::tree::mask::fillWithLine {{op {}} {move {}} {args {}}} {
 
   set ::tree::mask::controlButton 0
@@ -2415,6 +2423,7 @@ proc ::tree::mask::fillWithLine {{op {}} {move {}} {args {}}} {
     if {$reply == 2} {set reply black}
   }
 
+  set ::tree::fillMask 1
   sc_game push copy
 
   if {$op == "removeFromMask"} {
@@ -2447,6 +2456,7 @@ proc ::tree::mask::fillWithLine {{op {}} {move {}} {args {}}} {
       }
   }
   set ::tree::mask::dirty 1
+  set ::tree::fillMask 0
   sc_game pop
   ::tree::refresh
 }
@@ -2473,11 +2483,15 @@ proc ::tree::mask::fillWithBase {base} {
   set ::tree::mask::dirty 1
 }
 
-################################################################################
 # Take current position information and fill the mask (move, nag, comments, etc)
 
+set ::tree::mask::stdNags { "!!" "!" "!?" "?!" "??" "~"}
+
 proc ::tree::mask::feedMask {fen} {
-  set stdNags { "!!" "!" "!?" "?!" "??" "~"}
+  if {!$::tree::fillMask} {
+    return
+  }
+
   set fen [toShortFen $fen]
   set move [sc_game info previousMoveNT]
   set comment [sc_pos getCleanComment]
@@ -2502,7 +2516,7 @@ proc ::tree::mask::feedMask {fen} {
   if {$nag == "0"} { set nag "" }
   if {$nag != "" && $nag != "D"} {
     # append the NAGs to comment if not standard
-    if {[lsearch $stdNags $nag ] == -1 } {
+    if {[lsearch $::tree::mask::stdNags $nag ] == -1 } {
       if {$comment == ""} {
         set comment "$nag"
       } else {
@@ -2757,10 +2771,9 @@ proc ::tree::mask::populateDisplayMask {moves parent fen fenSeen posComment} {
   
 }
 
-
 proc ::tree::mask::searchMask {baseNumber} {
-  
   set w .searchmask
+
   if { [winfo exists $w] } {
     # in case we are trying to open two search masks for different trees, best close the old one first
     destroy $w

@@ -2249,7 +2249,7 @@ set helpText(TreeMasks) {<h1>Tree Masks</h1>
   </p>
   <h3>Using Masks</h3>
   <p>
-  The Tree window has a Mask sub-menu, where Masks are opened or created (as well as other features).
+  The Tree window has a Mask submenu, where Masks are opened or created (as well as other features).
   </p><p>
   Once a Mask is opened, commentary can be added 
   by <b>right-clicking moves</b> and adding comments/nags/markers (etc, see below).
