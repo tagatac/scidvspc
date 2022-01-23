@@ -2519,7 +2519,7 @@ proc ::tree::mask::displayMask {} {
   
   set w .displaymask
   if { [winfo exists $w] } {
-    focus $w
+    raiseWin $w
     return
   }
   toplevel $w
@@ -2645,9 +2645,9 @@ proc ::tree::mask::populateDisplayMask {moves parent fen fenSeen posComment} {
   if { $posComment != ""} {
     set posComment "\[$posComment\] "
   }
-  
+
   set tree .displaymask.f.tree
-  
+
   foreach m $moves {
     set move [lindex $m 0]
     if {$move == "null"} { continue }
@@ -2680,11 +2680,17 @@ proc ::tree::mask::populateDisplayMask {moves parent fen fenSeen posComment} {
     if { ! $::tree::mask::displayMask_showComment} {
       set posComment ""
     }
+
+  if {[catch {
     if { $::tree::mask::displayMask_showNag } {
       set id [ $tree insert $parent end -text "$posComment[::trans $move][set nag]$move_comment" -image $img -tags dblClickTree -open $::tree::mask::displayMask_unfold]
     } else {
       set id [ $tree insert $parent end -text "$posComment[::trans $move]$move_comment" -tags dblClickTree -open $::tree::mask::displayMask_unfold]
     }
+  }]} {
+    tk_messageBox -icon error -type ok -title Oops -message "Error in populateDisplayMask.\nPossibly you are using an old mask ?? Some images have been changed."
+    return
+  }
 
     if {[catch {sc_game startBoard $fen} err]} {
       puts "ERROR sc_game startBoard $fen => $err"
