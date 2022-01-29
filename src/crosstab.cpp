@@ -12,8 +12,6 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef WINCE
-
 #include "crosstab.h"
 
 // Expected differences in rating according to performance
@@ -156,29 +154,17 @@ Crosstable::Destroy ()
     for (uint player=0; player < PlayerCount; player++) {
         playerDataT * pdata = PlayerData[player];
         ASSERT (pdata != NULL);
-#ifdef WINCE
-        my_Tcl_Free((char*)pdata->name);
-#else
         delete[] pdata->name;
-#endif
         for (uint opp = 0; opp < PlayerCount; opp++) {
             clashT * clash = pdata->firstClash[opp];
             while (clash != NULL) {
                 clashT * temp = clash->next;
-#ifdef WINCE
-        my_Tcl_Free((char*)clash);
-#else
                 delete clash;
-#endif
                 clash = temp;
             }
         }
 
-#ifdef WINCE
-        my_Tcl_Free((char*)pdata);
-#else
         delete pdata;
-#endif
     }
 }
 
@@ -198,11 +184,7 @@ Crosstable::AddPlayer (idNumberT id, const char * name, eloT elo)
         }
     }
     if (PlayerCount == CROSSTABLE_MaxPlayers) { return ERROR_Full; }
-#ifdef WINCE
-    playerDataT * pdata = (playerDataT *) my_Tcl_Alloc(sizeof( playerDataT));
-#else
     playerDataT * pdata = new playerDataT;
-#endif
 
     PlayerData[PlayerCount] = pdata;
     pdata->id = id;
@@ -279,11 +261,7 @@ Crosstable::AddResult (uint gameNumber, idNumberT white, idNumberT black,
 
     // The number of prior encounters must be consistent:
     ASSERT (pwhite->clashCount[blackIdx] == pblack->clashCount[whiteIdx]);
-#ifdef WINCE
-    clashT * whiteClash = (clashT *) my_Tcl_Alloc(sizeof( clashT));
-#else
     clashT * whiteClash = new clashT;
-#endif
 
     if (pwhite->firstClash[blackIdx] == NULL) {  // New head of list:
         pwhite->firstClash[blackIdx] = whiteClash;
@@ -293,11 +271,7 @@ Crosstable::AddResult (uint gameNumber, idNumberT white, idNumberT black,
     whiteClash->next = NULL;
     pwhite->lastClash[blackIdx] = whiteClash;
 
-#ifdef WINCE
-    clashT * blackClash = (clashT *) my_Tcl_Alloc(sizeof( clashT));
-#else
     clashT * blackClash = new clashT;
-#endif
     if (pblack->firstClash[whiteIdx] == NULL) { // New head of list:
         pblack->firstClash[whiteIdx] = blackClash;
     } else {
@@ -689,6 +663,8 @@ Crosstable::PrintPlayer (DString * dstr, playerDataT * pdata)
 {
     char stemp[1000];
     if (OutputFormat == CROSSTABLE_Hypertext) {
+        // Dont think about trying to bind the initial  in column heading.
+        // Because the way htext.tcl works, it can't easily (at all?) be done S.A
         sprintf (stemp, "<pi %s>", pdata->name);
         dstr->Append (stemp);
     }
@@ -1247,7 +1223,6 @@ Crosstable::PrintKnockout (DString * dstr, uint playerLimit)
     }
 }
 
-#endif // WINCE
 //////////////////////////////////////////////////////////////////////
 //  EOF: crosstab.cpp
 //////////////////////////////////////////////////////////////////////

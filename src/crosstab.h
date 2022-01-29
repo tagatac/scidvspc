@@ -12,8 +12,6 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef WINCE
-
 #ifndef SCID_CROSSTAB_H
 #define SCID_CROSSTAB_H
 
@@ -150,24 +148,6 @@ class Crosstable
     void   Destroy();
 
   public:
-#ifdef WINCE
-  void* operator new(size_t sz) {
-    void* m = my_Tcl_Alloc(sz);
-    return m;
-  }
-  void operator delete(void* m) {
-    my_Tcl_Free((char*)m);
-  }
-  void* operator new [] (size_t sz) {
-    void* m = my_Tcl_AttemptAlloc(sz);
-    return m;
-  }
-
-  void operator delete [] (void* m) {
-    my_Tcl_Free((char*)m);
-  }
-
-#endif
     Crosstable() { Init(); }
     ~Crosstable() { Destroy(); }
 
@@ -218,5 +198,3 @@ class Crosstable
 };
 
 #endif  // #ifndef SCID_CROSSTAB_H
-
-#endif // WINCE
