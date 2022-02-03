@@ -48,6 +48,7 @@ proc ::file::Exit {}  {
     }
   }
 
+  ::tree::mask::close
   if {[winfo exists .glistWin]} {
     ::windows::gamelist::recordWidths
   }
