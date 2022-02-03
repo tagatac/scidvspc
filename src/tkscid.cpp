@@ -7968,6 +7968,7 @@ sc_game_load (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     db->bbuf->Empty();
     uint gnum = strGetUnsigned (argv[2]);
+    char errorStr[100];
 
     if (argv[2][0] == 'a') {
         // Load the autoload game for this base:
@@ -7990,10 +7991,12 @@ sc_game_load (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     IndexEntry * ie = db->idx->FetchEntry (gnum);
 
     if (db->gfile->ReadGame (db->bbuf,ie->GetOffset(),ie->GetLength()) != OK) {
-        return errorResult (ti, "This game appears to be corrupt.");
+        sprintf (errorStr, "Game %u appears to be corrupt.", gnum);
+        return errorResult (ti, errorStr);
     }
     if (db->game->Decode (db->bbuf, GAME_DECODE_ALL) != OK) {
-        return errorResult (ti, "This game appears to be corrupt.");
+        sprintf (errorStr, "Error decoding game %u.", gnum);
+        return errorResult (ti, errorStr);
     }
 
     // Get ply from tree filter if no interesting ply from filter
