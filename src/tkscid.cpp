@@ -5870,7 +5870,6 @@ sc_filter_value (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
     scidBaseT * base = db;
     uint gnum = db->gameNumber + 1;
-    uint ply;
 
     if (argc > 4)
         return errorResult (ti, "Usage : sc_filter_value [game [base]]");
@@ -7991,11 +7990,11 @@ sc_game_load (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     IndexEntry * ie = db->idx->FetchEntry (gnum);
 
     if (db->gfile->ReadGame (db->bbuf,ie->GetOffset(),ie->GetLength()) != OK) {
-        sprintf (errorStr, "Game %u appears to be corrupt.", gnum);
+        sprintf (errorStr, "Game %u appears to be corrupt.", gnum+1);
         return errorResult (ti, errorStr);
     }
     if (db->game->Decode (db->bbuf, GAME_DECODE_ALL) != OK) {
-        sprintf (errorStr, "Error decoding game %u.", gnum);
+        sprintf (errorStr, "Error decoding game %u.", gnum+1);
         return errorResult (ti, errorStr);
     }
 
@@ -15019,10 +15018,12 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 		    continue;
 	    }
 
+	    char errorStr[100];
 	    if (! foundMatch) {
 		    if (base->gfile->ReadGame (base->bbuf, ie->GetOffset(), ie->GetLength()) != OK) {
 			    search_pool.erase(&base);
-			    return errorResult (ti, "Error reading game file.");
+			    sprintf (errorStr, "Tree search: error reading game %u.", i+1);
+			    return errorResult (ti, errorStr);
 		    }
 		    Game *g = scratchGame;
 		    if (g->ExactMatch (pos, base->bbuf, &sm)) {
