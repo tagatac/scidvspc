@@ -21,11 +21,7 @@ void
 DString::Init (uint capacity)
 {
     if (capacity < DSTRING_MinCapacity) { capacity = DSTRING_MinCapacity; }
-#ifdef WINCE
-    Start = my_Tcl_Alloc(sizeof(char [capacity]));
-#else
     Start = new char [capacity];
-#endif
     Start[0] = 0;
     Len = 0;
     Capacity = capacity;

@@ -49,25 +49,6 @@ class Recognizer
     static int   KRPKR (Position * pos);
 
   public:
-#ifdef WINCE
-  void* operator new(size_t sz) {
-    void* m = my_Tcl_Alloc(sz);
-    return m;
-  }
-  void operator delete(void* m) {
-    my_Tcl_Free((char*)m);
-  }
-  void* operator new [] (size_t sz) {
-    void* m = my_Tcl_AttemptAlloc(sz);
-    return m;
-  }
-
-  void operator delete [] (void* m) {
-    my_Tcl_Free((char*)m);
-  }
-
-#endif  
-
     static uint  MaxPieces (void) { return MAX_RECOGNIZED_PIECES; }
     static int   Recognize (Position * pos);
 };

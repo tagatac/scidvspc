@@ -30,11 +30,7 @@
 //    20, so 60 is a sane limit.
 //
 
-#ifdef WINCE
-#define MAX_TREE_NODES 20
-#else
 #define MAX_TREE_NODES 60
-#endif
 
 // treeNodeT:
 //    Stores the move data, frequency, score, results by result type,

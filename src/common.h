@@ -21,7 +21,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "tclmy.h"
 #include "myassert.h"
 #include "error.h"
 

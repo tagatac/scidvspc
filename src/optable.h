@@ -108,24 +108,6 @@ class OpLine
     void Destroy (void);
 
   public:
-#ifdef WINCE
-  void* operator new(size_t sz) {
-    void* m = my_Tcl_Alloc(sz);
-    return m;
-  }
-  void operator delete(void* m) {
-    my_Tcl_Free((char*)m);
-  }
-  void* operator new [] (size_t sz) {
-    void* m = my_Tcl_AttemptAlloc(sz);
-    return m;
-  }
-
-  void operator delete [] (void* m) {
-    my_Tcl_Free((char*)m);
-  }
-
-#endif 
     OpLine () { Init(); }
     OpLine (Game * g, IndexEntry * ie, gameNumberT gnum, uint max, uint tm) {
         Init (g, ie, gnum, max, tm);
@@ -195,33 +177,11 @@ class OpTable
     void PrintNotes (DString * dstr, uint format);
 
   public:
-#ifdef WINCE
-  void* operator new(size_t sz) {
-    void* m = my_Tcl_Alloc(sz);
-    return m;
-  }
-  void operator delete(void* m) {
-    my_Tcl_Free((char*)m);
-  }
-  void* operator new [] (size_t sz) {
-    void* m = my_Tcl_AttemptAlloc(sz);
-    return m;
-  }
-
-  void operator delete [] (void* m) {
-    my_Tcl_Free((char*)m);
-  }
-
-#endif 
     OpTable (uint base, const char * type, Game * g, PBook * ecoBook) {
         Init (base, type, g, ecoBook);
     }
     OpTable (uint base, const char * type, Game * g) { Init (base, type, g, NULL); }
-#ifdef WINCE
-    ~OpTable() { Clear();  my_Tcl_Free((char*) Type); }
-#else
     ~OpTable() { Clear();  delete[] Type; }
-#endif
     void Init (uint base, const char * type, Game * g, PBook * ecoBook);
     void Clear ();
     void ClearNotes ();
@@ -275,11 +235,7 @@ class OpTable
     void   PrintStemLine (DString * dstr, uint format, bool exclude);
     void   PrintStemLine (DString * dstr) { PrintStemLine (dstr, Format, false); }
     void   MakeRows (void);
-#ifdef WINCE
-    void   DumpLines (/*FILE **/Tcl_Channel fp);
-#else
     void   DumpLines (FILE * fp);
-#endif
     void   PrintTable (DString * dstr, const char *title, const char *comment);
     void   PrintLaTeX (DString * dstr,const char *title, const char *comment);
     void   PrintHTML (DString * str, const char *title, const char *comment);

@@ -80,35 +80,13 @@ class ResultGrid
     }
 
   public:
-#ifdef WINCE
-  void* operator new(size_t sz) {
-    void* m = my_Tcl_Alloc(sz);
-    return m;
-  }
-  void operator delete(void* m) {
-    my_Tcl_Free((char*)m);
-  }
-  void* operator new [] (size_t sz) {
-    void* m = my_Tcl_AttemptAlloc(sz);
-    return m;
-  }
-
-  void operator delete [] (void* m) {
-    my_Tcl_Free((char*)m);
-  }
-
-#endif
     ResultGrid (uint bitsPerResult)
     {
         ASSERT (isValidBitsPerResult(bitsPerResult));
         BitsPerResult = bitsPerResult;
         HasBeenPacked = false;
         NumResultBytes = NumResults * BitsPerResult / 8;
-#ifdef WINCE
-        Data = (byte*) my_Tcl_Alloc(sizeof( byte[NumResultBytes]));
-#else
         Data = new byte[NumResultBytes];
-#endif
         PackedData = NULL;
         ClearStats();
     }
@@ -127,13 +105,8 @@ class ResultGrid
 
     ~ResultGrid()
     {
-#ifdef WINCE
-        if (Data != NULL) { my_Tcl_Free((char*) Data); }
-        if (HasBeenPacked) { my_Tcl_Free((char*) PackedData); }
-#else
         if (Data != NULL) { delete[] Data; }
         if (HasBeenPacked) { delete[] PackedData; }
-#endif
     }
 
     uint GetBitsPerResult() { return BitsPerResult; }
@@ -146,11 +119,7 @@ class ResultGrid
             Data[i] = 0xFF;
         }
         if (HasBeenPacked) {
-#ifdef WINCE
-        my_Tcl_Free((char*) PackedData);
-#else
         delete[] PackedData;
-#endif
             PackedData = NULL;
             PackedDataLength = 0;
         }
@@ -264,15 +233,9 @@ class ResultGrid
     // Compress a ResultGrid
     uint Pack() {
         if (PackedData != NULL) { return PackedDataLength; }
-#ifdef WINCE
-        byte * cblock = (byte*) my_Tcl_Alloc(sizeof( byte[NumResultBytes + BytePacker::OverflowBytes]));
-        uint csize = bytePacker->Pack(Data, cblock, NumResultBytes);
-        PackedData = (byte*) my_Tcl_Alloc(sizeof(byte[csize]));
-#else
         byte * cblock = new byte[NumResultBytes + BytePacker::OverflowBytes];
         uint csize = bytePacker->Pack(Data, cblock, NumResultBytes);
         PackedData = new byte[csize];
-#endif
         PackedDataLength = csize;
         for (uint i=0; i < csize; i++) {
             PackedData[i] = cblock[i];
@@ -285,11 +248,7 @@ class ResultGrid
     uint Unpack()
     {
         if (Data != NULL) { return 0; }
-#ifdef WINCE
-        Data = (byte*) my_Tcl_Alloc(sizeof( byte[NumResultBytes]));
-#else
         Data = new byte[NumResultBytes];
-#endif
         if (bytePacker->Unpack(PackedData, Data, PackedDataLength, NumResultBytes) != OK) {
             fprintf(stderr, "Unpacking error\n");
             exit(1);
@@ -346,24 +305,6 @@ class MTB
     mtbEntryT ** Table;
 
   public:
-#ifdef WINCE
-  void* operator new(size_t sz) {
-    void* m = my_Tcl_Alloc(sz);
-    return m;
-  }
-  void operator delete(void* m) {
-    my_Tcl_Free((char*)m);
-  }
-  void* operator new [] (size_t sz) {
-    void* m = my_Tcl_AttemptAlloc(sz);
-    return m;
-  }
-
-  void operator delete [] (void* m) {
-    my_Tcl_Free((char*)m);
-  }
-
-#endif
     MTB (const char * name, uint bitsPerResult, uint minCapacity)
     {
         Name = strDuplicate(name);
@@ -375,11 +316,7 @@ class MTB
             CapacityBits++;
         }
         BucketMask = Capacity - 1;
-#ifdef WINCE
-        Table = (mtbEntryPtr*) my_Tcl_Alloc(sizeof( mtbEntryPtr [Capacity]));
-#else
         Table = new mtbEntryPtr [Capacity];
-#endif
         for (uint i=0; i < Capacity; i++) {
             Table[i] = NULL;
         }
@@ -387,13 +324,8 @@ class MTB
 
     ~MTB()
     {
-#ifdef WINCE
-        my_Tcl_Free( Name );
-        my_Tcl_Free( (char*) Table);
-#else
         delete Name;
         delete[] Table;
-#endif
 
     }
 
@@ -450,11 +382,7 @@ class MTB
         // grid->Unpack();
         PackedData += packedDataLength;
         uint bucket = hash & BucketMask;
-#ifdef WINCE
-        mtbEntryT * entry = (mtbEntryT * ) my_Tcl_Alloc(sizeof( mtbEntryT));
-#else
         mtbEntryT * entry = new mtbEntryT;
-#endif
         entry->hash = hash;
         entry->grid = grid;
         entry->next = Table[bucket];

@@ -163,11 +163,7 @@ void
 PgnParser::ClearIgnoredTags ()
 {
     for (uint i = 0; i < NumIgnoredTags; i++) {
-#ifdef WINCE
-        my_Tcl_Free( IgnoredTags[i] );
-#else
         delete[] IgnoredTags[i];
-#endif
     }
     NumIgnoredTags = 0;
 }
@@ -1037,15 +1033,9 @@ PgnParser::GetNextToken (char * buffer, uint bufSize)
 errorT
 PgnParser::ParseMoves (Game * game)
 {
-#ifdef WINCE
-    char * buffer = my_Tcl_Alloc(sizeof( char [MAX_COMMENT_SIZE]));
-    errorT err = ParseMoves (game, buffer, MAX_COMMENT_SIZE);
-    my_Tcl_Free( buffer );
-#else
     char * buffer = new char [MAX_COMMENT_SIZE];
     errorT err = ParseMoves (game, buffer, MAX_COMMENT_SIZE);
     delete[] buffer;
-#endif
     return err;
 }
    
