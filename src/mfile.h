@@ -166,7 +166,9 @@ MFile::ReadOneByte ()
         GzBuffer_Current++;
         return retval;
     }
-    #ifdef __GNUC__
+    #ifdef _WIN32
+    return _getc_nolock(Handle);
+    #elif defined(__GNUC__) /* this is wrong!!! */
     return getc_unlocked(Handle);
     #else
     return getc(Handle);

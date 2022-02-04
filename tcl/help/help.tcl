@@ -3827,8 +3827,6 @@ set helpText(Formats) {<h1>Scid File Formats</h1>
 </p>
 <p><i>Scid only allocates three bytes for some data fields. This means si4's maximum number of games is 16,777,214.
 <br>
-Maximum game file size (sg4) is 2gb on Windows, and 4gb on other systems.
-<br>
 Additionally, maximum size for a single game is 131,072 bytes.
 </i></p>
 

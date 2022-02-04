@@ -85,7 +85,11 @@ MFile::Seek (uint position)
         result = gzseek (GzHandle, position, 0);
         GzBuffer_Avail = 0;
     } else {
+        #ifdef _WIN32
+        result = _fseeki64 (Handle, (__int64)position, 0);
+        #else
         result = fseek (Handle, position, 0);
+        #endif
     }
     if (result != 0) { return ERROR_FileSeek; }
     Location = position;
@@ -267,7 +271,11 @@ MFile::ReadLine (char * str, uint maxLength)
         *str = 0;
     } else {
         fgets (str, (int) maxLength, Handle);
+        #ifdef _WIN32
+        Location = _ftelli64 (Handle);
+        #else
         Location = ftell (Handle);
+        #endif
     }
     return OK;
 }
