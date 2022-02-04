@@ -5,11 +5,7 @@
 
 #include <cctype>
 #include <cstdio>
-#ifdef WINCE
-#include <stdlib.h>
-#else
 #include <cstdlib>
-#endif
 #include <cstring>
 
 #include "attack.h"

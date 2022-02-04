@@ -209,13 +209,7 @@ voidpf zcalloc (opaque, items, size)
     unsigned size;
 {
     if (opaque) items += size - size; /* make compiler happy */
-#ifdef WINCE
-    char * ptr = my_Tcl_Alloc(sizeof(unsigned[size]));
-    bzero(ptr, sizeof(unsigned[size]));
-    return (voidpf)ptr;    
-#else
     return (voidpf)calloc(items, size);
-#endif
 }
 
 void  zcfree (opaque, ptr)

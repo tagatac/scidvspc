@@ -17,11 +17,7 @@ const int PGN_STRING_SIZE = 256;
 // types
 
 struct pgn_t {
-#ifdef WINCE
-   Tcl_Channel file;
-#else
    FILE * file;
-#endif
    int char_hack;
    int char_line;
    int char_column;

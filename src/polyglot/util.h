@@ -7,9 +7,6 @@
 // includes
 
 #include <cstdio>
-#ifdef WINCE
-#include <tcl.h>
-#endif
 // constants
 
 #undef FALSE
@@ -99,11 +96,7 @@ extern void   my_log_close          ();
 extern void   my_log                (const char format[], ...);
 extern void   my_fatal              (const char format[], ...);
 
-#ifdef WINCE
-extern bool   my_file_read_line     (Tcl_Channel file, char string[], int size);
-#else
 extern bool   my_file_read_line     (FILE * file, char string[], int size);
-#endif
 
 extern bool   my_string_empty       (const char string[]);
 extern bool   my_string_equal       (const char string_1[], const char string_2[]);

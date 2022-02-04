@@ -32,9 +32,6 @@
 #define _ZLIB_H
 
 #include "zconf.h"
-#ifdef WINCE
-#include <tcl.h>
-#endif
 #ifdef __cplusplus
 extern "C" {
 #endif

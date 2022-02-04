@@ -6,11 +6,7 @@
 #include <cerrno>
 #include <csignal>
 #include <cstdio>
-#ifdef WINCE
-#include <stdlib.h>
-#else
 #include <cstdlib>
-#endif
 #include <cstring>
 
 //#include "adapter.h"
@@ -110,24 +106,14 @@ int polyglot_positions (char *moves, const char *fen, const int BookNumber) {
 static void parse_option() {
 
    const char * file_name;
-#ifdef WINCE
-   Tcl_Channel file;
-#else
    FILE * file;
-#endif
    char line[256];
    char * name, * value;
 
    file_name = option_get_string("OptionFile");
 
 
-#ifdef WINCE
-   file = my_Tcl_OpenFileChannel(NULL, file_name, "r", 0666);
-   my_Tcl_SetChannelOption(NULL, file, "-encoding", "binary");
-   my_Tcl_SetChannelOption(NULL, file, "-translation", "binary");
-#else
    file = fopen(file_name,"r");
-#endif
    if (file == NULL) my_fatal("Can't open file \"%s\": %s\n",file_name,strerror(errno));
 
    // PolyGlot options (assumed first)
@@ -167,11 +153,7 @@ static void parse_option() {
 
 //    uci_send_isready(Uci);
 
-#ifdef WINCE
-   my_Tcl_Close(NULL, file);
-#else
    fclose(file);
-#endif
 
    if (my_string_equal(option_get_string("EngineName"),"<empty>")) {
 //       option_set("EngineName",Uci->name);

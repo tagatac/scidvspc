@@ -56,13 +56,7 @@ void pgn_open(pgn_t * pgn, const char file_name[]) {
 
    ASSERT(pgn!=NULL);
    ASSERT(file_name!=NULL);
-#ifdef WINCE
-   pgn->file = my_Tcl_OpenFileChannel(NULL, file_name, "r", 0666);
-   my_Tcl_SetChannelOption(NULL, pgn->file, "-encoding", "binary");
-   my_Tcl_SetChannelOption(NULL, pgn->file, "-translation", "binary");
-#else
    pgn->file = fopen(file_name,"r");
-#endif
 
    if (pgn->file == NULL) my_fatal("pgn_open(): can't open file \"%s\": %s\n",file_name,strerror(errno));
 
@@ -92,11 +86,7 @@ void pgn_open(pgn_t * pgn, const char file_name[]) {
 void pgn_close(pgn_t * pgn) {
 
    ASSERT(pgn!=NULL);
-#ifdef WINCE
-    my_Tcl_Close(NULL, pgn->file);
-#else
     fclose(pgn->file);
-#endif
 }
 
 // pgn_next_game()
@@ -623,19 +613,11 @@ static void pgn_char_read(pgn_t * pgn) {
    }
 
    // read a new character
-#ifdef WINCE
-      unsigned char c;
-      if (my_Tcl_Read(pgn->file, (char *)&c , 1) != 1)
-        pgn->char_hack = TOKEN_EOF;
-      else
-        pgn->char_hack = c;
-#else
       pgn->char_hack = fgetc(pgn->file);
       if (pgn->char_hack == EOF) {
         if (ferror(pgn->file)) my_fatal("pgn_char_read(): fgetc(): %s\n",strerror(errno));
         pgn->char_hack = TOKEN_EOF;
       }
-#endif
 
    if (DispChar) printf("< L%d C%d '%c' (%02X)\n",pgn->char_line,pgn->char_column,pgn->char_hack,pgn->char_hack);
 }

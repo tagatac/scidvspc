@@ -8,11 +8,7 @@
 #include <cmath>
 #include <cstdarg>
 #include <cstdio>
-#ifdef WINCE
-#include <stdlib.h>
-#else
 #include <cstdlib>
-#endif
 #include <cstring>
 #include <ctime>
 
@@ -23,9 +19,7 @@
 // variables
 
 static bool Error;
-#ifndef WINCE
 static FILE * LogFile;
-#endif
 // functions
 
 // util_init()
@@ -35,14 +29,10 @@ void util_init() {
    Error = false;
 
    // init log file
-#ifndef WINCE
    LogFile = NULL;
-#endif
    // switch file buffering off
-#ifndef WINCE
    setbuf(stdin,NULL);
    setbuf(stdout,NULL);
-#endif
 }
 
 // my_random_init()
@@ -102,11 +92,7 @@ void * my_malloc(int size) {
    void * address;
 
    ASSERT(size>0);
-#ifdef WINCE
-   address = (void*)my_Tcl_Alloc(size);
-#else
    address = malloc(size);
-#endif
    if (address == NULL) my_fatal("my_malloc(): malloc(): %s\n",strerror(errno));
 
    return address;
@@ -118,11 +104,7 @@ void * my_realloc(void * address, int size) {
 
    ASSERT(address!=NULL);
    ASSERT(size>0);
-#ifdef WINCE
-   address = (void*) my_Tcl_Realloc((char*)address,size);
-#else
    address = realloc(address,size);
-#endif
    if (address == NULL) my_fatal("my_realloc(): realloc(): %s\n",strerror(errno));
 
    return address;
@@ -133,38 +115,28 @@ void * my_realloc(void * address, int size) {
 void my_free(void * address) {
 
    ASSERT(address!=NULL);
-#ifdef WINCE
-   my_Tcl_Free((char*)address);
-#else
    free(address);
-#endif
 }
 
 // my_log_open()
 
 void my_log_open(const char file_name[]) {
-#ifndef WINCE
    ASSERT(file_name!=NULL);
 
    LogFile = fopen(file_name,"a");
 
    if (LogFile != NULL) setvbuf(LogFile,NULL,_IOLBF,0); // line buffering
-#endif
 }
 
 // my_log_close()
 
 void my_log_close() {
-#ifndef WINCE
-
    if (LogFile != NULL) fclose(LogFile);
-#endif
 }
 
 // my_log()
 
 void my_log(const char format[], ...) {
-#ifndef WINCE
    va_list ap;
 
    ASSERT(format!=NULL);
@@ -174,7 +146,6 @@ void my_log(const char format[], ...) {
       vfprintf(LogFile,format,ap);
       va_end(ap);
    }
-#endif
 }
 
 // my_fatal()
@@ -188,9 +159,7 @@ void my_fatal(const char format[], ...) {
    va_start(ap,format);
 
    vfprintf(stderr,format,ap);
-#ifndef WINCE
   if (LogFile != NULL) vfprintf(LogFile,format,ap);
-#endif
    va_end(ap);
 
    if (Error) { // recursive error
@@ -204,11 +173,7 @@ void my_fatal(const char format[], ...) {
 }
 
 // my_file_read_line()
-#ifdef WINCE
-bool my_file_read_line(Tcl_Channel file, char string[], int size) {
-#else
 bool my_file_read_line(FILE * file, char string[], int size) {
-#endif
    int src, dst;
    int c;
 
@@ -216,20 +181,6 @@ bool my_file_read_line(FILE * file, char string[], int size) {
    ASSERT(string!=NULL);
    ASSERT(size>0);
 
-#ifdef WINCE
-        int maxLength = size;
-        char ch;
-        char *str = string;
-        while (1) {
-            if (maxLength == 0) { break; }
-            maxLength--;
-            if (my_Tcl_Read(file, &ch, 1) == 0)
-              return false;
-            *str++ = ch;
-            if (ch == '\n') { break; }
-        }
-        *str = 0;
-#else
    if (fgets(string,size,file) == NULL) {
       if (feof(file)) {
          return false;
@@ -237,7 +188,6 @@ bool my_file_read_line(FILE * file, char string[], int size) {
          my_fatal("my_file_read_line(): fgets(): %s\n",strerror(errno));
       }
    }
-#endif
 
    // remove CRs and LFs
 

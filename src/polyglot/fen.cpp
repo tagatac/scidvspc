@@ -6,11 +6,7 @@
 #include <cctype>
 #include <cstdio>
 
-#ifdef WINCE
-#include <stdlib.h>
-#else
 #include <cstdlib>
-#endif
 
 #include "board.h"
 #include "colour.h"

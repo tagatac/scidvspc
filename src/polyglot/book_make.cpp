@@ -6,11 +6,7 @@
 #include <cerrno>
 #include <cmath>
 #include <cstdio>
-#ifdef WINCE
-#include <stdlib.h>
-#else
 #include <cstdlib>
-#endif
 
 #include <cstring>
 
@@ -74,11 +70,7 @@ static bool   keep_entry    (int pos);
 static int    entry_score    (const entry_t * entry);
 
 static int    key_compare   (const void * p1, const void * p2);
-#ifdef WINCE
-static void   write_integer (Tcl_Channel file, int size, uint64 n);
-#else
 static void   write_integer (FILE * file, int size, uint64 n);
-#endif
 // functions
 
 // book_make()
@@ -308,22 +300,12 @@ static void book_sort() {
 // book_save()
 
 static void book_save(const char file_name[]) {
-#ifdef WINCE
-   Tcl_Channel file;
-#else
    FILE * file;
-#endif
    int pos;
 
    ASSERT(file_name!=NULL);
 
-#ifdef WINCE
-   file = my_Tcl_OpenFileChannel(NULL, file_name, "w", 0666);
-   my_Tcl_SetChannelOption(NULL, file, "-encoding", "binary");
-   my_Tcl_SetChannelOption(NULL, file, "-translation", "binary");
-#else
    file = fopen(file_name,"wb");
-#endif
 
    if (file == NULL) my_fatal("book_save(): can't open file \"%s\" for writing: %s\n",file_name,strerror(errno));
 
@@ -339,11 +321,7 @@ static void book_save(const char file_name[]) {
       write_integer(file,2,0);
       write_integer(file,2,0);
    }
-#ifdef WINCE
-   my_Tcl_Close(NULL, file);
-#else
    fclose(file);
-#endif
 }
 
 // find_entry()
@@ -544,11 +522,7 @@ static int key_compare(const void * p1, const void * p2) {
 }
 
 // write_integer()
-#ifdef WINCE
-static void write_integer(Tcl_Channel file, int size, uint64 n) {
-#else
 static void write_integer(FILE * file, int size, uint64 n) {
-#endif
    int i;
    int b;
    ASSERT(file!=NULL);
@@ -558,13 +532,7 @@ static void write_integer(FILE * file, int size, uint64 n) {
    for (i = size-1; i >= 0; i--) {
       b = (n >> (i*8)) & 0xFF;
       ASSERT(b>=0&&b<256);
-#ifdef WINCE
-      unsigned char c;
-      c = b;
-      my_Tcl_Write(file, (char*) &c, 1);
-#else
       fputc(b,file);
-#endif
    }
 }
 

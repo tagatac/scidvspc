@@ -1,5 +1,3 @@
-#ifndef WINCE
-
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -232,11 +230,7 @@ static void* PvMalloc
 	{
 	void	*pv;
 
-#ifdef WINCE
-  pv = my_Tcl_Alloc (cb);
-#else
   pv = malloc (cb);
-#endif
 	if (NULL == pv)
 		{
 		printf ("*** Cannot allocate %lu bytes of memory\n", (unsigned long) cb);
@@ -4334,29 +4328,17 @@ extern "C" int IInitializeTb
 			if (NULL != rgtbdDesc[iTb].m_prgtbcbBuckets[sd] &&
 				NULL == rgtbdDesc[iTb].m_rgpbRead[sd])
 				{
-#ifdef WINCE
-				my_Tcl_Free ((char*)rgtbdDesc[iTb].m_prgtbcbBuckets[sd]);
-#else
         free (rgtbdDesc[iTb].m_prgtbcbBuckets[sd]);
-#endif
 				rgtbdDesc[iTb].m_prgtbcbBuckets[sd] = NULL;
 				}
 			if (NULL != rgtbdDesc[iTb].m_rgpchFileName[sd])
 				{
-#ifdef WINCE
-        my_Tcl_Free ((char*)rgtbdDesc[iTb].m_rgpchFileName[sd]);
-#else
         free (rgtbdDesc[iTb].m_rgpchFileName[sd]);
-#endif
 				rgtbdDesc[iTb].m_rgpchFileName[sd] = NULL;
 				}
 			if (NULL != rgtbdDesc[iTb].m_rgpdiDecodeInfo[sd])
 				{
-#ifdef WINCE
-        my_Tcl_Free ((char*)rgtbdDesc[iTb].m_rgpdiDecodeInfo[sd]);
-#else
         free (rgtbdDesc[iTb].m_rgpdiDecodeInfo[sd]);
-#endif
 				rgtbdDesc[iTb].m_rgpdiDecodeInfo[sd] = NULL;
 				}
 			}
@@ -4366,11 +4348,7 @@ extern "C" int IInitializeTb
 		{
 		if (NULL != rgpdbDecodeBlocks[i])
 			{
-#ifdef WINCE
-      my_Tcl_Free ((char*)rgpdbDecodeBlocks[i]);
-#else
       free (rgpdbDecodeBlocks[i]);
-#endif
 			rgpdbDecodeBlocks[i] = NULL;
 			}
 		}
@@ -4432,5 +4410,3 @@ extern "C" int IInitializeTb
 		return 3;
 	return 0;
 	}
-
-#endif
