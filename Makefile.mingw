@@ -16,8 +16,8 @@
 ifeq ($(W64),1)
 DEF_CROSS=x86_64-w64-mingw32-
 else
-DEF_CROSS=i686-pc-mingw32-
-#DEF_CROSS=i686-w64-mingw32-
+#DEF_CROSS=i686-pc-mingw32-
+DEF_CROSS=i686-w64-mingw32-
 endif
 
 # detect if running under unix by finding 'rm' in $PATH :
