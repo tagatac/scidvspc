@@ -6241,6 +6241,30 @@ set helpText(Sound) {<h1>Sound</h1>
 set helpTitle(Changelog) "Scid vs PC Changelog"
 set helpText(Changelog) {<h1>Changelog</h1>
 
+<h4>4.23 (Feb 27, 2022)</h4>
+Game move/reorder feature:
+<ul>
+<li>From the gamelist context menu it is possible to move single games to any position in the DB. Seems robust, but please backup DBs. Short 'moves' only require a few si4 writes, longer ones basically rewrite the entire si4 file, and if interupted DB will be broken</li>
+</ul><ul>
+<li>Browse multiple games feature - please read help topic</li>
+<li>Player Ratings graph can now (optionally) use the ratings history in the spelling "ratings.ssp" file</li>
+<li>New Online tablebase lookups by Michael Brown (lokasoft bases are gone), and other minor tablebase window tweaks</li>
+<li>PGN Window has a new 'Delete Comment' context menu</li>
+<li>MS Windows bugfix - can now have sg4 files larger than 2gb</li>
+<li>Allow for globbing/wildcard matches in the Name Editor date fields</li>
+<li>Time graph: when we are calulating movetimes from %clk, allow for a TimeControl tag</li>
+<li>Give the comment editor some decent colours, and increase board size</li>
+<li>Player vs UCI Game - nodes do not have to be in 1000s (helpful for some new chess engines)</li>
+<li>Tree mask/cache - change 'fill with base' to 'fill with filter', speed up mask fill, and fix up the progress window</li>
+<li>Don't auto-focus text widget in comment editor as there may be timing related side effects</li>
+<li></li>
+<li>New treeviewFont.diff patch which allows the gamelist font to be configured (system Small font)</li>
+<li>Nicer board arrows</li>
+<li>Ensure Stockfish w/d/l percentiles total 100 - author Michael</li>
+<li>Better allign the UCI config window widgets - author Aditya</li>
+<li>Epd load random position (Control-?)</li>
+</ul>
+
 <h4>4.22 (June 10, 2021)</h4>
 <ul>
 <li>Show Stockfish Win/Draw/Loss (as White/Draw/Black) infos in information window</li>
@@ -6258,8 +6282,7 @@ set helpText(Changelog) {<h1>Changelog</h1>
 <li>Add an undo point at the start of every annotation game</li>
 <li>Add a Switcher menu item to show/hide the gamelist buttonbar</li>
 <li>Update Player Data (spelling) file<li>
-</ul>
-<ul>
+</ul><ul>
 <li>Help and translation updates</li>
 <li>Book tuning tweaks</li>
 <li>Graph window tweaks</li>
@@ -7087,49 +7110,6 @@ set helpText(Changelog) {<h1>Changelog</h1>
 <li>EPD: Quick fix for epd analysis annotation bug</li>
 <li>Hungarian, Swedish and Potugese Spanish were broken if Piece translation enabled (which was default). Fixed</li>
 <li>Fix up Tacgame score-isn't-updated bug</li>
-</ul>
-
-<h4>4.6 (November 20, 2011)</h4>
-<ul>
-<li>Undo and Redo features (partly from SCID)</li>
-<li>Microsoft Windows has a proper installer</li>
-<li>Always loads games at the correct game ply when using the tree and searches</li>
-<li>Ratings graph can show multiple players (and there's a minimum ELO feature)</li>
-<li>Computer Tournament: Improvements for both Xboard and UCI engines, and implement the 50 move draw rule</li>
-<li>Auto-promote feature for FICS</li>
-<li>Book tuning 'Remove move' feature</li>
-<li>Autoraise button raises all windows</li>
-<li>Annotation improvements, and it is now possible to score All moves while only annotating Blunders</li>
-<br>
-<li>Biographical data for aliases is shown in the player information window</li>
-<li>The player info widget has buttons enabling quick player renames and look-up</li>
-<li>'Read-Only' context menu in the Database Switcher, and Read-Only bases are greyed out</li>
-<li>Fix bug in the opening/theory table</li>
-<li>Remember game position when stripping comments and variations from PGN</li>
-<li>Change analysis colors for MultiPV to black/grey instead of blue/black</li>
-<li>New 'Search in (other) Database' feature to the board search (from SCID)</li>
-<li>Variation/Mainline arrows can have custom colours</li>
-<li>Crosstable can (optionally) show 3 points for a win</li>
-<li>Fix sc_remote (which allows games to be opened in an already running Scid vs PC)</li>
-<li>Phalanx tacgame bug-fixes (play brainy, and stop after the correct amount of time)</li>
-<li>Tweak the best games widget (make fields line-up)</li>
-<li>When handling Import PGN errors, show the game numbers as well as the line in file</li>
-<li>Catch a nasty wish8.5.10 bug with the gamelist (Wish-8.5.10 should be avoided)</li>
-<li>Remove the broken integer field validation and replace it with something that allows backspace to work</li>
-<li>Bind Control-Tab to 'switch to next base', and Control-(quoteleft) to 'switch to clipbase'</li>
-<li>Fix a couple of corner cases concerning dates and searches</li>
-<li>Analysis widget : small speed improvements , icon changes and bug-fixes</li>
-<li>Add a help item for Maintenance 'Check Games' feature</li>
-<li>Swap around the 'Next Move' and 'Event' game-information lines</li>
-<li>New documentation about making Polyglot books</li>
-<li>Make the player Report config widget a bit easier to use</li>
-<li>Catch a nasty wish8.5.10 bug with the gamelist (Wish-8.5.10 should be avoided)</li>
-<li>New OSX HowTo</li>
-<li>Crosstable bugfix: the 'show white first' feature didn't work for two match rounds</li>
-<li>Update 'Tips'</li>
-<li>Clarify Scid's maximum number of games</li>
-<li>Update Spanish and Polish translations</li>
-<li>Update FICS , PGN and Menu  language translations</li>
 </ul>
 }
 

@@ -95,15 +95,15 @@ project is authored by
 <LI> Drag+Drop file opens for Windows and Linux.</LI>
 <LI> Rewritten Gamelist widget with convenient context menus and buttons, and integrated Database Switcher.</LI>
 <LI> Improved Computer Game and FICS features, including premove, and simultaneous observed games.</LI>
-<LI> Many chess engine improvements, including max-ply option, an unlimited number of engines running, and the function hot-keys can be explicitly set..</LI>
+<LI> Many chess engine improvements, including max-ply option, an unlimited number of engines running, and the function hot-keys can be explicitly set.</LI>
 <LI> New EPD search and analyze features.</LI>
 <LI> Tri-coloured Tree bar-graphs, and options for more or less statistics.</LI>
 <LI> Ratings Graph can show multiple players, and Score graph is an attractive bar graph.</LI>
 <LI> Improved Book windows, including book compare, and remove move features.</LI>
 <LI> Redone Button and Tool bars.</LI>
-<LI> The Chessboard/Pieces config widget has been overhauled, and includes support for custom tilesand pieces.</LI>
-<LI> Clickable Tablebase moves.</LI>
-<LI> Recent Game and Player-info histories</LI>
+<LI> The Chessboard/Pieces config widget has been overhauled, and includes support for custom tiles and pieces.</LI>
+<LI> Browse multiple games.</LI>
+<LI> Recent Game and Player-info histories.</LI>
 <LI> Bug tested Undo and Redo features.</LI>
 <LI> The Help index is meaningful to new users, with links to the game's main features.</LI>
 <LI> Clickable Variation Arrows, and Paste Variation feature.</LI>
@@ -122,15 +122,15 @@ project is authored by
 
 
 <P>Source 
-<A HREF="http://sourceforge.net/projects/scidvspc/files/source/scid_vs_pc-4.22.tgz/download">scid_vs_pc-4.22.tgz</A></P>
+<A HREF="http://sourceforge.net/projects/scidvspc/files/source/scid_vs_pc-4.23.tgz/download">scid_vs_pc-4.23.tgz</A></P>
 <P>Windows 
-<A HREF="http://sourceforge.net/projects/scidvspc/files/windows/Scid%20vs%20PC-4.22.exe/download">Scid vs PC-4.22.exe</A></P>
+<A HREF="http://sourceforge.net/projects/scidvspc/files/windows/Scid%20vs%20PC-4.23.exe/download">Scid vs PC-4.23.exe</A></P>
 <P>Windows 64 bit 
-<A HREF="http://sourceforge.net/projects/scidvspc/files/windows-64bit/Scid%20vs%20PC-4.22.x64.exe/download">Scid vs PC-4.22.x64.exe</A></P>
+<A HREF="http://sourceforge.net/projects/scidvspc/files/windows-64bit/Scid%20vs%20PC-4.23.x64.exe/download">Scid vs PC-4.23.x64.exe</A></P>
 <P>Mac 
-<A HREF="http://sourceforge.net/projects/scidvspc/files/mac/ScidvsMac-4.22.dmg/download">ScidvsMac-4.22.dmg</A></P>
+<A HREF="http://sourceforge.net/projects/scidvspc/files/mac/ScidvsMac-4.23.dmg/download">ScidvsMac-4.23.dmg</A></P>
 <P>Mac 64bit (beta) 
-<A HREF="https://sourceforge.net/projects/scidvspc/files/mac-64bit-unsupported/ScidvsMac-4.22.x64.dmg/download">ScidvsMac-4.22.x64.dmg</A></P>
+<A HREF="https://sourceforge.net/projects/scidvspc/files/mac-64bit-unsupported/ScidvsMac-4.23.x64.dmg/download">ScidvsMac-4.23.x64.dmg</A></P>
 <P>
 <H3>Other resources</H3>
 
@@ -159,8 +159,8 @@ use <B>./configure BINDIR=/usr/bin/ SHAREDIR=/usr/share/scid/</B></P>
 <P>Installing from source:</P>
 <HR>
 <PRE>
-tar -xzf scid_vs_pc-4.22.tgz
-cd scid_vs_pc-4.22
+tar -xzf scid_vs_pc-4.23.tgz
+cd scid_vs_pc-4.23
 ./configure
 make
 sudo make install
@@ -188,7 +188,7 @@ C:\Users\[USERNAME]\AppData\Local\VirtualStore\Program Files\Scid vs PC</P>
 
 
 <P>The 
-<A HREF="#download_">ScidvsMac-4.22 app</A> should include everything you need. Simply drag and drop the App into /Applications (or similar). It cannot be run from the dmg disk image.</P>
+<A HREF="#download_">ScidvsMac-4.23 app</A> should include everything you need. Simply drag and drop the App into /Applications (or similar). It cannot be run from the dmg disk image.</P>
 <P>Due to complicated build reasons, only Yosemite (OS X 10.10) and
 later are now supported.  Additionally, Catalina has removed 32-bit app
 support, and it is only supported by our beta ScidvsMac-x64 app,
@@ -333,6 +333,7 @@ may not be too hard.</LI>
 <LI> Linux sound playback is buggy/broken. The Wish sound package (Snack) needs maintenance.</LI>
 <LI> Tcl/Tk-8.5.10 is buggy.</LI>
 <LI> Some versions of Tk-8.6.x have severe memory leaks. To avoid, compile with Gregor's tk::text (patches/gregors_tktext_inline.patch).</LI>
+<LI> PGN Window slow-downs (with huge games) can also be fixed using Gregor's tk::text.</LI>
 <LI> OS X docked mode has some issues due to it's poor Tcl/Tk.</LI>
 <LI> <B>Focus Issues</B>. KDE users can allow Tcl apps to properly raise themselves by
 configuring desktop > window behavior > advanced > focus stealing prevention
@@ -417,9 +418,9 @@ Since then, Scid has had widespread technical changes by Fulvio Benini, who is a
 <P>Currently there exist several Scid related projects.</P>
 <P>Chessx was originally by Michal Rudolf (a longtime Scid contributor from Germany) and named Newscid.  Now led by Jens Nissen, with a 1.0 release, it
 is an attractive Chess GUI but with a small feature set and without si4 support.</P>
-<P>Scid vs. PC was started in 2009 by Steven Atkinson from Australia. Forked from Scid-3.6.26, it began as an effort to tidy Shane's frenetic code base and improve the user interface, and has since matured into a capable Scid successor.</P>
+<P>Scid vs. PC was started in 2009 by Steven Atkinson from Australia. Forked from Scid-3.6.26, it began as an effort to consolidate many of Pascal's new features, and has since matured into a capable Scid successor.</P>
 <P>The Android app, Scid on the Go, supports the si4 database format, and is the only mobile Scid related project.</P>
-<P>Another project nearing a 1.0 release is Scidb by Gregor Cramer from
+<P>Another huge project, now without a maintainer, is Scidb by Gregor Cramer from
 Germany. It is an ambitious chess database program inspired by Scid, with heavy
 utilization of C++ classes and customized Tk widgets. It also supports
 Chessbase databases and many chess variants.</P>
@@ -429,6 +430,33 @@ Chessbase databases and many chess variants.</P>
 
 
 <P>
+<H3>Scid vs. PC 4.23</H3>
+
+<P>
+<UL>
+<LI>Game move/reorder feature -
+From the gamelist context menu it is possible to move single games to any position in the DB. Seems robust, but please backup DBs. Short 'moves' only require a few si4 writes, longer ones basically rewrite the entire si4 file, and if interupted DB will be broken.
+<BR><BR></LI>
+<LI>Browse multiple games feature - please read help topic.</LI>
+<LI>Player Ratings graph can now (optionally) use the ratings history in the spelling "ratings.ssp" file.</LI>
+<LI>New Online tablebase lookups by Michael Brown (lokasoft bases are gone), and other minor tablebase window tweaks.</LI>
+<LI>PGN Window has a new 'Delete Comment' context menu.</LI>
+<LI>MS Windows bugfix - can now have sg4 files larger than 2gb.</LI>
+<LI>Allow for globbing/wildcard matches in the Name Editor date fields.</LI>
+<LI>Time graph: when we are calulating movetimes from %clk, allow for a TimeControl tag.</LI>
+<LI>Give the comment editor some decent colours, and increase board size.</LI>
+<LI>Player vs UCI Game - nodes do not have to be in 1000s (helpful for some new chess engines).</LI>
+<LI>Tree mask/cache - change 'fill with base' to 'fill with filter', speed up mask fill, and fix up the progress window..</LI>
+<LI>Don't auto-focus text widget in comment editor as there may be timing related side effects.
+<BR><BR></LI>
+<LI>New treeviewFont.diff patch which allows the gamelist font to be configured (system Small font).</LI>
+<LI>Nicer board arrows.</LI>
+<LI>Ensure Stockfish w/d/l percentiles total 100 - author Michael.</LI>
+<LI>Better allign the UCI config window widgets - author Aditya.</LI>
+<LI>Epd load random position (Control-?).
+</LI>
+</UL>
+</P>
 <H3>Scid vs. PC 4.22</H3>
 
 <P>
