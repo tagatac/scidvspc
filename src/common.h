@@ -736,7 +736,7 @@ square_Adjacent (squareT from, squareT to)
 //   and mix the bits around.
 
 inline void srandom32(uint seed) {
-#ifdef WIN32
+#ifdef _WIN32
     srand (seed);
 #else
     srandom (seed);
@@ -745,7 +745,7 @@ inline void srandom32(uint seed) {
 
 inline uint random32()
 {
-#ifdef WIN32
+#ifdef _WIN32
     return rand() ^ (rand() << 16) ^ (rand() >> 16);
 #else
     return random() ^ (random() << 16) ^ (random() >> 16);

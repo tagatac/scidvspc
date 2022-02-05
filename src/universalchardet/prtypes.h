@@ -62,7 +62,7 @@
 **
 **
 ***********************************************************************/
-#if defined(WIN32)
+#if defined(_WIN32)
 #define PR_EXTERN(__type) extern _declspec(dllexport) __type
 #define PR_IMPLEMENT(__type) _declspec(dllexport) __type
 #define PR_EXTERN_DATA(__type) extern _declspec(dllexport) __type

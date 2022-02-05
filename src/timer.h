@@ -21,7 +21,7 @@
 // It uses gettimeofday() in Unix, or ftime() in Windows.
 
 
-#ifdef WIN32
+#ifdef _WIN32
 #  include <sys/timeb.h>
 #else
 #  ifndef NO_GETTIMEOFDAY
@@ -39,7 +39,7 @@ struct msecTimerT {
 inline static void 
 setTimer (msecTimerT *t)
 {
-#ifdef WIN32
+#ifdef _WIN32
     // Use ftime() call in Windows:
     struct timeb tb;
     ftime (&tb);
@@ -57,7 +57,7 @@ setTimer (msecTimerT *t)
     t->seconds = timeOfDay.tv_sec;
     t->milliseconds = timeOfDay.tv_usec / 1000;
 #  endif  // NO_GETTIMEOFDAY
-#endif  // WIN32
+#endif  // _WIN32
 }
 
 

@@ -6,7 +6,7 @@ Index: src/index.cpp
      SORT_deleted, SORT_eventdate, SORT_variations, SORT_comments, SORT_random, SORT_sentinel
  };
  
--#ifdef WIN32 // Fast file read
+-#ifdef _WIN32 // Fast file read
  
 -struct Index::WinFileMapping {
 -    Index& index;
@@ -44,13 +44,13 @@ Index: src/index.cpp
              gamesToRead = INDEX_ENTRY_CHUNKSIZE;
          }
 -
--#ifdef WIN32 // Fast file read
+-#ifdef _WIN32 // Fast file read
 -        { Index::WinFileMapping fileMapping(*this, FilePtr->GetFileName());
 -#endif
 -
          err = ReadEntries (Entries[chunkCount], readCount, gamesToRead);
 -
--#ifdef WIN32 // Fast file read
+-#ifdef _WIN32 // Fast file read
 -        }
 -#endif
 -
@@ -82,7 +82,7 @@ Index: src/index.h
  
       errorT     ParseSortCriteria (const char * inputStr);
 -
--#ifdef WIN32 // Fast file read
+-#ifdef _WIN32 // Fast file read
 -    class WinFileMapping;
 -    friend class WinFileMapping;
 -#endif
@@ -97,7 +97,7 @@ Index: src/mfile.cpp
      CurrentPtr = NULL;
      FileBuffer = NULL;
      FileName = NULL;
--#ifdef WIN32
+-#ifdef _WIN32
 -    MappedFile = NULL;
 -#endif
  }
@@ -116,7 +116,7 @@ Index: src/mfile.cpp
      if (Type == MFILE_GZIP) {
          result = gzseek (GzHandle, position, 0);
          GzBuffer_Avail = 0;
--#ifdef WIN32
+-#ifdef _WIN32
 -    } else if (Type == MFILE_MMAP) {
 -        result = 0; // always succeeding
 -#endif
@@ -127,7 +127,7 @@ Index: src/mfile.cpp
      return OK;
  }
  
--#ifdef WIN32
+-#ifdef _WIN32
  errorT
 -MFile::OpenMappedFile (const char * name, fileModeT fmode)
 -{
@@ -152,7 +152,7 @@ Index: src/mfile.cpp
              GzBuffer_Avail = 0;
          }
          result = gzclose (GzHandle);
--#ifdef WIN32
+-#ifdef _WIN32
 -    } else if (Type == MFILE_MMAP) {
 -        delete MappedFile;
 -        MappedFile = NULL;
@@ -185,13 +185,13 @@ Index: src/mfile.h
  #include "dstring.h"
  #include "error.h"
  
--#ifdef WIN32
+-#ifdef _WIN32
 -# include "win_mmap.h"
 -#endif
 -
  enum mfileT {
 -    MFILE_REGULAR = 0, MFILE_MEMORY, MFILE_GZIP, MFILE_ZIP,
--#ifdef WIN32
+-#ifdef _WIN32
 -    MFILE_MMAP,
 -#endif
 +    MFILE_REGULAR = 0, MFILE_MEMORY, MFILE_GZIP, MFILE_ZIP
@@ -202,7 +202,7 @@ Index: src/mfile.h
  
      char *      FileBuffer;  // Only for files with unusual buffer size.
  
--#ifdef WIN32
+-#ifdef _WIN32
 -    WinMMap *   MappedFile;  // File mapping for fast read access.
 -#endif
 -
@@ -213,7 +213,7 @@ Index: src/mfile.h
          if (Data != NULL) { delete[] Data; }
          if (FileBuffer != NULL) { delete[] FileBuffer; }
          if (FileName != NULL) { delete[] FileName; }
--#ifdef WIN32
+-#ifdef _WIN32
 -        delete MappedFile;
 -#endif
      }
@@ -223,7 +223,7 @@ Index: src/mfile.h
  
      errorT Create (const char * name, fileModeT fmode);
      errorT Open  (const char * name, fileModeT fmode);
--#ifdef WIN32
+-#ifdef _WIN32
 -    errorT OpenMappedFile (const char * name, fileModeT fmode);
 -#endif
      void   CreateMemory () { Close(); Init(); }
@@ -233,7 +233,7 @@ Index: src/mfile.h
      case MFILE_GZIP:
          if (GzBuffer_Avail > 0) { return 0; }
          return gzeof(GzHandle);
--#ifdef WIN32
+-#ifdef _WIN32
 -    case MFILE_MMAP:
 -        return Location >= MappedFile->size();
 -#endif
@@ -254,7 +254,7 @@ Index: src/mfile.h
          GzBuffer_Current++;
          return retval;
      }
--#ifdef WIN32
+-#ifdef _WIN32
 -    if (Type == MFILE_MMAP) {
 -        if (Location >= MappedFile->size()) { return EOF; }
 -        return *(MappedFile->address() + Location++);

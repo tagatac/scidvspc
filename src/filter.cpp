@@ -15,7 +15,7 @@
 #include "filter.h"
 
 // Include header file for memcpy():
-#ifdef WIN32
+#ifdef _WIN32
 #  include <memory.h>
 #else
 #  include <string.h>

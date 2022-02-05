@@ -355,7 +355,7 @@ main (int argc, char * argv[])
     int newArgc = argc;
     char ** newArgv = argv;
 
-#ifdef WIN32
+#ifdef _WIN32
 #  ifdef SOURCE_TCL_FILE
 
     // Load scid.gui (SOURCE_TCL_FILE) by inserting it into argv[1]
@@ -375,7 +375,7 @@ main (int argc, char * argv[])
     if (end != NULL) { strCopy (end + 1, SOURCE_TCL_FILE); }
     newArgv[1] = sourceFileName;
 #  endif  // ifdef SOURCE_TCL_FILE
-#endif  // ifdef WIN32
+#endif  // ifdef _WIN32
 
 #ifdef TCL_ONLY
     Tcl_Main (newArgc, newArgv, scid_InitTclTk);
@@ -10484,7 +10484,7 @@ sc_info_limit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 int
 sc_info_priority (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
-#ifdef WIN32
+#ifdef _WIN32
     const char * usage = "Usage: sc_info priority <pid> [normal|idle]";
     if (argc < 3  ||  argc > 4) { return errorResult (ti, usage); }
 
@@ -10528,7 +10528,7 @@ sc_info_priority (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     }
     Tcl_AppendResult (ti, priorityName, NULL);
 
-#else  // #ifdef WIN32
+#else  // #ifdef _WIN32
 
     const char * usage = "Usage: sc_info priority <pid> [<priority>]";
     if (argc < 3  ||  argc > 4) { return errorResult (ti, usage); }
@@ -10545,7 +10545,7 @@ sc_info_priority (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     // Now return the process priority:
     int priority = getpriority (PRIO_PROCESS, pid);
     appendIntResult (ti, priority);
-#endif  // #ifdef WIN32
+#endif  // #ifdef _WIN32
     return TCL_OK;
 }
 

@@ -216,7 +216,7 @@ float nsLatin1Prober::GetConfidence(void)
 
 const char* nsLatin1Prober::GetCharSetName()
 {
-#if defined(CS_ISO_8859_1) && !defined(WIN32) && !defined(_WIN32) && !defined(WIN64) && !defined(_WIN64)
+#if defined(CS_ISO_8859_1) && !defined(_WIN32)
   return CS_ISO_8859_1;
 #else
   return CS_WINDOWS_1252;

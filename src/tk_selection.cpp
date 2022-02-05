@@ -20,7 +20,7 @@
 #define M_ASSERT(x) assert(x)
 
 
-#if defined(WIN32) || (defined(__unix__) && !defined(__MacOSX__))
+#if defined(_WIN32) || (defined(__unix__) && !defined(__MacOSX__))
 
 extern "C" { int TclRenameCommand(Tcl_Interp* ti, char const* oldName, char const* newName); }
 

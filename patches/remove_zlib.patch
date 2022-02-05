@@ -911,16 +911,16 @@ Index: Makefile.mingw
  LFLAGS = $(PROFILE)
  
  ### CPPFLAGS: C++ compiler flags
--CPPFLAGS = -DZLIB -DWIN32 $(OPT) $(CPPOPT) $(PROFILE) $(WARNINGS)
-+CPPFLAGS = -DWIN32 $(OPT) $(CPPOPT) $(PROFILE) $(WARNINGS)
+-CPPFLAGS = -DZLIB $(OPT) $(CPPOPT) $(PROFILE) $(WARNINGS)
++CPPFLAGS = $(OPT) $(CPPOPT) $(PROFILE) $(WARNINGS)
  
  ### CPPFLAGSNOWARN: C++ compiler flags without warnings
--CPPFLAGSNOWARN = -DZLIB -DWIN32 $(OPT) $(CPPOPT) $(PROFILE)
-+CPPFLAGSNOWARN = -DWIN32 $(OPT) $(CPPOPT) $(PROFILE)
+-CPPFLAGSNOWARN = -DZLIB $(OPT) $(CPPOPT) $(PROFILE)
++CPPFLAGSNOWARN = $(OPT) $(CPPOPT) $(PROFILE)
  
  ### CFLAGS: C (not C++) compiler flags
--CFLAGS = -DZLIB -DWIN32 $(OPT) $(PROFILE)
-+CFLAGS = -DWIN32 $(OPT) $(PROFILE)
+-CFLAGS = -DZLIB $(OPT) $(PROFILE)
++CFLAGS = $(OPT) $(PROFILE)
  
  
  ### EXECS: all the evecutable programs compiled from C++ files.

@@ -456,11 +456,10 @@ WARNINGS	= -W2
 
 ##	PROFILE: Set profile for compiling
 #	-DNDEBUG		:Turn off debug code
-#	-DWIN32			:Target Windows 32bit
 #	-DWIN32_LEAN_AND_MEAN	:Speeds building times by excluding some less
 #				 common APIs, and SEEMS NECESSARY at some stage
 
-PROFILE		= $(PROFILE) -DWIN32 -DWIN32_LEAN_AND_MEAN
+PROFILE		= $(PROFILE) -DWIN32_LEAN_AND_MEAN
 
 ##	CFLAGS: C++ compiler flags
 #	-c	:Compile Without linking
