@@ -1340,7 +1340,12 @@ proc gameSave {gnum {focus {}}} {
     } else {
       set extraTags [.save.g.extratext get 1.0 end-1c]
       if {[gsave $gsaveNum]} {
-        destroy .save
+        if {$::macOS} {
+          # Segfaults on bug infested Cocoa wish.
+          after idle {destroy .save}
+        } else {
+          destroy .save
+        }
         updateMenuStates
       }
     }
