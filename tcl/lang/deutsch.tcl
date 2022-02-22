@@ -1470,8 +1470,7 @@ translate D moveblunderthreshold {fehlerhafter Zug, wenn Verlust größer als}
 translate D limitanalysis {Analysezeit der Engine begrenzen}
 translate D seconds {Sekunden}
 translate D Abort {Abbrechen}
-# ====== TODO To be translated ======
-translate D Quit {Quit}
+translate D Quit {Beenden}
 translate D Resume {Fortfahren}
 translate D Restart {Neustart}
 translate D OutOfOpening {Ende der Eröffnung}
@@ -3711,8 +3710,14 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
 
   <p>Das <run ::windows::gamelist::Open><green>Partienlistenfenster</green></run>
   zeigt alle gefilterten Partien der aktuell geöffneten Datenbank/PGN-Datei.</p>
+
+  <p><i>Die Partienliste (und die Liste der besten Zugbaumpartien) hat
+	aktuell keine konfigurierbare Schriften. Für weitere Informationen
+	siehe patches/treeviewFont.diff.</i></p>
+
   <p>Unterhalb der Partienliste sind verschiedene Schaltflächen und
-  Eingabefelder und unten finden Sie den <a Switcher>Datenbankwechsler</a>.</p>
+  Eingabefelder und unten finden Sie
+  den <a Switcher>Datenbankwechsler</a>.</p>
   <p>Ein Klick auf einen Partieeintrag wählt die Partie aus. Um
   mehrere Partien auszuwählen, verwenden Sie Strg+Klick und
   Umschalt+Klick. Ein Rechtsklick auf eine Partie/mehrere Partien
@@ -4458,13 +4463,13 @@ set helpText(D,Tree) {<h1>Das Zugbaumfenster</h1>
   ersetzen, die Datenbank sortieren oder die Zwischenspeichergröße
   verringern.
   </i></p>
-  <p>Andererseits könnte man den Zwischenspeicher mit dem Inhalt einer
-  Datenbank oder einer einzelnen Partie einschließlich aller Varianten
-  füllen. Im Allgemeinen wird der Zwischenspeicher für eine ganze
-  Datenbank nicht groß genug sein. In diesem Fall werden die weniger
-  gebräuchlichen Zeilen verworfen. Diese Funktion ist nützlich, wenn
-  Sie eine oder mehrere Repertoiredatenbanken haben, die als
-  Dateneingabe dienen können.
+  <p>Andererseits könnte man den Zwischenspeicher mit dem Inhalt von
+  ausgewählten Partien oder einer einzelnen Partie einschließlich
+  aller Varianten füllen. Im Allgemeinen wird der Zwischenspeicher für
+  zahlreiche Partien nicht groß genug sein. In diesem Fall werden die
+  weniger gebräuchlichen Zeilen verworfen. Diese Funktion ist
+  nützlich, wenn Sie eine oder mehrere Repertoiredatenbanken haben,
+  die als Dateneingabe dienen können.
   </p>
 
   <h3>Schneller/gründlicher Modus</h3>
@@ -4638,15 +4643,15 @@ set helpText(D,TreeMasks) {<h1>Die Zugbaummasken</h1>
   genutzt werden, um verschiedene Datenbanken in einer einzigen Maske
   zu verbinden.</i>
   </p>
-  <p>Jetzt kann die Maske automatisch mit dem Partieninhalt der
-  Datenbank gefüllt werden. In diesem Prozeß werden Kommentare
-  innerhalb der Partien in Zugkommentare in der Maske umgewandelt (um
-  sie schließlich an die bestehenden anzuhängen). NAGs werden ebenso
-  hinzugefügt. Um diesen Prozeß zu starten, kann man entweder <b>Mit
-  Partie füllen</b> wählen, um die Maske mit dem Inhalt einer einzigen
-  Partie zu füllen, oder <b>Mit Datenbank füllen</b>, um über alle
-  Partien in der Datenbank zu gehen.
+
+  <p>Jetzt kann die Maske automatisch mit ausgewählten Partien der
+  Datenbank gefüllt werden. In diesem Prozeß werden Kommentare ebenso
+  wie das erste NAG innerhalb der Partien in Zugkommentare in der
+  Maske umgewandelt (um sie schließlich an die bestehenden
+  anzuhängen). Dies erfolgt entweder mit <b>Mit Partie füllen</b> oder
+  für ausgewählte Partien mit <b>Mit Filter füllen</b>.
   </p>
+
   <p><b>Hinweis</b> Das Füllen einer Maske mit einer ganzen Datenbank
   kann sehr zeitraubend sein.
   </p>
@@ -4657,7 +4662,7 @@ set helpText(D,TreeMasks) {<h1>Die Zugbaummasken</h1>
   Mittelspiel erreicht ist.
   </p>
 
-  <p><footer>(Aktualisiert: Scid vs. PC 4.14, März 2015)</footer></p>
+  <p><footer>(Aktualisiert: Scid vs. PC 4.23, Januar 2022)</footer></p>
 }
 
 
@@ -5977,17 +5982,19 @@ set helpText(D,Graphs) {<h1>Grafikfenster</h1>
   <h3><name Rating>Grafik Ratingveränderung</name></h3>
   <p>Die Grafik <green><run ::tools::graphs::rating::Refresh
   both>Ratingveränderung</run></green> zeigt die Entwicklung von einem
-  oder von mehreren Spielern. Sie erhalten die Grafik durch Drücken
-  auf die Schaltfläche "Ratingveränderung" im
+  oder mehreren Spielern. Sie erhalten die Grafik durch Drücken auf
+  die Schaltfläche "Ratingveränderung" im
   Fenster <a PInfo>Spielerinformationen</a> oder durch Auswahl von
   "Ratingveränderung" im Menü Werkzeuge. Ein Rechtsklick auf die
   Grafik erneuert sie.
   </p>
-  <p>
-  In den Grafikmenüs gibt es mehrere Optionen, einschließlich die
-  Möglichkeit, Elo-Werte aus der Rechtschreibdatei (Ratings.ssp) zu
-  verwenden. Dies ist praktisch, wenn die Datenbank nicht viele
-  Partien enthält.
+
+  <p> In den Grafikmenüs gibt es mehrere Optionen, einschließlich die
+  Möglichkeit, Elo-Werte aus der Schreibkorrekturdatei <a Maintenance
+  Spellfile>ratings.ssp</a> zu verwenden. Dies ist praktisch, wenn die
+  Datenbank nicht viele Partien enthält oder wenn bei
+  Blitz-/Schnellschachpartien unterschiedliche Ratingwerte angezeigt
+  werden.
   </p>
 
   <h3><name Score>Grafik für Bewertung/Zeit</name></h3>
@@ -6341,8 +6348,9 @@ set helpText(D,Formats) {<h1>Die Dateiformate von Scid</h1>
   Partiendatei (.sg4).
   </p>
   <p><i>Scid weist für einige Datenfelder nur drei Bytes zu. Das
-  bedeutet, daß die höchste Partienanzahl 16.777.214 ist.</i>
-  </p>
+  bedeutet, daß die höchste Partienanzahl 16.777.214 ist.
+  <br>Zusätzlich ist die maximale Größe für eine Partie 131.072 Bytes.
+  </i></p>
 
   <h3>Die Indexdatei (.si4)</h3>
   <p>Die Indexdatei enthält eine Beschreibung für die Datenbank und
