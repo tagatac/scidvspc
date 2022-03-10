@@ -42,8 +42,8 @@ menuText B Edit "Editar" 0
 menuText B EditAdd "Adiciona variante" 0 {Adiciona variante do movimento}
 menuText B EditPasteVar "Colar Variante" 0
 menuText B EditDelete "Deleta Variante" 0 {Exclui variante do movimento}
-# ====== TODO To be translated ======
-menuText B EditDeleteComment "Delete Comment" 0
+# ====== Translated OK by Gilberto======
+menuText B EditDeleteComment "Apagar Comentario" 0
 menuText B EditFirst "Converte para Primeira Variante" 14 \
   {Faz com que uma variante seja a primeira da lista}
 menuText B EditMain "Converte variante para Linha Principal" 24 \
@@ -664,7 +664,7 @@ menuText B TreeOptSlowmode "Modo Lento" 0 {Modo lento para atualizações (mais ac
 menuText B TreeOptFastmode "Modo Rápido" 0 {Modo rápido para atualizações (sem transsposições de movimentos)}
 menuText B TreeOptFastAndSlowmode "Modo rápido e lento" 0 {Modo rápido e lento para atualizações}
 menuText B TreeOptStartStop "Atualização automática" 0 {Liga/Desliga a atualização automática da janela de árvore}
-menuText B TreeOptLock "Lock" 0 {Trava/Destrava a arvore para o banco corrente}
+menuText B TreeOptLock "Travar" 0 {Trava/Destrava a arvore para o banco corrente}
 menuText B TreeOptTraining "Treinamento" 0 \
   {Liga/Desliga o modo treinamento na arvore}
 
@@ -801,8 +801,8 @@ menuText B GraphOptionsWhite "Branco" 0
 menuText B GraphOptionsBlack "Preto" 0
 
 menuText B GraphOptionsDots "Mostrar Pontos" 0
-# ====== TODO To be translated ======
-menuText B GraphOptionsSpelling "Elo from Spelling File" 0
+# ====== Translated OK by Gilberto======
+menuText B GraphOptionsSpelling "ELO do arquivo de ortografia" 0
 
 menuText B GraphOptionsBar "Destacar movimento atual" 0
 menuText B GraphOptionsBoth "Ambos" 0
@@ -998,7 +998,7 @@ menuText B CrosstabSortCountry "Pais" 0
 # todo
 menuText B CrosstabType "Formato" 0
 menuText B CrosstabTypeAll "Todos contra todos" 0
-menuText B CrosstabTypeSwiss "Swiss" 0
+menuText B CrosstabTypeSwiss "Suiço" 0
 menuText B CrosstabTypeKnockout "Knockout" 0
 menuText B CrosstabTypeAuto "Automatico" 0
 menuText B CrosstabHelp "Ajuda" 0
@@ -1107,16 +1107,16 @@ translate B GlistAlignL {Alinhar: esquerda}
 translate B GlistAlignR {Alinhar: direita}
 
 translate B GlistAlignC {Alinhar: centro}
-# ====== TODO To be translated ======
-translate B GlistMoveFieldUp {Move up}
-# ====== TODO To be translated ======
-translate B GlistMoveFieldDown {Move down}
-# ====== TODO To be translated ======
-translate B GlistMoveFieldFirst {Move to first}
-# ====== TODO To be translated ======
-translate B GlistMoveFieldLast {Move to last}
-# ====== TODO To be translated ======
-translate B GlistMoveFieldN {Move to N}
+# ====== Translated OK by Gilberto ======
+translate B GlistMoveFieldUp {Mover acima}
+# ====== Translated OK by Gilberto ======
+translate B GlistMoveFieldDown {Mover abaixo}
+# ====== Translated OK by Gilberto ======
+translate B GlistMoveFieldFirst {Mover para primeiro}
+# ====== Translated OK by Gilberto ======
+translate B GlistMoveFieldLast {Mover para último}
+# ====== Translated OK by Gilberto ======
+translate B GlistMoveFieldN {Mover para N}
 
 # Maintenance window:
 translate B DatabaseName {Nome da base de dados:}
@@ -1712,8 +1712,8 @@ translate B limitanalysis {limita tempo de analise do engine}
 translate B seconds {segundos}
 
 translate B Abort {Abortar}
-# ====== TODO To be translated ======
-translate B Quit {Quit}
+# ====== Translated OK by Gilberto ======
+translate B Quit {Sair}
 
 translate B Resume {Continuar}
 
