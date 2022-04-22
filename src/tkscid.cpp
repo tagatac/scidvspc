@@ -9156,8 +9156,11 @@ addScoreToList (Tcl_Interp * ti, int moveCounter, const char * comment,
     float f;
     sscanf (comment, "%f", &f);
     if (negate) { f = -f; }
-    if (f < min) { f = min; }
+    if (f < min) { f = min; } // min is -10
     if (f > max) { f = max; }
+    // pad out zero scores so we can see something
+    if (f >= 0 && f < .05) f=.05;
+    if (f < 0 && f > -.05) f=-.05;
     sprintf (buffer, "%.2f", f);
     Tcl_AppendElement (ti, buffer);
     return true;
