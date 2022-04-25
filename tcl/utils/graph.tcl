@@ -655,7 +655,7 @@ proc ::utils::graph::scale_data {graph coords} {
 
 # set_range:
 #    Sets any range boundaries that are not already set for a graph.
-#
+
 proc ::utils::graph::set_range {graph} {
   variable _data
 
@@ -682,7 +682,7 @@ proc ::utils::graph::set_range {graph} {
   set xtick $_data($graph,xtick)
   set ytick $_data($graph,ytick)
   set _data($graph,axmin) [expr {floor($xmin/$xtick) * $xtick}]
-  set _data($graph,axmax) [expr {floor($xmax/$xtick) * $xtick + $xtick}]
+  set _data($graph,axmax) [expr {int($xmax+1)}]
   set _data($graph,aymin) [expr {floor($ymin/$ytick) * $ytick}]
   set _data($graph,aymax) [expr {floor($ymax/$ytick) * $ytick +$ytick}]
 
