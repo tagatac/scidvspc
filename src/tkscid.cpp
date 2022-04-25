@@ -9158,9 +9158,11 @@ addScoreToList (Tcl_Interp * ti, int moveCounter, const char * comment,
     if (negate) { f = -f; }
     if (f < min) { f = min; } // min is -10
     if (f > max) { f = max; }
-    // pad out zero scores so we can see something
-    if (f >= 0 && f < .05) f=.05;
-    if (f < 0 && f > -.05) f=-.05;
+    /* Hmm - can't do this as equal games show the y-axis -1 to 1, and .05 is too noticeable
+     * // pad out zero scores so we can see something
+     * if (f >= 0 && f < .05) f=.05;
+     * if (f < 0 && f > -.05) f=-.05;
+    */
     sprintf (buffer, "%.2f", f);
     Tcl_AppendElement (ti, buffer);
     return true;
