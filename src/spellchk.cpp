@@ -888,7 +888,8 @@ SpellChecker::GetAllElo (const char * name, uint startYear, uint startElo)
 {
     DString * result = new DString;
     char searchName [512];
-
+    if (!Correct(name)) 
+      return "";
     strCopyExclude (searchName, Correct(name), ExcludeChars);
     spellCheckNodeT * node = Names[(byte) *searchName];
 

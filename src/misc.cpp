@@ -196,6 +196,7 @@ void
 strCopyExclude (char * target, const char * original,
                 const char * excludeChars)
 {
+    ASSERT (target != NULL  &&  original != NULL);
     while (*original != 0) {
         int exclude = 0;
         for (char * s = (char *) excludeChars; *s; s++) {
