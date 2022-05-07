@@ -3509,7 +3509,7 @@ set helpText(Graphs) {<h1>Graph Windows</h1>
 Graph</run></green> shows the ELO history of one, or many, players.
 You can access the graph by pressing the "Rating Graph" button
 in the <a PInfo>Player Information</a> window, or by selecting "Player Ratings"
-from the Tools menu. Right-clicking the graph will refresh it.
+from the Tools menu. Right-clicking the graph shows a Recent Players context menu.
   </p>
   <p>
   There are several options in the Graph menus, including the ability to use Elo from the <a Maintenance Spellfile>ratings.ssp</a> file,

@@ -52,6 +52,7 @@ set ::utils::graph::_defaults(graph) \
 #   -linewidth: width of line in canvas units.
 #   -barwidth:  width of bars -- in GRAPH units, NOT canvas units.
 #   -key:     key name to print by line.
+#             (Now only used in ratings graph. It stores the whole player name, but only displays surname - S.A)
 #   -coords:  actual data to plot; should be a list containing an
 #             EVEN number of numeric values.
 #
@@ -470,9 +471,12 @@ proc ::utils::graph::plot_data {graph} {
           if {$nexty > $y} { set dy -3; set anchor sw }
         }
         incr y $dy
-        catch {$canvas create text $x $y -fill $color -tag $tag \
-                 -text $_data($graph,$dataset,key) \
-                 -font $_data($graph,font) -anchor $anchor}
+        catch {
+          set citem [$canvas create text $x $y -fill $color -tag $tag -text [::utils::string::Surname $key] -font $_data($graph,font) -anchor $anchor]
+          $canvas bind $citem <Button-1> [list playerInfo $key 1]
+          $canvas bind $citem <Enter> "$canvas configure -cursor hand2"
+          $canvas bind $citem <Leave> "$canvas configure -cursor {}"
+        }
       }
     }
 

@@ -860,6 +860,8 @@ set ::tools::graphs::rating::colors {steelblue seagreen rosybrown violet sandybr
 
 proc ::tools::graphs::rating::Refresh {{player {}}} {
 
+  global playerInfoHistory
+
   set w .rgraph
 
   if {[winfo exists $w]} {
@@ -867,6 +869,15 @@ proc ::tools::graphs::rating::Refresh {{player {}}} {
   } else {
     ::createToplevel $w
     ::setTitle $w "[tr ToolsRating]"
+
+    # bastardized Player Info context menu to show/hide ratings
+    menu $w.players -tearoff 1
+    $w.players delete 0 end
+    foreach i $playerInfoHistory {
+      $w.players add command -label $i -command [list ::tools::graphs::rating::Refresh $i]
+    }
+    bind $w <Button-3> "tk_popup $w.players %X %Y"
+    # Button-3 also triggers a Refresh below
 
     menu $w.menu
     ::setMenu $w $w.menu
@@ -981,7 +992,6 @@ proc ::tools::graphs::rating::Refresh {{player {}}} {
 
   set i 1
   foreach p $::tools::graphs::rating::players {
-    set key [::utils::string::Surname $p]
     set color [lindex $::tools::graphs::rating::colors [expr ($i - 1) % [llength $::tools::graphs::rating::colors]]]
     if {$::tools::graphs::spelling} {
       # new feature to get data from ratings.ssp
@@ -991,7 +1001,7 @@ proc ::tools::graphs::rating::Refresh {{player {}}} {
     }
     catch {
       ::utils::graph::data ratings d$i -color $color -points $::tools::graphs::showpoints -lines 1 \
-	       -linewidth $lwidth -radius $psize -outline $color -key $key -coords $coords
+	       -linewidth $lwidth -radius $psize -outline $color -key $p -coords $coords
     }
     incr i
   }
