@@ -1548,15 +1548,6 @@ set helpMessage($m,[incr menuindex]) HelpIndex
 
 $m add separator
 incr menuindex
-# $m add command -label HelpIndex -command {helpWindow Index}
-# set helpMessage($m,[incr menuindex]) HelpIndex
-# $m add command -label HelpGuide -command {helpWindow Guide}
-# set helpMessage($m,[incr menuindex]) HelpGuide
-# $m add command -label HelpHints -command {helpWindow Hints}
-# set helpMessage($m,[incr menuindex]) HelpHints
-# 
-# $m add separator
-# incr menuindex
 
 $m add command -label HelpTip -command ::tip::show
 set helpMessage($m,[incr menuindex]) HelpTip
@@ -1740,11 +1731,11 @@ proc updateMenuStates {} {
 proc configMenuText {menu entry tag lang} {
   global menuLabel menuUnder
   if {[info exists menuLabel($lang,$tag)] && [info exists menuUnder($lang,$tag)]} {
-    $menu entryconfig $entry -label $menuLabel($lang,$tag) \
-        -underline $menuUnder($lang,$tag)
+catch {
+    $menu entryconfig $entry -label $menuLabel($lang,$tag) -underline $menuUnder($lang,$tag)
+}
   } else {
-    $menu entryconfig $entry -label $menuLabel(E,$tag) \
-        -underline $menuUnder(E,$tag)
+    $menu entryconfig $entry -label $menuLabel(E,$tag) -underline $menuUnder(E,$tag)
   }
 }
 
@@ -1891,6 +1882,10 @@ proc setLanguageMenus {{lang ""}} {
   foreach tag {Contents Index Tip Startup About} {
     configMenuText .menu.help [tr Help$tag $oldLang] Help$tag $lang
   }
+  # Have to leave HelpContents menu intact
+  .menu.help entryconfig 1 -label [tr Contents]
+
+
   if {$::macOS} {
     configMenuText .menu.apple [tr HelpAbout $oldLang] HelpAbout $lang
   }
