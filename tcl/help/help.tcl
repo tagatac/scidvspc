@@ -1594,7 +1594,7 @@ is done from the Maintenance window.</i></p>
 
 <p><i>The default database (Clipbase) cannot be compacted</i>.</p>
 
-<h3>Moving Games</h3>
+<h3><name MovingGames>Moving Games<name></h3>
 <p>Scid vs PC now enables basic game moving/reordering (on single games) via the gamelist context menu.
 <br><br>
 <red>Please use with caution, and backup databases before use. Reordering games involves writing the index file in an non-atomic manor. For short distances, only a few writes are made, but longer moves involve rewriting much of the index file in-place, and interuption may cause data loss.</p>
@@ -2632,6 +2632,8 @@ set helpText(Sorting) {<h1>Sorting Databases</h1>
   <li> Comments (number of comments in game)
   <li> Random
   </ul>
+
+  <p><i>ScidvsPC can also </i><a GameList MovingGames>move/re-order single games</a>.</p>
 
   <h3>Sorting is Permanent</h3>
   <p>
