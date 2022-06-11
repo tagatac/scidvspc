@@ -286,6 +286,8 @@ menuText U OptionsMovesDelay "Tempo de atraso p/ Jogo automático..." 1 \
   {Define o tempo de espera antes de entrar no modo de jogo automatico}
 menuText U OptionsMovesCoord "Entrada de movimentos por coordenadas" 0 \
   {Aceita o estilo de entrada de movimentos por coordenadas ("g1f3")}
+# ====== TODO To be translated ======
+menuText U OptionsMovesSuggest "Show Suggested Moves" 0 \
 menuText U OptionsShowVarPopup "Mostrar janela de variantes" 0 {Turn on/off the display of a variations window}  
 menuText U OptionsMovesSpace "Adicionar um espaço depois do número do lance" 0 {Add spaces after move number}  
 menuText U OptionsMovesKey "Auto completar" 0 \
@@ -1356,6 +1358,8 @@ translate U CopyErrNotOpen {não está aberta}
 translate U LightSquares {Casas Brancas}
 translate U DarkSquares {Casas Pretas}
 translate U SelectedSquares {Casas selecionadas}
+# ====== TODO To be translated ======
+translate U SuggestedSquares {Suggested}
 translate U Grid {Grid}
 translate U Previous {Escolhas}
 translate U WhitePieces {Peças Brancas}

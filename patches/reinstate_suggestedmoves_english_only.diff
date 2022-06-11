@@ -1,3 +1,32 @@
+Index: src/tkscid.cpp
+===================================================================
+--- src/tkscid.cpp	(revision 3286)
++++ src/tkscid.cpp	(working copy)
+@@ -11242,7 +11242,7 @@
+             // moves but fast enough to seem almost instant. The
+             // search promotes the best move to be first in the list.
+             Engine * engine = new Engine();
+-            engine->SetSearchTime (25);    // Do a 25 millisecond search
++            engine->SetSearchTime (100);    // 25
+             engine->SetPosition (pos);
+             engine->Think (&mlist);
+             delete engine;
+@@ -11256,10 +11256,12 @@
+ 
+     simpleMoveT * sm = mlist.Get(0);
+     ASSERT (sq == sm->from  ||  sq == sm->to);
+-    squareT bestSq = sm->from;
+-    if (sm->from == sq) { bestSq = sm->to; }
+-    setUintResult (ti, bestSq);
+ 
++    if (sm->from == sq) 
++      setUintResult (ti, sm->to);
++    else
++      setUintResult (ti, sm->from);
++
+     return TCL_OK;
+ }
+ 
 Index: tcl/board.tcl
 ===================================================================
 --- tcl/board.tcl	(revision 3286)
@@ -141,7 +170,7 @@ Index: tcl/help/help.tcl
  
 +  <h4>Suggested Moves</h4>
 +  <p>
-+  The Suggested Move feature, if enabled, highlights all squares to which there is a legal move.
++  The Suggested Move feature, if enabled, highlights the best move (taken from ECO or a quick engine search) to/from a board square.
 +  This can be confusing at times, or also regarded as cheating, and is disabled by default in Scid vs. PC.
 +  This option also enforces "Colour Selected Square".
 +  </p> 

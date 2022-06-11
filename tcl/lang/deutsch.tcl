@@ -307,6 +307,8 @@ menuText D OptionsMovesDelay "Automatisch vorspielen..." 7 \
   {Zeit für automatisches Vorspielen einstellen}
 menuText D OptionsMovesCoord "Tastatureingabe" 0 \
   {Zugeingabe über Koordinaten ("g1f3") akzeptieren}
+# ====== TODO To be translated ======
+menuText D OptionsMovesSuggest "Show Suggested Moves" 0 \
 menuText D OptionsShowVarPopup "Variantenfenster zeigen" 0 { Anzeige des Variantenauswahlfensters ein/ausschalten}  
 menuText D OptionsMovesSpace "Leerzeichen nach Zugnummer einfügen" 0 {Leerzeichen nach Zugnummer einfügen}  
 menuText D OptionsMovesKey "Automatische Zugergänzung" 10 \
@@ -1389,6 +1391,8 @@ translate D CopyErrNotOpen {ist nicht geöffnet}
 translate D LightSquares {Helle Felder}
 translate D DarkSquares {Dunkle Felder}
 translate D SelectedSquares {Ausgewählte Felder}
+# ====== TODO To be translated ======
+translate D SuggestedSquares {Suggested}
 translate D Grid {Gitter}
 translate D Previous {Vorherige}
 translate D WhitePieces {Weiße Steine}

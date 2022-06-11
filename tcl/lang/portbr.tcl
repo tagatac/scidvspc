@@ -360,6 +360,8 @@ menuText B OptionsMovesDelay "Tempo de atraso p/ Jogo automatico..." 1 \
   {Define o tempo de espera antes de entrar no modo de jogo automatico}
 menuText B OptionsMovesCoord "Entrada de movimentos por coordenadas" 0 \
   {Aceita o estilo de entrada de movimentos por coordenadas ("g1f3")}
+# ====== TODO To be translated ======
+menuText B OptionsMovesSuggest "Show Suggested Moves" 0 \
 
 menuText B OptionsShowVarPopup "Mostrar janela de variantes" 0 {Liga/Desliga a janela de variantes}  
 
@@ -1604,6 +1606,8 @@ translate B CopyErrNotOpen {nao esta aberta}
 translate B LightSquares {Casas Brancas}
 translate B DarkSquares {Casas Pretas}
 translate B SelectedSquares {Casas selecionadas}
+# ====== TODO To be translated ======
+translate B SuggestedSquares {Suggested}
 # todo
 translate B Grid {Grade}
 translate B Previous {Escolhas}

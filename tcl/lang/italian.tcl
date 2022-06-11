@@ -322,6 +322,8 @@ menuText I OptionsMovesDelay "Intervallo di tempo per il gioco automatico..." 1 
   {Definisce l'intervallo di tempo per il gioco automatico}
 menuText I OptionsMovesCoord "Immissione mossa per coordinate" 0 \
   {Accetta l'input di mossa mediante coordinate ("g1f3")}
+# ====== TODO To be translated ======
+menuText I OptionsMovesSuggest "Show Suggested Moves" 0 \
 menuText I OptionsShowVarPopup "Mostra Finestra Varianti" 0 {Attiva/Disattiva la visualizzazione della finestra delle varianti}
 menuText I OptionsMovesSpace "Aggiungi Spazi dopo Mossa" 0 {Agginuge spazi dopo il numero della mossa}
 menuText I OptionsMovesKey "Completamento da tastiera" 0 \
@@ -1528,6 +1530,8 @@ translate I CopyErrNotOpen {non e' aperto}
 translate I LightSquares {Case chiare}
 translate I DarkSquares {Case scure}
 translate I SelectedSquares {Case selezionate}
+# ====== TODO To be translated ======
+translate I SuggestedSquares {Suggested}
 # todo
 translate I Grid {Grid}
 translate I Previous {Previous}

@@ -316,6 +316,8 @@ menuText N OptionsMovesDelay "Tijdinstelling voor auto-spelen" 10 \
   {Stel de tijd in voor het automatisch spelen van de zetten}
 menuText N OptionsMovesCoord "Zet-ingave" 0 \
   {Accepteer de volgende manier van zetten invoeren ("g1f3")}
+# ====== TODO To be translated ======
+menuText N OptionsMovesSuggest "Show Suggested Moves" 0 \
 menuText N OptionsShowVarPopup "Toon variantenvenster" 0 {In-/Uitschakelen weergeven van het variantenvenster} 
 menuText N OptionsMovesSpace "Spaties zetten achter zetnummer" 0 {Zet spaties na het zetnummer}  
 menuText N OptionsMovesKey "Auto-aanvullen" 0 \
@@ -1461,6 +1463,8 @@ translate N CopyErrNotOpen {is niet geopend}
 translate N LightSquares {Lichte velden}
 translate N DarkSquares {Donkere velden}
 translate N SelectedSquares {Geselecteerde velden}
+# ====== TODO To be translated ======
+translate N SuggestedSquares {Suggested}
 translate N Grid {Raster}
 translate N Previous {Voorgaande}
 translate N WhitePieces {Witte stukken}

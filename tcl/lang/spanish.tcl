@@ -325,6 +325,8 @@ menuText S OptionsMovesDelay "Retardo del Automovimiento" 1 \
   {Pone el tiempo de demora para el modo de automovimiento}
 menuText S OptionsMovesCoord "Entrada de movimientos coordinada" 0 \
   {Acepta entrada de movimientos en sistema "coordinado" ("g1f3")}
+# ====== TODO To be translated ======
+menuText S OptionsMovesSuggest "Show Suggested Moves" 0 \
 menuText S OptionsShowVarPopup "Mostrar ventana de variaciones" 0 {Activa/desactivar la ventana de variaciones}
 menuText S OptionsMovesSpace "Añadir espacios detrás de número de jugada" 0 {Añadir espacios detrás del número de jugada}  
 menuText S OptionsMovesKey "Teclado inteligente" 0 \
@@ -1428,6 +1430,8 @@ translate S CopyErrNotOpen {no está abierta}
 translate S LightSquares {Casillas claras}
 translate S DarkSquares {Casillas oscuras}
 translate S SelectedSquares {Casillas seleccionadas}
+# ====== TODO To be translated ======
+translate S SuggestedSquares {Suggested}
 translate S Grid {Cuadrícula}
 translate S Previous {Elección}
 translate S WhitePieces {Piezas blancas}

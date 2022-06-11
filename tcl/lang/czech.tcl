@@ -335,6 +335,8 @@ menuText C OptionsMovesDelay "Prodleva pøi automatickém pøehrávání..." 1 \
 menuText C OptionsMovesCoord "Souøadnicové zadávání tahù" 0 \
   {Povolit zadávání tahù pomocí souøadnic (napø. "g1f3")}
 # ====== TODO To be translated ======
+menuText C OptionsMovesSuggest "Show Suggested Moves" 0 \
+# ====== TODO To be translated ======
 menuText C OptionsShowVarPopup "Show Variation Window" 0 {Turn on/off the display of a variations window}  
 # ====== TODO To be translated ======
 menuText C OptionsMovesSpace "Add spaces after move number" 0 {Add spaces after move number}  
@@ -1559,6 +1561,8 @@ translate C CopyErrNotOpen {není otevøena}
 translate C LightSquares {Bílá pole}
 translate C DarkSquares {Èerná pole}
 translate C SelectedSquares {Vybraná pole}
+# ====== TODO To be translated ======
+translate C SuggestedSquares {Suggested}
 # todo
 translate C Grid {Grid}
 translate C Previous {Pøedchozí}

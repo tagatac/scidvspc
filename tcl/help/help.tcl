@@ -908,6 +908,13 @@ set helpText(Moves) {<h1>Move Entry and Options</h1>
   is disabled.
   </p>
 
+  <h4>Suggested Moves</h4>
+  <p>
+  The Suggested Move feature, if enabled, highlights the best move (taken from ECO or a quick engine search) to/from a board square.
+  This can be confusing at times, or also regarded as cheating, and is disabled by default in Scid vs. PC.
+  This option also enforces "Colour Selected Square".
+  </p> 
+
   <h3><name Null>Entering Null Moves</name></h3>
   <p>
   <a Variations Null>Null Moves</a> (or empty moves) can be useful in variations where

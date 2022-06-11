@@ -11242,7 +11242,7 @@ sc_pos_bestSquare (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             // moves but fast enough to seem almost instant. The
             // search promotes the best move to be first in the list.
             Engine * engine = new Engine();
-            engine->SetSearchTime (25);    // Do a 25 millisecond search
+            engine->SetSearchTime (100);    // 25
             engine->SetPosition (pos);
             engine->Think (&mlist);
             delete engine;
@@ -11256,9 +11256,11 @@ sc_pos_bestSquare (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     simpleMoveT * sm = mlist.Get(0);
     ASSERT (sq == sm->from  ||  sq == sm->to);
-    squareT bestSq = sm->from;
-    if (sm->from == sq) { bestSq = sm->to; }
-    setUintResult (ti, bestSq);
+
+    if (sm->from == sq) 
+      setUintResult (ti, sm->to);
+    else
+      setUintResult (ti, sm->from);
 
     return TCL_OK;
 }
