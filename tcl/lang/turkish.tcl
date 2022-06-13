@@ -275,7 +275,7 @@ menuText T OptionsMovesDelay "Otomatik Oynatma Zamanı Gecikmesi" 1 \
 menuText T OptionsMovesCoord "Klavyeden Oynama" 0 \
   {Koordinat stili oynama girişini kabul edin (ör. "g1f3")}
 # ====== TODO To be translated ======
-menuText T OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText T OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 menuText T OptionsShowVarPopup "Varyant Penceresini Aç/Kapat" 0 {Turn on/off the display of a variations window}  
 menuText T OptionsMovesSpace "Hamle numarasından sonra boşluk ekle" 0 {Hamle numarasından sonra boşluk ekle}  
 menuText T OptionsMovesKey "Klavye Tamamlama" 0 \

@@ -335,7 +335,7 @@ menuText C OptionsMovesDelay "Prodleva pøi automatickém pøehrávání..." 1 \
 menuText C OptionsMovesCoord "Souøadnicové zadávání tahù" 0 \
   {Povolit zadávání tahù pomocí souøadnic (napø. "g1f3")}
 # ====== TODO To be translated ======
-menuText C OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText C OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 # ====== TODO To be translated ======
 menuText C OptionsShowVarPopup "Show Variation Window" 0 {Turn on/off the display of a variations window}  
 # ====== TODO To be translated ======

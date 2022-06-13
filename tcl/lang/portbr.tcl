@@ -361,7 +361,7 @@ menuText B OptionsMovesDelay "Tempo de atraso p/ Jogo automatico..." 1 \
 menuText B OptionsMovesCoord "Entrada de movimentos por coordenadas" 0 \
   {Aceita o estilo de entrada de movimentos por coordenadas ("g1f3")}
 # ====== TODO To be translated ======
-menuText B OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText B OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 
 menuText B OptionsShowVarPopup "Mostrar janela de variantes" 0 {Liga/Desliga a janela de variantes}  
 

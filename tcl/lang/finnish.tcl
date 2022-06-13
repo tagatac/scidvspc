@@ -275,7 +275,7 @@ menuText L OptionsMovesDelay "Automaattisen pelaamisen viivästys" 1 \
 menuText L OptionsMovesCoord "Koordinoi siirron tekeminen" 0 \
   {Hyväksy koordinaattityylinen siirron suoritus (esim. "g1f3")}
 # ====== TODO To be translated ======
-menuText L OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText L OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 menuText L OptionsShowVarPopup "Näytä muunnelmaikkuna" 0 {Käännä päälle/pois muunnelmaikkunan näyttö}  
 menuText L OptionsMovesSpace "Lisää välilyöntejä siirron numeron jälkeen" 0 {Lisää välilyöntejä siirron numeron jälkeen}  
 menuText L OptionsMovesKey "Näppäimistön täydentäminen" 0 \

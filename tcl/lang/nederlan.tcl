@@ -317,7 +317,7 @@ menuText N OptionsMovesDelay "Tijdinstelling voor auto-spelen" 10 \
 menuText N OptionsMovesCoord "Zet-ingave" 0 \
   {Accepteer de volgende manier van zetten invoeren ("g1f3")}
 # ====== TODO To be translated ======
-menuText N OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText N OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 menuText N OptionsShowVarPopup "Toon variantenvenster" 0 {In-/Uitschakelen weergeven van het variantenvenster} 
 menuText N OptionsMovesSpace "Spaties zetten achter zetnummer" 0 {Zet spaties na het zetnummer}  
 menuText N OptionsMovesKey "Auto-aanvullen" 0 \

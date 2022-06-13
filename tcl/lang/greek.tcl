@@ -333,7 +333,7 @@ menuText G OptionsMovesDelay "Χρ.Καθυστέρηση Αναπαραγωγή
 menuText G OptionsMovesCoord "Κίνηση με Συντεταγμένες" 11 \
   {Αποδοχή Κινήσεων με Συντεταγμένες (πχ "g1f3")}
 # ====== TODO To be translated ======
-menuText G OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText G OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 menuText G OptionsShowVarPopup "Εμφάνιση Παραθύρου Βαριάντων" 9 {Εμφάνιση ή μη Παραθύρου Βαριάντων}  
 menuText G OptionsMovesSpace "Προσθ.Κενού Μετά Αριθμ.Κίνησης" 6 {Προσθήκη κενού μετά από τον αριθμό της κίνησης}  
 menuText G OptionsMovesKey "Αυτόματη Συμπλήρωση" 0 \

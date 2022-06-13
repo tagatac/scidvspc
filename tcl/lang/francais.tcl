@@ -290,7 +290,7 @@ menuText F OptionsMovesDelay "Délai entre les coups" 3 \
 menuText F OptionsMovesCoord "Coordonnées entre les coups" 0 \
   {Accepter l'entrée des coups par coordonnées ("g1f3")}
 # ====== TODO To be translated ======
-menuText F OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText F OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 menuText F OptionsShowVarPopup "Montrer fenêtre des variantes" 0 {Affichage automatique des variantes}  
 menuText F OptionsMovesSpace "Ajouter un espace après le numéro du coup" 0 {Espace après numéro du coup}  
 menuText F OptionsMovesKey "Complétion clavier" 0 \

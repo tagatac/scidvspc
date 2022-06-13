@@ -1735,6 +1735,10 @@ proc updateMenuStates {} {
 proc configMenuText {menu entry tag lang} {
   global menuLabel menuUnder
   if {[info exists menuLabel($lang,$tag)] && [info exists menuUnder($lang,$tag)]} {
+
+# [r3289] Change the Help->Help menu to Help->Contents. AND introduce a big effing CATCH
+# This catch *does* make menu fails nastier too :( S.A.
+
 catch {
     $menu entryconfig $entry -label $menuLabel($lang,$tag) -underline $menuUnder($lang,$tag)
 }

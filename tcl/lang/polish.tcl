@@ -309,7 +309,7 @@ menuText P OptionsMovesDelay "Automatyczne przeglądanie..." 0 \
 menuText P OptionsMovesCoord "Posunięcia w formacie \"g1f3\"" 0 \
   {Akceptuj posunięcia wprowadzone w formacie "g1f3"}
 # ====== TODO To be translated ======
-menuText P OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText P OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 menuText P OptionsShowVarPopup "Pokaż okno wariantów" 0 {Włącz/wyłącz wyświetlanie okna wariantów}  
 menuText P OptionsMovesSpace "Dodaj spację po numerze posunięcia" 0 {Dodawaj spację po numerze posunięcia}  
 menuText P OptionsMovesKey "Automatyczne dopełnianie posunięć" 1 \

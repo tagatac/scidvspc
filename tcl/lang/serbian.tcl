@@ -356,7 +356,7 @@ menuText Y OptionsMovesDelay "Odlaganje izmeðu poteza..." 1 \
 menuText Y OptionsMovesCoord "Uno¹enje koordinata poteza" 0 \
   {Prihvati uno¹enje poteza pomoæu koordinata ("g1f3")}
 # ====== TODO To be translated ======
-menuText Y OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText Y OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 # ====== TODO To be translated ======
 menuText Y OptionsShowVarPopup "Show Variation Window" 0 {Turn on/off the display of a variations window}  
 # ====== TODO To be translated ======

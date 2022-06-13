@@ -303,7 +303,7 @@ menuText O OptionsMovesDelay "Autospillforsinkelse..." 0 \
 menuText O OptionsMovesCoord "Koordinater" 0 \
   {Tillat angivelse av koordinater ("g1f3")}
 # ====== TODO To be translated ======
-menuText O OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText O OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 menuText O OptionsShowVarPopup "Vis varianter-vindu" 0 {Skru vinduet med varianter av/på}
 menuText O OptionsMovesSpace "Mellomrom etter trekknummer" 0 {Legg til mellomrom etter trekknummer}
 menuText O OptionsMovesKey "Autofullfør" 0 \

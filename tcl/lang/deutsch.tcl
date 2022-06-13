@@ -308,7 +308,7 @@ menuText D OptionsMovesDelay "Automatisch vorspielen..." 7 \
 menuText D OptionsMovesCoord "Tastatureingabe" 0 \
   {Zugeingabe über Koordinaten ("g1f3") akzeptieren}
 # ====== TODO To be translated ======
-menuText D OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText D OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 menuText D OptionsShowVarPopup "Variantenfenster zeigen" 0 { Anzeige des Variantenauswahlfensters ein/ausschalten}  
 menuText D OptionsMovesSpace "Leerzeichen nach Zugnummer einfügen" 0 {Leerzeichen nach Zugnummer einfügen}  
 menuText D OptionsMovesKey "Automatische Zugergänzung" 10 \

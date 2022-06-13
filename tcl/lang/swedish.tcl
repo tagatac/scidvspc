@@ -310,7 +310,7 @@ menuText W OptionsMovesDelay "Fördröjning vid automatspel..." 1 \
 menuText W OptionsMovesCoord "Koordinater" 0 \
   {Acceptera koordinater ("g1f3") vid dragangivelse}
 # ====== TODO To be translated ======
-menuText W OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText W OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 menuText W OptionsShowVarPopup "Visa Variantfönster" 0 {Starta/Avsluta visningen av ett Variantfönster} 
 menuText W OptionsMovesSpace "Lägg till mellanslag efter dragnummer" 0 {Lägg till mellanslag efter dragnummer} 
 menuText W OptionsMovesKey "Tangentkomplettering" 0 \

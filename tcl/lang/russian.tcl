@@ -306,7 +306,7 @@ menuText R OptionsMovesDelay "Временная задержка автоигр
 menuText R OptionsMovesCoord "Координаты ходов" 1 \
   {Принять стиль записи ходов с координатами ("g1f3")}
 # ====== TODO To be translated ======
-menuText R OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText R OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 menuText R OptionsShowVarPopup "Показать окно вариантов" 0 {Включает/выключает отображение окна вариантов}
 menuText R OptionsMovesSpace "Добавлять пробелы после номера хода" 0 {Добавлять пробелы после номера хода}
 menuText R OptionsMovesKey "Клавиатурное завершение" 0 \

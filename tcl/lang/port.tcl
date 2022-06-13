@@ -287,7 +287,7 @@ menuText U OptionsMovesDelay "Tempo de atraso p/ Jogo automático..." 1 \
 menuText U OptionsMovesCoord "Entrada de movimentos por coordenadas" 0 \
   {Aceita o estilo de entrada de movimentos por coordenadas ("g1f3")}
 # ====== TODO To be translated ======
-menuText U OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText U OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 menuText U OptionsShowVarPopup "Mostrar janela de variantes" 0 {Turn on/off the display of a variations window}  
 menuText U OptionsMovesSpace "Adicionar um espaço depois do número do lance" 0 {Add spaces after move number}  
 menuText U OptionsMovesKey "Auto completar" 0 \

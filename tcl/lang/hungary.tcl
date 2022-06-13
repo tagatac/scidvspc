@@ -340,7 +340,7 @@ menuText H OptionsMovesDelay "Automatikus visszajátszás késleltetése..." 0 \
 menuText H OptionsMovesCoord "Lépés megadása koordinátákkal" 15 \
   {Koordinátákkal megadott lépést ("g1f3") is elfogad.}
 # ====== TODO To be translated ======
-menuText H OptionsMovesSuggest "Show Suggested Moves" 0 \
+menuText H OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
 # ====== TODO To be translated ======
 menuText H OptionsShowVarPopup "Show Variation Window" 0 {Turn on/off the display of a variations window}  
 # ====== TODO To be translated ======
