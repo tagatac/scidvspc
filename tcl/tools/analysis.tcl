@@ -2384,7 +2384,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
 
   set showAnnoButton 1
   for {set i 0} {$i < [llength $::engines(list)]} {incr i} {
-    if {[winfo exists .analysisWin$i.b.annotatebut]} {
+    if {[winfo exists .analysisWin$i.b.annotatebut]  && [winfo class .analysisWin$i.b.annotatebut] == "Checkbutton"} {
       set showAnnoButton 0
     }
   }
