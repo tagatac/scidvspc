@@ -910,7 +910,7 @@ set helpText(Moves) {<h1>Move Entry and Options</h1>
 
   <h4>Suggested Moves</h4>
   <p>
-  The Suggested Move feature, if enabled, highlights the best move (taken from ECO or a quick engine search) to/from a board square.
+  The Suggested Move feature, if enabled, highlights the best move (taken from ECO or a quick engine search) to/from the board square under the mouse.
   This can be confusing at times, or also regarded as cheating, and is disabled by default in Scid vs. PC.
   This option also enforces "Colour Selected Square".
   </p> 
@@ -5501,13 +5501,12 @@ using a publicly accessible computer, please make sure to
 restrict readability to these files, or clear password after FICS end.
 </li>
 
-<li><term>Timeseal</term> If checked, all connections to the
-FICS server are routed through the (optional) timeseal
-program. Its purpose is to cope with network lags and keep the clocks in
-correct order, which can otherwise create problems on slow network
-connections.
+<li><term>Timeseal and Zseal</term> Optionally, the FICS server can be routed through either timeseal
+or (the open source) zseal programs. Their purpose is to cope with network lags and keep the clocks in
+correct order, which can otherwise create problems on slow network connections. 
+The author is not authoritive, but i think zseal uses timeseal protocol 2, and can also better handle special characters.
 
-Timeseal is available from the
+Timeseal and Zseal are available from the
 <url http://sourceforge.net/projects/scidvspc>Scid vs. PC project page</url>.
 </li>
 
@@ -5526,7 +5525,7 @@ timeseal program is listening. The default is 5001
 and should be ok for almost all needs.</li>
 </ul>
 
-  <p><footer>Updated: Scid vs. PC 4.10 July 2013</footer></p>
+<p><footer>Updated: Scid vs. PC 4.24 July 2022</footer></p>
 }
 
 # FICS Find Opponent

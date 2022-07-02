@@ -87,20 +87,38 @@ namespace eval fics {
     checkbutton $w.timeseal -textvar tr(FICSTimeseal) -variable ::fics::use_timeseal \
       -onvalue 1 -offvalue 0 -command {
         if {$::fics::use_timeseal} {
-	  .ficsConfig.timeseal_entry configure -state normal
-	  .ficsConfig.timeseal_browse configure -state normal
+          set ::fics::use_zseal 0
+          foreach i {timeseal_entry timeseal_browse ipserver bRefresh portts} {
+	    .ficsConfig.$i configure -state normal
+          }
+	  .ficsConfig.zseal_entry configure -state disabled
+	  .ficsConfig.zseal_browse configure -state disabled
         } else {
-	  .ficsConfig.timeseal_entry configure -state disabled
-	  .ficsConfig.timeseal_browse configure -state disabled
+          foreach i {timeseal_entry timeseal_browse ipserver bRefresh portts} {
+	    .ficsConfig.$i configure -state disabled
+          }
         }
     }
     entry $w.timeseal_entry -width 20 -textvariable ::fics::timeseal_exec
     button $w.timeseal_browse -textvar tr(Browse) -command { set ::fics::timeseal_exec [tk_getOpenFile -parent .ficsConfig] } -pady 0.8
 
-    if {!$::fics::use_timeseal} {
-      $w.timeseal_entry configure -state disabled
-      $w.timeseal_browse configure -state disabled
+    # Zseal seal configuration
+    checkbutton $w.zseal -text Zseal -variable ::fics::use_zseal \
+      -onvalue 1 -offvalue 0 -command {
+        if {$::fics::use_zseal} {
+          set ::fics::use_timeseal 0
+	  .ficsConfig.zseal_entry configure -state normal
+	  .ficsConfig.zseal_browse configure -state normal
+          foreach i {timeseal_entry timeseal_browse ipserver bRefresh portts} {
+	    .ficsConfig.$i configure -state disabled
+          }
+        } else {
+	  .ficsConfig.zseal_entry configure -state disabled
+	  .ficsConfig.zseal_browse configure -state disabled
+        }
     }
+    entry $w.zseal_entry -width 20 -textvariable ::fics::zseal_exec
+    button $w.zseal_browse -textvar tr(Browse) -command { set ::fics::zseal_exec [tk_getOpenFile -parent .ficsConfig] } -pady 0.8
 
     # Server URL, IP address, Refresh button
 
@@ -113,8 +131,19 @@ namespace eval fics {
 
     label $w.lFICS_port -textvar tr(FICSServerPort)
     entry $w.portserver -width 6 -textvariable ::fics::port_fics
+
     label $w.ltsport -textvar tr(FICSTimesealPort)
     entry $w.portts -width 6 -textvariable ::fics::port_timeseal
+
+    if {!$::fics::use_timeseal} {
+      foreach i {timeseal_entry timeseal_browse ipserver bRefresh portts} {
+	.ficsConfig.$i configure -state disabled
+      }
+    }
+    if {!$::fics::use_zseal} {
+      $w.zseal_entry configure -state disabled
+      $w.zseal_browse configure -state disabled
+    }
 
     frame $w.button
     button $w.button.connect -textvar tr(FICSLogin) -command {
@@ -165,6 +194,12 @@ namespace eval fics {
 
     grid $w.timeseal_entry -column 1 -row $row -sticky ew -padx 2
     grid $w.timeseal_browse -column 2 -row $row -sticky ew -padx 2
+
+    incr row
+    grid $w.zseal -column 0 -row $row -sticky w
+
+    grid $w.zseal_entry -column 1 -row $row -sticky ew -padx 2
+    grid $w.zseal_browse -column 2 -row $row -sticky ew -padx 2
 
     incr row
     grid $w.lServer -column 0 -row $row 
@@ -273,8 +308,14 @@ namespace eval fics {
 
     # check timeseal configuration
     if {$::fics::use_timeseal} {
-      if {![ file executable $::fics::timeseal_exec ]} {
+      if {![file executable $::fics::timeseal_exec] || ![file isfile $::fics::timeseal_exec]} {
         tk_messageBox -title "Error" -icon error -type ok -message "Timeseal error : \"$::fics::timeseal_exec\" not executable" -parent .ficsConfig
+        return
+      }
+    }
+    if {$::fics::use_zseal} {
+      if {![file executable $::fics::zseal_exec] || ![file isfile $::fics::zseal_exec]} {
+        tk_messageBox -title "Error" -icon error -type ok -message "Zseal error : \"$::fics::zseal_exec\" not executable" -parent .ficsConfig
         return
       }
     }
@@ -563,9 +604,14 @@ namespace eval fics {
 
     updateConsole "Socket opening"
 
-    if { [catch { set sockchan [socket $server $port] } ] } {
+    if {$::fics::use_zseal} {
+      set command {set sockchan [open "| $::fics::zseal_exec $::fics::server $port" "r+"]}
+    } else {
+      set command { set sockchan [socket $server $port] }
+    }
+    if {[catch $command result]} {
       unbusyCursor .
-      tk_messageBox -title "Error" -icon error -type ok -message "Network error\nCan't connect to $::fics::server $port" -parent .fics
+      tk_messageBox -title "Error" -icon error -type ok -message "Network error\nError executing $command" -parent .fics
       return
     }
 
@@ -2471,6 +2517,7 @@ namespace eval fics {
       return
     }
 
+    # I think zseal is ok here - S.A.
     if {$::fics::use_timeseal} {
       # Remove non-ascii chars. They cause timeseal to die and give a network error
       set line [regsub -all {[\u0080-\uffff]} $line ?]

@@ -476,6 +476,7 @@ array set findopponent {}
 proc initFICSDefaults {} {
   namespace eval fics {
     set use_timeseal 0
+    set use_zseal 0
     if {$::macOS} {
       set timeseal_exec "$::scidExeDir/timeseal"
     } else {

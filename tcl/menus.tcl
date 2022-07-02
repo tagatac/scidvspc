@@ -1067,7 +1067,7 @@ $m add command -label OptionsSave -command {
     puts $optionF ""
 
     # save FICS config
-    foreach i { use_timeseal timeseal_exec port_fics port_timeseal login password consolebg consolefg chanoff shouts server_ip consolebg consolefg autopromote storeclk autoraise size sound no_results no_requests server init_commands show_buttons allow_premove user_buttons user_commands} {
+    foreach i { use_timeseal timeseal_exec use_zseal zseal_exec port_fics port_timeseal login password consolebg consolefg chanoff shouts server_ip consolebg consolefg autopromote storeclk autoraise size sound no_results no_requests server init_commands show_buttons allow_premove user_buttons user_commands} {
       puts $optionF "set ::fics::$i [list [set ::fics::$i]]"
     }
     foreach i [lsort [array names ::fics::findopponent]] {
