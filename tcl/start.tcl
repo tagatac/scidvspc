@@ -477,6 +477,7 @@ proc initFICSDefaults {} {
   namespace eval fics {
     set use_timeseal 0
     set use_zseal 0
+    set zseal_exec ""
     if {$::macOS} {
       set timeseal_exec "$::scidExeDir/timeseal"
     } else {
