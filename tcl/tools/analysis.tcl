@@ -1239,7 +1239,7 @@ proc okAnnotation {n} {
     }
   }
   if {$autoplayMode == 0} { toggleAutoplay }
-  set disableButtons {startStop move line alllines exclude lockengine alllines training finishGame multipv}
+  set disableButtons {startStop move line alllines exclude lockengine alllines training finishGame}
   foreach b $disableButtons {
     .analysisWin$n.b.$b configure -state disabled
   }
@@ -2378,7 +2378,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   button $w.b.alllines -image tb_addallvars -command "addAllVariations $n" -relief $relief
   ::utils::tooltip::Set $w.b.alllines $tr(AddAllVariations)
 
-  spinbox $w.b.multipv -from 1 -to 8 -increment 1 -textvar analysis(multiPVCount$n) \
+  spinbox $w.b.multipv -from 1 -to 8 -increment 1 -textvar analysis(multiPVCount$n) -justify center \
     -width 2 -font font_Small -command "changePVSize $n" 
   ::utils::tooltip::Set $w.b.multipv $tr(Lines)
 
@@ -2456,6 +2456,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   if {!$showAnnoButton} {
     pack forget $w.b.annotatebut
   }
+  pack $w.b.multipv -expand 1 -fill y -pady 2
 
   if {$n == 1 || $n == 2} {
     # training only works with engines 1 and 2
@@ -3376,7 +3377,11 @@ proc toggleLockEngine {n} {
     $w.b.$b configure -state $state
   }
   if {$analysis(uci$n)} {
-    $w.b.multipv configure -state $state
+    if {$state == "normal"} {
+      $w.b.multipv configure -state readonly
+    } else {
+      $w.b.multipv configure -state disabled
+    }
   }
   updateAnalysis $n
 }
