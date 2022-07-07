@@ -13,6 +13,8 @@ namespace eval ::commenteditor {
 
   # Each list is a set of buttons in the dialog menu:
   set markTypeList {{tux circle disk full + - = ? !} {1 2 3 4 5 6 7 8 9}}
+  # note: ? and + are backslashed
+  set typeRegsub {(tux|circle|disk|full|\+|-|=|\?|!|1|2|3|4|5|6|7|8|9)}
 
   # IO state of the comment editor
   variable  State
@@ -21,10 +23,10 @@ namespace eval ::commenteditor {
 	pending {}
   }
   if {![info exists State(markColor)]} {
-    set State(markColor) purple
+    set State(markColor) skyBlue
   }
   if {![info exists State(markType)]} {
-    set State(markType) +
+    set State(markType) circle
   }
 
   proc addMark {args} {eval ::board::mark::add $args}
@@ -104,9 +106,9 @@ proc ::commenteditor::Open {} {
     N Novelty
     D Diagram
   } {
-    button $nagbuttons.b$i -takefocus 0 -text "$nag" -width $width -height 1 -font font_Small \
-        -command "$w.nf.tf.text insert end \"$nag  \"
-                  focus $w.nf.tf.text" -pady 1
+    button $nagbuttons.b$i -takefocus 0 -text "$nag" -width $width -height 1 -font font_Small -pady 1 -command "
+        $w.nf.tf.text insert end \"$nag  \" 
+        focus $w.nf.tf.text" 
     # set helpMessage(E,$nagbuttons.b$i) $description
     ::utils::tooltip::Set $nagbuttons.b$i $description
     grid $nagbuttons.b$i -row [expr {$i % 2}] -column [expr {int($i / 2)}] -padx 1 -pady 1

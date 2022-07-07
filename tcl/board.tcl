@@ -1550,6 +1550,30 @@ namespace eval ::board::mark {
   (?:,($Color))?         # optional: color name
   $EndTag                # closing tag
   "
+  ### Adopt Scid's/Alexander's ? Chessbase markup for Lichess S.A.
+  # ChessBase' syntax for markers and arrows
+  variable CBSquare    {csl}
+  variable CBarrow     {cal}
+  variable CBColor     {[GRYB]}
+  variable sqintern    {[a-h][1-8]}
+
+  variable CBSquareRegex \
+     "$StartTag
+     ($CBSquare)\\\ +
+     ($CBColor)
+     ($Square)
+     (?:,($CBColor)($Square))?
+     $EndTag
+     "
+
+  variable CBArrowRegex \
+     "$StartTag
+     ($CBarrow)\\\ +
+     ($CBColor)
+     ($sqintern)
+     ($sqintern)
+     $EndTag
+     "
 }
 
 # ::board::mark::getEmbeddedCmds --
@@ -1577,28 +1601,39 @@ proc ::board::mark::getEmbeddedCmds {comment} {
   if {$comment == ""} {return}
   variable ScidCmdRegex
   variable StdCmdRegex
+  variable CBSquareRegex
+  variable CBArrowRegex
   set result {}
 
   # Build regex and search script for embedded commands:
-  set regex  ""
-  foreach r [list $ScidCmdRegex $StdCmdRegex] {
-    if {[string equal $regex ""]} {set regex $r} else {append regex "|$r"}
-  }
-  set locateScript  {regexp -expanded -indices -start $start \
-        $regex $comment indices}
+  append regex $ScidCmdRegex | $StdCmdRegex | $CBSquareRegex | $CBArrowRegex
+  set locateScript  {regexp -expanded -indices -start $start $regex $comment indices}
 
   # Loop over all embedded commands contained in comment string:
 
   for {set start 0} {[eval $locateScript]} {incr start} {
     foreach {first last} $indices {}	;# just a multi-assign
-    foreach re [list $ScidCmdRegex $StdCmdRegex] {
-      # Assing matching subexpressions to variables:
-      if {![regexp -expanded $re [string range $comment $first $last] \
-            match type arg1 arg2 color]} {
+    foreach re [list $ScidCmdRegex $StdCmdRegex $CBSquareRegex $CBArrowRegex] {
+      # Passing matching subexpressions to variables:
+      if {![regexp -expanded $re [string range $comment $first $last] match type arg1 arg2 color]} {
         continue
       }
+      if {$type == "csl" || $type == "cal"} {
+         # CB uses rotated arguments. Bring them in order
+         set temp $arg1
+         set arg1 $arg2
+         set arg2 $color
+         set color $temp
+         # FIXME
+         if {$type == "csl"} {set type circle}
+         if {$type == "cal"} {set type arrow}
+         if {$color == "R"}  {set color indianred}
+         if {$color == "G"}  {set color green}
+         if {$color == "Y"}  {set color sandybrown}
+         if {$color == "B"}  {set color blue}
+      }
       # Settings of (default) type and arguments:
-      if {$color == {}} { set color red }
+      if {$color == {}} {set color indianred}
       switch -glob -- $type {
         ""   {set type [expr {[string length $arg2] ? "arrow" : "full"}]}
         mark {set type full	;# new syntax}
@@ -1727,7 +1762,7 @@ proc ::board::mark::add {win args} {
   # Remove existing marks:
   if {$type == "arrow" || [string match {var*} $type]} {
     $board delete "mark${square}:${dest}" "mark${dest}:${square}"
-    if {[string equal $color "nocolor"]} { set type DEL }
+    if {$color == "nocolor"} { set type DEL }
   } else {
     $board delete "mark${square}"
     # not needed anymore
@@ -1784,8 +1819,8 @@ proc ::board::mark::add {win args} {
 
 proc ::board::mark::DrawCircle {pathName square color} {
   # Some "constants":
-  set size 0.6	;# inner (enclosing) box size, 0.0 <  $size < 1.0
-  set width 0.1	;# outline around circle, 0.0 < $width < 1.0
+  set size 0.85	;# inner (enclosing) box size, 0.0 <  $size < 1.0
+  set width 0.075	;# outline around circle, 0.0 < $width < 1.0
 
   set box [GetBox $pathName $square $size]
   lappend pathName create oval [lrange $box 0 3] \
