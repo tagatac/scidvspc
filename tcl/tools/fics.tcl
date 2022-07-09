@@ -630,6 +630,9 @@ namespace eval fics {
 
   proc changeScaleSize {} {
       set size [expr {$::fics::size * 5 + 20}]
+      if {![winfo exists .fics]} {
+        return
+      }
       foreach w [winfo children .fics.bottom] {
         if {[string match .fics.bottom.game* $w]} {
 	  ::board::resize $w.bd $size
