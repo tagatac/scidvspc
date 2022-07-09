@@ -563,7 +563,7 @@ proc ::commenteditor::Refresh {} {
   set offset  0
   ::board::mark::clear $board
   $text delete 1.0 end
-  foreach {mark pos} [::board::mark::getEmbeddedCmds $comment] {
+  foreach {mark pos duplicate} [::board::mark::getEmbeddedCmds $comment] {
     foreach {type square arg color} $mark {begin end} $pos {break}  ;# set
     set square [::board::sq $square]
     regsub -all -- {[^[:alnum:]]} $color {_} _color
@@ -574,8 +574,10 @@ proc ::commenteditor::Refresh {} {
       }
       default { set tags [list $square ${square}:$type:$_color] }
     }
-    $text insert insert [string range $comment $offset [expr {$begin-1}]]
-    $text insert insert [string range $comment $begin $end] $tags
+    if {!$duplicate} {
+      $text insert insert [string range $comment $offset [expr {$begin-1}]]
+      $text insert insert [string range $comment $begin $end] $tags
+    }
     set offset [expr {$end + 1}]
     addMark $board $type $square $arg $color 1
   }

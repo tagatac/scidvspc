@@ -1530,7 +1530,7 @@ namespace eval ::board::mark {
 
   # Current (non-standard) version:
   variable ScidCmdRegex \
-      "$StartTag              # leading tag
+  "$StartTag             # leading tag
   ($ScidKey)\\\ +        # (old) command name + space chars
   ($Square)              # mandatory square (e.g. 'a4')
   (?:\\ +($Square))?     # optional: another (destination) square
@@ -1540,7 +1540,7 @@ namespace eval ::board::mark {
   # Proposed new version, according to the
   # PGN Specification and Implementation Guide (Supplement):
   variable StdCmdRegex \
-      "${StartTag}            # leading tag
+  "${StartTag}           # leading tag
   ${Command}             # command name
   \\                     # a space character
   (?:(${Type}|$Text),)?  # keyword, e.g. 'arrow' (may be omitted)
@@ -1550,8 +1550,9 @@ namespace eval ::board::mark {
   (?:,($Color))?         # optional: color name
   $EndTag                # closing tag
   "
-  ### Adopt Scid's/Alexander's ? Chessbase markup for Lichess S.A.
+  ### Adopt Scid's Chessbase (and Lichess) markup S.A.
   # ChessBase' syntax for markers and arrows
+  # eg [%csl Ye5][%cal Rd5e4,Yb1c3,Yb1d2,Ye4e5]
   variable CBSquare    {csl}
   variable CBarrow     {cal}
   variable CBColor     {[GRYB]}
@@ -1560,24 +1561,18 @@ namespace eval ::board::mark {
   variable CBSquareRegex \
      "$StartTag
      ($CBSquare)\\\ +
-     ($CBColor)
-     ($Square)
-     (?:,($CBColor)($Square))?
+     (($CBColor)($Square)(?:,($CBColor)($Square))*)
      $EndTag
      "
 
   variable CBArrowRegex \
      "$StartTag
      ($CBarrow)\\\ +
-     ($CBColor)
-     ($sqintern)
-     ($sqintern)
+     (($CBColor)($sqintern)($sqintern)(?:,($CBColor)($sqintern)($sqintern))*)
      $EndTag
      "
 }
 
-# ::board::mark::getEmbeddedCmds --
-#
 #	Scans a game comment string and extracts embedded commands
 #	used by Scid to mark squares or draw arrows.
 #
@@ -1613,40 +1608,48 @@ proc ::board::mark::getEmbeddedCmds {comment} {
 
   for {set start 0} {[eval $locateScript]} {incr start} {
     foreach {first last} $indices {}	;# just a multi-assign
+
     foreach re [list $ScidCmdRegex $StdCmdRegex $CBSquareRegex $CBArrowRegex] {
-      # Passing matching subexpressions to variables:
+      # Parsing matching subexpressions to variables:
       if {![regexp -expanded $re [string range $comment $first $last] match type arg1 arg2 color]} {
         continue
       }
       if {$type == "csl" || $type == "cal"} {
-         # CB uses rotated arguments. Bring them in order
-         set temp $arg1
-         set arg1 $arg2
-         set arg2 $color
-         set color $temp
-         # FIXME
+         ### Chessbase / Lichess markups
+         # 'duplicate' var used to stop the comment editor inserting duplicate markups made from (eg) [%csl Yb5,Ba5]
+         set duplicate 0
          if {$type == "csl"} {set type circle}
          if {$type == "cal"} {set type arrow}
-         if {$color == "R"}  {set color indianred}
-         if {$color == "G"}  {set color green}
-         if {$color == "Y"}  {set color sandybrown}
-         if {$color == "B"}  {set color blue}
+	 foreach i [split $arg1 {,}] {
+	   set col [string range $i 0 0]
+	   set c1  [string range $i 1 2]
+	   set c2  [string range $i 3 4]
+	   if {$col == "R"}  {set color indianred}
+	   if {$col == "G"}  {set color green}
+	   if {$col == "Y"}  {set color sandybrown}
+	   if {$col == "B"}  {set color blue}
+	   lappend result [list $type $c1 $c2 $color]
+	   lappend result $indices
+	   lappend result $duplicate
+           set duplicate 1
+	}
+      } else {
+	# Settings of (default) type and arguments:
+	if {$color == {}} {set color indianred}
+	switch -glob -- $type {
+	  ""   {set type [expr {[string length $arg2] ? "arrow" : "full"}]}
+	  mark {set type full	;# new syntax}
+	  ?    {if {[string length $arg2]} {
+		  break 
+		} else {
+		  set arg2 $type; set type text
+		}
+	       }
+	}
+	lappend result [list $type $arg1 $arg2 $color]
+	lappend result $indices
+	lappend result 0
       }
-      # Settings of (default) type and arguments:
-      if {$color == {}} {set color indianred}
-      switch -glob -- $type {
-        ""   {set type [expr {[string length $arg2] ? "arrow" : "full"}]}
-        mark {set type full	;# new syntax}
-        ?    {if {[string length $arg2]} {
-                break 
-              } else {
-		set arg2 $type; set type text
-              }
-	     }
-      }
-      # Construct result list:
-      lappend result [list $type $arg1 $arg2 $color]
-      lappend result $indices
       set start $last	;# +1 by for-loop
     }
   }

@@ -1491,6 +1491,14 @@ proc gameQuickSave {} {
 
 set startArrowSquare ""
 
+# Defined in ::commenteditor::markTypeList
+# Note: ? and + special characters need backslashes
+set typeRegsub {(tux|circle|disk|full|\+|-|=|\?|!|1|2|3|4|5|6|7|8|9)}
+
+# set colorRegsub "([join $colorList {|}])"
+# Use any matching letters/numbers to match mainline SCID/old colours (eg purple)
+set colorRegsub {[[:alnum:]]+}
+
 proc addMarker {sq color} {
   set to [::board::san $sq]
   set oldComment [sc_pos getComment]
@@ -1504,7 +1512,7 @@ proc addMarker {sq color} {
   # [%draw full,f4,green]
   # check if the square is already marked draw
   set erase [regexp "\[\x5B\]%draw $newtype,$to,$color\[\x5D\]" $oldComment]
-  regsub "\[\x5B\]%draw $::commenteditor::typeRegsub,$to,$::commenteditor::colorRegsub\[\x5D\]" $oldComment "" newComment
+  regsub "\[\x5B\]%draw $::typeRegsub,$to,$::colorRegsub\[\x5D\]" $oldComment "" newComment
   set newComment [string trim $newComment]
   if {!$erase} {
     append newComment " \[%draw $type,$to,$color\]"
@@ -1524,7 +1532,7 @@ proc drawArrow {sq color} {
     set to [::board::san $sq]
     if {$startArrowSquare != $to } {
       set erase [regexp "\[\x5B\]%draw arrow,$startArrowSquare,$to,$color\[\x5D\]" $oldComment]
-      regsub "\[\x5B\]%draw arrow,$startArrowSquare,$to,$::commenteditor::colorRegsub\[\x5D\]" $oldComment "" newComment
+      regsub "\[\x5B\]%draw arrow,$startArrowSquare,$to,$::colorRegsub\[\x5D\]" $oldComment "" newComment
       set newComment [string trim $newComment]
       if {!$erase} {
         append newComment " \[%draw arrow,$startArrowSquare,$to,$color\]"

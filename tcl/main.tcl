@@ -845,7 +845,7 @@ proc updateBoard2 {} {
   # (program flow  between here and ::board::mark::drawAll is a little convolute)
 
 if  {$::gameInfo(showMarks)} {
-  foreach {cmd discard} [::board::mark::getEmbeddedCmds [sc_pos getComment]] {
+  foreach {cmd discard duplicate} [::board::mark::getEmbeddedCmds [sc_pos getComment]] {
     set type   [lindex $cmd 0]
     set square [::board::sq [lindex $cmd 1]]
     set color  [lindex $cmd end]
