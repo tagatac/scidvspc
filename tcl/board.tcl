@@ -339,11 +339,11 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
       pack $f -side left -padx 10 -pady 10
 
       bind $f <Button-1> "
-	setBoardColor $i $count
-	set ::boardfile_dark emptySquare
-	set ::boardfile_lite emptySquare
-	::SetBoardTextures
-	applyBoardColors"
+        setBoardColor $i $count
+        set ::boardfile_dark emptySquare
+        set ::boardfile_lite emptySquare
+        ::SetBoardTextures
+        applyBoardColors"
 
       incr count
     }
@@ -1620,35 +1620,35 @@ proc ::board::mark::getEmbeddedCmds {comment} {
          set duplicate 0
          if {$type == "csl"} {set type circle}
          if {$type == "cal"} {set type arrow}
-	 foreach i [split $arg1 {,}] {
-	   set col [string range $i 0 0]
-	   set c1  [string range $i 1 2]
-	   set c2  [string range $i 3 4]
-	   if {$col == "R"}  {set color indianred}
-	   if {$col == "G"}  {set color green}
-	   if {$col == "Y"}  {set color sandybrown}
-	   if {$col == "B"}  {set color blue}
-	   lappend result [list $type $c1 $c2 $color]
-	   lappend result $indices
-	   lappend result $duplicate
+         foreach i [split $arg1 {,}] {
+           set col [string range $i 0 0]
+           set c1  [string range $i 1 2]
+           set c2  [string range $i 3 4]
+           if {$col == "R"}  {set color firebrick}
+           if {$col == "G"}  {set color green}
+           if {$col == "Y"}  {set color darkOrange1}
+           if {$col == "B"}  {set color blue}
+           lappend result [list $type $c1 $c2 $color]
+           lappend result $indices
+           lappend result $duplicate
            set duplicate 1
-	}
+        }
       } else {
-	# Settings of (default) type and arguments:
-	if {$color == {}} {set color indianred}
-	switch -glob -- $type {
-	  ""   {set type [expr {[string length $arg2] ? "arrow" : "full"}]}
-	  mark {set type full	;# new syntax}
-	  ?    {if {[string length $arg2]} {
-		  break 
-		} else {
-		  set arg2 $type; set type text
-		}
-	       }
-	}
-	lappend result [list $type $arg1 $arg2 $color]
-	lappend result $indices
-	lappend result 0
+        # Settings of (default) type and arguments:
+        if {$color == {}} {set color firebrick}
+        switch -glob -- $type {
+          ""   {set type [expr {[string length $arg2] ? "arrow" : "full"}]}
+          mark {set type full	;# new syntax}
+          ?    {if {[string length $arg2]} {
+                  break 
+                } else {
+                  set arg2 $type; set type text
+                }
+               }
+        }
+        lappend result [list $type $arg1 $arg2 $color]
+        lappend result $indices
+        lappend result 0
       }
       set start $last	;# +1 by for-loop
     }
@@ -1673,8 +1673,6 @@ proc ::board::mark::drawAll {win} {
   }
 }
 
-# ::board::mark::remove --
-#
 #	Removes a specified mark.
 #
 # Arguments:
@@ -1684,7 +1682,7 @@ proc ::board::mark::drawAll {win} {
 #	Appends a dummy mark to the bord's list of marks
 #	which causes the add routine to delete all marks for
 #	the specified square(s).
-#
+
 proc ::board::mark::remove {win args} {
   if {[llength $args] == 2} {
     eval add $win arrow $args nocolor 1
@@ -1693,8 +1691,6 @@ proc ::board::mark::remove {win args} {
   }
 }
 
-# ::board::mark::clear --
-#
 #	Clears all marked square information for the board:
 #	colored squares, arrows, circles, etc.
 #
@@ -1705,7 +1701,7 @@ proc ::board::mark::remove {win args} {
 #	squares (set to default square colors), but does not
 #	delete the canvas objects drawn on the board.
 #	Returns nothing.
-#
+
 proc ::board::mark::clear {win} {
   # Clear all marked square information:
   set ::board::_mark($win) {}
@@ -1775,30 +1771,30 @@ proc ::board::mark::add {win args} {
   switch -glob -- $type {
     full    { ::board::colorSquare $win $square $color }
     DEL     { if {$origtype == "DEL"} {
-		# tough bug-fix for erasing the FULL marker in the little board - S.A.
-		after idle "::board::colorSquare $win $square"
-	      }
-	      set new 1
+                # tough bug-fix for erasing the FULL marker in the little board - S.A.
+                after idle "::board::colorSquare $win $square"
+              }
+              set new 1
             }
     varComment {
-	      if {[catch {DrawVar $board $square $dest $color 0 small}]} {
-		return
-	      }
-	    }
+              if {[catch {DrawVar $board $square $dest $color 0 small}]} {
+                return
+              }
+            }
     var*    {
-	      scan $type var%s varnum
-	      if {[catch {DrawVar $board $square $dest $color $varnum}]} {
-		return
-	      }
-	    }
+              scan $type var%s varnum
+              if {[catch {DrawVar $board $square $dest $color $varnum}]} {
+                return
+              }
+            }
     default {
-	      # Find a subroutine to draw the canvas object:
-	      set drawingScript "Draw[string totitle $type]"
-	      if {![llength [info procs $drawingScript]]} { return }
-	      if {[catch {eval $drawingScript $board $square $dest $color}]} {
-		return
-	      }
-	    }
+              # Find a subroutine to draw the canvas object:
+              set drawingScript "Draw[string totitle $type]"
+              if {![llength [info procs $drawingScript]]} { return }
+              if {[catch {eval $drawingScript $board $square $dest $color}]} {
+                return
+              }
+            }
   }
   if {$new} { lappend ::board::_mark($win) [lrange $args 0 end-1] }
 }
@@ -1839,18 +1835,17 @@ proc ::board::mark::DrawCircle {pathName square color} {
   eval $pathName
 }
 
-# ::board::mark::DrawDisk --
-#
 proc ::board::mark::DrawDisk {pathName square color} {
   # Size of the inner (enclosing) box within the square:
-  set size 0.6	;# 0.0 <  $size < 1.0 = size of rectangle
+  set size 0.85	;# 0.0 <  $size < 1.0 = size of rectangle
 
   set box [GetBox $pathName $square $size 1]
   $pathName create oval $box -fill $color -outline $color -tag [list mark disk mark$square p$square]
 }
 
-# ::board::mark::DrawText --
+### Draws a single char to a square
 # Pascal Georges : if shadow!="", try to make the text visible even if fg and bg colors are close
+
 proc ::board::mark::DrawText {pathName square char color {size 0} {shadowColor ""}} {
   set box [GetBox $pathName $square 0.8]
   set len [expr {($size > 0) ? $size : int([lindex $box 4])}]
@@ -2251,9 +2246,8 @@ proc ::board::bind {w sq event action} {
   $w.bd bind p$sq $event $action
 }
 
-# ::board::drawPiece
 #   Draws a piece on a specified square.
-#
+
 proc ::board::drawPiece {w sq piece} {
   set psize $::board::_size($w)
   set flip $::board::_flip($w)
@@ -2266,17 +2260,15 @@ proc ::board::drawPiece {w sq piece} {
   $w.bd create image $xc $yc -image $::board::letterToPiece($piece)$psize -tag p$sq
 }
 
-# ::board::clearText
 #   Remove all text annotations from the board.
-#
+
 proc ::board::clearText {w} {
   $w.bd delete texts
 }
 
-# ::board::drawText
 #   Draws the specified text on the specified square.
 #   Additional arguments are treated as canvas text parameters.
-#
+
 proc ::board::drawText {w sq text color args {shadow ""} } {
   mark::DrawText ${w}.bd $sq $text $color \
       [expr {[catch {font actual font_Bold -size} size] ? 11 : $size}] \
@@ -2287,6 +2279,7 @@ proc ::board::drawText {w sq text color args {shadow ""} } {
 }
 
 # Highlight last move played by drawing a coloured rectangle around the two squares
+
 proc  ::board::lastMoveHighlight {w} {
   $w.bd delete highlightLastMove
   if { ! $::highlightLastMove } {return}
@@ -2529,15 +2522,15 @@ proc ::board::material {w} {
       set c [expr abs($[set piece])]
       set minus [expr $[set piece] < 0]
       if {$minus} {
-	while {$c > 0} {
-	  lappend matblack $piece
-	  incr c -1
-	}
+        while {$c > 0} {
+          lappend matblack $piece
+          incr c -1
+        }
       } else {
-	while {$c > 0} {
-	  lappend matwhite $piece
-	  incr c -1
-	}
+        while {$c > 0} {
+          lappend matwhite $piece
+          incr c -1
+        }
       }
     }
   }
@@ -2568,21 +2561,21 @@ proc ::board::material {w} {
   if {$::gameInfo(showMaterial) == 1} {
     if {[expr {[llength $matblack] * $width > $halfway}]} {
       if {[ ::board::isFlipped $w ]} {
-	set halfway [expr {$h - ([llength $matblack] * $width)}]
-	if {$halfway < 0} {set halfway 0}
+        set halfway [expr {$h - ([llength $matblack] * $width)}]
+        if {$halfway < 0} {set halfway 0}
       } else {
-	set halfway [expr {[llength $matblack] * $width}]
-	if {$halfway > $h} {set halfway $h}
+        set halfway [expr {[llength $matblack] * $width}]
+        if {$halfway > $h} {set halfway $h}
       }
     } else {
       if {[expr {[llength $matwhite] * $width > $halfway}]} {
-	if {[ ::board::isFlipped $w ]} {
-	  set halfway [expr {[llength $matwhite] * $width}]
-	  if {$halfway > $h} {set halfway $h}
-	} else {
-	  set halfway [expr {$h - ([llength $matwhite] * $width)}]
-	  if {$halfway < 0} {set halfway 0}
-	}
+        if {[ ::board::isFlipped $w ]} {
+          set halfway [expr {[llength $matwhite] * $width}]
+          if {$halfway > $h} {set halfway $h}
+        } else {
+          set halfway [expr {$h - ([llength $matwhite] * $width)}]
+          if {$halfway < 0} {set halfway 0}
+        }
       }
     }
   }
@@ -2701,9 +2694,9 @@ proc ::board::animate {w oldboard newboard} {
     foreach {kfrom kto rfrom rto} $castlingList {
       if {[lsort $difflist] == [lsort [list $kfrom $kto $rfrom $rto]]} {
         if {[string index $oldlower $kfrom] == {k}  &&
-	    [string index $oldlower $rfrom] == {r}  &&
-	    [string index $newlower $kto] == {k}  &&
-	    [string index $newlower $rto] == {r}} {
+            [string index $oldlower $rfrom] == {r}  &&
+            [string index $newlower $kto] == {k}  &&
+            [string index $newlower $rto] == {r}} {
           # A castling move animation.
           # Move the rook back to initial square until animation is complete:
           eval $w.bd coords p$rto [::board::midSquare $w $rfrom]
@@ -2712,9 +2705,9 @@ proc ::board::animate {w oldboard newboard} {
           set from2 $rfrom
           set to2 $rto
         } elseif {[string index $newlower $kfrom] == {k}  &&
-	    [string index $newlower $rfrom] == {r}  &&
-	    [string index $oldlower $kto] == {k}  &&
-	    [string index $oldlower $rto] == {r}} {
+            [string index $newlower $rfrom] == {r}  &&
+            [string index $oldlower $kto] == {k}  &&
+            [string index $oldlower $rto] == {r}} {
           eval $w.bd coords p$rfrom [::board::midSquare $w $rto]
           set from $kto
           set to $kfrom
@@ -2923,12 +2916,12 @@ proc boardToFile { format filepath } {
     # set types {{"Image Files" {.$format}}}
     set types {{"All Files" {*}}}
     set filename [tk_getSaveFile \
-	-filetypes $types \
-	-parent . \
-	-initialfile $filename.$format \
-	-initialdir $::env(HOME) \
-	-defaultextension .$format \
-	-title {Board Screenshot}]
+        -filetypes $types \
+        -parent . \
+        -initialfile $filename.$format \
+        -initialdir $::env(HOME) \
+        -defaultextension .$format \
+        -title {Board Screenshot}]
   }
 
   if {[llength $filename]} {

@@ -1511,8 +1511,8 @@ proc addMarker {sq color} {
   }
   # [%draw full,f4,green]
   # check if the square is already marked draw
-  set erase [regexp "\[\x5B\]%draw $newtype,$to,$color\[\x5D\]" $oldComment]
-  regsub "\[\x5B\]%draw $::typeRegsub,$to,$::colorRegsub\[\x5D\]" $oldComment "" newComment
+  set erase [regexp "\\\[%draw $newtype,$to,$color\\\]" $oldComment]
+  regsub "\\\[%draw $::typeRegsub,$to,$::colorRegsub\\\]" $oldComment "" newComment
   set newComment [string trim $newComment]
   if {!$erase} {
     append newComment " \[%draw $type,$to,$color\]"
@@ -1531,8 +1531,10 @@ proc drawArrow {sq color} {
     set oldComment [sc_pos getComment]
     set to [::board::san $sq]
     if {$startArrowSquare != $to } {
-      set erase [regexp "\[\x5B\]%draw arrow,$startArrowSquare,$to,$color\[\x5D\]" $oldComment]
-      regsub "\[\x5B\]%draw arrow,$startArrowSquare,$to,$::colorRegsub\[\x5D\]" $oldComment "" newComment
+      set erase [regexp "\\\[%draw arrow,$startArrowSquare,$to,$color\\\]" $oldComment]
+      # slightly different behaiour to the comment editor board
+      regsub "\\\[%draw arrow,$startArrowSquare,$to,$::colorRegsub\\\]|\
+              \\\[%draw arrow,$to,$startArrowSquare,$::colorRegsub\\\]" $oldComment "" newComment
       set newComment [string trim $newComment]
       if {!$erase} {
         append newComment " \[%draw arrow,$startArrowSquare,$to,$color\]"

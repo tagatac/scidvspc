@@ -8,7 +8,7 @@ namespace eval ::commenteditor {
   # List of colors and types used to mark a square
 
   variable  colorList {}  markTypeList {}
-  set colorList {cornsilk2 wheat2 burlyWood3 grey50 gray10 rosyBrown mediumPurple1 royalBlue3 skyBlue cadetBlue2 paleGreen2 yellow3 darkOrange1 indianRed3 }
+  set colorList {cornsilk2 wheat2 burlyWood3 grey50 gray10 rosyBrown mediumPurple1 royalBlue3 skyBlue cadetBlue2 paleGreen2 yellow3 darkOrange1 firebrick}
   set   colorRegsub "([join $colorList {|}])"
 
   # Each list is a set of buttons in the dialog menu:
@@ -197,7 +197,7 @@ proc ::commenteditor::Open {} {
                 destroy .commentWin"
   set helpMessage(E,$w.b.cancel) {Close comment editor window}
 
-  pack $w.b.hide $w.b.clear $w.b.ok $w.b.apply $w.b.cancel -side left -padx 5
+  pack $w.b.hide $w.b.clear $w.b.apply $w.b.ok $w.b.cancel -side left -padx 5
 
   ### Insert-mark frame
 
