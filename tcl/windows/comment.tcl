@@ -438,6 +438,7 @@ proc ::commenteditor::InsertMark {board square} {
   } else {
     $textwin insert insert $State(text) $tag(value)
   }
+  set ::gameInfo(showMarks) 1
 }
 
 # ::commenteditor::ClearComments --
