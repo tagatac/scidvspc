@@ -1373,6 +1373,8 @@ translate O LightSquares {Lyse felt}
 translate O DarkSquares {Mørke felt}
 translate O SelectedSquares {Merkede felt}
 # ====== TODO To be translated ======
+translate O SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate O SuggestedSquares {Suggested}
 translate O Grid {Ruter}
 translate O Previous {Tidligere}

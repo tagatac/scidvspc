@@ -1392,6 +1392,8 @@ translate D LightSquares {Helle Felder}
 translate D DarkSquares {Dunkle Felder}
 translate D SelectedSquares {Ausgewählte Felder}
 # ====== TODO To be translated ======
+translate D SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate D SuggestedSquares {Suggested}
 translate D Grid {Gitter}
 translate D Previous {Vorherige}

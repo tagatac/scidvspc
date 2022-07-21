@@ -1572,6 +1572,8 @@ translate H LightSquares {Világos mezõk}
 translate H DarkSquares {Sötét mezõk}
 translate H SelectedSquares {Kiválasztott mezõk}
 # ====== TODO To be translated ======
+translate H SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate H SuggestedSquares {Suggested}
 # todo
 translate H Grid {Grid}

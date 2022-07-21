@@ -1351,6 +1351,7 @@ translate E CopyErrNotOpen {is not open}
 translate E LightSquares {Light squares}
 translate E DarkSquares {Dark squares}
 translate E SelectedSquares {Selected}
+translate E SelectedOutline {Selected Box}
 translate E SuggestedSquares {Suggested}
 translate E Grid {Grid}
 translate E Previous {Previous}

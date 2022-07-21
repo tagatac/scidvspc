@@ -1562,6 +1562,8 @@ translate C LightSquares {Bílá pole}
 translate C DarkSquares {Èerná pole}
 translate C SelectedSquares {Vybraná pole}
 # ====== TODO To be translated ======
+translate C SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate C SuggestedSquares {Suggested}
 # todo
 translate C Grid {Grid}

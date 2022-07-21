@@ -1607,6 +1607,8 @@ translate B LightSquares {Casas Brancas}
 translate B DarkSquares {Casas Pretas}
 translate B SelectedSquares {Casas selecionadas}
 # ====== TODO To be translated ======
+translate B SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate B SuggestedSquares {Suggested}
 # todo
 translate B Grid {Grade}

@@ -1645,6 +1645,8 @@ translate Y LightSquares {Svetla polja}
 translate Y DarkSquares {Tamna polja}
 translate Y SelectedSquares {Izabrana polja}
 # ====== TODO To be translated ======
+translate Y SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate Y SuggestedSquares {Suggested}
 # todo
 translate Y Grid {Grid}

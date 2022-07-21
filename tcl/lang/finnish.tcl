@@ -1359,6 +1359,8 @@ translate L LightSquares {Valkeat ruudut}
 translate L DarkSquares {Mustat ruudut}
 translate L SelectedSquares {Valitut}
 # ====== TODO To be translated ======
+translate L SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate L SuggestedSquares {Suggested}
 translate L Grid {Ruudukko}
 translate L Previous {Edellinen}

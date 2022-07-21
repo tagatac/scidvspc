@@ -1359,6 +1359,8 @@ translate U LightSquares {Casas Brancas}
 translate U DarkSquares {Casas Pretas}
 translate U SelectedSquares {Casas selecionadas}
 # ====== TODO To be translated ======
+translate U SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate U SuggestedSquares {Suggested}
 translate U Grid {Grid}
 translate U Previous {Escolhas}

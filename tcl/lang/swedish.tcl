@@ -1460,6 +1460,8 @@ translate W LightSquares {Ljusa fält}
 translate W DarkSquares {Mörka fält}
 translate W SelectedSquares {Valda fält}
 # ====== TODO To be translated ======
+translate W SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate W SuggestedSquares {Suggested}
 translate W Grid {Ruta}
 translate W Previous {Föregående}

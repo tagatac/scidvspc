@@ -1022,7 +1022,7 @@ $m add command -label OptionsSave -command {
     puts $optionF ""
     puts $optionF "set analysisCommand [list $analysisCommand]"
     puts $optionF ""
-    foreach i {lite dark highcolor bestcolor bgcolor maincolor varcolor engineLineColor rowcolor highlightcolor progcolor crosscolor scorecolor scorebarcolor switchercolor borderwidth \
+    foreach i {lite dark highcolor bestcolor bgcolor maincolor varcolor squarecolor engineLineColor rowcolor highlightcolor progcolor crosscolor scorecolor scorebarcolor switchercolor borderwidth \
           pgnColor(Header) pgnColor(Main) pgnColor(Var) \
           pgnColor(Nag) pgnColor(Comment) pgnColor(Background) \
           pgnColor(Current) pgnColor(NextMove) } {

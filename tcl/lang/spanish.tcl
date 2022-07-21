@@ -1431,6 +1431,8 @@ translate S LightSquares {Casillas claras}
 translate S DarkSquares {Casillas oscuras}
 translate S SelectedSquares {Casillas seleccionadas}
 # ====== TODO To be translated ======
+translate S SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate S SuggestedSquares {Suggested}
 translate S Grid {Cuadrícula}
 translate S Previous {Elección}

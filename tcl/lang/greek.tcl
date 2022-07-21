@@ -1476,6 +1476,8 @@ translate G LightSquares {Λευκά τετράγωνα}
 translate G DarkSquares {Μαύρα τετράγωνα}
 translate G SelectedSquares {Επιλεγμένα}
 # ====== TODO To be translated ======
+translate G SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate G SuggestedSquares {Suggested}
 translate G Grid {Πλαίσιο}
 translate G Previous {Προηγούμενη}

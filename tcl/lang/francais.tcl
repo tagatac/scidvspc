@@ -1357,6 +1357,8 @@ translate F LightSquares {Cases blanches}
 translate F DarkSquares {Cases noires}
 translate F SelectedSquares {Cases sélectionnées}
 # ====== TODO To be translated ======
+translate F SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate F SuggestedSquares {Suggested}
 translate F Grid {Grille}
 translate F Previous {Précédents}

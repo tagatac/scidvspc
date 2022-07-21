@@ -1362,6 +1362,8 @@ translate T LightSquares {Açık kareler}
 translate T DarkSquares {Koyu kareler}
 translate T SelectedSquares {seçilmiş}
 # ====== TODO To be translated ======
+translate T SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate T SuggestedSquares {Suggested}
 translate T Grid {Çerçeve}
 translate T Previous {Önceki}

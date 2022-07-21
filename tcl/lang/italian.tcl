@@ -1531,6 +1531,8 @@ translate I LightSquares {Case chiare}
 translate I DarkSquares {Case scure}
 translate I SelectedSquares {Case selezionate}
 # ====== TODO To be translated ======
+translate I SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate I SuggestedSquares {Suggested}
 # todo
 translate I Grid {Grid}

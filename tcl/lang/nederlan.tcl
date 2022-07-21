@@ -1464,6 +1464,8 @@ translate N LightSquares {Lichte velden}
 translate N DarkSquares {Donkere velden}
 translate N SelectedSquares {Geselecteerde velden}
 # ====== TODO To be translated ======
+translate N SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate N SuggestedSquares {Suggested}
 translate N Grid {Raster}
 translate N Previous {Voorgaande}

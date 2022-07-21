@@ -80,14 +80,15 @@ proc setBoardColor {row choice} {
   set newColors(highlightLastMoveColor)   $::highlightLastMoveColor
   set newColors(maincolor) $::maincolor
   set newColors(varcolor)  $::varcolor
+  set newColors(squarecolor) $::squarecolor
 }
 
 proc applyBoardColors {} {
 
-  global newColors lite dark highcolor bestcolor bgcolor highlightLastMoveColor borderwidth maincolor varcolor
+  global newColors lite dark highcolor bestcolor bgcolor highlightLastMoveColor borderwidth maincolor varcolor squarecolor
 
   set w .bdOptions
-  set colors {lite dark highcolor bestcolor bgcolor highlightLastMoveColor maincolor varcolor}
+  set colors {lite dark highcolor bestcolor bgcolor highlightLastMoveColor maincolor varcolor squarecolor}
 
   foreach i $colors {
     set $i $newColors($i)
@@ -180,10 +181,10 @@ proc chooseBoardColors {} {
 
 proc initBoardColors {} {
 
-  global lite dark highcolor bestcolor bgcolor highlightLastMoveColor png_image_support maincolor varcolor
+  global lite dark highcolor bestcolor bgcolor highlightLastMoveColor png_image_support maincolor varcolor squarecolor
   global newColors boardStyles boardStyle boardSizes boardStyleActiveButton
 
-  set colors {lite dark highcolor bestcolor bgcolor highlightLastMoveColor maincolor varcolor}
+  set colors {lite dark highcolor bestcolor bgcolor highlightLastMoveColor maincolor varcolor squarecolor}
   set w .bdOptions
 
   if { [winfo exists $w] } {
@@ -307,10 +308,10 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
   }
 
   set f $w.select
-  foreach row {0 0 1 1 0 1 2 2} column {0 2 0 2 4 4 0 2} c {
-    lite dark highcolor bestcolor bgcolor highlightLastMoveColor maincolor varcolor
+  foreach row {0 0 1 1 0 1 2 2 2} column {0 2 0 2 4 4 0 2 4} c {
+    lite dark highcolor bestcolor bgcolor highlightLastMoveColor squarecolor maincolor varcolor
   } n {
-    LightSquares DarkSquares SelectedSquares SuggestedSquares Grid Previous ArrowMain ArrowVar
+    LightSquares DarkSquares SelectedSquares SuggestedSquares Grid Previous SelectedOutline ArrowMain ArrowVar
   } {
     label $f.b$c -width 2 -background [set $c] 
     bind  $f.b$c <Button-1> "chooseAColor $w $c"
@@ -1430,9 +1431,7 @@ proc ::board::highlightSquare {args} {
       set square [lindex $args 1]
       if {$square < 0  ||  $square > 63} { puts "error square = $square" ; return }
       set box [::board::mark::GetBox $board $square 1.0 1]
-      $board create rectangle $box -outline black -width $::highlightLastMoveWidth -tag {moveRectangle mark}
-      # Only using black at the moment, but could use (another?) colour
-      # -outline $::highlightLastMoveColor ???
+      $board create rectangle $box -outline $::squarecolor -width $::highlightLastMoveWidth -tag {moveRectangle mark}
     } else  {
       $board delete moveRectangle
     }

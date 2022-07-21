@@ -1431,6 +1431,8 @@ translate R LightSquares {Светлые поля}
 translate R DarkSquares {Тёмные поля}
 translate R SelectedSquares {Выбранные поля}
 # ====== TODO To be translated ======
+translate R SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate R SuggestedSquares {Suggested}
 translate R Grid {Сетка}
 translate R Previous {Назад}

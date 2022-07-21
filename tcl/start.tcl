@@ -426,6 +426,7 @@ set progcolor   rosybrown	;# progress bar
 set buttoncolor #b0c0d0		;# (below)
 set maincolor   black		;# Main line arrow color
 set varcolor    grey80		;# Variation arrow colors
+set squarecolor black           ;# box alternative to highcolor
 # arrowWidth/Length is no longer under ::mark namespace to avoid version conflict when sourcing options.dat
 set ::board::arrowWidth 2
 set ::board::arrowLength 0.6
@@ -658,13 +659,13 @@ set locale(numeric) ".,"
 # Ask for piece translations (first letter)
 set translatePieces 1
 
-set colorActiveSquare 1
+set colorActiveSquare 0
 
 # Hightlight the last move played
 set highlightLastMove 1
-set highlightLastMoveWidth 2
+set highlightLastMoveWidth 3
 set highlightLastMoveColor grey
-set highlightLastMovePattern {} ; # this option is not saved
+set highlightLastMovePattern {} ; # unused, and also not saved
 
 # Ask before replacing existing moves: on by default
 set askToReplaceMoves 1

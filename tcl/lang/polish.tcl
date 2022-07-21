@@ -1438,6 +1438,8 @@ translate P LightSquares {Jasne pola}
 translate P DarkSquares {Ciemne pola}
 translate P SelectedSquares {Wybrane pola}
 # ====== TODO To be translated ======
+translate P SelectedOutline {Selected Box}
+# ====== TODO To be translated ======
 translate P SuggestedSquares {Suggested}
 translate P Grid {Krata}
 translate P Previous {Poprzednie}
