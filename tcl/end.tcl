@@ -1500,6 +1500,7 @@ set typeRegsub {(tux|circle|disk|full|\+|-|=|\?|!|1|2|3|4|5|6|7|8|9)}
 set colorRegsub {[[:alnum:]]+}
 
 proc addMarker {sq color} {
+  set ::gameInfo(showMarks) 1
   set to [::board::san $sq]
   set oldComment [sc_pos getComment]
   set type $::commenteditor::State(markType)
@@ -1525,6 +1526,7 @@ proc addMarker {sq color} {
 
 proc drawArrow {sq color} {
   global startArrowSquare
+  set ::gameInfo(showMarks) 1
   if {$startArrowSquare == ""} {
     set startArrowSquare [::board::san $sq]
   } else  {

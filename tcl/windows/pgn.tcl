@@ -31,13 +31,13 @@ namespace eval pgn {
   ################################################################################
   proc ChooseColor {type name} {
     global pgnColor
-    set x [tk_chooseColor -initialcolor $pgnColor($type) \
-        -title "PGN $name color"  -parent .pgnWin]
-    if {$x != ""} { set pgnColor($type) $x; ::pgn::ResetColors }
+    set x [tk_chooseColor -initialcolor $pgnColor($type) -title "PGN $name color"  -parent .pgnWin]
+    if {$x != ""} {
+      set pgnColor($type) $x
+      ::pgn::ResetColors
+    }
   }
-  ################################################################################
-  #
-  ################################################################################
+
   proc ConfigMenus {} {
     if {! [winfo exists .pgnWin]} { return }
     set lang $::language
@@ -60,9 +60,7 @@ namespace eval pgn {
       configMenuText $m.help $idx $tag $lang
     }
   }
-  ################################################################################
-  #
-  ################################################################################
+
   proc PrepareForDisplay {str} {
     global useGraphFigurine
 
@@ -136,35 +134,31 @@ namespace eval pgn {
     setWinLocation $w
     setWinSize $w
 
-    menu $w.menu
-    ::setMenu $w $w.menu
+    set m $w.menu
+    menu $m
+    ::setMenu $w $m
 
     foreach i {file opt color help} label {PgnFile PgnOpt PgnColor PgnHelp} tear {0 1 1 0} {
-      $w.menu add cascade -label $label -menu $w.menu.$i -underline 0
-      menu $w.menu.$i -tearoff $tear
+      $m add cascade -label $label -menu $m.$i -underline 0
+      menu $m.$i -tearoff $tear
     }
     # alter ConfigMenus if changing tearoffs S.A
 
-    $w.menu.file add command -label PgnFilePrint -command "::pgn::savePgn $w"
+    $m.file add command -label PgnFilePrint -command "::pgn::savePgn $w"
 
-    $w.menu.file add command -label PgnFileCopy -command ::pgn::copyPgn
+    $m.file add command -label PgnFileCopy -command ::pgn::copyPgn
 
-    $w.menu.file add separator
+    $m.file add separator
 
-    $w.menu.file add command -label PgnFileClose -accelerator Esc \
+    $m.file add command -label PgnFileClose -accelerator Esc \
         -command "focus .main ; destroy $w"
 
-    $w.menu.opt add checkbutton -label PgnOptShort \
-        -variable ::pgn::shortHeader -command {updateBoard -pgn}
-    $w.menu.opt add checkbutton -label PgnOptColumn \
-        -variable ::pgn::columnFormat -command {updateBoard -pgn}
-    $w.menu.opt add checkbutton -label PgnOptColor \
-        -variable ::pgn::showColor -command {updateBoard -pgn}
-    $w.menu.opt add checkbutton -label PgnOptIndentC \
-        -variable ::pgn::indentComments -command {updateBoard -pgn}
-    $w.menu.opt add checkbutton -label PgnOptIndentV \
-        -variable ::pgn::indentVars -command {updateBoard -pgn}
-    $w.menu.opt add checkbutton -label PgnOptBoldMainLine -variable ::pgn::boldMainLine -command {
+    $m.opt add checkbutton -label PgnOptShort -variable ::pgn::shortHeader -command {updateBoard -pgn}
+    $m.opt add checkbutton -label PgnOptColumn -variable ::pgn::columnFormat -command {updateBoard -pgn}
+    $m.opt add checkbutton -label PgnOptColor -variable ::pgn::showColor -command {updateBoard -pgn}
+    $m.opt add checkbutton -label PgnOptIndentC -variable ::pgn::indentComments -command {updateBoard -pgn}
+    $m.opt add checkbutton -label PgnOptIndentV -variable ::pgn::indentVars -command {updateBoard -pgn}
+    $m.opt add checkbutton -label PgnOptBoldMainLine -variable ::pgn::boldMainLine -command {
       if { $::pgn::boldMainLine } {
         .pgnWin.text configure -font font_Bold
         # unhandled
@@ -177,43 +171,31 @@ namespace eval pgn {
         .pgnWin.text tag configure var -fore $::pgnColor(Var)
       }
     }
-    $w.menu.opt add checkbutton -label PgnOptSpace \
-        -variable ::pgn::moveNumberSpaces -command {updateBoard -pgn}
-    $w.menu.opt add checkbutton -label PgnOptSymbols \
-        -variable ::pgn::symbolicNags -command {updateBoard -pgn}
-    $w.menu.opt add checkbutton -label PgnOptStripMarks \
-        -variable ::pgn::stripMarks -command {updateBoard -pgn}
+    $m.opt add checkbutton -label PgnOptSpace -variable ::pgn::moveNumberSpaces -command {updateBoard -pgn}
+    $m.opt add checkbutton -label PgnOptSymbols -variable ::pgn::symbolicNags -command {updateBoard -pgn}
+    $m.opt add checkbutton -label PgnOptStripMarks -variable ::pgn::stripMarks -command {updateBoard -pgn}
 
-    $w.menu.opt add separator
+    $m.opt add separator
 
     if {$::graphFigurineAvailable} {
-      $w.menu.opt add checkbutton -label PgnOptChess \
-	  -variable ::useGraphFigurine -command {updateBoard -pgn}
+      $m.opt add checkbutton -label PgnOptChess -variable ::useGraphFigurine -command {updateBoard -pgn}
     } else {
-      $w.menu.opt add checkbutton -label PgnOptChess \
-	  -variable ::useGraphFigurine -command {updateBoard -pgn} -state disabled
+      $m.opt add checkbutton -label PgnOptChess -variable ::useGraphFigurine -command {updateBoard -pgn} -state disabled
     }
 
-    $w.menu.opt add checkbutton -variable ::pgn::showScrollbar -label PgnOptScrollbar -command ::pgn::packScrollbar 
+    $m.opt add checkbutton -variable ::pgn::showScrollbar -label PgnOptScrollbar -command ::pgn::packScrollbar 
 
-    $w.menu.opt add command -label [tr OptionsFonts] -command "FontDialogRegular $w" -underline 0
+    $m.opt add command -label [tr OptionsFonts] -command "FontDialogRegular $w" -underline 0
 
-    $w.menu.color add command -label PgnColorHeader \
-        -command {::pgn::ChooseColor Header "header text"}
-    $w.menu.color add command -label PgnColorAnno \
-        -command {::pgn::ChooseColor Nag annotation}
-    $w.menu.color add command -label PgnColorComments \
-        -command {::pgn::ChooseColor Comment comment}
-    $w.menu.color add command -label PgnColorVars \
-        -command {::pgn::ChooseColor Var variation}
-    $w.menu.color add command -label PgnColorBackground \
-        -command {::pgn::ChooseColor Background background}
-    $w.menu.color add command -label PgnColorCurrent \
-        -command {::pgn::ChooseColor Current current}
+    $m.color add command -label PgnColorHeader -command {::pgn::ChooseColor Header "header text"}
+    $m.color add command -label PgnColorAnno -command {::pgn::ChooseColor Nag annotation}
+    $m.color add command -label PgnColorComments -command {::pgn::ChooseColor Comment comment}
+    $m.color add command -label PgnColorVars -command {::pgn::ChooseColor Var variation}
+    $m.color add command -label PgnColorBackground -command {::pgn::ChooseColor Background background}
+    $m.color add command -label PgnColorCurrent -command {::pgn::ChooseColor Current current}
 
-    $w.menu.help add command -label PgnHelpPgn \
-        -accelerator F1 -command {helpWindow PGN}
-    $w.menu.help add command -label PgnHelpIndex -command {helpWindow Index}
+    $m.help add command -label PgnHelpPgn -accelerator F1 -command {helpWindow PGN}
+    $m.help add command -label PgnHelpIndex -command {helpWindow Index}
 
     ::pgn::ConfigMenus
 
@@ -237,11 +219,11 @@ namespace eval pgn {
 
 
     # # Middle button popups a PGN board
-    bind $w.text <ButtonPress-2> "::pgn::ShowBoard .pgnWin.text %x %y %X %Y"
+    bind $w.text <ButtonPress-2> "::pgn::ShowBoard $w.text %x %y %X %Y"
     bind $w <ButtonRelease-2> ::pgn::HideBoard
 
     # Right button draws context menu
-    bind $w <ButtonPress-3> "::pgn::contextMenu .pgnWin.text %x %y %X %Y"
+    bind $w <ButtonPress-3> "::pgn::contextMenu $w.text"
 
     if {$::macOS} {
       bind .pgnWin <Control-Button-1> {event generate .pgnWin <Button-3> -x %x -y %y -button 3}
@@ -277,6 +259,7 @@ namespace eval pgn {
     ::pgn::ResetColors
 
     ::createToplevelFinalize $w
+    ::setTitle $w PGN
   }
 
   ### Set the tab stops for the pgn window (only used in column mode)
@@ -393,9 +376,7 @@ namespace eval pgn {
     updateBoard -pgn
   }
 
-  proc contextMenu {win x y xc yc} {
-    # x y xc yc -  unused
-
+  proc contextMenu {win} {
     update idletasks
 
     set mctxt $win.ctxtMenu
@@ -539,13 +520,14 @@ namespace eval pgn {
   ################################################################################
   proc ResetColors {} {
     global pgnColor
-    if {![winfo exists .pgnWin]} { return }
-    .pgnWin.text tag configure Current -background $pgnColor(Current)
-    ::htext::init .pgnWin.text
+    set w .pgnWin
+    if {![winfo exists $w]} { return }
+    $w.text tag configure Current -background $pgnColor(Current)
+    ::htext::init $w.text
     ::pgn::Refresh 1
     if {$pgnColor(Background) != {white} && $pgnColor(Background) != {#ffffff}} {
-	.pgnWin.text configure -background $pgnColor(Background)
-	.pgnWin.text tag configure Current -background $pgnColor(Current)
+	$w.text configure -background $pgnColor(Background)
+	$w.text tag configure Current -background $pgnColor(Current)
     }
   }
   ################################################################################
@@ -558,7 +540,8 @@ namespace eval pgn {
   proc Refresh {{pgnNeedsUpdate 0}} {
     global useGraphFigurine
 
-    if {![winfo exists .pgnWin]} {
+    set w .pgnWin
+    if {![winfo exists $w]} {
       return
     }
 
@@ -576,51 +559,50 @@ namespace eval pgn {
     # debug puts $pgnStr
 
     if {$pgnNeedsUpdate} {
-      ::setTitle .pgnWin PGN
-      .pgnWin.text configure -state normal
-      .pgnWin.text delete 0.0 end
+      $w.text configure -state normal
+      $w.text delete 0.0 end
       if {$::pgn::showColor} {
         if {$::pgn::indentComments} {
-	  ::htext::display .pgnWin.text [PrepareForDisplay $pgnStr] {} 2
+	  ::htext::display $w.text [PrepareForDisplay $pgnStr] {} 2
         } else {
-	  ::htext::display .pgnWin.text [PrepareForDisplay $pgnStr]
+	  ::htext::display $w.text [PrepareForDisplay $pgnStr]
         }
-	.pgnWin.text configure -state normal
+	$w.text configure -state normal
       } else {
-        .pgnWin.text insert 1.0 $pgnStr
+        $w.text insert 1.0 $pgnStr
       }
     }
 
     if {$::pgn::showColor} {
       ### set Current tag and adjust text window view if necessary
 
-      .pgnWin.text tag remove Current 1.0 end
+      $w.text tag remove Current 1.0 end
 
       set offset [sc_pos pgnOffset]
-      set moveRange [.pgnWin.text tag nextrange m_$offset 1.0]
+      set moveRange [$w.text tag nextrange m_$offset 1.0]
       if {[llength $moveRange] == 2} {
         # Save previous offset for undetermined 'see's. EG add-empty-var and undos/redos(?)
 	set ::pgn::prevOffset $offset
 
-	.pgnWin.text tag add Current [lindex $moveRange 0] [lindex $moveRange 1]
+	$w.text tag add Current [lindex $moveRange 0] [lindex $moveRange 1]
 
 	### There's a bottleneck here when large pgn files are shown on one line
 	### Slowdown is internal to Tk , but Using Gregor's new tk::text fixes it :)
 
-	.pgnWin.text see [lindex $moveRange 0]
+	$w.text see [lindex $moveRange 0]
 	# Better is -
 	# see "[lindex $moveRange 0] + 1 lines"
 	# but the damn thing doesnt work on actual lines, only text lines
 	### Necessary for (eg 23. (\n) Qa5
-	.pgnWin.text see [lindex $moveRange 1]
+	$w.text see [lindex $moveRange 1]
       } else {
 	# Nasty hack to see new empty Vars but it is still quite poor and ugly.
 	# We also need a new '-switch' arg to updateBoard. (commit 2725)
 	# To fix properly, we need to get [sc_pos pgnOffset] working for new empty vars
 	set offset $::pgn::prevOffset
-	set moveRange [.pgnWin.text tag nextrange m_$offset 1.0]
+	set moveRange [$w.text tag nextrange m_$offset 1.0]
 	if {![sc_pos isAt start] && [llength $moveRange] == 2} {
-	  .pgnWin.text see "[lindex $moveRange 1] + 1 lines"
+	  $w.text see "[lindex $moveRange 1] + 1 lines"
         }
       }
     } else {
@@ -633,10 +615,10 @@ namespace eval pgn {
       set move [sc_pos pgnOffset].
       # seek to after first blank line
       set offset [expr [string first \n\n $pgnStr] + 2]
-      #.pgnWin.text tag add Current UMMMM....
+      #$w.text tag add Current UMMMM....
 
     }
-    .pgnWin.text configure -state disabled
+    $w.text configure -state disabled
   }
 }
 

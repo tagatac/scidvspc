@@ -1,11 +1,10 @@
 ###
-###
 ### main.tcl: Routines for creating and updating the main window.
 ###
 
 ############################################################
 # Keyboard move entry:
-#   Handles letters, digits and BackSpace/Delete keys.
+#   Handles letters and digits
 #   Note that king- and queen-side castling moves are denoted
 #   "OK" and "OQ" respectively.
 #   The letters n, r, q, k, o and l are promoted to uppercase
@@ -13,7 +12,7 @@
 #   so in some rare cases, a capital B may be needed for the
 #   Bishop move to distinguish it from the pawn move.
 
-set moveEntry(Text) ""
+set moveEntry(Text) {}
 set moveEntry(List) {}
 
 # Bind Alt+letter key to nothing, to stop Alt+letter from
@@ -96,6 +95,7 @@ proc moveEntry_Complete {} {
   }
 }
 
+# unused
 proc moveEntry_Backspace {} {
   global moveEntry
   set moveEntry(Text) [string range $moveEntry(Text) 0 \
@@ -331,26 +331,27 @@ if {0} {
 
 ###### Main Button Bar ########
 
-frame .main.button -relief flat
-button .main.button.start -image tb_start -command ::move::Start
-button .main.button.back -image tb_prev -command ::move::Back
-button .main.button.forward -image tb_next -command ::move::Forward
-button .main.button.end -image tb_end -command ::move::End
-frame .main.button.space -width 15
+set bb .main.button
+frame $bb -relief flat
+button $bb.start -image tb_start -command ::move::Start
+button $bb.back -image tb_prev -command ::move::Back
+button $bb.forward -image tb_next -command ::move::Forward
+button $bb.end -image tb_end -command ::move::End
+frame $bb.space -width 15
 
 # The go-into-variation button is a menubutton. 
 # It has a bug - Press button so vars are displayed, then use wheelmouse to change board position.
 # -> Button remains in pressed state (and draws all vars) until focus is lost from .main
-menubutton .main.button.intoVar -image tb_invar -menu .main.button.intoVar.menu
-menu .main.button.intoVar.menu -tearoff 0 -font font_Regular
+menubutton $bb.intoVar -image tb_invar -menu $bb.intoVar.menu
+menu $bb.intoVar.menu -tearoff 0 -font font_Regular
 
-button .main.button.exitVar -image tb_outvar -command {
+button $bb.exitVar -image tb_outvar -command {
    set ::pause 1
    sc_var exit
    updateBoard -animate
 }
 
-bind .main.button.exitVar <Button-3> {
+bind $bb.exitVar <Button-3> {
    set ::pause 1
    while {[sc_var level] > 0} {
      sc_var exit
@@ -358,7 +359,7 @@ bind .main.button.exitVar <Button-3> {
    updateBoard -animate
 }
 
-button .main.button.addVar -image tb_addvar -command {
+button $bb.addVar -image tb_addvar -command {
     if {[sc_pos isAt vstart]  &&  [sc_pos isAt vend]} {
       return
     }
@@ -379,38 +380,38 @@ button .main.button.addVar -image tb_addvar -command {
     updateBoard -pgn
 }
 
-button .main.button.autoplay -image autoplay_off -command toggleAutoplay
-button .main.button.trial    -image tb_trial     -command {setTrialMode toggle}
-button .main.button.flip     -image tb_flip      -command toggleRotateBoard
-button .main.button.windows  -image tb_windows   -command {raiseAllWindows 1}
+button $bb.autoplay -image autoplay_off -command toggleAutoplay
+button $bb.trial    -image tb_trial     -command {setTrialMode toggle}
+button $bb.flip     -image tb_flip      -command toggleRotateBoard
+button $bb.windows  -image tb_windows   -command {raiseAllWindows 1}
 
 # Right-click raises .splash
-bind .main.button.windows <Button-3> {
+bind $bb.windows <Button-3> {
   wm deiconify .splash
   raise .splash
   break
 }
 
 # Right-click Autoplays all games in filter
-bind .main.button.autoplay <Button-3> {toggleAutoplay 2 ; break}
+bind $bb.autoplay <Button-3> {toggleAutoplay 2 ; break}
 
 # Right-click adds a null move and enters trial mode
-bind .main.button.trial    <Button-3>  {setTrialMode toggleNull ; break}
+bind $bb.trial    <Button-3>  {setTrialMode toggleNull ; break}
 
-::utils::tooltip::Set .main.button.autoplay [tr AutoPlay]
-::utils::tooltip::Set .main.button.trial [tr TrialMode]
-::utils::tooltip::Set .main.button.flip [tr FlipBoard]
-::utils::tooltip::Set .main.button.windows [tr RaiseWindows]
+::utils::tooltip::Set $bb.autoplay [tr AutoPlay]
+::utils::tooltip::Set $bb.trial [tr TrialMode]
+::utils::tooltip::Set $bb.flip [tr FlipBoard]
+::utils::tooltip::Set $bb.windows [tr RaiseWindows]
 
 foreach i {start back forward end intoVar exitVar addVar autoplay flip windows trial} {
-  .main.button.$i configure -relief flat -border 1 -highlightthickness 0 -takefocus 0
-  # bind .main.button.$i <Any-Enter> "+.main.button.$i configure -relief groove"
-  # bind .main.button.$i <Any-Leave> "+.main.button.$i configure -relief flat; statusBarRestore %W; break"
+  $bb.$i configure -relief flat -border 1 -highlightthickness 0 -takefocus 0
+  # bind $bb.$i <Any-Enter> "+$bb.$i configure -relief groove"
+  # bind $bb.$i <Any-Leave> "+$bb.$i configure -relief flat; statusBarRestore %W; break"
 }
 
-pack .main.button.start .main.button.back .main.button.forward .main.button.end \
-     .main.button.space .main.button.exitVar .main.button.intoVar .main.button.addVar \
-     .main.button.autoplay .main.button.trial .main.button.flip .main.button.windows \
+pack $bb.start $bb.back $bb.forward $bb.end \
+     $bb.space $bb.exitVar $bb.intoVar $bb.addVar \
+     $bb.autoplay $bb.trial $bb.flip $bb.windows \
         -side left -pady 1 -padx 0 -ipadx 2 -ipady 2
 
 ### Main Board Init
@@ -441,44 +442,45 @@ pack [label .main.gameInfoMini.black -font font_Regular -cursor hand2] -side rig
 ### Context menu for main board
 ### allows customisation of board, gameinfo and a couple of windows
 
-menu .main.gameInfo.menu -tearoff 0 -background gray90
+set m .main.gameInfo.menu
+menu $m -tearoff 0 -background gray90
 
-.main.gameInfo.menu add checkbutton -label GInfoMenuBar -variable gameInfo(showMenu) -command showMenubar
-.main.gameInfo.menu add checkbutton -label GInfoToolBar -variable gameInfo(showTool) -command toggleToolbar
-.main.gameInfo.menu add checkbutton -label GInfoButtonBar -variable gameInfo(showButtons) -command toggleButtonBar
-.main.gameInfo.menu add checkbutton -label WindowsGameinfo -variable gameInfo(show) -command showGameInfo
-.main.gameInfo.menu add checkbutton -label GInfoStatusBar -variable gameInfo(showStatus) -command toggleStatus
+$m add checkbutton -label GInfoMenuBar -variable gameInfo(showMenu) -command showMenubar
+$m add checkbutton -label GInfoToolBar -variable gameInfo(showTool) -command toggleToolbar
+$m add checkbutton -label GInfoButtonBar -variable gameInfo(showButtons) -command toggleButtonBar
+$m add checkbutton -label WindowsGameinfo -variable gameInfo(show) -command showGameInfo
+$m add checkbutton -label GInfoStatusBar -variable gameInfo(showStatus) -command toggleStatus
 
-.main.gameInfo.menu add separator
+$m add separator
 
-.main.gameInfo.menu add checkbutton -label GInfoShow \
+$m add checkbutton -label GInfoShow \
     -variable boardSTM -offvalue 0 -onvalue 1 -command {::board::togglestm .main.board}
 
-.main.gameInfo.menu add checkbutton -label OptionsMovesHighlightLastMove \
+$m add checkbutton -label OptionsMovesHighlightLastMove \
     -variable ::highlightLastMove -offvalue 0 -onvalue 1 -command updateBoard
 
-.main.gameInfo.menu add checkbutton -label GInfoFEN -variable gameInfo(showFEN) -offvalue 0 -onvalue 1 -command {
+$m add checkbutton -label GInfoFEN -variable gameInfo(showFEN) -offvalue 0 -onvalue 1 -command {
   checkGameInfoHeight
   if {!$::gameInfo(show)} {
     toggleGameInfo
   }
 }
 
-.main.gameInfo.menu add checkbutton -label GInfoHideNext \
+$m add checkbutton -label GInfoHideNext \
     -variable gameInfo(hideNextMove) -offvalue 0 -onvalue 1 -command updateBoard
 
-.main.gameInfo.menu add command -label GInfoMaterial -command toggleMat
-.main.gameInfo.menu add command -label GInfoCoords -command toggleCoords
+$m add command -label GInfoMaterial -command toggleMat
+$m add command -label GInfoCoords -command toggleCoords
 
 if { $::docking::USE_DOCKING } {
   foreach i {0 1 2 3 4 6 10 11} {
-    .main.gameInfo.menu entryconfigure $i -command "[.main.gameInfo.menu entrycget $i -command] ; resizeMainBoard"
+    $m entryconfigure $i -command "[.main.gameInfo.menu entrycget $i -command] ; resizeMainBoard"
   }
 }
 
 if {$::macOS} {
   set gameInfo(showMenu) 1
-  .main.gameInfo.menu entryconfigure 0 -state disabled
+  $m entryconfigure 0 -state disabled
 }
 
 proc contextmenu {x y} {
