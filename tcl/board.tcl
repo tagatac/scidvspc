@@ -557,6 +557,14 @@ zJQyACuT6pkzogLAvmaUTBh4ICHAi4FFJihroImIjh1DRFEMpZFjR4+cIj0K
 BAA7
 }
 
+image create photo tb_ginfo -data {
+R0lGODlhFAAUAIQdANnZ2dnZ2QAngf///5KSkq6urv7+/pSUlImJieLi4hYW
+FltbW9XV1REREWJiYoyMjJmZmWNjY/39/d7e3g4ODgQEBNPT0wsLCwUFBSEh
+Ierq6tjY2AAAAKKioqKioqKioiH5BAEAAB8ALAAAAAAUABQAAAVTYCCOZFkK
+aKqubOu+MDsMEDTXt03r6Jz/O9+g58MFjzOicakzKptQIBHIFE6PVd+TGh0K
+hOCw9sspm89ojncoFqt73zb4/Y3LffRBem9e38UxMCEAOw==
+}
+
 image create photo tb_glist -data {
   R0lGODdhFAAUAMIAANnZ2QAngf///wAAAIsAAAAAAAAAAAAAACwAAAAAFAAUAAADQgi63B0w
   ykmrvZiKzbvnkDAMX7mFo6AJRNuqgSnDIjl3KCl17hvenxwQFEutegTaEFe0DYUTDlK5PAUc
@@ -726,6 +734,7 @@ button $tb.bsearch -image tb_bsearch -command ::search::board
 button $tb.hsearch -image tb_hsearch -command ::search::header
 button $tb.msearch -image tb_msearch -command ::search::material
 frame  $tb.space4  -width 12
+button $tb.ginfo   -image tb_ginfo   -command toggleGameInfo
 button $tb.glist   -image tb_glist   -command ::windows::gamelist::Open
 button $tb.pgn     -image tb_pgn     -command ::pgn::Open
 button $tb.tmt     -image tb_tmt     -command ::tourney::Open
@@ -744,7 +753,7 @@ foreach {b m} {
   gfirst GameFirst gprev GamePrev gnext GameNext glast GameLast
   newgame GameNew copy EditCopy paste EditPaste
   hsearch SearchHeader bsearch SearchCurrent msearch SearchMaterial rfilter SearchReset 
-  glist WindowsGList pgn WindowsPGN comment WindowsComment
+  ginfo WindowsGameinfo glist WindowsGList pgn WindowsPGN comment WindowsComment 
   maint WindowsMaint eco WindowsECO tree WindowsTree book WindowsBook crosst WindowsCross tmt WindowsTmt 
   engine ToolsAnalysis
 } {
@@ -753,7 +762,7 @@ foreach {b m} {
 }
 
 foreach i {new open save close finder bkm newgame copy paste gprev gnext gfirst glast \
-      rfilter hsearch bsearch msearch glist pgn comment maint eco tree book crosst tmt engine} {
+      rfilter hsearch bsearch msearch ginfo glist pgn comment maint eco tree book crosst tmt engine} {
   $tb.$i configure -relief flat -border 1 -highlightthickness 0 -anchor n -takefocus 0
   ::utils::tooltip::Set $tb.$i [tr $::helpMessage($tb.$i)]
 }
@@ -818,7 +827,7 @@ proc configToolbar {} {
   }
 
   pack [frame $w.f5] -side top -fill x
-  foreach i {glist pgn comment maint eco tree book crosst tmt engine} {
+  foreach i {ginfo glist pgn comment maint eco tree book crosst tmt engine} {
     eval checkbutton $w.f5.$i -image tb_$i -variable toolbar_temp($i) $button_options
     eval pack $w.f5.$i $pack_options
     bindToolbarRadio f5 $i
@@ -897,7 +906,7 @@ proc redrawToolbar {} {
     pack .main.tb.space4 -side left
   }
   set seen 0
-  foreach i {glist pgn comment maint eco tree book crosst tmt engine} {
+  foreach i {ginfo glist pgn comment maint eco tree book crosst tmt engine} {
     if {$toolbar($i)} {
       set seen 1
       pack .main.tb.$i -side left -pady 1 -padx 0 -ipadx 0 -pady 0 -ipady 0
@@ -1113,7 +1122,7 @@ hI+py+0Po5y0WhCCyYljjXheB45hCV7qyrbuaxQAOw==
 # Double size the toolbar buttons (disabled)
 if {0} {
   image create photo tempimage
-  foreach i {glist pgn comment maint eco tree book crosst tmt engine
+  foreach i {ginfo glist pgn comment maint eco tree book crosst tmt engine
     hsearch bsearch msearch rfilter newgame copy paste
     gfirst gprev gnext glast new open save close finder bkm} {
 
