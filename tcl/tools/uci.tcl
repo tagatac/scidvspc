@@ -889,8 +889,8 @@ namespace eval uci {
       set ::engines(list) [lreplace $::engines(list) $n $n $enginedata]
 
       ::enginelist::write
-      return 1
     }
+    return 1
 }
 
 
