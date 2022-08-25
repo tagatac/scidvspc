@@ -2456,7 +2456,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   if {!$showAnnoButton} {
     pack forget $w.b.annotatebut
   }
-  pack $w.b.multipv -expand 1 -fill y -pady 2
+  pack $w.b.multipv -fill y -pady 2
 
   if {$n == 1 || $n == 2} {
     # training only works with engines 1 and 2
