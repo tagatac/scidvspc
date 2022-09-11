@@ -49,7 +49,7 @@ foreach topic [array names helpText] {
   regsub -all {<run[^>]*>} $text {} text
   regsub -all {</run>} $text {} text
 
-  regsub -all {<url ([^ ><]*)>} $text {<a href="\1">}  text
+  regsub -all {<url ([^>><]*)>} $text {<a href="\1">}  text
   regsub -all {</url>} $text {</a>} text
 
   # puts $fd {<html><head>}
