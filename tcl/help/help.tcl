@@ -2815,7 +2815,8 @@ with the format "stat01: time nodes ply mvleft mvtot mvname". The results can be
   Most UCI engines allow one to analyse several moves (or <b>lines</b>) at
   once. Using this <b>MultiPV</b> feature, the user can see the second or
   third (et cetera) best continuations.  The best line is always on top and
-  highlighted.  If MultiPV is supported, the spinbox can be used to set the number of PV shown.  In this case,
+  highlighted.  If MultiPV is supported, the spinbox can be used to set the number of PV shown.
+  (And can be set permanently from the <a Analysis List>Engine Configuration</a> window). In this case,
   instead of the calculation history, only the resulting principal lines are
   shown. The spin box is disabled if an engine doesn't offer this feature.
   </p>
@@ -4401,11 +4402,11 @@ set helpText(Related) {<h1>Links</h1>
   <li>Player Information resources  <url http://sourceforge.net/projects/scid/files/Player Data/>http://sourceforge.net/projects/scid/files/Player Data/</url></li>
   <li>FICS <url http://www.freechess.org>www.freechess.org</url></li>
   <li>FICS game archives <url http://ficsgames.org>http://ficsgames.org</url></li>
-  <li>Kayvan's Cross platform 'docker' images <url https://github.com/ksylvan/scidvspc>https://github.com/ksylvan/scidvspc</url></li>
   <li>Chess Tech blog, with some ScidvsPC tutorials <url http://chesstech.info/>http://chesstech.info/</url></li>
-  <li>Debian/Mint/Ubuntu installation how-to <url http://www.linuxx.eu/2012/11/scid-vs-pc-installation-guide-ubuntu.html>http://www.linuxx.eu/2012/11/scid-vs-pc-installation-guide-ubuntu.html</url></li>
+  <li>Chessengeria Chess blog, also with tutorials   <url https://www.chessengeria.com/>https://www.chessengeria.com/</url></li>
   <li>Ed Collins' Scid vs. PC page <url http://edcollins.com/chess/scidvspc/index.html>http://edcollins.com/chess/scidvspc/index.html</url></li>
   <li>Gorgonian's custom pieces <url http://gorgonian.weebly.com/scid-vs-pc.html>http://gorgonian.weebly.com/scid-vs-pc.html</url></i>
+  <li>Kayvan's Cross platform 'docker' images <url https://github.com/ksylvan/scidvspc>https://github.com/ksylvan/scidvspc</url></li>
   <li>The PGN and EPD standards <url http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm>www.saremba.de/chessgml/standards/pgn...</url></li>
   <li>Common PGN extensions <url http://www.enpassant.dk/chess/palview/enhancedpgn.htm>http://www.enpassant.dk/chess/palview/enhancedpgn.htm</url></li>
   <li>Pgn of players <url http://www.pgnmentor.com/files.html#players>www.pgnmentor.com/files.html#players</url></li>
