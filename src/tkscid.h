@@ -356,11 +356,7 @@ void setMainFilter( scidBaseT * dbase);
 void clearFilter( scidBaseT * dbase, uint size);
 void filter_reset (scidBaseT * base, byte value);
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// manage undo functions
-//
-void sc_game_save_for_undo ();
-void sc_game_undo_reset();
+void sc_game_undo_reset(scidBaseT * base);
 
 //////////////////////////////////////////////////////////////////////
 // Declarations for Scid application-specific Tcl commands

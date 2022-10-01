@@ -1196,17 +1196,7 @@ sc_base_close (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         return errorResult (ti, errMsgNotOpen(ti));
     }
 
-    // reset undo data
-    basePtr->undoMax = -1;
-    basePtr->undoIndex = -1;
-    basePtr->undoCurrent = -1;
-    basePtr->undoCurrentNotAvail = false;
-    for (int u = 0; u < UNDO_MAX; u++) {
-      if ( basePtr->undoGame[u] != NULL ) {
-        delete basePtr->undoGame[u];
-        basePtr->undoGame[u] = NULL;
-      }
-    }
+    sc_game_undo_reset (basePtr);
 
     // If the database is the clipbase, do not close it, just clear it:
     if (basePtr == clipbase) { return sc_clipbase_clear (ti); }
@@ -4108,6 +4098,10 @@ sc_clipbase_copy (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         return errorResult (ti, "You are already in the clipbase database.");
     }
 
+    // Sorry, clipbase changes get discarded
+    sc_game_undo_reset (clipbase);
+    clipbase->gameAltered = false;
+
     db->bbuf->Empty();
     db->game->SaveState();
     if (db->game->Encode (db->bbuf, NULL) != OK) {
@@ -4164,6 +4158,10 @@ sc_clipbase_paste (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     if (clipbase->game->Encode (db->bbuf, NULL) != OK) {
         return errorResult (ti, "Error encoding game.");
     }
+
+    // db changes get discarded
+    sc_game_undo_reset (db);
+
     db->bbuf->BackToStart();
     db->game->Clear();
     db->gameNumber = -1;
@@ -6178,7 +6176,7 @@ sc_game (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         return sc_game_moves (cd, ti, argc, argv);
 
     case GAME_NEW:
-        sc_game_undo_reset();
+        sc_game_undo_reset(db);
         return sc_game_new (cd, ti, argc, argv);
 
     case GAME_NOVELTY:
@@ -7963,7 +7961,7 @@ sc_game_load (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         return errorResult (ti, "Usage: sc_game load <gameNumber>");
     }
 
-    sc_game_undo_reset();
+    sc_game_undo_reset(db);
 
     db->bbuf->Empty();
     uint gnum = strGetUnsigned (argv[2]);
@@ -10175,15 +10173,15 @@ sc_game_tags_share (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //    resets data used for undos (for example after loading another game)
 
-void sc_game_undo_reset() {
-  db->undoMax = -1;
-  db->undoIndex = -1;
-  db->undoCurrent = -1;
-  db->undoCurrentNotAvail = false;
+void sc_game_undo_reset(scidBaseT * base) {
+  base->undoMax = -1;
+  base->undoIndex = -1;
+  base->undoCurrent = -1;
+  base->undoCurrentNotAvail = false;
   for (int i = 0 ; i < UNDO_MAX ; i++) {
-    if (db->undoGame[i] != NULL) {
-      delete db->undoGame[i];
-      db->undoGame[i] = NULL;
+    if (base->undoGame[i] != NULL) {
+      delete base->undoGame[i];
+      base->undoGame[i] = NULL;
     }
   }
 }
