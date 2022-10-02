@@ -4091,11 +4091,15 @@ sc_clipbase_clear (Tcl_Interp * ti)
 int
 sc_clipbase_copy (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
+    // Hmmm - errors currently caught
     if (! clipbase->inUse) {
         return errorResult (ti, "The clipbase is not open.");
     }
     if (db == clipbase) {
         return errorResult (ti, "You are already in the clipbase database.");
+    }
+    if (clipbase->fileMode == FMODE_ReadOnly) {
+         return errorResult (ti, errMsgReadOnly(ti));
     }
 
     // Sorry, clipbase changes get discarded
@@ -5226,8 +5230,8 @@ int
 sc_filter_copy (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
     bool showProgress = startProgressBar();
-    if (argc != 4) {
-        return errorResult (ti, "Usage: sc_filter copy <fromBase> <toBase>");
+    if (argc != 4 && argc != 5) {
+        return errorResult (ti, "Usage: sc_filter copy <fromBase> <toBase> [items]");
     }
     uint updateStart, update;
     updateStart = update = 1000;  // Update progress bar every 100 games
@@ -5252,11 +5256,29 @@ sc_filter_copy (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         return errorResult (ti, "The target database is read-only.");
     }
 
+    // Currently only used by gamelist context menu gamelist::CopyFilter "Copy to filter", but could be expanded
+    bool listMode = (argc == 5);
+    uint targetCount;
+    int largc = 0;
+    const char ** largv;
+
+    if (listMode) {
+	if (Tcl_SplitList (ti, (char *)argv[4], &largc, (CONST84 char ***) &largv) != TCL_OK) {
+	    return errorResult (ti, "Error parsing filter list.");
+	}
+        if (largc <= 0) {
+	   Tcl_Free ((char *) largv);
+           return errorResult (ti, "Zero args when parsing filter list.");
+        }
+        targetCount = (uint)largc;
+     } else {
+        targetCount = sourceBase->filter->Count();
+     }
+
     // Now copy each game from source to target:
     uint count = 0;
-    uint targetCount = sourceBase->filter->Count();
-    // Check target db has enough capacity
 
+    // Check target db has enough capacity
     uint newSize = targetBase->numGames + targetCount;
     targetBase->filter->SetCapacity(newSize);
     // (FilterSize, Count, is increased in sc_savegame below)
@@ -5264,6 +5286,21 @@ sc_filter_copy (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         targetBase->dbFilter->SetCapacity(newSize);
     if( targetBase->treeFilter != NULL)
         targetBase->treeFilter->SetCapacity(newSize);
+
+    if (listMode) {
+	for (uint i=0; i < targetCount; i++) {
+	    count++;
+	    IndexEntry * ie = sourceBase->idx->FetchEntry (atoi(largv[i])-1);
+	    sourceBase->bbuf->Empty();
+	    if (sourceBase->gfile->ReadGame (sourceBase->bbuf, ie->GetOffset(), ie->GetLength()) != OK) {
+		return errorResult (ti, "Error reading game file.");
+	    }
+	    if (sc_savegame (ti, sourceBase, sourceBase->bbuf, ie, targetBase) != TCL_OK) {
+		    return TCL_ERROR;
+	    }
+	}
+	Tcl_Free ((char *) largv);
+    } else {
 
     for (uint i=0; i < sourceBase->numGames; i++) {
         if (sourceBase->filter->Get(i) == 0) { continue; }
@@ -5287,6 +5324,8 @@ sc_filter_copy (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 	if (sc_savegame (ti, sourceBase, sourceBase->bbuf, ie, targetBase) != TCL_OK) {
 		return TCL_ERROR;
         }
+    }
+
     }
 
     targetBase->gfile->FlushAll();

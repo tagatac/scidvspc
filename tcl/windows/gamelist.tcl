@@ -687,6 +687,23 @@ proc ::windows::gamelist::Select {} {
   }
 }
 
+# Currently only used to copy to clipbase, but could be expanded i think. S.A
+
+proc ::windows::gamelist::CopyFilter {} {
+  set items [.glistWin.tree selection]
+  if { "$items" == "" } {
+    bell
+  } else {
+    set games {}
+    foreach i $items {
+      append games [.glistWin.tree set $i Number]
+    }
+    sc_filter copy [sc_base current] [sc_info clipbase] $games
+    ::windows::gamelist::Refresh
+  }
+}
+
+
 proc ::windows::gamelist::setColumnTitles {} {
   foreach {code col anchor null} $::glistFields {
     if {[info exists ::tr(Glist$col)]} {
@@ -783,11 +800,16 @@ proc ::windows::gamelist::Popup {w x y X Y} {
     menu $menu -tearoff 0
     set f $w.b.f
 
+    set clipbase [expr {[sc_base current] == [sc_info clipbase]}]
+
     if {$menutype == "short"} {
     $menu add command -label $tr(GlistRemoveThisGameFromFilter) -command ::windows::gamelist::Remove
     $menu add command -label $tr(GlistDeleteField) -command ::windows::gamelist::Delete
     $menu add cascade -label $tr(Flag)      -menu $menu.flags
     $menu add command -label $tr(SetFilter) -command ::windows::gamelist::Select
+    if {!$clipbase} {
+      $menu add command -label [tr EditCopy] -command ::windows::gamelist::CopyFilter
+    }
     $menu add separator
     $menu add command -label $tr(Reset) -command "$f.reset invoke"
     } else {
@@ -796,6 +818,9 @@ proc ::windows::gamelist::Popup {w x y X Y} {
     $menu add command -label $tr(GlistDeleteField) -command ::windows::gamelist::Delete
     $menu add cascade -label $tr(Flag)      -menu $menu.flags
     $menu add command -label $tr(SetFilter) -command ::windows::gamelist::Select
+    if {!$clipbase} {
+      $menu add command -label [tr EditCopy] -command ::windows::gamelist::CopyFilter
+    }
     $menu add separator
     $menu add command -label $tr(GlistRemoveThisGameFromFilter) -command ::windows::gamelist::Remove
     $menu add command -label $tr(GlistRemoveGameAndAboveFromFilter) -command {::windows::gamelist::removeFromFilter up}

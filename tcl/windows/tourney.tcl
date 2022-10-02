@@ -360,7 +360,6 @@ proc ::tourney::refresh {} {
   }
   $t insert end "\n"
   $t configure -state disabled
-  wm title $w "[tr Database]: [file tail [sc_base filename]], $count [tr WindowsTmt]"
   unbusyCursor .
 }
 
