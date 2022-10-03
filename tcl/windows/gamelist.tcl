@@ -1393,8 +1393,10 @@ proc ::windows::gamelist::Reorder {dir} {
 
   ### Do we want to clear game or reload ??
   # ::game::Clear
-  # refreshWindows
   # return
+
+  # Not done in refreshWindows - in case bestgames are open
+  ::tree::refresh
 
   if {$newgame < $gl_num} {
     if {$current == $gl_num} {

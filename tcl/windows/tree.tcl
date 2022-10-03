@@ -1548,6 +1548,9 @@ proc ::tree::bestPopup {baseNumber w x y X Y} {
     } else {
       $menu add command -label $tr(Browse) -command "browseGames $w.tree"
     }
+    if {$baseNumber != [sc_info clipbase]} {
+      $menu add command -label [tr EditCopy] -command "::tree::bestCopyFilter $baseNumber"
+    }
     tk_popup $menu [winfo pointerx .] [winfo pointery .]
   }
 }
@@ -1577,6 +1580,21 @@ proc ::tree::bestMerge {baseNumber} {
   set selection [$w.tree selection]
   if { $selection != {} } {
     mergeGame $baseNumber [$w.tree set [lindex $selection 0] Number]
+  }
+}
+
+proc ::tree::bestCopyFilter {baseNumber} {
+  set w .treeBest$baseNumber
+  set items [$w.tree selection]
+  if { "$items" == "" } {
+    bell
+  } else {
+    set games {}
+    foreach i $items {
+      append games [$w.tree set $i Number]
+    }
+    sc_filter copy $baseNumber [sc_info clipbase] $games
+    ::windows::gamelist::Refresh
   }
 }
 
