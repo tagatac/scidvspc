@@ -217,7 +217,8 @@ proc ::utils::graph::redraw {graph} {
   if {$graph == "score"} {
     ::utils::graph::updateMove
     # Print a little title on the top left of graph
-    $_data(score,canvas) create text [expr {$_data(score,xtop) + 10}] 50 -text $::tools::graphs::score::title -font font_Small -anchor w -tag title
+    $_data(score,canvas) create image [expr {$_data(score,xtop) + 10}] 50 -image arrow_down -tag title
+    $_data(score,canvas) create text [expr {$_data(score,xtop) + 18}] 50 -text $::tools::graphs::score::title -font font_Small -anchor w -tag title
   }
 }
 

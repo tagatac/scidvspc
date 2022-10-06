@@ -4101,6 +4101,9 @@ sc_clipbase_copy (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     if (clipbase->fileMode == FMODE_ReadOnly) {
          return errorResult (ti, errMsgReadOnly(ti));
     }
+    if (clipbase->fileMode == FMODE_ReadOnly) {
+        return errorResult (ti, errMsgReadOnly(ti));
+    }
 
     // Sorry, clipbase changes get discarded
     sc_game_undo_reset (clipbase);

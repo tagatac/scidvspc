@@ -5950,6 +5950,7 @@ set helpText(Novag) {<h1>Novag Citrine Chess Board</h1>
 
 set helpTitle(HardwareConfig) "Connecting External Hardware"
 set helpText(HardwareConfig) {<h1>Connecting External Hardware</h1>
+<p><i>Scid's hardware support is old and probably not working with most boards. User's wishing to help can visit <url https://goneill.co.nz/chess.php>Graham's Chess site</url> and see about porting his awesome drivers to Scid vs PC.</i></p>
 <p>
   Scid supports two types of external hardware, configured in 
   <green><run ::ExtHardware::config>Tools-<gt>Connect Hardware-<gt>Configure</run></green>.
@@ -6008,6 +6009,7 @@ at <url https://goneill.co.nz/chess.php>Graham's Chess page</url>, where he has 
   </p>
 
   <h3>Input Engine/DGT</h3>
+<p><i>Scid's hardware support is old and probably not working with most boards. User's wishing to help can visit <url https://goneill.co.nz/chess.php>Graham's Chess site</url> and see about porting his awesome drivers to Scid vs PC.</i></p>
 
   <p>
   Configuring an Input Engine compatible driver requires additional fields.
@@ -6095,6 +6097,8 @@ set helpText(HardwareStatus) {<h1>Status of External Hardware</h1>
 
 set helpTitle(InputEngine) "DGT / Input Engine console"
 set helpText(InputEngine) {<h1>DGT / Input Engine console</h1>
+<p><i>Scid's hardware support is old and probably not working with most boards. User's wishing to help can visit <url https://goneill.co.nz/chess.php>Graham's Chess site</url> and see about porting his awesome drivers to Scid vs PC.</i></p>
+
    <p>
    On top of the Input Engine window, a console monitors the
    communication between Scid and the driver engine. Usually, this is
