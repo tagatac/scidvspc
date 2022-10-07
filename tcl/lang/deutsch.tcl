@@ -293,7 +293,7 @@ menuText D OptionsFicsNoReq "Keine Anfragen" 0
 menuText D OptionsFicsPremove "Voreingabe von Zügen erlauben" 0
 menuText D OptionsLanguage "Sprache" 0 {Sprache wählen}
 menuText D OptionsMovesTranslatePieces "Figurennamen übersetzen" 0 {Übersetze den ersten Buchstaben der Figurenbezeichnung}
-menuText D OptionsMovesHighlightLastMove "Letzen Zug hervorheben" 0 {Rahmt Start- und Zielfeld des letzten Zuges farbig ein}
+menuText D OptionsMovesHighlightLastMove "Letzten Zug hervorheben" 0 {Rahmt Start- und Zielfeld des letzten Zuges farbig ein}
 menuText D OptionsMovesHighlightLastMoveDisplay "Anzeigen" 0 {Hervorhebung des letzen Zuges anzeigen}
 menuText D OptionsMovesHighlightLastMoveWidth "Dicke" 0 {Dicke der Linie}
 menuText D OptionsMovesHighlightLastMoveColor "Farbe" 0 {Farbe der Linie}
@@ -307,8 +307,7 @@ menuText D OptionsMovesDelay "Automatisch vorspielen..." 7 \
   {Zeit für automatisches Vorspielen einstellen}
 menuText D OptionsMovesCoord "Tastatureingabe" 0 \
   {Zugeingabe über Koordinaten ("g1f3") akzeptieren}
-# ====== TODO To be translated ======
-menuText D OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
+menuText D OptionsMovesSuggest "Zugvorschläge anzeigen" 0 {Zugvorschlag ein-/ausschalten}
 menuText D OptionsShowVarPopup "Variantenfenster zeigen" 0 { Anzeige des Variantenauswahlfensters ein/ausschalten}  
 menuText D OptionsMovesSpace "Leerzeichen nach Zugnummer einfügen" 0 {Leerzeichen nach Zugnummer einfügen}  
 menuText D OptionsMovesKey "Automatische Zugergänzung" 10 \
@@ -2975,6 +2974,15 @@ set helpText(D,Moves) {<h1>Zugeingabe und Optionen</h1>
   Bauernzügen, falls die Zugeingabe mit Koordinaten ausgeschaltet ist.
   </p>
 
+  <h4>Zugvorschläge</h4>
+  <p>Die Option "Zugvorschläge anzeigen", falls aktiviert, hebt unter
+  der Maus den besten Zug von/nach einem Feld hervor (von ECO oder
+  einer schnellen Engine-Suche ausgewählt). Dies kann manchmal
+  verwirrend sein und auch als Betrug angesehen werden. Sie ist
+  standardmäßig in Scid vs. PC deaktiviert. Diese Option erzwingt auch
+  "Farbe ausgewähltes Feld".
+  </p>
+
   <h3><name Null>Nullzüge eingeben</name></h3>
   <p><a Variations Null>Nullzüge</a> (oder leere Züge) können in
   Varianten hilfreich sein, wo man für eine Seite einen Zug
@@ -3779,7 +3787,7 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
 
   <p><i>Die Ablagedatenbank kann nicht komprimiert werden.</i></p>
 
-  <h3>Partien verschieben</h3>
+  <h3><name MovingGames>Partien verschieben<name></h3>
 
   <p>Scid vs PC ermöglicht jetzt im Kontextmenü der Partienliste das
   grundlegende Verschieben/Umordnen von einzelnen Partien.</p>
@@ -4948,6 +4956,9 @@ set helpText(D,Sorting) {<h1>Datenbanken sortieren</h1>
   <li> Zufallsniveau
   </ul>
 
+  <p><i>ScidvsPC kann auch</i><a GameList MovingGames>einzelne Partien
+	verschieben/neu ordnen</a>.</p>
+
   <h3>Sortieren ist dauerhaft</h3>
   <p>Wenn Sie eine Datenbank sortieren, die nicht im Nur-Lesen-Zustand
   ist, werden die Ergebnisse sofort gespeichert und die <b>Reihenfolge
@@ -5140,26 +5151,26 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   </ul>
   </p>
 
-  <h3><name Moves>Züge/Hauptvarianten</name></h3>
-  <p>Jede Zeile im Haupttextfenster enthält eine
-  <b>Information</b>, die vom Schachprogramm ausgegeben wird. Die
-  erste Zahl ist die aktuelle <b>Suchtiefe</b>. Die nächste (mit
-  vorangestelltem +/-) ist die <b>Zugbewertung</b>. Sie wird in
-  Bauerneinheiten aus der Sicht von Weiß gemessen. Ein positiver Wert
-  bedeutet, daß Weiß einen Vorteil hat, ein negativer Wert steht für
-  Vorteil für Schwarz. Dann folgen die Züge, auch bekannt
-  als <b>Hauptvarianten</b> oder <b>PV</b> (Principal Variation).</p>
-  <p>Die meisten UCI-Schachprogramme ermöglichen es, sofort mehrere
-  Züge zu analysieren (oder <b>Zugfolgen</b>). Wenn man
-  diese <b>MultiPV</b>-Funktion nutzt, kann man die zweit- oder
-  drittbesten (usw.) Fortsetzungen erkennen. Die beste Zugfolge wird
-  immer zuoberst angezeigt und hervorgehoben. Wenn MultiPV unterstützt
-  wird, kann das Auswahlfeld verwendet werden, um die Anzahl der
-  angezeigten Hauptfortsetzungen festzulegen. In diesem Fall werden
+  <h3><name Moves>Züge/Hauptvarianten</name></h3> <p>Jede Zeile im
+  Haupttextfenster enthält eine <b>Information</b>, die vom
+  Schachprogramm ausgegeben wird. Die erste Zahl ist die aktuelle
+  <b>Suchtiefe</b>. Die nächste (mit vorangestelltem +/-) ist die
+  <b>Zugbewertung</b>. Sie wird in Bauerneinheiten aus der Sicht von
+  Weiß gemessen. Ein positiver Wert bedeutet, daß Weiß einen Vorteil
+  hat, ein negativer Wert steht für Vorteil für Schwarz. Dann folgen
+  die Züge, auch bekannt als <b>Hauptvarianten</b> oder <b>PV</b>
+  (Principal Variation).</p> <p>Die meisten UCI-Schachprogramme
+  ermöglichen es, sofort mehrere Züge zu analysieren (oder
+  <b>Zugfolgen</b>). Wenn man diese <b>MultiPV</b>-Funktion nutzt,
+  kann man die zweit- oder drittbesten (usw.) Fortsetzungen
+  erkennen. Die beste Zugfolge wird immer zuoberst angezeigt und
+  hervorgehoben. Wenn MultiPV unterstützt wird, kann das Auswahlfeld
+  verwendet werden, um die Anzahl der angezeigten Hauptfortsetzungen
+  festzulegen (dies kann dauerhaft im Fenster <a Analysis
+  List>Analyse-Engine</a> eingestellt werden). In diesem Fall werden
   anstelle der Berechnungshistorie nur die resultierenden
   Hauptfortsetzungen angezeigt. Dieses Auswahlfeld ist nicht aktiv,
-  wenn ein Schachprogramm diese Funktion nicht anbietet.
-  </p>
+  wenn ein Schachprogramm diese Funktion nicht anbietet.  </p>
 
   <h3><name Info>Zusatzinformationen</h3>
   <p>Unten gibt es einige weitere Informationen, die mit der
@@ -5992,7 +6003,7 @@ set helpText(D,Graphs) {<h1>Grafikfenster</h1>
   die Schaltfläche "Ratingveränderung" im
   Fenster <a PInfo>Spielerinformationen</a> oder durch Auswahl von
   "Ratingveränderung" im Menü Werkzeuge. Ein Rechtsklick auf die
-  Grafik erneuert sie.
+  Grafik zeigt ein Kontextmenü über die letzten Spieler.
   </p>
 
   <p> In den Grafikmenüs gibt es mehrere Optionen, einschließlich die
@@ -6957,9 +6968,8 @@ set helpText(D,Related) {<h1>Links</h1>
   <li>Spielerinformationsdaten  <url http://sourceforge.net/projects/scid/files/Player Data/>http://sourceforge.net/projects/scid/files/Player Data/</url></li>
   <li>FICS <url http://www.freechess.org>www.freechess.org</url></li>
   <li>FICS-Partienarchive <url http://ficsgames.org>http://ficsgames.org</url></li>
-  <li>Kayvan's Cross platform 'docker' images <url https://github.com/ksylvan/scidvspc>https://github.com/ksylvan/scidvspc</url></li>
   <li>Chess Tech Blog, mit einigen ScidvsPC-Anleitungen <url http://chesstech.info/>http://chesstech.info/</url></li>
-  <li>Installationsführer Debian/Mint/Ubuntu <url http://www.linuxx.eu/2012/11/scid-vs-pc-installation-guide-ubuntu.html>http://www.linuxx.eu/2012/11/scid-vs-pc-installation-guide-ubuntu.html</url></li>
+  <li>Schach-Blog Chessengeria, auch mit Tutorien <url https://www.chessengeria.com/>https://www.chessengeria.com/</url></li>
   <li>Ed Collins' Seite Scid vs. PC <url http://edcollins.com/chess/scidvspc/index.html>http://edcollins.com/chess/scidvspc/index.html</url></li>
   <li>Gorgonians selbsterstellte Figuren <url http://gorgonian.weebly.com/scid-vs-pc.html>http://gorgonian.weebly.com/scid-vs-pc.html</url></i>
   <li>Die Standards PGN und EPD <url http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm>www.saremba.de/chessgml/standards/pgn...</url></li>
@@ -8110,12 +8120,17 @@ set helpText(D,FICSlogin) {<h1>FICS-Anmeldung</h1>
   Paßwort nach Beendigung von FICS.
   </li>
 
-  <li><term>Timeseal</term> Falls aktiviert werden alle Verbindungen
-  zum FICS-Server durch ein (optionales) timeseal-Programm
-  geleitet. Sein Zweck ist der Umgang mit Netzwerkverzögerungen und
-  die Uhren in richtiger Reihenfolge zu halten, was ansonsten bei
-  langsamen Netzwerkverbindungen Probleme verursachen kann. Timeseal
-  ist auf der <url http://sourceforge.net/projects/scidvspc>Scid
+  <li><term>Timeseal und Zseal</term> Wahlweise kann der FICS-Server
+  entweder mit den Programmen timeseal oder (Open Source) zseal
+  gesteuert werden. Ihr Zweck ist es, mit Netzwerkverzögerungen
+  umzugehen und die Uhren in der richtigen Reihenfolge zu halten, was
+  anderenfalls bei langsamen Netzwerkverbindungen zu Problemen führen
+  kann. Der Verfasser ist nicht maßgeblich, aber ich glaube, daß zseal
+  das timeseal-Protokoll-2 verwendet und daß es auch mit Sonderzeichen
+  besser umgehen kann.
+
+  Timeseal und Zseal sind auf der
+  <url http://sourceforge.net/projects/scidvspc>Scid
   vs. PC-Projektseite</url> verfügbar.
   </li>
 
@@ -8138,7 +8153,7 @@ set helpText(D,FICSlogin) {<h1>FICS-Anmeldung</h1>
   für fast alle Zwecke in Ordnung sein.</li>
   </ul>
 
-  <p><footer>Aktualisiert: Scid vs. PC 4.10 Juli 2013</footer></p>
+  <p><footer>Aktualisiert: Scid vs. PC 4.24 Juli 2022</footer></p>
   }
 
   # FICS Find Opponent
@@ -8632,6 +8647,12 @@ set helpText(D,Novag) {<h1>Schachbrett von Novag Citrine</h1>
 set helpTitle(D,HardwareConfig) "Mit externer Hardware verbinden"
 set helpText(D,HardwareConfig) {<h1>Mit externer Hardware verbinden</h1>
 
+  <p><i>Scids Hardware-Unterstützung ist alt und funktioniert
+  wahrscheinlich nicht mit den meisten Boards. Anwender, die helfen
+  möchten, können <url https://goneill.co.nz/chess.php>Grahams
+  Schachseite </url> besuchen und schauen, wie man seine großartigen
+  Treiber nach Scid vs Pc portiert.  </i></p>
+
   <p>Scid unterstützt zwei Arten von externer Hardware, die
   im Menü <green><run ::ExtHardware::config>Werkzeuge--<gt>Hardware
   verbinden--<gt>Konfigurieren...</run></green> konfiguriert werden.</p>
@@ -8695,6 +8716,12 @@ set helpText(D,HardwareConfig) {<h1>Mit externer Hardware verbinden</h1>
   in der Werkzeugleiste.</p>
 
   <h3>Input Engine/DGT</h3>
+
+  <p><i>Scids Hardware-Unterstützung ist alt und funktioniert
+  wahrscheinlich nicht mit den meisten Boards. Anwender, die helfen
+  möchten, können <url https://goneill.co.nz/chess.php>Grahams
+  Schachseite </url> besuchen und schauen, wie man seine großartigen
+  Treiber nach Scid vs Pc portiert.</i></p>
 
   <p>Das Konfigurieren eines für Input Engine kompatiblen Treibers
   erfordert zusätzliche Felder.</p>
@@ -8774,6 +8801,12 @@ set helpText(D,HardwareStatus) {<h1>Status externer Hardware</h1>
 
 set helpTitle(D,InputEngine) "Konsole DGT/Input Engine"
 set helpText(D,InputEngine) {<h1>Konsole DGT/Input Engine</h1>
+
+  <p><i>Scids Hardware-Unterstützung ist alt und funktioniert
+  wahrscheinlich nicht mit den meisten Boards. Anwender, die helfen
+  möchten, können <url https://goneill.co.nz/chess.php>Grahams
+  Schachseite </url> besuchen und schauen, wie man seine großartigen
+  Treiber nach Scid vs Pc portiert.</i></p>
 
   <p>Zuoberst im Input Engine-Fenster überwacht eine Konsole die
   Kommunikation zwischen Scid und dem Treiberprogramm. Dies ist
