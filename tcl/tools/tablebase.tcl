@@ -5,10 +5,19 @@ set tbTraining 0
 set tbBoard 0
 set tbStatus ""
 
-set ::tb::online_available [expr ! [catch {
-  package require http
-  ::splash::add "tls package [package require tls] found"
-} ] ]
+set ::tb::online_available 0
+
+if {[catch {package require http}]} {
+  ::splash::add "Package 'http' not found. Disabling online tablebases."
+} else {
+  ::splash::add "Package 'http' found."
+  if {[catch {package require tls}]} {
+    ::splash::add "Package 'tls' not found. Disabling online tablebases."
+  } else {
+    ::splash::add "Package 'tls' found. Enabling online tablebases."
+    set ::tb::online_available 1
+  }
+}
 
 namespace eval ::tb {
   set url {}
