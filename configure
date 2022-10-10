@@ -462,6 +462,16 @@ proc writeMakefile {{type ""}} {
     }
 
     checkZlib
+
+    if {[catch {exec /bin/sh -c "which $var(CC)"}]} {
+      puts "\nC compiler \"$var(CC)\" not found/executable\n"
+      exit 1
+    }
+    if {[catch {exec /bin/sh -c "which $var(CXX)"}]} {
+      puts "\nC++ compiler \"$var(CXX)\" not found/executable\n"
+      exit 1
+    }
+
     probeCompiler
 
     if {![string match *-O* $var(CFLAGS)]} {
