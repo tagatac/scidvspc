@@ -1301,8 +1301,19 @@ proc confirmReplaceMove {} {
   # http://wiki.tcl.tk/1062
   option add *Dialog.msg.wrapLength 5i interactive
   # option add *Dialog.msg.font {Helvetica 10}
-  # Can't bind <Escape> inside tk_dialog.
 
+after 1 {
+  # hack tk_dialog toplevel... Only way besides rewriting/customising the whole procedure
+  if {$::macOS} {
+    # For some reason mac button foreground systemPressedButtonTextColor is hard to read.
+    # Default is button 2 (add variation)
+    .dialog.button2 config -activeforeground [.dialog.button2 cget -foreground]
+    # But dammit, this doesnt work on 8.6.9 Carbon... button color seems hardwired
+  }
+  # Escape button invokes Cancel
+  wm protocol .dialog WM_DELETE_WINDOW {.dialog.button4 invoke}
+  bind .dialog <Escape> {.dialog.button4 invoke}
+}
   catch {tk_dialog .dialog "Scid: $::tr(ReplaceMove)?" \
         $::tr(ReplaceMoveMessage) {} 2 \
         $::tr(ReplaceMove) $::tr(NewMainLine) \
