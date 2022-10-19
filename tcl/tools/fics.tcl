@@ -1133,6 +1133,10 @@ namespace eval fics {
 
       ::fics::disableEngines
 
+      # This is maybe the only place when (without user interaction) a new game is created, so destroy the "proc gameSave" dialog if exists
+      if {[winfo exists .save]} {
+        destroy .save
+      }
       ::game::Clear noconfirm
 
       set idx1 [string first "(" $line]
@@ -2280,6 +2284,9 @@ namespace eval fics {
       ### Save previous (unfinished?) game.
       # ideally we can save observed games too, but only after we have the "Debug fen" working 100%
 
+      if {[winfo exists .save]} {
+        destroy .save
+      }
       if {[string match -nocase $white $::fics::reallogin] ||
           [string match -nocase $black $::fics::reallogin]} {
 	catch {::game::Save}
