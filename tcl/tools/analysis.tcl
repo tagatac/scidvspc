@@ -3690,10 +3690,16 @@ proc updateAnalysisBoard {n {moves {}}} {
     ::board::flip $bd
   }
 
-  # New feature to show arrows for UCI engines
+  # New feature to show arrows
   if {$analysis(boardShowsVar$n)} {
-    set move [lindex $moves 0]
+    set offset 0
+    set move [lindex $moves $offset]
     if {!$analysis(uci$n)} {
+      # Xboard - skip non-moves matching *. (eg "4.", or "...")
+      while {[string match *. $move]} {
+        incr offset
+        set move [lindex $moves $offset]
+      }
       sc_game push copyfast
       if {$analysis(lockEngine$n)} {
 	sc_game startBoard $analysis(lockFen$n)
@@ -3701,15 +3707,32 @@ proc updateAnalysisBoard {n {moves {}}} {
       catch {sc_move addSan $move}
       set move [sc_game info previousMoveUCI]
       sc_game pop
+    } elseif {$analysis(multiPVCount$n) != 1} {
+      # MultiPV 
+      # ($move != {} is a check for movecount == 0, as multiPVraw is not getting reset properly somewhere)
+      if {$move != {}} {
+	set move {}
+	foreach pv $analysis(multiPVraw$n) {
+	  lappend move [lindex [lindex $pv 2] 0]
+	}
+      }
     }
     if {!$analysis(lockEngine$n)} {
       ::board::update $bd [sc_pos board]
     }
     $bd.bd delete var
-    if {$move != ""} {
-      set sq_start [::board::sq [string range $move 0 1]]
-      set sq_end   [::board::sq [string range $move 2 3]]
+    set m [lindex $move 0]
+    if {$m != ""} {
+      set sq_start [::board::sq [string range $m 0 1]]
+      set sq_end   [::board::sq [string range $m 2 3]]
       ::board::mark::add $bd varComment $sq_start $sq_end $::engineLineColor
+    }
+    foreach m [lrange $move 1 end] {
+      if {$m != ""} {
+	set sq_start [::board::sq [string range $m 0 1]]
+	set sq_end   [::board::sq [string range $m 2 3]]
+	::board::mark::add $bd varComment $sq_start $sq_end $::varcolor
+      }
     }
   } else {
     if {$analysis(lockEngine$n)} {
