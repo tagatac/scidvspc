@@ -3656,9 +3656,14 @@ proc initAnalysisBoard {n} {
     # bind $w <Configure> "recordWinSize $w"
   } else {
     # bind $w <Configure> {}
+    # Check if board size has been changed
+    if {[::board::size $w.frame.bd]  != [expr {$analysis(boardSize) * 5 + 20}]} {
+      ::board::resize $w.frame.bd [expr {$analysis(boardSize) * 5 + 20}]
+    }
     pack $w.frame -side bottom -before $w.hist 
     update
     $w.hist.text configure -setgrid 1
+    $w.hist.text see end
     $w.text configure -setgrid 1
   }
 }
@@ -3700,21 +3705,25 @@ proc updateAnalysisBoard {n {moves {}}} {
         incr offset
         set move [lindex $moves $offset]
       }
-      sc_game push copyfast
-      if {$analysis(lockEngine$n)} {
-	sc_game startBoard $analysis(lockFen$n)
+      # Xboard engines have character(s)! Gnuchess sometimes spouts :-(
+      set move [string map {\+ {} : {} \( {} \? {} ! {} - {}} $move]
+      if {$move != ""} {
+        sc_game push copyfast
+        if {$analysis(lockEngine$n)} {
+          sc_game startBoard $analysis(lockFen$n)
+        }
+        catch {sc_move addSan $move}
+        set move [sc_game info previousMoveUCI]
+        sc_game pop
       }
-      catch {sc_move addSan $move}
-      set move [sc_game info previousMoveUCI]
-      sc_game pop
     } elseif {$analysis(multiPVCount$n) != 1} {
       # MultiPV 
       # ($move != {} is a check for movecount == 0, as multiPVraw is not getting reset properly somewhere)
       if {$move != {}} {
-	set move {}
-	foreach pv $analysis(multiPVraw$n) {
-	  lappend move [lindex [lindex $pv 2] 0]
-	}
+        set move {}
+        foreach pv $analysis(multiPVraw$n) {
+          lappend move [lindex [lindex $pv 2] 0]
+        }
       }
     }
     if {!$analysis(lockEngine$n)} {
@@ -3729,9 +3738,9 @@ proc updateAnalysisBoard {n {moves {}}} {
     }
     foreach m [lrange $move 1 end] {
       if {$m != ""} {
-	set sq_start [::board::sq [string range $m 0 1]]
-	set sq_end   [::board::sq [string range $m 2 3]]
-	::board::mark::add $bd varComment $sq_start $sq_end $::varcolor
+        set sq_start [::board::sq [string range $m 0 1]]
+        set sq_end   [::board::sq [string range $m 2 3]]
+        ::board::mark::add $bd varComment $sq_start $sq_end $::varcolor
       }
     }
   } else {
