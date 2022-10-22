@@ -3978,6 +3978,13 @@ set helpText(Options) {<h1>Options and Preferences</h1>
   </p>
   <p>
   The <b>Fixed</b> font is used by the <a Tree>Tree</a> and <a Crosstable>Crosstable</a> windows, and requires a fixed-width font to make text allign nicely.
+</p>
+
+  <h3>High DPI Displays</h3>
+  <p>Unfortunately, Tcl/Tk's support for high resolution displays is poor. If Microsoft Windows users see the text in the application and menus appearing washed out, try editing "Properties-<gt>Compatibility-<gt>Change high DPI settings" for the file C:\Scid vs PC-4.xx\bin\scid.exe
+and change "Override high DPI scaling behaviour" to "Scaling Performed by Application".
+  </p>
+
   </p>
   <h3><name Themes>Themes</name></h3>
   <p>
@@ -4002,7 +4009,7 @@ Theme installation is not quite trivial:
 </ul>
   </p>
 
-  <p><footer>Updated: Scid vs. PC 4.22 Feb 2020</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.24 Oct 2022</footer></p>
 }
 
 set helpTitle(NAGs) "NAG values"

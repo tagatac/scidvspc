@@ -18,7 +18,7 @@ set colorSchemes1 {
 }
 set colorSchemes2 {
   { Tan		#fbdbc4 #cc9c83 #b0d0e0 #bebebe rosybrown4}
-  { Grey	#dfdfdf #808080 #b0d0e0 #bebebe black }
+  { Grey	#9d9d9b #7a7977 #6c8898 #bebebe steelblue4}
   { Rosy	#f8dbcc rosybrown #b0d0e0 #bebebe rosybrown4}
   { SteelBlue	lightsteelblue steelblue #51a068 #e0d873 #002958}
   { GreenSA     #46a631 #006400 #008064 rosybrown4 #8bb869 }
