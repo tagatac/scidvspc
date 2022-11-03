@@ -42,7 +42,6 @@ menuText B Edit "Editar" 0
 menuText B EditAdd "Adiciona variante" 0 {Adiciona variante do movimento}
 menuText B EditPasteVar "Colar Variante" 0
 menuText B EditDelete "Deleta Variante" 0 {Exclui variante do movimento}
-# ====== Translated OK by Gilberto======
 menuText B EditDeleteComment "Apagar Comentario" 0
 menuText B EditFirst "Converte para Primeira Variante" 14 \
   {Faz com que uma variante seja a primeira da lista}
@@ -323,7 +322,7 @@ menuText B OptionsFontsSmall "Pequeno" 0 {Fonte pequeno}
 menuText B OptionsFontsFixed "Fixo" 0 {Fonte de largura fixa}
 menuText B OptionsGInfo "Informacoes do Jogo" 0 {Opcoes de informacao do jogo}
 menuText B OptionsFics "FICS" 0
-# todo
+
 menuText B OptionsFicsAuto "Auto Promover para Dama" 0
 
 menuText B OptionsFicsClk "Guardar tempos do relogio" 0
@@ -360,8 +359,8 @@ menuText B OptionsMovesDelay "Tempo de atraso p/ Jogo automatico..." 1 \
   {Define o tempo de espera antes de entrar no modo de jogo automatico}
 menuText B OptionsMovesCoord "Entrada de movimentos por coordenadas" 0 \
   {Aceita o estilo de entrada de movimentos por coordenadas ("g1f3")}
-# ====== TODO To be translated ======
-menuText B OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
+# ====== Translated - Gilberto - 221101 ======
+menuText B OptionsMovesSuggest "Mostrar movimentos sugeridos" 0 {Liga/Desliga sugestão de movimento}
 
 menuText B OptionsShowVarPopup "Mostrar janela de variantes" 0 {Liga/Desliga a janela de variantes}  
 
@@ -552,7 +551,6 @@ translate B Database {Base de dados}
 translate B Filter {Filtro}
 
 translate B Reset {Reiniciar}
-# todo - OK
 translate B IgnoreCase {Ignorar maiusc/minusculas}
 translate B noGames {nenhum jogo}
 translate B allGames {todos os jogos}
@@ -803,7 +801,6 @@ menuText B GraphOptionsWhite "Branco" 0
 menuText B GraphOptionsBlack "Preto" 0
 
 menuText B GraphOptionsDots "Mostrar Pontos" 0
-# ====== Translated OK by Gilberto======
 menuText B GraphOptionsSpelling "ELO do arquivo de ortografia" 0
 
 menuText B GraphOptionsBar "Destacar movimento atual" 0
@@ -1109,15 +1106,10 @@ translate B GlistAlignL {Alinhar: esquerda}
 translate B GlistAlignR {Alinhar: direita}
 
 translate B GlistAlignC {Alinhar: centro}
-# ====== Translated OK by Gilberto ======
 translate B GlistMoveFieldUp {Mover acima}
-# ====== Translated OK by Gilberto ======
 translate B GlistMoveFieldDown {Mover abaixo}
-# ====== Translated OK by Gilberto ======
 translate B GlistMoveFieldFirst {Mover para primeiro}
-# ====== Translated OK by Gilberto ======
 translate B GlistMoveFieldLast {Mover para último}
-# ====== Translated OK by Gilberto ======
 translate B GlistMoveFieldN {Mover para N}
 
 # Maintenance window:
@@ -1606,10 +1598,10 @@ translate B CopyErrNotOpen {nao esta aberta}
 translate B LightSquares {Casas Brancas}
 translate B DarkSquares {Casas Pretas}
 translate B SelectedSquares {Casas selecionadas}
-# ====== TODO To be translated ======
-translate B SelectedOutline {Selected Box}
-# ====== TODO To be translated ======
-translate B SuggestedSquares {Suggested}
+# ====== Translated - Gilberto - 221101 ======
+translate B SelectedOutline {Area selecionada}
+# ====== Translated - Gilberto - 221101 ======
+translate B SuggestedSquares {Sugerido}
 # todo
 translate B Grid {Grade}
 translate B Previous {Escolhas}
@@ -1718,7 +1710,7 @@ translate B limitanalysis {limita tempo de analise do engine}
 translate B seconds {segundos}
 
 translate B Abort {Abortar}
-# ====== Translated OK by Gilberto ======
+
 translate B Quit {Sair}
 
 translate B Resume {Continuar}
