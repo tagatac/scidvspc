@@ -4219,9 +4219,9 @@ B07d "Pirc: Lengfellner System"  1.e4 d6 2.d4 e6 *
 B07d "Pirc: 2.d4 Nd7"  1.e4 d6 2.d4 Nd7 *
 B07d "Pirc: 2.d4 Nf6"  1.e4 d6 2.d4 Nf6 *
 B07d "Pirc: Roscher Gambit"  1.e4 d6 2.d4 Nf6 3.Nf3 *
-B07d "Pirc: 3.Nbd2"  1.e4 d6 2.d4 Nf6 3.Nbd2 *
-B07d "Pirc: 3.Nbd2 g6"  1.e4 d6 2.d4 Nf6 3.Nbd2 g6 *
-B07d "Pirc: 3.Nbd2 g6"  1.e4 d6 2.d4 Nf6 3.Nbd2 g6 4.c3 Bg7 *
+B07d "Pirc: 3.Nbd2"  1.e4 d6 2.d4 Nf6 3.Nd2 *
+B07d "Pirc: 3.Nbd2 g6"  1.e4 d6 2.d4 Nf6 3.Nd2 g6 *
+B07d "Pirc: 3.Nbd2 g6"  1.e4 d6 2.d4 Nf6 3.Nd2 g6 4.c3 Bg7 *
 B07e "Pirc: 3.f3"  1.e4 d6 2.d4 Nf6 3.f3 *
 B07f "Pirc: 3.f3 e5"  1.e4 d6 2.d4 Nf6 3.f3 e5 *
 B07f "Pirc: 3.f3 e5 Queenswap"  1.e4 d6 2.d4 Nf6 3.f3 e5 4.dxe5 dxe5 5.Qxd8+ *
@@ -8742,10 +8742,10 @@ C08j "French: Tarrasch, Open, 4.exd5 exd5 5.Ngf3 Nf6"
 C08k "French: Tarrasch, Open, 4.exd5 exd5 5.Ngf3 Nf6, 7.Bxd7"
   1.e4 e6 2.d4 d5 3.Nd2 c5 4.exd5 exd5 5.Ngf3 Nf6 6.Bb5+ Bd7 7.Bxd7+ *
 C08l "French: Tarrasch, Open, 4.exd5 exd5 5.Ngf3 Nf6, Main Line"
-  1.e4 e6 2.d4 d5 3.Nd2 c5 4.exd5 exd5 5.Ngf3 Nf6 6.Bb5+ Bd7 7.Bxd7+ Nbd7
+  1.e4 e6 2.d4 d5 3.Nd2 c5 4.exd5 exd5 5.Ngf3 Nf6 6.Bb5+ Bd7 7.Bxd7+ Nbxd7
   8.O-O Be7 9.dxc5 *
 C08m "French: Tarrasch, Open, 4.exd5 exd5 5.Ngf3 Nf6, Main Line, 10.Nb3"
-  1.e4 e6 2.d4 d5 3.Nd2 c5 4.exd5 exd5 5.Ngf3 Nf6 6.Bb5+ Bd7 7.Bxd7+ Nbd7
+  1.e4 e6 2.d4 d5 3.Nd2 c5 4.exd5 exd5 5.Ngf3 Nf6 6.Bb5+ Bd7 7.Bxd7+ Nbxd7
   8.O-O Be7 9.dxc5 Nxc5 10.Nb3 *
 
 C09a "French: Tarrasch, Open, 5.Ngf3 Nc6"
@@ -14061,7 +14061,7 @@ D30d "QGD: 3.cxd5"  1.d4 d5 2.c4 e6 3.cxd5 exd5 *
 D30d "QGD: 3.cxd5"  1.d4 d5 2.c4 e6 3.cxd5 exd5 4.Nc3 *
 D30e "QGD: 3.Bf4"  1.d4 d5 2.c4 e6 3.Bf4 *
 D30f "QGD: 3.Nf3"  1.d4 d5 2.c4 e6 3.Nf3 *
-D30g "QGD: 3.Nf3 Nbd7 (Westphalia)"  1.d4 d5 2.c4 e6 3.Nf3 Nbd7 *
+D30g "QGD: 3.Nf3 Nbd7 (Westphalia)"  1.d4 d5 2.c4 e6 3.Nf3 Nd7 *
 D30h "QGD: Tarrasch without Nc3"  1.d4 d5 2.c4 e6 3.Nf3 c5 *
 D30h "QGD: Tarrasch without Nc3: 4.e3"  1.d4 d5 2.c4 e6 3.Nf3 c5 4.e3 *
 D30h "QGD: Tarrasch without Nc3: 4.e3 Nf6"  1.d4 d5 2.c4 e6 3.Nf3 c5 4.e3 Nf6 *
