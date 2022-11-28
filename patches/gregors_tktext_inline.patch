@@ -18,6 +18,9 @@ Generaly usage will be something like
   svn diff > ../newfiles.patch
 and then discard scidvspc-gregor)
 
+If you're having trouble find includes, try adding the private includes (ubuntu for eg)
+TKTEXT_CFLAGS += -I/usr/include/tcl8.6/tk-private/generic/ -I/usr/include/tcl8.6/tcl-private/generic/
+
 S.A.
 
 
