@@ -424,6 +424,8 @@ proc setPieceFont {font button} {
 ############################################################
 ### Toolbar and game movement buttons:
 
+proc initToolbarIcons {} {
+
 image create photo tb_open -data {
 R0lGODlhEQARAMIEAAAAAKmpqb6+vtnZ2f///////////////yH5BAEKAAcA
 LAAAAAARABEAAANLeLrc/vCASWl4gOidwW3ZpoUeKI7WQp0ipQACLMy0QAAD
@@ -657,6 +659,32 @@ w5lOLC6YqSCAiQgDcgwwCyswJAAoVCcKUyaNMFkBDTAhAAaKLxYbMC0VHYIw
 EA8wLA4JKjAXHlMUH1iDYWKxsly0tbC4trpVYLxRUEEAOw==
 }
 
+} ; # initToolbarIcons
+
+# Should match above tb_
+set toolbarButtons {new open save close finder bkm newgame copy paste gprev gnext gfirst glast rfilter hsearch bsearch msearch ginfo glist pgn comment maint eco tree book crosst tmt engine}
+
+initToolbarIcons 
+
+proc createBigToolbarIcons {} {
+  # Double size the toolbar buttons.
+  # Perhaps better would be resizing them individually to 1.5x
+  image create photo tempimage
+
+  foreach i $::toolbarButtons {
+    tempimage blank
+    tempimage copy tb_$i -zoom 2
+    tb_$i blank
+    tb_$i copy tempimage
+  }
+}
+
+if {$bigToolbar} {
+  createBigToolbarIcons
+}
+
+# Some other icons
+
 image create photo tb_help -data {
 R0lGODlhGAAYAKUAAERq5KS69HSS7Nzm/Fx+5LzO9Iym7PT2/ISe7GyK5Ex2
 5LTG9Ozu/KzC9ISa7GSG5Mza9Pz+/Exy5Ky69HyS7OTm/GSC5MTO9Jyy7Pz6
@@ -676,7 +704,7 @@ AAADPzi63AswSvmIvdiCeoMP2KYAHUh4lziQViBYgkmobIZqXCnPefuGvdMv
 FXRlaJkkb2Qb4phK4GhChTiu2KwjAQA7
 }
 
-
+# unused
 image create photo b_bargraph -data {
 R0lGODlhGAAYAKEAAAAAAP/6zf///wAAACH5BAEKAAMALAAAAAAYABgAAAJf
 nI+pCO0PIzBA2ItznqPqr3EeSAoiKWEnCASuO5oU+sLqzNZBvH5tzZulfq9g
@@ -761,8 +789,7 @@ foreach {b m} {
   # ::utils::tooltip::Set $tb.$b $m
 }
 
-foreach i {new open save close finder bkm newgame copy paste gprev gnext gfirst glast \
-      rfilter hsearch bsearch msearch ginfo glist pgn comment maint eco tree book crosst tmt engine} {
+foreach i $toolbarButtons {
   $tb.$i configure -relief flat -border 1 -highlightthickness 0 -anchor n -takefocus 0
   ::utils::tooltip::Set $tb.$i [tr $::helpMessage($tb.$i)]
 }
@@ -783,6 +810,8 @@ proc bindToolbarRadio {frame i} {
 }
 
 proc configToolbar {} {
+  global bigToolbar
+
   set w .tbconfig
   if {[winfo exists $w]} {
     raiseWin $w
@@ -794,7 +823,11 @@ proc configToolbar {} {
 
   array set ::toolbar_temp [array get ::toolbar]
 
-  set button_options {-height 20 -width 22 -command changeToolbar}
+  if {$bigToolbar} {
+    set button_options {-height 40 -width 44 -command changeToolbar}
+  } else {
+    set button_options {-height 20 -width 22 -command changeToolbar}
+  }
 
   set pack_options {-side left -ipadx 1 -padx 3 -ipady 1}
 
@@ -843,14 +876,17 @@ proc configToolbar {} {
     foreach i [array names toolbar_temp] { set toolbar_temp($i) 0 }
     changeToolbar 0
   }
+  checkbutton $w.big -text "Big Icons" -variable ::bigToolbar -command toggleBigToolbar
+
   dialogbutton $w.ok -text OK -command {
     array set toolbar [array get toolbar_temp]
     catch {grab release .tbconfig}
     destroy .tbconfig
     redrawToolbar
   }
-  pack $w.ok -side right -padx 5 -pady 5
+  pack $w.ok        -side right -padx 5 -pady 5
   pack $w.on $w.off -side left -padx 5 -pady 5
+  pack $w.big       -side left -padx 5 -pady 5
 
   pack [label $w.bar -width 20] -side bottom -pady 5
 
@@ -860,6 +896,23 @@ proc configToolbar {} {
 
   # catch {grab $w}
   # ?? S.A.
+}
+
+proc toggleBigToolbar {} {
+  global bigToolbar
+
+  if {$bigToolbar} {
+    createBigToolbarIcons
+  } else {
+    foreach i $::toolbarButtons {
+      image delete tb_$i
+    }
+    initToolbarIcons
+  }
+
+  # Have to reinit config to repad the buttons
+    destroy .tbconfig
+    configToolbar
 }
 
 proc redrawToolbar {} {
@@ -1118,23 +1171,6 @@ image create photo tb_popup_left -data {
 R0lGODlhDAAgAKECANnZ2QAAAP///////yH5BAEAAAAALAAAAAAMACAAAAId
 hI+py+0Po5y0WhCCyYljjXheB45hCV7qyrbuaxQAOw==
 }
-
-# Double size the toolbar buttons (disabled)
-if {0} {
-  image create photo tempimage
-  foreach i {ginfo glist pgn comment maint eco tree book crosst tmt engine
-    hsearch bsearch msearch rfilter newgame copy paste
-    gfirst gprev gnext glast new open save close finder bkm} {
-
-    tempimage blank
-    tempimage copy tb_$i -zoom 2
-    tb_$i blank
-    tb_$i copy tempimage
-  }
-}
-
-
-
 
 ##############################
 

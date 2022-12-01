@@ -328,7 +328,9 @@ set boardSize 60
 # language for help pages and messages:
 set language E
 set oldLang X
-# Toolbar configuration:
+
+# Toolbar configuration/default visibility
+set bigToolbar 0
 foreach {tbicon status}  {
   new 0 open 0 save 1 close 0
   finder 0 bkm 1 gfirst 1 gprev 1 gnext 1 glast 1

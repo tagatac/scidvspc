@@ -957,7 +957,7 @@ $m add command -label OptionsSave -command {
     puts $optionF "# format or it will not set your Scid options properly."
     puts $optionF ""
 
-  foreach i {boardSize boardStyle language ::pgn::showColor 
+  foreach i {boardSize boardStyle language ::pgn::showColor bigToolbar
     ::pgn::indentVars ::pgn::indentComments ::defaultBackground ::defaultForeground ::::defaultGraphBackgroud ::enableBackground ::enableForeground
     ::pgn::shortHeader ::pgn::boldMainLine ::pgn::stripMarks 
     ::pgn::symbolicNags ::pgn::moveNumberSpaces ::pgn::columnFormat ::pgn::showScrollbar
