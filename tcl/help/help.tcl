@@ -4409,7 +4409,7 @@ set helpText(Related) {<h1>Links</h1>
   <li>Player Information resources  <url http://sourceforge.net/projects/scid/files/Player Data/>http://sourceforge.net/projects/scid/files/Player Data/</url></li>
   <li>FICS <url http://www.freechess.org>www.freechess.org</url></li>
   <li>FICS game archives <url http://ficsgames.org>http://ficsgames.org</url></li>
-  <li>Chess Tech blog, with some ScidvsPC tutorials <url https://chesstech.info/>http://chesstech.info/</url> and <url https://www.chesstech.info/2019/02/scid-vs-pc-players-pictures-part-1.html">Part 1</url></li>
+  <li>Chess Tech blog, with some ScidvsPC tutorials <url https://www.chesstech.info/>https://www.chesstech.info/</url> and <url https://www.chesstech.info/2019/02/scid-vs-pc-players-pictures-part-1.html">Part 1</url></li>
 
   <li>Chessengeria Chess blog, also with tutorials   <url https://www.chessengeria.com/>https://www.chessengeria.com/</url></li>
   <li>Ed Collins' Scid vs. PC page <url http://edcollins.com/chess/scidvspc/index.html>http://edcollins.com/chess/scidvspc/index.html</url></li>
