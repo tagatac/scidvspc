@@ -6968,7 +6968,7 @@ set helpText(D,Related) {<h1>Links</h1>
   <li>Spielerinformationsdaten  <url http://sourceforge.net/projects/scid/files/Player Data/>http://sourceforge.net/projects/scid/files/Player Data/</url></li>
   <li>FICS <url http://www.freechess.org>www.freechess.org</url></li>
   <li>FICS-Partienarchive <url http://ficsgames.org>http://ficsgames.org</url></li>
-  <li>Chess Tech Blog, mit einigen ScidvsPC-Anleitungen <url http://chesstech.info/>http://chesstech.info/</url></li>
+  <li>Chess Tech Blog, mit einigen ScidvsPC-Anleitungen <url https://chesstech.info/>https://chesstech.info/</url></li>
   <li>Schach-Blog Chessengeria, auch mit Tutorien <url https://www.chessengeria.com/>https://www.chessengeria.com/</url></li>
   <li>Ed Collins' Seite Scid vs. PC <url http://edcollins.com/chess/scidvspc/index.html>http://edcollins.com/chess/scidvspc/index.html</url></li>
   <li>Gorgonians selbsterstellte Figuren <url http://gorgonian.weebly.com/scid-vs-pc.html>http://gorgonian.weebly.com/scid-vs-pc.html</url></i>
