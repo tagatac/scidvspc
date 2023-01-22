@@ -129,6 +129,11 @@ namespace eval uci {
       }
       set analysis(waitForBestMove$n) 0
 
+      # Autoplay any move from Graham's hardware driver
+      if {$analysis(eboard$n)} {
+	makeAnalysisMove $n $uciInfo(bestmove$n)
+      }
+
       return
     }
 
@@ -450,6 +455,22 @@ namespace eval uci {
         set uciInfo(name$n) $name
       }
       catch {::setTitle .analysisWin$n "$name"}
+    }
+
+    if {$analysis(eboard$n)} {
+      # Custom/hacked UCI standard commands
+      if {$line == "move start"} {
+        ::move::Start
+      } elseif {$line == "move back"} {
+        ::move::Back
+      } elseif {[scan $line "move back %i" ply] == 1} {
+        ::move::Back $ply
+      }
+    }
+
+    if {$line == "id author Graham ONeill"} {
+      set analysis(eboard$n) 1
+      ::sendToEngine $n eboardok
     }
   }
 

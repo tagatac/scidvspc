@@ -89,6 +89,7 @@ proc resetEngine {n} {
   set analysis(multiPVCount$n) 1      ;# number of N-best lines
   set analysis(uciok$n) 0             ;# uciok sent by engine in response to uci command
   set analysis(name$n) {}             ;# engine name
+  set analysis(eboard$n) 0            ;# Engine is a hardware device driver written by Graham ONeill
   set analysis(processInput$n) 0      ;# the time of the last processed event
   set analysis(waitForBestMove$n) 0
   set analysis(waitForReadyOk$n) 0
@@ -1928,9 +1929,13 @@ proc addAllVariations {{n 1} {rightclick 0}} {
   ::tools::graphs::score::Refresh
 }
 
-proc makeAnalysisMove {n} {
+proc makeAnalysisMove {n {someMove {}}} {
   global analysis comp
 
+if {$someMove != {}} {
+  # Graham's hardware driver / a discrete move
+  set move $someMove
+} else {
   set s $analysis(moves$n)
 
   # Scan over any leading number/etc. This is ugly
@@ -1947,6 +1952,7 @@ proc makeAnalysisMove {n} {
   if {[scan $s %s move] != 1} {
     return 0
   }
+}
 
   if {$move == [sc_game info nextMoveUCI]} {
     ::move::Forward
@@ -1954,9 +1960,13 @@ proc makeAnalysisMove {n} {
   }
 
   if {! [sc_pos isAt vend] && ! $comp(playing)} {
-    set action [confirmReplaceMove]
-    if {$action == "cancel"} {
-      return
+    if {$someMove != {}} {
+      set action mainline
+    } else {
+      set action [confirmReplaceMove]
+      if {$action == "cancel"} {
+	return
+      }
     }
   } else {
     set action replace
@@ -1979,6 +1989,17 @@ proc makeAnalysisMove {n} {
     return 0
   } else {
     ::fics::checkAdd
+
+    if {[winfo exists .serGameWin]} {
+      set ::sergame::lastPlayerMoveUci $move
+    } else {
+      set ::sergame::lastPlayerMoveUci ""
+    }
+
+    if {$::novag::connected} {
+      ::novag::addMove $move
+    }
+
     if {$action == "mainline"} {
       sc_var exit
       sc_var promote [expr {[sc_var count] - 1}]

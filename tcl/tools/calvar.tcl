@@ -383,7 +383,8 @@ namespace eval calvar {
     # first enter the user moves
     sc_var create
     if {$repeat_move != ""} {sc_move addSan $repeat_move}
-    if { [::uci::addUCIMoves $usermoves] } {
+    # Is this now correct ? S.A.
+    if { ! [::uci::addUCIMoves $usermoves] } {
       sc_pos setComment $comment
     }
 

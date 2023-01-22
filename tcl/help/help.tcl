@@ -287,8 +287,7 @@ append helpText(Index) {
   <li><a GameList Del>Deleted and Filtered games.</a>
   <li><a Flags>Delete flag</a></li>
   <li><a Maintenance Twins>Deleting twin games</a></li>
-  <li>Configuring <a HardwareConfig>DGT Electronic Chess Board</a></li>
-  <li><a InputEngine>DGT Usage</a></li>
+  <li><a Eboards>DGT Electronic Chess Board</a></li>
   <li><a Comment Diagrams>Diagrams</a></li>
   <li><a Comment Diagrams>Drawing arrows</a></li>
   <li><a Docking>Docked Windows</a></li>
@@ -312,7 +311,7 @@ append helpText(Index) {
   <li><a EPD>EPD Files</a></li>
   <li><a EPD opcodes>EPD Opcodes</a></li>
   <li><a Export>Exporting Games</a></li>
-  <li><a HardwareConfig>External Hardware</a> (Novag, DGT...)</li>
+  <li><a Eboards>Electronic Chessboards</a> (Novag, DGT...)</li>
   </ul>
 
   <h3><name F>F</name></h3>
@@ -394,7 +393,7 @@ append helpText(Index) {
   <li><a NAGs>NAG annotation values</a></li>
   <li><a Maintenance Editing>Names, editing</a></li>
   <li><a Maintenance Spellcheck>Names, spellchecking</a></li>
-  <li><a Novag>Novag Citrine</a></li>
+  <li><a Eboards>Novag Citrine</a></li>
   <li><a Variations Null>Null moves</a></li>
   </ul>
 
@@ -5938,8 +5937,41 @@ set helpText(BookTuning) {<h1>Book Tuning</h1>
   <p><footer>Updated: Scid vs. PC 4.21 January, 2020 </footer></p>
 }
 
+set helpTitle(Eboards) "Electronic Chessboards"
+set helpText(Eboards) {<h1>Electronic Chessboards</h1>
+ <p>Graham O'Neill has been releasing drivers for numerous electronic chess boards for a while now. At <url https://goneill.co.nz/chess.php>Graham's Chess page</url> you'll find lots of information, including Windows support for
+<br>
+<ul>
+<li>Certabo</li>
+<li>Chessnut</li>
+<li>DGT</li>
+<li>DGT Pegasus</li>
+<li>Millennium</li>
+<li>Novag Citrine</li>
+<li>Novag USB</li>
+<li>Saitek</li>
+<li>Square Off</li>
+</ul>
+<br>
+A subset of these are also supported in <url https://goneill.co.nz/chess#linux>Linux</url>.
+</p>
+<p>
+Basically, one installs the UCI Engine version of the appropriate driver from Graham's site and, by starting the driver using the Analysis Engines option, your eboard can now be used to enter chess games, play online with FICS, or against an UCI Engine.
+</p>
+<p>
+This is a new feature and hopefully it will mature as we go. A huge thanks to Graham for his great eboard support and documentation. :)
+</p>
+<p>
+<i>Information about Scid's legacy hardware support is available <a HardwareConfig>here</a></i>
+</p>
+
+  <p><footer>(Updated: Scid vs PC 4.23)</footer></p>
+}
+
 set helpTitle(Novag) "Novag Citrine"
 set helpText(Novag) {<h1>Novag Citrine Chess Board</h1>
+
+   <p><b>This section describes SCID's old Novag support. You probably want to use Graham's <a Eboards>Eboards engine</a>.</b></p>
    <p>
    The Novag Citrine is a wooden chess board that can connect to computers
    using a serial connection. It can be used with Scid
@@ -5956,16 +5988,15 @@ set helpText(Novag) {<h1>Novag Citrine Chess Board</h1>
     <p><footer>Updated: Scid vs. PC 4.18</footer></p>
 }
 
+
 set helpTitle(HardwareConfig) "Connecting External Hardware"
 set helpText(HardwareConfig) {<h1>Connecting External Hardware</h1>
-<p><i>Scid's hardware support is old and probably not working with most boards. User's wishing to help can visit <url https://goneill.co.nz/chess.php>Graham's Chess site</url> and see about porting his awesome drivers to Scid vs PC.</i></p>
+  <p><b>This section describes SCID's old hardware support. You probably want to use Graham's <a Eboards>Eboards engine</a>.</b></p>
 <p>
   Scid supports two types of external hardware, configured in 
   <green><run ::ExtHardware::config>Tools-<gt>Connect Hardware-<gt>Configure</run></green>.
 </p>
-
   <ul>
-
     <li><b>Novag Citrine</b> (<a Novag>and compatible boards</a>) use an
     internal driver that was developed specifically for the Novag
     Citrine board, but may also support other boards.
@@ -5984,8 +6015,6 @@ set helpText(HardwareConfig) {<h1>Connecting External Hardware</h1>
   <li><b>Other UCB Boards</b>
   Note - Scid does not include any input engine by default. Input engines are
 meant to be independent programs that can be used with a variety of GUIs.
- There is a great modern effort to provide an easy way to access many hardware devices
-at <url https://goneill.co.nz/chess.php>Graham's Chess page</url>, where he has drivers for <b>Millennium Chesslink, Certabo and Novag</b> UCB boards, as well as great documentation (at the bottom of the page) for a relatively easy way to implement in Scid (or any chess GUI).
   </li>
   </ul>
 
@@ -6017,7 +6046,7 @@ at <url https://goneill.co.nz/chess.php>Graham's Chess page</url>, where he has 
   </p>
 
   <h3>Input Engine/DGT</h3>
-<p><i>Scid's hardware support is old and probably not working with most boards. User's wishing to help can visit <url https://goneill.co.nz/chess.php>Graham's Chess site</url> and see about porting his awesome drivers to Scid vs PC.</i></p>
+  <p><b>This section describes SCID's old hardware support. You probably want to use Graham's <a Eboards>Eboards engine</a>.</b></p>
 
   <p>
   Configuring an Input Engine compatible driver requires additional fields.
@@ -6105,8 +6134,8 @@ set helpText(HardwareStatus) {<h1>Status of External Hardware</h1>
 
 set helpTitle(InputEngine) "DGT / Input Engine console"
 set helpText(InputEngine) {<h1>DGT / Input Engine console</h1>
-<p><i>Scid's hardware support is old and probably not working with most boards. User's wishing to help can visit <url https://goneill.co.nz/chess.php>Graham's Chess site</url> and see about porting his awesome drivers to Scid vs PC.</i></p>
 
+   <p><b>This section describes SCID's old DGT support. You probably want to use Graham's <a Eboards>Eboards engine</a>.</b></p>
    <p>
    On top of the Input Engine window, a console monitors the
    communication between Scid and the driver engine. Usually, this is

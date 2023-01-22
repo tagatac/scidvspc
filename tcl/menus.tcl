@@ -599,13 +599,16 @@ $m add cascade -label ToolsConnectHardware -menu $m.hardware
 set helpMessage($m,[incr menuindex]) ToolsConnectHardware
 incr menuindex
 
+  $m.hardware add command -label Help -command "helpWindow Eboards"
+  set helpMessage($m.hardware,0) Help
+
   $m.hardware add command -label ToolsConnectHardwareConfigure -command ::ExtHardware::config
-  set helpMessage($m.hardware,0) ToolsConnectHardwareConfigure
+  set helpMessage($m.hardware,1) ToolsConnectHardwareConfigure
 
   $m.hardware add command -label ToolsConnectHardwareNovagCitrineConnect -command ::novag::connect
-  set helpMessage($m.hardware,1) ToolsConnectHardwareNovagCitrineConnect
+  set helpMessage($m.hardware,2) ToolsConnectHardwareNovagCitrineConnect
   $m.hardware add command -label ToolsConnectHardwareInputEngineConnect -command ::inputengine::connectdisconnect
-  set helpMessage($m.hardware,2) ToolsConnectHardwareInputEngineConnect
+  set helpMessage($m.hardware,3) ToolsConnectHardwareInputEngineConnect
 
 $m add separator
 incr menuindex
@@ -1838,6 +1841,7 @@ proc setLanguageMenus {{lang ""}} {
   configMenuText .menu.options.colour.fore [tr OptionsMovesHighlightLastMoveColor $oldLang] OptionsMovesHighlightLastMoveColor $lang
   configMenuText .menu.options.colour.fore [tr OptionsFicsColour $oldLang] OptionsFicsColour $lang
 
+  configMenuText .menu.tools.hardware [tr Help $oldLang] Help $lang
   foreach tag { Configure NovagCitrineConnect InputEngineConnect  } {
     configMenuText .menu.tools.hardware [tr ToolsConnectHardware$tag $oldLang] ToolsConnectHardware$tag $lang
   }
