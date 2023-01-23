@@ -539,13 +539,9 @@ proc updateVarMenus {} {
       } else {
 	.main.button.intoVar.menu add command -label $str -command $commandStr
       }
-      set commandStr "sc_var delete $i; updateBoard -pgn"
-      .menu.edit.del add command -label $str -command $commandStr
-      set commandStr "sc_var first $i; updateBoard -pgn"
-      .menu.edit.first add command -label $str -command $commandStr
-      set commandStr "sc_var promote $i; updateBoard -pgn"
-      .menu.edit.main add command -label $str -command $commandStr \
-	  -state $state
+      .menu.edit.del add command -label $str -command "sc_game undoPoint ; sc_var delete $i; updateBoard -pgn"
+      .menu.edit.first add command -label $str -command "sc_game undoPoint ; sc_var first $i; updateBoard -pgn"
+      .menu.edit.main add command -label $str -command "sc_game undoPoint ; sc_var promote $i; updateBoard -pgn" -state $state
     }
   }
 }
