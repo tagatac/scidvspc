@@ -1929,11 +1929,11 @@ proc addAllVariations {{n 1} {rightclick 0}} {
   ::tools::graphs::score::Refresh
 }
 
-proc makeAnalysisMove {n {someMove {}}} {
+proc makeAnalysisMove {n {someMove {}} {defaultAction {}}} {
   global analysis comp
 
 if {$someMove != {}} {
-  # Graham's hardware driver / a discrete move
+  # A discrete move from Graham's hardware driver or from clicking analysis window arrows
   set move $someMove
 } else {
   set s $analysis(moves$n)
@@ -1960,16 +1960,21 @@ if {$someMove != {}} {
   }
 
   if {! [sc_pos isAt vend] && ! $comp(playing)} {
-    if {$someMove != {}} {
-      set action mainline
-    } else {
+    if {$someMove == {}} {
       set action [confirmReplaceMove]
-      if {$action == "cancel"} {
-	return
+    } else {
+      if {$defaultAction != {}} {
+        set action $defaultAction
+      } else {
+        set action [confirmReplaceMove]
       }
     }
   } else {
     set action replace
+  }
+
+  if {$action == "cancel"} {
+    return
   }
 
   if {!$comp(playing)} {
@@ -3755,13 +3760,14 @@ proc updateAnalysisBoard {n {moves {}}} {
     if {$m != ""} {
       set sq_start [::board::sq [string range $m 0 1]]
       set sq_end   [::board::sq [string range $m 2 3]]
-      ::board::mark::add $bd varComment $sq_start $sq_end $::engineLineColor
+      ::board::mark::add $bd varComment$m $sq_start $sq_end $::engineLineColor
+
     }
     foreach m [lrange $move 1 end] {
       if {$m != ""} {
         set sq_start [::board::sq [string range $m 0 1]]
         set sq_end   [::board::sq [string range $m 2 3]]
-        ::board::mark::add $bd varComment $sq_start $sq_end $::varcolor
+        ::board::mark::add $bd varComment$m $sq_start $sq_end $::varcolor
       }
     }
   } else {

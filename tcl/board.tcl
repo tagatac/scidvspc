@@ -1820,8 +1820,9 @@ proc ::board::mark::add {win args} {
               }
               set new 1
             }
-    varComment {
-              if {[catch {DrawVar $board $square $dest $color 0 small}]} {
+    varComment* {
+              # pretty nasty - "varComment" has an uci move appended. Extract move, and pass it on to DrawVar
+              if {[catch {DrawVar $board $square $dest $color m[string range $type 10 end]}]} {
                 return
               }
             }
@@ -1933,11 +1934,16 @@ proc ::board::mark::DrawArrow {pathName from to color} {
   $pathName raise p$from all
 }
 
-proc ::board::mark::DrawVar {pathName from to color varnum {small 0}} {
-  if {$from < 0  ||  $from > 63} { return }
-  if {$to   < 0  ||  $to   > 63} { return }
+proc ::board::mark::DrawVar {pathName from to color varnum} {
+  # main     board arrows come with varnum integer
+  # analysis board arrows come with varnum  m$MOVE, to allow for clickable moves
+
+  if {[scan $varnum m%s uciMove] == 1} {set small 1} else {set small 0}
+
+  if {$from < 0  ||  $from > 63 || $to < 0 || $to   > 63} { return }
+
   set coord [GetArrowCoords $pathName $from $to $::board::arrowLength]
-  if {$small == "0"} {
+  if {!$small} {
     set arrow [
     $pathName create line $coord -fill $color -arrow last -width $::board::arrowWidth \
       -width $::board::arrowWidth -arrowshape "[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * sqrt (6.25 + 2.25)] [expr int($::board::arrowWidth * 1.5)]" \
@@ -1945,15 +1951,25 @@ proc ::board::mark::DrawVar {pathName from to color varnum {small 0}} {
     ]
   } else {
     set arrow [
-    $pathName create line $coord -fill $color -arrow last -width 2 -arrowshape {9 12 3} \
-      -activewidth 4 -tag [list mark var "mark${from}:${to}" var$varnum]
+    $pathName create line $coord -fill $color -arrow last -width 3 -arrowshape {9 12 3} \
+      -activewidth 5 -tag [list mark var "mark${from}:${to}" var$uciMove]
     ]
   }
   $pathName raise $arrow all
   $pathName raise p$from all
 
   # Create arrow binding
-  $pathName bind var$varnum <Button-1> "enterVar $varnum"
+  if {!$small} {
+    $pathName bind var$varnum <Button-1> "enterVar $varnum"
+  } else {
+    # derive engine number from pathname ".analysisWin$n.frame.bd"
+    set n [string range $pathName 12 [string first . $pathName 10]-1]
+    if {!$::analysis(lockEngine$n)} {
+      $pathName bind var$uciMove <Button-1> "makeAnalysisMove $n $uciMove"
+    } else {
+      $pathName bind var$uciMove <Button-1> ""
+    }
+  }
 }
 
 # ::board::mark::DrawRectangle --

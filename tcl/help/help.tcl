@@ -2785,7 +2785,7 @@ making for easier <a Analysis Debugging>Debugging</a>.
   Hover cursor over this button to see stats for locked game.
   After a while, to add this analysis to game, return to the locked position, 
   press Pause, Unlock, and Add Variation.</li>
-  <li> <button tb_coords 32> <b>Show Board</b> displays a small working board.
+  <li> <button tb_coords 32> <b>Show Board</b> displays a small working board with clickable arrows.
   If engine is locked the board displays the locked position, otherwise middle-click toggles between display modes.</li>
   <li> <button tb_exclude 32> <b>Exclude Move(s)</b> helps refine the engine's search list (mainly UCI engines only). Hovering mouse shows the current excluded moves.</li>
   <li> <button tb_cpu 32> <b>Low CPU priority</b> 

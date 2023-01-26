@@ -131,7 +131,7 @@ namespace eval uci {
 
       # Autoplay any move from Graham's hardware driver
       if {$analysis(eboard$n)} {
-	makeAnalysisMove $n $uciInfo(bestmove$n)
+	makeAnalysisMove $n $uciInfo(bestmove$n) mainline
       }
 
       return
