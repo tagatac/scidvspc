@@ -54,14 +54,11 @@ proc ::file::Exit {}  {
   }
   for {set i 0} {$i < [llength $::engines(list)]} {incr i} {
     if {[winfo exists .analysisWin$i]} {
-      if {$::analysis(eboard$i)} {
-	set answer [tk_dialog .unsaved "Scid: Confirm Quit" "Eboard still running" question {} "   [tr FileExit]   " [tr Cancel]]
-	if {$answer != 0} {
-	  wm protocol . WM_DELETE_WINDOW {::file::Exit}
-	  return
-	} 
-      }
-      destroyAnalysisWin $i .analysisWin$i
+        # Try to be nice and close all engines, especially Graham's driver. It's a bit of a mess, but
+        # Destroy/WM_DELETE_WINDOW is now unbound (on windows only?) so call proc exclusively
+        destroyAnalysisWin $i .analysisWin$i
+        # This vwait is essential for eboards, but may need removing if it misbehaves elsewhere. S.A.
+        vwait ::analysisWin$i
     }
   }
   if {$::optionsAutoSave} {
