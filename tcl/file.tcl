@@ -58,7 +58,7 @@ proc ::file::Exit {}  {
         # Destroy/WM_DELETE_WINDOW is now unbound (on windows only?) so call proc exclusively
         destroyAnalysisWin $i .analysisWin$i
         # This vwait is essential for eboards, but may need removing if it misbehaves elsewhere. S.A.
-        vwait ::analysisWin$i
+        if {[set ::analysisWin$i]} {vwait ::analysisWin$i}
     }
   }
   if {$::optionsAutoSave} {
