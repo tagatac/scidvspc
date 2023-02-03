@@ -932,11 +932,13 @@ proc ::windows::gamelist::Configure {window} {
   if {$window == {.glistWin.tree}} {
     recordWidths
     recordWinSize .glistWin
-
-    if {$::windows::gamelist::customFont} {
-      ttk::style configure Treeview -rowheight [expr {int ([font metrics font_Small -linespace] * 1.4)}]
-    } else {
-      ttk::style configure Treeview -rowheight [expr {int ([font metrics TkTextFont -linespace] * 1.1)}]
+    if {!$::macOS} {
+      # on macOS this is breaking the initial window size
+      if {$::windows::gamelist::customFont} {
+	ttk::style configure Treeview -rowheight [expr {int ([font metrics font_Small -linespace] * 1.4)}]
+      } else {
+	ttk::style configure Treeview -rowheight [expr {int ([font metrics TkTextFont -linespace] * 1.1)}]
+      }
     }
     ::windows::gamelist::SetSize
     ::windows::gamelist::Refresh
@@ -1005,10 +1007,15 @@ proc ::windows::gamelist::SetSize {} {
   set w .glistWin.tree
   if {![winfo exists $w]} {return}
 
-  if {$::windows::gamelist::customFont} {
-    set fontspace [expr {int ([font metrics font_Small -linespace] * 1.4)}]
+  if {$::macOS} {
+    # font metrics doesn't seem too great on Mac ??
+    set fontspace 20
   } else {
-    set fontspace [expr {int ([font metrics TkTextFont -linespace] * 1.1)}]
+    if {$::windows::gamelist::customFont} {
+      set fontspace [expr {int ([font metrics font_Small -linespace] * 1.4)}]
+    } else {
+      set fontspace [expr {int ([font metrics TkTextFont -linespace] * 1.1)}]
+    }
   }
   set height [winfo height $w]
   set heading 18
