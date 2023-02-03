@@ -1,6 +1,6 @@
 Index: tcl/windows/gamelist.tcl
 ===================================================================
---- tcl/windows/gamelist.tcl	(revision 3253)
+--- tcl/windows/gamelist.tcl	(revision 3337)
 +++ tcl/windows/gamelist.tcl	(working copy)
 @@ -303,9 +303,9 @@
      # -yscroll "$w.vsb set" -xscroll "$w.hsb set"
@@ -35,17 +35,17 @@ Index: tcl/windows/gamelist.tcl
    # MouseWheel bindings:
    # bind $w <MouseWheel> {::windows::gamelist::Scroll [expr {- (%D / 120)}]}
    if {$::windowsOS || $::macOS} {
-@@ -909,6 +898,9 @@
+@@ -936,6 +925,9 @@
    if {$window == {.glistWin.tree}} {
      recordWidths
      recordWinSize .glistWin
 +
-+    ttk::style configure Treeview -rowheight [expr {[font metrics  font_Small -linespace] + 1}]
++    ttk::style configure Treeview -rowheight [expr {int ([font metrics  font_Small -linespace] * 1.4)}]
 +    ::windows::gamelist::SetSize
      ::windows::gamelist::Refresh
    }
    if {$window == ".glistWin.b.f"} {
-@@ -975,24 +967,17 @@
+@@ -1002,30 +994,13 @@
    set w .glistWin.tree
    if {![winfo exists $w]} {return}
  
@@ -60,22 +60,24 @@ Index: tcl/windows/gamelist.tcl
 -    } else {
 -      set glFontHeight [expr $fontspace*106/72]
 -    }
-+  set fontspace [font metrics  font_Small -linespace]
-+  # Nasty hack to make things work
-+  if {$::windowsOS} {
-+    set glFontHeight [expr $fontspace*125/72]
-+  } elseif {$::macOS} {
-+    set glFontHeight [expr $fontspace*92/72]
-+  } else {
-+    set glFontHeight $fontspace
-   }
+-  }
 -  # $glFontHeight ~ 22 linux
- 
+-
 -  # set glistSize [expr {[winfo height $w] / $glFontHeight +([winfo height $w]-300)/200}]
--}
++  set fontspace [expr {int ([font metrics  font_Small -linespace] * 1.4)}]
++  set height [winfo height $w]
++  set heading 18
++  set space [expr $height - $heading]
++  set glistSize [expr int(ceil($space / $fontspace)) ]
+ }
 -  # hardcoded in ttkTreeview.c to (20 pixels high + 1 pixel padding ) - 1 row for title.
 -  set glistSize [expr {int([winfo height $w] / 21)-1}]
-+  set glistSize [expr {[winfo height $w] / $glFontHeight +([winfo height $w]-300)/200}]
  
-   # debugging voodoo
-   # puts "glistSize $glistSize , winfo height [winfo height $w]"
+-  # debugging voodoo
+-  # puts "glistSize $glistSize , winfo height [winfo height $w]"
+-  # 700 = +2 # 100 = -1
+-}
+-
+ image create photo arrow_up -format gif -data {
+ R0lGODlhCgAKAIABAAAAAP///yH5BAEKAAEALAAAAAAKAAoAAAIPjI+pq8AA
+ G4xnWmMz26gAADs=
