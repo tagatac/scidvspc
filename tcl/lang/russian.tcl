@@ -592,6 +592,8 @@ menuText R TreeOptShowBar "Show Progress Bar" 0 "Show tree progress bar."
 # ====== TODO To be translated ======
 menuText R TreeOptShowFrame "Show Button Bar" 0 "Show tree button bar."
 # ====== TODO To be translated ======
+menuText R TreeOptSmallFont "Use Custom Font" 0 "Use font_Small for Gamelist."
+# ====== TODO To be translated ======
 menuText R TreeOptSortBest "Sort Best Games" 0 "Sort Best Games by ELO."
 menuText R TreeHelp "Помощь" 0
 menuText R TreeHelpTree "Помощь по дереву" 0

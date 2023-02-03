@@ -150,6 +150,7 @@ set ::commenteditor::showBoard 1
 set ::windows::gamelist::widths {}
 set ::windows::gamelist::findcase 1
 set ::windows::gamelist::showButtons 1
+set ::windows::gamelist::customFont 0
 set ::windows::switcher::icons 1
 set ::windows::switcher::confirmCopy 1
 set ::file::finder::data(dir) $::env(HOME)

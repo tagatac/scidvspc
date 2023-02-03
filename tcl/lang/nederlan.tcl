@@ -620,6 +620,8 @@ menuText N TreeOptShowBar "Show Progress Bar" 0 "Show tree progress bar."
 # ====== TODO To be translated ======
 menuText N TreeOptShowFrame "Show Button Bar" 0 "Show tree button bar."
 # ====== TODO To be translated ======
+menuText N TreeOptSmallFont "Use Custom Font" 0 "Use font_Small for Gamelist."
+# ====== TODO To be translated ======
 menuText N TreeOptSortBest "Sort Best Games" 0 "Sort Best Games by ELO."
 menuText N TreeHelp "Help" 0
 menuText N TreeHelpTree "Hulp bij zoekboom" 0

@@ -975,7 +975,7 @@ $m add command -label OptionsSave -command {
     exportFlags(comments) exportFlags(space) exportFlags(vars) exportFlags(indentc)
     exportFlags(indentv) exportFlags(newlines) exportFlags(column) exportFlags(htmldiag) exportFlags(utf8)
     email(smtp) email(smproc) email(server) 
-    email(from) email(bcc) ::windows::gamelist::findcase ::windows::gamelist::showButtons
+    email(from) email(bcc) ::windows::gamelist::findcase ::windows::gamelist::showButtons ::windows::gamelist::customFont
     gameInfo(show) gameInfo(photos) gameInfo(wrap) gameInfo(showStatus) 
     gameInfo(fullComment) gameInfo(showMarks) gameInfo(showMenu) gameInfo(showTool) 
     gameInfo(showMaterial) gameInfo(showFEN) gameInfo(showButtons) gameInfo(showTB) 

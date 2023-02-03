@@ -582,6 +582,8 @@ menuText D TreeOptAutomask "Automatisches Laden der Maske" 0 "Automatisches Lade
 menuText D TreeOptCacheSize "Cache-Größe" 0 {Cache-Größe auswählen.}
 menuText D TreeOptShowBar "Fortschrittsbalken anzeigen" 0 "Zeigt Fortschrittsbalken an."
 menuText D TreeOptShowFrame "Schaltflächenleiste anzeigen" 0 "Zeigt Schaltflächenleiste für den Zugbaum"
+# ====== TODO To be translated ======
+menuText D TreeOptSmallFont "Use Custom Font" 0 "Use font_Small for Gamelist."
 menuText D TreeOptSortBest "Sortiere beste Partien" 0 "Sortiert beste Partien nach ELO."
 menuText D TreeHelp "Hilfe" 0
 menuText D TreeHelpTree "Zugbaumhilfe" 0

@@ -545,6 +545,8 @@ menuText T TreeOptCacheSize "Cache size" 0 {Set the cache size}
 menuText T TreeOptShowBar "İlerleme Çubuğunu Göster" 0 "Ağaç ilerleme çubuğunu göster."
 # ====== TODO To be translated ======
 menuText T TreeOptShowFrame "Show Button Bar" 0 "Show tree button bar."
+# ====== TODO To be translated ======
+menuText T TreeOptSmallFont "Use Custom Font" 0 "Use font_Small for Gamelist."
 menuText T TreeOptSortBest "En İyi Oyunları Sıralayın" 0 "En İyi Oyunları ELO'ya Göre Sırala."
 menuText T TreeHelp "yardım" 0
 menuText T TreeHelpTree "Ağaç Yardımı" 0

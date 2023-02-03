@@ -559,6 +559,7 @@ menuText E TreeOptAutomask "Auto-Load Mask" 0 "Auto-Load most recent mask with a
 menuText E TreeOptCacheSize "Cache size" 0 {Set the cache size}
 menuText E TreeOptShowBar "Show Progress Bar" 0 "Show tree progress bar."
 menuText E TreeOptShowFrame "Show Button Bar" 0 "Show tree button bar."
+menuText E TreeOptSmallFont "Use Custom Font" 0 "Use font_Small for Gamelist."
 menuText E TreeOptSortBest "Sort Best Games" 0 "Sort Best Games by ELO."
 menuText E TreeHelp "Help" 0
 menuText E TreeHelpTree "Tree Help" 0

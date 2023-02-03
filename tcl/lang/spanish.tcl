@@ -623,6 +623,8 @@ menuText S TreeOptCacheSize "Tamaño de caché" 0 {Fija el tamaño del caché}
 menuText S TreeOptShowBar "Mostrar barra de progreso" 0 "Mostrar barra de progreso del árbol"
 # ====== TODO To be translated ======
 menuText S TreeOptShowFrame "Show Button Bar" 0 "Show tree button bar."
+# ====== TODO To be translated ======
+menuText S TreeOptSmallFont "Use Custom Font" 0 "Use font_Small for Gamelist."
 menuText S TreeOptSortBest "Ordenar mejores partidas" 0 "Ordenar mejores partidas por ELO."
 menuText S TreeHelp "Ayuda" 1
 menuText S TreeHelpTree "Ayuda del árbol" 4

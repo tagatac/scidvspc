@@ -562,6 +562,8 @@ menuText U TreeOptAutomask "Abrir máscara automaticamente" 0 "Auto-Load most rec
 menuText U TreeOptCacheSize "Tamanho da Cache" 0 {Define o tamanho do cache}
 menuText U TreeOptShowBar "Mostrar Barra de Progresso" 0 "Mostrar barra de progresso da árvore."
 menuText U TreeOptShowFrame "Mostrar Menu Inferior" 0 "Mostra a barra de menu inferior."
+# ====== TODO To be translated ======
+menuText U TreeOptSmallFont "Use Custom Font" 0 "Use font_Small for Gamelist."
 menuText U TreeOptSortBest "Ordenar melhores jogos" 0 "Ordena melhores jogos por ELO."
 menuText U TreeHelp "Ajuda" 0
 menuText U TreeHelpTree "Ajuda para árvore" 0

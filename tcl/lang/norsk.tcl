@@ -571,6 +571,8 @@ menuText O TreeOptAutomask "Åpne maske automatisk" 0 "Åpner siste maske med et
 menuText O TreeOptCacheSize "Mellomlager" 0 {Størrelse på mellomlager}
 menuText O TreeOptShowBar "Vis fremdrift" 0 "Viser fremdrift."
 menuText O TreeOptShowFrame "Vis knapperad" 0 "Vis knapperad."
+# ====== TODO To be translated ======
+menuText O TreeOptSmallFont "Use Custom Font" 0 "Use font_Small for Gamelist."
 menuText O TreeOptSortBest "Sorter beste partier" 0 "Sorter beste partier etter ELO."
 menuText O TreeHelp "Hjelp" 0
 menuText O TreeHelpTree "Tre hjelp" 0

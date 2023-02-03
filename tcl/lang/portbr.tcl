@@ -676,6 +676,8 @@ menuText B TreeOptAutomask "Auto carregar mascara" 0 "Auto carrega a mascara mai
 menuText B TreeOptCacheSize "Tamanho do Cache" 0 {Define o tamanho do cache}
 menuText B TreeOptShowBar "Mostra barra de Progresso" 0 "Mostra a barra de progresso da arvore."
 menuText B TreeOptShowFrame "Exibe Barra de Botoes" 0 "Exibe a barra de botoes da arvore."
+# ====== TODO To be translated ======
+menuText B TreeOptSmallFont "Use Custom Font" 0 "Use font_Small for Gamelist."
 
 
 

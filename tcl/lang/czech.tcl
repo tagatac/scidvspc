@@ -647,6 +647,8 @@ menuText C TreeOptShowBar "Show Progress Bar" 0 "Show tree progress bar."
 # ====== TODO To be translated ======
 menuText C TreeOptShowFrame "Show Button Bar" 0 "Show tree button bar."
 # ====== TODO To be translated ======
+menuText C TreeOptSmallFont "Use Custom Font" 0 "Use font_Small for Gamelist."
+# ====== TODO To be translated ======
 menuText C TreeOptSortBest "Sort Best Games" 0 "Sort Best Games by ELO."
 menuText C TreeHelp "Nápovìda" 0
 menuText C TreeHelpTree "Nápovìda - Strom" 11

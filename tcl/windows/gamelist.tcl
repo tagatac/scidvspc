@@ -302,10 +302,7 @@ proc ::windows::gamelist::Open {} {
   ttk::treeview $w.tree -columns $::glistHeaders -displaycolumns $::glistColOrder -show headings -xscroll "$w.hsb set"
     # -yscroll "$w.vsb set" -xscroll "$w.hsb set"
 
-  # To mess with treeview fonts (for eg)
-  # ttk::style configure Treeview.Heading -font font_Small
-  # ttk::style configure Treeview -font font_Small
-  # ttk::style configure Treeview -rowheight [expr {[font metrics  font_Small -linespace] + 1}]
+  ::windows::gamelist::configFont
 
   bind $w.tree <Button-2> {
     set ::windows::gamelist::showButtons [expr {!$::windows::gamelist::showButtons}]
@@ -409,18 +406,7 @@ proc ::windows::gamelist::Open {} {
     }
     ::windows::gamelist::Refresh last
   }
-  bind $w <Next>  {
-    incr glstart $glistSize
-    set totalSize [sc_filter count]
-    set lastEntry [expr $totalSize - $glistSize]
-    if {$lastEntry < 1} {
-      set lastEntry 1
-    }
-    if {$glstart > $lastEntry} {
-      set glstart $lastEntry
-    }
-    ::windows::gamelist::Refresh first
-  }
+  bind $w <Next>  {::windows::gamelist::Scroll $glistSize}
   # MouseWheel bindings:
   # bind $w <MouseWheel> {::windows::gamelist::Scroll [expr {- (%D / 120)}]}
   if {$::windowsOS || $::macOS} {
@@ -573,6 +559,16 @@ proc ::windows::gamelist::Open {} {
   after idle {
     ::windows::gamelist::placePopupButton
     ::windows::gamelist::showCurrent
+  }
+}
+
+proc ::windows::gamelist::configFont {} {
+  if {$::windows::gamelist::customFont} {
+    ttk::style configure Treeview.Heading -font font_Small
+    ttk::style configure Treeview -font font_Small
+  } else {
+    ttk::style configure Treeview.Heading -font TkTextFont
+    ttk::style configure Treeview -font TkTextFont
   }
 }
 
@@ -936,6 +932,13 @@ proc ::windows::gamelist::Configure {window} {
   if {$window == {.glistWin.tree}} {
     recordWidths
     recordWinSize .glistWin
+
+    if {$::windows::gamelist::customFont} {
+      ttk::style configure Treeview -rowheight [expr {int ([font metrics font_Small -linespace] * 1.4)}]
+    } else {
+      ttk::style configure Treeview -rowheight [expr {int ([font metrics TkTextFont -linespace] * 1.1)}]
+    }
+    ::windows::gamelist::SetSize
     ::windows::gamelist::Refresh
   }
   if {$window == ".glistWin.b.f"} {
@@ -991,7 +994,7 @@ proc ::windows::gamelist::Scroll {nlines} {
 }
 
 proc ::windows::gamelist::SetSize {} {
-  global glistSize glFontHeight 
+  global glistSize
 
   ### Figure out how many lines of text in the treeview widget
   ### This is probably broke on some platforms
@@ -1002,28 +1005,15 @@ proc ::windows::gamelist::SetSize {} {
   set w .glistWin.tree
   if {![winfo exists $w]} {return}
 
-if {0} {
-  if {![info exists glFontHeight]} {
-    set fontspace [font metrics [ttk::style lookup [$w cget -style] -font] -linespace]
-    # Nasty hack to make things work
-    if {$::windowsOS} {
-      set glFontHeight [expr $fontspace*125/72]
-    } elseif {$::macOS} {
-      set glFontHeight [expr $fontspace*92/72]
-    } else {
-      set glFontHeight [expr $fontspace*106/72]
-    }
+  if {$::windows::gamelist::customFont} {
+    set fontspace [expr {int ([font metrics font_Small -linespace] * 1.4)}]
+  } else {
+    set fontspace [expr {int ([font metrics TkTextFont -linespace] * 1.1)}]
   }
-  # $glFontHeight ~ 22 linux
-
-  # set glistSize [expr {[winfo height $w] / $glFontHeight +([winfo height $w]-300)/200}]
-}
-  # hardcoded in ttkTreeview.c to (20 pixels high + 1 pixel padding ) - 1 row for title.
-  set glistSize [expr {int([winfo height $w] / 21)-1}]
-
-  # debugging voodoo
-  # puts "glistSize $glistSize , winfo height [winfo height $w]"
-  # 700 = +2 # 100 = -1
+  set height [winfo height $w]
+  set heading 18
+  set space [expr $height - $heading]
+  set glistSize [expr int($space / $fontspace)-1 ]
 }
 
 image create photo arrow_up -format gif -data {

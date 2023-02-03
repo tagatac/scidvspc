@@ -547,6 +547,8 @@ menuText L TreeOptCacheSize "Välimuistin koko" 0 {Aseta välimuistin koko}
 menuText L TreeOptShowBar "Näytä edistymispalkki" 0 "Näytä puun edistymispalkki."
 # ====== TODO To be translated ======
 menuText L TreeOptShowFrame "Show Button Bar" 0 "Show tree button bar."
+# ====== TODO To be translated ======
+menuText L TreeOptSmallFont "Use Custom Font" 0 "Use font_Small for Gamelist."
 menuText L TreeOptSortBest "Lajittele parhaat pelit" 0 "Lajittele parhaat pelit ECOn mukaan."
 menuText L TreeHelp "Apu" 0
 menuText L TreeHelpTree "Puuapu" 0
