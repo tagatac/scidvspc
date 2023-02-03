@@ -1973,9 +1973,10 @@ set helpText(PGN) {<h1>PGN Window</h1>
 
   <h3><name ttf>Chess Figurines</name></h3>
   <p>
-  The <b>Chess Pieces</b> option displays small chess figurines instead of letters, to represent pieces.
-  This feature is only available if truetype fonts are supported, and ScidChessStandard.ttf has successfully been installed,
-  and may incur a small performance loss.
+  The <b>Chess Pieces</b> option displays small chess figures instead of letters, to represent pieces.
+  This feature is only available if truetype fonts are supported, and ScidChessStandard.ttf has successfully been
+  installed. This is done as part of compiling from source by "make install", but otherwise you will find the font
+  <url https://sourceforge.net/projects/scidvspc/files/support files/pgn_ttf_fonts.tgz/download>here</url>
   </p>
   <p>
   On <b>Microsoft Windows</b>, the fonts are installed automatically, but may
@@ -2759,9 +2760,9 @@ making for easier <a Analysis Debugging>Debugging</a>.
   Keys <b>1 to 5</b> will set the engine's variation count (MultiPV).
   </p>
   <p>
-  At the top of the window are some useful buttons.
-  <a Analysis Moves>Engine Analysis</a> occupy most of the space,
-  and at the bottom is some <a Analysis Info>Extra Information</a> (which may be hidden).
+  At the top of the window are some useful buttons. Below them,
+  <a Analysis Moves>Engine Analysis/PV</a> occupies most of the space.
+  And at the bottom is some <a Analysis Info>Extra Information</a>, though hidden by default (see below).
   </p>
 
   <p>
@@ -2777,8 +2778,8 @@ making for easier <a Analysis Debugging>Debugging</a>.
   <li> <button tb_play 32> <b>Play</b> / <button tb_pause 32> <b>Pause</b>. Start / Stop engine analysis.
   <li> <button tb_addmove 32> <b>Add Move</b> 
   adds the engine's best move to the current game. (Right click adds the engine score).</li>
-  <li> <button tb_addvar 32> <b>Add Variation</b>  adds the whole main line.  (Right click adds the second variation if multi-pv enabled)</li>
-  <li> <button tb_addallvars 32> <b>MultiPV</b>  if the engine supports MultiPV, add all variations.</li>
+  <li> <button tb_addvar 32> <b>Add Variation</b>  adds the whole main line.  (Right click adds the second variation if MultiPV enabled)</li>
+  <li> <button tb_addallvars 32> <b>MultiPV</b>  adds all variations, the number being defined by the adjoining spinbox.</li>
 
   <li> <button tb_annotate 32> <b>Annotate Game</b> (see <a Analysis Annotating>below</a>).</li>
   <li> <button tb_lockengine 32> <b>Lock Analysis</b> to a certain position.

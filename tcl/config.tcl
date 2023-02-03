@@ -93,9 +93,9 @@ if {$graphFigurineAvailable} {
 }
 
 if {$graphFigurineAvailable} {
-  ::splash::add "True type fonts (PGN figurines) enabled."
+  ::splash::add "PGN chess figures (True type fonts) enabled."
 } else {
-  ::splash::add "True type fonts (PGN figurines) disabled." error
+  ::splash::add "PGN chess figures (True type fonts) disabled."
 }
 
 if {$graphFigurineAvailable} {

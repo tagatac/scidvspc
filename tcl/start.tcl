@@ -1942,7 +1942,7 @@ proc ::splash::add {text {tag {indent}}} {
 ::splash::add "$::scidName $::scidVersion ($::scidVersionDate)"
 ::splash::add "http://scidvspc.sourceforge.net"
 ::splash::add ""
-::splash::add "(C) Steven Atkinson (stevenaaus@yahoo.com) 2008-2022"
+::splash::add "(C) Steven Atkinson (stevenaaus@yahoo.com) 2008-2023"
 ::splash::add "(C) Pascal Georges 2006-2008"
 ::splash::add "(C) Shane Hudson 1999-2004"
 ::splash::add "(C) Gregor Cramer, Fulvio Benini and others."
