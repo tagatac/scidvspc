@@ -601,7 +601,9 @@ proc ::windows::gamelist::popupButtonBar {} {
   pack [frame .t.f -relief solid -borderwidth 1]
   set t .t.f
   catch {wm transient .t [winfo toplevel .main]}
-  wm overrideredirect .t 1
+  if {!$::macOS || $::macCarbon} {
+    wm overrideredirect .t 1
+  }
 
   set offset 14
   foreach b [winfo children $w] {
