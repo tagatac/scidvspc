@@ -1,0 +1,85 @@
+Todo - lots of ttk elements (notably the tabs) still need doing.
+
+Index: tcl/board.tcl
+===================================================================
+--- tcl/board.tcl	(revision 3341)
++++ tcl/board.tcl	(working copy)
+@@ -25,6 +25,40 @@
+ }
+ array set newColors {}
+ 
++proc SetBackgroundColour {} {
++  global defaultBackground enableBackground
++
++  set temp [tk_chooseColor -initialcolor $defaultBackground -title Scid]
++  if {$temp != {}} {
++    set defaultBackground $temp
++    set enableBackground 1
++    option add *Text*background $temp
++    option add *Listbox*background $temp
++    .main.gameInfo configure -bg $temp
++    initBackgroundColour $defaultBackground
++  }
++}
++
++proc initBackgroundColour {colour} {
++    # border around gameinfo photos
++    .main.photoW configure -background $colour
++    .main.photoB configure -background $colour
++    ::ttk::style configure Treeview -background $colour
++    ::ttk::style configure Treeview -fieldbackground $colour
++    option add *Text*background $colour
++    option add *Listbox*background $colour
++    # Updating padding in tree would be nice, but now they have to close and re-open tree
++    # if {[winfo exists .baseWin.c]} { .baseWin.c configure -bg $temp }
++    recurseBackgroundColour . $colour
++}
++
++proc recurseBackgroundColour {w colour} {
++       catch {$w configure -background $colour}
++       foreach c [winfo children $w] {
++	   recurseBackgroundColour $c $colour
++       }
++}
++
+ proc SetBoardTextures {} {
+   global boardfile_dark boardfile_lite
+   # handle cases of old configuration files
+Index: tcl/menus.tcl
+===================================================================
+--- tcl/menus.tcl	(revision 3341)
++++ tcl/menus.tcl	(working copy)
+@@ -1375,19 +1375,6 @@
+ $m.fore add command -label OptionsMovesHighlightLastMoveColor -command SetForegroundColour
+ $m.fore add checkbutton -label OptionsFicsColour -variable enableForeground
+ 
+-proc SetBackgroundColour {} {
+-  global defaultBackground enableBackground
+-  set temp [tk_chooseColor -initialcolor $defaultBackground -title [tr OptionsBackColour]]
+-  if {$temp != {}} {
+-    set defaultBackground $temp
+-    if {!$enableBackground} {set enableBackground 1}
+-    option add *Text*background $temp
+-    option add *Listbox*background $temp
+-    .main.gameInfo configure -bg $temp
+-    initBackgroundColour $defaultBackground
+-  }
+-}
+-
+ ### Text foreground colour
+ proc SetForegroundColour {} {
+   global defaultForeground enableForeground
+Index: tcl/start.tcl
+===================================================================
+--- tcl/start.tcl	(revision 3341)
++++ tcl/start.tcl	(working copy)
+@@ -1618,8 +1618,7 @@
+   # option add *menu*foreground white
+ }
+ if {$enableBackground == 1} {
+-  option add *Text*background $defaultBackground
+-  option add *Listbox*background $defaultBackground
++  option add *background $defaultBackground
+ }
+ 
+ # Global background disabled
