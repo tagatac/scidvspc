@@ -2234,10 +2234,11 @@ proc makeAnalysisWin {{n 0} {options {}}} {
     ### Stop engine and exit
     destroy $w
     focus .main
+    # Hmm - this is already zero-ed by destroyAnalysisWin (which is bound to destroy). Do we really have to do so again?
     set analysisWin$n 0
     resetEngine $n
     updateStatusBar
-    update
+    # update
     return
   }
 
@@ -2253,7 +2254,6 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   ### but now    engine[0] will run in toplevel .analysisWin0
 
   if {$n == {}  ||  $n < 0} {
-    set analysisWin$n 0
     return
   }
 
