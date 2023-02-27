@@ -98,7 +98,6 @@ proc ::game::TruncateBegin {} {
     return
   }
   updateBoard -pgn
-  updateTitle
   ::tools::graphs::score::Refresh
 }
 

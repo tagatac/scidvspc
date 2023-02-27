@@ -1687,7 +1687,7 @@ proc nextFindEntryBox {entry var text} {
     }
     if {$result == {}} {
       set topvar(findindex) 1.0
-      bell
+      flashEntryBox $entry
     } else {
       if {[ regexp {(.*)\.(.*)} $result t1 line char]} {
         $text see $result

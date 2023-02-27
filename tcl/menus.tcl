@@ -199,6 +199,7 @@ proc menuUndo {action} {
     # returns 0/fail if no action taken
     if {$changed != "0"} {
       updateBoard -pgn
+      ::tools::graphs::score::Refresh
     }
   }
 }
