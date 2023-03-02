@@ -1848,7 +1848,7 @@ translate H MoveOutOfBook {Move out of book}
 # ====== TODO To be translated ======
 translate H LastBookMove {Last book move}
 # ====== TODO To be translated ======
-translate H AnnotateSeveralGames {Annotate several games\nfrom current to :}
+translate H AnnotateSeveralGames {Annotate several games}
 # ====== TODO To be translated ======
 translate H FindOpeningErrors {Find opening errors}
 # ====== TODO To be translated ======

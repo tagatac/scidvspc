@@ -1524,7 +1524,7 @@ translate U TimeSec {seg}
 translate U AllExercisesDone {Completou todos os exercícios}
 translate U MoveOutOfBook {Movimento fora do livro}
 translate U LastBookMove {Último movimento do livro}
-translate U AnnotateSeveralGames {Anotar vários jogos\do atual até:}
+translate U AnnotateSeveralGames {Anotar vários jogos}
 translate U FindOpeningErrors {Encontrar erros na abertura}
 translate U MarkTacticalExercises {Assinalar exercícios táticos}
 translate U UseBook {Usar livro}

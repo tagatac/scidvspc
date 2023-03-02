@@ -1722,7 +1722,7 @@ translate I TimeSec {sec}
 translate I AllExercisesDone {Tutti gli esercizi eseguiti}
 translate I MoveOutOfBook {Mossa fuori dal libro}
 translate I LastBookMove {Ultima mossa del libro}
-translate I AnnotateSeveralGames {Annota più partite\ndall'attuale a:}
+translate I AnnotateSeveralGames {Annota più partite}
 translate I FindOpeningErrors {Trova errori dell'apertura}
 # ====== TODO To be translated ======
 translate I MarkTacticalExercises {Mark tactical exercises}

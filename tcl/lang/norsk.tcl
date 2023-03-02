@@ -1534,7 +1534,7 @@ translate O TimeSec {sek}
 translate O AllExercisesDone {Alle øvelser fullført}
 translate O MoveOutOfBook {Trekk er ute av bok}
 translate O LastBookMove {Siste bok-trekk}
-translate O AnnotateSeveralGames {Annoter flere partiner\nfra dette til :}
+translate O AnnotateSeveralGames {Annoter flere partiner}
 translate O FindOpeningErrors {Finn feil i åpning}
 translate O MarkTacticalExercises {Marker taktiske øvelser}
 translate O UseBook {Bruk bok}

@@ -1838,7 +1838,7 @@ translate C MoveOutOfBook {Move out of book}
 # ====== TODO To be translated ======
 translate C LastBookMove {Last book move}
 # ====== TODO To be translated ======
-translate C AnnotateSeveralGames {Annotate several games\nfrom current to :}
+translate C AnnotateSeveralGames {Annotate several games}
 # ====== TODO To be translated ======
 translate C FindOpeningErrors {Find opening errors}
 # ====== TODO To be translated ======

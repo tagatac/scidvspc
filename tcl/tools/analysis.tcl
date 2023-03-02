@@ -23,7 +23,6 @@ set wentOutOfBook 0
 # Todo: these should be in analysis array
 
 set annotate(isBatch) 0
-set annotate(batchEnd) 1
 set annotate(markExercises) 0
 set isOpeningOnly 0
 set isOpeningOnlyMoves 10
@@ -1107,16 +1106,7 @@ proc initAnnotation {n} {
 
   frame $w.batch
   pack $w.batch -side top -fill x
-  set to [sc_base numGames]
-  if {$to < 1} {set to 1}
-  checkbutton $w.batch.cbBatch -textvar tr(AnnotateSeveralGames) -variable annotate(isBatch) \
-    -command "checkState ::annotate(isBatch) $w.batch.spBatchEnd"
-
-  spinbox $w.batch.spBatchEnd -width 6 -textvar annotate(batchEnd) \
-      -from 1 -to $to -increment 1 -validate all -vcmd {string is int %P}
-
-  checkState ::annotate(isBatch) $w.batch.spBatchEnd
-
+  checkbutton $w.batch.cbBatch -textvar tr(AnnotateSeveralGames) -variable annotate(isBatch)
 
   # Opening Errors Only
 
@@ -1134,9 +1124,6 @@ proc initAnnotation {n} {
   # Pack
 
   grid $w.batch.cbBatch    -column 0 -row 0 -sticky w
-  grid $w.batch.spBatchEnd -column 1 -row 0 -columnspan 2 -sticky e
-  set annotate(batchEnd) $to
-
   grid $w.batch.cbOpeningOnly -column 0 -row 1 -sticky w
   grid $w.batch.spOpeningOnly -column 1 -row 1 -padx 5
   grid $w.batch.lOpeningOnly  -column 2 -row 1 -sticky e

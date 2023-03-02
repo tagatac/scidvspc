@@ -1636,7 +1636,7 @@ translate W TimeSec {sek}
 translate W AllExercisesDone {Alla övningar gjorda}
 translate W MoveOutOfBook {Drag utanför bok}
 translate W LastBookMove {Sista bokdrag}
-translate W AnnotateSeveralGames {Kommentera flera partier\nfrån aktuellt till :}
+translate W AnnotateSeveralGames {Kommentera flera partier}
 translate W FindOpeningErrors {Hitta öppningsfel}
 translate W MarkTacticalExercises {Markera taktiska övningar}
 translate W UseBook {Använd bok}

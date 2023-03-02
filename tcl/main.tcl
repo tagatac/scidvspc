@@ -1830,12 +1830,9 @@ proc nextgameAutoplay {n} {
   sc_game save [sc_game number]
   set analysis(prevscore$n) 0
 
-  if {[sc_filter next] <= $annotate(batchEnd)  && [sc_filter next] != 0} {
-    # if [sc_game number] < $::annotate(batchEnd)
-    # sc_game load [expr [sc_game number] + 1]
-
+  if {[sc_filter next] > 0} {
     ### Skip games not in filter (dont autoraise main window)
-    ::game::LoadNextPrev next 0
+    ::game::Load [sc_filter next] 1 0
 
     # One undo point at the start of every game
     sc_game undoPoint
@@ -1869,7 +1866,7 @@ proc nextgameAutoplay {n} {
 
     toggleEngineAnalysis $n
     after $autoplayDelay autoplay
-  } else  {
+  } else {
     cancelAutoplay
   }
 }

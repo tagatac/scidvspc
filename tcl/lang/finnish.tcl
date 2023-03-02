@@ -1525,7 +1525,7 @@ translate L TimeSec {sekunti}
 translate L AllExercisesDone {Kaikki harjoitukset tehty}
 translate L MoveOutOfBook {Avauskirjaston ulkopuolinen siirto}
 translate L LastBookMove {Avauskirjaston viimeinen siirto}
-translate L AnnotateSeveralGames {Joukkohuomautus\nFrom nykyisestä johonkin :}
+translate L AnnotateSeveralGames {Joukkohuomautus}
 translate L FindOpeningErrors {Vain avausvirheet}
 translate L MarkTacticalExercises {Merkitse taktiset harjoitukset}
 translate L UseBook {Käytä avauskirjastoa}

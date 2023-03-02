@@ -1508,7 +1508,7 @@ translate E TimeSec {sec}
 translate E AllExercisesDone {All exercises done}
 translate E MoveOutOfBook {Move out of book}
 translate E LastBookMove {Last book move}
-translate E AnnotateSeveralGames {Batch annotation\nFrom current to :}
+translate E AnnotateSeveralGames {Batch annotate}
 translate E FindOpeningErrors {Opening errors only}
 translate E MarkTacticalExercises {Mark tactical exercises}
 translate E UseBook {Use book}

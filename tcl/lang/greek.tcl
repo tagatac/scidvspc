@@ -1649,7 +1649,7 @@ translate G TimeSec {δευτ}
 translate G AllExercisesDone {Όλες οι ασκήσεις τελείωσαν}
 translate G MoveOutOfBook {Κίνηση εκτός βιβλίου}
 translate G LastBookMove {Τελευταία κίνηση βιβλίου}
-translate G AnnotateSeveralGames {Ομαδικός Σχολιασμός\nΑπό τρέχουσα έως :}
+translate G AnnotateSeveralGames {Ομαδικός Σχολιασμός}
 translate G FindOpeningErrors {Μόνο λάθη ανοίγματος}
 translate G MarkTacticalExercises {Επισήμανση τακτικών}
 translate G UseBook {Χρήση βιβλίου}

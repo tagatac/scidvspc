@@ -1522,7 +1522,7 @@ translate F TimeSec {sec}
 translate F AllExercisesDone {Tous les exercices sont faits}
 translate F MoveOutOfBook {Coup hors bibliothèque d'ouverture}
 translate F LastBookMove {Dernier coup de la bibliothèque d'ouverture}
-translate F AnnotateSeveralGames {Annotater plusieurs parties\ndepuis l'actuelle jusqu'à :}
+translate F AnnotateSeveralGames {Annotater plusieurs parties}
 translate F FindOpeningErrors {Chercher les erreurs d'ouverture}
 translate F MarkTacticalExercises {Marquer exercices tactiques}
 translate F UseBook {Utiliser bibliothèque}

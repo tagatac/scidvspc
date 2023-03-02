@@ -1877,7 +1877,7 @@ translate B MoveOutOfBook {Movimento fora do livro}
 
 translate B LastBookMove {Ultimo movimento do livro}
 
-translate B AnnotateSeveralGames {Anotar diversos jogos\ndo atual até :}
+translate B AnnotateSeveralGames {Anotar diversos jogos}
 
 translate B FindOpeningErrors {Encontrar erros na abertura}
 

@@ -1607,7 +1607,7 @@ translate R TimeSec {с}
 translate R AllExercisesDone {Все задания выполнены}
 translate R MoveOutOfBook {Двигаться не по книге}
 translate R LastBookMove {Ход из последней книги}
-translate R AnnotateSeveralGames {Аннотировать несколько партий\nот текущей до:}
+translate R AnnotateSeveralGames {Аннотировать несколько партий}
 translate R FindOpeningErrors {Поиск ошибок дебюта}
 translate R MarkTacticalExercises {Пометить тактические задания}
 translate R UseBook {Использовать книгу}

@@ -1558,7 +1558,7 @@ translate D TimeSec {s}
 translate D AllExercisesDone {Alle Übungen gemacht}
 translate D MoveOutOfBook {Zug nicht mehr im Buch}
 translate D LastBookMove {Letzter Buchzug}
-translate D AnnotateSeveralGames {Kommentiere mehrere Partien\nvon aktueller bis:}
+translate D AnnotateSeveralGames {Kommentiere mehrere Partien}
 translate D FindOpeningErrors {Eröffnungsfehler finden}
 translate D MarkTacticalExercises {Taktische Übungen markieren}
 translate D UseBook {Buch benutzen}

@@ -1603,7 +1603,7 @@ translate S TimeSec {seg}
 translate S AllExercisesDone {Todos los ejercicio hechos}
 translate S MoveOutOfBook {Movimiento fuera del libro}
 translate S LastBookMove {Último movimiento del libro}
-translate S AnnotateSeveralGames {Anotar las partidas\ndesde la actual a la: }
+translate S AnnotateSeveralGames {Anotar las partidas}
 translate S FindOpeningErrors {Solo errores de apertura en los primeros}
 translate S MarkTacticalExercises {Marca ejercicios tácticos}
 translate S UseBook {Usar libro de aperturas (Book)}

@@ -1921,7 +1921,7 @@ translate Y MoveOutOfBook {Move out of book}
 # ====== TODO To be translated ======
 translate Y LastBookMove {Last book move}
 # ====== TODO To be translated ======
-translate Y AnnotateSeveralGames {Annotate several games\nfrom current to :}
+translate Y AnnotateSeveralGames {Annotate several games}
 # ====== TODO To be translated ======
 translate Y FindOpeningErrors {Find opening errors}
 # ====== TODO To be translated ======

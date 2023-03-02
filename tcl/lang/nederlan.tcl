@@ -1671,7 +1671,7 @@ translate N TimeSec {sec}
 translate N AllExercisesDone {Alle oefeningen gedaan}
 translate N MoveOutOfBook {Zet buiten boek}
 translate N LastBookMove {Laatste zet boek}
-translate N AnnotateSeveralGames {Becommentarieer verschillende partijen \n van huidig tot :}
+translate N AnnotateSeveralGames {Becommentarieer verschillende partijen}
 translate N FindOpeningErrors {Vind openingsfouten}
 translate N MarkTacticalExercises {Markeer tactische oefeningen}
 translate N UseBook {Gebruik boek}

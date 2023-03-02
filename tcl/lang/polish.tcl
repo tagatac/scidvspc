@@ -1615,7 +1615,7 @@ translate P TimeSec {s}
 translate P AllExercisesDone {Wszystkie zadania zakończone}
 translate P MoveOutOfBook {Posunięcie spoza książki debiutowej}
 translate P LastBookMove {Ostatnie posunięcie w książce debiutowej}
-translate P AnnotateSeveralGames {Komentuj kilka partii\ od aktualnej do:}
+translate P AnnotateSeveralGames {Komentuj kilka partii}
 translate P FindOpeningErrors {Znajdź błędy debiutowe}
 translate P MarkTacticalExercises {Oznacz zadania taktyczne}
 translate P UseBook {Użyj książki debiutowej}

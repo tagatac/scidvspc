@@ -2889,7 +2889,7 @@ with the format "stat01: time nodes ply mvleft mvtot mvname". The results can be
      <li><b>Use book</b> Moves that are contained in this opening book are skipped
      , and annotation starts after the book moves.</li>
      <li><b>Batch annotation</b> 
-     Automatically process multiple games, saving them as we go.</li>
+     Automatically process all filter games (from current one), saving them as we go.</li>
      <li><b>Opening errors only</b> Only check for opening errors.
      (up to the move specified).</li>
      <li><b>Mark tactical exercises</b> This can be used to

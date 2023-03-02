@@ -1528,7 +1528,7 @@ translate T TimeSec {saniye}
 translate T AllExercisesDone {Yapılan tüm alıştırmalar}
 translate T MoveOutOfBook {Kitap dışı Hamle}
 translate T LastBookMove {Son kitap hamlesi}
-translate T AnnotateSeveralGames {Toplu açıklama \n Şu andan itibaren:}
+translate T AnnotateSeveralGames {Toplu açıklama}
 translate T FindOpeningErrors {Yalnızca Açılış Hatası}
 translate T MarkTacticalExercises {Taktik egzersizleri işaretleyin}
 translate T UseBook {Kitap kullan}
