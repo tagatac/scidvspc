@@ -1,10 +1,8 @@
-Todo - lots of ttk elements (notably the tabs) still need doing.
-
 Index: tcl/board.tcl
 ===================================================================
 --- tcl/board.tcl	(revision 3341)
 +++ tcl/board.tcl	(working copy)
-@@ -25,6 +25,40 @@
+@@ -25,6 +25,46 @@
  }
  array set newColors {}
  
@@ -15,8 +13,8 @@ Index: tcl/board.tcl
 +  if {$temp != {}} {
 +    set defaultBackground $temp
 +    set enableBackground 1
-+    option add *Text*background $temp
-+    option add *Listbox*background $temp
++    option add *background $temp
++    option add *HighlightBackground $temp
 +    .main.gameInfo configure -bg $temp
 +    initBackgroundColour $defaultBackground
 +  }
@@ -28,8 +26,14 @@ Index: tcl/board.tcl
 +    .main.photoB configure -background $colour
 +    ::ttk::style configure Treeview -background $colour
 +    ::ttk::style configure Treeview -fieldbackground $colour
-+    option add *Text*background $colour
-+    option add *Listbox*background $colour
++    ::ttk::style configure TNotebook.Tab -font font_Menu
++    ::ttk::style configure TNotebook -background $colour
++    ::ttk::style configure TPanedwindow -background $colour
++    ::ttk::style configure TScrollbar -background $colour
++    ::ttk::style configure TScale -background $colour
++
++    option add *background $colour
++    option add *HighlightBackground $colour
 +    # Updating padding in tree would be nice, but now they have to close and re-open tree
 +    # if {[winfo exists .baseWin.c]} { .baseWin.c configure -bg $temp }
 +    recurseBackgroundColour . $colour
@@ -47,9 +51,20 @@ Index: tcl/board.tcl
    # handle cases of old configuration files
 Index: tcl/menus.tcl
 ===================================================================
---- tcl/menus.tcl	(revision 3341)
+--- tcl/menus.tcl	(revision 3344)
 +++ tcl/menus.tcl	(working copy)
-@@ -1375,19 +1375,6 @@
+@@ -1335,6 +1335,10 @@
+       ::ttk::style configure Treeview -foreground $::defaultForeground
+     }
+     ::ttk::style configure TNotebook.Tab -font font_Menu
++    ::ttk::style configure TNotebook -background $::defaultBackground 
++    ::ttk::style configure TPanedwindow -background $::defaultBackground
++    ::ttk::style configure TScrollbar -background $::defaultBackground
++    ::ttk::style configure TScale -background $::defaultBackground
+ }
+ 
+ set m .menu.options.colour
+@@ -1376,19 +1380,6 @@
  $m.fore add command -label OptionsMovesHighlightLastMoveColor -command SetForegroundColour
  $m.fore add checkbutton -label OptionsFicsColour -variable enableForeground
  
@@ -71,15 +86,47 @@ Index: tcl/menus.tcl
    global defaultForeground enableForeground
 Index: tcl/start.tcl
 ===================================================================
---- tcl/start.tcl	(revision 3341)
+--- tcl/start.tcl	(revision 3344)
 +++ tcl/start.tcl	(working copy)
-@@ -1618,8 +1618,7 @@
+@@ -1607,19 +1607,12 @@
+   option add *Text*foreground $defaultForeground
+   option add *Listbox*foreground $defaultForeground
+ 
+-  # Global colouring is disabled
+-  # option add *Button*foreground $defaultForeground
+-  # option add *Label*foreground $defaultForeground
+-  # option add *Menubutton*foreground $defaultForeground
+-  # option add *Checkbutton*foreground $defaultForeground
+-  # option add *Radiobutton*foreground $defaultForeground
+-
+   # Menus
    # option add *menu*foreground white
  }
  if {$enableBackground == 1} {
 -  option add *Text*background $defaultBackground
 -  option add *Listbox*background $defaultBackground
 +  option add *background $defaultBackground
++  option add *HighlightBackground $defaultBackground
  }
  
  # Global background disabled
+@@ -1999,7 +1992,18 @@
+ 
+ # Load theme
+ catch {ttk::style theme use $lookTheme}
+-::ttk::style configure TNotebook.Tab -font font_Menu
++if {$enableBackground} {
++  ::ttk::style configure TNotebook.Tab -font font_Menu
++  ::ttk::style configure TNotebook -background $::defaultBackground
++  ::ttk::style configure TPanedwindow -background $::defaultBackground
++  ::ttk::style configure TScrollbar -background $::defaultBackground
++  ::ttk::style configure TScale -background $::defaultBackground
++  # God knows :( Nothing works for the comboboxes
++  # https://www.tcl.tk/man/tcl/TkCmd/ttk_combobox.html#M20
++  # ::ttk::style configure TEntry -background $::defaultBackground
++  # ::ttk::style configure TCombobox -fieldbackground $::defaultBackground
++  # option add *TCombobox*Listbox.background $::defaultBackground
++}
+ 
+ # Check for old (single-directory) tablebase option:
+ if {[info exists initialDir(tablebase)]} {
