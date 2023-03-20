@@ -264,9 +264,12 @@ menuText C CCEditCopy "Zkopírovat seznam partií do schránky" 0 {Zkopírovat parti
 # Options menu:
 menuText C Options "Volby" 0
 menuText C OptionsBoard "©achovnice" 1 {Volby zobrazení ¹achovnice}
-menuText C OptionsColour "Background Colour" 0 {Default text widget color}
+# ====== TODO To be translated ======
+menuText C OptionsColour "Colour" 0 {Default text widget color}
 # ====== TODO To be translated ======
 menuText C OptionsBackColour "Background" 0 {Default text widget color}
+# ====== TODO To be translated ======
+menuText C OptionsBackColourGlobal "Global" 0 {Global background color}
 # ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText C OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}

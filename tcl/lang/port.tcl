@@ -242,6 +242,8 @@ menuText U Options "Opções" 0
 menuText U OptionsBoard "Tabuleiro" 0 {Opções de aparência do tabuleiro} ;# ***
 menuText U OptionsColour "Cor do Fundo" 0 {Default text widget color}
 menuText U OptionsBackColour "Fundo" 0 {Default text widget color}
+# ====== TODO To be translated ======
+menuText U OptionsBackColourGlobal "Global" 0 {Global background color}
 menuText U OptionsMainLineColour "Setas da Linha Principal" 0 {Mainline arrows}
 menuText U OptionsVarLineColour "Setas da Variante" 0 {Variation arrows}
 menuText U OptionsEngineLineColour "Setas do Programa" 0 {Engine arrows}

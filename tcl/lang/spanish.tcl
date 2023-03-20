@@ -278,6 +278,8 @@ menuText S Options "Opciones" 0
 menuText S OptionsBoard "Tablero" 0 {Opciones sobre el aspecto del tablero}
 menuText S OptionsColour "Color de fondo" 0 {Color de fondo por defecto}
 menuText S OptionsBackColour "Fondo" 0 {Color del widget de texto predeterminado}
+# ====== TODO To be translated ======
+menuText S OptionsBackColourGlobal "Global" 0 {Global background color}
 menuText S OptionsMainLineColour "Flechas principales" 0 {Flechas principales}
 menuText S OptionsVarLineColour "Flechas de variación" 0 {Flechas de variación}
 # ====== TODO To be translated ======

@@ -240,14 +240,12 @@ menuText E CCGamePage "Game Page" 0 {Call up the game via the web browser}
 
 menuText E CCEditCopy "Copy Gamelist to clipboard" 0 {Copy the games as CSV list to the clipboard}
 
-
-#  B    GHiJKL    Q  TUV XYZ
-
 # Options menu:
 menuText E Options "Options" 0
 menuText E OptionsBoard "Chessboard/Pieces" 0 {Chess board appearance}
 menuText E OptionsColour "Colors" 0 {Default text widget color}
 menuText E OptionsBackColour "Background" 0 {Default text widget color}
+menuText E OptionsBackColourGlobal "Global" 0 {Global background color}
 menuText E OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
 menuText E OptionsVarLineColour "Variation Arrows" 0 {Variation arrows}
 menuText E OptionsEngineLineColour "Engine Arrows" 0 {Engine arrows}

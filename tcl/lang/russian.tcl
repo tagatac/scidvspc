@@ -241,14 +241,14 @@ menuText R CCGamePage "Страница партии..." 0 {Позвать в п
 # menu in cc window:
 menuText R CCEditCopy "Копировать список партий в буферную базу" 0 {Копирует партии как CSV список в буферную базу}
 
-#  B    GHiJKL    Q  TUV XYZ
-
 # Options menu:
 menuText R Options "Настройки" 0
 menuText R OptionsBoard "Шахматная доска" 0 {Настройки внешнего вида шахматной доски}
 menuText R OptionsColour "Цвет фона" 0 {Цвет текста по-умолчанию}
 # ====== TODO To be translated ======
 menuText R OptionsBackColour "Background" 0 {Default text widget color}
+# ====== TODO To be translated ======
+menuText R OptionsBackColourGlobal "Global" 0 {Global background color}
 # ====== TODO To be translated ======
 menuText R OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
 # ====== TODO To be translated ======

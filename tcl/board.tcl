@@ -25,6 +25,75 @@ set colorSchemes2 {
 }
 array set newColors {}
 
+proc SetBackgroundColour {} {
+  global defaultBackground enableBackground
+
+  set temp [tk_chooseColor -initialcolor $defaultBackground -title Scid]
+  if {$temp != {}} {
+    set defaultBackground $temp
+    if {!$enableBackground} {
+      set enableBackground 1
+    }
+    initBackgroundColour $defaultBackground
+  }
+}
+
+proc initBackgroundColour {colour} {
+    global enableBackground defaultGraphBackground
+
+    # border around gameinfo photos
+    .main.photoW configure -background $colour
+    .main.photoB configure -background $colour
+    ::ttk::style configure Treeview -background $colour
+    ::ttk::style configure Treeview -fieldbackground $colour
+
+    # 0 no colour / system background colour only
+    # 1 text widgets (etc) only
+    # 2 All widgets get coloured
+    if {$enableBackground != 2} {
+      option add *Text*background $colour
+      option add *Listbox*background $colour
+      .main.gameInfo configure -bg $colour
+      recurseBackgroundColour1 . $colour
+      foreach i {.sgraph .rgraph .fgraph .afgraph} {
+	if {[winfo exists $i.c]} {
+	  $i.c itemconfigure fill -fill $colour
+	}
+      }
+    } else {
+      option add *background $colour
+      option add *HighlightBackground $colour
+      ::ttk::style configure TNotebook.Tab -font font_Menu
+      ::ttk::style configure Heading -background $colour
+      ::ttk::style configure TNotebook -background $colour
+      ::ttk::style configure TPanedwindow -background $colour
+      ::ttk::style configure TScrollbar -background $colour
+      ::ttk::style configure TScale -background $colour
+      recurseBackgroundColour2 . $colour
+    }
+    set defaultGraphBackground $colour
+}
+
+proc recurseBackgroundColour1 {w colour} {
+   if {[winfo class $w] == "Text" || [winfo class $w] == "Listbox"} {
+       $w configure -background $colour
+   } else {
+     foreach c [winfo children $w] {
+       recurseBackgroundColour1 $c $colour
+     }
+   }
+}
+
+proc recurseBackgroundColour2 {w colour} {
+   # Skip board canvas backgrounds (which colour the lines inbetween board squares)
+   if {![string match *.bd $w]} {
+     catch {$w configure -background $colour}
+     foreach c [winfo children $w] {
+	 recurseBackgroundColour2 $c $colour
+     }
+   }
+}
+
 proc SetBoardTextures {} {
   global boardfile_dark boardfile_lite
   # handle cases of old configuration files

@@ -253,9 +253,12 @@ menuText I CCEditCopy "Copy Gamelist to Clipbase" 0 {Copy the games as CSV list 
 # Options menu:
 menuText I Options "Opzioni" 0
 menuText I OptionsBoard "Scacchiera" 0 {Opzioni di visualizzazione della scacchiera}
-menuText I OptionsColour "Background Colour" 0 {Default text widget color}
+# ====== TODO To be translated ======
+menuText I OptionsColour "Colour" 0 {Default text widget color}
 # ====== TODO To be translated ======
 menuText I OptionsBackColour "Background" 0 {Default text widget color}
+# ====== TODO To be translated ======
+menuText I OptionsBackColourGlobal "Global" 0 {Global background color}
 # ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText I OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}

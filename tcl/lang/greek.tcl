@@ -263,15 +263,14 @@ menuText G CCGamePage "Σελίδα Παρτίδας..." 0 {Ανάκτηση Π�
 # menu in cc window:
 menuText G CCEditCopy "Αντιγραφή Ευρετηρίου Παρτίδων σε Clipbase" 0 {Αντιγραφή Παρτίδων ως λίστα CSV στο clipbase}
 
-
-#  B    GHiJKL    Q  TUV XYZ
-
 # Options menu:
 menuText G Options "Ρυθμίσεις" 2
 menuText G OptionsBoard "Σκακιέρα/Κομμάτια" 0 {Ρύθμιση Εμφάνισης Σκακιέρας}
 menuText G OptionsColour "Χρώμα Φόντου" 7 {Προπιλεγμένο Χρώμα Φόντου Κειμένου}
 # ====== TODO To be translated ======
 menuText G OptionsBackColour "Background" 0 {Default text widget color}
+# ====== TODO To be translated ======
+menuText G OptionsBackColourGlobal "Global" 0 {Global background color}
 # ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText G OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}

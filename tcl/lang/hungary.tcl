@@ -269,9 +269,12 @@ menuText H CCEditCopy "Copy Gamelist to Clipbase" 0 {Copy the games as CSV list 
 # Options menu:
 menuText H Options "Beállítások" 0
 menuText H OptionsBoard "Sakktábla" 0 {Sakktábla megjelenésének megváltoztatása}
-menuText H OptionsColour "Background Colour" 0 {Default text widget color}
+# ====== TODO To be translated ======
+menuText H OptionsColour "Colour" 0 {Default text widget color}
 # ====== TODO To be translated ======
 menuText H OptionsBackColour "Background" 0 {Default text widget color}
+# ====== TODO To be translated ======
+menuText H OptionsBackColourGlobal "Global" 0 {Global background color}
 # ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText H OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}

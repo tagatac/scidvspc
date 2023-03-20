@@ -246,6 +246,8 @@ menuText F Options "Options" 0
 menuText F OptionsBoard "Echiquier" 0 {Options d'aspect de l'échiquier}
 menuText F OptionsColour "Couleurs" 0 {Default text widget color}
 menuText F OptionsBackColour "Arrière-plan" 0 {Default text widget color}
+# ====== TODO To be translated ======
+menuText F OptionsBackColourGlobal "Global" 0 {Global background color}
 menuText F OptionsMainLineColour "Flèche coup principal" 0 {Mainline arrows}
 menuText F OptionsVarLineColour "Flèche coup variante" 0 {Variation arrows}
 menuText F OptionsEngineLineColour "Flèche moteur" 0 {Flèche moteur}

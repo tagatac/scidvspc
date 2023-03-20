@@ -218,14 +218,13 @@ menuText T CCGamePage "Oyun Sayfası" 0 {Oyunu web tarayıcısı üzerinden ça�
 # menu in cc window:
 menuText T CCEditCopy "Oyun listesini Gösterim panosuna kopyala" 0 {Oyunları CSV listesi olarak Gösterim panosuna kopyalayın}
 
-
-#  B    GHiJKL    Q  TUV XYZ
-
 # Options menu:
 menuText T Options "Seçenekler" 0
 menuText T OptionsBoard "Satranç tahtası/Taşlar" 0 {Satranç tahtası görünüşü}
 menuText T OptionsColour "Renkler" 0 {Default text widget color}
 menuText T OptionsBackColour "arka plan" 0 {Default text widget color}
+# ====== TODO To be translated ======
+menuText T OptionsBackColourGlobal "Global" 0 {Global background color}
 menuText T OptionsMainLineColour "Ana Hamle Okları" 0 {Ana oklar}
 menuText T OptionsVarLineColour "Varyasyant Okları" 0 {Variation arrows}
 # ====== TODO To be translated ======

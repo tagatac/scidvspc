@@ -218,14 +218,13 @@ menuText L CCGamePage "Pelisivu" 0 {Kutsu peli verkkoselaimen kautta}
 # menu in cc window:
 menuText L CCEditCopy "Kopio pelilista leikepöydälle" 0 {Kopio pelit CSV-listana leikepöydälle}
 
-
-#  B    GHiJKL    Q  TUV XYZ
-
 # Options menu:
 menuText L Options "Vaihtoehdot" 0
 menuText L OptionsBoard "Shakkilauta/nappulat" 0 {Shakkilaudan ulkoasu}
 menuText L OptionsColour "Värit" 0 {Oletustekstiwidgetin väri}
 menuText L OptionsBackColour "Tausta" 0 {Oletustekstiwidgetin väri}
+# ====== TODO To be translated ======
+menuText L OptionsBackColourGlobal "Global" 0 {Global background color}
 menuText L OptionsMainLineColour "Päämuunnelman nuolet" 0 {Päämuunnelman nuolet}
 menuText L OptionsVarLineColour "Muunnelman nuolet" 0 {Muunnelman nuolet}
 # ====== TODO To be translated ======

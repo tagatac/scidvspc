@@ -327,6 +327,9 @@ proc ::windows::gamelist::Open {} {
     ::ttk::style configure Treeview -background $::defaultBackground
     ::ttk::style configure Treeview -fieldbackground $::defaultBackground
   }
+  if {$::enableBackground == 2} {
+    ::ttk::style configure Heading -background $::defaultBackground
+  }
   if {$::enableForeground} {
     ::ttk::style configure Treeview -foreground $::defaultForeground
   }

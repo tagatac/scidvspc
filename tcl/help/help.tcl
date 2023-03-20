@@ -3948,8 +3948,9 @@ set helpText(Options) {<h1>Options and Preferences</h1>
   Crosstable and GameInfo Player Names mouse-over highlighting, and the Crosstable and Report's Game highlighting.
   </p>
   <p>
-  The <b>Background Colour</b> feature enables a bg colour for various text-like windows.
-  Likewise, <b>Text Colour</b> enables a text fg colour for the same/simliar windows, though this change requires ScidvsPC restart.
+  The <b>Background Colour</b> feature enables a bg colour for various text-like windows, or a Global background colour.
+  Likewise, <b>Text Colour</b> enables a text fg colour for the same/simliar windows.
+  <i>Unsetting the Global and Text colour features won't work properly until Scid is restarted</i>.
   </p>
 
   <h3><name MyPlayerNames>My Player Names</name></h3>

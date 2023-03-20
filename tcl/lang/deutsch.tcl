@@ -264,6 +264,8 @@ menuText D Options "Optionen" 0
 menuText D OptionsBoard "Schachbrett" 6 {Schachbrettoptionen}
 menuText D OptionsColour "Farben" 0 {Standardfarbe für Textelemente}
 menuText D OptionsBackColour "Hintergrund" 0 {Standardhintergrundfarbe für Textelemente}
+# ====== TODO To be translated ======
+menuText D OptionsBackColourGlobal "Global" 0 {Global background color}
 menuText D OptionsMainLineColour "Pfeilfarbe für Partiezug" 0 {Partiezugpfeilfarbe}
 menuText D OptionsVarLineColour "Pfeilfarbe für Variante" 0 {Variantenpfeilfarbe}
 menuText D OptionsEngineLineColour "Engine-Pfeile" 0 {Engine-Pfeile}

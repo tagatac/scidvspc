@@ -257,6 +257,8 @@ menuText O Options "Innstillinger" 0
 menuText O OptionsBoard "Sjakkbrett" 0 {Velg hvordan sjakkbrett skal se ut}
 menuText O OptionsColour "Farge" 0 {Standard tekstfarge}
 menuText O OptionsBackColour "Bakgrunn" 0 {Standard bakgrunnsfarge}
+# ====== TODO To be translated ======
+menuText O OptionsBackColourGlobal "Global" 0 {Global background color}
 menuText O OptionsMainLineColour "Hovedlinje piler" 0 {}
 menuText O OptionsVarLineColour "Variant piler" 0 {}
 menuText O OptionsEngineLineColour "Motorpiler" 0 {Motorpiler}

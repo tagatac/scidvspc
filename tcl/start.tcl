@@ -116,7 +116,7 @@ set ::MAX_GAMES [sc_info limit games]
 set ::pause 0
 set ::defaultBackground white
 set ::defaultForeground black
-set ::defaultGraphBackgroud white
+set ::defaultGraphBackground white
 set ::enableBackground 0
 set ::enableForeground 0
 set ::tacgame::threshold 0.9
@@ -1607,13 +1607,6 @@ if {$enableForeground == 1} {
   option add *Text*foreground $defaultForeground
   option add *Listbox*foreground $defaultForeground
 
-  # Global colouring is disabled
-  # option add *Button*foreground $defaultForeground
-  # option add *Label*foreground $defaultForeground
-  # option add *Menubutton*foreground $defaultForeground
-  # option add *Checkbutton*foreground $defaultForeground
-  # option add *Radiobutton*foreground $defaultForeground
-
   # Menus
   # option add *menu*foreground white
 }
@@ -1621,12 +1614,11 @@ if {$enableBackground == 1} {
   option add *Text*background $defaultBackground
   option add *Listbox*background $defaultBackground
 }
+if {$enableBackground == 2} {
+  option add *background $defaultBackground
+  option add *HighlightBackground $defaultBackground
+}
 
-# Global background disabled
-# if {$enableBackground == 2} {
-#   # only valid after restart
-#   option add *background $defaultBackground
-# }
 
 # Reconfigure fonts if necessary
 
@@ -2000,6 +1992,19 @@ set boardSize $newSize
 # Load theme
 catch {ttk::style theme use $lookTheme}
 ::ttk::style configure TNotebook.Tab -font font_Menu
+
+if {$enableBackground == 2} {
+  ::ttk::style configure TNotebook.Tab -font font_Menu
+  ::ttk::style configure TNotebook -background $::defaultBackground
+  ::ttk::style configure TPanedwindow -background $::defaultBackground
+  ::ttk::style configure TScrollbar -background $::defaultBackground
+  ::ttk::style configure TScale -background $::defaultBackground
+  # God knows :( Nothing works for the comboboxes
+  # https://www.tcl.tk/man/tcl/TkCmd/ttk_combobox.html#M20
+  # ::ttk::style configure TEntry -background $::defaultBackground
+  # ::ttk::style configure TCombobox -fieldbackground $::defaultBackground
+  # option add *TCombobox*Listbox.background $::defaultBackground
+}
 
 # Check for old (single-directory) tablebase option:
 if {[info exists initialDir(tablebase)]} {

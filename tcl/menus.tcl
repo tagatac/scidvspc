@@ -962,7 +962,7 @@ $m add command -label OptionsSave -command {
     puts $optionF ""
 
   foreach i {boardSize boardStyle language ::pgn::showColor bigToolbar
-    ::pgn::indentVars ::pgn::indentComments ::defaultBackground ::defaultForeground ::::defaultGraphBackgroud ::enableBackground ::enableForeground
+    ::pgn::indentVars ::pgn::indentComments ::defaultBackground ::defaultForeground ::defaultGraphBackground ::enableBackground ::enableForeground
     ::pgn::shortHeader ::pgn::boldMainLine ::pgn::stripMarks 
     ::pgn::symbolicNags ::pgn::moveNumberSpaces ::pgn::columnFormat ::pgn::showScrollbar
     myPlayerNames optionsAutoSave ::tree::mask::recentMask ::tree::mask::autoLoadMask ::tree::showBar ::tree::short ::tree::sortBest ::tree::autoAdjust
@@ -1326,15 +1326,24 @@ foreach i [ttk::style theme names] {
 }
 
 proc changeTheme {} {
-    ttk::style theme use $::lookTheme
-    if {$::enableBackground} {
-      ::ttk::style configure Treeview -background $::defaultBackground
-      ::ttk::style configure Treeview -fieldbackground $::defaultBackground
+    global lookTheme defaultBackground enableForeground enableBackground
+
+    ::ttk::style theme use $lookTheme
+    if {$enableBackground} {
+      ::ttk::style configure Treeview -background $defaultBackground
+      ::ttk::style configure Treeview -fieldbackground $defaultBackground
+      if {$enableBackground == 2} {
+	::ttk::style configure TNotebook.Tab -font font_Menu
+        ::ttk::style configure Heading -background $defaultBackground
+	::ttk::style configure TNotebook -background $defaultBackground 
+	::ttk::style configure TPanedwindow -background $defaultBackground
+	::ttk::style configure TScrollbar -background $defaultBackground
+	::ttk::style configure TScale -background $defaultBackground
+      }
     }
-    if {$::enableForeground} {
-      ::ttk::style configure Treeview -foreground $::defaultForeground
+    if {$enableForeground} {
+      ::ttk::style configure Treeview -foreground $defaultForeground
     }
-    ::ttk::style configure TNotebook.Tab -font font_Menu
 }
 
 set m .menu.options.colour
@@ -1360,14 +1369,22 @@ $m add cascade -label OptionsBackColour -menu $m.back
 set helpMessage($m,1) OptionsBackColour
 
 $m.back add command -label OptionsMovesHighlightLastMoveColor -command SetBackgroundColour
-$m.back add checkbutton -label Enable -variable enableBackground -command {
-    if {$enableBackground} {
-      initBackgroundColour $defaultBackground
-    } else {
-      initBackgroundColour grey95
-    }
+
+$m.back add radiobutton -label [tr None] -variable enableBackground -value 0 -command {
+    initBackgroundColour grey95
 }
-set helpMessage($m.back,1) Enable
+set helpMessage($m.back,1) None
+
+$m.back add radiobutton -label Enable -variable enableBackground -value 1 -command {
+    initBackgroundColour $defaultBackground
+}
+set helpMessage($m.back,2) Enable
+
+$m.back add radiobutton -label Global -variable enableBackground -value 2 -command {
+    initBackgroundColour $defaultBackground
+    tk_messageBox -type ok -icon info -title Scid -message {Unsetting Global background colours will not work until you restart Scid.}
+}
+set helpMessage($m.back,3) Global
 
 menu $m.fore
 $m add cascade -label OptionsFicsColour -menu $m.fore
@@ -1375,19 +1392,6 @@ set helpMessage($m,1) OptionsFicsColour
 
 $m.fore add command -label OptionsMovesHighlightLastMoveColor -command SetForegroundColour
 $m.fore add checkbutton -label OptionsFicsColour -variable enableForeground
-
-proc SetBackgroundColour {} {
-  global defaultBackground enableBackground
-  set temp [tk_chooseColor -initialcolor $defaultBackground -title [tr OptionsBackColour]]
-  if {$temp != {}} {
-    set defaultBackground $temp
-    if {!$enableBackground} {set enableBackground 1}
-    option add *Text*background $temp
-    option add *Listbox*background $temp
-    .main.gameInfo configure -bg $temp
-    initBackgroundColour $defaultBackground
-  }
-}
 
 ### Text foreground colour
 proc SetForegroundColour {} {
@@ -1470,36 +1474,6 @@ proc SetProgressColour {} {
   if {$temp != {}} {
     set progcolor $temp
   }
-}
-
-proc initBackgroundColour {colour} {
-    ### Hmm , todo - Use tk_setPalette!?!
-    # border around gameinfo photos
-    .main.photoW configure -background $colour
-    .main.photoB configure -background $colour
-    ::ttk::style configure Treeview -background $colour
-    ::ttk::style configure Treeview -fieldbackground $colour
-    option add *Text*background $colour
-    option add *Listbox*background $colour
-    # Updating padding in tree would be nice, but now they have to close and re-open tree
-    # if {[winfo exists .baseWin.c]} { .baseWin.c configure -bg $temp }
-    recurseBackgroundColour . $colour
-    set ::defaultGraphBackgroud $colour
-    foreach i {.sgraph .rgraph .fgraph .afgraph} {
-      if {[winfo exists $i.c]} {
-        $i.c itemconfigure fill -fill $colour
-      }
-    }
-}
-
-proc recurseBackgroundColour {w colour} {
-     if {[winfo class $w] == "Text" || [winfo class $w] == "Listbox"} {
-         $w configure -background $colour
-     } else {
-       foreach c [winfo children $w] {
-	   recurseBackgroundColour $c $colour
-       }
-     }
 }
 
 ###############################
@@ -1838,7 +1812,9 @@ proc setLanguageMenus {{lang ""}} {
   }
   configMenuText .menu.options.colour [tr OptionsFicsColour $oldLang] OptionsFicsColour $lang
   configMenuText .menu.options.colour.back [tr OptionsMovesHighlightLastMoveColor $oldLang] OptionsMovesHighlightLastMoveColor $lang
-  configMenuText .menu.options.colour.back 1 OptionsBackColour $lang
+  configMenuText .menu.options.colour.back 2 OptionsBackColour $lang
+  configMenuText .menu.options.colour.back 3 OptionsBackColourGlobal $lang
+
   configMenuText .menu.options.colour.fore [tr OptionsMovesHighlightLastMoveColor $oldLang] OptionsMovesHighlightLastMoveColor $lang
   configMenuText .menu.options.colour.fore [tr OptionsFicsColour $oldLang] OptionsFicsColour $lang
 

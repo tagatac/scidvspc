@@ -296,6 +296,8 @@ menuText B OptionsBoard "Tabuleiro" 0 {Opções de aparência do tabuleiro}
 menuText B OptionsColour "Cores de Fundo" 0 {Cores padrao}
 
 menuText B OptionsBackColour "Janelas de texto" 0 {Cor padrao de fundo janelas de texto}
+# ====== TODO To be translated ======
+menuText B OptionsBackColourGlobal "Global" 0 {Global background color}
 
 
 menuText B OptionsMainLineColour "Setas da Linha Principal" 0 {Setas da linha principal}
