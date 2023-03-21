@@ -193,7 +193,7 @@ menuText D ToolsMaintNameEditor "Namenseditor" 0 \
   {Namenseditorfenster öffnen/schließen}
 menuText D ToolsMaintNamePlayer "Schreibkorrektur Spieler..." 17 \
   {Schreibkorrektur der Spielernamen mit Hilfe der .ssp-Datei}
-menuText D ToolsMaintNameEvent "Schreibkorrektur ..." 17 \
+menuText D ToolsMaintNameEvent "Schreibkorrektur Turnier..." 17 \
   {Schreibkorrektur der Veranstaltungen mit Hilfe der .ssp-Datei}
 menuText D ToolsMaintNameSite "Schreibkorrektur Ort..." 17 \
   {Schreibkorrektur der Orte mit Hilfe der .ssp-Datei}
@@ -264,8 +264,7 @@ menuText D Options "Optionen" 0
 menuText D OptionsBoard "Schachbrett" 6 {Schachbrettoptionen}
 menuText D OptionsColour "Farben" 0 {Standardfarbe für Textelemente}
 menuText D OptionsBackColour "Hintergrund" 0 {Standardhintergrundfarbe für Textelemente}
-# ====== TODO To be translated ======
-menuText D OptionsBackColourGlobal "Global" 0 {Global background color}
+menuText D OptionsBackColourGlobal "Global" 0 {Globale Hintergrundfarbe}
 menuText D OptionsMainLineColour "Pfeilfarbe für Partiezug" 0 {Partiezugpfeilfarbe}
 menuText D OptionsVarLineColour "Pfeilfarbe für Variante" 0 {Variantenpfeilfarbe}
 menuText D OptionsEngineLineColour "Engine-Pfeile" 0 {Engine-Pfeile}
@@ -584,8 +583,7 @@ menuText D TreeOptAutomask "Automatisches Laden der Maske" 0 "Automatisches Lade
 menuText D TreeOptCacheSize "Cache-Größe" 0 {Cache-Größe auswählen.}
 menuText D TreeOptShowBar "Fortschrittsbalken anzeigen" 0 "Zeigt Fortschrittsbalken an."
 menuText D TreeOptShowFrame "Schaltflächenleiste anzeigen" 0 "Zeigt Schaltflächenleiste für den Zugbaum"
-# ====== TODO To be translated ======
-menuText D TreeOptSmallFont "Use Custom Font" 0 "Use font_Small for Gamelist."
+menuText D TreeOptSmallFont "Benutzerdefinierte Schriftart verwenden" 0 "Verwendet für die Partienliste kleine Schrift."
 menuText D TreeOptSortBest "Sortiere beste Partien" 0 "Sortiert beste Partien nach ELO."
 menuText D TreeHelp "Hilfe" 0
 menuText D TreeHelpTree "Zugbaumhilfe" 0
@@ -2285,8 +2283,7 @@ append helpText(D,Index) {
   <li><a Switcher>Datenbankwechsler</a></li>
   <li><a Finder>Datensicherungen</a></li>
   <li><a Options Themes>Design</a></li>
-  <li><a HardwareConfig>DGT Elektronisches Schachbrett konfigurieren</a></li>
-  <li><a InputEngine>DGT-Benutzung</a></li>
+  <li><a Eboards>DGT Elektronisches Schachbrett</a></li>
   <li><a Comment Diagrams>Diagramme</a></li>
   <li><a Moves Trial>Direkte Drohungen</a></li>
   <li><a Maintenance Twins>Dubletten</a></li>
@@ -2314,7 +2311,7 @@ append helpText(D,Index) {
   <li><a Book>Eröffnungsbücher</a></li>
   <li><a ECO>Eröffnungsklassifikation (ECO)</a></li>
   <li><a Repertoire>Eröffnungsrepertoire</a></li>
-  <li><a HardwareConfig>Externe Hardware (Novag, DGT...)</a></li>
+  <li><a Eboards>Elektronische Schachbretter</a> (Novag, DGT...)</li>
   </ul>
 
   <h3><name F>F</name></h3>
@@ -2407,7 +2404,7 @@ append helpText(D,Index) {
   <li><a Maintenance Spellcheck>Namen, Rechtschreibprüfung</a></li>
   <li><a Import CCRL>Namensproblem Runden</a></li>
   <li><a Maintenance Editing>Namensschreibweise bearbeiten</a></li>
-  <li><a Novag>Novag Citrine</a></li>
+  <li><a Eboards>Novag Citrine</a></li>
   <li><a Variations Null>Nullzüge</a></li>
   </ul>
 
@@ -3729,9 +3726,9 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
   <p>Das <run ::windows::gamelist::Open><green>Partienlistenfenster</green></run>
   zeigt alle gefilterten Partien der aktuell geöffneten Datenbank/PGN-Datei.</p>
 
-  <p><i>Die Partienliste (und die Liste der besten Zugbaumpartien) hat
-	aktuell keine konfigurierbare Schriften. Für weitere Informationen
-	siehe patches/treeviewFont.diff.</i></p>
+  <p><i>Die Partienliste (und die Liste der besten Zugbaumpartien) hat jetzt die
+  Möglichkeit, die Schriftart zu konfigurieren. Sie wird über ein Kontextmenü im
+  Datenbankwechsler aktiviert und der Schrifttyp ist "Klein".</i></p>
 
   <p>Unterhalb der Partienliste sind verschiedene Schaltflächen und
   Eingabefelder und unten finden Sie
@@ -4216,11 +4213,14 @@ set helpText(D,PGN) {<h1>PGN-Fenster</h1>
 
   <h3><name ttf>Schachfiguren</name></h3>
   <p>Die Option <b>Schachfiguren als Symbole</b> (im
-  Menü <green>PGN--<gt>Ausgabe</green>) zeigt kleine Schachfiguren
-  anstelle von Buchstaben, um Figuren darzustellen. Diese Eigenschaft
-  ist nur verfügbar, wenn Truetype-Schriften unterstützt werden und
-  ScidChessStandard.ttf erfolgreich installiert wurde. Dies kann in
-  einem kleinen Leistungsverlust resultieren.
+  Menü <green>PGN--<gt>Ausgabe</green>) zeigt kleine Schachfiguren anstelle von
+  Buchstaben, um Figuren darzustellen. Diese Eigenschaft ist nur verfügbar, wenn
+  Truetype-Schriften unterstützt werden und ScidChessStandard.ttf erfolgreich
+  installiert wurde. Dies geschieht im Rahmen der Kompilierung aus dem Quellcode
+  durch "make install", aber ansonsten finden Sie die Schriftart hier:
+  <url https://sourceforge.net/projects/scidvspc/files/support
+  files/pgn_ttf_fonts.tgz/download>https://sourceforge.net/projects/scidvspc/files/support
+  files/pgn_ttf_fonts.tgz</url>
   </p>
 
   <p>In <b>Microsoft Windows</b> werden die Schriften automatisch
@@ -4233,8 +4233,9 @@ set helpText(D,PGN) {<h1>PGN-Fenster</h1>
   <p><b>OS X</b>-Anwender sollten die Schrift ebenfalls manuell
   installieren.</p>
 
-  <p><url https://sourceforge.net/projects/scidvspc/files/support
-  files/pgn_ttf_fonts.tgz/download>TTF-Schrift herunterladen</url>
+  <p>TTF-Schrift herunterladen: <url https://sourceforge.net/projects/scidvspc/files/support
+  files/pgn_ttf_fonts.tgz/download>https://sourceforge.net/projects/scidvspc/files/support
+  files/pgn_ttf_fonts.tgz/download</url>
   </p>
 
   <h3>Optionen</h3>
@@ -4739,10 +4740,10 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   <h3><name Twins>Doppelt vorhandene Partien löschen</name></h3>
   <p>
   <run markTwins><green>Lösche Dubletten</green></run> ermöglicht das
-  Entfernen von doppelt vorhandenen Partien, Es erkennt solche Partien
+  Entfernen von doppelt vorhandenen Partien. Es erkennt solche Partien
   und markiert eine Partie als gelöscht. Zwei Partien werden als
   Dubletten erkannt, wenn die Spielernamen und weitere Markierungen,
-  die Sie angeben, exakt passaen. Wenn Sie die Option "die gleichen
+  die Sie angeben, exakt passen. Wenn Sie die Option "die gleichen
   Züge" angeben (wird sehr empfohlen), dann muß jedes Paar die
   gleichen Züge haben: bis zur Länge der kürzeren Partie oder maximal
   sechzig Züge.
@@ -5107,10 +5108,9 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   die Bewertung des Programms hinzu).</li>
   <li> <button tb_addvar 32> <b>Variante hinzufügen</b> fügt die ganze
   Hauptvariante hinzu (Rechtsklick fügt eine zweite Variante hinzu,
-  falls Multi-PV aktiviert ist).</li>
-  <li> <button tb_addallvars 32> <b>alle Varianten hinzufügen</b> wenn
-  das Schachprogramm MultiPV unterstützt, werden alle Varianten
-  hinzugefügt.</li>
+  falls MultiPV aktiviert ist).</li>
+  <li> <button tb_addallvars 32> <b>MultiPV</b> fügt alle Varianten hinzu, wobei
+  die Anzahl durch die angrenzende Spinbox bestimmt wird.</li>
 
   <li> <button tb_annotate 32> <b>Automatisch kommentieren</b>
   (siehe <a Analysis Annotating>unten</a>).</li>
@@ -5121,9 +5121,9 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   der Partie hinzuzufügen, kehren Sie zu der gesperrten Stellung
   zurück, drücken Pause, entsperren die Analyse und fügen die Variante hinzu.
 </li>
-  <li> <button tb_coords 32> <b>Analysebrett anzeigen</b> zeigt ein
-  kleines Hilfsschachbrett an. Wenn das Schachprogramm angehalten ist,
-  zeigt dieses Brett die gesperrte Stellung. Ein Klick mit der
+  <li> <button tb_coords 32> <b>Analysebrett anzeigen</b> zeigt ein kleines
+  Hilfsschachbrett mit anklickbaren Pfeilen an. Wenn das Schachprogramm
+  angehalten ist, zeigt dieses Brett die gesperrte Stellung. Ein Klick mit der
   mittleren Maustaste schaltet zwischen den Anzeigemodi um.</li>
   <li> <button tb_exclude 32> <b>Zug ausschließen</b> hilft, die
   Suchliste des Schachprogramms zu verfeinern (hauptsächlich nur
@@ -6502,11 +6502,12 @@ set helpText(D,Options) {<h1>Optionen und Einstellungen</h1>
   (unterhalb des Hauptbrettes) sowie Partiehervorhebungen in der
   Kreuztabelle und in den Berichten ein.</p>
 
-  <p>Die Funktion <b>Hintergrundfarbe</b> setzt eine Hintergrundfarbe
-  für verschiedene textähnliche Fenster. Ebenso setzt <b>Textfarbe</b>
-  eine Vordergrundfarbe für die gleichen/ähnlichen Fenster. Diese
-  Änderung erfordert einen Neustart von Scid vs PC.</p>
-
+  <p>Die Funktion <b>Hintergrundfarbe</b> setzt eine Hintergrundfarbe für
+  verschiedene textähnliche Fenster oder eine globale Hintergrundfarbe. Ebenso
+  setzt <b>Textfarbe</b> eine Vordergrundfarbe für die gleichen/ähnlichen
+  Fenster. <i>Das Zurücksetzen der globalen und der Textvordergrundfarbe
+  funktioniert nicht korrekt, bis Scid neu gestartet wird</i>.</p>
+  
   <h3><name MyPlayerNames>Meine Spielernamen</name></h3>
   <p><green><run editMyPlayerNames>Meine Spielernamen</run></green>
   ermöglicht die Berücksichtigung von besonderen Spielernamen.
@@ -6535,6 +6536,17 @@ set helpText(D,Options) {<h1>Optionen und Einstellungen</h1>
   Fenstern <a Tree>Zugbaum</a> und <a Crosstable>Kreuztabelle</a>
   verwendet. Diese erfordern eine Schriftart mit fester Breite, um die
   Textausrichtung passend zu gestalten.
+  </p>
+
+  <h3>Hochauflösende Bildschirmanzeigen</h3>
+
+  <p>Unglücklicherweise ist die Unterstützung für hochauflösende
+  Bildschirmanzeigen schlecht. Falls Anwender von Windows im Programm
+  und in den Menüs ausgewaschenen Text sehen, versuche man für die
+  Datei C:\Scid vs PC-4.xx\bin\scid.exe
+  "Properties-<gt>Compatibility-<gt>Change high DPI settings" zu
+  editieren und "Override high DPI scaling behaviour" in "Scaling
+  Performed by Application" zu ändern.
   </p>
 
   <h3><name Themes>Themen</name></h3>
@@ -6571,7 +6583,7 @@ set helpText(D,Options) {<h1>Optionen und Einstellungen</h1>
  </ul>
  </p>
 
-  <p><footer>Aktualisiert: Scid vs. PC 4.22 Februar 2020</footer></p>
+  <p><footer>Aktualisiert: Scid vs. PC 4.24 Oktober 2022</footer></p>
 }
 
 set helpTitle(D,NAGs) "NAG-Werte"
@@ -8629,8 +8641,54 @@ set helpText(D,BookTuning) {<h1>Eröffnungsbuch anpassen</h1>
   <p><footer>Aktualisiert: Scid vs. PC 4.21, Januar 2020 </footer></p>
 }
 
-set helpTitle(D,Novag) "Novag Citrine"
+set helpTitle(Eboards) "Electronic Chessboards"
+set helpText(Eboards) {<h1>Elektronische Schachbretter</h1>
+
+  <p>Graham O'Neill' hat seit einiger Zeit Treiber für zahlreiche elektronische
+  Schachbretter herausgegeben. Auf <url https://goneill.co.nz/chess.php>Graham's
+  Chess page</url> findet man viele Informationen, einschließlich
+  Windows-Unterstützung für
+  <br>
+  <ul>
+  <li>Certabo</li>
+  <li>Chessnut</li>
+  <li>DGT</li>
+  <li>DGT Pegasus</li>
+  <li>Millennium</li>
+  <li>Novag Citrine</li>
+  <li>Novag USB</li>
+  <li>Saitek</li>
+  <li>Square Off</li>
+  </ul>
+  <br>
+  Eine Teilmenge hiervon wird auch in
+  <url https://goneill.co.nz/chess#linux>Linux</url> unterstützt.
+  </p>
+  <p>
+  Im Grunde genommen installiert man die UCI-Engine-Version des entsprechenden
+  Treibers von Grahams Website und kann dann, indem man den Treiber mit der
+  Option Analysis Engines startet, sein Eboard benutzen, um Schachpartien
+  einzugeben, online mit FICS oder gegen eine UCI-Engine zu spielen.
+  </p>
+  <p>
+  Dies ist eine neue Funktion, die hoffentlich nach und nach ausgebaut wird. Ein
+  großes Dankeschön an Graham für seine großartige Eboard-Unterstützung und
+  Dokumentation.
+  </p>
+  <p>
+  <i>Information über Scids alte Hardware-Unterstützung
+  ist <a HardwareConfig>hier</a> verfügbar.</i>
+  </p>
+
+  <p><footer>(Updated: Scid vs PC 4.23)</footer></p>
+}
+
+  set helpTitle(D,Novag) "Novag Citrine"
 set helpText(D,Novag) {<h1>Schachbrett von Novag Citrine</h1>
+
+  <p><b>Dieser Abschnitt beschreibt die alte Novag-Unterstützung von
+  SCID. Wahrscheinlich wollen Sie Grahams <a Eboards>Eboard-Engine</a>
+  verwenden.</b></p>
 
   <p>Das Novag Citrine ist ein Holzschachbrett, das sich über eine
   serielle Verbindung mit Computern verbinden kann. Es kann mit Scid
@@ -8651,11 +8709,8 @@ set helpText(D,Novag) {<h1>Schachbrett von Novag Citrine</h1>
 set helpTitle(D,HardwareConfig) "Mit externer Hardware verbinden"
 set helpText(D,HardwareConfig) {<h1>Mit externer Hardware verbinden</h1>
 
-  <p><i>Scids Hardware-Unterstützung ist alt und funktioniert
-  wahrscheinlich nicht mit den meisten Boards. Anwender, die helfen
-  möchten, können <url https://goneill.co.nz/chess.php>Grahams
-  Schachseite </url> besuchen und schauen, wie man seine großartigen
-  Treiber nach Scid vs Pc portiert.  </i></p>
+  <p><b>Dieser Abschnitt beschreibt SCIDs alte Hardware-Unterstützung. Sie
+  wollen wahrscheinlich Grahams <a Eboards>Eboards engine</a> verwenden.</b></p>
 
   <p>Scid unterstützt zwei Arten von externer Hardware, die
   im Menü <green><run ::ExtHardware::config>Werkzeuge--<gt>Hardware
@@ -8685,13 +8740,7 @@ set helpText(D,HardwareConfig) {<h1>Mit externer Hardware verbinden</h1>
   <li><b>Weitere UCB-Bretter</b> Beachte: Scid enthält standardmäßig
   keine Input Engine. Input Engines sind als unabhängige Programme für
   die Verwendung mit einer Vielzahl an grafischen Benutzeroberflächen
-  bestimmt. Auf <url https://goneill.co.nz/chess.php>Grahams
-  Schachseite</url> gibt es große Anstrengungen, um einen einfachen
-  Zugang zu vielen Geräten zu ermöglichen. Am unteren Ende der Seite
-  gibt es sowohl Treiber für UCB-Bretter von <b>Millennium Chesslink,
-  Certabo und Novag</b> als auch eine umfangreiche Dokumentation für
-  einen vergleichsweise einfachen Weg, um sie in Scid (oder eine
-  andere grafische Oberfläche für Schach) zu integrieren.</li>
+  bestimmt.</li>
   </ul>
 
   <h3>Einstellungen</h3>
@@ -8720,6 +8769,10 @@ set helpText(D,HardwareConfig) {<h1>Mit externer Hardware verbinden</h1>
   in der Werkzeugleiste.</p>
 
   <h3>Input Engine/DGT</h3>
+
+  <p><b>Dieser Abschnitt beschreibt SCIDs alte
+  Hardware-Unterstützung. Wahrscheinlich wollen Sie
+  Grahams <a Eboards>Eboards-Engine</a> verwenden.</b></p>
 
   <p><i>Scids Hardware-Unterstützung ist alt und funktioniert
   wahrscheinlich nicht mit den meisten Boards. Anwender, die helfen
@@ -8806,11 +8859,8 @@ set helpText(D,HardwareStatus) {<h1>Status externer Hardware</h1>
 set helpTitle(D,InputEngine) "Konsole DGT/Input Engine"
 set helpText(D,InputEngine) {<h1>Konsole DGT/Input Engine</h1>
 
-  <p><i>Scids Hardware-Unterstützung ist alt und funktioniert
-  wahrscheinlich nicht mit den meisten Boards. Anwender, die helfen
-  möchten, können <url https://goneill.co.nz/chess.php>Grahams
-  Schachseite </url> besuchen und schauen, wie man seine großartigen
-  Treiber nach Scid vs Pc portiert.</i></p>
+  <p><b>Dieser Abschnitt beschreibt SCIDs alte DGT-Unterstützung. Wahrscheinlich
+  wollen Sie Grahams <a Eboards>Eboards engine</a> verwenden.</b></p>
 
   <p>Zuoberst im Input Engine-Fenster überwacht eine Konsole die
   Kommunikation zwischen Scid und dem Treiberprogramm. Dies ist

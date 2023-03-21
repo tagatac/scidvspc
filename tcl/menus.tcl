@@ -1370,7 +1370,7 @@ set helpMessage($m,1) OptionsBackColour
 
 $m.back add command -label OptionsMovesHighlightLastMoveColor -command SetBackgroundColour
 
-$m.back add radiobutton -label [tr None] -variable enableBackground -value 0 -command {
+$m.back add radiobutton -label None -variable enableBackground -value 0 -command {
     initBackgroundColour grey95
 }
 set helpMessage($m.back,1) None
@@ -1812,6 +1812,7 @@ proc setLanguageMenus {{lang ""}} {
   }
   configMenuText .menu.options.colour [tr OptionsFicsColour $oldLang] OptionsFicsColour $lang
   configMenuText .menu.options.colour.back [tr OptionsMovesHighlightLastMoveColor $oldLang] OptionsMovesHighlightLastMoveColor $lang
+  .menu.options.colour.back entryconfigure 1 -label [tr None]
   configMenuText .menu.options.colour.back 2 OptionsBackColour $lang
   configMenuText .menu.options.colour.back 3 OptionsBackColourGlobal $lang
 
