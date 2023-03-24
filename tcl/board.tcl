@@ -62,6 +62,7 @@ proc initBackgroundColour {colour} {
       }
     } else {
       option add *background $colour
+      option add *activeBackground [::gradient $::defaultBackground .4 .]
       option add *HighlightBackground $colour
       ::ttk::style configure TNotebook.Tab -font font_Menu
       ::ttk::style configure Heading -background $colour
@@ -88,6 +89,11 @@ proc recurseBackgroundColour2 {w colour} {
    # Skip board canvas backgrounds (which colour the lines inbetween board squares)
    if {![string match *.bd $w]} {
      catch {$w configure -background $colour}
+     ### Hmm - dynamic changing button bgs doesn't work ?
+     # if {[winfo class $w] == "Button"} {
+     #   catch {$w configure -activebackground $colour}
+     #   catch {$w configure -highlightbackground $colour}
+     # }
      foreach c [winfo children $w] {
 	 recurseBackgroundColour2 $c $colour
      }
