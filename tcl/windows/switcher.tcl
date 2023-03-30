@@ -1080,7 +1080,11 @@ proc ::windows::switcher::Refresh {} {
       if {$i == $current} {
         set color $::switchercolor ; # khaki , lightgoldenrodyellow
       } else {
-	set color gainsboro
+        if {$::enableBackground == 2} {
+	  set color [::gradient $::defaultBackground -.15 .]
+        } else {
+	  set color gainsboro
+        }
       }
 
       $w.c.f$i configure -background $color
