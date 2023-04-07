@@ -311,19 +311,9 @@ proc ::tourney::refresh {} {
   foreach tmt $tlist {
     incr count
     if {$count > $::tourney::size} { break }
-    set date [lindex $tmt 0]
-    set site [lindex $tmt 1]
-    set event [lindex $tmt 2]
-    set np [lindex $tmt 3]
-    set ng [lindex $tmt 4]
-    set elo [lindex $tmt 5]
-    set g [lindex $tmt 6]
-    set winner [::utils::string::Surname [lindex $tmt 7]]
-    set elo1 [lindex $tmt 8]
-    set score1 [lindex $tmt 9]
-    set runnerup [::utils::string::Surname [lindex $tmt 10]]
-    set elo2 [lindex $tmt 11]
-    set score2 [lindex $tmt 12]
+    lassign $tmt date site event np ng elo g winner elo1 score1 runnerup elo2 score2
+    set winner [::utils::string::Surname $winner]
+    set runnerup [::utils::string::Surname $runnerup]
     if {$elo1 > 0} { append winner " ($elo1)" }
     if {$elo2 > 0} { append runnerup " ($elo2)" }
     # append winner " $score1"

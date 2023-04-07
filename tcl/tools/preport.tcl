@@ -691,11 +691,9 @@ proc ::preport::report {fmt {withTable 1}} {
   if {$preport(AvgPerf)} {
     append r [::preport::_subsec $tr(OprepAvgPerf)]
     set e [sc_report player elo white]
-    set welo [lindex $e 0]; set wng [lindex $e 1]
-    set bpct [lindex $e 2]; set bperf [lindex $e 3]
+    lassign $e welo wng bpct bperf
     set e [sc_report player elo black]
-    set belo [lindex $e 0]; set bng [lindex $e 1]
-    set wpct [lindex $e 2]; set wperf [lindex $e 3]
+    lassign $e belo bng wpct wperf
     append r "$tr(OprepWRating): $welo ($wng $games);  "
     append r "$tr(OprepWPerf): $wperf ($wpct$percent vs $belo)$n"
     append r "$tr(OprepBRating): $belo ($bng $games);  "

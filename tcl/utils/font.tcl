@@ -49,10 +49,7 @@ proc FontDialog {name {parent .}} {
   # Get current font's family and so on.
   if {[llength $options] == 4} {
     # Use provided font settings:
-    set family [lindex $options 0]
-    set size   [lindex $options 1]
-    set weight [lindex $options 2]
-    set slant  [lindex $options 3]
+    lassign $options family size weight slant
   } else {
     # Get options using [font actual]:
     set family [font actual $font_name -family]

@@ -144,10 +144,7 @@ proc setPatterns {pattlist} {
   set count 1
   foreach patt $pattlist {
     if {$count <= $nPatterns  &&  [llength $patt] == 4} {
-      set pattPiece($count) [lindex $patt 0]
-      set pattFyle($count) [lindex $patt 1]
-      set pattRank($count) [lindex $patt 2]
-      set pattBool($count) [lindex $patt 3]
+      lassign $patt pattPiece($count) pattFyle($count) pattRank($count) pattBool($count)
       incr count
     }
   }

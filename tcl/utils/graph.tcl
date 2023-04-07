@@ -282,12 +282,9 @@ proc ::utils::graph::plot_axes {graph} {
 
   # Plot vertical guide lines:
   foreach vline $_data($graph,vline) {
-    set color [lindex $vline 0]
+    lassign $vline color width type inc
     # don't plot gray lines if bg enabled
     if {$::enableBackground && $color == "gray90"} {continue}
-    set width [lindex $vline 1]
-    set type [lindex $vline 2]
-    set inc [lindex $vline 3]
     set xminvalue [xmap $graph $xmin]
     set xmaxvalue [xmap $graph $xmax]
     if {$type == "at"} {
@@ -317,12 +314,9 @@ proc ::utils::graph::plot_axes {graph} {
 
   # Plot horizontal guide lines:
   foreach hline $_data($graph,hline) {
-    set color [lindex $hline 0]
+    lassign $hline color width type inc
     #  but probably ok to leave the horizontal lines in
     # if {$::enableBackground && $color == "gray90"} {continue}
-    set width [lindex $hline 1]
-    set type [lindex $hline 2]
-    set inc [lindex $hline 3]
     set yminvalue [ymap $graph $ymin]
     set ymaxvalue [ymap $graph $ymax]
     if {$type == "at"} {

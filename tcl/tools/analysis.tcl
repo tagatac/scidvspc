@@ -202,15 +202,7 @@ proc ::enginelist::write {} {
   puts $f "\# Analysis Engines configuration for $::scidName [sc_info version]"
   puts $f {}
   foreach e $engines(list) {
-    set name [lindex $e 0]
-    set cmd  [lindex $e 1]
-    set args [lindex $e 2]
-    set dir  [lindex $e 3]
-    set elo  [lindex $e 4]
-    set time [lindex $e 5]
-    set url  [lindex $e 6]
-    set uci  [lindex $e 7]
-    set opt  [lindex $e 8]
+    lassign $e name cmd args dir elo time url uci opt
     puts $f "engine {"
       puts $f "  Name [list $name]"
       puts $f "  Cmd  [list $cmd]"
@@ -551,13 +543,7 @@ proc ::enginelist::edit {index {copy {}}} {
   }
 
   set engines(newIndex) $index
-  set engines(newCmd)	[lindex $e 1]
-  set engines(newArgs)	[lindex $e 2]
-  set engines(newDir)	[lindex $e 3]
-  set engines(newElo)	[lindex $e 4]
-  set engines(newURL)	[lindex $e 6]
-  set engines(newUCI)	[lindex $e 7]
-  set engines(newUCIoptions) [lindex $e 8]
+  lassign $e dummy0 engines(newCmd) engines(newArgs) engines(newDir) engines(newElo) dummy5 engines(newURL) engines(newUCI) engines(newUCIoptions)
 
   toplevel $w
   wm title $w {Configure Engine}
@@ -1720,11 +1706,7 @@ proc popAnalysisData {n} {
     return
   }
   set tmp [lindex $stack end]
-  set analysis(prevscore$n) [lindex $tmp 0]
-  set analysis(score$n)     [lindex $tmp 1]
-  set analysis(prevmoves$n) [lindex $tmp 2]
-  set analysis(moves$n)     [lindex $tmp 3]
-  set lastVar               [lindex $tmp 4]
+  lassign $tmp analysis(prevscore$n) analysis(score$n) analysis(prevmoves$n) analysis(moves$n) lastVar
   set stack [lreplace $stack end end]
   return $lastVar
 }

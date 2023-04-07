@@ -185,11 +185,7 @@ proc ::plist::refresh {} {
   set count 0
   foreach player $pdata {
     incr count
-    set ng [lindex $player 0]
-    set oldest [lindex $player 1]
-    set newest [lindex $player 2]
-    set elo [lindex $player 3]
-    set name [lindex $player 4]
+    lassign $player ng oldest newest elo name
 
     $t tag bind p$count <ButtonPress-1> [list playerInfo $name raise]
     #$t tag bind p$count <ButtonPress-3> [list playerInfo $name raise]

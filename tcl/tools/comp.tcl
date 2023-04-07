@@ -423,11 +423,7 @@ proc compOk {} {
   set thisgame [lindex $comp(games) $comp(current)]
 
   while {$thisgame != {} } {
-    set n     [lindex $thisgame 0]
-    set m     [lindex $thisgame 1]
-    set name1 [lindex $thisgame 2]
-    set name2 [lindex $thisgame 3]
-    set k     [lindex $thisgame 4]
+    lassign $thisgame n m name1 name2 k
     if {$n != {} && $m != {}} {
       puts "Game [expr $comp(current) + 1]: $name1 vs. $name2"
       incr comp(current)
