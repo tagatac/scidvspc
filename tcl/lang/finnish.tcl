@@ -637,6 +637,8 @@ menuText L PListSortElo "Elo" 0
 menuText L PListSortGames "Pelit" 0
 menuText L PListSortOldest "Vanhin" 0
 menuText L PListSortNewest "Uusin" 2
+# ====== TODO To be translated ======
+menuText L PListSortCountry "Country" 0
 
 # Tournament finder:
 menuText L TmtFile "Turnaushakulaite" 0

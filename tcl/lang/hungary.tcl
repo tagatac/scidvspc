@@ -755,6 +755,8 @@ menuText H PListSortElo "Élõ" 0
 menuText H PListSortGames "Játszmák" 0
 menuText H PListSortOldest "Legrégibb" 0
 menuText H PListSortNewest "Legújabb" 3
+# ====== TODO To be translated ======
+menuText H PListSortCountry "Country" 0
 
 # Tournament finder:
 menuText H TmtFile "Fájl" 0

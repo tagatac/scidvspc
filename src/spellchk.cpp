@@ -1003,8 +1003,8 @@ SpellChecker::GetLastCountry (const char * comment)
     // Return the final three characters of the country field:
     if (length >= 3) {
         for (int i=0; i < 3; i++) { country[i] = start[length-3 + i]; }
-        country[3] = 0;
     }
+    country[3] = 0;
     return country;
 }
 

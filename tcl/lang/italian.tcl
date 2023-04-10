@@ -780,6 +780,8 @@ menuText I PListSortElo "Elo" 0
 menuText I PListSortGames "Partite" 0
 menuText I PListSortOldest "Pi� vecchie" 0
 menuText I PListSortNewest "Pi� recenti" 0
+# ====== TODO To be translated ======
+menuText I PListSortCountry "Country" 0
 
 # Tournament finder:
 menuText I TmtFile "File" 0

@@ -722,6 +722,8 @@ menuText G PListSortElo "Elo " 0
 menuText G PListSortGames "Παρτίδες" 0
 menuText G PListSortOldest "Παλιά" 0
 menuText G PListSortNewest "Νέα" 2
+# ====== TODO To be translated ======
+menuText G PListSortCountry "Country" 0
 
 # Tournament finder:
 menuText G TmtFile "Ευρετήριο Τουρνουά" 0

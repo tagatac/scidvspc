@@ -748,6 +748,8 @@ menuText C PListSortElo "ELO" 0
 menuText C PListSortGames "Partie" 0
 menuText C PListSortOldest "Nejstar¹í" 3
 menuText C PListSortNewest "Nejnovìj¹í" 3
+# ====== TODO To be translated ======
+menuText C PListSortCountry "Country" 0
 
 # Tournament finder:
 menuText C TmtFile "Soubor" 0

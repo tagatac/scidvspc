@@ -653,6 +653,8 @@ menuText U PListSortElo "Elo" 0
 menuText U PListSortGames "Jogos" 0
 menuText U PListSortOldest "Antigo" 0 ;# ***
 menuText U PListSortNewest "Recente" 0 ;# ***
+# ====== TODO To be translated ======
+menuText U PListSortCountry "Country" 0
 
 # Tournament finder:
 menuText U TmtFile "Arquivo" 0

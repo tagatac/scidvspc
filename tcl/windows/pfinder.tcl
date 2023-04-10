@@ -9,6 +9,7 @@ set ::plist::sort Name
 
 proc ::plist::defaults {} {
   set ::plist::name ""
+  set ::plist::country no
   set ::plist::minGames 1
   set ::plist::maxGames 9999
   set ::plist::minElo 0
@@ -42,8 +43,9 @@ proc ::plist::Open {} {
   bind $w <Down> "$w.t.text yview scroll 1 units"
   bind $w <Prior> "$w.t.text yview scroll -1 pages"
   bind $w <Next> "$w.t.text yview scroll 1 pages"
-  bind $w <Key-Home> "$w.t.text yview moveto 0"
-  bind $w <Key-End> "$w.t.text yview moveto 0.99"
+  # These are kindof broken when subsequently using Up and Down.
+  bind $w <Key-Home> "$w.t.text yview 0"
+  bind $w <Key-End> "$w.t.text yview end"
   #bindMouseWheel $w $w.t.text
 
   foreach i {t o1 o2 o3 b} {frame $w.$i}
@@ -53,16 +55,15 @@ proc ::plist::Open {} {
     -cursor top_left_arrow -xscrollcommand "$w.t.xbar set" -borderwidth 0
   scrollbar $w.t.ybar -command "$w.t.text yview" -takefocus 0
   scrollbar $w.t.xbar -orient horiz -command "$w.t.text xview" -takefocus 0
-  set xwidth [font measure [$w.t.text cget -font] "0"]
-  set tablist {}
-  foreach {tab justify} {4 r 10 r 18 r 24 r 32 r 35 l} {
-    set tabwidth [expr {$xwidth * $tab} ]
-    lappend tablist $tabwidth $justify
-  }
-  $w.t.text configure -tabs $tablist
+
+  set ::plist::xwidth [font measure [$w.t.text cget -font] "0"]
+
+  ::plist::configureHeading
+  $w.t.text configure -tabs $::plist::tablist
   $w.t.text tag configure ng -foreground darkBlue
   $w.t.text tag configure date -foreground darkGreen
   $w.t.text tag configure elo -foreground {}
+  $w.t.text tag configure country -foreground steelBlue
   $w.t.text tag configure name -foreground steelBlue
   $w.t.text tag configure title -font font_SmallBold
 
@@ -96,7 +97,7 @@ proc ::plist::Open {} {
   set ::plist::name $tmp
 
   bindFocusColors $f.name
-  pack $f.name $f.nlabel -side right
+  pack $f.name $f.nlabel -side right -padx 5
 
   set f $w.o2
 
@@ -121,7 +122,21 @@ proc ::plist::Open {} {
   trace variable ::plist::size w {::utils::validate::Integer 100000 0}
   bindFocusColors $f.esize
 
-  pack $f.esize $f.size -side right
+  pack $f.esize $f.size -side right -padx 5
+
+  # Country
+
+  label $f.ncountry -textvar  ::tr(Country) -font $fbold
+
+  set tmp $::plist::country
+  ttk::combobox $f.country -textvariable ::plist::country -width 5
+  ::utils::history::SetCombobox ::plist::country $f.country
+  set ::plist::country $tmp
+
+  # WTF - Sort his out please S.A.
+  # bindFocusColors $f.name 
+  pack $f.country $f.ncountry -side right -padx 5
+
 
   dialogbutton $w.b.defaults -text $::tr(Defaults) -command ::plist::defaults
   dialogbutton $w.b.update -text $::tr(Update) -command ::plist::refresh
@@ -142,6 +157,7 @@ proc ::plist::Open {} {
   grid rowconfig $w.t 0 -weight 1 -minsize 0
   grid columnconfig $w.t 0 -weight 1 -minsize 0
 
+  update
   ::plist::refresh
 }
 
@@ -152,14 +168,20 @@ proc ::plist::refresh {} {
   wm title $w "[tr WindowsPList]: [file tail [sc_base filename]]"
 
   busyCursor .
-  update
+
+  set ::plist::name [string trim $::plist::name]
+  set ::plist::country [string trim $::plist::country]
   ::utils::history::AddEntry ::plist::name $::plist::name
+  ::utils::history::AddEntry ::plist::country $::plist::country
   set t $w.t.text
   $t configure -state normal
   $t delete 1.0 end
 
   $t insert end "\t" title
-  foreach i {Games Oldest Newest Elo Name} {
+
+  ::plist::configureHeading
+  $w.t.text configure -tabs $::plist::tablist
+  foreach i $::plist::headings {
     $t tag configure s$i -font font_SmallBold
     $t tag bind s$i <1> "set ::plist::sort $i; ::plist::refresh"
     $t tag bind s$i <Any-Enter> "$t tag config s$i -background $::rowcolor"
@@ -171,10 +193,11 @@ proc ::plist::refresh {} {
 
   update
 
-  set err [catch {sc_name plist -name $::plist::name -size $::plist::size \
-            -minGames $::plist::minGames -maxGames $::plist::maxGames \
-            -minElo $::plist::minElo -maxElo $::plist::maxElo \
-                -sort [string tolower $::plist::sort]} pdata]
+  set err [catch {
+    sc_name plist -name $::plist::name -size $::plist::size -minGames $::plist::minGames \
+                  -maxGames $::plist::maxGames -minElo $::plist::minElo -maxElo $::plist::maxElo \
+                  -sort [string tolower $::plist::sort] -country [string toupper $::plist::country]
+     } pdata]
   if {$err} {
     $t insert end "\n$pdata\n"
     unbusyCursor .
@@ -185,7 +208,12 @@ proc ::plist::refresh {} {
   set count 0
   foreach player $pdata {
     incr count
-    lassign $player ng oldest newest elo name
+
+    if {$::plist::country == "no"} {
+	lassign $player ng oldest newest elo name
+    } else {
+	lassign $player ng oldest newest country elo name
+    }
 
     $t tag bind p$count <ButtonPress-1> [list playerInfo $name raise]
     #$t tag bind p$count <ButtonPress-3> [list playerInfo $name raise]
@@ -201,6 +229,10 @@ proc ::plist::refresh {} {
     $t insert end "\t" p$count
     $t insert end "- $newest" [list date p$count]
     $t insert end "\t" p$count
+    if {$::plist::country != "no"} {
+      $t insert end $country [list country p$count]
+      $t insert end "\t" p$count
+    }
     $t insert end $elo [list elo p$count]
     $t insert end "\t" p$count
     $t insert end $name [list name p$count]
@@ -209,6 +241,24 @@ proc ::plist::refresh {} {
   $t configure -state disabled
   wm title $w "[tr WindowsPList]: [file tail [sc_base filename]], $count [tr Players]"
   unbusyCursor .
+}
+
+proc ::plist::configureHeading {} {
+  set ::plist::tablist {}
+  if {$::plist::country == "no"} {
+     set tabs {4 r 10 r 18 r 24 r 32 r 35 l}
+     set ::plist::headings {Games Oldest Newest Elo Name}
+     if {$::plist::sort == "Country"} {
+       set ::plist::sort Name
+     }
+  } else {
+     set tabs {4 r 10 r 18 r 24 r 26 l 36 r 38 l}
+     set ::plist::headings {Games Oldest Newest Country Elo Name}
+  }
+  foreach {tab justify} $tabs {
+    set tabwidth [expr {$::plist::xwidth * $tab} ]
+    lappend ::plist::tablist $tabwidth $justify
+  }
 }
 
 proc ::plist::check {} {

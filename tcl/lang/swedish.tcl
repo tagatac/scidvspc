@@ -710,6 +710,8 @@ menuText W PListSortElo "Elo" 0
 menuText W PListSortGames "Partier" 0
 menuText W PListSortOldest "Äldst" 0
 menuText W PListSortNewest "Yngst" 0
+# ====== TODO To be translated ======
+menuText W PListSortCountry "Country" 0
 
 # Tournament finder:
 menuText W TmtFile "Fil" 0

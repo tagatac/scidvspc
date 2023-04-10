@@ -683,6 +683,8 @@ menuText R PListSortElo "Рейтинг Эло" 0
 menuText R PListSortGames "Партии" 0
 menuText R PListSortOldest "Старейшая" 1
 menuText R PListSortNewest "Новейшая" 0
+# ====== TODO To be translated ======
+menuText R PListSortCountry "Country" 0
 
 # Tournament finder:
 menuText R TmtFile "Файл" 0

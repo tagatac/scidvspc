@@ -645,6 +645,7 @@ menuText E PListSortElo "Elo" 0
 menuText E PListSortGames "Games" 0
 menuText E PListSortOldest "Oldest" 0
 menuText E PListSortNewest "Newest" 2
+menuText E PListSortCountry "Country" 0
 
 # Tournament finder:
 menuText E TmtFile "Tournament Finder" 0

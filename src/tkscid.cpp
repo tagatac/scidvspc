@@ -13348,6 +13348,16 @@ struct SortNamebaseNodes
     }
 
     static int
+    compareCountry(namebaseNodeT lhs, namebaseNodeT rhs)
+    {
+	const char * name1 = lhs->data.country;
+	const char * name2 = rhs->data.country;
+
+	int compare = strCompare (name1, name2);
+	return compare;
+    }
+
+    static int
     compareElo(namebaseNodeT lhs, namebaseNodeT rhs)
     {
 	int compare = rhs->data.maxElo - lhs->data.maxElo;
@@ -13408,30 +13418,31 @@ sc_name_plist (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     const char * usage = "Usage: sc_name plist [-<option> <value> ...]";
 
     const char * namePrefix = "";
+    const char * country = "";
+    bool searchCountry = 0;
     uint minGames = 0;
     uint maxGames = db->numGames;
     uint minElo = 0;
     uint maxElo = MAX_ELO;
     uint maxListSize = db->nb->GetNumNames(NAME_PLAYER);
+    extern spellingT countryTable[];
 
     if (! db->inUse) { return errorResult (ti, errMsgNotOpen(ti)); }
     if (db->numGames == 0) { return TCL_OK; }
 
     static const char * options [] = {
-        "-name", "-minElo", "-maxElo", "-minGames", "-maxGames",
-        "-size", "-sort", NULL
+        "-name", "-minElo", "-maxElo", "-minGames", "-maxGames", "-size", "-sort", "-country", NULL
     };
     enum {
-        OPT_NAME, OPT_MINELO, OPT_MAXELO, OPT_MINGAMES, OPT_MAXGAMES,
-        OPT_SIZE, OPT_SORT
+        OPT_NAME, OPT_MINELO, OPT_MAXELO, OPT_MINGAMES, OPT_MAXGAMES, OPT_SIZE, OPT_SORT, OPT_COUNTRY
     };
 
     // Valid sort types:
     static const char * sortModes [] = {
-        "elo", "games", "oldest", "newest", "name", "photo", NULL
+        "elo", "games", "oldest", "newest", "name", "photo", "country", NULL
     };
     enum {
-        SORT_ELO, SORT_GAMES, SORT_OLDEST, SORT_NEWEST, SORT_NAME, SORT_PHOTO
+        SORT_ELO, SORT_GAMES, SORT_OLDEST, SORT_NEWEST, SORT_NAME, SORT_PHOTO, SORT_COUNTRY
     };
 
     int sortMode = SORT_NAME;
@@ -13450,6 +13461,10 @@ sc_name_plist (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             case OPT_MINGAMES: minGames = strGetUnsigned (value);    break;
             case OPT_MAXGAMES: maxGames = strGetUnsigned (value);    break;
             case OPT_SIZE:     maxListSize = strGetUnsigned (value); break;
+            case OPT_COUNTRY:
+               country = value;
+               searchCountry = !(strEqual(country,"NO"));
+               break;
             case OPT_SORT:
                sortMode = strUniqueMatch (value, sortModes);
                break;
@@ -13470,6 +13485,7 @@ sc_name_plist (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         case SORT_NEWEST: comp = SortNamebaseNodes::compareNewest; break;
         case SORT_NAME:   comp = SortNamebaseNodes::compareNames;  break;
         case SORT_PHOTO:  comp = SortNamebaseNodes::comparePhoto;  break;
+        case SORT_COUNTRY: comp = SortNamebaseNodes::compareCountry; break;
         default:
             return InvalidCommand (ti, "sc_name plist -sort", sortModes);
     }
@@ -13481,11 +13497,14 @@ sc_name_plist (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     SortNamebaseNodes sortOp(comp);
     NamebaseNodeSet pset(sortOp);
+    SpellChecker * spChecker = spellChecker[NAME_PLAYER];
+    const char *text;
+    char tmp[16];
 
     for (uint id = 0; id < nPlayers; id++) {
-	namebaseNodeT node = nb->GetNode(NAME_PLAYER, id);
+        namebaseNodeT node = nb->GetNode(NAME_PLAYER, id);
 
-	ASSERT(node);
+        ASSERT(node);
 
         const char * name = node->name;
         uint nGames = node->data.frequency;
@@ -13493,6 +13512,21 @@ sc_name_plist (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         if (nGames < minGames  ||  nGames > maxGames) { continue; }
         if (elo < minElo  ||  elo > maxElo) { continue; }
         if (! strIsCasePrefix (namePrefix, name)) { continue; }
+
+        if (searchCountry) {
+          if (spChecker && (node->data.country[0] == 0) && (text = spChecker->GetComment(node->name))) {
+              strncpy ((char*)node->data.country, SpellChecker::GetLastCountry(text), 3);
+              // We use strIsCasePrefix to match ""
+              if (! strIsCasePrefix (country, node->data.country)) { continue; }
+          } else {
+              if (node->data.country[0] == 0) {
+                  strcpy  ((char*)node->data.country, "~~~");
+                  if (! strIsCasePrefix (country, "~~~")) { continue; }
+              } else {
+                  if (! strIsCasePrefix (country, node->data.country)) { continue; }
+              }
+          }
+        }
 
         // Check if this player has a photo:
         //if (Tcl_GetVar2 (ti, "photo", (char *)name, TCL_GLOBAL_ONLY) != NULL) {
@@ -13515,16 +13549,20 @@ sc_name_plist (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     // C++: Note that in C++ pre-increment is preferred over post-increment, this means
     // C++: '++i' is better than 'i++' (pre-increment returns the modified object, but
     // C++: post-increment must return a copy of the object before modification).
+
     for (auto i = pset.cbegin(), e = pset.cend(); i != e; ++i) {
         Tcl_DStringStartSublist (ds);
         namebaseNodeT node = *i; // C++: '*' is dereferencing the object from iterator
-        char tmp[16];
         sprintf (tmp, "%u", node->data.frequency);
         Tcl_DStringAppendElement(ds, tmp);
         sprintf (tmp, "%u", date_GetYear(node->data.firstDate));
         Tcl_DStringAppendElement(ds, tmp);
         sprintf (tmp, "%u", date_GetYear(node->data.lastDate));
         Tcl_DStringAppendElement(ds, tmp);
+
+        if (searchCountry) 
+            Tcl_DStringAppendElement(ds, node->data.country);
+
         sprintf (tmp, "%u", node->data.maxElo);
         Tcl_DStringAppendElement(ds, tmp);
         //strCopy (tmp, nb->HasPhoto(pset[p]) ? "1" : "0");

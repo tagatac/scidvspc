@@ -635,6 +635,8 @@ menuText T PListSortElo "Elo" 0
 menuText T PListSortGames "Oyunlar" 0
 menuText T PListSortOldest "en eski" 0
 menuText T PListSortNewest "en yeni" 2
+# ====== TODO To be translated ======
+menuText T PListSortCountry "Country" 0
 
 # Tournament finder:
 menuText T TmtFile "Turnuva bulma" 0

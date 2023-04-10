@@ -778,6 +778,8 @@ menuText B PListSortElo "Elo" 0
 menuText B PListSortGames "Jogos" 0
 menuText B PListSortOldest "Mais antigo" 0 
 menuText B PListSortNewest "Mais novo" 0 
+# ====== TODO To be translated ======
+menuText B PListSortCountry "Country" 0
 
 # Tournament finder:
 menuText B TmtFile "Arquivo" 0

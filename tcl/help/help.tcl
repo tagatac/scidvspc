@@ -1135,7 +1135,7 @@ set helpText(CQL) {<h1>Chess Query Language</h1>
   CQL is a powerful query language which allows for a huge variety of searches.
   It differs from normal Scid searches in that it can also add detailed comments to matching games.
   </p><p><i>
-  Quick and powerful position searches can be done by marking squares with Shift+Click, then opening the CQL search dialog.
+  Quick and powerful position searches can be done by marking squares with Shift+Click (full square), then opening the CQL search dialog.
   </i></p><p>
   Because of CQL's cryptic nature, adding comments is restricted to the clipbase,
   and must be enabled with <b>Allow Comments</b>.
@@ -3388,9 +3388,7 @@ set helpText(PList) {<h1>The Player Finder Window</h1>
   about that player.
   </p>
   <p>
-  Five columns are displayed showing each player's name, peak Elo
-  rating, number of games played and the year of their oldest and
-  newest game.
+  Five columns are displayed showing each player's Number of Games, Oldest and Newest games, peak Elo and Name.
   Click on any column title to sort the list by that column.
   </p>
   <p>
@@ -3399,8 +3397,14 @@ set helpText(PList) {<h1>The Player Finder Window</h1>
   name prefix (such as "ada" to search for "Adams"), and restrict the
   ranges of Elo rating and number of games played.
   </p>
+  <h3>Country</h3>
+  <p>
+  Scid vs. PC can now search the <a Maintenance Editing>Spelling</a> file to display Players' Countries.
+  This feature is disabled by default, though, as it can substantially slow down the Player Finder.
+  To enable, just remove the "no", or replace it with a three letter country code (such as GER, USA or ENG), and press 'Update'.
+  </p>
 
-  <p><footer>Updated: Scid 3.6.2, December 2006</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.24, April 2023</footer></p>
 }
 
 set helpTitle(PInfo) "Player Information"

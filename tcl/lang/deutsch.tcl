@@ -673,6 +673,7 @@ menuText D PListSortElo "ELO" 0
 menuText D PListSortGames "Partien" 0
 menuText D PListSortOldest "Älteste" 0
 menuText D PListSortNewest "Neueste" 0
+menuText D PListSortCountry "Land" 0
 
 # Tournament finder:
 menuText D TmtFile "Datei" 0

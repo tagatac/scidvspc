@@ -649,6 +649,8 @@ menuText F PListSortElo "Elo" 0
 menuText F PListSortGames "Parties" 0
 menuText F PListSortOldest "Les plus vieux" 0
 menuText F PListSortNewest "Les plus récents" 0
+# ====== TODO To be translated ======
+menuText F PListSortCountry "Country" 0
 
 # Tournament finder:
 menuText F TmtFile "Fichier" 0
