@@ -13462,8 +13462,9 @@ sc_name_plist (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             case OPT_MAXGAMES: maxGames = strGetUnsigned (value);    break;
             case OPT_SIZE:     maxListSize = strGetUnsigned (value); break;
             case OPT_COUNTRY:
-               country = value;
-               searchCountry = !(strEqual(country,"NO"));
+               searchCountry = !(strEqual(value,"NO"));
+               // 'yes' leaves country = "";
+               if (!strEqual(value,"YES")) country = value;
                break;
             case OPT_SORT:
                sortMode = strUniqueMatch (value, sortModes);

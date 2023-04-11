@@ -3401,7 +3401,7 @@ set helpText(PList) {<h1>The Player Finder Window</h1>
   <p>
   Scid vs. PC can now search the <a Maintenance Editing>Spelling</a> file to display Players' Countries.
   This feature is disabled by default, though, as it can substantially slow down the Player Finder.
-  To enable, just remove the "no", or replace it with a three letter country code (such as GER, USA or ENG), and press 'Update'.
+  To enable, just select "yes", or replace it with a three letter country code (such as GER, USA or ENG), and press 'Update'.
   </p>
 
   <p><footer>Updated: Scid vs. PC 4.24, April 2023</footer></p>

@@ -18,6 +18,7 @@ proc ::plist::defaults {} {
 }
 
 ::plist::defaults
+::utils::history::AddEntry ::plist::country yes
 
 trace variable ::plist::minElo w [list ::utils::validate::Integer [sc_info limit elo] 0]
 trace variable ::plist::maxElo w [list ::utils::validate::Integer [sc_info limit elo] 0]
