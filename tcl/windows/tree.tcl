@@ -1258,9 +1258,6 @@ proc ::tree::best {baseNumber} {
 
     $w.tree tag configure error -foreground red
 
-    # Hmm... seems no way to change the deafult blue bg colour for selected items
-    # without using (extra) tags. So this colour must look ok with a blue background
-
     if {$::enableBackground} {
       ::ttk::style configure Treeview -background $::defaultBackground
       ::ttk::style configure Treeview -fieldbackground $::defaultBackground

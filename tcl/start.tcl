@@ -2055,12 +2055,14 @@ if {$enableBackground == 2} {
   ::ttk::style configure TPanedwindow -background $::defaultBackground
   ::ttk::style configure TScrollbar -background $::defaultBackground
   ::ttk::style configure TScale -background $::defaultBackground
-  # God knows :( Nothing works for the comboboxes
-  # https://www.tcl.tk/man/tcl/TkCmd/ttk_combobox.html#M20
-  # ::ttk::style configure TEntry -background $::defaultBackground
-  # ::ttk::style configure TCombobox -fieldbackground $::defaultBackground
-  # option add *TCombobox*Listbox.background $::defaultBackground
 }
+
+set bg white
+set fg black
+::ttk::style configure TCombobox -selectbackground $bg
+::ttk::style configure TCombobox -selectforeground $fg
+::ttk::style map TCombobox -selectbackground [list active $bg disabled $bg readonly $bg]
+::ttk::style map TCombobox -selectforeground [list active $fg disabled $fg readonly $fg]
 
 # Check for old (single-directory) tablebase option:
 if {[info exists initialDir(tablebase)]} {

@@ -250,9 +250,6 @@ proc ::windows::gamelist::Close {window} {
 
 proc ::windows::gamelist::Open {} {
 
-  ### ttk::style theme use alt
-  # default classic alt clam
-
   global helpMessage
   global glistSortedBy glSortReversed glistSize
 

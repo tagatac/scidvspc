@@ -1344,6 +1344,13 @@ proc changeTheme {} {
     if {$enableForeground} {
       ::ttk::style configure Treeview -foreground $defaultForeground
     }
+  set bg white
+  set fg black
+  ::ttk::style configure TCombobox -selectbackground $bg
+  ::ttk::style configure TCombobox -selectforeground $fg
+  ::ttk::style map TCombobox -selectbackground [list active $bg disabled $bg readonly $bg]
+  ::ttk::style map TCombobox -selectforeground [list active $fg disabled $fg readonly $fg]
+
 }
 
 set m .menu.options.colour
