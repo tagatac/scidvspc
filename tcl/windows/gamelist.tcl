@@ -801,36 +801,38 @@ proc ::windows::gamelist::Popup {w x y X Y} {
     set clipbase [expr {[sc_base current] == [sc_info clipbase]}]
 
     if {$menutype == "short"} {
-    $menu add command -label $tr(GlistRemoveThisGameFromFilter) -command ::windows::gamelist::Remove
-    $menu add command -label $tr(GlistDeleteField) -command ::windows::gamelist::Delete
-    $menu add cascade -label $tr(Flag)      -menu $menu.flags
-    $menu add command -label $tr(SetFilter) -command ::windows::gamelist::Select
-    if {!$clipbase} {
-      $menu add command -label [tr EditCopy] -command ::windows::gamelist::CopyFilter
-    }
-    $menu add separator
-    $menu add command -label $tr(Reset) -command "$f.reset invoke"
+      $menu add command -label $tr(GlistRemoveThisGameFromFilter) -command ::windows::gamelist::Remove
+      $menu add command -label $tr(GlistDeleteField) -command ::windows::gamelist::Delete
+      $menu add cascade -label $tr(Flag)      -menu $menu.flags
+      $menu add command -label $tr(SetFilter) -command ::windows::gamelist::Select
+      if {!$clipbase} {
+	$menu add command -label [tr EditCopy] -command ::windows::gamelist::CopyFilter
+      }
+      $menu add separator
+      $menu add command -label $tr(Reset) -command "$f.reset invoke"
     } else {
-    $menu add command -label $tr(LoadGame) -command ::windows::gamelist::LoadSelection
-    $menu add command -label $tr(Browse) -command ::windows::gamelist::Browse
-    $menu add command -label $tr(GlistDeleteField) -command ::windows::gamelist::Delete
-    $menu add cascade -label $tr(Flag)      -menu $menu.flags
-    $menu add command -label $tr(SetFilter) -command ::windows::gamelist::Select
-    if {!$clipbase} {
-      $menu add command -label [tr EditCopy] -command ::windows::gamelist::CopyFilter
-    }
-    $menu add separator
-    $menu add command -label $tr(GlistRemoveThisGameFromFilter) -command ::windows::gamelist::Remove
-    $menu add command -label $tr(GlistRemoveGameAndAboveFromFilter) -command {::windows::gamelist::removeFromFilter up}
-    $menu add command -label $tr(GlistRemoveGameAndBelowFromFilter) -command {::windows::gamelist::removeFromFilter down}
-    $menu add command -label $tr(Reset) -command "$f.reset invoke"
-    $menu add separator
-    $menu add cascade -label $tr(GlistMoveField)      -menu $menu.move
+      $menu add command -label $tr(LoadGame) -command ::windows::gamelist::LoadSelection
+      $menu add command -label $tr(Browse) -command ::windows::gamelist::Browse
+      $menu add command -label $tr(GlistDeleteField) -command ::windows::gamelist::Delete
+      $menu add cascade -label $tr(Flag)      -menu $menu.flags
+      $menu add command -label $tr(SetFilter) -command ::windows::gamelist::Select
+      if {!$clipbase} {
+	$menu add command -label [tr EditCopy] -command ::windows::gamelist::CopyFilter
+      }
+      $menu add separator
+      $menu add command -label $tr(GlistRemoveThisGameFromFilter) -command ::windows::gamelist::Remove
+      $menu add command -label $tr(GlistRemoveGameAndAboveFromFilter) -command {::windows::gamelist::removeFromFilter up}
+      $menu add command -label $tr(GlistRemoveGameAndBelowFromFilter) -command {::windows::gamelist::removeFromFilter down}
+      $menu add command -label $tr(Reset) -command "$f.reset invoke"
+      $menu add separator
+      $menu add cascade -label $tr(GlistMoveField)      -menu $menu.move
     }
     if {[sc_base isReadOnly]} {
       $menu entryconfigure $tr(GlistDeleteField) -state disabled
       $menu entryconfigure $tr(Flag) -state disabled
-      $menu entryconfigure $tr(GlistMoveField) -state disabled
+      if {$menutype != "short"} {
+        $menu entryconfigure $tr(GlistMoveField) -state disabled
+      }
     }
 
     menu $menu.flags -tearoff -1
