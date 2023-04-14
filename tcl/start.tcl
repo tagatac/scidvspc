@@ -704,7 +704,6 @@ if {$::windowsOS} {
 foreach i {tilegtk tileq keramik keramik_alt plastik dark} {
   catch {package require ttk::theme::$i}
 }
-# catch {ttk::style theme use $lookTheme}
 
 #   Which windows should be opened on startup
 set startup(pgn) 0
@@ -2057,12 +2056,15 @@ if {$enableBackground == 2} {
   ::ttk::style configure TScale -background $::defaultBackground
 }
 
-set bg white
-set fg black
-::ttk::style configure TCombobox -selectbackground $bg
-::ttk::style configure TCombobox -selectforeground $fg
-::ttk::style map TCombobox -selectbackground [list active $bg disabled $bg readonly $bg]
-::ttk::style map TCombobox -selectforeground [list active $fg disabled $fg readonly $fg]
+# Redefine this combobox proc to disable highlighting of the selected entry ffs
+proc ttk::combobox::SelectEntry {cb index} {
+    $cb current $index
+    # $cb selection range 0 end
+    $cb selection clear
+    $cb icursor end
+    event generate $cb <<ComboboxSelected>> -when mark
+}
+
 
 # Check for old (single-directory) tablebase option:
 if {[info exists initialDir(tablebase)]} {
