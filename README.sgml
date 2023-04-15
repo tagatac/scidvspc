@@ -392,6 +392,31 @@ Chessbase databases and many chess variants.</p>
 <label id="changes_">
 <sect> changes <p>
 
+<sect2> Scid vs. PC 4.24<p>
+<itemize>
+<item>Gamelist (and Best games) 'Copy to filter' context-menu/feature.
+<item>Support for Graham O'Neill's (UCI engine) eboard drivers.
+<item>New 'Country' feature/option for the Player Finder (though it's slow with big databases).
+<item>Global background colour option.
+<item>Player Ratings Graph now has a history context menu, and Player Info binding for the Player Name.
+<item>Arrows in the small engine boards can now be clicked to add moves, and fix these arrows with Xboard engines and MultiPV.
+<item>Big toolbar icons option, and a new GameInfo toolbar icon.
+<item>Gamelist (and Best games) have an option for custom font (Selectable in the Switcher context menu - using the Small Font).
+<item>Some comment editor / drawing improvements : Support for Chessbase arrow/squares diagrams. Shift+Button now draws the last symbol from the commenteditor (instead of always a full square). Change circle size..
+<newline><newline>
+<item>Reinstate the Suggested Move feature.
+<item>Simplify batch annotation feature.
+<item>FICS - Enable use of zseal (an opensource timeseal).
+<item>Some Edit menus were missing undo points.
+<item>Undo for clipbase copy and paste was kindof broken / leaky.
+<item>Add sanity checks for CC and CXX to configure.
+<item>Little colour theme change, and high DPI doco, from Aditya's wordpress blog ;>.
+<item>Explicitly kill all engines when program close and at program exit, be nice and wait a little for uci (and eboard) engines to close.
+<item>Add a check for Carbon macOS, and don't enable transient noborder for engine/gamelist popups if Cocoa.
+<item>Text-search / FlashEntryBox improvements.
+<item>Disable the nasty, persistent ComboBox entry highlighting after selection.
+</itemize></p>
+
 <sect2> Scid vs. PC 4.23<p>
 <itemize>
 Game move/reorder feature -

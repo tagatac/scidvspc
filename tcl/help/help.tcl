@@ -300,6 +300,7 @@ append helpText(Index) {
   <li><a ECO Browser>ECO Browser</a> window</li>
   <li><a ECO Codes>ECO codes specification</a></li>
   <li><a Menus Edit>Edit menu</a></li>
+  <li><a Eboards>Electronic Chessboards</a> (eboards such as Novag, DGT...)</li>
   <li>Adding <a Maintenance Ratings>Elo Ratings</a></li>
   <li><a Email>Email window</a> (deprecated)</li>
   <li>Correspondence Chess via <a CCeMailChess>eMail</a></li>
@@ -311,7 +312,6 @@ append helpText(Index) {
   <li><a EPD>EPD Files</a></li>
   <li><a EPD opcodes>EPD Opcodes</a></li>
   <li><a Export>Exporting Games</a></li>
-  <li><a Eboards>Electronic Chessboards</a> (Novag, DGT...)</li>
   </ul>
 
   <h3><name F>F</name></h3>
@@ -6297,6 +6297,31 @@ set helpText(Sound) {<h1>Sound</h1>
 set helpTitle(Changelog) "Scid vs PC Changelog"
 set helpText(Changelog) {<h1>Changelog</h1>
 
+<h4>4.24 (May 1, 2023)</h4>
+<ul>
+<li>Gamelist (and Best games) 'Copy to filter' context-menu/feature</li>
+<li>Support for Graham O'Neill's (UCI engine) eboard drivers</li>
+<li>New 'Country' feature/option for the Player Finder (though it's slow with big databases)</li>
+<li>Global background colour option</li>
+<li>Player Ratings Graph now has a history context menu, and Player Info binding for the Player Name</li>
+<li>Arrows in the small engine boards can now be clicked to add moves, and fix these arrows with Xboard engines and MultiPV</li>
+<li>Big toolbar icons option, and a new GameInfo toolbar icon</li>
+<li>Gamelist (and Best games) have an option for custom font (Selectable in the Switcher context menu - using the Small Font)</li>
+<li>Some comment editor / drawing improvements : Support for Chessbase arrow/squares diagrams. Shift+Button now draws the last symbol from the commenteditor (instead of always a full square). Change circle size.</li>
+</ul><ul>
+<li>Reinstate the Suggested Move feature</li>
+<li>Simplify batch annotation feature</li>
+<li>FICS - Enable use of zseal (an opensource timeseal)</li>
+<li>Some Edit menus were missing undo points</li>
+<li>Undo for clipbase copy and paste was kindof broken / leaky</li>
+<li>Add sanity checks for CC and CXX to configure</li>
+<li>Little colour theme change, and high DPI doco, from Aditya's wordpress blog ;></li>
+<li>Explicitly kill all engines when program close and at program exit, be nice and wait a little for uci (and eboard) engines to close</li>
+<li>Add a check for Carbon macOS, and don't enable transient noborder for engine/gamelist popups if Cocoa</li>
+<li>Text-search / FlashEntryBox improvements</li>
+<li>Disable the nasty, persistent ComboBox entry highlighting after selection</li>
+</ul>
+
 <h4>4.23 (Feb 27, 2022)</h4>
 Game move/reorder feature:
 <ul>
@@ -7130,42 +7155,6 @@ Game move/reorder feature:
 <li>Work arounds for wish 8.5.12 and 8.5.8 issues</li>
 <li>Analysis logs can badly break autoscroll, so use normal frames and scrollbars</li>
 <li>Handle PGN parsing of unspecified promotions (b8 becomes b8=Q , for eg)</li>
-</ul>
-
-<h4>4.7 (January 20, 2012)</h4>
-<ul>
-<li>Tree: Add coloured bar-graphs representing win/draw/loss (and remove the old tree graph)</li>
-<li>Tablebases: Make best tablebase moves clickable</li>
-<li>Tablebases: tidy up config , main window and help items</li>
-<li>FICs: Can now play and watch (observe) multiple games at the same time</li>
-<li>FICS: Support loading old/interupted games for analysis (using 'smoves' command)</li>
-<li>FICs: Add an Abort button. Other minor fixes</li>
-<li>Serious Game  overhaul (though still has minor issues) Add pause, resume features and mate, game drawn dialogs</li>
-<li>Computer Tournament: Add  'first engine only' feature for testing a single engine against others</li>
-<li>Enable material difference display for game browser and fics observed games</li>
-<li>Analysis: View engine logs from within Scid, and can also disable logging</li>
-<li>Analysis no longer word wraps, and uses fixed font</li>
-<li>Analysis: add a xboard/uci protocol column to the engine list</li>
-<li>Include updates to SCID's spellchk.c, improving the ELO add-ratings feature</li>
-<li>Update spelling.ssp file to Jan 2012</li>
-<li>Player info: clicking FIDE ID opens relevant url</li>
-<li>New feature: 'Search-<gt>Filter to Last Move'. All filter games will load at the last move (end of game)</li>
-<li>Refine the Calculation of Variation (Stoyko Exercise) feature and Help</li>
-<li>Toolbar has a 'book window' icon</li>
-<li>Tweak PGN context menu: reorder the Strip/Delete move items</li>
-<li>Gamelist: replace the Negate button with a Select button</li>
-<li>Tree: Include a patch for embedding the Best Games into the Tree window</li>
-<li></li>
-<li>Bugfixes</li>
-<li>Importing PGN, check that Promotion Moves are long enough (otherwise can segfault)</li>
-<li>Document CCRL pgn round name problem, and handle errors better when Name limits hit</li>
-<li>FICS: remove non-ascii chars from commands if using timeseal</li>
-<li>Gamelist: To display unusual characters, convert to unicode before displaying games</li>
-<li>Sync html bitmaps with SCID</li>
-<li>Book: Only do the second book move lookup if we have too. (slight performance boost)</li>
-<li>EPD: Quick fix for epd analysis annotation bug</li>
-<li>Hungarian, Swedish and Potugese Spanish were broken if Piece translation enabled (which was default). Fixed</li>
-<li>Fix up Tacgame score-isn't-updated bug</li>
 </ul>
 }
 
