@@ -13516,7 +13516,7 @@ sc_name_plist (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
         if (searchCountry) {
           if (spChecker && (node->data.country[0] == 0) && (text = spChecker->GetComment(node->name))) {
-              strncpy ((char*)node->data.country, SpellChecker::GetLastCountry(text), 3);
+              strcpy ((char*)node->data.country, SpellChecker::GetLastCountry(text));
               // We use strIsCasePrefix to match ""
               if (! strIsCasePrefix (country, node->data.country)) { continue; }
           } else {
