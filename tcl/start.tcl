@@ -116,6 +116,8 @@ set ::MAX_GAMES [sc_info limit games]
 set ::pause 0
 set ::defaultBackground white
 set ::defaultForeground black
+# custom SelectColor colors (if available)
+set ::bwidgetBackgrounds {#ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff}
 set ::defaultGraphBackground white
 set ::enableBackground 0
 set ::enableForeground 0
@@ -1600,6 +1602,26 @@ if {$::docking::USE_DOCKING} {
 } else  {
   set dot_w .main
 }
+
+if {$unixOS} {
+  if {![catch {package require BWidget}]} {
+    ::splash::add "BWidget found! Enabling custom Colour Selector"
+    set i 0
+    foreach c $::bwidgetBackgrounds {
+      ::SelectColor::setcolor $i $c
+      incr i
+    }
+    proc tk_chooseColor {args} {
+      if {[set i [lsearch -exact $args -initialcolor]] > -1} {
+	set args [lreplace $args $i $i -color]
+      }
+      set result [eval ::SelectColor::dialog .bwidget $args]
+      set ::bwidgetBackgrounds $::SelectColor::_userColors
+      return $result
+    }
+  }
+}
+::splash::add {}
 
 # gradient 
 # Bryan Oakley

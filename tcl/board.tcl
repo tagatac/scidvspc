@@ -28,7 +28,7 @@ array set newColors {}
 proc SetBackgroundColour {} {
   global defaultBackground enableBackground
 
-  set temp [tk_chooseColor -initialcolor $defaultBackground -title Scid]
+  set temp [tk_chooseColor -initialcolor $defaultBackground -title {Background Colour}]
   if {$temp != {}} {
     set defaultBackground $temp
     if {!$enableBackground} {

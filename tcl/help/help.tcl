@@ -3957,6 +3957,11 @@ set helpText(Options) {<h1>Options and Preferences</h1>
   <i>Unsetting the Global and Text colour features won't work properly until Scid is restarted</i>.
   </p>
 
+  <h4>Custom Linux Colour Selector</h4>
+  <p>
+  The standard Unix colour selector, tk_chooseColor, is very poor. If the tcl package 'BWidget' is found, it's great ::SelectColor widget will be used instead. To install BWidget, try 'apt install BWidget'.
+  </p>
+
   <h3><name MyPlayerNames>My Player Names</name></h3>
   <p>
   <green><run editMyPlayerNames>My Player Names</run></green> allows one to

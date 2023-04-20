@@ -962,7 +962,7 @@ $m add command -label OptionsSave -command {
     puts $optionF ""
 
   foreach i {boardSize boardStyle language ::pgn::showColor bigToolbar
-    ::pgn::indentVars ::pgn::indentComments ::defaultBackground ::defaultForeground ::defaultGraphBackground ::enableBackground ::enableForeground
+    ::pgn::indentVars ::pgn::indentComments ::defaultBackground ::defaultForeground ::bwidgetBackgrounds ::defaultGraphBackground ::enableBackground ::enableForeground
     ::pgn::shortHeader ::pgn::boldMainLine ::pgn::stripMarks 
     ::pgn::symbolicNags ::pgn::moveNumberSpaces ::pgn::columnFormat ::pgn::showScrollbar
     myPlayerNames optionsAutoSave ::tree::mask::recentMask ::tree::mask::autoLoadMask ::tree::showBar ::tree::short ::tree::sortBest ::tree::autoAdjust
