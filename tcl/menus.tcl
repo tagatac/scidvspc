@@ -1350,21 +1350,6 @@ proc changeTheme {} {
 set m .menu.options.colour
 menu $m -tearoff -1
 
-$m add command -label OptionsMainLineColour -command SetMainLineColour
-set helpMessage($m,1) OptionsMainLineColour
-$m add command -label OptionsVarLineColour -command SetVarLineColour
-set helpMessage($m,1) OptionsVarLineColour
-$m add command -label OptionsEngineLineColour -command SetEngineLineColour
-set helpMessage($m,1) OptionsEngineLineColour
-$m add command -label OptionsRowColour -command SetRowBackgroundColour
-set helpMessage($m,1) OptionsRowColour
-$m add command -label OptionsHighlightColour -command SetHighlightColour
-set helpMessage($m,1) OptionsHighlightColour
-$m add command -label OptionsSwitcherColour -command SetRowSwitcherColour
-set helpMessage($m,1) OptionsSwitcherColour
-$m add command -label OptionsProgressColour -command SetProgressColour
-set helpMessage($m,1) OptionsProgressColour
-
 menu $m.back
 $m add cascade -label OptionsBackColour -menu $m.back
 set helpMessage($m,1) OptionsBackColour
@@ -1387,12 +1372,29 @@ $m.back add radiobutton -label Global -variable enableBackground -value 2 -comma
 }
 set helpMessage($m.back,3) Global
 
+# Text
 menu $m.fore
 $m add cascade -label OptionsFicsColour -menu $m.fore
 set helpMessage($m,1) OptionsFicsColour
-
 $m.fore add command -label OptionsMovesHighlightLastMoveColor -command SetForegroundColour
 $m.fore add checkbutton -label OptionsFicsColour -variable enableForeground
+
+$m add command -label OptionsHighlightColour -command SetHighlightColour
+set helpMessage($m,1) OptionsHighlightColour
+
+$m add separator
+$m add command -label OptionsMainLineColour -command SetMainLineColour
+set helpMessage($m,1) OptionsMainLineColour
+$m add command -label OptionsVarLineColour -command SetVarLineColour
+set helpMessage($m,1) OptionsVarLineColour
+$m add command -label OptionsEngineLineColour -command SetEngineLineColour
+set helpMessage($m,1) OptionsEngineLineColour
+$m add command -label OptionsRowColour -command SetRowBackgroundColour
+set helpMessage($m,1) OptionsRowColour
+$m add command -label OptionsSwitcherColour -command SetRowSwitcherColour
+set helpMessage($m,1) OptionsSwitcherColour
+$m add command -label OptionsProgressColour -command SetProgressColour
+set helpMessage($m,1) OptionsProgressColour
 
 ### Text foreground colour
 proc SetForegroundColour {} {

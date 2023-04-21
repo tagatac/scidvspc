@@ -103,5 +103,24 @@ if {$graphFigurineAvailable} {
   font create font_Figurine(bold) -family $graphFigurineFamily(bold) -weight $graphFigurineWeight(bold) -size [lindex $fontOptions(Regular) 1]
 }
 
+if {$unixOS && !$macOS} {
+  if {![catch {package require BWidget}]} {
+    ::splash::add "BWidget found! Enabling custom Colour Selector"
+    set i 0
+    foreach c $::bwidgetBackgrounds {
+      ::SelectColor::setcolor $i $c
+      incr i
+    }
+    proc tk_chooseColor {args} {
+      if {[set i [lsearch -exact $args -initialcolor]] > -1} {
+        set args [lreplace $args $i $i -color]
+      }
+      set result [eval ::SelectColor::dialog .bwidget $args]
+      set ::bwidgetBackgrounds $::SelectColor::_userColors
+      return $result
+    }
+  }
+}
+
 ### end of config.tcl
 
