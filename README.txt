@@ -148,21 +148,21 @@
 
   3.  download
 
-  Source scid_vs_pc-4.23.tgz
-  <http://sourceforge.net/projects/scidvspc/files/source/scid_vs_pc-4.23.tgz/download>
+  Source scid_vs_pc-4.24.tgz
+  <http://sourceforge.net/projects/scidvspc/files/source/scid_vs_pc-4.24.tgz/download>
 
-  Windows Scid vs PC-4.23.exe
-  <http://sourceforge.net/projects/scidvspc/files/windows/Scid%20vs%20PC-4.23.exe/download>
+  Windows Scid vs PC-4.24.exe
+  <http://sourceforge.net/projects/scidvspc/files/windows/Scid%20vs%20PC-4.24.exe/download>
 
-  Windows 64 bit Scid vs PC-4.23.x64.exe
-  <http://sourceforge.net/projects/scidvspc/files/windows-64bit/Scid%20vs%20PC-4.23.x64.exe/download>
+  Windows 64 bit Scid vs PC-4.24.x64.exe
+  <http://sourceforge.net/projects/scidvspc/files/windows-64bit/Scid%20vs%20PC-4.24.x64.exe/download>
 
-  Mac ScidvsMac-4.23.dmg
-  <http://sourceforge.net/projects/scidvspc/files/mac/ScidvsMac-4.23.dmg/download>
+  Mac ScidvsMac-4.24.dmg
+  <http://sourceforge.net/projects/scidvspc/files/mac/ScidvsMac-4.24.dmg/download>
 
-  Mac 64bit (beta) ScidvsMac-4.23.x64.dmg
+  Mac 64bit (beta) ScidvsMac-4.24.x64.dmg
   <https://sourceforge.net/projects/scidvspc/files/mac-64bit-
-  unsupported/ScidvsMac-4.23.x64.dmg/download>
+  unsupported/ScidvsMac-4.24.x64.dmg/download>
 
   3.0.1.  Other resources
 
@@ -192,8 +192,8 @@
   Installing from source:
 
   ______________________________________________________________________
-  tar -xzf scid_vs_pc-4.23.tgz
-  cd scid_vs_pc-4.23
+  tar -xzf scid_vs_pc-4.24.tgz
+  cd scid_vs_pc-4.24
   ./configure
   make
   sudo make install
@@ -235,7 +235,7 @@
 
   4.0.3.  Mac OS X
 
-  The ``ScidvsMac-4.23 app'' should include everything you need. Simply
+  The ``ScidvsMac-4.24 app'' should include everything you need. Simply
   drag and drop the App into /Applications (or similar). It cannot be
   run from the dmg disk image.
 
@@ -553,7 +553,7 @@
   o  New 'Country' feature/option for the Player Finder (though it's
      slow with big databases).
 
-  o  Global background colour option.
+  o  Global background colour option, and use BWidget::Selectcolor (if found) on Linux.
 
   o  Player Ratings Graph now has a history context menu, and Player
      Info binding for the Player Name.

@@ -70,15 +70,15 @@ project is authored by <ref name="Stevenaaus" id="contact_"> and numerous contri
 <label id="download_">
 <sect> download <p>
 
-Source <url url="http://sourceforge.net/projects/scidvspc/files/source/scid_vs_pc-4.23.tgz/download" name="scid_vs_pc-4.23.tgz">
+Source <url url="http://sourceforge.net/projects/scidvspc/files/source/scid_vs_pc-4.24.tgz/download" name="scid_vs_pc-4.24.tgz">
 
-Windows <url url="http://sourceforge.net/projects/scidvspc/files/windows/Scid%20vs%20PC-4.23.exe/download" name="Scid vs PC-4.23.exe">
+Windows <url url="http://sourceforge.net/projects/scidvspc/files/windows/Scid%20vs%20PC-4.24.exe/download" name="Scid vs PC-4.24.exe">
 
-Windows 64 bit <url url="http://sourceforge.net/projects/scidvspc/files/windows-64bit/Scid%20vs%20PC-4.23.x64.exe/download" name="Scid vs PC-4.23.x64.exe">
+Windows 64 bit <url url="http://sourceforge.net/projects/scidvspc/files/windows-64bit/Scid%20vs%20PC-4.24.x64.exe/download" name="Scid vs PC-4.24.x64.exe">
 
-Mac <url url="http://sourceforge.net/projects/scidvspc/files/mac/ScidvsMac-4.23.dmg/download" name="ScidvsMac-4.23.dmg">
+Mac <url url="http://sourceforge.net/projects/scidvspc/files/mac/ScidvsMac-4.24.dmg/download" name="ScidvsMac-4.24.dmg">
 
-Mac 64bit (beta) <url url="https://sourceforge.net/projects/scidvspc/files/mac-64bit-unsupported/ScidvsMac-4.23.x64.dmg/download" name="ScidvsMac-4.23.x64.dmg">
+Mac 64bit (beta) <url url="https://sourceforge.net/projects/scidvspc/files/mac-64bit-unsupported/ScidvsMac-4.24.x64.dmg/download" name="ScidvsMac-4.24.x64.dmg">
 
 <sect2> Other resources<p>
 
@@ -106,8 +106,8 @@ use <bf>./configure BINDIR=/usr/bin/ SHAREDIR=/usr/share/scid/</bf></p>
   <p>Installing from source:</p>
 
 <code>
-tar -xzf scid_vs_pc-4.23.tgz
-cd scid_vs_pc-4.23
+tar -xzf scid_vs_pc-4.24.tgz
+cd scid_vs_pc-4.24
 ./configure
 make
 sudo make install
@@ -139,7 +139,7 @@ C:\Users\[USERNAME]\AppData\Local\VirtualStore\Program Files\Scid vs PC
 
 <sect2> Mac OS X <p>
 
-The <ref name="ScidvsMac-4.23 app" id="download_"> should include everything you need. Simply drag and drop the App into /Applications (or similar). It cannot be run from the dmg disk image.</p>
+The <ref name="ScidvsMac-4.24 app" id="download_"> should include everything you need. Simply drag and drop the App into /Applications (or similar). It cannot be run from the dmg disk image.</p>
 
 <p>Due to complicated build reasons, only Yosemite (OS X 10.10) and
 later are now supported.  Additionally, Catalina has removed 32-bit app
@@ -397,7 +397,7 @@ Chessbase databases and many chess variants.</p>
 <item>Gamelist (and Best games) 'Copy to filter' context-menu/feature.
 <item>Support for Graham O'Neill's (UCI engine) eboard drivers.
 <item>New 'Country' feature/option for the Player Finder (though it's slow with big databases).
-<item>Global background colour option.
+<item>Global background colour option, and use BWidget::Selectcolor (if found) on Linux.
 <item>Player Ratings Graph now has a history context menu, and Player Info binding for the Player Name.
 <item>Arrows in the small engine boards can now be clicked to add moves, and fix these arrows with Xboard engines and MultiPV.
 <item>Big toolbar icons option, and a new GameInfo toolbar icon.
