@@ -176,13 +176,12 @@
 
   4.0.1.  Linux , Unix
 
-  Installing from source is reccommended, though there exists deb
-  packages (from third parties) in the linux packages
+  Installing from source is reccommended, though there exists deb packages of some versions (from third parties) in the linux packages
   <https://sourceforge.net/projects/scidvspc/files/linux%20packages/>
 
   Scid vs. PC requires Wish (Tcl/Tk) 8.5 or later and a C++ compiler.
-  Example packages required include "tcl, tk, tcl-devel, tk-devel" and
-  "gcc-c++ , libstdc++"; but of course will vary with your distribution.
+  Example packages required include "tcl, tk, tcl-dev, tk-dev" and
+  "gcc, g++ , libstdc++"; but of course will vary with your distribution.
 
   The default installation directory is /usr/local, which is generally
   empty, but any version of Scid here will be overwritten. To install
@@ -553,7 +552,7 @@
   o  New 'Country' feature/option for the Player Finder (though it's
      slow with big databases).
 
-  o  Global background colour option, and use BWidget::Selectcolor (if found) on Linux.
+  o  Global background colour option, and use BWidget::SelectColor (if found) on Linux.
 
   o  Player Ratings Graph now has a history context menu, and Player
      Info binding for the Player Name.

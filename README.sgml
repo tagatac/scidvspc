@@ -92,11 +92,11 @@ Mac 64bit (beta) <url url="https://sourceforge.net/projects/scidvspc/files/mac-6
 <sect> installation <p>
 
 <sect2> Linux , Unix<p>
-<p><em>Installing from source is reccommended, though there exists deb packages (from third parties) in the <url url="https://sourceforge.net/projects/scidvspc/files/linux%20packages/" name="linux packages"></em></p>
+<p><em>Installing from source is reccommended, though there exists deb packages of some versions (from third parties) in the <url url="https://sourceforge.net/projects/scidvspc/files/linux%20packages/" name="linux packages"></em></p>
   <p>
   Scid vs. PC requires Wish (Tcl/Tk) 8.5 or later and a C++ compiler. 
-  Example packages required include "tcl, tk, tcl-devel, tk-devel" and
-  "gcc-c++ , libstdc++"; but of course will vary with your distribution.
+  Example packages required include "tcl, tk, tcl-dev, tk-dev" and
+  "gcc, g++ , libstdc++"; but of course will vary with your distribution.
   </p>
 
 <p>The default installation directory is <bf>/usr/local</bf>, which is generally empty, but any
@@ -397,7 +397,7 @@ Chessbase databases and many chess variants.</p>
 <item>Gamelist (and Best games) 'Copy to filter' context-menu/feature.
 <item>Support for Graham O'Neill's (UCI engine) eboard drivers.
 <item>New 'Country' feature/option for the Player Finder (though it's slow with big databases).
-<item>Global background colour option, and use BWidget::Selectcolor (if found) on Linux.
+<item>Global background colour option, and use BWidget::SelectColor (if found) on Linux.
 <item>Player Ratings Graph now has a history context menu, and Player Info binding for the Player Name.
 <item>Arrows in the small engine boards can now be clicked to add moves, and fix these arrows with Xboard engines and MultiPV.
 <item>Big toolbar icons option, and a new GameInfo toolbar icon.

@@ -9027,7 +9027,7 @@ set helpText(D,Changelog) {<h1>Änderungshistorie</h1>
 <li>Gamelist (and Best games) 'Copy to filter' context-menu/feature</li>
 <li>Support for Graham O'Neill's (UCI engine) eboard drivers</li>
 <li>New 'Country' feature/option for the Player Finder (though it's slow with big databases)</li>
-<li>Global background colour option</li>
+<li>Global background colour option, and use BWidget::SelectColor (if found) on Linux</li>
 <li>Player Ratings Graph now has a history context menu, and Player Info binding for the Player Name</li>
 <li>Arrows in the small engine boards can now be clicked to add moves, and fix these arrows with Xboard engines and MultiPV</li>
 <li>Big toolbar icons option, and a new GameInfo toolbar icon</li>
