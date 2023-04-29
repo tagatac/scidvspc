@@ -3362,7 +3362,23 @@ proc toggleLockEngine {n} {
     if {[winfo exists .analysisWin$n.frame.bd]} {
       ::board::update .analysisWin$n.frame.bd $analysis(lockPos$n)
     }
-    ::utils::tooltip::Set .analysisWin$n.b.lockengine "[file tail [sc_base filename]], game [sc_game number]"
+    set tooltip "[file tail [sc_base filename]], [tr game] [sc_game number]"
+    
+    # Append current move
+
+    set prevMove [::trans [sc_game info previousMove]]
+    if {$prevMove != ""} {
+      if {$analysis(side$n) == {white}} {
+	append tooltip ", [expr $analysis(lockN$n) - 1]. ... $prevMove"
+      } else {
+	append tooltip ", $analysis(lockN$n). $prevMove"
+      }
+      if {[sc_var level] > 0} {
+	append tooltip " (vardepth [sc_var level])"
+      }
+    }
+
+    ::utils::tooltip::Set .analysisWin$n.b.lockengine $tooltip
   } else {
     set state normal
     ::utils::tooltip::Set .analysisWin$n.b.lockengine $tr(LockEngine)
