@@ -1840,18 +1840,15 @@ proc addAllVariations {{n 1} {rightclick 0}} {
     }
     # two single item lists with the second variation 
     set v1 [list "[lindex $analysis(multiPVraw$n) 1]"]
-    set v2 [list "[lindex $analysis(multiPV$n) 1]"]
   } else {
     # Process all variations
     set v1 $analysis(multiPVraw$n)
-    set v2 $analysis(multiPV$n)
   }
 
   set idx 0
-  foreach i $v1 j $v2 {
+  foreach i $v1 {
     set moves [lindex $i 2]
 
-    set tmp_moves [ lindex $j 2 ]
     set tmp_scoremate [scoreToMate [lindex $i 1] [lindex $i 3]]
     if {$analysis(logName)} {
       set text [format "\[%s\] %d:%s" $analysis(name$n) [lindex $i 0] $tmp_scoremate]
@@ -2666,7 +2663,6 @@ proc formatAnalysisScore {n} {
   global analysis
 
   if {$analysis(uci$n)} {
-    set tmp_moves [ lindex [ lindex $analysis(multiPV$n) 0 ] 2 ]
     set tmp_scoremate [scoreToMate $analysis(score$n) $analysis(scoremate$n)]
     if {$analysis(logName)} {
       set text [format "\[%s\] %d:%s" $analysis(name$n) $analysis(depth$n) $tmp_scoremate]
