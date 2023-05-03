@@ -2777,9 +2777,9 @@ making for easier <a Analysis Debugging>Debugging</a>.
   <ul>
   <li> <button tb_play 32> <b>Play</b> / <button tb_pause 32> <b>Pause</b>. Start / Stop engine analysis.
   <li> <button tb_addmove 32> <b>Add Move</b> 
-  adds the engine's best move to the current game. (Right click adds the engine score).</li>
-  <li> <button tb_addvar 32> <b>Add Variation</b>  adds the whole main line.  (Right click adds the second variation if MultiPV enabled)</li>
-  <li> <button tb_addallvars 32> <b>MultiPV</b>  adds all variations, the number being defined by the adjoining spinbox.</li>
+  adds the engine's best move to the current game. (Right-click adds the engine score).</li>
+  <li> <button tb_addvar 32> <b>Add Variation</b>  adds the whole main line.  (Right-click adds the second variation if MultiPV enabled)</li>
+  <li> <button tb_addallvars 32> <b>MultiPV</b>  adds all variations, the number being defined by the adjoining spinbox. (Right-click adds all first moves).</li>
 
   <li> <button tb_annotate 32> <b>Annotate Game</b> (see <a Analysis Annotating>below</a>).</li>
   <li> <button tb_lockengine 32> <b>Lock Analysis</b> to a certain position.

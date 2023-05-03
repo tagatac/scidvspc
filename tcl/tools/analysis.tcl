@@ -1832,7 +1832,7 @@ proc addAllVariations {{n 1} {rightclick 0}} {
   # so we add the analysis one move before and append the last game move at the beginning of the analysis
   set addAtEnd [sc_pos isAt vend]
 
-  if {$rightclick} {
+  if {$rightclick == 1} {
     # Only process second variation
     if {[lindex $analysis(multiPV$n) 1] == {}} {
       # Not enough PV
@@ -1848,6 +1848,11 @@ proc addAllVariations {{n 1} {rightclick 0}} {
   set idx 0
   foreach i $v1 {
     set moves [lindex $i 2]
+
+    # Right clicking addAllVar - only add AllFirstMoves
+    if {$rightclick == 2} {
+      set moves [lindex $moves 0]
+    }
 
     set tmp_scoremate [scoreToMate [lindex $i 1] [lindex $i 3]]
     if {$analysis(logName)} {
@@ -2369,6 +2374,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
 
   button $w.b.alllines -image tb_addallvars -command "addAllVariations $n" -relief $relief
   ::utils::tooltip::Set $w.b.alllines $tr(AddAllVariations)
+  bind $w.b.alllines <Button-3> "addAllVariations $n 2"
 
   spinbox $w.b.multipv -from 1 -to 8 -increment 1 -textvar analysis(multiPVCount$n) -justify center \
     -width 2 -font font_Small -command "changePVSize $n" 
