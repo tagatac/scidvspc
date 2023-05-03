@@ -1897,7 +1897,7 @@ but not quite. It remains todo: Implement comments inside variations, castling d
 <li>latex-xcolor (xcolor.sty)</li>
 <li>texlive-games (xskak.sty)</li>
 <li>texlive-generic-extra, (lambda.sty) </li>
-<li>texlive-latex-extra (xifthem.sty)</li>
+<li>texlive-latex-extra (xifthen.sty)</li>
 <li>pgf (pgfcore.sty)</li>
 <li>lmodern (lmodern.sty)</li>
 <li>texlive-pstricks (pstricks-add.sty)</li>

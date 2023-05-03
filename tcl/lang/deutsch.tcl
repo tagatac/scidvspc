@@ -4130,7 +4130,7 @@ set helpText(D,LaTeX) {<h1>LaTeX mit Scid benutzen</h1>
   <li>latex-xcolor (xcolor.sty)</li>
   <li>texlive-games (xskak.sty)</li>
   <li>texlive-generic-extra, (lambda.sty) </li>
-  <li>texlive-latex-extra (xifthem.sty)</li>
+  <li>texlive-latex-extra (xifthen.sty)</li>
   <li>pgf (pgfcore.sty)</li>
   <li>lmodern (lmodern.sty)</li>
   <li>texlive-pstricks (pstricks-add.sty)</li>
