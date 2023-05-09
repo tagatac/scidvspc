@@ -110,6 +110,10 @@ proc ::utils::validate::Alpha {name el op} {
 #    Used to verify a file is "a-h", for example.
 #
 proc ::utils::validate::Regexp {expression name el op} {
+  if {$el != {}} {
+    # Arrays not handled
+    return
+  }
   global $name ${name}_old
   set old ${name}_old
   if {![regexp $expression [set $name]]} {
