@@ -1808,10 +1808,13 @@ proc autoplay {} {
   }
 
   if {[sc_pos matchMoves {}] == ""} {
+    addScore $n single 1
     if {$annotate(isBatch) && [sc_game number] != 0} {
       nextgameAutoplay $n
     } else {
       toggleEngineAnalysis $n
+      updateBoard -pgn
+      ::tools::graphs::score::Refresh
       cancelAutoplay
     }
     return
@@ -1867,6 +1870,8 @@ proc nextgameAutoplay {n} {
     toggleEngineAnalysis $n
     after $autoplayDelay autoplay
   } else {
+    updateBoard -pgn
+    ::tools::graphs::score::Refresh
     cancelAutoplay
   }
 }

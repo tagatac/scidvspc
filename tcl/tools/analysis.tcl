@@ -1395,7 +1395,19 @@ proc addScore {n type {novar 0}} {
       # Where is there getting called from ?. Hack to not display errant last mated score
       ### Last move , don't attempt to score as it comes out wrong/negative and breaks the score graph
       # But should we use scoreToMate and not score mating moves at all... but it's nice to see the graph maxed out
-      return
+
+      # S.A. 2023
+      # Ok, hack to score the last move - which may or may-not be set by the engine (I'm unsure).
+      set type single
+      if {[sc_pos isCheck]} {
+	if {[sc_pos side] == "black"} {
+	  set analysis(score$n) 327.0
+	} else {
+	  set analysis(score$n) -327.0
+	}
+      } else {
+	set analysis(score$n) 0
+      }
     }
 
     switch $type {
