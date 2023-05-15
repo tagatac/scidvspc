@@ -582,7 +582,7 @@ proc ::tree::dorefresh { baseNumber } {
 
   if {!$::tree::showBar} {
     # enable tree
-    if {$::enableBackground} {
+    if {$::enableForeground} {
       $w.f.tl tag configure treetext -foreground  $::defaultForeground
     } else {
       $w.f.tl tag configure treetext -foreground black
