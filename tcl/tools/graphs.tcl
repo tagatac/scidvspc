@@ -900,7 +900,7 @@ proc ::tools::graphs::rating::Refresh {{player {}}} {
 
     $w.menu add cascade -label {Start Year} -menu $w.menu.year
     menu $w.menu.year
-    foreach i {1900 1980 1985 1990 1995 2000 2005 2010 2015 } {
+    foreach i {1900 1980 1985 1990 1995 2000 2005 2010 2015 2020} {
       $w.menu.year add radiobutton -label "Since $i" \
         -variable ::tools::graphs::rating::year -value $i \
         -command ::tools::graphs::rating::Refresh

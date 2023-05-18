@@ -17,6 +17,7 @@
 #include "date.h"
 #include "mfile.h"
 #include <ctype.h>
+#include <stdlib.h>
 
 inline uint
 spellHash (const char * str)
@@ -649,7 +650,7 @@ SpellChecker::GetBioData (const char * name)
 }
 
 
-static const uint ELO_YEAR_LAST  = 2021; // end of current ELO scheme. OMG S.A.
+static const uint ELO_YEAR_LAST = atoi(__DATE__ + 7);
 static const uint ELO_YEAR_FIRST = 1970;
 
 static const uint ELO_YEAR_RANGE = ELO_YEAR_LAST + 1 - ELO_YEAR_FIRST;
@@ -733,7 +734,7 @@ static const uint ELO_FIRST_MONTHLY_YEAR = 2013;
 // the holes that - as a consequence - will appear in the rating graph constructed here!
 //
 // ^^^ What he means is that this is shite. The eloData array is totally wasteful (loosely populated)
-//     and the ELO_YEAR_LAST year is currently hard coded :( - S.A.
+
 void
 SpellChecker::AddEloData (spellCheckNodeT * node, const char * str)
 {
