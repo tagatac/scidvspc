@@ -41,10 +41,10 @@ while 1:
         if cont[-1] == '*' and cont[-2] != ' ':
             cont = cont[:-1] + ' *'
 
-    print '[ECO "%s"]' % eco
-    print '[Variation "%s"]' % variation
-    print '[Result "*"]'
+    print ('[ECO "%s"]' % eco)
+    print ('[Variation "%s"]' % variation)
+    print ('[Result "*"]')
     print
-    print cont
+    print (cont)
     print
 
