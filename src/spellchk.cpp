@@ -17,7 +17,7 @@
 #include "date.h"
 #include "mfile.h"
 #include <ctype.h>
-#include <stdlib.h>
+#include <ctime>
 
 inline uint
 spellHash (const char * str)
@@ -650,7 +650,10 @@ SpellChecker::GetBioData (const char * name)
 }
 
 
-static const uint ELO_YEAR_LAST = atoi(__DATE__ + 7);
+std::time_t current_time = std::time(NULL);
+std::tm *const local_time = std::localtime(&current_time);
+static const uint ELO_YEAR_LAST = 1900 + local_time->tm_year;
+
 static const uint ELO_YEAR_FIRST = 1970;
 
 static const uint ELO_YEAR_RANGE = ELO_YEAR_LAST + 1 - ELO_YEAR_FIRST;
