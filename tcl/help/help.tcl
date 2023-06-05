@@ -3988,6 +3988,9 @@ set helpText(Options) {<h1>Options and Preferences</h1>
   </p>
   <p>
   The <b>Fixed</b> font is used by the <a Tree>Tree</a> and <a Crosstable>Crosstable</a> windows, and requires a fixed-width font to make text allign nicely.
+  </p>
+  <p>
+  To alter the Gamelist font, right-click Database Switcher-<gt>More-<gt>Use Custom Font, which enables it to use the basic Small font.
 </p>
 
   <h3>High DPI Displays</h3>
