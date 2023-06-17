@@ -219,9 +219,9 @@ namespace eval uci {
           # convert the score to white's perspective (not engine's one)
 
           if { $analysis(side$n) == "black"} {
-            set uciInfo(tmp_score$n) [ expr 0.0 - $uciInfo(tmp_score$n) ]
+            set uciInfo(tmp_score$n) [ expr {0.0 - $uciInfo(tmp_score$n)} ]
             if { $uciInfo(scoremate$n) != ""} {
-              set uciInfo(scoremate$n) [ expr 0 - $uciInfo(scoremate$n) ]
+              set uciInfo(scoremate$n) [ expr {0 - $uciInfo(scoremate$n)} ]
             }
           }
           set uciInfo(tmp_score$n) [expr {double($uciInfo(tmp_score$n)) / 100.0} ]
@@ -329,7 +329,7 @@ namespace eval uci {
         set toBeFormatted 0
       }
 
-      set idx [ expr $uciInfo(multipv$n) -1 ]
+      set idx [ expr {$uciInfo(multipv$n) - 1} ]
 
       if {$analysis(seenWDL$n)} {
 	### Show Win/Draw/Lose
@@ -348,13 +348,13 @@ namespace eval uci {
 	set temp_list_WDL [lsort -increasing -real [list $win_pc $draw_pc $lose_pc]]
 	#
 	if { $win_pc == [lindex $temp_list_WDL 2]} {
-	    set win_pc [expr 100 - $draw_pc - $lose_pc]
+	    set win_pc [expr {100 - $draw_pc - $lose_pc}]
 	}
 	if { $draw_pc == [lindex $temp_list_WDL 2]} {
-	    set draw_pc [expr 100 - $win_pc - $lose_pc]
+	    set draw_pc [expr {100 - $win_pc - $lose_pc}]
 	}
 	if { $lose_pc == [lindex $temp_list_WDL 2]} {
-	    set lose_pc [expr 100 - $win_pc - $draw_pc]    
+	    set lose_pc [expr {100 - $win_pc - $draw_pc}]    
 	}		
 	set analysis(WDL$n,$idx) "W: $win_pc% D: $draw_pc% B: $lose_pc%"
       }

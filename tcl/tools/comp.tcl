@@ -795,7 +795,7 @@ proc compNM {n m k name1 name2} {
       if {!$comp(playing)} {break}
     }
 
-    set expired [expr [clock clicks -milli] - $comp(lasttime)]
+    set expired [expr {[clock clicks -milli] - $comp(lasttime)}]
 
     if {$analysis(uci$other_engine) && $comp(ponder) && ($uciInfo(ponder$other_engine) != "")} {
       ### UCI other engine
@@ -891,7 +891,7 @@ proc compNM {n m k name1 name2} {
 
       if {$current_engine != $n} {
 	if {$comp(timecontrol) == "pergame"} {
-	  set comp(btime) [expr $comp(btime) - $expired]
+	  set comp(btime) [expr {$comp(btime) - $expired}]
           if {$comp(btime) < 0} {
 	    compResult 1 {Black loses on time}
             break
@@ -918,7 +918,7 @@ proc compNM {n m k name1 name2} {
 	set other_engine $m
       } else {
 	if {$comp(timecontrol) == "pergame"} {
-	  set comp(wtime) [expr $comp(wtime) - $expired]
+	  set comp(wtime) [expr {$comp(wtime) - $expired}]
           if {$comp(wtime) < 0} {
 	    compResult 0 {White loses on time}
             break

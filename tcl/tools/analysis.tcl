@@ -326,7 +326,7 @@ proc ::enginelist::listEngines {{focus 0}} {
     incr count
   }
   if {$focus == -1} {
-    set focus [expr $count - 1]
+    set focus [expr {$count - 1}]
   }
   $f selection set $focus
   $f see $focus
@@ -1535,13 +1535,13 @@ if {0} {
     if {abs($prevscore) < $annotate(cutoff) || abs($score) < $annotate(cutoff) || \
        (abs($deltamove) > abs($score) && $score*$prevscore < 0)} {
       if {$annotate(WithVars) != "notbest"} {
-	if { $deltamove < [expr 0.0 - $annotate(blunder)] && $tomove == {black} || \
+	if { $deltamove < [expr {0.0 - $annotate(blunder)}] && $tomove == {black} || \
 	      $deltamove > $annotate(blunder) && $tomove == {white} } {
 	  set isBlunder 1
 	}
 	# if the game is dead, and the score continues to go down, don't add any comment
 	if { $prevscore > $::informant("++-") && $tomove == {white} || \
-	      $prevscore < [expr 0.0 - $::informant("++-") ] && $tomove == {black} } {
+	      $prevscore < [expr {0.0 - $::informant("++-")}] && $tomove == {black} } {
 	  set isBlunder 0
 	}
       } else { ;# notbest
@@ -1568,7 +1568,7 @@ if {0} {
     addScore $n single
 
     set absdeltamove [expr { abs($deltamove) } ]
-    if { $deltamove < [expr 0.0 - $annotate(blunder)] && $tomove == {black} || \
+    if { $deltamove < [expr {0.0 - $annotate(blunder)}] && $tomove == {black} || \
 	  $deltamove > $annotate(blunder) && $tomove == {white} } {
       if {$absdeltamove > $::informant("?!") && $absdeltamove <= $::informant("?")} {
 	sc_pos addNag "?!"
@@ -1612,7 +1612,7 @@ if {0} {
 
     # if the game was won and the score remains high, don't add comment
     if { $score > $::informant("++-") && $tomove == {black} || \
-          $score < [expr 0.0 - $::informant("++-") ] && $tomove == {white} } {
+          $score < [expr {0.0 - $::informant("++-")}] && $tomove == {white} } {
       addScore $n end
     } else  {
       if {$absdeltamove > $::informant("?!") && $absdeltamove <= $::informant("?")} {
@@ -2272,7 +2272,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   }
 
   # 0 hide engine lines, 1 no word wrap, 2 word wrap
-  set analysis(movesDisplay$n) [expr $analysis(wrapPV) + 1]
+  set analysis(movesDisplay$n) [expr {$analysis(wrapPV) + 1}]
 
   # Try to execute the analysis program:
   if {[catch {set analysis(pipe$n) [open "| [list $analysisCommand] $analysisArgs" "r+"]} result]} {
@@ -3563,7 +3563,7 @@ proc updateAnalysisText {n} {
 	}
       }
     } else  {
-      # Original Scid analysis display
+      # Original Scid xboard analysis display
       append line [format "%2d \[%+5.2f\]  %s (%.2f)\n" $analysis(depth$n) $score [::trans $moves] $analysis(time$n)] 
     }
 
@@ -3577,7 +3577,6 @@ proc updateAnalysisText {n} {
       }
     } 
 
-    ### Should we truncate line so it only takes up one line ? S.A.
     $h insert end $line indent
     # $h see end-1c
     set pos [lindex [ .analysisWin$n.hist.ybar get ] 1]
@@ -3640,7 +3639,7 @@ proc addMoveNumbers { e pv } {
 
   for {set i $start} {$i < [llength $pv]} {incr i} {
     set m [lindex $pv $i]
-    if { [expr $i % 2] == 0 && $start == 0 || [expr $i % 2] == 1 && $start == 1 } {
+    if { [expr {$i % 2}] == 0 && $start == 0 || [expr {$i % 2}] == 1 && $start == 1 } {
       append ret "$n.$spc$m "
     } else  {
       append ret "$m "
