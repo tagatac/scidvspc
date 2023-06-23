@@ -266,7 +266,7 @@ proc ::tree::Open {{baseNumber 0}} {
   }
   pack $w.f -side top -expand 1 -fill both
 
-  button $w.buttons.best -image b_list -command "::tree::toggleBest $baseNumber"
+  button $w.buttons.best -image b_list -command "::tree::raiseBest $baseNumber"
   ::utils::tooltip::Set $w.buttons.best [tr TreeFileBest]
 
   button $w.buttons.training -image tb_training -command "::tree::toggleTraining $baseNumber"
@@ -599,7 +599,7 @@ proc ::tree::dorefresh { baseNumber } {
     ### See the last game (bind $w <End> from gamelist.tcl)
     set totalSize [sc_filter count]
     set glstart $totalSize
-    set lastEntry [expr $totalSize - $glistSize + 1]
+    set lastEntry [expr {$totalSize - $glistSize + 1}]
     if {$lastEntry < 1} {
       set lastEntry 1
     }
@@ -688,9 +688,9 @@ proc ::tree::displayLines {baseNumber moves} {
   $w.f.tl insert end "[lindex $moves 0]\n" treetext
   # blank bargraph in title
   if {$::tree::short} {
-    set padding [expr [string length [lrange $::tr(TreeTitleRowShort) 2 end]] + 5]
+    set padding [expr {[string length [lrange $::tr(TreeTitleRowShort) 2 end]] + 5}]
   } else {
-    set padding [expr [string length [lrange $::tr(TreeTitleRow) 2 end]] + 5]
+    set padding [expr {[string length [lrange $::tr(TreeTitleRow) 2 end]] + 5}]
   }
   $w.f.tl window create end-${padding}c -create "canvas %W.g -width 60 -height 12 -highlightthickness 0"
 
@@ -699,7 +699,7 @@ proc ::tree::displayLines {baseNumber moves} {
   
   ### Main Display the lines of the tree
 
-  for { set i 1 } { $i < [expr $len - 3 ] } { incr i } {
+  for { set i 1 } { $i < $len - 3 } { incr i } {
     set line [lindex $moves $i]
     if {$line == ""} { continue }
     set trans_move [lindex $line 1]
@@ -708,13 +708,13 @@ proc ::tree::displayLines {baseNumber moves} {
 
     set tagfg {}
 
-    if { $maskFile != "" && $i > 0 && $i < [expr $len - 3] } {
+    if { $maskFile != "" && $i > 0 && $i < $len - 3 } {
       if { [::tree::mask::moveExists $move] } {
         set tagfg movefg
       }
     }
     if { $maskFile != "" } {
-      if { $i > 0 && $i < [expr $len - 3] && $move != "\[end\]" } {
+      if { $i > 0 && $i < $len - 3 && $move != {[end]} } {
         # images
         foreach j { 0 1 } {
           set img [::tree::mask::getImage $move $j]
@@ -800,7 +800,8 @@ proc ::tree::displayLines {baseNumber moves} {
     }
     # This line extends tags to marker1,2
     # But dont extend line bindings to comment, as it overrides double-click sets comment
-    $w.f.tl tag add tagclick$i [expr $i +1 + $hasPositionComment].0 "[expr $i + 1 + $hasPositionComment].end - $commentLength chars"
+    set offset [expr {$i +1 + $hasPositionComment}]
+    $w.f.tl tag add tagclick$i $offset.0 "$offset.end - $commentLength chars"
     
     $w.f.tl insert end "\n"
   } ;# end for loop
@@ -808,7 +809,7 @@ proc ::tree::displayLines {baseNumber moves} {
   if {$lMoves != {}} {
 
   # Display the last two lines  - hypens and total
-  for { set i [expr $len - 3 ] } { $i < [expr $len - 1 ] } { incr i } {
+  for { set i [expr {$len - 3}] } { $i < $len - 1 } { incr i } {
     if { $maskFile != "" } {
       $w.f.tl image create end -image ::tree::mask::emptyImage -align center
       $w.f.tl image create end -image ::tree::mask::emptyImage -align center
@@ -1147,10 +1148,10 @@ proc ::tree::prime {baseNumber} {
 
 ### Update the window of best (highest-rated) tree games.
 
-proc ::tree::toggleBest { baseNumber } {
+proc ::tree::raiseBest { baseNumber } {
   set w .treeBest$baseNumber
   if {[winfo exists $w]} {
-    destroy $w
+    raiseWin $w
   } else {
     ::tree::best $baseNumber
   }
@@ -1391,7 +1392,7 @@ proc ::tree::bestColumnTitles {w} {
 ### $w is ignored on these three procs,
 ### all tree windows have same layout
 proc ::tree::bestInsertCol {w col after} {
-  set b [expr [string trimleft $after {#}]]
+  set b [string trimleft $after {#}]
   set d [lsearch -exact $::blistColOrder $col]
   set ::blistColOrder [linsert $::blistColOrder $b $col]
   if {$d > -1} {
@@ -1408,7 +1409,7 @@ proc ::tree::bestInsertCol {w col after} {
   }
 }
 proc ::tree::bestRemoveCol {w col} {
-  set d [expr [string trimleft $col {#}] -1]
+  set d [expr {[string trimleft $col {#}] -1}]
   set ::blistColOrder [lreplace $::blistColOrder $d $d]
   set count [sc_base count total]
   for {set i 1} {$i <= $count} {incr i} {
@@ -1855,7 +1856,7 @@ proc ::tree::mask::addRecent {filename} {
 
   set recentMask [ linsert $recentMask 0 $filename]
   if {[llength $recentMask] > $::tree::mask::maxRecent } {
-    set recentMask [ lreplace $recentMask  [ expr $::tree::mask::maxRecent -1 ] end ]
+    set recentMask [ lreplace $recentMask  [ expr {$::tree::mask::maxRecent -1} ] end ]
   }
   
   # update recent masks menu entry
@@ -2107,7 +2108,7 @@ proc ::tree::mask::moveExists { move {fen ""} } {
   global ::tree::mask::mask
 
   if {$fen == ""} { set fen $::tree::mask::cacheFenIndex }
-  if {![info exists mask($fen)] || $move == "\[end\]" } {
+  if {![info exists mask($fen)] || $move == {[end]} } {
     return 0
   }
   set moves [ lindex $mask($fen) 0 ]
@@ -2216,7 +2217,7 @@ proc ::tree::mask::getComment { move { fen "" } } {
 
   if {$fen == ""} { set fen $::tree::mask::cacheFenIndex }
 
-  if {![info exists mask($fen)] || $move == "" || $move == "\[end\]" } {
+  if {![info exists mask($fen)] || $move == "" || $move == {[end]} } {
     return ""
   }
 
@@ -2294,7 +2295,7 @@ proc ::tree::mask::setImage { move img nmr } {
   set ::tree::mask::dirty 1
   set moves [ lindex $mask($fen) 0 ]
   set idxm [lsearch -regexp $moves "^$move\\+* "]
-  set loc [expr 4 + $nmr]
+  set loc [expr {4 + $nmr}]
   set newmove [lreplace [lindex $moves $idxm] $loc $loc $img ]
   set moves [lreplace $moves $idxm $idxm $newmove ]
   set mask($fen) [ lreplace $mask($fen) 0 0 $moves ]
@@ -2315,7 +2316,7 @@ proc ::tree::mask::getImage { move nmr } {
   if { $idxm == -1} {
     return ::tree::mask::emptyImage
   }
-  set loc [expr 4 + $nmr]
+  set loc [expr {4 + $nmr}]
   set img [lindex $moves $idxm $loc]
   if {$img == ""} { set img ::tree::mask::emptyImage }
   return $img
@@ -2360,6 +2361,7 @@ proc ::tree::mask::addComment { {move ""} {parent .} } {
   pack  $w.buttons.cancel -side right -padx 10
 
   bind $w <Escape> "destroy $w"
+  # hmmm  - how to stop Control-Return from middle of line from inserting a CR
   bind $w <Control-Return> "$w.buttons.ok invoke"
   focus $w.f.e
 }

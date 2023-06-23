@@ -603,10 +603,10 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
 
     foreach {i j} $emtValues {
 	if {[string match *.0 $i]} {
-	  set whiteSum [expr $whiteSum + $j]
+	  set whiteSum [expr {$whiteSum + $j}]
 	  lappend whiteValues $i $whiteSum
 	} else {
-	  set blackSum [expr $blackSum + $j]
+	  set blackSum [expr {$blackSum + $j}]
 	  lappend blackValues $i $blackSum
 	}
 	if {$j > $maxEmt} {set maxEmt $j}
@@ -744,9 +744,9 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
 	if {$type == "Score Combo" && [llength $scoreValues] < 5} {
 	  # Scale to emt yaxis , as no Scores
 	  # ... or we *could* use a "total time" scale if we recalculate yticks, hlines
-	  set scale [expr $maxEmt / $maxLines]
+	  set scale [expr {$maxEmt / $maxLines}]
 	} else {
-	  set scale [expr $max / $maxLines]
+	  set scale [expr {$max / $maxLines}]
 	}
     }
     # On engine tournaments, all emt may be 0.0
@@ -758,10 +758,10 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
     set scaledWhiteValues {}
     set scaledBlackValues {}
     foreach {i j} $whiteValues {
-      lappend scaledWhiteValues $i [expr $j * $scale]
+      lappend scaledWhiteValues $i [expr {$j * $scale}]
     }
     foreach {i j} $blackValues {
-      lappend scaledBlackValues $i [expr $j * $scale]
+      lappend scaledBlackValues $i [expr {$j * $scale}]
     }
 
     ::utils::graph::data score lineWhite -color grey50 -points 0 -lines 1 -linewidth 2 -radius 2 -bars 0 -coords $scaledWhiteValues
@@ -992,7 +992,7 @@ proc ::tools::graphs::rating::Refresh {{player {}}} {
 
   set i 1
   foreach p $::tools::graphs::rating::players {
-    set color [lindex $::tools::graphs::rating::colors [expr ($i - 1) % [llength $::tools::graphs::rating::colors]]]
+    set color [lindex $::tools::graphs::rating::colors [expr {($i - 1) % [llength $::tools::graphs::rating::colors]}]]
     if {$::tools::graphs::spelling} {
       # new feature to get data from ratings.ssp
       set coords [sc_name info -rateAll:$year -elo:$elo $p]

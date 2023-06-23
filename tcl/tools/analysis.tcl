@@ -3639,7 +3639,7 @@ proc addMoveNumbers { e pv } {
 
   for {set i $start} {$i < [llength $pv]} {incr i} {
     set m [lindex $pv $i]
-    if { [expr {$i % 2}] == 0 && $start == 0 || [expr {$i % 2}] == 1 && $start == 1 } {
+    if { $i % 2 == 0 && $start == 0 || $i % 2 == 1 && $start == 1 } {
       append ret "$n.$spc$m "
     } else  {
       append ret "$m "

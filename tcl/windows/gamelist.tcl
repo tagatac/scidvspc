@@ -745,7 +745,7 @@ proc ::windows::gamelist::Popup {w x y X Y} {
     $menu.addcol delete 0 end
     set i 0
     foreach h $::glistHeaders {
-        $menu.addcol add command -label $tr(Glist$h) -command "::windows::gamelist::insertCol $w $i $col"
+      $menu.addcol add command -label $tr(Glist$h) -command "::windows::gamelist::insertCol $w $i $col"
       incr i
     }
     $menu add cascade -label $tr(GlistAddField) -menu $menu.addcol
@@ -870,7 +870,7 @@ proc ::windows::gamelist::Popup {w x y X Y} {
 # These two procs and related snippets derived from SCID, copyright (C) Fulvio Benini
 
 proc ::windows::gamelist::insertCol {w col after} {
-  set b [expr [string trimleft $after {#}]]
+  set b [string trimleft $after {#}]
   set d [lsearch -exact $::glistColOrder $col]
   set ::glistColOrder [linsert $::glistColOrder $b $col]
   if {$d > -1} {
