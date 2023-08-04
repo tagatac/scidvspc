@@ -964,6 +964,7 @@ proc ::windows::switcher::Open {} {
       $f.menu.show add checkbutton -label [tr ShowIcons] -variable ::windows::switcher::icons -command ::windows::switcher::Refresh
       $f.menu.show add checkbutton -label [tr ConfirmCopy] -variable ::windows::switcher::confirmCopy 
       $f.menu.show add separator
+      $f.menu.show add command -label "Switcher Colour" -command SetSwitcherColour
       $f.menu.show add checkbutton -label [tr TreeOptSmallFont] -variable ::windows::gamelist::customFont -command {
         ::windows::gamelist::configFont
         ::windows::gamelist::Configure .glistWin.tree

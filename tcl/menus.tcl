@@ -1391,7 +1391,7 @@ $m add command -label OptionsEngineLineColour -command SetEngineLineColour
 set helpMessage($m,1) OptionsEngineLineColour
 $m add command -label OptionsRowColour -command SetRowBackgroundColour
 set helpMessage($m,1) OptionsRowColour
-$m add command -label OptionsSwitcherColour -command SetRowSwitcherColour
+$m add command -label OptionsSwitcherColour -command SetSwitcherColour
 set helpMessage($m,1) OptionsSwitcherColour
 $m add command -label OptionsProgressColour -command SetProgressColour
 set helpMessage($m,1) OptionsProgressColour
@@ -1462,7 +1462,7 @@ proc SetHighlightColour {} {
   }
 }
 
-proc SetRowSwitcherColour {} {
+proc SetSwitcherColour {} {
   global switchercolor
   set temp [tk_chooseColor -initialcolor $switchercolor -title [tr OptionsSwitcherColour]]
   if {$temp != {}} {
