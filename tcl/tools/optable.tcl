@@ -98,21 +98,25 @@ proc ::optable::makeReportWin {args} {
   sc_search board RESET Exact false 0
   set newTreeData [sc_tree search -time 0 -epd 0 -adjust 1]
   if {$showProgress} {
+    # This is ugly.. Handle the (two possible) interrupts, but continue on to main window regardless
+    # as we may wish to process a favourite, or change an option, and there is no other way to do so. &%$#@ S.A.
     if {$::optable::_interrupt} {
       unbusyCursor .
       grab release $w.b.cancel
-      destroy $w
-      return
+    } else {
+      sc_progressBar $w.c2 bar 401 21 time
     }
-    sc_progressBar $w.c2 bar 401 21 time
   }
-  sc_report opening create $::optable(ExtraMoves) $::optable(MaxGames) $::optable(MaxLines) $::optable::_data(exclude)
+  if {!$::optable::_interrupt} {
+    sc_report opening create $::optable(ExtraMoves) $::optable(MaxGames) $::optable(MaxLines) $::optable::_data(exclude)
+  }
+
   if {$showProgress} {
     grab release $w.b.cancel
     destroy $w
     if {$::optable::_interrupt} {
-      unbusyCursor .
-      return
+      # unbusyCursor .
+      # return
     }
   }
   set ::optable::_data(tree) $newTreeData
@@ -123,7 +127,12 @@ proc ::optable::makeReportWin {args} {
   set ::optable::_data(bdLaTeX_flip) [sc_pos tex flip]
   set ::optable::_data(bdHTML_flip) [sc_pos html -flip 1]
   ::optable::setupRatios
-  set report [::optable::report ctext 1]
+  if {$::optable::_interrupt} {
+    # Don't generate report if interrupted... bugs ?
+    set report [tr ErrSearchInterrupted]
+  } else {
+    set report [::optable::report ctext 1]
+  }
   if {[lsearch -exact $args "-nodisplay"] >= 0} { return }
 
   set w .oprepWin
