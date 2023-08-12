@@ -914,7 +914,7 @@ proc ::optable::report {fmt withTable {flipPos 0}} {
       append r "$n[format $tr(OprepTableComment) $::optable(MaxGames)]$n"
     } else {
       if {$tgames > $::optable::OPTABLE_MAX_LINES} {
-	append r "$n[format $tr(OprepTableComment) $::optable::::optable::OPTABLE_MAX_LINES]$n"
+	append r "$n[format $tr(OprepTableComment) $::optable::OPTABLE_MAX_LINES]$n"
       }
     }
   }
@@ -1127,7 +1127,7 @@ proc ::optable::report {fmt withTable {flipPos 0}} {
       set comment [format $tr(OprepTableComment) $::optable(MaxTableGames)]
     } else {
       if {$tgames > $::optable::OPTABLE_MAX_TABLE_LINES} {
-        append r "$n[format $tr(OprepTableComment) $::optable::::optable::OPTABLE_MAX_TABLE_LINES]$n"
+        append r "$n[format $tr(OprepTableComment) $::optable::OPTABLE_MAX_TABLE_LINES]$n"
       }
     }
     append r [sc_report opening print $numRows $sec $comment]
