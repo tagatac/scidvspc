@@ -14307,10 +14307,11 @@ sc_report_create (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
     uint maxThemeMoveNumber = 20;
     uint maxExtraMoves = 1;
+    // maxTableLines corresponds to maxTableGames in tcl, maxLines corresponds to maxGames.
     uint maxTableLines = OPTABLE_MAX_TABLE_LINES;
     uint maxLines = OPTABLE_MAX_LINES;
     static const char * usage =
-        "Usage: sc_report opening|player create [maxExtraMoves] [maxTableLines] [maxGames] [excludeMove]";
+        "Usage: sc_report opening|player create [maxExtraMoves] [maxTableGames] [maxGames] [excludeMove]";
 
     uint reportType = 0;
     if (argc < 2) {
@@ -14330,16 +14331,16 @@ sc_report_create (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     if (argc > 4) {
         maxTableLines = strGetUnsigned (argv[4]);
         if (maxTableLines > OPTABLE_MAX_TABLE_LINES) {
-            maxTableLines = OPTABLE_MAX_TABLE_LINES;
             printf ("maxTableLines %u reduced to limit of %u\n",maxTableLines,OPTABLE_MAX_TABLE_LINES);
+            maxTableLines = OPTABLE_MAX_TABLE_LINES;
         }
         if (maxTableLines == 0) { maxTableLines = 1; }
     }
     if (argc > 5) {
         maxLines = strGetUnsigned (argv[5]);
         if (maxLines > OPTABLE_MAX_LINES) {
-            maxLines = OPTABLE_MAX_LINES;
             printf ("maxLines %u reduced to limit of %u\n",maxLines,OPTABLE_MAX_LINES);
+            maxLines = OPTABLE_MAX_LINES;
         }
         if (maxLines == 0) { maxLines = 1; }
     }

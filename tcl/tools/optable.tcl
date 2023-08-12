@@ -10,6 +10,8 @@ set ::optable::_docEnd(text) {}
 set ::optable::_docStart(ctext) {}
 set ::optable::_docEnd(ctext) {}
 set ::optable::_flip 0
+set ::optable::OPTABLE_MAX_LINES       100000 ; # also redefined in optable.h
+set ::optable::OPTABLE_MAX_TABLE_LINES 10000  ; # also redefined in optable.h
 
 set ::optable::_docStart(html) {<html>
   <head>
@@ -59,12 +61,9 @@ proc ::optable::ConfigMenus {{lang ""}} {
   }
 }
 
-proc ::optable::makeReportWin {args} {
+proc ::optable::makeReportWin {{showProgress 1} {showDisplay 1}} {
   if {! [sc_base inUse]} { return }
   set ::optable::opReportBase [sc_base current]
-  set showProgress 1
-  set args [linsert $args 0 "args"]
-  if {[lsearch -exact $args "-noprogress"] >= 0} { set showProgress 0 }
   if {$showProgress} {
     set w .progress
     toplevel $w
@@ -108,7 +107,7 @@ proc ::optable::makeReportWin {args} {
     }
   }
   if {!$::optable::_interrupt} {
-    sc_report opening create $::optable(ExtraMoves) $::optable(MaxGames) $::optable(MaxLines) $::optable::_data(exclude)
+    sc_report opening create $::optable(ExtraMoves) $::optable(MaxTableGames) $::optable(MaxGames) $::optable::_data(exclude)
   }
 
   if {$showProgress} {
@@ -133,7 +132,9 @@ proc ::optable::makeReportWin {args} {
   } else {
     set report [::optable::report ctext 1]
   }
-  if {[lsearch -exact $args "-nodisplay"] >= 0} { return }
+  if {!$showDisplay} {
+    return
+  }
 
   set w .oprepWin
   if {[winfo exists $w]} {
@@ -315,11 +316,11 @@ proc ::optable::setOptions {} {
   set right 1
   set from 0
   set to 10
-  foreach i {OprepStatsHist   MaxLines Stats Oldest Newest Popular MostFrequent sep \
+  foreach i {OprepStatsHist   MaxGames Stats Oldest Newest Popular MostFrequent sep \
              OprepRatingsPerf AvgPerf HighRating sep \
              OprepTrends      Results Shortest sep \
              OprepMovesThemes MoveOrders MovesFrom Themes Endgames sep \
-             OprepTheoryTable MaxGames ExtraMoves} {
+             OprepTheoryTable MaxTableGames ExtraMoves} {
     if {$i == "col"} {
       # Used to signfify a second column, but now unused - S.A.
       incr left 4
@@ -344,9 +345,11 @@ proc ::optable::setOptions {} {
       label $w.f.f$i -textvar ::tr($i) -font font_Bold
       grid $w.f.f$i -row $row -column $left -columnspan 4 ;# -sticky e
     } else {
-      if {$i == "MaxGames" || $i == "MaxLines"} {
-        spinbox $w.f.s$i -textvariable ::optable($i) -from 0 -to 25000 -increment 500 -width 6 -justify right
-      } else  {
+      if {$i == "MaxGames" } {
+        spinbox $w.f.s$i -textvariable ::optable($i) -from 0 -to $::optable::OPTABLE_MAX_LINES -increment 500 -width 6 -justify right
+      } elseif {$i == "MaxTableGames"} {
+        spinbox $w.f.s$i -textvariable ::optable($i) -from 0 -to $::optable::OPTABLE_MAX_TABLE_LINES -increment 500 -width 6 -justify right
+      } else {
         spinbox $w.f.s$i -textvariable ::optable($i) -width 3 -from $from -to $to -justify right
       }
       label $w.f.t$i -textvar ::tr(Oprep$i)
@@ -907,8 +910,12 @@ proc ::optable::report {fmt withTable {flipPos 0}} {
     ($::optable(MostFrequent) > 0 &&
     ($::optable(MostFrequentWhite) || $::optable(MostFrequentBlack)))} {
     append r [::optable::_sec $tr(OprepStatsHist)]
-    if {$tgames > $::optable(MaxLines)} {
-      append r "$n[format $tr(OprepTableComment) $::optable(MaxLines)]$n"
+    if {$tgames > $::optable(MaxGames)} {
+      append r "$n[format $tr(OprepTableComment) $::optable(MaxGames)]$n"
+    } else {
+      if {$tgames > $::optable::OPTABLE_MAX_LINES} {
+	append r "$n[format $tr(OprepTableComment) $::optable::::optable::OPTABLE_MAX_LINES]$n"
+      }
     }
   }
   if {$::optable(Stats)} {
@@ -1113,11 +1120,15 @@ proc ::optable::report {fmt withTable {flipPos 0}} {
     append r [sc_report opening endmat]
   }
 
-  if {$withTable  &&  $::optable(MaxGames) > 0} {
+  if {$withTable  &&  $::optable(MaxTableGames) > 0} {
     set sec [::optable::_sec $tr(OprepTheoryTable)]
     set comment ""
-    if {$tgames > $::optable(MaxGames)} {
-      set comment [format $tr(OprepTableComment) $::optable(MaxGames)]
+    if {$tgames > $::optable(MaxTableGames)} {
+      set comment [format $tr(OprepTableComment) $::optable(MaxTableGames)]
+    } else {
+      if {$tgames > $::optable::OPTABLE_MAX_TABLE_LINES} {
+        append r "$n[format $tr(OprepTableComment) $::optable::::optable::OPTABLE_MAX_TABLE_LINES]$n"
+      }
     }
     append r [sc_report opening print $numRows $sec $comment]
   }
@@ -1156,8 +1167,10 @@ proc ::optable::updateFavoritesMenu {} {
   foreach entry $::reportFavorites {
     set name [lindex $entry 0]
     set moves [lindex $entry 1]
-    $m add command -label $name \
-        -command "importMoveList [list $moves]; ::optable::makeReportWin"
+    $m add command -label $name -command "
+      importMoveList [list $moves]
+      ::optable::makeReportWin
+    "
   }
   if {[llength $::reportFavorites] == 0} {
     $m entryconfigure 1 -state disabled
@@ -1454,8 +1467,12 @@ proc ::optable::generateFavoriteReports {} {
   pack $w.dir.entry -side left -fill x -padx 5
   addHorizontalRule $w
   pack [frame $w.b] -side bottom -fill x
-  dialogbutton $w.b.ok -text "OK" \
-      -command "::optable::reportFavoritesOK; grab release $w; destroy $w; ::optable::makeReportWin"
+  dialogbutton $w.b.ok -text OK -command "
+    ::optable::reportFavoritesOK
+    grab release $w
+    destroy $w
+    ::optable::makeReportWin
+  "
   dialogbutton $w.b.cancel -text $::tr(Cancel) -command "grab release $w; destroy $w"
   pack $w.b.cancel $w.b.ok -side right -padx 5 -pady 5
 
@@ -1507,7 +1524,7 @@ proc ::optable::reportFavoritesOK {} {
     update
     sc_game push
     sc_move addSan $moves
-    ::optable::makeReportWin -nodisplay -noprogress
+    ::optable::makeReportWin 0 0
     if {$reportType == "theory"} {
       set report [::optable::table $fmt]
     } elseif {$reportType == "compact"} {

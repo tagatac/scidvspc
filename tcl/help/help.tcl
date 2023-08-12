@@ -3302,7 +3302,7 @@ set helpText(Reports) {<h1>Reports</h1>
   </p>
   <p><i>
   Some features are affected by the "Maximum games for statistics" Option, which is 10,000 by default
-  but can now be increased to 25,000 in the Options Window.
+  but can be increased to 100,000. The default Theory Table Games is 500 (and 10,000 maximum).
   </i></p>
   <p>
   The <b>first few sections</b> show matching games and subsequent moves.
@@ -3375,7 +3375,7 @@ set helpText(Reports) {<h1>Reports</h1>
   or for games matching the current position.
   </p>
 
-  <p><footer>Updated: Scid vs. PC 4.22, Feb 2020</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.25, August 2023</footer></p>
 }
 
 

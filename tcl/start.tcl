@@ -788,8 +788,8 @@ array set optable {
   MovesFrom 1
   Themes 1
   Endgames 1
-  MaxGames 500
-  MaxLines 10000
+  MaxTableGames 500
+  MaxGames 10000
   ExtraMoves 1
 }
 array set optableDefaults [array get optable]

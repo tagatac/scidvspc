@@ -27,9 +27,10 @@ const uint OPTABLE_MAX_ROWS = 20;
 const uint OPTABLE_DEFAULT_ROWS = 10;
 const uint OPTABLE_MAX_EXTRA_MOVES = 10;
 const uint OPLINE_MOVES = (OPTABLE_COLUMNS + OPTABLE_MAX_EXTRA_MOVES) * 2;
-const uint OPTABLE_MAX_LINES = 25000;
-const uint OPTABLE_MAX_TABLE_LINES = 25000;
-const uint OPTABLE_MAX_STARTLINE = 100;
+// If changing the below two, please change them also in optable.tcl
+const uint OPTABLE_MAX_LINES       = 100000;
+const uint OPTABLE_MAX_TABLE_LINES = 10000;
+const uint OPTABLE_MAX_STARTLINE   = 100;
 
 const uint OPTABLE_Text  = 0;
 const uint OPTABLE_HTML  = 1;
