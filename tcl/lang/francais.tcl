@@ -1228,8 +1228,8 @@ translate F OprepEndClass {Classification du matériel des positions finales}
 translate F OprepTheoryTable {Table de Théorie}
 translate F OprepTableComment {Généré à partir des %u parties au classement le plus élevé.}
 translate F OprepExtraMoves {Nombre de coups additionnels dans la table de théorie}
-translate F OprepMaxGames {Nombre maximum de parties dans la table de théorie}
-translate F OprepMaxLines {Nombre maximum de parties pour statistiques}
+translate F OprepMaxTableGames {Nombre maximum de parties dans la table de théorie}
+translate F OprepMaxGames {Nombre maximum de parties pour statistiques}
 translate F OprepViewHTML {Voir en HTML}
 translate F OprepViewLaTeX {Voir en LaTeX}
 

@@ -1219,8 +1219,8 @@ translate E OprepEndClass {Material at the end of each game}
 translate E OprepTheoryTable {Theory Table}
 translate E OprepTableComment {Generated from the %u highest-rated games.}
 translate E OprepExtraMoves {Extra note moves in theory table}
-translate E OprepMaxGames {Maximum games in theory table}
-translate E OprepMaxLines {Maximum games for statistics}
+translate E OprepMaxTableGames {Maximum games in theory table}
+translate E OprepMaxGames {Maximum games for statistics}
 translate E OprepViewHTML {View HTML}
 translate E OprepViewLaTeX {View LaTeX}
 

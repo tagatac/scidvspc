@@ -1225,9 +1225,9 @@ translate L OprepEndClass {Materiaali jokaisen pelin lopussa }
 translate L OprepTheoryTable {Teoriataulukko}
 translate L OprepTableComment {Luotu %u korkeimman Elo-luvun peleist‰}
 translate L OprepExtraMoves {Ylim‰‰r‰iset huomatussiirrot teoriataulukossa}
-translate L OprepMaxGames {Maksimim‰‰r‰ pelej‰ teoriataulukossa}
+translate L OprepMaxTableGames {Maksimim‰‰r‰ pelej‰ teoriataulukossa}
 # ====== TODO To be translated ======
-translate L OprepMaxLines {Maximum games for statistics}
+translate L OprepMaxGames {Maximum games for statistics}
 translate L OprepViewHTML {N‰yt‰ HTML}
 translate L OprepViewLaTeX {N‰yt‰ LaTeX}
 

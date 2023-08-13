@@ -1244,9 +1244,9 @@ translate O OprepEndClass {Materiale i sluttspillet}
 translate O OprepTheoryTable {Teoritabell}
 translate O OprepTableComment {Generert fra de %u høyest ratede partiene.}
 translate O OprepExtraMoves {Ytterligere trekk notert i teoritabellen}
-translate O OprepMaxGames {Maksimalt antall partier i teoritabellen}
+translate O OprepMaxTableGames {Maksimalt antall partier i teoritabellen}
 # ====== TODO To be translated ======
-translate O OprepMaxLines {Maximum games for statistics}
+translate O OprepMaxGames {Maximum games for statistics}
 translate O OprepViewHTML {Vis HTML}
 translate O OprepViewLaTeX {Vis LaTeX}
 

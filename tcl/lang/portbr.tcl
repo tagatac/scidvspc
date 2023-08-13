@@ -1455,8 +1455,8 @@ translate B OprepEndClass {Material ao fim de cada jogo}
 translate B OprepTheoryTable {Tabela de Teoria}
 translate B OprepTableComment {Gerada a partir dos %u jogos com rating mais alto.}
 translate B OprepExtraMoves {Movimentos com nota extra na Tabela de Teoria}
-translate B OprepMaxGames {Qtde. Maxima de jogos na tabela de teoria}
-translate B OprepMaxLines {Máximo de jogos para estatisticas}
+translate B OprepMaxTableGames {Qtde. Maxima de jogos na tabela de teoria}
+translate B OprepMaxGames {Máximo de jogos para estatisticas}
 translate B OprepViewHTML {Visualizar HTML} 
 translate B OprepViewLaTeX {Visualizar LaTeX} 
 

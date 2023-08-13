@@ -1227,9 +1227,9 @@ translate T OprepEndClass {Her oyunun sonunda malzeme}
 translate T OprepTheoryTable {Teori Tablosu}
 translate T OprepTableComment {En çok oy alan %u oyundan üretildi.}
 translate T OprepExtraMoves {Teorik tabloda ekstra Hamle notları}
-translate T OprepMaxGames {Teorik tabloda maksimum oyun}
+translate T OprepMaxTableGames {Teorik tabloda maksimum oyun}
 # ====== TODO To be translated ======
-translate T OprepMaxLines {Maximum games for statistics}
+translate T OprepMaxGames {Maximum games for statistics}
 translate T OprepViewHTML {HTML'yi görüntüle}
 translate T OprepViewLaTeX {LaTeX'i görüntüle}
 

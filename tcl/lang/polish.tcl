@@ -1305,9 +1305,9 @@ translate P OprepEndClass {Materiał w pozycji końcowej}
 translate P OprepTheoryTable {Teoria}
 translate P OprepTableComment {Utworzono z %u partii o najwyższym średnim rankingu.}
 translate P OprepExtraMoves {Dodatkowe posunięcia w przypisach}
-translate P OprepMaxGames {Maksymalna liczba partii w teorii}
+translate P OprepMaxTableGames {Maksymalna liczba partii w teorii}
 # ====== TODO To be translated ======
-translate P OprepMaxLines {Maximum games for statistics}
+translate P OprepMaxGames {Maximum games for statistics}
 translate P OprepViewHTML {Źródło HTML} 
 translate P OprepViewLaTeX {Źródło LaTeX} 
 

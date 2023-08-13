@@ -1433,9 +1433,9 @@ translate H OprepEndClass {Anyagi viszonyok az egyes játszmák végén}
 translate H OprepTheoryTable {Elmélettáblázat}
 translate H OprepTableComment {a legnagyobb értékszámú %u játszma alapján}
 translate H OprepExtraMoves {A külön megjegyzéssel ellátott lépések száma az elmélettáblázatban}
-translate H OprepMaxGames {Az elmélettáblázat létrehozásához felhasználható játszmák maximális száma}
+translate H OprepMaxTableGames {Az elmélettáblázat létrehozásához felhasználható játszmák maximális száma}
 # ====== TODO To be translated ======
-translate H OprepMaxLines {Maximum games for statistics}
+translate H OprepMaxGames {Maximum games for statistics}
 translate H OprepViewHTML {HTML megtekintése}
 translate H OprepViewLaTeX {LaTeX megtekintése}
 

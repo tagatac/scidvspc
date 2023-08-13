@@ -1300,9 +1300,9 @@ translate S OprepEndClass {Tipos de finales según la última posición de las part
 translate S OprepTheoryTable {Tabla Teórica}
 translate S OprepTableComment {Generado a partir de las %u partidas con mejor Elo.}
 translate S OprepExtraMoves {Anotación extra de movimientos en la tabla teórica}
-translate S OprepMaxGames {Máximas partidas en la tabla teórica}
+translate S OprepMaxTableGames {Máximas partidas en la tabla teórica}
 # ====== TODO To be translated ======
-translate S OprepMaxLines {Maximum games for statistics}
+translate S OprepMaxGames {Maximum games for statistics}
 translate S OprepViewHTML {Ver HTML}
 translate S OprepViewLaTeX {Ver LaTeX}
 

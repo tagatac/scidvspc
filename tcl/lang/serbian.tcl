@@ -1506,9 +1506,9 @@ translate Y OprepEndClass {Materijal na kraju svake partije}
 translate Y OprepTheoryTable {Tabela teorije}
 translate Y OprepTableComment {Generisano iz %u najbolje rejtiranih partija.}
 translate Y OprepExtraMoves {Posebno notirani potezi u tabeli teorije}
-translate Y OprepMaxGames {Maksimum partija u tabeli teorije}
+translate Y OprepMaxTableGames {Maksimum partija u tabeli teorije}
 # ====== TODO To be translated ======
-translate Y OprepMaxLines {Maximum games for statistics}
+translate Y OprepMaxGames {Maximum games for statistics}
 translate Y OprepViewHTML {View HTML} ;# ***
 translate Y OprepViewLaTeX {View LaTeX} ;# ***
 

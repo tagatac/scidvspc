@@ -1326,9 +1326,9 @@ translate W OprepEndClass {Material i slutställningen}
 translate W OprepTheoryTable {Teorisammanställning}
 translate W OprepTableComment {Skapad från de %u högst rankade partierna.}
 translate W OprepExtraMoves {Ytterligare antal drag i notförteckningen}
-translate W OprepMaxGames {Maximalt antal partier i sammanställningen}
+translate W OprepMaxTableGames {Maximalt antal partier i sammanställningen}
 # ====== TODO To be translated ======
-translate W OprepMaxLines {Maximum games for statistics}
+translate W OprepMaxGames {Maximum games for statistics}
 translate W OprepViewHTML {Visa HTML}
 translate W OprepViewLaTeX {Visa LaTeX}
 
