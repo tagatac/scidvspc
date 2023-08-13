@@ -144,7 +144,6 @@ proc ::preport::makeReportWin {args} {
     toplevel $w
     wm withdraw $w
     wm title $w "[tr ToolsPlayerReport]"
-    bind $w <Visibility> "raiseWin $w"
 
     pack [frame $w.b] -side bottom -fill x
     set ::preport::_interrupt 0

@@ -69,7 +69,6 @@ proc ::optable::makeReportWin {{showProgress 1} {showDisplay 1}} {
     toplevel $w
     wm withdraw $w
     wm title $w "Generating Report"
-    bind $w <Visibility> "raiseWin $w"
 
     pack [frame $w.b] -side bottom -fill x
     set ::optable::_interrupt 0
@@ -1498,7 +1497,6 @@ proc ::optable::reportFavoritesOK {} {
   toplevel $w
   wm withdraw $w
   wm title $w "Generating Reports"
-  bind $w <Visibility> "raiseWin $w"
   pack [label $w.t -width 40 -text "Generating reports. Please wait..." -font font_Bold] -side top -pady 5
   pack [label $w.report] -side top -pady 5
   placeWinCenter $w
