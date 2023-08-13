@@ -806,7 +806,7 @@ array set preport {
   MostFrequentEcoCodes 6
   Themes 1
   Endgames 1
-  MaxGames 500
+  MaxTableGames 500
   ExtraMoves 1
 }
 array set preportDefaults [array get preport]

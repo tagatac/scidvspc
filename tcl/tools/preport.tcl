@@ -4,7 +4,7 @@
 namespace eval ::preport {}
 array set ::preport::_data {}
 
-set preport(MaxGames) 400
+set preport(MaxTableGames) 400
 
 set ::preport::_player ""
 set ::preport::_color white
@@ -194,7 +194,7 @@ proc ::preport::makeReportWin {args} {
 
   if {$::preport::_pos == "start"} { sc_game push }
   sc_search board AND Exact false 0
-  sc_report player create $::preport(ExtraMoves) $::preport(MaxGames)
+  sc_report player create $::preport(ExtraMoves) $::preport(MaxTableGames)
   if {$::preport::_pos == "start"} { sc_game pop }
   if {$::preport::_clipbase} {
     if {[sc_base current] != [sc_info clipbase]} {
@@ -342,9 +342,9 @@ proc ::preport::setOptions {} {
   foreach i {Stats Oldest Newest MostFrequentOpponents Results sep \
                AvgPerf HighRating sep \
                MostFrequentEcoCodes Themes Endgames sep \
-               MaxGames ExtraMoves} {
+               MaxTableGames ExtraMoves} {
     set from 0; set to 10; set tick 1; set res 1
-    if {$i == "MaxGames"} {
+    if {$i == "MaxTableGames"} {
       set from 0; set to 1000; set tick 200; set res 100
     }
     if {$i == "sep"} {
@@ -732,11 +732,11 @@ proc ::preport::report {fmt {withTable 1}} {
     append r [sc_report player endmat]
   }
 
-  if {$withTable  &&  $::preport(MaxGames) > 0} {
+  if {$withTable  &&  $::preport(MaxTableGames) > 0} {
     set sec [::preport::_sec $tr(OprepTheoryTable)]
     set comment ""
-    if {$tgames > $::preport(MaxGames)} {
-      set comment [format $tr(OprepTableComment) $::preport(MaxGames)]
+    if {$tgames > $::preport(MaxTableGames)} {
+      set comment [format $tr(OprepTableComment) $::preport(MaxTableGames)]
     }
     append r [sc_report player print $numRows $sec $comment]
   }
