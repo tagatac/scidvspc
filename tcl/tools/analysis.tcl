@@ -3893,6 +3893,9 @@ proc updateAnalysis {{n 0} {reset 1}} {
   set old_movelist $analysis(movelist$n)
   set movelist [sc_game moves coord]
 
+  set analysis(depth$n) 0 
+  # to ensure clearing text widget if using goComand {go depth 12} (eg) but probably a good idea anyway. TEST
+
   ### seems erroneous... what about vars/backtracking ??
   # if {$movelist == $old_movelist} { return }
 
