@@ -13022,7 +13022,11 @@ sc_name_info (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
              htextOutput ? "</run></green></tt>" : "");
     Tcl_AppendResult (ti, temp, newline, NULL);
 
-    // Now print stats for games in the filter:
+// Now print stats for games in the filter (if any games are filtered)
+
+if (db->numGames == db->filter->Count()) {
+    Tcl_AppendResult (ti, newline, NULL);
+} else {
 
     sprintf (temp, "<b>%s</b>", translate (ti, "PInfoFilter"));
     if (! htextOutput) { strTrimMarkup (temp); }
@@ -13093,6 +13097,7 @@ sc_name_info (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
              "", blackcount[STATS_FILTER],
              htextOutput ? "</tt>" : "");
     Tcl_AppendResult (ti, temp, newline, NULL);
+}
 
     // Now print stats for games against the current opponent:
 
