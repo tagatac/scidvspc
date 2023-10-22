@@ -1307,6 +1307,10 @@ proc ::board::new {w {psize 40} {showmat 0} {flip 0}} {
 
   set ::board::_size($w) $psize
   set ::board::_border($w) $::borderwidth
+  # Make smaller boards less padded
+  if {$w != ".main.board" && $::borderwidth > 0} {
+      incr ::board::_border($w) -1
+  }
   set ::board::_coords($w) 0
   set ::board::_flip($w) $flip
   set ::board::_data($w) [sc_pos board]
