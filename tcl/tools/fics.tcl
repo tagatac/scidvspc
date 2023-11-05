@@ -915,11 +915,11 @@ namespace eval fics {
                $::fics::findopponent(rated) $color \
                $::fics::findopponent(manual) $formula $range"
       ::fics::writechan $cmd
-      destroy .ficsfindopp
+      catch {destroy .ficsfindopp}
       ::fics::initOffers
     } -width 10
     button $w.help   -text $tr(Help) -command "helpWindow FICSfindopp" -width 10
-    button $w.cancel -text $tr(Cancel) -command "destroy $w" -width 10
+    button $w.cancel -text $tr(Cancel) -command "catch \{destroy $w\}" -width 10
 
     bind $w <F1> {helpWindow FICSfindopp}
     bind $w <Escape> "$w.cancel invoke"
@@ -1824,7 +1824,7 @@ namespace eval fics {
     pack [label $w.title -text "$::tr(FICSOffers) for $::fics::reallogin" -font font_Regular] -side top -padx 20 -pady 5
 
     pack [button $w.cancel -text $::tr(Cancel) \
-	-command "::fics::writechan unseek ; destroy $w"] -side bottom -pady 5
+	-command "::fics::writechan unseek ; catch \{destroy $w\}"] -side bottom -pady 5
     pack [frame $w.line -height 2 -borderwidth 2 -relief sunken ] \
         -fill x -expand 1 -side bottom -pady 2
 
@@ -1916,7 +1916,7 @@ namespace eval fics {
 
     if {$::fics::Offers <= 0} {
       if {$n == -1 && $::fics::exitwithzero} {
-        destroy .ficsOffers
+        catch {destroy .ficsOffers}
         return
       }
       if {$::fics::findopponent(manual) == {auto}} {
