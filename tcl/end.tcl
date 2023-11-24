@@ -472,6 +472,7 @@ proc exportOptions {exportType {fName {}}} {
     grid $w.o.convertNullMoves -row $row -column 1 -sticky w
     grid $w.o.keepNullMoves    -row $row -column 2 -sticky w
     incr row
+  }
 
     label $w.o.utf8 -text "Character encoding"
     radiobutton $w.o.utf8True -text Utf-8 -variable exportFlags(utf8) -value 1
@@ -480,7 +481,6 @@ proc exportOptions {exportType {fName {}}} {
     grid $w.o.utf8True   -row $row -column 1 -sticky w
     grid $w.o.utf8False  -row $row -column 2 -sticky w
     incr row
-  }
 
   # Extra option for HTML format: diagram image set
   if {$exportType == "HTML"} {
