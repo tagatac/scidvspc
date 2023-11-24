@@ -533,15 +533,14 @@ proc ::optable::setupRatios {} {
         [expr {int(double([lindex $r 1]) / double([lindex $r 0]))} ]
   }
   foreach {start end} {1800 1899  1900 1949  1950 1969  1970 1979
-    1980 1989 1990 1999 2000 2009 2010 2019} {
+    1980 1989 1990 1999 2000 2009 2010 2019 2020 2029} {
     set r [sc_filter freq date $start.00.00 $end.12.31]
     set filter [lindex $r 0]
     set all [lindex $r 1]
     if {$filter == 0} {
       set ::optable::_data(range$start) "none"
     } else {
-      set ::optable::_data(range$start) \
-          [expr {int(double($all) / double($filter))} ]
+      set ::optable::_data(range$start) [expr {int(double($all) / double($filter))} ]
     }
   }
   foreach y {1 5 10} {
@@ -789,7 +788,6 @@ proc ::optable::_subsec {text} {
 ### Produces a report in the appropriate format. If "withTable" is true, the theory table is also included.
 
 proc ::optable::report {fmt withTable {flipPos 0}} {
-puts ":optable::report $fmt $withTable $flipPos"
   global tr
   sc_report opening format $fmt
   set fmt [string tolower $fmt]
@@ -949,14 +947,14 @@ puts ":optable::report $fmt $withTable $flipPos"
     set len [string length $sYear]
     if {[string length $sEvery] > $len} { set len [string length $sEvery] }
     append r [::utils::string::Pad $tr(Year) $len]
-    foreach range {1800-99 1900-49 1950-69 1970-79 1980-89 1990-99 2000-09 2010-19} {
+    foreach range {1800-99 1900-49 1950-69 1970-79 1980-89 1990-99 2000-09 2010-19 2020-29} {
       append r $next
       append r [::utils::string::PadCenter $range 8]
     }
 
     append r $n
     append r [::utils::string::Pad $sEvery $len]
-    foreach y {1800 1900 1950 1970 1980 1990 2000 2010} {
+    foreach y {1800 1900 1950 1970 1980 1990 2000 2010 2020} {
       append r $next
       append r [::utils::string::PadCenter $::optable::_data(range$y) 8]
     }
