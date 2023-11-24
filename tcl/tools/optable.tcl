@@ -461,9 +461,9 @@ proc ::optable::saveReport {fmt} {
     } else {
       set report [::optable::report $fmt 1 $::optable::_flip]
     }
-    if {$::hasEncoding  &&  $::langEncoding($::language) != ""} {
-      catch {set report [encoding convertto $::langEncoding($::language) $report]}
-    }
+    # Why are we trying to convert these reports to the default language's menu encoding ?? S.A.
+    # if {$::hasEncoding  &&  $::langEncoding($::language) != ""} { catch {set report [encoding convertto $::langEncoding($::language) $report]} }
+
     puts $tempfile $report
     close $tempfile
   }
@@ -789,6 +789,7 @@ proc ::optable::_subsec {text} {
 ### Produces a report in the appropriate format. If "withTable" is true, the theory table is also included.
 
 proc ::optable::report {fmt withTable {flipPos 0}} {
+puts ":optable::report $fmt $withTable $flipPos"
   global tr
   sc_report opening format $fmt
   set fmt [string tolower $fmt]
@@ -1530,9 +1531,7 @@ proc ::optable::reportFavoritesOK {} {
     } else {
       set report [::optable::report $fmt 1 $::optable::_flip]
     }
-    if {$::hasEncoding  &&  $::langEncoding($::language) != ""} {
-      catch {set report [encoding convertto $::langEncoding($::language) $report]}
-    }
+    # if {$::hasEncoding  &&  $::langEncoding($::language) != ""} { catch {set report [encoding convertto $::langEncoding($::language) $report]} }
     sc_game pop
     puts $f $report
     close $f

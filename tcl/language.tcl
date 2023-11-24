@@ -121,7 +121,6 @@ proc initLanguageMenus {} {
 ### Assigns the menu name and help message for a menu entry and language.
 
 proc menuText {args} {
-  global hasEncoding langEncoding
 
   lassign $args lang tag label underline helpMsg
   if {![string is integer -strict $underline]} {
@@ -181,7 +180,7 @@ proc tr {tag {lang ""}} {
 
 
 proc setLanguage {{lang ""}} {
-  global menuLabel menuUnder oldLang hasEncoding langEncoding langTable
+  global menuLabel menuUnder oldLang langEncoding langTable
 
   if {$lang == ""} {
     set lang $::language

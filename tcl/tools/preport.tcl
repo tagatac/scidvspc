@@ -456,9 +456,7 @@ proc ::preport::saveReport {fmt} {
       -message "Unable to write the file: $fname\n\n"
   } else {
     set report [::preport::report $fmt 1]
-    if {$::hasEncoding  &&  $::langEncoding($::language) != ""} {
-      catch {set report [encoding convertto $::langEncoding($::language) $report]}
-    }
+    # if {$::hasEncoding  &&  $::langEncoding($::language) != ""} { catch {set report [encoding convertto $::langEncoding($::language) $report]} }
     puts $tempfile $report
     close $tempfile
   }
