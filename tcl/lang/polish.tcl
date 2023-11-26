@@ -1373,6 +1373,8 @@ translate P NameEditSelect {Partie do edycji}
 translate P NameEditReplace {Zastąp}
 translate P NameEditWith {przez}
 translate P NameEditMatches {Pasujące: Ctrl+1 do Ctrl+9 wybiera}
+# ====== TODO To be translated ======
+translate P MatchRegexp {Match Regular Expression}
 
 # Classify window:
 translate P Classify {Przyporządkowanie ECO}

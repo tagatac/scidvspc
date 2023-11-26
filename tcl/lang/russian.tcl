@@ -1362,6 +1362,8 @@ translate R NameEditSelect {Партии для редактирования}
 translate R NameEditReplace {Заменить}
 translate R NameEditWith {с}
 translate R NameEditMatches {Совпадения: нажмите Ctrl+1 - Ctrl+9 для выбора}
+# ====== TODO To be translated ======
+translate R MatchRegexp {Match Regular Expression}
 
 # Check games window:
 

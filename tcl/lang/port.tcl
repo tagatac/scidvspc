@@ -1295,6 +1295,8 @@ translate U NameEditSelect {Jogos para editar}
 translate U NameEditReplace {Substituir}
 translate U NameEditWith {com}
 translate U NameEditMatches {Confere: Pressione Ctrl+1 a Ctrl+9 para selecionar}
+# ====== TODO To be translated ======
+translate U MatchRegexp {Match Regular Expression}
 
 # Classify window:
 translate U Classify {Classificar}

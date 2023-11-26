@@ -30,6 +30,7 @@
 #include <unordered_set>
 
 #include "charsetconverter.h"
+#include <regex.h>        
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Global variables:
@@ -12109,7 +12110,7 @@ sc_name_correct (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 int
 sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
-    const char * usage = "Usage: sc_name edit <type> <oldName> <newName>";
+    const char * usage = "Usage: sc_name edit <type> <editSelection> <oldName> <newName> <useRegexp>";
 
     if (!db->inUse) {
         return errorResult (ti, errMsgNotOpen(ti));
@@ -12142,9 +12143,9 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     }
 
     if (option == OPT_RATING) {
-        if (argc != 7) { return errorResult (ti, usage); }
+        if (argc != 8) { return errorResult (ti, usage); }
     } else {
-        if (argc != 6) { return errorResult (ti, usage); }
+        if (argc != 7) { return errorResult (ti, usage); }
     }
 
     enum { EDIT_ALL, EDIT_FILTER, EDIT_CTABLE };
@@ -12159,6 +12160,7 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     const char * oldName = argv[4];
     const char * newName = argv[5];
+    bool useRegexp;
     dateT oldDate = ZERO_DATE;
     dateT newDate = ZERO_DATE;
     eloT newRating = 0;
@@ -12166,29 +12168,54 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     if (option == OPT_RATING) {
         newRating = strGetUnsigned (argv[5]);
         newRatingType = strGetRatingType (argv[6]);
+        useRegexp =  strGetBoolean (argv[7]);
+    } else {
+        useRegexp =  strGetBoolean (argv[6]);
     }
+
     if (option == OPT_DATE  ||  option == OPT_EVENTDATE) {
         oldDate = date_EncodeFromString (argv[4]);
         newDate = date_EncodeFromString (argv[5]);
     }
 
-    // "*" will match anything in EVENT, SITE and a few others
-    bool glob = (oldName[0]=='*' && oldName[1]==0 && (option == OPT_EVENT || option == OPT_SITE || option == OPT_ROUND || option == OPT_DATE || option == OPT_EVENTDATE));
+    // "*" will match anything, without using regex
+    bool glob = ((option == OPT_DATE ||  option == OPT_EVENTDATE || useRegexp) && oldName[0]=='*' && oldName[1]==0);
 
     // Find the existing name in the namebase:
     idNumberT oldID = 0;
 
-    // dont' allow globbing unless it is filter only.
-    if ((glob || (oldName[0]=='?' && oldName[1]==0)) && editSelection == EDIT_ALL) {
-      Tcl_AppendResult (ti, "Using '*' and '?' to match field names is potentially harmful, and not allowed with 'All games'.",NULL);
+    // dont' allow globbing player names or EDIT_ALL
+    if (glob && (option == OPT_PLAYER || option == OPT_RATING)) {
+      Tcl_AppendResult (ti, "Using '*' to match Player names is not allowed.",NULL);
+      return TCL_ERROR;
+    }
+    if (glob && editSelection == EDIT_ALL) {
+      Tcl_AppendResult (ti, "Using '*' to match field names is potentially harmful, and not allowed with 'All games'." , NULL);
       return TCL_ERROR;
     }
 
-    // skip this check is we are searching for "*" and the field is OPT_EVENT SITE or ROUND
-    if (option != OPT_DATE  &&  option != OPT_EVENTDATE && ! glob) {
+    regex_t regex;
+    char regExp[255];
+    int regex_int;
+
+    // Must make sure to not call regexec if glob, as regex is unset
+    if (useRegexp && !glob) {
+      // Wrap the reg expression into ^,$ to match start and end of line - otherwise too dangerous.
+      sprintf (regExp, "%s%s%s", "^", oldName, "$");
+      /* Compile regular expression */
+      regex_int = regcomp(&regex, regExp, REG_NEWLINE);
+      if (regex_int) {
+	Tcl_AppendResult (ti, "Regular expression compilation failed." , NULL);
+	return TCL_ERROR;
+      }
+    }
+
+    // Not very useful check but ....
+
+    // skip this check is we are globbing or useRegexp, or the field is DATE or EVENT_DATE
+    if (option != OPT_DATE  &&  option != OPT_EVENTDATE && ! glob && ! useRegexp) {
         if (db->nb->FindExactName (nt, oldName, &oldID) != OK) {
-            Tcl_AppendResult (ti, "The ", NAME_TYPE_STRING[nt],
-                              " name \"", oldName, "\" does not exist.", NULL);
+            Tcl_AppendResult (ti, "The ", NAME_TYPE_STRING[nt], " name \"", oldName, "\" does not exist.", NULL);
             return TCL_ERROR;
         }
     }
@@ -12216,7 +12243,7 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         eventDate = g->GetEventDate();
     }
 
-    // Add the new name to the namebase:
+    // Add the new name to the namebase (if necessary)
     idNumberT newID = 0;
     if (option != OPT_RATING  &&  option != OPT_DATE  &&  option != OPT_EVENTDATE) {
         if (db->nb->AddName (nt, newName, &newID) == ERROR_NameBaseFull) {
@@ -12251,6 +12278,23 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
         switch (option) {
         case OPT_PLAYER:
+          // no globbing allowed
+          if (useRegexp) {
+            regex_int = regexec(&regex, db->nb->GetName (NAME_PLAYER, ie->GetWhite()), 0, NULL, 0);
+	    if (!regex_int) {
+		newIE.SetWhite (newID);
+		edits++;
+		oldID = ie->GetWhite();
+            } else {
+              // Can't match both white and black in same iteration as no way to decrement both oldIDs
+	      regex_int = regexec(&regex, db->nb->GetName (NAME_PLAYER, ie->GetBlack()), 0, NULL, 0);
+	      if (!regex_int) {
+		  newIE.SetBlack (newID);
+                  edits++;
+                  oldID = ie->GetBlack();
+              }
+            }
+          } else {
             if (ie->GetWhite() == oldID) {
                 newIE.SetWhite (newID);
                 edits++;
@@ -12259,32 +12303,63 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
                 newIE.SetBlack (newID);
                 edits++;
             }
-            break;
+          }
+          break;
 
         case OPT_EVENT:
-            if (glob || ie->GetEvent() == oldID) {
-                newIE.SetEvent (newID);
+
+            if (glob) {
+                newIE.SetEvent(newID);
                 edits++;
-                if (glob)
+                oldID = ie->GetEvent();
+            } else if (useRegexp) {
+                regex_int = regexec(&regex, db->nb->GetName (NAME_EVENT, ie->GetEvent()), 0, NULL, 0);
+                if (!regex_int) {
+                    newIE.SetEvent(newID);
+                    edits++;
                     oldID = ie->GetEvent();
+                }
+            } else if (ie->GetEvent() == oldID) {
+                newIE.SetEvent(newID);
+                edits++;
             }
+
             break;
 
         case OPT_SITE:
-            if (glob || ie->GetSite() == oldID) {
-                newIE.SetSite (newID);
+            if (glob) {
+                newIE.SetSite(newID);
                 edits++;
-                if (glob)
+                oldID = ie->GetSite();
+            } else if (useRegexp) {
+                regex_int = regexec(&regex, db->nb->GetName (NAME_SITE, ie->GetSite()), 0, NULL, 0);
+                if (!regex_int) {
+                    newIE.SetSite(newID);
+                    edits++;
                     oldID = ie->GetSite();
+                }
+            } else if (ie->GetSite() == oldID) {
+                newIE.SetSite(newID);
+                edits++;
             }
             break;
 
         case OPT_ROUND:
-            if (glob || ie->GetRound() == oldID) {
-                newIE.SetRound (newID);
+
+            if (glob) {
+                newIE.SetRound(newID);
                 edits++;
-                if (glob)
+                oldID = ie->GetRound();
+            } else if (useRegexp) {
+                regex_int = regexec(&regex, db->nb->GetName (NAME_ROUND, ie->GetRound()), 0, NULL, 0);
+                if (!regex_int) {
+                    newIE.SetRound(newID);
+                    edits++;
                     oldID = ie->GetRound();
+                }
+            } else if (ie->GetRound() == oldID) {
+                newIE.SetRound(newID);
+                edits++;
             }
             break;
 
@@ -12303,15 +12378,31 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             break;
 
         case OPT_RATING:
-            if (ie->GetWhite() == oldID) {
-                newIE.SetWhiteElo (newRating);
-                newIE.SetWhiteRatingType (newRatingType);
-                edits++;
-            }
-            if (ie->GetBlack() == oldID) {
-                newIE.SetBlackElo (newRating);
-                newIE.SetBlackRatingType (newRatingType);
-                edits++;
+            // no globbing allowed
+            if (useRegexp) {
+              regex_int = regexec(&regex, db->nb->GetName (NAME_PLAYER, ie->GetWhite()), 0, NULL, 0);
+              if (!regex_int) {
+                  newIE.SetWhiteElo (newRating);
+                  newIE.SetWhiteRatingType (newRatingType);
+                  edits++;
+              }
+              regex_int = regexec(&regex, db->nb->GetName (NAME_PLAYER, ie->GetBlack()), 0, NULL, 0);
+              if (!regex_int) {
+                  newIE.SetBlackElo (newRating);
+                  newIE.SetBlackRatingType (newRatingType);
+                  edits++;
+              }
+            } else {
+              if (ie->GetWhite() == oldID) {
+                  newIE.SetWhiteElo (newRating);
+                  newIE.SetWhiteRatingType (newRatingType);
+                  edits++;
+              }
+              if (ie->GetBlack() == oldID) {
+                  newIE.SetBlackElo (newRating);
+                  newIE.SetBlackRatingType (newRatingType);
+        	  edits++;
+              }
             }
             break;
 
@@ -12324,8 +12415,7 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             if (db->idx->WriteEntries (&newIE, i, 1) != OK) {
                 return errorResult (ti, "Error writing index file.");
             }
-            if (option != OPT_RATING  &&  option != OPT_DATE
-                    && option != OPT_EVENTDATE) {
+            if (option != OPT_RATING  &&  option != OPT_DATE && option != OPT_EVENTDATE) {
                 db->nb->IncFrequency (nt, newID, edits);
                 db->nb->IncFrequency (nt, oldID, -edits);
             }

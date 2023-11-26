@@ -1397,6 +1397,8 @@ translate N NameEditSelect {Partijen om te wijzigen}
 translate N NameEditReplace {Vervangen}
 translate N NameEditWith {met}
 translate N NameEditMatches {Gelijken: Druk Ctrl+1 tot Ctrl+9 om te selecteren}
+# ====== TODO To be translated ======
+translate N MatchRegexp {Match Regular Expression}
 
 # Check games window:
 

@@ -2465,22 +2465,25 @@ set helpText(Maintenance) {<h1>Database Maintenance</h1>
   <p>
   The 
   <run nameEditor><green>Name Editor</green></run>
-  is a tool to selectively edit entity names (eg Player names and Dates) and also edit any Player's rating (for a selection of games. See also <a Maintenance Ratings>below</a>).
+  is a tool to selectively edit entity names (eg Player Names and Dates) and also edit any Player's rating (for a selection of games. See also <a Maintenance Ratings>below</a>).
   </p>
   <p>
   Each unique name is only stored once in the <a Formats>name file</a>, so changing a name
-  actually changes all occurrences of it. Similarly, some names in the name file may not actually be used. To remove such names, 
+  actually changes all occurrences of it. Similarly, some names in the name file may not actually be in use. To remove such names, 
 perform a <a Compact>namebase compaction</a>.
   </p>
   <p>
-  An single asterisk '*' may be used to match <b>any</b> name. This global substitution is only available for 
-  the Event, Site, Round and date names - not the Player, Elo.
+  <i><url https://en.wikibooks.org/wiki/Regular_Expressions/POSIX_Basic_Regular_Expressions>Regular Expressions</url> (wrapped in line-start and line-end, to match the whole name) may be used instead of exact Name matches for some fields. Please use with caution as these operators are complex and potentially destructive. EG if you input ".*" , the full regexp used will be "^.*$" .
+  </i></p>
+  <p>
+  Additionally, a single asterisk '*' may be used to match <b>any</b> name. This global substitution is only available for 
+  the Event, Site, Round and date names - not the Player or Rating.
   </p>
   <p>
-  Date and Eventdate fields must be of the form YYYY.MM.DD (year, month, day), and Eventdates cannot exist without a valid Date entry.
+  Date and Eventdate fields must be of the form YYYY.MM.DD (year, month, day). A single '?' will match blank fields. Eventdates cannot exist without a valid Date entry, and must also be within 3 years of this Date.
   </p>
   <p>
-  <i>Please take care when using the Name Editor. Changes are not properly undoable if the new name already exists. There is also a safety mechanism - Using '*' or '?' is not allowed with 'All games in database'.</i>
+  <i>Please take care when using the Name Editor. Changes are not undoable if the new name already exists. There is also a safety mechanism - Using '*' is not allowed with 'All games in database'.</i>
   </p>
 
   <h3><name Spellfile>Spellcheck File</name></h3>
@@ -2608,7 +2611,7 @@ For example - the first two examples remove four digit ELOs from player names. T
   back in a consistent and usable state.
   </p>
 
-  <p><footer>Updated: Scid vs. PC 4.23, July 2021</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.25, Nov 2023</footer></p>
 }
 
 set helpTitle(Sorting) "Sorting a database"

@@ -1292,6 +1292,8 @@ translate L NameEditSelect {Muokattavat pelit}
 translate L NameEditReplace {Korvaa}
 translate L NameEditWith {Kanssa}
 translate L NameEditMatches {Vastaa: Paina Ctrl+1:sta  Ctrl+9:een valitaksesi}
+# ====== TODO To be translated ======
+translate L MatchRegexp {Match Regular Expression}
 
 # Check games window:
 

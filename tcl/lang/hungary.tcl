@@ -1502,6 +1502,8 @@ translate H NameEditReplace {Cserél}
 translate H NameEditWith {Erre}
 translate H NameEditMatches {Egyezések: Ctrl+1...Ctrl+9 választ.}
 # ====== TODO To be translated ======
+translate H MatchRegexp {Match Regular Expression}
+# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 # ====== TODO To be translated ======
 

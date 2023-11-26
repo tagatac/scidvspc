@@ -1367,6 +1367,8 @@ translate S NameEditSelect {Partidas a editar}
 translate S NameEditReplace {Reemplazar}
 translate S NameEditWith {Con}
 translate S NameEditMatches {Partidas: Presionar Ctrl+1 a Ctrl+9 para seleccionarla}
+# ====== TODO To be translated ======
+translate S MatchRegexp {Match Regular Expression}
 
 # Classify window:
 translate S Classify {Clasificar}
