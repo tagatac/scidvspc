@@ -1321,7 +1321,7 @@ translate D NameEditSelect {Welche Spiele sollen geändert werden?}
 translate D NameEditReplace {Ersetze}
 translate D NameEditWith {durch}
 translate D NameEditMatches {Entsprechungen: Drücke Strg+1 bis Strg+9 zum Auswählen}
-translate D MatchRegexp {Regulären Ausdruck Abgleichen}
+translate D MatchRegexp {Regulären Ausdruck abgleichen}
 
 # Check games window:
 
@@ -4241,11 +4241,10 @@ set helpText(D,PGN) {<h1>PGN-Fenster</h1>
 
   <h3>Optionen</h3>
   <p>Das PGN-Menü enthält Optionen darüber, wie die Partie angezeigt
-  wird. Einige von ihnen enthalten: farbige Darstellung oder reiner
-  Text, kurzer Vorspann, tabellarische Darstellung
-  und <b>Bildlaufleiste</b>.
-  Persönliche Vorlieben für die <b>Farben</b> können ebenfalls
-  eingestellt werden.
+  wird. Einige von ihnen enthalten: farbige Darstellung oder reiner Text, kurzer
+  Vorspann, tabellarische Darstellung und <b>Bildlaufleiste</b>.  Persönliche
+  Vorlieben für die <b>Farben</b> können ebenfalls eingestellt werden. (Weiß
+  wählen für die Rückkehr zum Systemhintergrund)
   </p>
 
  <p>Auf langsamen Rechnern kann das Abwählen der <b>farbigen
@@ -4778,19 +4777,32 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   solche Namen zu entfernen, führen Sie eine <a Compact>Komprimierung
   der Namendatenbank</a> durch.
   </p>
-  <p>Ein einzelnes Sternchen '*' kann benutzt werden, um
-  auf <b>jeden</b> Namen zu passen. Diese globale Ersetzung ist nur
-  für Veranstaltungs-, Ort-, Runden- und Datumsbezeichnungen verfügbar
-  - nicht für Spielernamen und Eloangaben.
+
+  <p><i><url https://de.wikipedia.org/wiki/Regulärer_Ausdruck>Reguläre Ausdrücke
+  </url>(eingeschlossen in Zeilenanfang und Zeilenende, um den ganzen Namen zu
+  finden) können anstelle von exakten Namensübereinstimmungen für einige Felder
+  verwendet werden. Bitte verwenden Sie sie mit Vorsicht, da diese Operatoren
+  komplex und potenziell zerstörerisch sind. Wenn Sie beispielsweise ".*"
+  eingeben, wird die vollständige Regexp, die verwendet wird, "^.*$"
+  sein.</i></p>
+
+  <p>Außerdem kann ein einzelnes Sternchen '*' verwendet werden, um auf
+  einen <b>beliebigen</b> Namen zu passen. Diese globale Ersetzung ist nur für
+  Ereignis, Ort, Runde und Datum verfügbar, nicht für den Spieler oder die
+  Bewertung.
   </p>
-  <p>Datums- und Turnierdatumsfelder müssen die Form JJJJ.MM.TT (Jahr,
-  Monat, Tag) haben.
+
+  <p>Die Felder Datum und Turnierdatum müssen in der Form JJJJ.MM.TT (Jahr, Monat,
+  Tag) sein. Ein einzelnes '?' wird mit leeren Feldern
+  übereinstimmen. Turnierdaten können nicht ohne einen gültigen Datumseintrag
+  existieren und müssen außerdem innerhalb von drei Jahren nach diesem Datum
+  liegen.
   </p>
-  <p><i>Bitte seien Sie vorsichtig, wenn Sie den Namenseditor
-  verwenden. Änderungen können nicht einwandfrei rückgängig gemacht
-  werden, wenn der neue Name bereits existiert. Es gibt auch viele
-  Sicherheitsmechanismen - die Verwendung von '*' oder '?' ist bei
-  'Alle Partien in der Datenbank' nicht erlaubt.</i>
+
+  <p><i>Bitte seien Sie vorsichtig bei der Verwendung des
+  Namenseditors. Änderungen können nicht rückgängig gemacht werden, wenn der
+  neue Name bereits existiert. Es gibt auch einen Sicherheitsmechanismus: die
+  Verwendung von '*' ist bei 'Alle Partien in der Datenbank' nicht erlaubt.</i>
   </p>
 
   <h3><name Spellfile>Die Schreibkorrekturdatei</name></h3>
@@ -4929,7 +4941,7 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   zurückzubringen.
   </p>
 
-  <p><footer>Aktualisiert: Scid vs. PC 4.23, Juli 2021</footer></p>
+  <p><footer>Aktualisiert: Scid vs. PC 4.25, November 2023</footer></p>
 }
 
 set helpTitle(D,Sorting) "Sortieren einer Datenbank"
@@ -5073,12 +5085,11 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   das Fenster <a Analysis List>Analyse-Engine</a> hinzugefügt werden
   können (siehe unten).</p>
 
-<p>Diese Programme können auf verschiedene Arten gestartet
-  werden: durch <run ::startAnalysisWin F2><green>Drücken von
-  F2</green></run>, F3 oder F4 oder aus dem
-  Menü <green>Werkzeuge--<gt>Starte Engine</green>. Zusätzlich kann das erste
-  Schachprogramm durch<b>Doppelklick in der Statusleiste</b> gestartet
-  oder angehalten werden.</p>
+<p>Diese Programme können auf verschiedene Arten gestartet werden:
+  durch <run ::startAnalysisWin F2><green>Drücken von F2</green></run>, F3 oder
+  F4 oder aus dem Menü <green>Werkzeuge--<gt>Starte Engine</green>. Zusätzlich
+  kann das erste Schachprogramm durch <b>Doppelklick in der Statusleiste</b>
+  gestartet oder angehalten werden.</p>
 
 <p>Die <b>Leertaste</b> startet bzw. beendet das
   Schachprogramm. Drücken der <b>Eingabetaste</b> fügt den besten Zug des
@@ -5103,7 +5114,8 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   <p>
   <ul>
   <li> <button tb_play 32> <b>Engine starten</b> / <button tb_pause
-  32> <b>Engine anhalten</b>. startet bzw. hält das Schachprogramm an.
+  32> <b>Engine anhalten</b>. startet bzw. hält das Schachprogramm an. (Siehe
+  auch <a Analysis Debugging>Fortgeschrittenes</a>)
   <li> <button tb_addmove 32> <b>Zug hinzufügen</b> fügt der aktuellen
   Partie den besten Zug des Schachprogramms hinzu (Rechtsklick fügt
   die Bewertung des Programms hinzu).</li>
@@ -5372,10 +5384,10 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   maximale Anzahl an Zeilen im Protokoll. Wenn man sie auf Null setzt,
   wird die Protokollierung insgesamt abgeschaltet.</p>
 
-  <p>Der Standard-UCI-Befehl für <button tb_play> ist "rechne
-  endlos". Dies kann aber in der <a Console>Konsole</a> von ScidvsPC
-  über eine Änderung von <b>::uci::goCommand</b> geändert werden
-  (z.B. "set ::uci::goCommand {go movetime 60}").</p>
+  <p>Der Standard-UCI-Befehl für <button tb_play> ist "rechne endlos". Dies kann
+  aber in der <a Console>Konsole</a> von ScidvsPC über eine Änderung
+  von <b>::uci::goCommand</b> geändert werden (z.B. "set ::uci::goCommand {go
+  movetime 60}" oder {go movetime 10000}).</p>
 
   <p><footer>Aktualisiert: Scid vs. PC 4.21, Juli 2019</footer></p>
 }
@@ -5767,8 +5779,10 @@ set helpText(D,Reports) {<h1>Berichte</h1>
   zeigt unterschiedliche Informationen über die aktuelle Stellung.</p>
 
   <p><i>Einige Funktionen sind von der Option "Maximum an Partien für
-  Statistiken", die standardmäßig 10.000 ist, betroffen. Sie kann
-  jetzt aber im Optionenfenster auf 25.000 erhöht werden.</i></p>
+  Statistiken", die standardmäßig 10.000 ist, betroffen. Sie kann aber im
+  Optionenfenster auf 100.000 erhöht werden. Die voreingestellte Partienzahl für
+  die Theorietabelle ist 500 (und maximal 10.000).
+  </i></p>
 
   <p>Die <b>ersten Abschnitte</b> zeigen passende Partien und
   nachfolgende Partiezüge. Man sieht, ob eine Eröffnung beliebter
@@ -5845,16 +5859,7 @@ set helpText(D,Reports) {<h1>Berichte</h1>
   angegebenen Spieler) oder für Partien, die auf die aktuelle Stellung passen.
   </p>
 
-  <h3>Land</h3>
-  <p>Scid vs. PC kann nun die <a Maintenance Editing>Schreibkorrekturdatei</a>
-  durchsuchen, um die Länder der Spieler anzuzeigen. Diese Funktion ist jedoch
-  standardmäßig deaktiviert, da sie den Spielerfinder erheblich verlangsamen
-  kann.  Um sie zu aktivieren, entfernen Sie einfach das "no" oder ersetzen Sie
-  es durch einen dreistelligen Ländercode (wie GER, USA oder ENG), und drücken
-  Sie auf 'Aktualisieren'.
-  </p>
-
-  <p><footer>Aktualisiert: Scid vs. PC 4.24, April 2023</footer></p>
+  <p><footer>Aktualisiert: Scid vs. PC 4.25, August 2023</footer></p>
 }
 
 set helpTitle(D,PList) "Das Spielersuchfenster"
@@ -6515,7 +6520,15 @@ set helpText(D,Options) {<h1>Optionen und Einstellungen</h1>
   setzt <b>Textfarbe</b> eine Vordergrundfarbe für die gleichen/ähnlichen
   Fenster. <i>Das Zurücksetzen der globalen und der Textvordergrundfarbe
   funktioniert nicht korrekt, bis Scid neu gestartet wird</i>.</p>
-  
+
+  <h4>Benutzerdefinierter Linux-Farbwähler</h4>
+
+  <p>Der Standard-Unix-Farbwähler, tk_chooseColor, ist sehr schlecht. Wenn das
+  tcl-Paket 'BWidget' gefunden wird, wird stattdessen dessen großartiges
+  ::SelectColor-Widget verwendet. Um BWidget zu installieren, versuchen Sie 'apt
+  install BWidget'.
+  </p>
+
   <h3><name MyPlayerNames>Meine Spielernamen</name></h3>
   <p><green><run editMyPlayerNames>Meine Spielernamen</run></green>
   ermöglicht die Berücksichtigung von besonderen Spielernamen.
@@ -6544,6 +6557,10 @@ set helpText(D,Options) {<h1>Optionen und Einstellungen</h1>
   Fenstern <a Tree>Zugbaum</a> und <a Crosstable>Kreuztabelle</a>
   verwendet. Diese erfordern eine Schriftart mit fester Breite, um die
   Textausrichtung passend zu gestalten.
+  </p>
+  <p>Um die Schrift für die Partienliste zu ändern, führen Sie einen Rechtsklick
+  auf dem Datenbankumschalter aus und wählen "Mehr-<gt>Benutzerdefinierte
+  Schriftart verwenden", wodurch die Grundschriftart Klein verwendet wird.
   </p>
 
   <h3>Hochauflösende Bildschirmanzeigen</h3>
