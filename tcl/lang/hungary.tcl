@@ -683,6 +683,8 @@ translate H AddThisMoveToMask {Add hozzá ezt a lépést a maszkhoz}
 translate H SearchMask {Search in Mask}
 # ====== TODO To be translated ======
 translate H DisplayMask {Display Mask}
+# ====== TODO To be translated ======
+translate H MaskShowMarkers "Show Markers"
 translate H Nag {NAG-kód}
 translate H Marker {Jelölés}
 translate H Include {Belevesz}

@@ -677,7 +677,7 @@ proc ::tree::displayLines {baseNumber moves} {
   }
 
   # Display the line with column headings
-  if { $maskFile != "" } {
+  if { $maskFile != "" && $::tree::mask::showMarkers } {
     # insert 2 blank images and 4 blank space
     foreach j { 0 1 } {
       $w.f.tl image create end -image ::tree::mask::emptyImage -align center
@@ -713,7 +713,7 @@ proc ::tree::displayLines {baseNumber moves} {
         set tagfg movefg
       }
     }
-    if { $maskFile != "" } {
+    if { $maskFile != "" && $::tree::mask::showMarkers} {
       if { $i > 0 && $i < $len - 3 && $move != {[end]} } {
         # images
         foreach j { 0 1 } {
@@ -810,7 +810,7 @@ proc ::tree::displayLines {baseNumber moves} {
 
   # Display the last two lines  - hypens and total
   for { set i [expr {$len - 3}] } { $i < $len - 1 } { incr i } {
-    if { $maskFile != "" } {
+    if { $maskFile != "" && $::tree::mask::showMarkers } {
       $w.f.tl image create end -image ::tree::mask::emptyImage -align center
       $w.f.tl image create end -image ::tree::mask::emptyImage -align center
       $w.f.tl insert end "    "
@@ -849,6 +849,7 @@ proc ::tree::displayLines {baseNumber moves} {
       $w.f.tl tag bind tagclick$idx <ButtonPress-3> "::tree::mask::contextMenu 0 $w.f.tl $maskmove %x %y %X %Y"
       $w.f.tl tag bind tagclick$idx <Control-ButtonPress-3> "::tree::mask::contextMenu 1 $w.f.tl $maskmove %x %y %X %Y"
 
+    if {$::tree::mask::showMarkers} {
       # Markers
       foreach j {4 5} {
         if {[lindex $m $j] == ""} {
@@ -874,6 +875,7 @@ proc ::tree::displayLines {baseNumber moves} {
 
       # NAG tag
       $w.f.tl insert end [::tree::mask::getNag $maskmove] tagclick$idx
+    }
 
       # Move
       if {$maskmove == $nextmove} {
@@ -1994,35 +1996,10 @@ proc ::tree::mask::contextMenu {control win move x y xc yc} {
   menu $mctxt
   $mctxt add command -label [tr AddToMask] -command [list ::tree::mask::op addToMask 1 $move]
   $mctxt add command -label [tr RemoveFromMask] -command [list ::tree::mask::op removeFromMask 1 $move]
+
   $mctxt add separator
 
-  foreach j { 0 1 } {
-    menu $mctxt.image$j
-    $mctxt add cascade -label "[tr Marker] [expr $j +1]" -menu $mctxt.image$j
-    foreach e { Include Exclude MainLine Bookmark White Black NewLine ToBeVerified ToTrain Dubious ToRemove } {
-      set i  $::tree::mask::marker2image($e)
-
-      $mctxt.image$j add command -label [ tr $e ] -image $i -compound left -command [list ::tree::mask::op setImage 1 $move $i $j]
-    }
-    $mctxt.image$j add command -label [tr NoMarker] -command [list ::tree::mask::op setImage 1 $move {} $j]
-  }
-  menu $mctxt.color
-  $mctxt add cascade -label [tr ColorMarker] -menu $mctxt.color
-  foreach c { "White" "Green" "Yellow" "Blue" "Red"} {
-    $mctxt.color add command -label [ tr "${c}Mark" ] -background $c -command [list ::tree::mask::op setColor 1 $move $c]
-  }
-  
-  menu $mctxt.nag
-  $mctxt add cascade -label [tr Nag] -menu $mctxt.nag
-
-  foreach nag [ list "!!" " !" "!?" "?!" " ?" "??" " ~" [::tr "None"]  ] {
-    $mctxt.nag add command -label $nag -command [list ::tree::mask::op setNag 1 $move $nag]
-  }
-  
   $mctxt add command -label [tr CommentMove] -command [list ::tree::mask::op addComment 0 $move $win]
-
-  $mctxt add separator
-
   $mctxt add command -label [ tr CommentPosition] -command [list ::tree::mask::addComment {} $win]
   
   set lMatchMoves [sc_pos matchMoves ""]
@@ -2047,6 +2024,36 @@ proc ::tree::mask::contextMenu {control win move x y xc yc} {
     incr row
   }
 
+  $mctxt add separator
+  $mctxt add checkbutton -label [tr MaskShowMarkers] -variable ::tree::mask::showMarkers -command ::tree::refresh
+
+  foreach j { 0 1 } {
+    menu $mctxt.image$j
+    $mctxt add cascade -label "[tr Marker] [expr $j +1]" -menu $mctxt.image$j
+    foreach e { Include Exclude MainLine Bookmark White Black NewLine ToBeVerified ToTrain Dubious ToRemove } {
+      set i  $::tree::mask::marker2image($e)
+
+      $mctxt.image$j add command -label [ tr $e ] -image $i -compound left -command [list ::tree::mask::op setImage 1 $move $i $j]
+    }
+    $mctxt.image$j add command -label [tr NoMarker] -command [list ::tree::mask::op setImage 1 $move {} $j]
+  }
+  menu $mctxt.color
+  $mctxt add cascade -label [tr ColorMarker] -menu $mctxt.color
+  foreach c { "White" "Green" "Yellow" "Blue" "Red"} {
+    $mctxt.color add command -label [ tr "${c}Mark" ] -background $c -command [list ::tree::mask::op setColor 1 $move $c]
+  }
+  
+  menu $mctxt.nag
+  $mctxt add cascade -label [tr Nag] -menu $mctxt.nag
+
+  foreach nag [ list "!!" " !" "!?" "?!" " ?" "??" " ~" [::tr "None"]  ] {
+    $mctxt.nag add command -label $nag -command [list ::tree::mask::op setNag 1 $move $nag]
+  }
+  if {!$::tree::mask::showMarkers} {
+    foreach i {8 9 10 11} {
+      $mctxt entryconfigure $i -state disabled
+    }
+  }
   # Adding a trailing Mask menu doesn't work ? - S.A.
   # $mctxt add separator
   # $mctxt add cascade -label [tr Mask] -menu .treeWin1.menu.mask

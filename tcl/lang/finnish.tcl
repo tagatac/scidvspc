@@ -570,6 +570,8 @@ translate L RemoveFromMask {Poista naamiosta}
 translate L AddThisMoveToMask {Lis‰‰ siirto naamioon}
 translate L SearchMask {Etsi naamiosta}
 translate L DisplayMask {N‰yt‰ naamio}
+# ====== TODO To be translated ======
+translate L MaskShowMarkers "Show Markers"
 translate L Nag {Nalkuta-koodi}
 translate L Marker {Merkki}
 translate L Include {Sis‰llyt‰}

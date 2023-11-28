@@ -584,6 +584,8 @@ translate F RemoveFromMask {Enlever du masque}
 translate F AddThisMoveToMask {Ajouter ce coup au masque}
 translate F SearchMask {Recherche dans masque}
 translate F DisplayMask {Affichage du masque}
+# ====== TODO To be translated ======
+translate F MaskShowMarkers "Show Markers"
 translate F Nag {Code Nag}
 translate F Marker {Marqueur}
 translate F Include {Inclure}

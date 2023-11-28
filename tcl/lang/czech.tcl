@@ -676,6 +676,8 @@ translate C RemoveFromMask {Odstranit z masky}
 translate C AddThisMoveToMask {Pøidat tento tah do masky}
 translate C SearchMask {Hledat v masce}
 translate C DisplayMask {Zobrazit masku}
+# ====== TODO To be translated ======
+translate C MaskShowMarkers "Show Markers"
 translate C Nag {Nag kód}
 translate C Marker {Znaèka}
 translate C Include {Zahrnout}

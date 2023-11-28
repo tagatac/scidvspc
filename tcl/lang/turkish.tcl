@@ -568,6 +568,8 @@ translate T RemoveFromMask {Maskeden çıkar}
 translate T AddThisMoveToMask {Maskeye hamle Ekle}
 translate T SearchMask {Maskede ara}
 translate T DisplayMask {Ekran Maskesi}
+# ====== TODO To be translated ======
+translate T MaskShowMarkers "Show Markers"
 translate T Nag {Nag kodu}
 translate T Marker {İşaretleyici}
 translate T Include {Dahil et}

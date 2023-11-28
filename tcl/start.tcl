@@ -239,6 +239,7 @@ set ::tree::short 1
 set ::tree::autoAdjust 0
 set ::tree::mask::recentMask {}
 set ::tree::mask::autoLoadMask 0
+set ::tree::mask::showMarkers 0
 set ::tree::order frequency
 # Auto-save tree cache when closing tree window:
 set ::tree::autoSave 0

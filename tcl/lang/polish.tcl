@@ -630,6 +630,8 @@ translate P RemoveFromMask {Usuń z maski}
 translate P AddThisMoveToMask {Dodaj posunięcie do maski}
 translate P SearchMask {Szukaj wedłu maski}
 translate P DisplayMask {Wyświetl maskę}
+# ====== TODO To be translated ======
+translate P MaskShowMarkers "Show Markers"
 translate P Nag {Kod NAG}
 translate P Marker {Znacznik}
 translate P Include {Dołącz}

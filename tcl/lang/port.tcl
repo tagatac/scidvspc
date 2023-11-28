@@ -588,6 +588,8 @@ translate U RemoveFromMask {Remover da máscara}
 translate U AddThisMoveToMask {Adicionar este movimento à máscara}
 translate U SearchMask {Pesquisar na máscara}
 translate U DisplayMask {Mostrar máscara}
+# ====== TODO To be translated ======
+translate U MaskShowMarkers "Show Markers"
 translate U Nag {Código Nag}
 translate U Marker {Marcador}
 translate U Include {Incluir}

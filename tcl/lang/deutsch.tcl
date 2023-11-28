@@ -608,6 +608,7 @@ translate D RemoveFromMask {Von Maske entfernen}
 translate D AddThisMoveToMask {Diesen Zug zur Maske hinzufügen}
 translate D SearchMask {Suche in einer Maske}
 translate D DisplayMask {Maske als Zugbaum}
+translate D MaskShowMarkers {Markierungen anzeigen}
 translate D Nag {NAG-Code}
 translate D Marker {Marker}
 translate D Include {Einbezogene Variante}

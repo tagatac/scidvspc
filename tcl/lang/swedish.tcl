@@ -643,6 +643,8 @@ translate W RemoveFromMask {Ta bort från Sökmask}
 translate W AddThisMoveToMask {Add Move to Mask}
 translate W SearchMask {Sök i sökmask}
 translate W DisplayMask {Visa sökmask}
+# ====== TODO To be translated ======
+translate W MaskShowMarkers "Show Markers"
 translate W Nag {NAG-kod}
 translate W Marker {Markera}
 translate W Include {Inkludera}

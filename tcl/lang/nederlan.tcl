@@ -648,6 +648,8 @@ translate N RemoveFromMask {Verwijderen uit het masker}
 translate N AddThisMoveToMask {Voeg deze zet toe aan het masker}
 translate N SearchMask {Zoek in masker}
 translate N DisplayMask {Toon masker}
+# ====== TODO To be translated ======
+translate N MaskShowMarkers "Show Markers"
 translate N Nag {Nag code}
 translate N Marker {Aanwijzer}
 translate N Include {Invoegen}

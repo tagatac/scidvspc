@@ -975,7 +975,7 @@ proc nameEditor {{parent {}}} {
   $w.g.rtype configure -pady 2 -relief flat
 
   set useRegexp 0
-  checkbutton $w.g.regexp -textvar ::tr(MatchRegexp) -variable useRegexp
+  checkbutton $w.g.regexp -textvar ::tr(MatchRegexp) -variable useRegexp -font font_Tiny
   grid $w.g.regexp -row 2 -column 1 -columnspan 2 -padx 10
   
   text $w.g.list -height 9 -width 40 -relief sunken -tabs {2c left} -wrap none

@@ -731,6 +731,8 @@ translate Y SearchMask {Search in Mask}
 # ====== TODO To be translated ======
 translate Y DisplayMask {Display Mask}
 # ====== TODO To be translated ======
+translate Y MaskShowMarkers "Show Markers"
+# ====== TODO To be translated ======
 translate Y Nag {Nag code}
 # ====== TODO To be translated ======
 translate Y Marker {Marker}

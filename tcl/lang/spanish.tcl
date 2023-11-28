@@ -650,6 +650,8 @@ translate S RemoveFromMask {Elimina desde la máscara}
 translate S AddThisMoveToMask {Añadir este movimiento a la máscara}
 translate S SearchMask {Buscar en máscara}
 translate S DisplayMask {Mostrar máscara}
+# ====== TODO To be translated ======
+translate S MaskShowMarkers "Show Markers"
 translate S Nag {Código de regaño}
 translate S Marker {Marcador}
 translate S Include {Incluir}

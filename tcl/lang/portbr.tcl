@@ -708,6 +708,8 @@ translate B RemoveFromMask {Remover da máscara}
 translate B AddThisMoveToMask {Adicionar este movimento à máscara}
 translate B SearchMask {Pesquisar na máscara}
 translate B DisplayMask {Mostrar máscara}
+# ====== TODO To be translated ======
+translate B MaskShowMarkers "Show Markers"
 translate B Nag {Código Nag}
 translate B Marker {Marcador}
 translate B Include {Incluir}

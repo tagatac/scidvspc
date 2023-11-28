@@ -616,6 +616,8 @@ translate R RemoveFromMask {Удалить из маски}
 translate R AddThisMoveToMask {Добавить этот ход в маску}
 translate R SearchMask {Поиск в маске}
 translate R DisplayMask {Показать маску}
+# ====== TODO To be translated ======
+translate R MaskShowMarkers "Show Markers"
 translate R Nag {Nag код}
 translate R Marker {Метка}
 translate R Include {Включать}

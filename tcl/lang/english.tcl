@@ -580,6 +580,7 @@ translate E RemoveFromMask {Remove from Mask}
 translate E AddThisMoveToMask {Add Move to Mask}
 translate E SearchMask {Search in Mask}
 translate E DisplayMask {Mask}
+translate E MaskShowMarkers "Show Markers"
 translate E Nag {Nag code}
 translate E Marker {Marker}
 translate E Include {Include}
