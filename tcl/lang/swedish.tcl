@@ -645,6 +645,8 @@ translate W SearchMask {Sök i sökmask}
 translate W DisplayMask {Visa sökmask}
 # ====== TODO To be translated ======
 translate W MaskShowMarkers "Show Markers"
+# ====== TODO To be translated ======
+translate W MaskShowToolTips {Show Tooltips}
 translate W Nag {NAG-kod}
 translate W Marker {Markera}
 translate W Include {Inkludera}

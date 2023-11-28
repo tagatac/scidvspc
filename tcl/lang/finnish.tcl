@@ -572,6 +572,8 @@ translate L SearchMask {Etsi naamiosta}
 translate L DisplayMask {Näytä naamio}
 # ====== TODO To be translated ======
 translate L MaskShowMarkers "Show Markers"
+# ====== TODO To be translated ======
+translate L MaskShowToolTips {Show Tooltips}
 translate L Nag {Nalkuta-koodi}
 translate L Marker {Merkki}
 translate L Include {Sisällytä}

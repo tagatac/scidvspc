@@ -609,6 +609,8 @@ translate D AddThisMoveToMask {Diesen Zug zur Maske hinzufügen}
 translate D SearchMask {Suche in einer Maske}
 translate D DisplayMask {Maske als Zugbaum}
 translate D MaskShowMarkers {Markierungen anzeigen}
+# ====== TODO To be translated ======
+translate D MaskShowToolTips {Show Tooltips}
 translate D Nag {NAG-Code}
 translate D Marker {Marker}
 translate D Include {Einbezogene Variante}

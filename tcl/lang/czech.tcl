@@ -678,6 +678,8 @@ translate C SearchMask {Hledat v masce}
 translate C DisplayMask {Zobrazit masku}
 # ====== TODO To be translated ======
 translate C MaskShowMarkers "Show Markers"
+# ====== TODO To be translated ======
+translate C MaskShowToolTips {Show Tooltips}
 translate C Nag {Nag kód}
 translate C Marker {Znaèka}
 translate C Include {Zahrnout}

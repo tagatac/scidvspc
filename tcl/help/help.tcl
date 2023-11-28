@@ -2242,7 +2242,7 @@ set helpText(TreeMasks) {<h1>Tree Masks</h1>
   </p>
   <p>
   When a Mask is opened, the display of the Tree window changes. First of all,
-  all moves present in the mask are highlighted in purple.  Additionally, nags and
+  all moves present in the mask are highlighted in SteelBlue.  Additionally, nags and
   markers are shown in front of a move, and Comments concerning the move are
   shown afterwards.  Finally, the current postition may also hold a comment.
   </p>

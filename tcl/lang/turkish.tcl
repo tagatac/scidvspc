@@ -570,6 +570,8 @@ translate T SearchMask {Maskede ara}
 translate T DisplayMask {Ekran Maskesi}
 # ====== TODO To be translated ======
 translate T MaskShowMarkers "Show Markers"
+# ====== TODO To be translated ======
+translate T MaskShowToolTips {Show Tooltips}
 translate T Nag {Nag kodu}
 translate T Marker {İşaretleyici}
 translate T Include {Dahil et}

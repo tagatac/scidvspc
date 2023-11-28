@@ -590,6 +590,8 @@ translate U SearchMask {Pesquisar na máscara}
 translate U DisplayMask {Mostrar máscara}
 # ====== TODO To be translated ======
 translate U MaskShowMarkers "Show Markers"
+# ====== TODO To be translated ======
+translate U MaskShowToolTips {Show Tooltips}
 translate U Nag {Código Nag}
 translate U Marker {Marcador}
 translate U Include {Incluir}

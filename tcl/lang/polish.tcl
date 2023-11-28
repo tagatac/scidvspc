@@ -632,6 +632,8 @@ translate P SearchMask {Szukaj wedłu maski}
 translate P DisplayMask {Wyświetl maskę}
 # ====== TODO To be translated ======
 translate P MaskShowMarkers "Show Markers"
+# ====== TODO To be translated ======
+translate P MaskShowToolTips {Show Tooltips}
 translate P Nag {Kod NAG}
 translate P Marker {Znacznik}
 translate P Include {Dołącz}

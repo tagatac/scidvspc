@@ -229,7 +229,7 @@ proc ::tree::Open {{baseNumber 0}} {
   $w.f.tl tag configure greybg -background #fa1cfa1cfa1c
   $w.f.tl tag configure whitebg 
   $w.f.tl tag configure bluefg -foreground blue
-  $w.f.tl tag configure movefg -foreground purple2
+  $w.f.tl tag configure movefg -foreground SteelBlue
   $w.f.tl tag configure nextmove -background $::rowcolor
   #   $w.f.tl tag configure nextmove -foreground seagreen3
 
@@ -669,7 +669,9 @@ proc ::tree::displayLines {baseNumber moves} {
       set hasPositionComment 1
       set firstLine [ lindex [split $posComment "\n"] 0 ]
       $w.f.tl insert end "$firstLine\n" [ list bluefg tagtooltip_poscomment ]
-      ::utils::tooltip::SetTag $w.f.tl $posComment tagtooltip_poscomment
+      if {$::tree::mask::tooltips} {
+        ::utils::tooltip::SetTag $w.f.tl $posComment tagtooltip_poscomment
+      }
       $w.f.tl tag bind tagtooltip_poscomment <Double-Button-1> "::tree::mask::addComment {} $w"
       # Background colour ??
       # $w.f.tl tag configure tagtooltip_poscomment -background lightskyblue
@@ -719,7 +721,7 @@ proc ::tree::displayLines {baseNumber moves} {
         foreach j { 0 1 } {
           set img [::tree::mask::getImage $move $j]
           if {[catch {
-	    $w.f.tl image create end -image $img -align center
+            $w.f.tl image create end -image $img -align center
           }]} {
             $w.f.tl image create end -image ::tree::mask::emptyImage -align center
           }
@@ -790,10 +792,12 @@ proc ::tree::displayLines {baseNumber moves} {
       # Move comment
       set comment [::tree::mask::getComment $move]
       if {$comment != ""} {
-	set commentLength [string length $comment]
+        set commentLength [string length $comment]
         set firstLine [ lindex [split $comment "\n"] 0 ]
         $w.f.tl insert end " $firstLine" tagtooltip$i
-        ::utils::tooltip::SetTag $w.f.tl $comment tagtooltip$i
+        if {$::tree::mask::tooltips} {
+          ::utils::tooltip::SetTag $w.f.tl $comment tagtooltip$i
+        }
         # Actually its impossible to double click tooltips now, so this is unused
         $w.f.tl tag bind tagtooltip$i <Double-Button-1> "::tree::mask::op addComment 0 $move $w"
       }
@@ -856,9 +860,9 @@ proc ::tree::displayLines {baseNumber moves} {
           $w.f.tl image create end -image ::tree::mask::emptyImage -align center
         } else  {
           if {[catch {
-	    $w.f.tl image create end -image [lindex $m $j] -align center
+            $w.f.tl image create end -image [lindex $m $j] -align center
           }]} {
-	    $w.f.tl image create end -image ::tree::mask::emptyImage -align center
+            $w.f.tl image create end -image ::tree::mask::emptyImage -align center
           }
         }
       }
@@ -866,10 +870,10 @@ proc ::tree::displayLines {baseNumber moves} {
       # color tag
       set color [lindex $m 2]
       if {$color != "white" && $color != "White"} {
-	$w.f.tl tag configure color$idx -background $color
-	$w.f.tl insert end "  " [ list color$idx tagclick$idx ]
+        $w.f.tl tag configure color$idx -background $color
+        $w.f.tl insert end "  " [ list color$idx tagclick$idx ]
       } else {
-	$w.f.tl insert end "  " tagclick$idx
+        $w.f.tl insert end "  " tagclick$idx
       }
 
 
@@ -879,9 +883,9 @@ proc ::tree::displayLines {baseNumber moves} {
 
       # Move
       if {$maskmove == $nextmove} {
-	$w.f.tl insert end "[::trans $maskmove] " [ list movefg tagclick$idx nextmove ]
+        $w.f.tl insert end "[::trans $maskmove] " [ list movefg tagclick$idx nextmove ]
       } else {
-	$w.f.tl insert end "[::trans $maskmove] " [ list movefg tagclick$idx ]
+        $w.f.tl insert end "[::trans $maskmove] " [ list movefg tagclick$idx ]
       }
 
       # Comment
@@ -890,7 +894,9 @@ proc ::tree::displayLines {baseNumber moves} {
       set firstLine [ lindex [split $comment "\n"] 0 ]
       $w.f.tl insert end "$firstLine\n" tagtooltip$idx
       $w.f.tl tag bind tagtooltip$idx <Double-Button-1> "::tree::mask::op addComment 0 $maskmove $w"
-      ::utils::tooltip::SetTag $w.f.tl $comment tagtooltip$idx
+      if {$::tree::mask::tooltips} {
+        ::utils::tooltip::SetTag $w.f.tl $comment tagtooltip$idx
+      }
 
       # Trying to exntend bindings to the markers, doesnt work ???
       # $w.f.tl tag add tagclick$idx [expr $idx +1 + $hasPositionComment].0 "[expr $idx + 1 + $hasPositionComment].end - $commentLength chars"
@@ -1994,7 +2000,7 @@ proc ::tree::mask::contextMenu {control win move x y xc yc} {
   }
   
   menu $mctxt
-  $mctxt add command -label [tr AddToMask] -command [list ::tree::mask::op addToMask 1 $move]
+  $mctxt add command -label "[tr AddToMask] $move" -command [list ::tree::mask::op addToMask 1 $move]
   $mctxt add command -label [tr RemoveFromMask] -command [list ::tree::mask::op removeFromMask 1 $move]
 
   $mctxt add separator
@@ -2054,6 +2060,8 @@ proc ::tree::mask::contextMenu {control win move x y xc yc} {
       $mctxt entryconfigure $i -state disabled
     }
   }
+  $mctxt add separator
+  $mctxt add checkbutton -label [tr MaskShowToolTips] -variable ::tree::mask::tooltips -command ::tree::refresh
   # Adding a trailing Mask menu doesn't work ? - S.A.
   # $mctxt add separator
   # $mctxt add cascade -label [tr Mask] -menu .treeWin1.menu.mask

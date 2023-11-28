@@ -687,6 +687,8 @@ translate I DisplayMask {Display Mask}
 # ====== TODO To be translated ======
 translate I MaskShowMarkers "Show Markers"
 # ====== TODO To be translated ======
+translate I MaskShowToolTips {Show Tooltips}
+# ====== TODO To be translated ======
 translate I Nag {Nag code}
 # ====== TODO To be translated ======
 translate I Marker {Marker}

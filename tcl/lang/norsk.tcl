@@ -599,6 +599,8 @@ translate O SearchMask {Søk i maske}
 translate O DisplayMask {Vis maske}
 # ====== TODO To be translated ======
 translate O MaskShowMarkers "Show Markers"
+# ====== TODO To be translated ======
+translate O MaskShowToolTips {Show Tooltips}
 translate O Nag {Kvalitet}
 translate O Marker {Markør}
 translate O Include {Inkluder}

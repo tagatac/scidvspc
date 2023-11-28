@@ -685,6 +685,8 @@ translate H SearchMask {Search in Mask}
 translate H DisplayMask {Display Mask}
 # ====== TODO To be translated ======
 translate H MaskShowMarkers "Show Markers"
+# ====== TODO To be translated ======
+translate H MaskShowToolTips {Show Tooltips}
 translate H Nag {NAG-kód}
 translate H Marker {Jelölés}
 translate H Include {Belevesz}

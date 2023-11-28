@@ -652,6 +652,8 @@ translate S SearchMask {Buscar en máscara}
 translate S DisplayMask {Mostrar máscara}
 # ====== TODO To be translated ======
 translate S MaskShowMarkers "Show Markers"
+# ====== TODO To be translated ======
+translate S MaskShowToolTips {Show Tooltips}
 translate S Nag {Código de regaño}
 translate S Marker {Marcador}
 translate S Include {Incluir}

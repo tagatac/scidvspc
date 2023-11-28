@@ -710,6 +710,8 @@ translate B SearchMask {Pesquisar na máscara}
 translate B DisplayMask {Mostrar máscara}
 # ====== TODO To be translated ======
 translate B MaskShowMarkers "Show Markers"
+# ====== TODO To be translated ======
+translate B MaskShowToolTips {Show Tooltips}
 translate B Nag {Código Nag}
 translate B Marker {Marcador}
 translate B Include {Incluir}

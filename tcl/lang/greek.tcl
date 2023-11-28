@@ -657,6 +657,8 @@ translate G SearchMask {Αναζήτηση σε Μάσκα}
 translate G DisplayMask {Εμφάνιση Μάσκας}
 # ====== TODO To be translated ======
 translate G MaskShowMarkers "Show Markers"
+# ====== TODO To be translated ======
+translate G MaskShowToolTips {Show Tooltips}
 translate G Nag {Κωδικός Nag}
 translate G Marker {Σημάδι}
 translate G Include {Συμπερίλαβε}

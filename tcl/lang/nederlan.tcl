@@ -650,6 +650,8 @@ translate N SearchMask {Zoek in masker}
 translate N DisplayMask {Toon masker}
 # ====== TODO To be translated ======
 translate N MaskShowMarkers "Show Markers"
+# ====== TODO To be translated ======
+translate N MaskShowToolTips {Show Tooltips}
 translate N Nag {Nag code}
 translate N Marker {Aanwijzer}
 translate N Include {Invoegen}

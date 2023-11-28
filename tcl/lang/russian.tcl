@@ -618,6 +618,8 @@ translate R SearchMask {Поиск в маске}
 translate R DisplayMask {Показать маску}
 # ====== TODO To be translated ======
 translate R MaskShowMarkers "Show Markers"
+# ====== TODO To be translated ======
+translate R MaskShowToolTips {Show Tooltips}
 translate R Nag {Nag код}
 translate R Marker {Метка}
 translate R Include {Включать}
