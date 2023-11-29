@@ -1324,7 +1324,7 @@ translate D NameEditSelect {Welche Spiele sollen geändert werden?}
 translate D NameEditReplace {Ersetze}
 translate D NameEditWith {durch}
 translate D NameEditMatches {Entsprechungen: Drücke Strg+1 bis Strg+9 zum Auswählen}
-translate D MatchRegexp {Regulären Ausdruck abgleichen}
+translate D MatchPattern {Regulären Ausdruck abgleichen}
 
 # Check games window:
 

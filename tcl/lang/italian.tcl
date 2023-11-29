@@ -1469,7 +1469,7 @@ translate I NameEditReplace {Sostituisci}
 translate I NameEditWith {con}
 translate I NameEditMatches {Corrispondenze: Digita da Ctrl+1 ad Ctrl+9 per scegliere}
 # ====== TODO To be translated ======
-translate I MatchRegexp {Match Regular Expression}
+translate I MatchPattern {Match Pattern}
 # ====== TODO To be translated ======
 # ====== TODO To be translated ======
 # ====== TODO To be translated ======

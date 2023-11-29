@@ -1287,7 +1287,7 @@ translate E NameEditSelect {Games to Edit}
 translate E NameEditReplace {Replace}
 translate E NameEditWith {With}
 translate E NameEditMatches {Matches: Press Ctrl+1 to Ctrl+9 to select}
-translate E MatchRegexp {Match Regular Expression}
+translate E MatchPattern {Match Pattern}
 
 # Classify window:
 translate E Classify {Classify}

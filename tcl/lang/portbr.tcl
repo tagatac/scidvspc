@@ -1532,7 +1532,7 @@ translate B NameEditReplace {Substituir}
 translate B NameEditWith {com}
 translate B NameEditMatches {Confere: Pressione Ctrl+1 a Ctrl+9 para selecionar}
 # ====== TODO To be translated ======
-translate B MatchRegexp {Match Regular Expression}
+translate B MatchPattern {Match Pattern}
 
 
 

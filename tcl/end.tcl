@@ -57,8 +57,7 @@ proc findNovelty {} {
   label $w.status -text "" -width 1 -font font_Small -relief sunken -anchor w
   pack $w.status -side bottom -fill x
   pack [frame $w.b] -side top -fill x
-  dialogbutton $w.b.stop -textvar ::tr(Stop) -state disabled \
-      -command sc_progressBar
+  dialogbutton $w.b.stop -textvar ::tr(Stop) -state disabled -command sc_progressBar
   dialogbutton $w.b.go -text $::tr(FindNovelty) -command {
     .noveltyWin.b.stop configure -state normal
     .noveltyWin.b.go configure -state disabled
@@ -856,11 +855,11 @@ proc setNameEditorType {type} {
 proc nameEditor {{parent {}}} {
   global editName editNameType editNameNew editNameSelect
   global editNameRating editDate editDateNew
-  variable useRegexp
+  variable useStringMatch
 
   set w .nedit
   if {[winfo exists $w]} {
-    set useRegexp 0
+    set useStringMatch 0
     raiseWin $w
     return
   }
@@ -885,14 +884,13 @@ proc nameEditor {{parent {}}} {
           grid remove .nedit.g.rtype
           grid remove .nedit.g.fromD
           grid remove .nedit.g.toD
-          .nedit.g.regexp configure -state normal
           grid .nedit.g.toL -row 1 -column 1 -sticky e
           .nedit.g.fromL configure -textvar ::tr(NameEditReplace)
           grid .nedit.g.fromE -row 0 -column 2 -sticky w
           grid .nedit.g.toE -row 1 -column 2 -sticky w
           set editName {}
           set editNameNew {}
-	  set useRegexp 0
+	  set useStringMatch 0
           checkNeditReplace
         }
     pack $w.typeButtons.$j -side left -padx 5
@@ -903,11 +901,11 @@ proc nameEditor {{parent {}}} {
         grid remove .nedit.g.toL
         grid remove .nedit.g.fromD
         grid remove .nedit.g.toD
-        .nedit.g.regexp configure -state normal
         .nedit.g.fromL configure -textvar ::tr(Player)
         grid .nedit.g.fromE -row 0 -column 2 -sticky w
         grid .nedit.g.rtype -row 1 -column 0 -columnspan 2 -sticky e -padx 5
         grid .nedit.g.ratingE -row 1 -column 2 -sticky w
+        set useStringMatch 0
         checkNeditReplace
       }
   radiobutton $w.typeButtons.date -textvar ::tr(Date) -variable editNameType \
@@ -916,12 +914,11 @@ proc nameEditor {{parent {}}} {
         grid remove .nedit.g.fromE
         grid remove .nedit.g.ratingE
         grid remove .nedit.g.rtype
-        .nedit.g.regexp configure -state disabled
-        .nedit.g.fromL configure -textvar ::tr(NameEditReplace)
         .nedit.g.fromL configure -textvar ::tr(NameEditReplace)
         grid .nedit.g.fromD -row 0 -column 2 -sticky w
         grid .nedit.g.toL -row 1 -column 1 -sticky e
         grid .nedit.g.toD -row 1 -column 2 -sticky w
+        set useStringMatch 0
         checkNeditReplace
       }
   radiobutton $w.typeButtons.edate -textvar ::tr(EventDate) \
@@ -931,11 +928,11 @@ proc nameEditor {{parent {}}} {
         grid remove .nedit.g.fromE
         grid remove .nedit.g.ratingE
         grid remove .nedit.g.rtype
-        .nedit.g.regexp configure -state disabled
         .nedit.g.fromL configure -textvar ::tr(NameEditReplace)
         grid .nedit.g.fromD -row 0 -column 2 -sticky w
         grid .nedit.g.toL -row 1 -column 1 -sticky e
         grid .nedit.g.toD -row 1 -column 2 -sticky w
+        set useStringMatch 0
         checkNeditReplace
       }
   pack $w.typeButtons.rating $w.typeButtons.date $w.typeButtons.edate \
@@ -974,9 +971,9 @@ proc nameEditor {{parent {}}} {
   eval tk_optionMenu $w.g.rtype editNameRType [sc_info ratings]
   $w.g.rtype configure -pady 2 -relief flat
 
-  set useRegexp 0
-  checkbutton $w.g.regexp -textvar ::tr(MatchRegexp) -variable useRegexp -font font_Tiny
-  grid $w.g.regexp -row 2 -column 1 -columnspan 2 -padx 10
+  set useStringMatch 0
+  checkbutton $w.g.stringmatch -textvar ::tr(MatchPattern) -variable useStringMatch -font font_Tiny
+  grid $w.g.stringmatch -row 2 -column 1 -columnspan 2 -padx 10
   
   text $w.g.list -height 9 -width 40 -relief sunken -tabs {2c left} -wrap none
 
@@ -999,11 +996,11 @@ proc nameEditor {{parent {}}} {
   frame $w.buttons
   dialogbutton $w.buttons.replace -textvar ::tr(NameEditReplace) -command {
     if {$editNameType == "rating"} {
-      set err [catch {sc_name edit $editNameType $editNameSelect $editName $editNameRating $editNameRType $useRegexp} result]
+      set err [catch {sc_name edit $editNameType $editNameSelect $editName $editNameRating $editNameRType $useStringMatch} result]
     } elseif {$editNameType == "date"  ||  $editNameType == "edate"} {
-      set err [catch {sc_name edit $editNameType $editNameSelect $editDate $editDateNew $useRegexp} result]
+      set err [catch {sc_name edit $editNameType $editNameSelect $editDate $editDateNew $useStringMatch} result]
     } else {
-      set err [catch {sc_name edit $editNameType $editNameSelect $editName $editNameNew $useRegexp} result]
+      set err [catch {sc_name edit $editNameType $editNameSelect $editName $editNameNew $useStringMatch} result]
       # Refresh Player Info if old player name matches
       if {$editNameType == "player" && [winfo exists .playerInfoWin] && $playerInfoName == $editName} {
         playerInfo $editNameNew

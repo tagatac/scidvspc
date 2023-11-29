@@ -2473,14 +2473,10 @@ set helpText(Maintenance) {<h1>Database Maintenance</h1>
 perform a <a Compact>namebase compaction</a>.
   </p>
   <p>
-  <i><url https://en.wikibooks.org/wiki/Regular_Expressions/POSIX_Basic_Regular_Expressions>Regular Expressions</url> (wrapped in line-start and line-end, to match the whole name) may be used instead of exact Name matches for some fields. Please use with caution as these operators are complex and potentially destructive. EG if you input ".*" , the full regexp used will be "^.*$" .
-  </i></p>
-  <p>
-  Additionally, a single asterisk '*' may be used to match <b>any</b> name. This global substitution is only available for 
-  the Event, Site, Round and date names - not the Player or Rating.
+  <b>Simple TCL Pattern Matching</b> (using * ? \ [ ] characters) may be used instead of exact Name matches for some fields. <b>Please use with caution</b>. A single asterisk (which matches any name, including empty ones) is not available for Player or Rating edits. Additionally, only '*' will match Date fields.
   </p>
   <p>
-  Date and Eventdate fields must be of the form YYYY.MM.DD (year, month, day). A single '?' will match blank fields. Eventdates cannot exist without a valid Date entry, and must also be within 3 years of this Date.
+  Date and Eventdate fields must be of the form YYYY.MM.DD (year, month, day). A single '?' or '*' will match blank fields. Eventdates cannot exist without a valid Date entry, and must also be within 3 years of this Date.
   </p>
   <p>
   <i>Please take care when using the Name Editor. Changes are not undoable if the new name already exists. There is also a safety mechanism - Using '*' is not allowed with 'All games in database'.</i>

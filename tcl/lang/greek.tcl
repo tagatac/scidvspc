@@ -1413,7 +1413,7 @@ translate G NameEditReplace {Αντικατάσταση}
 translate G NameEditWith {Με}
 translate G NameEditMatches {Ομοιότητες: Πατήστε Ctrl+1 έως Ctrl+9 για επιλογή}
 # ====== TODO To be translated ======
-translate G MatchRegexp {Match Regular Expression}
+translate G MatchPattern {Match Pattern}
 
 # Check games window:
 

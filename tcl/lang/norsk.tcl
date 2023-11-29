@@ -1316,7 +1316,7 @@ translate O NameEditReplace {Erstatt}
 translate O NameEditWith {med}
 translate O NameEditMatches {Treff: Trykk Ctrl+1 til Ctrl+9 for å velge}
 # ====== TODO To be translated ======
-translate O MatchRegexp {Match Regular Expression}
+translate O MatchPattern {Match Pattern}
 
 # Classify window:
 translate O Classify {Klassifiser}

@@ -1299,7 +1299,7 @@ translate F NameEditReplace {Remplacer}
 translate F NameEditWith {avec}
 translate F NameEditMatches {Correspondances: Presser Alt+1 à Alt+9 pour sélectionner}
 # ====== TODO To be translated ======
-translate F MatchRegexp {Match Regular Expression}
+translate F MatchPattern {Match Pattern}
 
 # Classify window:
 translate F Classify {Classer}

@@ -1496,7 +1496,7 @@ translate C NameEditReplace {Nahradit}
 translate C NameEditWith {}
 translate C NameEditMatches {Shoduje se: Stiskni Ctrl+1 a¾ Ctrl+9 pro výbìr}
 # ====== TODO To be translated ======
-translate C MatchRegexp {Match Regular Expression}
+translate C MatchPattern {Match Pattern}
 # ====== TODO To be translated ======
 # ====== TODO To be translated ======
 # ====== TODO To be translated ======

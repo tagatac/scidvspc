@@ -1300,7 +1300,7 @@ translate U NameEditReplace {Substituir}
 translate U NameEditWith {com}
 translate U NameEditMatches {Confere: Pressione Ctrl+1 a Ctrl+9 para selecionar}
 # ====== TODO To be translated ======
-translate U MatchRegexp {Match Regular Expression}
+translate U MatchPattern {Match Pattern}
 
 # Classify window:
 translate U Classify {Classificar}

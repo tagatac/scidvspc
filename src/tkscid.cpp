@@ -30,7 +30,6 @@
 #include <unordered_set>
 
 #include "charsetconverter.h"
-#include <regex.h>        
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Global variables:
@@ -12110,7 +12109,7 @@ sc_name_correct (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 int
 sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
-    const char * usage = "Usage: sc_name edit <type> <editSelection> <oldName> <newName> <useRegexp>";
+    const char * usage = "Usage: sc_name edit <type> <editSelection> <oldName> <newName> <useStringMatch>";
 
     if (!db->inUse) {
         return errorResult (ti, errMsgNotOpen(ti));
@@ -12160,7 +12159,7 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     const char * oldName = argv[4];
     const char * newName = argv[5];
-    bool useRegexp;
+    bool useStringMatch;
     dateT oldDate = ZERO_DATE;
     dateT newDate = ZERO_DATE;
     eloT newRating = 0;
@@ -12168,18 +12167,18 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     if (option == OPT_RATING) {
         newRating = strGetUnsigned (argv[5]);
         newRatingType = strGetRatingType (argv[6]);
-        useRegexp =  strGetBoolean (argv[7]);
+        useStringMatch =  strGetBoolean (argv[7]);
     } else {
-        useRegexp =  strGetBoolean (argv[6]);
+        useStringMatch =  strGetBoolean (argv[6]);
     }
 
-    if (option == OPT_DATE  ||  option == OPT_EVENTDATE) {
+    if (option == OPT_DATE || option == OPT_EVENTDATE) {
         oldDate = date_EncodeFromString (argv[4]);
         newDate = date_EncodeFromString (argv[5]);
     }
 
-    // "*" will match anything, without using regex
-    bool glob = ((option == OPT_DATE ||  option == OPT_EVENTDATE || useRegexp) && oldName[0]=='*' && oldName[1]==0);
+    bool glob = ((option == OPT_DATE || option == OPT_EVENTDATE || useStringMatch) && oldName[0]=='*' && oldName[1]==0);
+    int match;
 
     // Find the existing name in the namebase:
     idNumberT oldID = 0;
@@ -12190,30 +12189,14 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
       return TCL_ERROR;
     }
     if (glob && editSelection == EDIT_ALL) {
-      Tcl_AppendResult (ti, "Using '*' to match field names is potentially harmful, and not allowed with 'All games'." , NULL);
+      Tcl_AppendResult (ti, "Using '*' to match names is potentially harmful, and not allowed with 'All games'." , NULL);
       return TCL_ERROR;
-    }
-
-    regex_t regex;
-    char regExp[255];
-    int regex_int;
-
-    // Must make sure to not call regexec if glob, as regex is unset
-    if (useRegexp && !glob) {
-      // Wrap the reg expression into ^,$ to match start and end of line - otherwise too dangerous.
-      sprintf (regExp, "%s%s%s", "^", oldName, "$");
-      /* Compile regular expression */
-      regex_int = regcomp(&regex, regExp, REG_NEWLINE);
-      if (regex_int) {
-	Tcl_AppendResult (ti, "Regular expression compilation failed." , NULL);
-	return TCL_ERROR;
-      }
     }
 
     // Not very useful check but ....
 
-    // skip this check is we are globbing or useRegexp, or the field is DATE or EVENT_DATE
-    if (option != OPT_DATE  &&  option != OPT_EVENTDATE && ! glob && ! useRegexp) {
+    // skip this check is we useStringMatch or option == OPT_DATE ||  option == OPT_EVENTDATE
+    if (! useStringMatch && option != OPT_DATE && option != OPT_EVENTDATE) {
         if (db->nb->FindExactName (nt, oldName, &oldID) != OK) {
             Tcl_AppendResult (ti, "The ", NAME_TYPE_STRING[nt], " name \"", oldName, "\" does not exist.", NULL);
             return TCL_ERROR;
@@ -12279,16 +12262,16 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         switch (option) {
         case OPT_PLAYER:
           // no globbing allowed
-          if (useRegexp) {
-            regex_int = regexec(&regex, db->nb->GetName (NAME_PLAYER, ie->GetWhite()), 0, NULL, 0);
-	    if (!regex_int) {
+          if (useStringMatch) {
+            match = Tcl_StringMatch(db->nb->GetName (NAME_PLAYER, ie->GetWhite()), oldName);
+	    if (match) {
 		newIE.SetWhite (newID);
 		edits++;
 		oldID = ie->GetWhite();
             } else {
               // Can't match both white and black in same iteration as no way to decrement both oldIDs
-	      regex_int = regexec(&regex, db->nb->GetName (NAME_PLAYER, ie->GetBlack()), 0, NULL, 0);
-	      if (!regex_int) {
+	      match = Tcl_StringMatch(db->nb->GetName (NAME_PLAYER, ie->GetBlack()), oldName);
+	      if (match) {
 		  newIE.SetBlack (newID);
                   edits++;
                   oldID = ie->GetBlack();
@@ -12308,13 +12291,9 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
         case OPT_EVENT:
 
-            if (glob) {
-                newIE.SetEvent(newID);
-                edits++;
-                oldID = ie->GetEvent();
-            } else if (useRegexp) {
-                regex_int = regexec(&regex, db->nb->GetName (NAME_EVENT, ie->GetEvent()), 0, NULL, 0);
-                if (!regex_int) {
+            if (useStringMatch) {
+                match = Tcl_StringMatch(db->nb->GetName (NAME_EVENT, ie->GetEvent()), oldName);
+                if (match) {
                     newIE.SetEvent(newID);
                     edits++;
                     oldID = ie->GetEvent();
@@ -12327,13 +12306,9 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             break;
 
         case OPT_SITE:
-            if (glob) {
-                newIE.SetSite(newID);
-                edits++;
-                oldID = ie->GetSite();
-            } else if (useRegexp) {
-                regex_int = regexec(&regex, db->nb->GetName (NAME_SITE, ie->GetSite()), 0, NULL, 0);
-                if (!regex_int) {
+            if (useStringMatch) {
+                match = Tcl_StringMatch(db->nb->GetName (NAME_SITE, ie->GetSite()), oldName);
+                if (match) {
                     newIE.SetSite(newID);
                     edits++;
                     oldID = ie->GetSite();
@@ -12346,13 +12321,9 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
         case OPT_ROUND:
 
-            if (glob) {
-                newIE.SetRound(newID);
-                edits++;
-                oldID = ie->GetRound();
-            } else if (useRegexp) {
-                regex_int = regexec(&regex, db->nb->GetName (NAME_ROUND, ie->GetRound()), 0, NULL, 0);
-                if (!regex_int) {
+            if (useStringMatch) {
+                match = Tcl_StringMatch(db->nb->GetName (NAME_ROUND, ie->GetRound()), oldName);
+                if (match) {
                     newIE.SetRound(newID);
                     edits++;
                     oldID = ie->GetRound();
@@ -12379,15 +12350,15 @@ sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
         case OPT_RATING:
             // no globbing allowed
-            if (useRegexp) {
-              regex_int = regexec(&regex, db->nb->GetName (NAME_PLAYER, ie->GetWhite()), 0, NULL, 0);
-              if (!regex_int) {
+            if (useStringMatch) {
+              match = Tcl_StringMatch(db->nb->GetName (NAME_PLAYER, ie->GetWhite()), oldName);
+              if (match) {
                   newIE.SetWhiteElo (newRating);
                   newIE.SetWhiteRatingType (newRatingType);
                   edits++;
               }
-              regex_int = regexec(&regex, db->nb->GetName (NAME_PLAYER, ie->GetBlack()), 0, NULL, 0);
-              if (!regex_int) {
+              match = Tcl_StringMatch(db->nb->GetName (NAME_PLAYER, ie->GetBlack()), oldName);
+              if (match) {
                   newIE.SetBlackElo (newRating);
                   newIE.SetBlackRatingType (newRatingType);
                   edits++;

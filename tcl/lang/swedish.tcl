@@ -1400,7 +1400,7 @@ translate W NameEditReplace {Ersätt}
 translate W NameEditWith {med}
 translate W NameEditMatches {Matchar: Tryck Ctrl+1 till Ctrl+9 för att välja}
 # ====== TODO To be translated ======
-translate W MatchRegexp {Match Regular Expression}
+translate W MatchPattern {Match Pattern}
 
 # Classify window:
 translate W Classify {Klassificera}

@@ -1299,7 +1299,7 @@ translate T NameEditReplace {değiştir}
 translate T NameEditWith {İle}
 translate T NameEditMatches {Eşleşmeler: Seçmek için Ctrl + 1 ile Ctrl + 9 tuşlarına basın.}
 # ====== TODO To be translated ======
-translate T MatchRegexp {Match Regular Expression}
+translate T MatchPattern {Match Pattern}
 
 # Check games window:
 
