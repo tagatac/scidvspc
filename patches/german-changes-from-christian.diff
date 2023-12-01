@@ -1,8 +1,8 @@
 Index: src/namebase.h
 ===================================================================
---- src/namebase.h	(revision 3386)
+--- src/namebase.h	(revision 3396)
 +++ src/namebase.h	(working copy)
-@@ -33,8 +33,8 @@
+@@ -33,10 +33,10 @@
  const uint NUM_NAME_TYPES = 4;
  
  const char NAME_TYPE_STRING [NUM_NAME_TYPES][8] = {
@@ -15,9 +15,11 @@ Index: src/namebase.h
 +    "Ort",
 +    "Runde"
  };
+ 
+ 
 Index: src/pgnparse.cpp
 ===================================================================
---- src/pgnparse.cpp	(revision 3386)
+--- src/pgnparse.cpp	(revision 3396)
 +++ src/pgnparse.cpp	(working copy)
 @@ -376,7 +376,7 @@
              value[length-7] = 0;
@@ -189,9 +191,9 @@ Index: src/pgnparse.cpp
              err = OK;
 Index: src/tkscid.cpp
 ===================================================================
---- src/tkscid.cpp	(revision 3394)
+--- src/tkscid.cpp	(revision 3399)
 +++ src/tkscid.cpp	(working copy)
-@@ -51,7 +51,7 @@
+@@ -50,7 +50,7 @@
  static const uint REPORT_OPENING = 0;
  static const uint REPORT_PLAYER = 1;
  
@@ -200,7 +202,7 @@ Index: src/tkscid.cpp
  static uint htmlDiagStyle = 0;
  
  // Default maximum number of games in the clipbase database:
-@@ -89,8 +89,8 @@
+@@ -88,8 +88,8 @@
                  const char ** minorCmds)
  {
      ASSERT (majorCmd != NULL);
@@ -211,7 +213,7 @@ Index: src/tkscid.cpp
      while (*minorCmds != NULL) {
          Tcl_AppendResult (ti, "   ", *minorCmds, "\n", NULL);
          minorCmds++;
-@@ -330,7 +330,7 @@
+@@ -329,7 +329,7 @@
  const char *
  errMsgNotOpen (Tcl_Interp * ti)
  {
@@ -220,7 +222,7 @@ Index: src/tkscid.cpp
  }
  
  const char *
-@@ -337,7 +337,7 @@
+@@ -336,7 +336,7 @@
  errMsgReadOnly (Tcl_Interp * ti)
  {
      return translate (ti, "ErrReadOnly",
@@ -229,7 +231,7 @@ Index: src/tkscid.cpp
  }
  
  const char *
-@@ -344,7 +344,7 @@
+@@ -343,7 +343,7 @@
  errMsgSearchInterrupted (Tcl_Interp * ti)
  {
      return translate (ti, "ErrSearchInterrupted",
@@ -238,7 +240,7 @@ Index: src/tkscid.cpp
  }
  
  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-@@ -494,7 +494,7 @@
+@@ -493,7 +493,7 @@
      clipbase->gfile->CreateMemoryOnly();
      clipbase->idx->CreateMemoryOnly();
      clipbase->idx->SetType (2);
@@ -247,7 +249,7 @@ Index: src/tkscid.cpp
      clipbase->inUse = true;
      clipbase->memoryOnly = true;
  
-@@ -549,7 +549,7 @@
+@@ -548,7 +548,7 @@
  str_is_prefix (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -256,7 +258,7 @@ Index: src/tkscid.cpp
      }
  
      return setBoolResult (ti, strIsPrefix (argv[1], argv[2]));
-@@ -563,7 +563,7 @@
+@@ -562,7 +562,7 @@
  str_prefix_len (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -265,7 +267,7 @@ Index: src/tkscid.cpp
      }
  
      return setUintResult (ti, strPrefix (argv[1], argv[2]));
-@@ -715,7 +715,7 @@
+@@ -714,7 +714,7 @@
                  // Querying if base argv[2] is read-only
  	        baseNum = strGetInteger (argv[2]);
  		if (baseNum < 1 || baseNum > MAX_BASES) {
@@ -274,7 +276,7 @@ Index: src/tkscid.cpp
  		}
  		basePtr = &(dbList[baseNum - 1]);
  
-@@ -728,11 +728,11 @@
+@@ -727,11 +727,11 @@
                basePtr = db;
  	    } else {
                if (argc != 4 || !strEqual (argv[2], "set")) {
@@ -288,7 +290,7 @@ Index: src/tkscid.cpp
  	      }
  	      basePtr = &(dbList[baseNum - 1]);
              }
-@@ -741,10 +741,10 @@
+@@ -740,10 +740,10 @@
                  return errorResult (ti, errMsgNotOpen(ti));
              }
              if (basePtr->fileMode == FMODE_ReadOnly) {
@@ -301,7 +303,7 @@ Index: src/tkscid.cpp
              }
              basePtr->fileMode = FMODE_ReadOnly;
              return TCL_OK;
-@@ -833,7 +833,7 @@
+@@ -832,7 +832,7 @@
      if (argc > 2) {
          int baseNum = strGetInteger (argv[2]);
          if (baseNum < 1 || baseNum > MAX_BASES) {
@@ -310,7 +312,7 @@ Index: src/tkscid.cpp
          }
          basePtr = &(dbList[baseNum - 1]);
      }
-@@ -850,15 +850,15 @@
+@@ -849,15 +849,15 @@
      if (argc > 2) {
          int baseNum = strGetInteger (argv[2]);
          if (baseNum < 1 || baseNum > MAX_BASES) {
@@ -329,7 +331,7 @@ Index: src/tkscid.cpp
      } else {
          Tcl_AppendResult (ti, basePtr->fileName, NULL);
      }
-@@ -876,7 +876,7 @@
+@@ -875,7 +875,7 @@
      if (argc > 2) {
          int baseNum = strGetInteger (argv[2]);
          if (baseNum < 1 || baseNum > MAX_BASES) {
@@ -338,7 +340,7 @@ Index: src/tkscid.cpp
          }
          basePtr = &(dbList[baseNum - 1]);
      }
-@@ -898,7 +898,7 @@
+@@ -897,7 +897,7 @@
  sc_base_slot (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -347,7 +349,7 @@ Index: src/tkscid.cpp
      }
      fileNameT fname;
      strCopy (fname, argv[2]);
-@@ -943,7 +943,7 @@
+@@ -942,7 +942,7 @@
  
      bool readOnly = false;  // Open database read-only.
      bool fastOpen = false;  // Fast open (no flag counts, etc)
@@ -356,7 +358,7 @@ Index: src/tkscid.cpp
  
      // Check options:
      const char * options[] = { "-fast", "-readonly", NULL };
-@@ -967,7 +967,7 @@
+@@ -966,7 +966,7 @@
      strCopy (realFileName, filename);
      strAppend (realFileName, INDEX_SUFFIX);
      if (base_opened (realFileName) >= 0) {
@@ -365,7 +367,7 @@ Index: src/tkscid.cpp
      }
  
      // Find an empty database slot to use:
-@@ -975,7 +975,7 @@
+@@ -974,7 +974,7 @@
      if (db->inUse) {
          int newBaseNum = findEmptyBase();
          if (newBaseNum == -1) {
@@ -374,7 +376,7 @@ Index: src/tkscid.cpp
          }
          currentBase = newBaseNum;
          db = &(dbList[currentBase]);
-@@ -1002,12 +1002,12 @@
+@@ -1001,12 +1001,12 @@
      if (err != OK) {
          currentBase = oldBaseNum;
          db = &(dbList[currentBase]);
@@ -390,7 +392,7 @@ Index: src/tkscid.cpp
          }
          return TCL_ERROR;
      }
-@@ -1014,7 +1014,7 @@
+@@ -1013,7 +1013,7 @@
  
      if (db->nb->ReadNameFile() != OK) {
          base_open_failure(oldBaseNum);
@@ -399,7 +401,7 @@ Index: src/tkscid.cpp
      }
  
      err = db->gfile->Open (filename, db->fileMode);
-@@ -1026,7 +1026,7 @@
+@@ -1025,7 +1025,7 @@
  
      if (err != OK) {
          base_open_failure(oldBaseNum);
@@ -408,7 +410,7 @@ Index: src/tkscid.cpp
      }
  
      // Read entire index, showing progress every 20,000 games if applicable:
-@@ -1038,7 +1038,7 @@
+@@ -1037,7 +1037,7 @@
  
      if (db->idx->VerifyFile (db->nb) != OK) {
          db->idx->CloseIndexFile();
@@ -417,7 +419,7 @@ Index: src/tkscid.cpp
      }
  
      db->numGames = db->idx->GetNumGames();
-@@ -1095,17 +1095,17 @@
+@@ -1094,17 +1094,17 @@
  
      } else {
          if (base->idx->CreateIndexFile (FMODE_Both) != OK) {
@@ -438,7 +440,7 @@ Index: src/tkscid.cpp
          }
      }
  
-@@ -1139,7 +1139,7 @@
+@@ -1138,7 +1138,7 @@
  {
      // argc should be 3 or 4, e.g. "sc_base create <myfile> [<boolean>]"
      if (argc != 3  &&  argc != 4) {
@@ -447,7 +449,7 @@ Index: src/tkscid.cpp
      }
      bool memoryOnly = false;
      if (argc == 4) {
-@@ -1148,7 +1148,7 @@
+@@ -1147,7 +1147,7 @@
  
      // Check that this base is not already opened:
      if (base_opened (argv[2]) >= 0) {
@@ -456,7 +458,7 @@ Index: src/tkscid.cpp
      }
  
      // Find another slot if current slot is used:
-@@ -1156,7 +1156,7 @@
+@@ -1155,7 +1155,7 @@
      if (db->inUse) {
          newBaseNum = findEmptyBase();
          if (newBaseNum == -1) {
@@ -465,7 +467,7 @@ Index: src/tkscid.cpp
          }
      }
  
-@@ -1188,7 +1188,7 @@
+@@ -1187,7 +1187,7 @@
      if (argc > 2) {
          int baseNum = strGetInteger (argv[2]);
          if (baseNum < 1 || baseNum > MAX_BASES) {
@@ -474,7 +476,7 @@ Index: src/tkscid.cpp
          }
          basePtr = &(dbList[baseNum - 1]);
      }
-@@ -1238,7 +1238,7 @@
+@@ -1237,7 +1237,7 @@
          optionMode = strUniqueMatch (argv[2], options);
  
          if (optionMode < OPT_FREE || argc > 3) {
@@ -483,7 +485,7 @@ Index: src/tkscid.cpp
          }
      }
  
-@@ -1260,7 +1260,7 @@
+@@ -1259,7 +1259,7 @@
  sc_base_description (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc < 2  ||  argc > 3) {
@@ -492,7 +494,7 @@ Index: src/tkscid.cpp
      }
      if (argc == 2) {
          // Get description:
-@@ -1292,7 +1292,7 @@
+@@ -1291,7 +1291,7 @@
      bool limitToFilter = false;
  
      if (argc != 3) {
@@ -501,7 +503,7 @@ Index: src/tkscid.cpp
      }
  
      Game *g = new Game();
-@@ -1406,7 +1406,7 @@
+@@ -1405,7 +1405,7 @@
      gameFormatT outputFormat = PGN_FORMAT_Plain;
      const char * startText = "";
      const char * endText = "";
@@ -510,7 +512,7 @@ Index: src/tkscid.cpp
      uint pgnStyle = PGN_STYLE_TAGS;
  
      const char * options[] = {
-@@ -1517,7 +1517,7 @@
+@@ -1516,7 +1516,7 @@
      }
      exportFile = fopen (exportFileName, (appendToFile ? "r+" : "w"));
      if (exportFile == NULL) {
@@ -519,7 +521,7 @@ Index: src/tkscid.cpp
      }
  
      CharsetConverter* charsetConverter = NULL;
-@@ -1632,7 +1632,7 @@
+@@ -1631,7 +1631,7 @@
  int
  sc_base_import (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -528,7 +530,7 @@ Index: src/tkscid.cpp
      static const char * options[] = { "data", "file", NULL };
      enum { IMPORT_OPT_DATA, IMPORT_OPT_FILE };
  
-@@ -1655,7 +1655,7 @@
+@@ -1654,7 +1654,7 @@
  
      if (index == IMPORT_OPT_FILE) {
          if (pgnFile.Open (argv[3], FMODE_ReadOnly) != OK) {
@@ -537,7 +539,7 @@ Index: src/tkscid.cpp
          }
          parser.Reset (&pgnFile);
          inputLength = fileSize (argv[3], "");
-@@ -1680,7 +1680,7 @@
+@@ -1679,7 +1679,7 @@
            recalcFlagCounts (db);
            if (! db->memoryOnly) removeFile (db->fileName, TREEFILE_SUFFIX);
  
@@ -546,7 +548,7 @@ Index: src/tkscid.cpp
            return TCL_ERROR;
          }
          // Update the progress bar:
-@@ -1696,11 +1696,11 @@
+@@ -1695,11 +1695,11 @@
  
      // Now write the Index file header and the name file:
      if (db->idx->WriteHeader() != OK) {
@@ -560,7 +562,7 @@ Index: src/tkscid.cpp
          }
      }
  
-@@ -1728,7 +1728,7 @@
+@@ -1727,7 +1727,7 @@
      bool showProgress = startProgressBar();
  
      const char * usage =
@@ -569,7 +571,7 @@ Index: src/tkscid.cpp
  
      if (argc < 5) {
          return errorResult (ti, usage);
-@@ -1922,10 +1922,10 @@
+@@ -1921,10 +1921,10 @@
      bool showProgress = startProgressBar();
  
      if (argc < 3 || argc > 4) {
@@ -582,7 +584,7 @@ Index: src/tkscid.cpp
      }
      if (! db->inUse) {
          return errorResult (ti, errMsgNotOpen(ti));
-@@ -1944,7 +1944,7 @@
+@@ -1943,7 +1943,7 @@
      // if (status == ERROR )
      // ERROR define seems broken with mingwx
      if (status != OK ) {
@@ -591,7 +593,7 @@ Index: src/tkscid.cpp
      }
  
      if (showProgress) { updateProgressBar (ti, 1, 1); }
-@@ -2030,7 +2030,7 @@
+@@ -2029,7 +2029,7 @@
      if (argc > 3) {
          int baseNum = strGetInteger (argv[3]);
          if (baseNum < 1 || baseNum > MAX_BASES) {
@@ -600,7 +602,7 @@ Index: src/tkscid.cpp
          }
          basePtr = &(dbList[baseNum - 1]);
      }
-@@ -2085,7 +2085,7 @@
+@@ -2084,7 +2084,7 @@
  sc_base_ecoStats (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -609,7 +611,7 @@ Index: src/tkscid.cpp
      }
      const char * eco = argv[2];
      uint length = strLength (eco);
-@@ -2115,7 +2115,7 @@
+@@ -2114,7 +2114,7 @@
          }
      }
      if (invalid) {
@@ -618,7 +620,7 @@ Index: src/tkscid.cpp
      }
  
      ecoStatsT * result = NULL;
-@@ -2164,7 +2164,7 @@
+@@ -2163,7 +2163,7 @@
  sc_base_switch (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -627,7 +629,7 @@ Index: src/tkscid.cpp
      }
      int baseNum = strGetInteger (argv[2]);
      if (tolower(argv[2][0]) == 'c'  &&  strIsCasePrefix (argv[2], "clipbase")) {
-@@ -2195,12 +2195,12 @@
+@@ -2194,12 +2194,12 @@
  sc_base_type (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3  &&  argc != 4) {
@@ -642,7 +644,7 @@ Index: src/tkscid.cpp
      }
      scidBaseT * basePtr = &(dbList[baseNum - 1]);
  
-@@ -2419,7 +2419,7 @@
+@@ -2418,7 +2418,7 @@
      bool showProgress = startProgressBar();
  
      if ((argc % 2) != 0) {
@@ -651,7 +653,7 @@ Index: src/tkscid.cpp
      }
      if (! db->inUse) {
          return errorResult (ti, errMsgNotOpen(ti));
-@@ -2505,7 +2505,7 @@
+@@ -2504,7 +2504,7 @@
                  } else if (strIsCasePrefix (valueStr, "newer")) {
                      deleteStrategy = DELETE_NEWER;
                  } else {
@@ -660,7 +662,7 @@ Index: src/tkscid.cpp
                  }
                  break;
              default:
-@@ -2685,7 +2685,7 @@
+@@ -2684,7 +2684,7 @@
  int
  sc_base_tag (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -669,7 +671,7 @@ Index: src/tkscid.cpp
      const char * options[] = {
          "find", "list", "strip", NULL
      };
-@@ -2794,10 +2794,10 @@
+@@ -2793,10 +2793,10 @@
      if (cmd == TAG_STRIP  &&  nEditedGames > 0) {
          db->gfile->FlushAll();
          if (db->idx->WriteHeader() != OK) {
@@ -682,7 +684,7 @@ Index: src/tkscid.cpp
          }
      }
  
-@@ -3207,7 +3207,7 @@
+@@ -3206,7 +3206,7 @@
  int
  sc_base_tournaments (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -691,7 +693,7 @@ Index: src/tkscid.cpp
  
      uint i;
      uint maxTourneys = 100;
-@@ -3452,7 +3452,7 @@
+@@ -3451,7 +3451,7 @@
      bool showProgress = startProgressBar();
  
      if (argc != 3) {
@@ -700,7 +702,7 @@ Index: src/tkscid.cpp
      }
      const char * fname = argv[2];
      Index * oldIndex = new Index;
-@@ -3465,13 +3465,13 @@
+@@ -3464,13 +3464,13 @@
          newIndex->CloseIndexFile();
          delete oldIndex;
          delete newIndex;
@@ -716,7 +718,7 @@ Index: src/tkscid.cpp
      }
  
      if (newIndex->CreateIndexFile (FMODE_WriteOnly) != OK) {
-@@ -3478,7 +3478,7 @@
+@@ -3477,7 +3477,7 @@
          oldIndex->CloseIndexFile();
          delete oldIndex;
          delete newIndex;
@@ -725,7 +727,7 @@ Index: src/tkscid.cpp
      }
  
      MFile * oldMFile = oldIndex->GetMFile();
-@@ -3535,7 +3535,7 @@
+@@ -3534,7 +3534,7 @@
      newIndex->CloseIndexFile(true); // don't write again the header
  
      if (err == OK  &&  !interruptedProgress()) {
@@ -734,7 +736,7 @@ Index: src/tkscid.cpp
      }
  
      delete oldIndex;
-@@ -3543,7 +3543,7 @@
+@@ -3542,7 +3542,7 @@
  
      if (interruptedProgress()) {
          removeFile (fname, INDEX_SUFFIX);
@@ -743,7 +745,7 @@ Index: src/tkscid.cpp
      }
  
      if (err != OK) {
-@@ -3579,7 +3579,7 @@
+@@ -3578,7 +3578,7 @@
      if ( nb->ReadNameFile() != OK) {
          delete nb;
          delete idx;
@@ -752,7 +754,7 @@ Index: src/tkscid.cpp
      }
  
      Index * idxTemp = new Index;
-@@ -3588,7 +3588,7 @@
+@@ -3587,7 +3587,7 @@
          delete idxTemp;
          delete nb;
          delete idx;
@@ -761,7 +763,7 @@ Index: src/tkscid.cpp
      }
      recalcNameFrequencies (nb, idxTemp);
      idxTemp->CloseIndexFile();
-@@ -3613,7 +3613,7 @@
+@@ -3612,7 +3612,7 @@
              if (frequency > 0) {
                  uint newID;
                  if (nbNew->AddName (nt, name, &newID) != OK) {
@@ -770,7 +772,7 @@ Index: src/tkscid.cpp
                      break;
                  }
                  if (newID >= numEntries)
-@@ -3625,7 +3625,7 @@
+@@ -3624,7 +3624,7 @@
          }
      }
  
@@ -779,7 +781,7 @@ Index: src/tkscid.cpp
              nbNew->GetNumNames(NAME_PLAYER), nbNew->GetNumNames(NAME_EVENT),
              nbNew->GetNumNames(NAME_SITE), nbNew->GetNumNames(NAME_ROUND));
      Index * idxOld = new Index;
-@@ -3636,28 +3636,28 @@
+@@ -3635,28 +3635,28 @@
      idxOld->SetFileName (tempName);
      idxNew->SetFileName (filename);
  
@@ -815,7 +817,7 @@ Index: src/tkscid.cpp
  
      // For each entry in old index: read it, alter its name ID
      // values to match the new namebase, and write the entry to
-@@ -3669,8 +3669,8 @@
+@@ -3668,8 +3668,8 @@
          IndexEntry ieOld, ieNew;
          idxOld->ReadEntries (&ieOld, i, 1);
          if (ieOld.Verify (nb) != OK) {
@@ -826,7 +828,7 @@ Index: src/tkscid.cpp
          }
          err = idxNew->AddGame (&newNumGames, &ieNew);
          if (err != OK)  { break; }
-@@ -3703,13 +3703,13 @@
+@@ -3702,13 +3702,13 @@
      }
  
      if (err != OK) {
@@ -843,7 +845,7 @@ Index: src/tkscid.cpp
      removeFile (tempName, INDEX_SUFFIX);
      removeFile (tempName, NAMEBASE_SUFFIX);
  
-@@ -3773,8 +3773,8 @@
+@@ -3772,8 +3772,8 @@
      int epdID = -1;
      if (argc >= 3) { epdID = strGetInteger (argv[2]) - 1; }
      if (epdID < 0  ||  epdID >= MAX_EPD  ||  pbooks[epdID] == NULL) {
@@ -854,7 +856,7 @@ Index: src/tkscid.cpp
          return TCL_ERROR;
      }
  
-@@ -3804,7 +3804,7 @@
+@@ -3803,7 +3803,7 @@
      case EPD_LOAD:
          {
            if (argc != 4) {
@@ -863,7 +865,7 @@ Index: src/tkscid.cpp
            }
            int idx = strGetInteger (argv[3]);
            PBook * pb = pbooks[epdID];
-@@ -3836,7 +3836,7 @@
+@@ -3835,7 +3835,7 @@
  
      case EPD_SET:   // Sets the text for the current position:
          if (argc != 4) {
@@ -872,7 +874,7 @@ Index: src/tkscid.cpp
          }
          return sc_epd_set (ti, epdID, argv[3]);
  
-@@ -3845,7 +3845,7 @@
+@@ -3844,7 +3844,7 @@
  
      case EPD_STRIP:
          if (argc != 4) {
@@ -881,7 +883,7 @@ Index: src/tkscid.cpp
          }
          return setUintResult (ti, pbooks[epdID]->StripOpcode (argv[3]));
  
-@@ -3869,7 +3869,7 @@
+@@ -3868,7 +3868,7 @@
            } else if (argc == 4) {
              return setIntResult (ti, pb->SetIndex(strGetUnsigned(argv[3])));
            } else {
@@ -890,7 +892,7 @@ Index: src/tkscid.cpp
            }
          }
  
-@@ -3956,7 +3956,7 @@
+@@ -3955,7 +3955,7 @@
  sc_epd_open (Tcl_Interp * ti, int argc, const char ** argv, bool create)
  {
      if (argc != 3) {
@@ -899,7 +901,7 @@ Index: src/tkscid.cpp
      }
  
      const char * filename = argv[2];
-@@ -3966,7 +3966,7 @@
+@@ -3965,7 +3965,7 @@
      for (epdID = 0; epdID < MAX_EPD; epdID++) {
          if (pbooks[epdID] != NULL  &&
                  strEqual (filename, pbooks[epdID]->GetFileName())) {
@@ -908,7 +910,7 @@ Index: src/tkscid.cpp
          }
      }
  
-@@ -3976,7 +3976,7 @@
+@@ -3975,7 +3975,7 @@
          if (pbooks[epdID] == NULL) { freeID = epdID; break; }
      }
      if (freeID == -1) {
@@ -917,7 +919,7 @@ Index: src/tkscid.cpp
      }
  
      PBook * pb = new PBook;
-@@ -3987,8 +3987,8 @@
+@@ -3986,8 +3986,8 @@
      if (err != OK) {
          delete pb;
          pbooks[freeID] = NULL;
@@ -928,7 +930,7 @@ Index: src/tkscid.cpp
          return TCL_ERROR;
      }
      return setIntResult (ti, freeID + 1);
-@@ -4011,7 +4011,7 @@
+@@ -4010,7 +4010,7 @@
  {
      PBook * pb = pbooks[epdID];
      if (pb->WriteFile() != OK) {
@@ -937,7 +939,7 @@ Index: src/tkscid.cpp
      }
      return TCL_OK;
  }
-@@ -4061,7 +4061,7 @@
+@@ -4060,7 +4060,7 @@
  sc_clipbase_clear (Tcl_Interp * ti)
  {
      if (! clipbase->inUse) {
@@ -946,7 +948,7 @@ Index: src/tkscid.cpp
      }
      clipbase->game->Clear();
      clipbase->nb->Clear();
-@@ -4094,10 +4094,10 @@
+@@ -4093,10 +4093,10 @@
  {
      // Hmmm - errors currently caught
      if (! clipbase->inUse) {
@@ -959,7 +961,7 @@ Index: src/tkscid.cpp
      }
      if (clipbase->fileMode == FMODE_ReadOnly) {
           return errorResult (ti, errMsgReadOnly(ti));
-@@ -4113,7 +4113,7 @@
+@@ -4112,7 +4112,7 @@
      db->bbuf->Empty();
      db->game->SaveState();
      if (db->game->Encode (db->bbuf, NULL) != OK) {
@@ -968,7 +970,7 @@ Index: src/tkscid.cpp
      }
      db->game->RestoreState();
      db->bbuf->BackToStart();
-@@ -4120,7 +4120,7 @@
+@@ -4119,7 +4119,7 @@
      clipbase->game->Clear();
  
      if (clipbase->game->Decode (db->bbuf, GAME_DECODE_ALL) != OK) {
@@ -977,7 +979,7 @@ Index: src/tkscid.cpp
      }
  
      // Copy the standard tag values to the clipbase game:
-@@ -4164,7 +4164,7 @@
+@@ -4163,7 +4163,7 @@
      uint location = clipbase->game->GetPgnOffset (0);
      db->bbuf->Empty();
      if (clipbase->game->Encode (db->bbuf, NULL) != OK) {
@@ -986,7 +988,7 @@ Index: src/tkscid.cpp
      }
  
      // db changes get discarded
-@@ -4176,7 +4176,7 @@
+@@ -4175,7 +4175,7 @@
      db->gameAltered = true;
  
      if (db->game->Decode (db->bbuf, GAME_DECODE_ALL) != OK) {
@@ -995,7 +997,7 @@ Index: src/tkscid.cpp
      }
  
      // Copy the standard tag values from the clipbase game:
-@@ -4210,7 +4210,7 @@
+@@ -4209,7 +4209,7 @@
          return errorResult (ti, errMsgNotOpen(ti));
      }
      if (db->memoryOnly) {
@@ -1004,7 +1006,7 @@ Index: src/tkscid.cpp
      }
  
      if (argc > 1) { index = strUniqueMatch (argv[1], options); }
-@@ -4265,11 +4265,11 @@
+@@ -4264,11 +4264,11 @@
  
      if (newIdx->CreateIndexFile (FMODE_WriteOnly) != OK) {
          CLEANUP;
@@ -1018,7 +1020,7 @@ Index: src/tkscid.cpp
      }
  
      gameNumberT newNumGames = 0;
-@@ -4286,7 +4286,7 @@
+@@ -4285,7 +4285,7 @@
                  update = updateStart;
                  updateProgressBar (ti, i, db->numGames);
                  if (interruptedProgress()) {
@@ -1027,7 +1029,7 @@ Index: src/tkscid.cpp
                      interrupted = true;
                      break;
                  }
-@@ -4313,7 +4313,7 @@
+@@ -4312,7 +4312,7 @@
          }
          err = newIdx->AddGame (&newNumGames, &ieNew);
          if (err != OK) {
@@ -1036,7 +1038,7 @@ Index: src/tkscid.cpp
              interrupted = true;
              break;
          }
-@@ -4460,7 +4460,7 @@
+@@ -4459,7 +4459,7 @@
                  const char * name = nb->GetName (nt, oldID);
                  err = nbNew->AddName (nt, name, &newID);
                  if (err != OK) {
@@ -1045,7 +1047,7 @@ Index: src/tkscid.cpp
                      break;
                  }
                  nbNew->IncFrequency (nt, newID, frequency);
-@@ -4495,7 +4495,7 @@
+@@ -4494,7 +4494,7 @@
              ieNew.SetRound (idMapping [NAME_ROUND] [ie->GetRound()]);
              err = db->idx->WriteEntries (&ieNew, i, 1);
              if (err != OK) {
@@ -1054,7 +1056,7 @@ Index: src/tkscid.cpp
                  break;
              }
          }
-@@ -4508,7 +4508,7 @@
+@@ -4507,7 +4507,7 @@
          nbNew->SetFileName (db->fileName);
          err = nbNew->WriteNameFile();
          if (err != OK) {
@@ -1063,7 +1065,7 @@ Index: src/tkscid.cpp
          }
          delete db->nb;
          db->nb = nbNew;
-@@ -4541,7 +4541,7 @@
+@@ -4540,7 +4540,7 @@
  sc_compact_stats (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -1072,7 +1074,7 @@ Index: src/tkscid.cpp
      }
  
      if (argv[2][0] == 'n') {
-@@ -4557,7 +4557,7 @@
+@@ -4556,7 +4556,7 @@
          }
      } else {
          if (argv[2][0] != 'g') {
@@ -1081,7 +1083,7 @@ Index: src/tkscid.cpp
            return TCL_ERROR;
          }
  
-@@ -4688,9 +4688,9 @@
+@@ -4687,9 +4687,9 @@
  sc_eco_base (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 4) {
@@ -1093,7 +1095,7 @@ Index: src/tkscid.cpp
      if (! db->inUse) {
          return errorResult (ti, errMsgNotOpen(ti));
      }
-@@ -4807,7 +4807,7 @@
+@@ -4806,7 +4806,7 @@
          if (db->fileMode != FMODE_ReadOnly
                  &&  ie->GetEcoCode() != oldEcoCode) {
              if (db->idx->WriteEntries (ie, i, 1) != OK) {
@@ -1102,7 +1104,7 @@ Index: src/tkscid.cpp
              }
          }
      }
-@@ -4815,7 +4815,7 @@
+@@ -4814,7 +4814,7 @@
      // Update the index file header:
      if (db->fileMode != FMODE_ReadOnly) {
          if (db->idx->WriteHeader() != OK) {
@@ -1111,7 +1113,7 @@ Index: src/tkscid.cpp
          }
      }
  
-@@ -4824,7 +4824,7 @@
+@@ -4823,7 +4823,7 @@
  
      int centisecs = timer.CentiSecs();
      char tempStr [100];
@@ -1120,7 +1122,7 @@ Index: src/tkscid.cpp
               countClassified, strPlural (countClassified),
               centisecs / 100, decimalPointChar, centisecs % 100);
      Tcl_AppendResult (ti, tempStr, NULL);
-@@ -4846,7 +4846,7 @@
+@@ -4845,7 +4845,7 @@
          if (argc == 3  &&  strIsPrefix (argv[2], "ply")) {
              returnPly = 1;
          } else {
@@ -1129,7 +1131,7 @@ Index: src/tkscid.cpp
          }
      }
      if (!ecoBook) { return TCL_OK; }
-@@ -4893,12 +4893,12 @@
+@@ -4892,12 +4892,12 @@
      errorT err = ecoBook->ReadEcoFile();
      if (err != OK) {
          if (err == ERROR_FileOpen) {
@@ -1145,7 +1147,7 @@ Index: src/tkscid.cpp
              appendUintResult (ti, ecoBook->GetLineNumber());
          }
          delete ecoBook;
-@@ -4917,7 +4917,7 @@
+@@ -4916,7 +4916,7 @@
  {
      bool color = 0;
      if (argc != 3  &&  argc != 4) {
@@ -1154,7 +1156,7 @@ Index: src/tkscid.cpp
      }
      if (argc == 4) { color = strGetBoolean (argv[3]); }
      if (!ecoBook) { return TCL_OK; }
-@@ -4980,7 +4980,7 @@
+@@ -4979,7 +4979,7 @@
  sc_eco_find (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3 && argc != 4) {
@@ -1163,7 +1165,7 @@ Index: src/tkscid.cpp
      }
      if (!ecoBook) { return TCL_OK; }
  
-@@ -5047,7 +5047,7 @@
+@@ -5046,7 +5046,7 @@
  sc_eco_translate (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 5) {
@@ -1172,7 +1174,7 @@ Index: src/tkscid.cpp
      }
  
      ecoTranslateT * trans = new ecoTranslateT;
-@@ -5220,7 +5220,7 @@
+@@ -5219,7 +5219,7 @@
      if (argc > 2) {
          int baseNum = strGetInteger (argv[2]);
          if (baseNum < 1 || baseNum > MAX_BASES) {
@@ -1181,7 +1183,7 @@ Index: src/tkscid.cpp
          }
          basePtr = &(dbList[baseNum - 1]);
      }
-@@ -5235,7 +5235,7 @@
+@@ -5234,7 +5234,7 @@
  {
      bool showProgress = startProgressBar();
      if (argc != 4 && argc != 5) {
@@ -1190,7 +1192,7 @@ Index: src/tkscid.cpp
      }
      uint updateStart, update;
      updateStart = update = 1000;  // Update progress bar every 100 games
-@@ -5243,21 +5243,21 @@
+@@ -5242,21 +5242,21 @@
      int sourceBaseNum = strGetInteger (argv[2]);
      int targetBaseNum = strGetInteger (argv[3]);
      if (sourceBaseNum < 1  ||  sourceBaseNum > MAX_BASES) {
@@ -1217,7 +1219,7 @@ Index: src/tkscid.cpp
      }
  
      // Currently only used by gamelist context menu gamelist::CopyFilter "Copy to filter", but could be expanded
-@@ -5297,7 +5297,7 @@
+@@ -5296,7 +5296,7 @@
  	    IndexEntry * ie = sourceBase->idx->FetchEntry (atoi(largv[i])-1);
  	    sourceBase->bbuf->Empty();
  	    if (sourceBase->gfile->ReadGame (sourceBase->bbuf, ie->GetOffset(), ie->GetLength()) != OK) {
@@ -1226,7 +1228,7 @@ Index: src/tkscid.cpp
  	    }
  	    if (sc_savegame (ti, sourceBase, sourceBase->bbuf, ie, targetBase) != TCL_OK) {
  		    return TCL_ERROR;
-@@ -5322,7 +5322,7 @@
+@@ -5321,7 +5321,7 @@
          sourceBase->bbuf->Empty();
          if (sourceBase->gfile->ReadGame (sourceBase->bbuf, ie->GetOffset(),
                                           ie->GetLength()) != OK) {
@@ -1235,7 +1237,7 @@ Index: src/tkscid.cpp
          }
  
  	if (sc_savegame (ti, sourceBase, sourceBase->bbuf, ie, targetBase) != TCL_OK) {
-@@ -5336,10 +5336,10 @@
+@@ -5335,10 +5335,10 @@
  
      // Now write the Index file header and the name file:
      if (targetBase->idx->WriteHeader() != OK) {
@@ -1248,7 +1250,7 @@ Index: src/tkscid.cpp
      }
  
      // Ensure that the Index is still all in memory:
-@@ -5389,7 +5389,7 @@
+@@ -5388,7 +5388,7 @@
  sc_filter_freq (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      const char * usage =
@@ -1257,7 +1259,7 @@ Index: src/tkscid.cpp
  
      bool eloMode = false;
      bool moveMode = false;
-@@ -5539,7 +5539,7 @@
+@@ -5538,7 +5538,7 @@
  sc_filter_locate (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -1266,7 +1268,7 @@ Index: src/tkscid.cpp
      }
      uint filteredCount = 0;
      if (db->inUse) {
-@@ -5624,7 +5624,7 @@
+@@ -5623,7 +5623,7 @@
  sc_filter_remove (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3  &&  argc != 4) {
@@ -1275,7 +1277,7 @@ Index: src/tkscid.cpp
      }
      if (! db->inUse) { return TCL_OK; }
      uint from = strGetUnsigned (argv[2]);
-@@ -5658,7 +5658,7 @@
+@@ -5657,7 +5657,7 @@
      if (argc > 2) {
          int baseNum = strGetInteger (argv[2]);
          if (baseNum < 1 || baseNum > MAX_BASES) {
@@ -1284,7 +1286,7 @@ Index: src/tkscid.cpp
          }
          basePtr = &(dbList[baseNum - 1]);
      } else {
-@@ -5681,7 +5681,7 @@
+@@ -5680,7 +5680,7 @@
      if (argc > 2) {
          int baseNum = strGetInteger (argv[2]);
          if (baseNum < 1 || baseNum > MAX_BASES) {
@@ -1293,7 +1295,7 @@ Index: src/tkscid.cpp
          }
          basePtr = &(dbList[baseNum - 1]);
      }
-@@ -5706,7 +5706,7 @@
+@@ -5705,7 +5705,7 @@
      if (argc > 2) {
          int baseNum = strGetInteger (argv[2]);
          if (baseNum < 1 || baseNum > MAX_BASES) {
@@ -1302,7 +1304,7 @@ Index: src/tkscid.cpp
          }
          basePtr = &(dbList[baseNum - 1]);
      }
-@@ -5723,7 +5723,7 @@
+@@ -5722,7 +5722,7 @@
      enum {STATS_ALL, STATS_ELO, STATS_YEAR};
  
      if (argc < 2 || argc > 5) {
@@ -1311,7 +1313,7 @@ Index: src/tkscid.cpp
      }
      int statType = STATS_ALL;
      uint min = 0;
-@@ -5735,7 +5735,7 @@
+@@ -5734,7 +5734,7 @@
      }
      if (statType == STATS_ELO  ||  statType == STATS_YEAR) {
          if (argc < 4) {
@@ -1320,7 +1322,7 @@ Index: src/tkscid.cpp
          }
          min = strGetUnsigned (argv[3]);
          max = strGetUnsigned (argv[4]);
-@@ -5812,7 +5812,7 @@
+@@ -5811,7 +5811,7 @@
      bool (*stringcompare)(const char*, const char*);
  
      if (argc != 5) {
@@ -1329,7 +1331,7 @@ Index: src/tkscid.cpp
      }
  
      if (strGetUnsigned(argv[2])==0)
-@@ -5862,7 +5862,7 @@
+@@ -5861,7 +5861,7 @@
      uint number_removed = 0;
  
      if (argc != 4) {
@@ -1338,7 +1340,7 @@ Index: src/tkscid.cpp
      }
  
      if (strGetUnsigned(argv[2])==0)
-@@ -6035,7 +6035,7 @@
+@@ -6034,7 +6034,7 @@
  
  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  // sc_flags
@@ -1347,7 +1349,7 @@ Index: src/tkscid.cpp
  // returns a string with all set flags for this game
  //
  // Could be incorporated into sc_game
-@@ -6048,7 +6048,7 @@
+@@ -6047,7 +6047,7 @@
      gameNumberT gnum;
  
      if (argc < 2 || argc > 3) {
@@ -1356,7 +1358,7 @@ Index: src/tkscid.cpp
      }
  
      gnum = strGetUnsigned (argv[1]);
-@@ -6181,7 +6181,7 @@
+@@ -6180,7 +6180,7 @@
  
      case GAME_SET_ALTERED:
          if (argc != 3 ) {
@@ -1365,7 +1367,7 @@ Index: src/tkscid.cpp
          }
          db->gameAltered = strGetUnsigned (argv[2]);
          break;
-@@ -6291,7 +6291,7 @@
+@@ -6290,7 +6290,7 @@
  
      case GAME_UNDO:
  	if (trialMode) 
@@ -1374,7 +1376,7 @@ Index: src/tkscid.cpp
  
  	if (db->undoIndex <= -1)
  	    return setResult (ti, "0");
-@@ -6358,7 +6358,7 @@
+@@ -6357,7 +6357,7 @@
  
      case GAME_REDO:
  	if (trialMode)
@@ -1383,7 +1385,7 @@ Index: src/tkscid.cpp
  
  	if (db->undoIndex >= db->undoMax)
  	    return setResult (ti, "0");
-@@ -6422,7 +6422,7 @@
+@@ -6421,7 +6421,7 @@
      char stemp[1000];
  
      const char * usageMsg =
@@ -1392,7 +1394,7 @@ Index: src/tkscid.cpp
  
      static const char * extraOptions [] = {
          "allplay", "knockout", "swiss", "auto",
-@@ -6556,18 +6556,18 @@
+@@ -6555,18 +6555,18 @@
          g = scratchGame;
          g->Clear();
          if (gameNumber > db->numGames) {
@@ -1415,7 +1417,7 @@ Index: src/tkscid.cpp
              }
          g->LoadStandardTags (ie, db->nb);
      }
-@@ -6695,7 +6695,7 @@
+@@ -6694,7 +6694,7 @@
      }
      if (ctable->NumPlayers() < 2) {
          delete ctable;
@@ -1424,7 +1426,7 @@ Index: src/tkscid.cpp
      }
  
      if (option == OPT_LATEX) {
-@@ -6714,7 +6714,7 @@
+@@ -6713,7 +6713,7 @@
      if (mode == CROSSTABLE_AllPlayAll  &&
              ctable->NumPlayers() > apaLimit  &&
              !tableFullMessage) {
@@ -1433,7 +1435,7 @@ Index: src/tkscid.cpp
      }
  
      sprintf (stemp, "%s%s%s, ", g->GetEventStr(), newlineStr, g->GetSiteStr());
-@@ -6768,7 +6768,7 @@
+@@ -6767,7 +6767,7 @@
  sc_game_find (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 9) {
@@ -1442,7 +1444,7 @@ Index: src/tkscid.cpp
      }
  
      uint gnum = strGetUnsigned (argv[2]);
-@@ -6838,7 +6838,7 @@
+@@ -6837,7 +6837,7 @@
  sc_game_firstMoves (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 4) {
@@ -1451,7 +1453,7 @@ Index: src/tkscid.cpp
      }
      if (!db->inUse) {
          return errorResult (ti, errMsgNotOpen(ti));
-@@ -6846,7 +6846,7 @@
+@@ -6845,7 +6845,7 @@
  
      uint gNum = strGetUnsigned (argv[2]);
      if (gNum > db->numGames) {
@@ -1460,7 +1462,7 @@ Index: src/tkscid.cpp
      }
  
      int plyCount = strGetInteger (argv[3]);
-@@ -6858,17 +6858,17 @@
+@@ -6857,17 +6857,17 @@
          db->bbuf->Empty();
          IndexEntry * ie = db->idx->FetchEntry (gNum - 1);
          if (ie->GetLength() == 0) {
@@ -1481,7 +1483,7 @@ Index: src/tkscid.cpp
          }
      }
  
-@@ -6896,7 +6896,7 @@
+@@ -6895,7 +6895,7 @@
  int
  sc_game_flag (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -1490,7 +1492,7 @@ Index: src/tkscid.cpp
      if (argc < 3  ||  argc > 5) {
          return errorResult (ti, usage);
      }
-@@ -6919,7 +6919,7 @@
+@@ -6918,7 +6918,7 @@
          char desc[CUSTOM_FLAG_DESC_LENGTH+1];
          uint num = IndexEntry::CharToFlag (argv[2][0]) - 15;
          if (num < 1 || num > CUSTOM_FLAG_MAX )
@@ -1499,7 +1501,7 @@ Index: src/tkscid.cpp
          db->idx->GetCustomFlagDesc(desc, num);
          Tcl_AppendResult (ti, desc, NULL);
          return TCL_OK;
-@@ -6930,7 +6930,7 @@
+@@ -6929,7 +6929,7 @@
        } else {
          uint num = IndexEntry::CharToFlag (argv[2][0]) - 15;
          if (num < 1 || num > CUSTOM_FLAG_MAX )
@@ -1508,7 +1510,7 @@ Index: src/tkscid.cpp
          db->idx->SetCustomFlagDesc( argv[4], num);
          return TCL_OK;
        }
-@@ -6953,7 +6953,7 @@
+@@ -6952,7 +6952,7 @@
          // specified number exceeds the number of games, return an error:
          if (gNum == 0) { return TCL_OK; }
          if (gNum > db->numGames) {
@@ -1517,7 +1519,7 @@ Index: src/tkscid.cpp
          }
          gNum--;   // Set numbering to be from 0, rather than 1.
          if (argc == 4) {  // Get current flag value:
-@@ -6996,7 +6996,7 @@
+@@ -6995,7 +6995,7 @@
  sc_game_import (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -1526,7 +1528,7 @@ Index: src/tkscid.cpp
      }
      PgnParser parser (argv[2]);
      errorT err = parser.ParseGame (db->game);
-@@ -7010,13 +7010,13 @@
+@@ -7009,13 +7009,13 @@
      }
      db->gameAltered = true;
      if (err == OK  &&  parser.ErrorCount() == 0) {
@@ -1544,7 +1546,7 @@ Index: src/tkscid.cpp
      }
      return (err == OK ? TCL_OK : TCL_ERROR);
  }
-@@ -7127,7 +7127,7 @@
+@@ -7126,7 +7126,7 @@
  
      if (fullReport) {
          char tempStr [80];
@@ -1553,7 +1555,7 @@ Index: src/tkscid.cpp
                   winCount, drawCount, lossCount, unknownCount);
          dstr->Append (tempStr);
          int prevScore = -9999999;   // Lower than any possible TB score
-@@ -7849,7 +7849,7 @@
+@@ -7848,7 +7848,7 @@
  {
      bool showProgress = startProgressBar();
      if (argc != 5  &&  argc != 6) {
@@ -1562,7 +1564,7 @@ Index: src/tkscid.cpp
      }
      if (! db->inUse) { return TCL_OK; }
  
-@@ -8001,7 +8001,7 @@
+@@ -8000,7 +8000,7 @@
          return errorResult (ti, errMsgNotOpen(ti));
      }
      if (argc != 3) {
@@ -1571,7 +1573,7 @@ Index: src/tkscid.cpp
      }
  
      sc_game_undo_reset(db);
-@@ -8022,7 +8022,7 @@
+@@ -8021,7 +8021,7 @@
  
      // Check the game number is valid::
      if (gnum < 1  ||  gnum > db->numGames) {
@@ -1580,7 +1582,7 @@ Index: src/tkscid.cpp
      }
  
      // We number games from 0 internally, so subtract one:
-@@ -8035,7 +8035,7 @@
+@@ -8034,7 +8034,7 @@
          return errorResult (ti, errorStr);
      }
      if (db->game->Decode (db->bbuf, GAME_DECODE_ALL) != OK) {
@@ -1589,7 +1591,7 @@ Index: src/tkscid.cpp
          return errorResult (ti, errorStr);
      }
  
-@@ -8067,7 +8067,7 @@
+@@ -8066,7 +8066,7 @@
  int
  sc_game_merge (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -1598,7 +1600,7 @@ Index: src/tkscid.cpp
      scidBaseT * base = db;
      if (argc < 4  ||  argc > 5) { return errorResult (ti, usage); }
  
-@@ -8081,10 +8081,10 @@
+@@ -8080,10 +8080,10 @@
  
      // Check we have a valid database and game number:
      if (! base->inUse) {
@@ -1611,7 +1613,7 @@ Index: src/tkscid.cpp
      }
      // Number games from 0 internally:
      gnum--;
-@@ -8091,13 +8091,13 @@
+@@ -8090,13 +8090,13 @@
  
      // Check that the specified game can be merged:
      if (base == db  &&  (int)gnum == db->gameNumber) {
@@ -1628,7 +1630,7 @@ Index: src/tkscid.cpp
      }
  
      // Load the merge game:
-@@ -8106,12 +8106,12 @@
+@@ -8105,12 +8105,12 @@
      base->bbuf->Empty();
      if (base->gfile->ReadGame (base->bbuf, ie->GetOffset(),
                                 ie->GetLength()) != OK) {
@@ -1643,7 +1645,7 @@ Index: src/tkscid.cpp
      }
      merge->LoadStandardTags (ie, base->nb);
  
-@@ -8147,7 +8147,7 @@
+@@ -8146,7 +8146,7 @@
      delete[] mergeBoards;
  
      if (matchPly == 0) {
@@ -1652,7 +1654,7 @@ Index: src/tkscid.cpp
      }
  
      // Now the games match at the locations matchPly in the current
-@@ -8220,7 +8220,7 @@
+@@ -8219,7 +8219,7 @@
      uint MAXMOVES = g->GetCurrentPly() + 10; // overhead
      sanStringT * moveStrings = new sanStringT [MAXMOVES];
  
@@ -1661,7 +1663,7 @@ Index: src/tkscid.cpp
  
      if (argc > 3) {
          return errorResult (ti, usage);
-@@ -8332,7 +8332,7 @@
+@@ -8331,7 +8331,7 @@
          translate (ti, "NoveltyNone", "No novelty was found for this game");
  
      const char * usage =
@@ -1670,7 +1672,7 @@ Index: src/tkscid.cpp
  
      bool olderGamesOnly = false;
      dateT currentDate = db->game->GetDate();
-@@ -8368,11 +8368,11 @@
+@@ -8367,11 +8367,11 @@
      }
  
      if (! base->inUse) {
@@ -1684,7 +1686,7 @@ Index: src/tkscid.cpp
      }
  
      if (updateLabel != NULL) {
-@@ -8474,7 +8474,7 @@
+@@ -8473,7 +8473,7 @@
  
              if (base->gfile->ReadGame (db->bbuf, ie->GetOffset(),
                                       ie->GetLength()) != OK) {
@@ -1693,7 +1695,7 @@ Index: src/tkscid.cpp
              }
              if (g->ExactMatch (pos, db->bbuf, NULL)) {
                  foundMatch = true;
-@@ -8554,8 +8554,8 @@
+@@ -8553,8 +8553,8 @@
      while (thisArg < argc) {
          int index = strUniqueMatch (argv[thisArg], options);
          if (index == -1) {
@@ -1704,7 +1706,7 @@ Index: src/tkscid.cpp
              for (const char ** s = options; *s != NULL; s++) {
                  Tcl_AppendResult (ti, *s, " ", NULL);
              }
-@@ -8564,8 +8564,8 @@
+@@ -8563,8 +8563,8 @@
  
          // Check that our option has a value:
          if (thisArg+1 == argc) {
@@ -1715,7 +1717,7 @@ Index: src/tkscid.cpp
              return TCL_ERROR;
          }
  
-@@ -8579,7 +8579,7 @@
+@@ -8578,7 +8578,7 @@
                  base = &(dbList[value - 1]);
              }
              if (! base->inUse) {
@@ -1724,7 +1726,7 @@ Index: src/tkscid.cpp
              }
              g = base->game;
  
-@@ -8589,18 +8589,18 @@
+@@ -8588,18 +8588,18 @@
              g = scratchGame;
              g->Clear();
              if (value < 1  ||  value > base->numGames) {
@@ -1747,7 +1749,7 @@ Index: src/tkscid.cpp
              }
              g->LoadStandardTags (ie, base->nb);
  
-@@ -8607,7 +8607,7 @@
+@@ -8606,7 +8606,7 @@
          } else if (index == OPT_FORMAT) {
              // The option value should be "plain", "html" or "latex".
              if (! g->SetPgnFormatFromString (argv[thisArg+1])) {
@@ -1756,7 +1758,7 @@ Index: src/tkscid.cpp
              }
  
          } else {
-@@ -8641,7 +8641,7 @@
+@@ -8640,7 +8640,7 @@
                  case OPT_STRIPBRACES:
                      bitmask = PGN_STYLE_STRIP_BRACES;    break;
                  default: // unreachable!
@@ -1765,7 +1767,7 @@ Index: src/tkscid.cpp
              };
              if (bitmask > 0) {
                  if (value) {
-@@ -8731,7 +8731,7 @@
+@@ -8730,7 +8730,7 @@
  int
  sc_game_reorder (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -1774,7 +1776,7 @@ Index: src/tkscid.cpp
  
      if ( argc != 4 ) {
          Tcl_AppendResult (ti, usage, NULL);
-@@ -8740,7 +8740,7 @@
+@@ -8739,7 +8739,7 @@
  
      // unneeded  / wrong ?
      if (!db->idx->AllInMemory()) {
@@ -1783,7 +1785,7 @@ Index: src/tkscid.cpp
        return TCL_ERROR;
      }
  
-@@ -8748,19 +8748,19 @@
+@@ -8747,19 +8747,19 @@
      int direction;
  
      if (sscanf (argv[2], "%u", &gnum ) != 1 || gnum == 0) {
@@ -1806,7 +1808,7 @@ Index: src/tkscid.cpp
          return TCL_ERROR;
      }
  
-@@ -8788,12 +8788,12 @@
+@@ -8787,12 +8787,12 @@
  	ie_next_Filter = db->filter->Get(i + direction);
  
  	if (ie_next == NULL) {
@@ -1821,7 +1823,7 @@ Index: src/tkscid.cpp
            return TCL_ERROR;
          }
  
-@@ -8803,7 +8803,7 @@
+@@ -8802,7 +8802,7 @@
      // Write original game to new position
  
      if (db->idx->WriteEntries (&ie_gnum, newgame, 1) != OK) {
@@ -1830,7 +1832,7 @@ Index: src/tkscid.cpp
        return TCL_ERROR;
      }
  
-@@ -8835,7 +8835,7 @@
+@@ -8834,7 +8834,7 @@
          return TCL_ERROR;
      }
      if (base == clipbase   &&  base->numGames >= clipbaseMaxGames) {
@@ -1839,7 +1841,7 @@ Index: src/tkscid.cpp
          Tcl_AppendResult (ti, temp, NULL);
          return TCL_ERROR;
      }
-@@ -8856,10 +8856,10 @@
+@@ -8855,10 +8855,10 @@
      errorT result;
      if ((result = game->Encode (base->bbuf, &iE)) != OK) {
        if (result == ERROR_GameFull) {
@@ -1852,7 +1854,7 @@ Index: src/tkscid.cpp
        }
        return TCL_ERROR;
      }
-@@ -8876,7 +8876,7 @@
+@@ -8875,7 +8875,7 @@
      } else {
        // add game without resetting the index, because it has been filled by game->encode above
        if (base->idx->AddGame (&gNumber, &iE, false) != OK) {
@@ -1861,7 +1863,7 @@ Index: src/tkscid.cpp
          Tcl_AppendResult (ti, temp, NULL);
          return TCL_ERROR;
        }
-@@ -8888,7 +8888,7 @@
+@@ -8887,7 +8887,7 @@
      // Now try writing the game to the gfile:
      uint offset = 0;
      if (base->gfile->AddGame (base->bbuf, &offset) != OK) {
@@ -1870,7 +1872,7 @@ Index: src/tkscid.cpp
          return TCL_ERROR;
      }
      iE.SetOffset (offset);
-@@ -8902,7 +8902,7 @@
+@@ -8901,7 +8901,7 @@
      // WHITE:
      s = game->GetWhiteStr();  if (!s) { s = "?"; }
      if (base->nb->AddName (NAME_PLAYER, s, &id) == ERROR_NameBaseFull) {
@@ -1879,7 +1881,7 @@ Index: src/tkscid.cpp
          Tcl_AppendResult (ti, temp, NULL);
          return TCL_ERROR;
      }
-@@ -8912,7 +8912,7 @@
+@@ -8911,7 +8911,7 @@
      // BLACK:
      s = game->GetBlackStr();  if (!s) { s = "?"; }
      if (base->nb->AddName (NAME_PLAYER, s, &id) == ERROR_NameBaseFull) {
@@ -1888,7 +1890,7 @@ Index: src/tkscid.cpp
          Tcl_AppendResult (ti, temp, NULL);
          return TCL_ERROR;
      }
-@@ -8922,7 +8922,7 @@
+@@ -8921,7 +8921,7 @@
      // EVENT:
      s = game->GetEventStr();  if (!s) { s = "?"; }
      if (base->nb->AddName (NAME_EVENT, s, &id) == ERROR_NameBaseFull) {
@@ -1897,7 +1899,7 @@ Index: src/tkscid.cpp
          Tcl_AppendResult (ti, temp, NULL);
          return TCL_ERROR;
      }
-@@ -8932,7 +8932,7 @@
+@@ -8931,7 +8931,7 @@
      // SITE:
      s = game->GetSiteStr();  if (!s) { s = "?"; }
      if (base->nb->AddName (NAME_SITE, s, &id) == ERROR_NameBaseFull) {
@@ -1906,7 +1908,7 @@ Index: src/tkscid.cpp
          Tcl_AppendResult (ti, temp, NULL);
          return TCL_ERROR;
      }
-@@ -8942,7 +8942,7 @@
+@@ -8941,7 +8941,7 @@
      // ROUND:
      s = game->GetRoundStr();  if (!s) { s = "?"; }
      if (base->nb->AddName (NAME_ROUND, s, &id) == ERROR_NameBaseFull) {
@@ -1915,7 +1917,7 @@ Index: src/tkscid.cpp
          Tcl_AppendResult (ti, temp, NULL);
          return TCL_ERROR;
      }
-@@ -8969,7 +8969,7 @@
+@@ -8968,7 +8968,7 @@
      // writing them now would then be a waste of time.
  
      if (base->idx->WriteEntries (&iE, gNumber, 1) != OK) {
@@ -1924,7 +1926,7 @@ Index: src/tkscid.cpp
          return TCL_ERROR;
      }
  
-@@ -9006,7 +9006,7 @@
+@@ -9005,7 +9005,7 @@
          return TCL_ERROR;
      }
      if (base == clipbase   &&  base->numGames >= clipbaseMaxGames) {
@@ -1933,7 +1935,7 @@ Index: src/tkscid.cpp
                   clipbaseMaxGames);
          Tcl_AppendResult (ti, temp, NULL);
          return TCL_ERROR;
-@@ -9024,7 +9024,7 @@
+@@ -9023,7 +9023,7 @@
  
      // add game without resetting the index, because it has been filled by game->encode above
      if (base->idx->AddGame (&gNumber, &iE, false) != OK) {
@@ -1942,7 +1944,7 @@ Index: src/tkscid.cpp
          Tcl_AppendResult (ti, temp, NULL);
          return TCL_ERROR;
      }
-@@ -9035,7 +9035,7 @@
+@@ -9034,7 +9034,7 @@
      // Now try writing the game to the gfile:
      uint offset = 0;
      if (base->gfile->AddGame (bbuf, &offset) != OK) {
@@ -1951,7 +1953,7 @@ Index: src/tkscid.cpp
          return TCL_ERROR;
      }
      iE.SetOffset (offset);
-@@ -9049,7 +9049,7 @@
+@@ -9048,7 +9048,7 @@
      // WHITE:
  	s = srcIe->GetWhiteName( sourceBase->nb);  if (!s) { s = "?"; }
      if (base->nb->AddName (NAME_PLAYER, s, &id) == ERROR_NameBaseFull) {
@@ -1960,7 +1962,7 @@ Index: src/tkscid.cpp
          return TCL_ERROR;
      }
      base->nb->IncFrequency (NAME_PLAYER, id, 1);
-@@ -9058,7 +9058,7 @@
+@@ -9057,7 +9057,7 @@
      // BLACK:
      s = srcIe->GetBlackName( sourceBase->nb);  if (!s) { s = "?"; }
      if (base->nb->AddName (NAME_PLAYER, s, &id) == ERROR_NameBaseFull) {
@@ -1969,7 +1971,7 @@ Index: src/tkscid.cpp
          return TCL_ERROR;
      }
      base->nb->IncFrequency (NAME_PLAYER, id, 1);
-@@ -9067,7 +9067,7 @@
+@@ -9066,7 +9066,7 @@
      // EVENT:
      s = srcIe->GetEventName( sourceBase->nb);  if (!s) { s = "?"; }
      if (base->nb->AddName (NAME_EVENT, s, &id) == ERROR_NameBaseFull) {
@@ -1978,7 +1980,7 @@ Index: src/tkscid.cpp
          return TCL_ERROR;
      }
      base->nb->IncFrequency (NAME_EVENT, id, 1);
-@@ -9076,7 +9076,7 @@
+@@ -9075,7 +9075,7 @@
      // SITE:
      s = srcIe->GetSiteName( sourceBase->nb);  if (!s) { s = "?"; }
      if (base->nb->AddName (NAME_SITE, s, &id) == ERROR_NameBaseFull) {
@@ -1987,7 +1989,7 @@ Index: src/tkscid.cpp
          return TCL_ERROR;
      }
      base->nb->IncFrequency (NAME_SITE, id, 1);
-@@ -9085,7 +9085,7 @@
+@@ -9084,7 +9084,7 @@
      // ROUND:
      s = srcIe->GetRoundName( sourceBase->nb);  if (!s) { s = "?"; }
      if (base->nb->AddName (NAME_ROUND, s, &id) == ERROR_NameBaseFull) {
@@ -1996,7 +1998,7 @@ Index: src/tkscid.cpp
          return TCL_ERROR;
      }
      base->nb->IncFrequency (NAME_ROUND, id, 1);
-@@ -9096,7 +9096,7 @@
+@@ -9095,7 +9095,7 @@
      // writing them now would then be a waste of time.
  
      if (base->idx->WriteEntries (&iE, gNumber, 1) != OK) {
@@ -2005,7 +2007,7 @@ Index: src/tkscid.cpp
          return TCL_ERROR;
      }
  
-@@ -9126,7 +9126,7 @@
+@@ -9125,7 +9125,7 @@
  {
  
      if (argc != 3) {
@@ -2014,7 +2016,7 @@ Index: src/tkscid.cpp
      }
      if (! db->inUse) {
          return errorResult (ti, errMsgNotOpen(ti));
-@@ -9140,7 +9140,7 @@
+@@ -9139,7 +9139,7 @@
      if (gnum > db->numGames) {
          char tempStr[20];
          sprintf (tempStr, "%u", db->numGames);
@@ -2023,7 +2025,7 @@ Index: src/tkscid.cpp
                            tempStr, " games in this database.", NULL);
          return TCL_ERROR;
      }
-@@ -9150,10 +9150,10 @@
+@@ -9149,10 +9149,10 @@
      db->gfile->FlushAll();
      db->game->RestoreState ();
      if (db->idx->WriteHeader() != OK) {
@@ -2036,7 +2038,7 @@ Index: src/tkscid.cpp
      }
  
      if (gnum == 0) {
-@@ -9241,7 +9241,7 @@
+@@ -9240,7 +9240,7 @@
      bool inv_b = false;
  
      if (argc != 4)
@@ -2045,7 +2047,7 @@ Index: src/tkscid.cpp
  
      inv_w = atoi (argv[2]);
      inv_b = atoi (argv[3]);
-@@ -9266,7 +9266,7 @@
+@@ -9265,7 +9265,7 @@
  sc_game_values (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3)
@@ -2054,7 +2056,7 @@ Index: src/tkscid.cpp
  
      int moveCounter = 0;
  
-@@ -9316,7 +9316,7 @@
+@@ -9315,7 +9315,7 @@
      if (argc == 2) {
          return setBoolResult (ti, db->game->HasNonStandardStart());
      } else if (argc != 3) {
@@ -2063,7 +2065,7 @@ Index: src/tkscid.cpp
      }
      const char * str = argv[2];
      if (strIsPrefix ("random:", str)) {
-@@ -9325,12 +9325,12 @@
+@@ -9324,12 +9324,12 @@
          // set of material is generated. For example, "random:krpkr"
          // generates a random legal Rook+Pawn-vs-Rook position.
          if (scratchPos->Random (str+7) != OK) {
@@ -2078,7 +2080,7 @@ Index: src/tkscid.cpp
              }
          }
          // ReadFromFEN checks that there is one king of each side, but it
-@@ -9340,10 +9340,10 @@
+@@ -9339,10 +9339,10 @@
             squareT wk = scratchPos->GetKingSquare (WHITE);
             squareT bk = scratchPos->GetKingSquare (BLACK);
             if (square_Adjacent (wk, bk)) {
@@ -2091,7 +2093,7 @@ Index: src/tkscid.cpp
          }
      }
      db->game->SetStartPos (scratchPos);
-@@ -9369,7 +9369,7 @@
+@@ -9368,7 +9368,7 @@
  sc_game_strip (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      const char * usage =
@@ -2100,7 +2102,7 @@ Index: src/tkscid.cpp
  
      const char * options[] = { "comments", "variations", NULL };
      enum { OPT_COMS, OPT_VARS };
-@@ -9413,7 +9413,7 @@
+@@ -9412,7 +9412,7 @@
  	parser.Reset ((const char *) db->tbuf->GetBuffer());
  	scratchGame->Clear();
  	if (parser.ParseGame (scratchGame)) {
@@ -2109,7 +2111,7 @@ Index: src/tkscid.cpp
  	}
  	parser.Reset ((const char *) db->tbuf->GetBuffer());
  	db->game->Clear();
-@@ -9483,7 +9483,7 @@
+@@ -9482,7 +9482,7 @@
  
  	    // Load the game.
  	    if (db->gfile->ReadGame (db->bbuf, ie->GetOffset(), ie->GetLength()) != OK) {
@@ -2118,7 +2120,7 @@ Index: src/tkscid.cpp
  	    }
  	    g->Clear();
  	    if (g->Decode (db->bbuf, GAME_DECODE_ALL) != OK)
-@@ -9504,7 +9504,7 @@
+@@ -9503,7 +9503,7 @@
  // necessary ??
  	    db->gfile->FlushAll();
  	    if (db->idx->WriteHeader() != OK) {
@@ -2127,7 +2129,7 @@ Index: src/tkscid.cpp
  	    }
  
  	}
-@@ -9515,7 +9515,7 @@
+@@ -9514,7 +9514,7 @@
  // 
  // !!!!!!!!!!!!!!!!!!! S.A. 28/9/2020
      if (! db->memoryOnly  &&  db->nb->WriteNameFile() != OK) {
@@ -2136,7 +2138,7 @@ Index: src/tkscid.cpp
      }
  
      db->gameAltered = false;
-@@ -9556,7 +9556,7 @@
+@@ -9555,7 +9555,7 @@
  int
  sc_game_summary (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2145,7 +2147,7 @@ Index: src/tkscid.cpp
  
      const char * options[] = {
          "-base", "-gameNumber", NULL
-@@ -9600,20 +9600,20 @@
+@@ -9599,20 +9599,20 @@
      } else {
          // Load the specified game number:
          if (! base->inUse) {
@@ -2170,7 +2172,7 @@ Index: src/tkscid.cpp
          }
          g->LoadStandardTags (ie, base->nb);
      }
-@@ -9749,7 +9749,7 @@
+@@ -9748,7 +9748,7 @@
          T_EDate, T_EYear, T_EMonth, T_EDay, T_Extra
      };
  
@@ -2179,7 +2181,7 @@ Index: src/tkscid.cpp
      const char * tagName;
      Game * g = db->game;
  
-@@ -9772,10 +9772,10 @@
+@@ -9771,10 +9771,10 @@
              IndexEntry * ie = db->idx->FetchEntry (prevgame);
              if (db->gfile->ReadGame (db->bbuf, ie->GetOffset(),
                                       ie->GetLength()) != OK) {
@@ -2192,7 +2194,7 @@ Index: src/tkscid.cpp
              }
              g->LoadStandardTags (ie, db->nb);
          }
-@@ -9911,7 +9911,7 @@
+@@ -9910,7 +9910,7 @@
  
      int arg = 3;
      if (((argc-arg) % 2) != 0) {
@@ -2201,7 +2203,7 @@ Index: src/tkscid.cpp
      }
  
      // Process each pair of parameters:
-@@ -9952,7 +9952,7 @@
+@@ -9951,7 +9951,7 @@
                      if (Tcl_SplitList (ti, value, &largc,
                                         (CONST84 char ***) &largv) != TCL_OK) {
                          // Error from Tcl_SplitList!
@@ -2210,7 +2212,7 @@ Index: src/tkscid.cpp
                      }
  
                      // Extract each tag-value pair and add it to the game:
-@@ -10013,7 +10013,7 @@
+@@ -10012,7 +10012,7 @@
  sc_game_tags_share (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      const char * usage =
@@ -2219,7 +2221,7 @@ Index: src/tkscid.cpp
      if (argc != 6) { return errorResult (ti, usage); }
      bool updateMode = false;
      if (strIsPrefix (argv[3], "check")) {
-@@ -10311,7 +10311,7 @@
+@@ -10310,7 +10310,7 @@
  
      case INFO_VALIDDATE:
          if (argc != 3) {
@@ -2228,7 +2230,7 @@ Index: src/tkscid.cpp
          }
          setBoolResult (ti, date_ValidString (argv[2]));
          break;
-@@ -10325,7 +10325,7 @@
+@@ -10324,7 +10324,7 @@
          break;
      case INFO_LANGUAGE:
        if (argc != 3) {
@@ -2237,7 +2239,7 @@ Index: src/tkscid.cpp
        }
        if ( strcmp(argv[2], "en") == 0) {language = 0;}
        if ( strcmp(argv[2], "fr") == 0) {language = 1;}
-@@ -10360,7 +10360,7 @@
+@@ -10359,7 +10359,7 @@
  sc_info_fsize (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -2246,7 +2248,7 @@ Index: src/tkscid.cpp
      }
      const char * fname = argv[2];
      const char * lastSuffix = strFileSuffix (fname);
-@@ -10399,7 +10399,7 @@
+@@ -10398,7 +10398,7 @@
  
      MFile pgnFile;
      if (pgnFile.Open (fname, FMODE_ReadOnly) != OK) {
@@ -2255,7 +2257,7 @@ Index: src/tkscid.cpp
      }
  
      const uint maxBytes = 65536;
-@@ -10409,7 +10409,7 @@
+@@ -10408,7 +10408,7 @@
      if (pgnFile.ReadNBytes (buffer, bytes) != OK) {
          pgnFile.Close();
          delete[] buffer;
@@ -2264,7 +2266,7 @@ Index: src/tkscid.cpp
      }
      pgnFile.Close();
  
-@@ -10531,7 +10531,7 @@
+@@ -10530,7 +10530,7 @@
  sc_info_priority (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
  #ifdef _WIN32
@@ -2273,7 +2275,7 @@ Index: src/tkscid.cpp
      if (argc < 3  ||  argc > 4) { return errorResult (ti, usage); }
  
      int pid = strGetInteger(argv[2]);
-@@ -10548,7 +10548,7 @@
+@@ -10547,7 +10547,7 @@
          // Try to obtain a process handle for setting the priority class:
          HANDLE hProcess = OpenProcess (PROCESS_SET_INFORMATION, false, pid);
          if (hProcess == NULL) {
@@ -2282,7 +2284,7 @@ Index: src/tkscid.cpp
          }
  
          // Set the process class to NORMAL or IDLE:
-@@ -10559,7 +10559,7 @@
+@@ -10558,7 +10558,7 @@
      // Now return the process priority:
      HANDLE hProcess = OpenProcess (PROCESS_QUERY_INFORMATION, false, pid);
      if (hProcess == NULL) {
@@ -2291,7 +2293,7 @@ Index: src/tkscid.cpp
      }
      uint priorityClass = GetPriorityClass (hProcess);
      CloseHandle (hProcess);
-@@ -10576,7 +10576,7 @@
+@@ -10575,7 +10575,7 @@
  
  #else  // #ifdef _WIN32
  
@@ -2300,7 +2302,7 @@ Index: src/tkscid.cpp
      if (argc < 3  ||  argc > 4) { return errorResult (ti, usage); }
  
      int pid = strGetInteger(argv[2]);
-@@ -10585,7 +10585,7 @@
+@@ -10584,7 +10584,7 @@
          // Try to assign a new priority:
          int newpriority = strGetInteger(argv[3]);
          if (setpriority (PRIO_PROCESS, pid, newpriority) != 0) {
@@ -2309,7 +2311,7 @@ Index: src/tkscid.cpp
          }
      }
      // Now return the process priority:
-@@ -10634,7 +10634,7 @@
+@@ -10633,7 +10633,7 @@
  sc_info_tb (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      const char * usage =
@@ -2318,7 +2320,7 @@ Index: src/tkscid.cpp
  
      if (argc == 2) {
          // Command: sc_info tb
-@@ -10738,7 +10738,7 @@
+@@ -10737,7 +10737,7 @@
  
      case MOVE_PLY:
          if (argc != 3) {
@@ -2327,7 +2329,7 @@ Index: src/tkscid.cpp
          }
          {
              uint ply = strGetUnsigned (argv[2]);
-@@ -10765,7 +10765,7 @@
+@@ -10764,7 +10764,7 @@
  {
  
      if (argc != 5) {
@@ -2336,7 +2338,7 @@ Index: src/tkscid.cpp
      }
  
      uint sq1 = strGetUnsigned (argv[2]);
-@@ -10794,7 +10794,7 @@
+@@ -10793,7 +10793,7 @@
              return TCL_OK;
          }
      }
@@ -2345,7 +2347,7 @@ Index: src/tkscid.cpp
  }
  
  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-@@ -10819,7 +10819,7 @@
+@@ -10818,7 +10818,7 @@
          parser.SetResultWarnings (false);
          errorT err = parser.ParseMoves (db->game, buf, 1000);
          if (err != OK  ||  parser.ErrorCount() > 0) {
@@ -2354,7 +2356,7 @@ Index: src/tkscid.cpp
              return TCL_ERROR;
          }
          db->gameAltered = true;
-@@ -10944,7 +10944,7 @@
+@@ -10943,7 +10943,7 @@
  sc_move_pgn (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -2363,7 +2365,7 @@ Index: src/tkscid.cpp
      }
      db->tbuf->Empty();
      db->tbuf->SetWrapColumn (99999);
-@@ -11125,7 +11125,7 @@
+@@ -11124,7 +11124,7 @@
  sc_pos_addNag (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -2372,7 +2374,7 @@ Index: src/tkscid.cpp
      }
      const char * nagStr = argv[2];
      byte nag = game_parseNag (nagStr);
-@@ -11146,7 +11146,7 @@
+@@ -11145,7 +11145,7 @@
  int
  sc_pos_analyze (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2381,7 +2383,7 @@ Index: src/tkscid.cpp
  
      uint searchTime = 1000;   // Default = 1000 milliseconds
      uint hashTableKB = 1024;  // Default: one-megabyte hash table.
-@@ -11220,7 +11220,7 @@
+@@ -11219,7 +11219,7 @@
  sc_pos_bestSquare (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -2390,7 +2392,7 @@ Index: src/tkscid.cpp
      }
  
      Position * pos = db->game->GetCurrentPos();
-@@ -11232,7 +11232,7 @@
+@@ -11231,7 +11231,7 @@
        if (sqInt >= 0  &&  sqInt <= 63) { sq = sqInt; }
      }
      if (sq == NULL_SQUARE) {
@@ -2399,7 +2401,7 @@ Index: src/tkscid.cpp
      }
  
      // Generate all legal moves:
-@@ -11332,7 +11332,7 @@
+@@ -11331,7 +11331,7 @@
  int
  sc_pos_hash (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2408,7 +2410,7 @@ Index: src/tkscid.cpp
      bool pawnHashOnly = false;
      if (argc > 3) { return errorResult (ti, usage); }
      if (argc == 3) {
-@@ -11361,7 +11361,7 @@
+@@ -11360,7 +11360,7 @@
  int
  sc_pos_html (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2417,7 +2419,7 @@ Index: src/tkscid.cpp
      uint style = htmlDiagStyle;
      bool flip = false;
      int arg = 2;
-@@ -11419,7 +11419,7 @@
+@@ -11418,7 +11418,7 @@
          return setBoolResult (ti, db->game->AtVarEnd());
  
      default:
@@ -2426,7 +2428,7 @@ Index: src/tkscid.cpp
      }
      return TCL_OK;
  }
-@@ -11432,7 +11432,7 @@
+@@ -11431,7 +11431,7 @@
  sc_pos_isPromo (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 4) {
@@ -2435,7 +2437,7 @@ Index: src/tkscid.cpp
      }
  
      Position * pos = db->game->GetCurrentPos();
-@@ -11440,7 +11440,7 @@
+@@ -11439,7 +11439,7 @@
      int toSq = strGetInteger (argv[3]);
  
      if (fromSq < A1  ||  fromSq > H8  ||  toSq < A1  ||  toSq > H8) {
@@ -2444,7 +2446,7 @@ Index: src/tkscid.cpp
      }
  
      setBoolResult (ti, pos->IsPromoMove ((squareT) fromSq, (squareT) toSq));
-@@ -11452,7 +11452,7 @@
+@@ -11451,7 +11451,7 @@
  sc_pos_isInsufficient (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 2)
@@ -2453,7 +2455,7 @@ Index: src/tkscid.cpp
  
      Position * pos = db->game->GetCurrentPos();
      uint numPieces = pos->TotalMaterial();
-@@ -11474,7 +11474,7 @@
+@@ -11473,7 +11473,7 @@
  sc_pos_isLegal (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 4) {
@@ -2462,7 +2464,7 @@ Index: src/tkscid.cpp
      }
  
      Position * pos = db->game->GetCurrentPos();
-@@ -11505,7 +11505,7 @@
+@@ -11504,7 +11504,7 @@
  sc_pos_matchMoves (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3  &&  argc != 4) {
@@ -2471,7 +2473,7 @@ Index: src/tkscid.cpp
      }
      bool coordMoves = false;
      const char * prefix = argv[2];
-@@ -11596,7 +11596,7 @@
+@@ -11595,7 +11595,7 @@
  sc_pos_moves (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 2) {
@@ -2480,7 +2482,7 @@ Index: src/tkscid.cpp
      }
      Position * p = db->game->GetCurrentPos();
      sanListT sanList;
-@@ -11612,7 +11612,7 @@
+@@ -11611,7 +11611,7 @@
  sc_pos_moves_uci (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 2) {
@@ -2489,7 +2491,7 @@ Index: src/tkscid.cpp
      }
      Position * p = db->game->GetCurrentPos();
      sanListT sanList;
-@@ -11634,7 +11634,7 @@
+@@ -11633,7 +11633,7 @@
  sc_pos_pgnBoard (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -2498,7 +2500,7 @@ Index: src/tkscid.cpp
      }
  
      Game * g = scratchGame;
-@@ -11669,7 +11669,7 @@
+@@ -11668,7 +11668,7 @@
  int
  sc_pos_probe (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2507,7 +2509,7 @@ Index: src/tkscid.cpp
      static const char * options[] = {
          "score", "report", "optimal", "board", NULL
      };
-@@ -11718,7 +11718,7 @@
+@@ -11717,7 +11717,7 @@
  int
  sc_pos_probe_board (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2516,7 +2518,7 @@ Index: src/tkscid.cpp
  
      Position * pos = scratchPos;
      pos->CopyFrom (db->game->GetCurrentPos());
-@@ -11770,7 +11770,7 @@
+@@ -11769,7 +11769,7 @@
  sc_pos_setComment (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -2525,7 +2527,7 @@ Index: src/tkscid.cpp
      }
      const char * str = argv[2];
      const char * oldComment = db->game->GetMoveComment();
-@@ -11829,7 +11829,7 @@
+@@ -11828,7 +11828,7 @@
  
      default:
          return errorResult (ti,
@@ -2534,7 +2536,7 @@ Index: src/tkscid.cpp
      }
      return TCL_OK;
  }
-@@ -11899,7 +11899,7 @@
+@@ -11898,7 +11898,7 @@
  
      if (! NameBase::IsValidNameType(nt)) {
          return errorResult (ti,
@@ -2543,7 +2545,7 @@ Index: src/tkscid.cpp
      }
      if (!db->inUse) {
          return errorResult (ti, errMsgNotOpen(ti));
-@@ -11970,7 +11970,7 @@
+@@ -11969,7 +11969,7 @@
          delete[] startDate;
          delete[] endDate;
  
@@ -2552,7 +2554,7 @@ Index: src/tkscid.cpp
      }
  
      // Write the name file first, for safety:
-@@ -11978,7 +11978,7 @@
+@@ -11977,7 +11977,7 @@
          delete[] newIDs;
          delete[] startDate;
          delete[] endDate;
@@ -2561,7 +2563,7 @@ Index: src/tkscid.cpp
      }
  
      // Now go through the index making each necessary change:
-@@ -12068,7 +12068,7 @@
+@@ -12067,7 +12067,7 @@
  		delete[] newIDs;
  		delete[] startDate;
  		delete[] endDate;
@@ -2570,7 +2572,7 @@ Index: src/tkscid.cpp
              }
          }
      }
-@@ -12078,7 +12078,7 @@
+@@ -12077,7 +12077,7 @@
      delete[] endDate;
  
      if (db->idx->WriteHeader() != OK) {
@@ -2579,7 +2581,7 @@ Index: src/tkscid.cpp
      }
  
      recalcNameFrequencies (db->nb, db->idx);
-@@ -12087,7 +12087,7 @@
+@@ -12086,7 +12086,7 @@
               correctionCount,
               NAME_TYPE_STRING[nt],
               strPlural (correctionCount),
@@ -2588,25 +2590,25 @@ Index: src/tkscid.cpp
      Tcl_AppendResult (ti, temp, NULL);
      if (datefailedCount > 0) {
        sprintf (temp, "\n\n%u player name changes were ignored because of player age/game date considerations.", datefailedCount);
-@@ -12110,7 +12110,7 @@
+@@ -12109,7 +12109,7 @@
  int
  sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
--    const char * usage = "Usage: sc_name edit <type> <editSelection> <oldName> <newName> <useRegexp>";
-+    const char * usage = "Aufruf: sc_name edit <type> <editSelection> <oldName> <newName> <useRegexp>";
+-    const char * usage = "Usage: sc_name edit <type> <editSelection> <oldName> <newName> <useStringMatch>";
++    const char * usage = "Aufruf: sc_name edit <type> <editSelection> <oldName> <newName> <useStringMatch>";
  
      if (!db->inUse) {
          return errorResult (ti, errMsgNotOpen(ti));
-@@ -12215,7 +12215,7 @@
-     // skip this check is we are globbing or useRegexp, or the field is DATE or EVENT_DATE
-     if (option != OPT_DATE  &&  option != OPT_EVENTDATE && ! glob && ! useRegexp) {
+@@ -12198,7 +12198,7 @@
+     // skip this check is we useStringMatch or option == OPT_DATE ||  option == OPT_EVENTDATE
+     if (! useStringMatch && option != OPT_DATE && option != OPT_EVENTDATE) {
          if (db->nb->FindExactName (nt, oldName, &oldID) != OK) {
 -            Tcl_AppendResult (ti, "The ", NAME_TYPE_STRING[nt], " name \"", oldName, "\" does not exist.", NULL);
 +            Tcl_AppendResult (ti, "Der ", NAME_TYPE_STRING[nt], "name \"", oldName, "\" existiert nicht.", NULL);
              return TCL_ERROR;
          }
      }
-@@ -12226,10 +12226,10 @@
+@@ -12209,10 +12209,10 @@
      if (editSelection == EDIT_CTABLE) {
          Game * g = db->game;
          if (db->nb->FindExactName (NAME_EVENT, g->GetEventStr(), &eventId) != OK) {
@@ -2619,7 +2621,7 @@ Index: src/tkscid.cpp
          }
  
          if (date_GetMonthDay (g->GetDate()) == 0) {
-@@ -12247,12 +12247,12 @@
+@@ -12230,12 +12230,12 @@
      idNumberT newID = 0;
      if (option != OPT_RATING  &&  option != OPT_DATE  &&  option != OPT_EVENTDATE) {
          if (db->nb->AddName (nt, newName, &newID) == ERROR_NameBaseFull) {
@@ -2634,7 +2636,7 @@ Index: src/tkscid.cpp
          }
      }
  
-@@ -12413,7 +12413,7 @@
+@@ -12384,7 +12384,7 @@
          // Write this entry if any edits were made:
          if (edits != 0) {
              if (db->idx->WriteEntries (&newIE, i, 1) != OK) {
@@ -2643,7 +2645,7 @@ Index: src/tkscid.cpp
              }
              if (option != OPT_RATING  &&  option != OPT_DATE && option != OPT_EVENTDATE) {
                  db->nb->IncFrequency (nt, newID, edits);
-@@ -12424,15 +12424,15 @@
+@@ -12395,15 +12395,15 @@
      }
  
      if (db->idx->WriteHeader() != OK) {
@@ -2662,7 +2664,7 @@ Index: src/tkscid.cpp
                   numChanges, oldName, newName);
      }
      Tcl_AppendResult (ti, temp, NULL);
-@@ -12445,7 +12445,7 @@
+@@ -12416,7 +12416,7 @@
  int
  sc_name_retrievename (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2671,7 +2673,7 @@ Index: src/tkscid.cpp
      SpellChecker * spChecker = spellChecker[NAME_PLAYER];
  
      if (argc != 3 ) { return errorResult (ti, usageStr); }
-@@ -12483,7 +12483,7 @@
+@@ -12454,7 +12454,7 @@
  {
      static char * lastPlayerName = NULL;
      // this needs overhauling S.A
@@ -2680,7 +2682,7 @@ Index: src/tkscid.cpp
      uint startYear = 1900;
      uint startElo = 0;
      extern spellingT countryTable[];
-@@ -12662,10 +12662,10 @@
+@@ -12633,10 +12633,10 @@
  	      if (titleTable[i].id[0] != 0) {
  		// this is a little confusing, just to get the multiple "titles" on one line
  		if (count==0 && mark)
@@ -2693,7 +2695,7 @@ Index: src/tkscid.cpp
  		  else {
  		    if (mark)
  		      Tcl_AppendResult (ti, ",  ", titleTable[i].data, NULL);
-@@ -12684,7 +12684,7 @@
+@@ -12655,7 +12655,7 @@
  		    mark2++;
  		  Tcl_AppendResult (ti, startHeading, translate (ti,"Elo"), ":	", endHeading, mark2, newline, NULL);
  		} else {
@@ -2702,7 +2704,7 @@ Index: src/tkscid.cpp
  		}
  	      }
  
-@@ -12724,10 +12724,10 @@
+@@ -12695,10 +12695,10 @@
  
  	      if (t_country[0] != '-') {
  		if (count==0 && !mark)
@@ -2715,7 +2717,7 @@ Index: src/tkscid.cpp
  		  else {
  		    if (mark)
  		      Tcl_AppendResult (ti, ",  ", temp , NULL);
-@@ -12746,7 +12746,7 @@
+@@ -12717,7 +12717,7 @@
  
  	    // Birthyear
  	    if (*t_year) {
@@ -2724,7 +2726,7 @@ Index: src/tkscid.cpp
  	    }
  
  	}
-@@ -12754,7 +12754,7 @@
+@@ -12725,7 +12725,7 @@
  	// biography
  	const bioNoteT * note = spChecker->GetBioData (playerName);
  	if (note != NULL) {
@@ -2733,7 +2735,7 @@ Index: src/tkscid.cpp
  	    while (note != NULL) {
  		Tcl_AppendResult (ti, "	", note->text, newline, NULL);
  		note = note->next;
-@@ -12937,9 +12937,9 @@
+@@ -12908,9 +12908,9 @@
      char trWhite[128];
      char trBlack[128];
      char trTotal[128];
@@ -2746,7 +2748,7 @@ Index: src/tkscid.cpp
  
      uint wWidth = strLength (trWhite);
      uint bWidth = strLength (trBlack);
-@@ -12969,7 +12969,7 @@
+@@ -12940,7 +12940,7 @@
      if (ratingsOnly) { goto doRatings; }
  
      if (totalcount[STATS_ALL] == 0) {
@@ -2755,7 +2757,7 @@ Index: src/tkscid.cpp
        return TCL_OK;
      }
  
-@@ -12977,7 +12977,7 @@
+@@ -12948,7 +12948,7 @@
               htextOutput ? "<green><run sc_name info -faA {}; ::playerInfoRefresh>" : "",
               totalcount[STATS_ALL],
               (totalcount[STATS_ALL] == 1 ?
@@ -2764,7 +2766,7 @@ Index: src/tkscid.cpp
               htextOutput ? "</run></green>" : "");
      Tcl_AppendResult (ti, temp, NULL);
  
-@@ -12989,7 +12989,7 @@
+@@ -12960,7 +12960,7 @@
      if (lastGameDate > firstGameDate) {
          date_DecodeToString (lastGameDate, temp);
          strTrimDate (temp);
@@ -2773,7 +2775,7 @@ Index: src/tkscid.cpp
      }
  
      Tcl_AppendResult (ti, newline, NULL);
-@@ -13000,7 +13000,7 @@
+@@ -12971,7 +12971,7 @@
  	       htextOutput ? "<green><run sc_name info -F {}; ::playerInfoRefresh>" : "",
  	       totalcount[STATS_FILTER],
  	       (totalcount[STATS_FILTER] == 1 ?
@@ -2782,7 +2784,7 @@ Index: src/tkscid.cpp
  	       htextOutput ? "</run></green>" : "");
        Tcl_AppendResult (ti, temp, NULL);
      }
-@@ -13011,9 +13011,9 @@
+@@ -12982,9 +12982,9 @@
              startHeading,
  	    htextOutput ? "<tt>" : "",
  	    wbtWidth+18,
@@ -2795,7 +2797,7 @@ Index: src/tkscid.cpp
  	    htextOutput ? "</tt>" : "",
              endHeading);
  
-@@ -13381,7 +13381,7 @@
+@@ -13352,7 +13352,7 @@
  sc_name_match (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      const char * usage = \
@@ -2804,7 +2806,7 @@ Index: src/tkscid.cpp
  
      int arg = 2;
      int argsleft = argc - 2;
-@@ -13510,7 +13510,7 @@
+@@ -13481,7 +13481,7 @@
  int
  sc_name_plist (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2813,7 +2815,7 @@ Index: src/tkscid.cpp
  
      const char * namePrefix = "";
      const char * country = "";
-@@ -13741,14 +13741,14 @@
+@@ -13712,14 +13712,14 @@
          return errorResult (ti, errMsgReadOnly(ti));
      }
      if (sp == NULL) {
@@ -2833,7 +2835,7 @@ Index: src/tkscid.cpp
  
          return TCL_ERROR;
      }
-@@ -13820,7 +13820,7 @@
+@@ -13791,7 +13791,7 @@
                      newIE.SetBlackRatingType (RATING_Elo);
                  }
                  if (db->idx->WriteEntries (&newIE, gnum, 1) != OK) {
@@ -2842,7 +2844,7 @@ Index: src/tkscid.cpp
                  }
              }
          }
-@@ -13852,7 +13852,7 @@
+@@ -13823,7 +13823,7 @@
      }
  
      if (argc > 5) {
@@ -2851,7 +2853,7 @@ Index: src/tkscid.cpp
      }
      const char * filename = argv[2];
      bool checkPlayerOrder = false;
-@@ -13873,7 +13873,7 @@
+@@ -13844,7 +13844,7 @@
          if (temp_spellChecker->ReadSpellCheckFile (filename, checkPlayerOrder) != OK) {
              delete temp_spellChecker;
              Tcl_ResetResult (ti);
@@ -2860,7 +2862,7 @@ Index: src/tkscid.cpp
          }
          if (spellChecker[nt] != NULL) { delete spellChecker[nt]; }
          spellChecker[nt] = temp_spellChecker;
-@@ -13919,7 +13919,7 @@
+@@ -13890,7 +13890,7 @@
      nameT nt = NAME_INVALID;
      bool doSurnames = false;
      bool ambiguous = true;
@@ -2869,7 +2871,7 @@ Index: src/tkscid.cpp
  
      const char * options[] = {
          "-surnames", "-ambiguous", NULL
-@@ -13961,8 +13961,8 @@
+@@ -13932,8 +13932,8 @@
          return errorResult (ti, errMsgReadOnly(ti));
      }
      if (spellChecker[nt] == NULL) {
@@ -2880,7 +2882,7 @@ Index: src/tkscid.cpp
          return TCL_ERROR;
      }
  
-@@ -14132,7 +14132,7 @@
+@@ -14103,7 +14103,7 @@
  
      // Generate message
  
@@ -2889,7 +2891,7 @@ Index: src/tkscid.cpp
               correctionCount, NAME_TYPE_STRING[nt],
               strPlural (correctionCount));
      Tcl_AppendResult (ti, tempStr, NULL);
-@@ -14178,7 +14178,7 @@
+@@ -14149,7 +14149,7 @@
      };
  
      static const char * usage =
@@ -2898,7 +2900,7 @@ Index: src/tkscid.cpp
      OpTable * report = NULL;
      if (argc < 2) {
          return errorResult (ti, usage);
-@@ -14209,7 +14209,7 @@
+@@ -14180,7 +14180,7 @@
      switch (index) {
      case OPT_AVGLENGTH:
          if (argc != 4) {
@@ -2907,7 +2909,7 @@ Index: src/tkscid.cpp
          } else {
              resultT result = strGetResult (argv[3]);
              appendUintElement (ti, report->AvgLength (result));
-@@ -14219,7 +14219,7 @@
+@@ -14190,7 +14190,7 @@
  
      case OPT_BEST:
          if (argc != 5) {
@@ -2916,7 +2918,7 @@ Index: src/tkscid.cpp
          }
          dstr = new DString;
          report->BestGames (dstr, strGetUnsigned(argv[4]), argv[3]);
-@@ -14246,7 +14246,7 @@
+@@ -14217,7 +14217,7 @@
  
      case OPT_ELO:
          if (argc != 4) {
@@ -2925,7 +2927,7 @@ Index: src/tkscid.cpp
          } else {
              colorT color = WHITE;
              uint count = 0;
-@@ -14264,14 +14264,14 @@
+@@ -14235,14 +14235,14 @@
      case OPT_ENDMAT:
          dstr = new DString;
          report->EndMaterialReport (dstr,
@@ -2943,7 +2945,7 @@ Index: src/tkscid.cpp
          }
          report->SetFormat (argv[3]);
          break;
-@@ -14278,7 +14278,7 @@
+@@ -14249,7 +14249,7 @@
  
      case OPT_FREQ:
          if (argc != 4) {
@@ -2952,7 +2954,7 @@ Index: src/tkscid.cpp
          } else {
              resultT result = strGetResult (argv[3]);
              appendUintElement (ti, report->PercentFreq (result));
-@@ -14300,11 +14300,11 @@
+@@ -14271,11 +14271,11 @@
          } else if (argc == 4  &&  argv[3][0] == 'r') {
              return setUintResult (ti, OPTABLE_MAX_ROWS);
          }
@@ -2966,7 +2968,7 @@ Index: src/tkscid.cpp
          }
          dstr = new DString;
          report->PopularMoveOrders (dstr, strGetUnsigned(argv[3]));
-@@ -14313,7 +14313,7 @@
+@@ -14284,7 +14284,7 @@
  
      case OPT_NOTES:
          if (argc < 4  ||  argc > 5) {
@@ -2975,7 +2977,7 @@ Index: src/tkscid.cpp
          }
          report->ClearNotes ();
          if (strGetBoolean (argv[3])  &&  report->GetNumLines() > 0) {
-@@ -14331,7 +14331,7 @@
+@@ -14302,7 +14302,7 @@
  
      case OPT_PLAYERS:
          if (argc != 5) {
@@ -2984,7 +2986,7 @@ Index: src/tkscid.cpp
          } else {
              colorT color = WHITE;
              if (argv[3][0] == 'B'  ||  argv[3][0] == 'b') { color = BLACK; }
-@@ -14343,7 +14343,7 @@
+@@ -14314,7 +14314,7 @@
  
      case OPT_PRINT:
          if (argc < 3  ||  argc > 6) {
@@ -2993,7 +2995,7 @@ Index: src/tkscid.cpp
          }
          report->GuessNumRows ();
          if (argc > 3) {
-@@ -14406,7 +14406,7 @@
+@@ -14377,7 +14377,7 @@
      uint maxTableLines = OPTABLE_MAX_TABLE_LINES;
      uint maxLines = OPTABLE_MAX_LINES;
      static const char * usage =
@@ -3002,7 +3004,7 @@ Index: src/tkscid.cpp
  
      uint reportType = 0;
      if (argc < 2) {
-@@ -14472,10 +14472,10 @@
+@@ -14443,10 +14443,10 @@
          IndexEntry * ie = db->idx->FetchEntry (gnum);
          if (ply != 0) {
              if (db->gfile->ReadGame (db->bbuf, ie->GetOffset(), ie->GetLength()) != OK) {
@@ -3015,7 +3017,7 @@ Index: src/tkscid.cpp
              }
              scratchGame->LoadStandardTags (ie, db->nb);
              scratchGame->MoveToPly (ply - 1);
-@@ -14506,7 +14506,7 @@
+@@ -14477,7 +14477,7 @@
  sc_report_select (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      static const char * usage =
@@ -3024,7 +3026,7 @@ Index: src/tkscid.cpp
      if (argc != 5) {
          return errorResult (ti, usage);
      }
-@@ -14606,7 +14606,7 @@
+@@ -14577,7 +14577,7 @@
  sc_tree_best (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 7) {
@@ -3033,7 +3035,7 @@ Index: src/tkscid.cpp
      }
  
      scidBaseT * base = db;
-@@ -14782,7 +14782,7 @@
+@@ -14753,7 +14753,7 @@
  sc_tree_clean (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc < 3 || argc > 4) {
@@ -3042,7 +3044,7 @@ Index: src/tkscid.cpp
      }
  
      scidBaseT * base = db;
-@@ -14834,7 +14834,7 @@
+@@ -14805,7 +14805,7 @@
  sc_tree_move (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 4) {
@@ -3051,7 +3053,7 @@ Index: src/tkscid.cpp
      }
  
      scidBaseT * base = db;
-@@ -14921,7 +14921,7 @@
+@@ -14892,7 +14892,7 @@
      }
  
      if (base->treeCache->WriteFile (base->fileName) != OK) {
@@ -3060,7 +3062,7 @@ Index: src/tkscid.cpp
      }
      return setUintResult (ti, fileSize (base->fileName, TREEFILE_SUFFIX));
  }
-@@ -14984,7 +14984,7 @@
+@@ -14955,7 +14955,7 @@
  sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      static const char * usageStr =
@@ -3069,7 +3071,7 @@ Index: src/tkscid.cpp
  
        // Sort options: these should match the moveSortE enumerated type.
        static const char * sortOptions[] = {
-@@ -15605,7 +15605,7 @@
+@@ -15576,7 +15576,7 @@
  sc_tree_cachesize (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
    if (argc != 4) {
@@ -3078,7 +3080,7 @@ Index: src/tkscid.cpp
    }
    scidBaseT * base = NULL;
    int baseNum = strGetInteger (argv[2]);
-@@ -15624,7 +15624,7 @@
+@@ -15595,7 +15595,7 @@
  sc_tree_cacheinfo (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
    if (argc != 3) {
@@ -3087,7 +3089,7 @@ Index: src/tkscid.cpp
    }
    scidBaseT * base = NULL;
    int baseNum = strGetInteger (argv[2]);
-@@ -15716,7 +15716,7 @@
+@@ -15687,7 +15687,7 @@
  sc_search_board (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      const char * usageStr =
@@ -3096,7 +3098,7 @@ Index: src/tkscid.cpp
      bool showProgress = startProgressBar();
      if (!db->inUse) {
          return errorResult (ti, errMsgNotOpen(ti));
-@@ -15888,7 +15888,7 @@
+@@ -15859,7 +15859,7 @@
          // At this point, the game needs to be loaded:
          if (db->gfile->ReadGame (db->bbuf, ie->GetOffset(),
                                   ie->GetLength()) != OK) {
@@ -3105,7 +3107,7 @@ Index: src/tkscid.cpp
          }
          uint ply = 0;
          if (useVars) {
-@@ -15949,7 +15949,7 @@
+@@ -15920,7 +15920,7 @@
               centisecs / 100, decimalPointChar, centisecs % 100);
      Tcl_AppendResult (ti, temp, NULL);
  #ifdef SHOW_SKIPPED_STATS
@@ -3114,7 +3116,7 @@ Index: src/tkscid.cpp
      Tcl_AppendResult (ti, temp, NULL);
  #endif
  
-@@ -15969,7 +15969,7 @@
+@@ -15940,7 +15940,7 @@
  sc_search_moves (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      const char * usageStr =
@@ -3123,7 +3125,7 @@ Index: src/tkscid.cpp
      bool showProgress = startProgressBar();
      char **m_argv;
      int m_argc;
-@@ -16062,7 +16062,7 @@
+@@ -16033,7 +16033,7 @@
          // At this point, the game needs to be loaded:
          if (db->gfile->ReadGame (db->bbuf, ie->GetOffset(),
                                   ie->GetLength()) != OK) {
@@ -3132,7 +3134,7 @@ Index: src/tkscid.cpp
          }
  
  	g->Decode (db->bbuf, GAME_DECODE_NONE);
-@@ -16091,7 +16091,7 @@
+@@ -16062,7 +16062,7 @@
               centisecs / 100, decimalPointChar, centisecs % 100);
      Tcl_AppendResult (ti, temp, NULL);
  #ifdef SHOW_SKIPPED_STATS
@@ -3141,7 +3143,7 @@ Index: src/tkscid.cpp
      Tcl_AppendResult (ti, temp, NULL);
  #endif
      Tcl_Free((char *) m_argv);
-@@ -16107,7 +16107,7 @@
+@@ -16078,7 +16078,7 @@
  {
      uint gameNum;
      const char * usageStr =
@@ -3150,7 +3152,7 @@ Index: src/tkscid.cpp
      bool showProgress = startProgressBar();
  
      if (argc != 6)
-@@ -16153,7 +16153,7 @@
+@@ -16124,7 +16124,7 @@
      if (setjmp(jump_buffer) != 0 ) {
        CqlReset();
        if (cqlErrMsg) Tcl_AppendResult (ti, cqlErrMsg, NULL);
@@ -3159,7 +3161,7 @@ Index: src/tkscid.cpp
        return TCL_OK;
      }
  
-@@ -16229,7 +16229,7 @@
+@@ -16200,7 +16200,7 @@
  
          // Load the game.
          if (db->gfile->ReadGame (db->bbuf, ie->GetOffset(), ie->GetLength()) != OK) {
@@ -3168,7 +3170,7 @@ Index: src/tkscid.cpp
          }
  
          g->Decode (db->bbuf, GAME_DECODE_ALL); // variations, comments and non-standards
-@@ -16290,13 +16290,13 @@
+@@ -16261,13 +16261,13 @@
      if (dirtyFlag) {
          db->gfile->FlushAll();
          if (db->idx->WriteHeader() != OK) {
@@ -3184,7 +3186,7 @@ Index: src/tkscid.cpp
          }
      }
  
-@@ -16306,7 +16306,7 @@
+@@ -16277,7 +16277,7 @@
      // If the jump flag is set, we're falling out with an exception.
      if (jumpFlag) {
        if (cqlErrMsg) Tcl_AppendResult (ti, cqlErrMsg, NULL);
@@ -3193,7 +3195,7 @@ Index: src/tkscid.cpp
      } else {
        char temp[200];
        int centisecs = timer.CentiSecs();
-@@ -16318,7 +16318,7 @@
+@@ -16289,7 +16289,7 @@
               centisecs / 100, decimalPointChar, centisecs % 100);
        Tcl_AppendResult (ti, temp, NULL);
  #ifdef SHOW_SKIPPED_STATS
@@ -3202,7 +3204,7 @@ Index: src/tkscid.cpp
        Tcl_AppendResult (ti, temp, NULL);
  #endif
      }
-@@ -16451,7 +16451,7 @@
+@@ -16422,7 +16422,7 @@
  {
      bool showProgress = startProgressBar();
      if (! db->inUse) {
@@ -3211,7 +3213,7 @@ Index: src/tkscid.cpp
      }
  
      uint minMoves = 0;
-@@ -16549,7 +16549,7 @@
+@@ -16520,7 +16520,7 @@
  
          case OPT_PATTERN:
              if (parsePattern (value, &tempPatt) != OK) {
@@ -3220,7 +3222,7 @@ Index: src/tkscid.cpp
                  return TCL_ERROR;
              }
              // Only add to lists if a pattern was specified:
-@@ -16579,7 +16579,7 @@
+@@ -16550,7 +16550,7 @@
              return InvalidCommand (ti, "sc_search material", options);
          }
      }
@@ -3229,7 +3231,7 @@ Index: src/tkscid.cpp
  
      // Sanity check of values:
      if (max[WQ] < min[WQ]) { max[WQ] = min[WQ]; }
-@@ -16827,7 +16827,7 @@
+@@ -16798,7 +16798,7 @@
               centisecs / 100, decimalPointChar, centisecs % 100);
      Tcl_AppendResult (ti, temp, NULL);
  #ifdef SHOW_SKIPPED_STATS
@@ -3238,7 +3240,7 @@ Index: src/tkscid.cpp
      Tcl_AppendResult (ti, temp, NULL);
  #endif
  
-@@ -17198,7 +17198,7 @@
+@@ -17169,7 +17169,7 @@
      int pgnTextCount = 0;
      char ** sPgnText = NULL;
      bool ignoreCase = 0;
@@ -3247,7 +3249,7 @@ Index: src/tkscid.cpp
  
      const char * options[] = {
          "white", "black", "event", "site", "round",
-@@ -17394,7 +17394,7 @@
+@@ -17365,7 +17365,7 @@
              return InvalidCommand (ti, "sc_search header", options);
          }
      }
@@ -3256,7 +3258,7 @@ Index: src/tkscid.cpp
  
      // Set up White name matches array:
      if (sWhite != NULL  &&  sWhite[0] != 0) {
-@@ -17621,7 +17621,7 @@
+@@ -17592,7 +17592,7 @@
          filterOp = FILTEROP_AND;
      }
  
@@ -3265,7 +3267,7 @@ Index: src/tkscid.cpp
  
      // Here is the loop that searches on each game:
      for (uint i=0; i < db->numGames; i++) {
-@@ -17755,11 +17755,11 @@
+@@ -17726,11 +17726,11 @@
  
              if (match) {
  
@@ -3279,7 +3281,7 @@ Index: src/tkscid.cpp
  		     match = (p->IsStaleMate());
  		} else {
  		     match = (p->IsKingInMate());
-@@ -17840,7 +17840,7 @@
+@@ -17811,7 +17811,7 @@
               centisecs / 100, decimalPointChar, centisecs % 100);
      Tcl_AppendResult (ti, temp, NULL);
  #ifdef SHOW_SKIPPED_STATS
@@ -3288,7 +3290,7 @@ Index: src/tkscid.cpp
      Tcl_AppendResult (ti, temp, NULL);
  #endif
  
-@@ -17934,12 +17934,12 @@
+@@ -17905,12 +17905,12 @@
  {
  
      if (argc != 3) {
@@ -3303,7 +3305,7 @@ Index: src/tkscid.cpp
      }
      db->game->DeleteVariationAndFree (varNumber);
      db->gameAltered = true;
-@@ -17954,12 +17954,12 @@
+@@ -17925,12 +17925,12 @@
  {
  
      if (argc != 3) {
@@ -3318,7 +3320,7 @@ Index: src/tkscid.cpp
      }
      db->game->DeleteVariation (varNumber);
      db->gameAltered = true;
-@@ -17973,12 +17973,12 @@
+@@ -17944,12 +17944,12 @@
  sc_var_first (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -3333,7 +3335,7 @@ Index: src/tkscid.cpp
      }
      db->game->FirstVariation (varNumber);
      db->gameAltered = true;
-@@ -18012,12 +18012,12 @@
+@@ -17983,12 +17983,12 @@
  sc_var_enter (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -3348,7 +3350,7 @@ Index: src/tkscid.cpp
      }
  
      db->game->MoveIntoVariation (varNumber);
-@@ -18038,12 +18038,12 @@
+@@ -18009,12 +18009,12 @@
  sc_var_promote (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -3363,7 +3365,7 @@ Index: src/tkscid.cpp
      }
      db->game->MainVariation (varNumber);
      db->gameAltered = true;
-@@ -18098,7 +18098,7 @@
+@@ -18069,7 +18069,7 @@
  sc_book_load (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 4) {
@@ -3372,7 +3374,7 @@ Index: src/tkscid.cpp
      }
  
      uint slot = strGetUnsigned (argv[3]);
-@@ -18106,7 +18106,7 @@
+@@ -18077,7 +18077,7 @@
      int bookstate = polyglot_open(argv[2], slot);
  
      if (bookstate == -1 ) {
@@ -3381,7 +3383,7 @@ Index: src/tkscid.cpp
      }
      if (bookstate  >  0 ) {
         // state == 1: book is read only
-@@ -18115,7 +18115,7 @@
+@@ -18086,7 +18086,7 @@
      return TCL_OK;
  
  //--//    if (polyglot_open(argv[2], slot) == -1 ) {
@@ -3390,7 +3392,7 @@ Index: src/tkscid.cpp
  //--//		}
  //--//    return TCL_OK;
  }
-@@ -18127,11 +18127,11 @@
+@@ -18098,11 +18098,11 @@
  sc_book_close (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -3404,7 +3406,7 @@ Index: src/tkscid.cpp
      }
      return TCL_OK;
  }
-@@ -18146,7 +18146,7 @@
+@@ -18117,7 +18117,7 @@
      char boardStr[100];
  
      if (argc != 3) {
@@ -3413,7 +3415,7 @@ Index: src/tkscid.cpp
      }
      uint slot = strGetUnsigned (argv[2]);
      db->game->GetCurrentPos()->PrintFEN (boardStr, FEN_ALL_FIELDS);
-@@ -18165,7 +18165,7 @@
+@@ -18136,7 +18136,7 @@
      char boardStr[100];
  
      if (argc != 3) {
@@ -3422,7 +3424,7 @@ Index: src/tkscid.cpp
      }
      uint slot = strGetUnsigned (argv[2]);
      db->game->GetCurrentPos()->PrintFEN (boardStr, FEN_ALL_FIELDS);
-@@ -18182,7 +18182,7 @@
+@@ -18153,7 +18153,7 @@
  sc_book_update (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 4) {
@@ -3431,7 +3433,7 @@ Index: src/tkscid.cpp
      }
      uint slot = strGetUnsigned (argv[3]);
      scid_book_update( (char*) argv[2], slot );
-@@ -18196,7 +18196,7 @@
+@@ -18167,7 +18167,7 @@
  sc_book_movesupdate (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 6) {
@@ -3442,7 +3444,7 @@ Index: src/tkscid.cpp
      scid_book_movesupdate( (char*) argv[2], (char*) argv[3], slot, (char*) argv[5] );
 Index: tcl/bitmaps.tcl
 ===================================================================
---- tcl/bitmaps.tcl	(revision 3386)
+--- tcl/bitmaps.tcl	(revision 3396)
 +++ tcl/bitmaps.tcl	(working copy)
 @@ -71,19 +71,19 @@
  ### Process custom chess pieces
@@ -3528,7 +3530,7 @@ Index: tcl/bitmaps.tcl
  ### end of bitmaps.tcl
 Index: tcl/board.tcl
 ===================================================================
---- tcl/board.tcl	(revision 3388)
+--- tcl/board.tcl	(revision 3396)
 +++ tcl/board.tcl	(working copy)
 @@ -3012,7 +3012,7 @@
    if {[catch {
@@ -3550,7 +3552,7 @@ Index: tcl/board.tcl
    if {[llength $filename]} {
 Index: tcl/config.tcl
 ===================================================================
---- tcl/config.tcl	(revision 3386)
+--- tcl/config.tcl	(revision 3396)
 +++ tcl/config.tcl	(working copy)
 @@ -44,18 +44,18 @@
  
@@ -3578,7 +3580,7 @@ Index: tcl/config.tcl
  ### Setup for truetype (and PGN figurine) support
 Index: tcl/edit.tcl
 ===================================================================
---- tcl/edit.tcl	(revision 3386)
+--- tcl/edit.tcl	(revision 3396)
 +++ tcl/edit.tcl	(working copy)
 @@ -5,9 +5,9 @@
  proc fenErrorDialog {{msg {}}} {
@@ -3643,9 +3645,9 @@ Index: tcl/edit.tcl
      set setupBd {}
 Index: tcl/end.tcl
 ===================================================================
---- tcl/end.tcl	(revision 3394)
+--- tcl/end.tcl	(revision 3399)
 +++ tcl/end.tcl	(working copy)
-@@ -124,7 +124,7 @@
+@@ -123,7 +123,7 @@
    sc_game pop
    if {$err} {
      tk_messageBox -title Scid -type ok -icon info \
@@ -3654,7 +3656,7 @@ Index: tcl/end.tcl
      return
    }
    set merge(base) $base
-@@ -147,7 +147,7 @@
+@@ -146,7 +146,7 @@
    pack $w.f.text -side left -fill both -expand yes
    pack $w.f -fill both -expand yes
  
@@ -3663,7 +3665,7 @@ Index: tcl/end.tcl
    pack $w.b.label -side left -padx 2
    foreach i {5 10 15 20 25 30 35 40} {
      radiobutton $w.b.m$i -text [format "%2i" $i] -variable merge(ply) -value [expr {$i * 2}] \
-@@ -204,9 +204,9 @@
+@@ -203,9 +203,9 @@
      return 1
    } else {
      if {[winfo exists $w]} {
@@ -3675,7 +3677,7 @@ Index: tcl/end.tcl
      }
      return 0
    }
-@@ -226,7 +226,7 @@
+@@ -225,7 +225,7 @@
  
    toplevel $w
    wm withdraw $w
@@ -3684,7 +3686,7 @@ Index: tcl/end.tcl
    if {$exportType == "Latex"} {
        bind $w <F1> {helpWindow LaTeX}
    }
-@@ -237,8 +237,8 @@
+@@ -236,8 +236,8 @@
    set pane [::utils::pane::Create $w.pane start end 500 400 0.7]
    ::utils::pane::SetRange $w.pane 0.3 0.7
    pack $pane -side top -expand true -fill both
@@ -3695,7 +3697,7 @@ Index: tcl/end.tcl
      text $f.text -wrap none  \
          -yscroll "$f.ybar set" -xscroll "$f.xbar set"
      scrollbar $f.ybar -orient vertical -command "$f.text yview"
-@@ -256,18 +256,18 @@
+@@ -255,18 +255,18 @@
    
    # Additional Latex options
    if {$exportType == "Latex"} {
@@ -3717,7 +3719,7 @@ Index: tcl/end.tcl
        $pane.start.text delete 1.0 end
        $pane.start.text insert end \$default_exportStartFile(Latex)
        $pane.end.text delete 1.0 end
-@@ -287,7 +287,7 @@
+@@ -286,7 +286,7 @@
      "        
      addHorizontalRule $w
    } else {
@@ -3726,7 +3728,7 @@ Index: tcl/end.tcl
      $pane.start.text delete 1.0 end
      $pane.start.text insert end \$default_exportStartFile($exportType)
      $pane.end.text delete 1.0 end
-@@ -465,7 +465,7 @@
+@@ -464,7 +464,7 @@
  
    # Extra option for PGN format: handling of null moves
    if {$exportType == "PGN"} {
@@ -3735,7 +3737,7 @@ Index: tcl/end.tcl
      radiobutton $w.o.convertNullMoves -text $::tr(Yes) -variable exportFlags(convertNullMoves) -value 1
      radiobutton $w.o.keepNullMoves -text $::tr(No) -variable exportFlags(convertNullMoves) -value 0
      grid $w.o.nullMoves        -row $row -column 0 -sticky w
-@@ -474,7 +474,7 @@
+@@ -473,7 +473,7 @@
      incr row
    }
  
@@ -3744,7 +3746,7 @@ Index: tcl/end.tcl
      radiobutton $w.o.utf8True -text Utf-8 -variable exportFlags(utf8) -value 1
      radiobutton $w.o.utf8False -text Latin-1 -variable exportFlags(utf8) -value 0
      grid $w.o.utf8       -row $row -column 0 -sticky w
-@@ -485,7 +485,7 @@
+@@ -484,7 +484,7 @@
    # Extra option for HTML format: diagram image set
    if {$exportType == "HTML"} {
      label $w.o.space3 -text ""
@@ -3753,7 +3755,7 @@ Index: tcl/end.tcl
      radiobutton $w.o.hb0 -text "bitmaps" -variable exportFlags(htmldiag) -value 0
      radiobutton $w.o.hb1 -text "bitmaps2" -variable exportFlags(htmldiag) -value 1
      label $w.o.hl0 -image htmldiag0
-@@ -531,13 +531,13 @@
+@@ -530,13 +530,13 @@
    if {$exportFilter} {
      # Check that we have some games to export:
      if {![sc_base inUse]} {
@@ -3771,7 +3773,7 @@ Index: tcl/end.tcl
        return
      }
    }
-@@ -557,7 +557,7 @@
+@@ -556,7 +556,7 @@
      "HTML" {
        sc_info html $exportFlags(htmldiag)
        set ftype {
@@ -3780,7 +3782,7 @@ Index: tcl/end.tcl
          { "All files" {"*"} }
        }
        set title "an HTML file"
-@@ -566,7 +566,7 @@
+@@ -565,7 +565,7 @@
      }
      "Latex" {
        set ftype {
@@ -3789,7 +3791,7 @@ Index: tcl/end.tcl
          { "All files" {"*"} }
        }
        set title "a LaTeX file"
-@@ -601,7 +601,7 @@
+@@ -600,7 +600,7 @@
    if {$exportFilter} {
      progressWindow Scid "Exporting games" $::tr(Stop) sc_progressBar
    }
@@ -3798,7 +3800,7 @@ Index: tcl/end.tcl
    busyCursor .
    set error [catch {
    sc_base export $selection $exportType $fName -append $exportFlags(append) \
-@@ -620,7 +620,7 @@
+@@ -619,7 +619,7 @@
    unbusyCursor .
  
    if {$error} {
@@ -3807,7 +3809,7 @@ Index: tcl/end.tcl
    }
  
    if {$exportType == "HTML"} {
-@@ -640,7 +640,7 @@
+@@ -639,7 +639,7 @@
  
    if {[sc_filter count] < 1} {
      tk_messageBox -type ok -icon info -title Scid \
@@ -3816,7 +3818,7 @@ Index: tcl/end.tcl
      return
    }
  
-@@ -681,7 +681,7 @@
+@@ -680,7 +680,7 @@
    pack $w.preview -side top -fill x
    pack $w.xbar -side top -fill x
    pack [frame $w.b] -side bottom -fill x -pady 5
@@ -3825,7 +3827,7 @@ Index: tcl/end.tcl
    dialogbutton $w.b.ok -text "OK" -command saveExportGList
    dialogbutton $w.b.close -textvar ::tr(Cancel) -command "destroy $w"
    bind $w <Escape> "destroy $w"
-@@ -717,7 +717,7 @@
+@@ -716,7 +716,7 @@
    global glexport env
    set ftypes {{"Text files" {.txt}} {"All files" *}}
    set fname [tk_getSaveFile -filetypes $ftypes -parent .glexport \
@@ -3834,7 +3836,7 @@ Index: tcl/end.tcl
    if {$fname == ""} { return }
    set showProgress 0
    if {[sc_filter count] >= 20000} { set showProgress 1 }
-@@ -1059,20 +1059,20 @@
+@@ -1056,20 +1056,20 @@
  
    if {![sc_base inUse]} {
      # We can't load a game, no database is open
@@ -3861,7 +3863,7 @@ Index: tcl/end.tcl
      return
    }
  
-@@ -1220,7 +1220,7 @@
+@@ -1217,7 +1217,7 @@
  
    # Eco
  
@@ -3870,7 +3872,7 @@ Index: tcl/end.tcl
    ttk::entry $f.ecoentry -width 6  -textvariable eco -justify right
    grid $f.ecolabel -row 10 -column 0 -sticky w
    grid $f.ecoentry -row 10 -column 2 -sticky w
-@@ -1342,13 +1342,13 @@
+@@ -1339,13 +1339,13 @@
  
    frame $w.buttons
    if {$gnum == 0} {
@@ -3887,7 +3889,7 @@ Index: tcl/end.tcl
      } else {
        set extraTags [.save.g.extratext get 1.0 end-1c]
        if {[gsave $gsaveNum]} {
-@@ -1437,13 +1437,13 @@
+@@ -1434,13 +1434,13 @@
        set $i "?"
      }
      if {[string bytelength [set $i]] > 255} {
@@ -3904,7 +3906,7 @@ Index: tcl/end.tcl
  	return 0
        }
      }
-@@ -1941,7 +1941,7 @@
+@@ -1938,7 +1938,7 @@
          "dock" -
          "nodock" {} ; # handled later
          default {
@@ -3913,7 +3915,7 @@ Index: tcl/end.tcl
          }
        }
      } else {
-@@ -1967,7 +1967,7 @@
+@@ -1964,7 +1964,7 @@
  # Try to find tablebases:
  if {$loadAtStart(tb)} {
    if {[sc_info tb]} {
@@ -3922,7 +3924,7 @@ Index: tcl/end.tcl
      set tbDirs {}
      foreach i {1 2 3 4} {
        if {$initialDir(tablebase$i) != ""} {
-@@ -1981,9 +1981,9 @@
+@@ -1978,9 +1978,9 @@
        set result [sc_info tb $tbDirs]
      }
      if {$result == 0} {
@@ -3934,7 +3936,7 @@ Index: tcl/end.tcl
      }
    }
  }
-@@ -1996,12 +1996,12 @@
+@@ -1993,12 +1993,12 @@
    if {[catch { sc_eco read $ecoFile_fullname } result]} {
      # Hmmm - failed. So try "scid.eco" in the current directory:
      if {[catch {sc_eco read "scid.eco"} result]} {
@@ -3950,7 +3952,7 @@ Index: tcl/end.tcl
    }
  }
  
-@@ -2010,10 +2010,10 @@
+@@ -2007,10 +2007,10 @@
  set spellCheckFileExists 0
  if {$loadAtStart(spell)} {
    if {[catch {sc_name read $spellCheckFile} result]} {
@@ -3964,7 +3966,7 @@ Index: tcl/end.tcl
      set spellCheckFileExists 1
    }
  }
-@@ -2030,15 +2030,15 @@
+@@ -2027,15 +2027,15 @@
  if {$defaultDBs != {}} {
    if {$argc == 0 && $mac_args == 0} {
      if {[file readable [lindex $defaultDBs 0]] || [file readable "[lindex $defaultDBs 0].si4"]} {
@@ -3983,7 +3985,7 @@ Index: tcl/end.tcl
    }
  }
  
-@@ -2063,22 +2063,22 @@
+@@ -2060,22 +2060,22 @@
      break
    }
    if {[string match "*.epd*" $startbase]} {
@@ -4011,7 +4013,7 @@ Index: tcl/end.tcl
      set errMessage ""
      set err [catch { ::file::Open $startbase} errMessage]
      if {$err} {
-@@ -2086,9 +2086,9 @@
+@@ -2083,9 +2083,9 @@
        ### Umm... they are. ? S.A.
        set errMessage "$errMessage\nCould not open database \"$startbase\""
        ::splash::add $errMessage error
@@ -4025,7 +4027,7 @@ Index: tcl/end.tcl
        # this sets initialDir(file) for all files, not just pgn... 
 Index: tcl/file.tcl
 ===================================================================
---- tcl/file.tcl	(revision 3386)
+--- tcl/file.tcl	(revision 3396)
 +++ tcl/file.tcl	(working copy)
 @@ -93,7 +93,7 @@
  proc ::file::New {} {
@@ -4160,7 +4162,7 @@ Index: tcl/file.tcl
        set ::initialDir(file) [file tail $fName]
 Index: tcl/game.tcl
 ===================================================================
---- tcl/game.tcl	(revision 3386)
+--- tcl/game.tcl	(revision 3396)
 +++ tcl/game.tcl	(working copy)
 @@ -125,16 +125,16 @@
  proc ::game::LoadNextPrev {action {raise 1}} {
@@ -4184,7 +4186,7 @@ Index: tcl/game.tcl
    ::game::Load $number 1 $raise
 Index: tcl/language.tcl
 ===================================================================
---- tcl/language.tcl	(revision 3391)
+--- tcl/language.tcl	(revision 3396)
 +++ tcl/language.tcl	(working copy)
 @@ -124,8 +124,8 @@
  
@@ -4199,7 +4201,7 @@ Index: tcl/language.tcl
  
 Index: tcl/main.tcl
 ===================================================================
---- tcl/main.tcl	(revision 3386)
+--- tcl/main.tcl	(revision 3396)
 +++ tcl/main.tcl	(working copy)
 @@ -1039,7 +1039,7 @@
    catch {source $fname}
@@ -4273,7 +4275,7 @@ Index: tcl/main.tcl
    pack $w.label -side top -pady 5 -padx 5
 Index: tcl/menus.tcl
 ===================================================================
---- tcl/menus.tcl	(revision 3386)
+--- tcl/menus.tcl	(revision 3398)
 +++ tcl/menus.tcl	(working copy)
 @@ -84,7 +84,7 @@
  $m add command -label FileNew -command ::file::New
@@ -4728,7 +4730,7 @@ Index: tcl/menus.tcl
  
 Index: tcl/search/header.tcl
 ===================================================================
---- tcl/search/header.tcl	(revision 3386)
+--- tcl/search/header.tcl	(revision 3396)
 +++ tcl/search/header.tcl	(working copy)
 @@ -92,7 +92,7 @@
    set sIgnoreCol No
@@ -4826,7 +4828,7 @@ Index: tcl/search/header.tcl
    listbox $w.list -yscrollcommand "$w.ybar set" -height 20 -width 60 \
 Index: tcl/start.tcl
 ===================================================================
---- tcl/start.tcl	(revision 3386)
+--- tcl/start.tcl	(revision 3400)
 +++ tcl/start.tcl	(working copy)
 @@ -69,7 +69,7 @@
      append msg "tkscid program \nit uses is version [sc_info version].\n"
@@ -4837,7 +4839,7 @@ Index: tcl/start.tcl
    exit 1
  }
  
-@@ -1386,7 +1386,7 @@
+@@ -1388,7 +1388,7 @@
      if {$isMacBaseReady == 0} {
        if {$mac_args != 0} {
          tk_messageBox -type ok -icon info -title Scid -message \
@@ -4846,7 +4848,7 @@ Index: tcl/start.tcl
          return
        } else {
          # Save file names for later use:
-@@ -1398,7 +1398,7 @@
+@@ -1400,7 +1400,7 @@
      # Are we busy opening files? if so, display message and do nothing
      if {$mac_busy != 0} {
        tk_messageBox -type ok -icon info -title Scid -message \
@@ -4855,7 +4857,7 @@ Index: tcl/start.tcl
        return
      }
  
-@@ -1415,8 +1415,8 @@
+@@ -1417,8 +1417,8 @@
        # Check for available slots:
        if {[sc_base count free] == 0} {
          tk_messageBox -type ok -icon info -title Scid \
@@ -4866,7 +4868,7 @@ Index: tcl/start.tcl
          #::splash::add "No slot available."
          return
        }
-@@ -1430,8 +1430,8 @@
+@@ -1432,8 +1432,8 @@
        if {$ext == ".sso"} {
          set ::fName $file
          if {[catch {uplevel "#0" {source $::fName}} errmsg]} {
@@ -4877,7 +4879,7 @@ Index: tcl/start.tcl
          } else {
            switch -- $::searchType {
              "Material" { ::search::material }
-@@ -1556,19 +1556,19 @@
+@@ -1558,19 +1558,19 @@
  
  set optionsFile [scidConfigFile options]
  
@@ -4902,7 +4904,7 @@ Index: tcl/start.tcl
    set png_image_support 1
    set boardStyle Merida1
  }
-@@ -1576,9 +1576,9 @@
+@@ -1578,9 +1578,9 @@
  set useGraphFigurine 1
  
  if {[catch {source $optionsFile} ]} {
@@ -4914,7 +4916,7 @@ Index: tcl/start.tcl
  }
  
  if { [string first "-dock" [lindex $argv 0]] > -1} {
-@@ -1897,7 +1897,7 @@
+@@ -1899,7 +1899,7 @@
  
    wm withdraw $w
    wm protocol $w WM_DELETE_WINDOW [list wm withdraw $w]
@@ -4923,7 +4925,7 @@ Index: tcl/start.tcl
  
    ### Pack in this order to resize nicely
    # buttons
-@@ -1920,9 +1920,9 @@
+@@ -1922,9 +1922,9 @@
    scrollbar $w.ybar -command [list $w.t yview]
  
    # Translations aren't set up yet, but these are handled in setLanguage
@@ -4935,7 +4937,7 @@ Index: tcl/start.tcl
        -font font_Small
  
    entry $w.find -width 10 -textvariable ::splash::find(find) -highlightthickness 0
-@@ -1935,8 +1935,8 @@
+@@ -1937,8 +1937,8 @@
        ::splash::add {}
        ::splash::add "$scidName $scidVersion Console"
        ::splash::add {------------------------------------}
@@ -4946,7 +4948,7 @@ Index: tcl/start.tcl
      }
      set command [string trim [.splash.command get]]
      ::splash::add "# $command"
-@@ -1998,7 +1998,7 @@
+@@ -2000,7 +2000,7 @@
  ::splash::add "(C) Pascal Georges 2006-2008"
  ::splash::add "(C) Shane Hudson 1999-2004"
  ::splash::add "(C) Gregor Cramer, Fulvio Benini and others."
@@ -4955,7 +4957,7 @@ Index: tcl/start.tcl
  ::splash::add ""
  
  # add cached splash comments
-@@ -2014,11 +2014,11 @@
+@@ -2016,11 +2016,11 @@
  } else {
    set result Yes
  }
@@ -4970,7 +4972,7 @@ Index: tcl/start.tcl
  }
  if {[string match -nocase Linux $tcl_platform(os)]} {
    catch {
-@@ -2027,7 +2027,7 @@
+@@ -2029,7 +2029,7 @@
  }
  
  catch {
@@ -4981,7 +4983,7 @@ Index: tcl/start.tcl
  ::splash::add ""
 Index: tcl/tools/analysis.tcl
 ===================================================================
---- tcl/tools/analysis.tcl	(revision 3387)
+--- tcl/tools/analysis.tcl	(revision 3396)
 +++ tcl/tools/analysis.tcl	(working copy)
 @@ -232,7 +232,7 @@
    if {$::windowsOS} {
@@ -5123,7 +5125,7 @@ Index: tcl/tools/analysis.tcl
    pack $w.label -side top -pady 5 -padx 5
 Index: tcl/tools/calvar.tcl
 ===================================================================
---- tcl/tools/calvar.tcl	(revision 3386)
+--- tcl/tools/calvar.tcl	(revision 3396)
 +++ tcl/tools/calvar.tcl	(working copy)
 @@ -102,7 +102,7 @@
  
@@ -5160,7 +5162,7 @@ Index: tcl/tools/calvar.tcl
        button $f.p$piece -image w${piece}20 -command "::calvar::promo $piece"
 Index: tcl/tools/comp.tcl
 ===================================================================
---- tcl/tools/comp.tcl	(revision 3386)
+--- tcl/tools/comp.tcl	(revision 3396)
 +++ tcl/tools/comp.tcl	(working copy)
 @@ -27,7 +27,7 @@
    }
@@ -5407,7 +5409,7 @@ Index: tcl/tools/comp.tcl
  
 Index: tcl/tools/correspondence.tcl
 ===================================================================
---- tcl/tools/correspondence.tcl	(revision 3386)
+--- tcl/tools/correspondence.tcl	(revision 3396)
 +++ tcl/tools/correspondence.tcl	(working copy)
 @@ -90,7 +90,7 @@
  		global ::Xfcc::xfccrc ::Xfcc::xfccrcfile
@@ -5529,7 +5531,7 @@ Index: tcl/tools/correspondence.tcl
  
 Index: tcl/tools/email.tcl
 ===================================================================
---- tcl/tools/email.tcl	(revision 3386)
+--- tcl/tools/email.tcl	(revision 3396)
 +++ tcl/tools/email.tcl	(working copy)
 @@ -14,7 +14,7 @@
    }
@@ -5744,7 +5746,7 @@ Index: tcl/tools/email.tcl
      ::tools::email::refresh
 Index: tcl/tools/fics.tcl
 ===================================================================
---- tcl/tools/fics.tcl	(revision 3390)
+--- tcl/tools/fics.tcl	(revision 3396)
 +++ tcl/tools/fics.tcl	(working copy)
 @@ -77,7 +77,7 @@
  
@@ -6080,7 +6082,7 @@ Index: tcl/tools/fics.tcl
      }
 Index: tcl/tools/graphs.tcl
 ===================================================================
---- tcl/tools/graphs.tcl	(revision 3386)
+--- tcl/tools/graphs.tcl	(revision 3396)
 +++ tcl/tools/graphs.tcl	(working copy)
 @@ -14,12 +14,12 @@
    if {! [winfo exists $w]} { return }
@@ -6150,7 +6152,7 @@ Index: tcl/tools/graphs.tcl
      }
 Index: tcl/tools/import.tcl
 ===================================================================
---- tcl/tools/import.tcl	(revision 3386)
+--- tcl/tools/import.tcl	(revision 3396)
 +++ tcl/tools/import.tcl	(working copy)
 @@ -137,8 +137,8 @@
    }
@@ -6235,7 +6237,7 @@ Index: tcl/tools/import.tcl
      }
 Index: tcl/tools/inputengine.tcl
 ===================================================================
---- tcl/tools/inputengine.tcl	(revision 3386)
+--- tcl/tools/inputengine.tcl	(revision 3396)
 +++ tcl/tools/inputengine.tcl	(working copy)
 @@ -170,8 +170,8 @@
  
@@ -6268,7 +6270,7 @@ Index: tcl/tools/inputengine.tcl
            } \
 Index: tcl/tools/novag.tcl
 ===================================================================
---- tcl/tools/novag.tcl	(revision 3386)
+--- tcl/tools/novag.tcl	(revision 3396)
 +++ tcl/tools/novag.tcl	(working copy)
 @@ -36,7 +36,7 @@
      
@@ -6281,7 +6283,7 @@ Index: tcl/tools/novag.tcl
      }
 Index: tcl/tools/optable.tcl
 ===================================================================
---- tcl/tools/optable.tcl	(revision 3393)
+--- tcl/tools/optable.tcl	(revision 3396)
 +++ tcl/tools/optable.tcl	(working copy)
 @@ -68,7 +68,7 @@
      set w .progress
@@ -6480,7 +6482,7 @@ Index: tcl/tools/optable.tcl
        return
 Index: tcl/tools/pinfo.tcl
 ===================================================================
---- tcl/tools/pinfo.tcl	(revision 3386)
+--- tcl/tools/pinfo.tcl	(revision 3396)
 +++ tcl/tools/pinfo.tcl	(working copy)
 @@ -56,7 +56,7 @@
        } else {
@@ -6514,7 +6516,7 @@ Index: tcl/tools/pinfo.tcl
      ### If English, we can set the other four buttons likewise (and allign nicely)
 Index: tcl/tools/preport.tcl
 ===================================================================
---- tcl/tools/preport.tcl	(revision 3391)
+--- tcl/tools/preport.tcl	(revision 3396)
 +++ tcl/tools/preport.tcl	(working copy)
 @@ -19,7 +19,7 @@
  proc ::preport::preportDlg {{player {}}} {
@@ -6630,7 +6632,7 @@ Index: tcl/tools/preport.tcl
      # if {$::hasEncoding  &&  $::langEncoding($::language) != ""} { catch {set report [encoding convertto $::langEncoding($::language) $report]} }
 Index: tcl/tools/sergame.tcl
 ===================================================================
---- tcl/tools/sergame.tcl	(revision 3386)
+--- tcl/tools/sergame.tcl	(revision 3396)
 +++ tcl/tools/sergame.tcl	(working copy)
 @@ -91,7 +91,7 @@
  
@@ -6667,7 +6669,7 @@ Index: tcl/tools/sergame.tcl
      updateBoard -pgn
 Index: tcl/tools/tablebase.tcl
 ===================================================================
---- tcl/tools/tablebase.tcl	(revision 3386)
+--- tcl/tools/tablebase.tcl	(revision 3396)
 +++ tcl/tools/tablebase.tcl	(working copy)
 @@ -159,7 +159,7 @@
    set f $w.info
@@ -6801,7 +6803,7 @@ Index: tcl/tools/tablebase.tcl
  ####################################################################
 Index: tcl/tools/tacgame.tcl
 ===================================================================
---- tcl/tools/tacgame.tcl	(revision 3386)
+--- tcl/tools/tacgame.tcl	(revision 3396)
 +++ tcl/tools/tacgame.tcl	(working copy)
 @@ -127,7 +127,7 @@
      }
@@ -6900,7 +6902,7 @@ Index: tcl/tools/tacgame.tcl
      updateBoard -pgn
 Index: tcl/tools/tactics.tcl
 ===================================================================
---- tcl/tools/tactics.tcl	(revision 3386)
+--- tcl/tools/tactics.tcl	(revision 3396)
 +++ tcl/tools/tactics.tcl	(working copy)
 @@ -50,7 +50,7 @@
      set found 0
@@ -6997,7 +6999,7 @@ Index: tcl/tools/tactics.tcl
    }
 Index: tcl/tools/uci.tcl
 ===================================================================
---- tcl/tools/uci.tcl	(revision 3386)
+--- tcl/tools/uci.tcl	(revision 3396)
 +++ tcl/tools/uci.tcl	(working copy)
 @@ -484,7 +484,7 @@
      }
