@@ -1,21 +1,8 @@
-Index: src/misc.h
-===================================================================
---- src/misc.h	(revision 3386)
-+++ src/misc.h	(working copy)
-@@ -107,7 +107,7 @@
- //    Returns the empty string if its parameter is 1, or "s" otherwise.
- inline const char *
- strPlural (uint x) {
--    return (x == 1 ? "" : "s");
-+    return (x == 1 ? "" : "");
- }
- 
- uint   strSingleSpace (char * str);
 Index: src/namebase.h
 ===================================================================
 --- src/namebase.h	(revision 3386)
 +++ src/namebase.h	(working copy)
-@@ -33,10 +33,10 @@
+@@ -33,8 +33,8 @@
  const uint NUM_NAME_TYPES = 4;
  
  const char NAME_TYPE_STRING [NUM_NAME_TYPES][8] = {
@@ -28,45 +15,6 @@ Index: src/namebase.h
 +    "Ort",
 +    "Runde"
  };
- 
- 
-Index: src/optable.cpp
-===================================================================
---- src/optable.cpp	(revision 3386)
-+++ src/optable.cpp	(working copy)
-@@ -302,7 +302,7 @@
-   //  while (ch != 0) {
-    //     switch (ch) {
-    //     case 'K': case 'Q': case 'R': case 'B': case 'N':
--   //         dstr->Append ("{\\");
-+   //         dstr->Append ("\\ldots\\ ");
-    //         dstr->AddChar (ch);
-    //         dstr->AddChar ('}');
-    //         break;
-@@ -1064,12 +1064,12 @@
-         for (uint j=0; j < 2*OPTABLE_COLUMNS; j++) {
-             //dstr->Append (j % 2 == 0 ? " & " : " \\newline ");
-             if (j % 2 == 0) {
--                dstr->Append (" & ");
-+                dstr->Append ("\\ldots\\ ");
-             } else if (*(Row[row]->Move[j-1]) != '\0') {
-                 dstr->Append (" \\newline ");
-             }
-             if (j < nSameMoves) {
--                dstr->Append ("...");
-+                dstr->Append ("\\ldots\\ ");
-             } else {
-                 OpLine::PrintMove (dstr, Row[row]->Move[j], OPTABLE_LaTeX);
-             }
-@@ -1151,7 +1151,7 @@
-         for (uint j=0; j < 2*OPTABLE_COLUMNS; j++) {
-             dstr->Append (j % 2 == 0 ? " <td> " : " <br> ");
-             if (j < nSameMoves) {
--                dstr->Append ("...");
-+                dstr->Append ("\\ldots\\ ");
-             } else {
-                 OpLine::PrintMove (dstr, Row[row]->Move[j], OPTABLE_HTML);
-             }
 Index: src/pgnparse.cpp
 ===================================================================
 --- src/pgnparse.cpp	(revision 3386)

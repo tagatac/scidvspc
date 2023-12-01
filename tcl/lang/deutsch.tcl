@@ -609,8 +609,7 @@ translate D AddThisMoveToMask {Diesen Zug zur Maske hinzufügen}
 translate D SearchMask {Suche in einer Maske}
 translate D DisplayMask {Maske als Zugbaum}
 translate D MaskShowMarkers {Markierungen anzeigen}
-# ====== TODO To be translated ======
-translate D MaskShowToolTips {Show Tooltips}
+translate D MaskShowToolTips {Zeige Kurzinfos}
 translate D Nag {NAG-Code}
 translate D Marker {Marker}
 translate D Include {Einbezogene Variante}
@@ -4531,7 +4530,7 @@ set helpText(D,TreeMasks) {<h1>Die Zugbaummasken</h1>
   </p>
   <p>Wenn eine Maske geöffnet wird, ändert sich die Anzeige des
   Zugbaumfensters. Zuallererst werden alle in der Maske vorhandenen
-  Züge violett hervorgehoben. Zusätzlich werden NAGs und Markierungen
+  Züge stahlblau hervorgehoben. Zusätzlich werden NAGs und Markierungen
   vor jedem Zug angezeigt und den Zug betreffende Kommentare werden
   dahinter angezeigt. Schließlich kann die aktuelle Stellung ebenfalls
   einen Kommentar enthalten.
