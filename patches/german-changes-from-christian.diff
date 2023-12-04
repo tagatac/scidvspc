@@ -1,7 +1,7 @@
 Index: src/namebase.h
 ===================================================================
---- src/namebase.h	(Revision 1073)
-+++ src/namebase.h	(Revision 1075)
+--- src/namebase.h	(Revision 1083)
++++ src/namebase.h	(Revision 1086)
 @@ -33,10 +33,10 @@
  const uint NUM_NAME_TYPES = 4;
  
@@ -19,8 +19,8 @@ Index: src/namebase.h
  
 Index: src/pgnparse.cpp
 ===================================================================
---- src/pgnparse.cpp	(Revision 1073)
-+++ src/pgnparse.cpp	(Revision 1075)
+--- src/pgnparse.cpp	(Revision 1083)
++++ src/pgnparse.cpp	(Revision 1086)
 @@ -376,7 +376,7 @@
              value[length-7] = 0;
              elo = strGetUnsigned (&(value[length-5]));
@@ -191,8 +191,8 @@ Index: src/pgnparse.cpp
              err = OK;
 Index: src/tkscid.cpp
 ===================================================================
---- src/tkscid.cpp	(Revision 1073)
-+++ src/tkscid.cpp	(Revision 1075)
+--- src/tkscid.cpp	(Revision 1083)
++++ src/tkscid.cpp	(Revision 1086)
 @@ -50,7 +50,7 @@
  static const uint REPORT_OPENING = 0;
  static const uint REPORT_PLAYER = 1;
@@ -3477,8 +3477,8 @@ Index: src/tkscid.cpp
      scid_book_movesupdate( (char*) argv[2], (char*) argv[3], slot, (char*) argv[5] );
 Index: tcl/bitmaps.tcl
 ===================================================================
---- tcl/bitmaps.tcl	(Revision 1073)
-+++ tcl/bitmaps.tcl	(Revision 1075)
+--- tcl/bitmaps.tcl	(Revision 1083)
++++ tcl/bitmaps.tcl	(Revision 1086)
 @@ -71,19 +71,19 @@
  ### Process custom chess pieces
  
@@ -3563,8 +3563,8 @@ Index: tcl/bitmaps.tcl
  ### end of bitmaps.tcl
 Index: tcl/board.tcl
 ===================================================================
---- tcl/board.tcl	(Revision 1073)
-+++ tcl/board.tcl	(Revision 1075)
+--- tcl/board.tcl	(Revision 1083)
++++ tcl/board.tcl	(Revision 1086)
 @@ -3012,7 +3012,7 @@
    if {[catch {
    package require img::window
@@ -3585,8 +3585,8 @@ Index: tcl/board.tcl
    if {[llength $filename]} {
 Index: tcl/config.tcl
 ===================================================================
---- tcl/config.tcl	(Revision 1073)
-+++ tcl/config.tcl	(Revision 1075)
+--- tcl/config.tcl	(Revision 1083)
++++ tcl/config.tcl	(Revision 1086)
 @@ -44,18 +44,18 @@
  
  ### Display directories
@@ -3613,8 +3613,8 @@ Index: tcl/config.tcl
  ### Setup for truetype (and PGN figurine) support
 Index: tcl/edit.tcl
 ===================================================================
---- tcl/edit.tcl	(Revision 1073)
-+++ tcl/edit.tcl	(Revision 1075)
+--- tcl/edit.tcl	(Revision 1083)
++++ tcl/edit.tcl	(Revision 1086)
 @@ -5,9 +5,9 @@
  proc fenErrorDialog {{msg {}}} {
  
@@ -3678,8 +3678,8 @@ Index: tcl/edit.tcl
      set setupBd {}
 Index: tcl/end.tcl
 ===================================================================
---- tcl/end.tcl	(Revision 1073)
-+++ tcl/end.tcl	(Revision 1075)
+--- tcl/end.tcl	(Revision 1083)
++++ tcl/end.tcl	(Revision 1086)
 @@ -123,7 +123,7 @@
    sc_game pop
    if {$err} {
@@ -4058,10 +4058,242 @@ Index: tcl/end.tcl
        set initialDir(base) [file dirname $startbase]
        set initialDir(file) [file tail $startbase]
        # this sets initialDir(file) for all files, not just pgn... 
+Index: tcl/file/maint.tcl
+===================================================================
+--- tcl/file/maint.tcl	(Revision 1083)
++++ tcl/file/maint.tcl	(Revision 1086)
+@@ -14,12 +14,12 @@
+   set ftype {
+     { "Scid databases" {".si4"} }
+   }
+-  set fName [tk_getOpenFile -initialdir $::initialDir(base) -filetypes $ftype -title "Open a Scid file"]
++  set fName [tk_getOpenFile -initialdir $::initialDir(base) -filetypes $ftype -title "Eine Scid-Datei öffnen"]
+   if {$fName == ""} { return }
+   set fName [file rootname $fName]
+ 
+   if {[sc_base slot $fName] != 0} {
+-    tk_messageBox -type ok -icon info -title Scid -message "$fName is already opened.\nClose it first"
++    tk_messageBox -type ok -icon info -title Scid -message "$fName ist bereits geöffnet.\nBitte zuerst schließen."
+     return
+   }
+ 
+@@ -29,9 +29,9 @@
+   unbusyCursor .
+   closeProgressWindow
+   if {$err} {
+-    tk_messageBox -type ok -icon warning -title "Scid: Error compacting file" -message $result
++    tk_messageBox -type ok -icon warning -title "Scid: Fehler bei der Dateikomprimierung" -message $result
+   } else {
+-    tk_messageBox -type ok -icon info -title Scid -message "Base $fName was repaired"
++    tk_messageBox -type ok -icon info -title Scid -message "Datenbank $fName wurde repariert"
+   }
+ 
+ }
+@@ -828,7 +828,7 @@
+ 
+ proc stripCommentsVars {arg {parent .}} {
+   if {$arg != "comments" && $arg != "variations"} { 
+-    tk_messageBox -type ok -icon info -title Scid -message "stripCommentsVars: must be 'comments' or 'variations'"
++    tk_messageBox -type ok -icon info -title Scid -message "stripCommentsVars: muß entweder 'comments' oder 'variations' sein"
+     return
+   }
+   set w .stripCommentsVars
+@@ -844,7 +844,7 @@
+   
+   pack [frame $w.f] -expand 1
+   
+-  label $w.f.label -text "Stripping $arg cannot be undone."
++  label $w.f.label -text "Stripping $arg kann nicht rückgängig gemacht werden."
+   frame $w.f.g
+   radiobutton $w.f.g.all -textvar ::tr(SelectAllGames) -variable checkOption(AllGames) -value all
+   radiobutton $w.f.g.filter -textvar ::tr(SelectFilterGames) -variable checkOption(AllGames) -value filter
+@@ -1685,7 +1685,7 @@
+   set w .compactWin
+   if {$err} {
+     tk_messageBox -type ok -icon warning -parent $w \
+-        -title "Scid: Error compacting file" -message $result
++        -title "Scid: Fehler bei der Dateikomprimierung" -message $result
+   } else {
+     sc_game new
+     updateBoard -pgn
+@@ -1738,7 +1738,7 @@
+   set numberDeleted [expr {[lindex $stats 0] - [lindex $stats 2]}]
+   if {[tk_messageBox -title "$::tr(CompactDatabase): [file tail [sc_base filename]]" -parent $parent \
+       -icon question -type yesno -message \
+-      "$numberDeleted games will be permanently deleted.\nAre you sure ?"] != {yes}} {
++      "$numberDeleted Partien werden unwiderruflich gelöscht.\nSind Sie sicher?"] != {yes}} {
+     return
+   }
+   
+@@ -1749,7 +1749,7 @@
+   closeProgressWindow
+   if {$err} {
+     tk_messageBox -type ok -icon warning -parent $parent \
+-        -title "Scid: Error compacting file" -message $result
++        -title "Scid: Fehler bei der Dateikomprimierung" -message $result
+   } else {
+     sc_game new
+     updateBoard -pgn
+@@ -1899,15 +1899,15 @@
+   global sortCriteria
+   set w .sortWin
+   if {! [sc_base inUse]} {
+-    tk_messageBox -type ok -icon info -parent $w -title "Scid: Sort results" \
+-        -message "This is not an open database; there are no games to sort."
++    tk_messageBox -type ok -icon info -parent $w -title "Scid: Sortierergebnisse" \
++        -message "Dies ist keine geöffnete Datenbank, es gibt keine Partien zu sortieren."
+     return
+   }
+-  progressWindow Scid "Sorting the database."
++  progressWindow Scid "Sortierung der Datenbank"
+   busyCursor .
+   # can be messed up by gamelist sort
+   sc_base sortup
+-  set err [catch {sc_base sort $sortCriteria(real) {changeProgressWindow "Storing results."} } result]
++  set err [catch {sc_base sort $sortCriteria(real) {changeProgressWindow "Speichere Ergebnisse."} } result]
+   unbusyCursor .
+   closeProgressWindow
+ 
+@@ -1917,11 +1917,11 @@
+   ::maint::Refresh
+   if {$err} {
+     tk_messageBox -type ok -icon warning -parent $w \
+-        -title "Scid: Sort results" -message $result
++        -title "Scid: Sortierergebnisse" -message $result
+   } else {
+     tk_messageBox -type ok -icon info -parent $w \
+-        -title "Scid: Sort results" \
+-        -message "The database was successfully sorted."
++        -title "Scid: Sortierergebnisse" \
++        -message "Die Datenbank wurde erfolgreich sortiert."
+   }
+ }
+ 
+@@ -1965,7 +1965,7 @@
+     return
+   }
+   toplevel $w
+-  wm title $w "Allocate Ratings"
++  wm title $w "Zuweisung Ratings"
+   wm withdraw $w
+ 
+   label $w.lab -wraplength 3i -justify left -text $::tr(AllocRatingDescription)
+@@ -2008,7 +2008,7 @@
+     tk_messageBox -type ok -icon info -parent $parent -title Scid -message $result
+     return
+   }
+-  progressWindow Scid "Adding Elo ratings."
++  progressWindow Scid "Hinzufügung Elo-Ratings."
+   busyCursor .
+   if {[catch {sc_name ratings -change $addRatings(overwrite) -filter $addRatings(filter)} result]} {
+     closeProgressWindow
+@@ -2049,13 +2049,13 @@
+   }
+ 
+   set ::interrupt 0
+-  progressWindow Scid "Searching for extra PGN tags." $::tr(Cancel) "set ::interrupt 1; sc_progressBar"
++  progressWindow Scid "Suche nach Extra-PGN-Tags." $::tr(Cancel) "set ::interrupt 1; sc_progressBar"
+   busyCursor .
+   set err [catch {sc_base tag list} result]
+   unbusyCursor .
+   closeProgressWindow
+   if {$::interrupt} { 
+-    tk_messageBox -title Scid -icon warning -type ok -message "Searching cancelled.\n\nTag list and counts are not correct." -parent $parent
++    tk_messageBox -title Scid -icon warning -type ok -message "Suche abgebrochen.\n\nTag-Liste und Zähler sind nicht korrekt." -parent $parent
+   }
+   if {$err} {
+     tk_messageBox -title Scid -icon warning -type ok -message $result -parent $parent
+@@ -2072,7 +2072,7 @@
+ 
+   bind $w <F1> {helpWindow Maintenance Tags}
+ 
+-  label $w.title -text "PGN tags ([file tail [sc_base filename]])" -font font_Bold
++  label $w.title -text "PGN-Tags ([file tail [sc_base filename]])" -font font_Bold
+   pack $w.title -side top
+   frame $w.tags
+   pack $w.tags -side top -fill both -expand yes
+@@ -2146,10 +2146,11 @@
+   global checkOption
+ 
+   set msg "Do you want to remove all occurences of \"$tag\" from $checkOption(AllGames) games ?"
++  set msg "Wollen Sie alle Vorkommen von \"$tag\" von $checkOption(AllGames) Partien entfernen?"
+   set result [tk_messageBox -title Scid -parent .striptags \
+       -icon question -type yesno -message $msg]
+   if {$result == "no"} { return 0 }
+-  progressWindow Scid "Removing the PGN tag $tag." $::tr(Stop) sc_progressBar
++  progressWindow Scid "Entferne PGN-Tag $tag." $::tr(Stop) sc_progressBar
+   busyCursor .
+   set err [catch {sc_base tag strip $tag $checkOption(AllGames)} result]
+   unbusyCursor .
+@@ -2323,7 +2324,7 @@
+     } else {
+       set r [::utils::thousands [lindex $result 0]]
+       set g [::utils::thousands [lindex $result 1]]
+-      $t insert end "   Scid added $r Elo ratings in $g games.\n"
++      $t insert end "   Scid hat $r Elo-Ratings in $g Partien hinzugefügt.\n"
+     }
+   }
+ 
+@@ -2347,8 +2348,8 @@
+             -delete $twinSettings(delete)} result]} {
+       set message $result
+     } else {
+-      set message "Scid found $result twin games"
+-      if {$result > 0} {append message " and set their delete flags"}
++      set message "Scid hat $result Dubletten gefunden"
++      if {$result > 0} {append message " und ihr Löschkennzeichen gesetzt."}
+     }
+     $t insert end "   $message.\n"
+   }
+@@ -2359,13 +2360,13 @@
+     set stats [sc_compact stats names]
+     if {[lindex $stats 1] == 0  &&  [lindex $stats 3] == 0  && \
+           [lindex $stats 5] == 0  &&  [lindex $stats 7] == 0} {
+-      $t insert end "   Name file already compacted.\n"
++      $t insert end "   Namensdatei ist bereits komprimiert.\n"
+     } else {
+       set err [catch {sc_compact names} result]
+       if {$err} {
+         $t insert end "   $result\n"
+       } else {
+-        $t insert end "   Done.\n"
++        $t insert end "   Fertig.\n"
+       }
+     }
+     $t see end
+@@ -2375,13 +2376,13 @@
+     mtoolAdd $t "$count: $::tr(CompactGames)..."
+     incr count
+     if {[compactGamesEmpty]} {
+-      $t insert end "   Game file already compacted.\n"
++      $t insert end "   Partiendatei ist bereits komprimiert.\n"
+     } else {
+       set err [catch {sc_compact games} result]
+       if {$err} {
+         $t insert end "   $result\n"
+       } else {
+-        $t insert end "   Done.\n"
++        $t insert end "   Fertig.\n"
+       }
+     }
+     $t see end
+@@ -2403,10 +2404,10 @@
+       ::tree::mutex_refresh
+     }
+     ::tree::treeFileSave $base
+-    $t insert end "   Done.\n"
++    $t insert end "   Fertig.\n"
+   }
+ 
+-  mtoolAdd $t "Done."
++  mtoolAdd $t "fertig."
+   sc_game new
+   updateBoard
+   ::windows::stats::Refresh
 Index: tcl/file.tcl
 ===================================================================
---- tcl/file.tcl	(Revision 1073)
-+++ tcl/file.tcl	(Revision 1075)
+--- tcl/file.tcl	(Revision 1083)
++++ tcl/file.tcl	(Revision 1086)
 @@ -93,7 +93,7 @@
  proc ::file::New {} {
    if {[sc_base count free] == 0} {
@@ -4195,8 +4427,8 @@ Index: tcl/file.tcl
        set ::initialDir(file) [file tail $fName]
 Index: tcl/game.tcl
 ===================================================================
---- tcl/game.tcl	(Revision 1073)
-+++ tcl/game.tcl	(Revision 1075)
+--- tcl/game.tcl	(Revision 1083)
++++ tcl/game.tcl	(Revision 1086)
 @@ -125,16 +125,16 @@
  proc ::game::LoadNextPrev {action {raise 1}} {
    global pgnWin statusBar
@@ -4219,8 +4451,8 @@ Index: tcl/game.tcl
    ::game::Load $number 1 $raise
 Index: tcl/language.tcl
 ===================================================================
---- tcl/language.tcl	(Revision 1073)
-+++ tcl/language.tcl	(Revision 1075)
+--- tcl/language.tcl	(Revision 1083)
++++ tcl/language.tcl	(Revision 1086)
 @@ -124,8 +124,8 @@
  
    lassign $args lang tag label underline helpMsg
@@ -4234,8 +4466,8 @@ Index: tcl/language.tcl
  
 Index: tcl/main.tcl
 ===================================================================
---- tcl/main.tcl	(Revision 1073)
-+++ tcl/main.tcl	(Revision 1075)
+--- tcl/main.tcl	(Revision 1083)
++++ tcl/main.tcl	(Revision 1086)
 @@ -1039,7 +1039,7 @@
    catch {source $fname}
    set newcount [expr {[array size ::photo] - $oldcount}]
@@ -4308,8 +4540,8 @@ Index: tcl/main.tcl
    pack $w.label -side top -pady 5 -padx 5
 Index: tcl/menus.tcl
 ===================================================================
---- tcl/menus.tcl	(Revision 1073)
-+++ tcl/menus.tcl	(Revision 1075)
+--- tcl/menus.tcl	(Revision 1083)
++++ tcl/menus.tcl	(Revision 1086)
 @@ -84,7 +84,7 @@
  $m add command -label FileNew -command ::file::New
  set helpMessage($m,[incr menuindex]) FileNew
@@ -4763,8 +4995,8 @@ Index: tcl/menus.tcl
  
 Index: tcl/search/header.tcl
 ===================================================================
---- tcl/search/header.tcl	(Revision 1073)
-+++ tcl/search/header.tcl	(Revision 1075)
+--- tcl/search/header.tcl	(Revision 1083)
++++ tcl/search/header.tcl	(Revision 1086)
 @@ -92,7 +92,7 @@
    set sIgnoreCol No
    set sSideToMove wb
@@ -4861,8 +5093,8 @@ Index: tcl/search/header.tcl
    listbox $w.list -yscrollcommand "$w.ybar set" -height 20 -width 60 \
 Index: tcl/start.tcl
 ===================================================================
---- tcl/start.tcl	(Revision 1073)
-+++ tcl/start.tcl	(Revision 1075)
+--- tcl/start.tcl	(Revision 1083)
++++ tcl/start.tcl	(Revision 1086)
 @@ -69,7 +69,7 @@
      append msg "tkscid program \nit uses is version [sc_info version].\n"
      append msg "Check that the path to tkscid is correct."
@@ -5016,8 +5248,8 @@ Index: tcl/start.tcl
  ::splash::add ""
 Index: tcl/tools/analysis.tcl
 ===================================================================
---- tcl/tools/analysis.tcl	(Revision 1073)
-+++ tcl/tools/analysis.tcl	(Revision 1075)
+--- tcl/tools/analysis.tcl	(Revision 1083)
++++ tcl/tools/analysis.tcl	(Revision 1086)
 @@ -232,7 +232,7 @@
    if {$::windowsOS} {
      ### Windows comes with it's own custom engines.dat, so shoul dnever reach here.
@@ -5158,8 +5390,8 @@ Index: tcl/tools/analysis.tcl
    pack $w.label -side top -pady 5 -padx 5
 Index: tcl/tools/calvar.tcl
 ===================================================================
---- tcl/tools/calvar.tcl	(Revision 1073)
-+++ tcl/tools/calvar.tcl	(Revision 1075)
+--- tcl/tools/calvar.tcl	(Revision 1083)
++++ tcl/tools/calvar.tcl	(Revision 1086)
 @@ -102,7 +102,7 @@
  
      # if no engines defined, bail out
@@ -5195,8 +5427,8 @@ Index: tcl/tools/calvar.tcl
        button $f.p$piece -image w${piece}20 -command "::calvar::promo $piece"
 Index: tcl/tools/comp.tcl
 ===================================================================
---- tcl/tools/comp.tcl	(Revision 1073)
-+++ tcl/tools/comp.tcl	(Revision 1075)
+--- tcl/tools/comp.tcl	(Revision 1083)
++++ tcl/tools/comp.tcl	(Revision 1086)
 @@ -27,7 +27,7 @@
    }
    toplevel $w
@@ -5442,8 +5674,8 @@ Index: tcl/tools/comp.tcl
  
 Index: tcl/tools/correspondence.tcl
 ===================================================================
---- tcl/tools/correspondence.tcl	(Revision 1073)
-+++ tcl/tools/correspondence.tcl	(Revision 1075)
+--- tcl/tools/correspondence.tcl	(Revision 1083)
++++ tcl/tools/correspondence.tcl	(Revision 1086)
 @@ -90,7 +90,7 @@
  		global ::Xfcc::xfccrc ::Xfcc::xfccrcfile
  		# file delete $xfccrcfile
@@ -5564,8 +5796,8 @@ Index: tcl/tools/correspondence.tcl
  
 Index: tcl/tools/email.tcl
 ===================================================================
---- tcl/tools/email.tcl	(Revision 1073)
-+++ tcl/tools/email.tcl	(Revision 1075)
+--- tcl/tools/email.tcl	(Revision 1083)
++++ tcl/tools/email.tcl	(Revision 1086)
 @@ -14,7 +14,7 @@
    }
    if {! [sc_base inUse] || [sc_base current] == 9} {
@@ -5779,8 +6011,8 @@ Index: tcl/tools/email.tcl
      ::tools::email::refresh
 Index: tcl/tools/fics.tcl
 ===================================================================
---- tcl/tools/fics.tcl	(Revision 1073)
-+++ tcl/tools/fics.tcl	(Revision 1075)
+--- tcl/tools/fics.tcl	(Revision 1083)
++++ tcl/tools/fics.tcl	(Revision 1086)
 @@ -77,7 +77,7 @@
  
      toplevel $w
@@ -6115,8 +6347,8 @@ Index: tcl/tools/fics.tcl
      }
 Index: tcl/tools/graphs.tcl
 ===================================================================
---- tcl/tools/graphs.tcl	(Revision 1073)
-+++ tcl/tools/graphs.tcl	(Revision 1075)
+--- tcl/tools/graphs.tcl	(Revision 1083)
++++ tcl/tools/graphs.tcl	(Revision 1086)
 @@ -14,12 +14,12 @@
    if {! [winfo exists $w]} { return }
    set ftypes {{"PostScript files" {.eps .ps}} {"All files" *}}
@@ -6185,8 +6417,8 @@ Index: tcl/tools/graphs.tcl
      }
 Index: tcl/tools/import.tcl
 ===================================================================
---- tcl/tools/import.tcl	(Revision 1073)
-+++ tcl/tools/import.tcl	(Revision 1075)
+--- tcl/tools/import.tcl	(Revision 1083)
++++ tcl/tools/import.tcl	(Revision 1086)
 @@ -137,8 +137,8 @@
    }
  
@@ -6270,8 +6502,8 @@ Index: tcl/tools/import.tcl
      }
 Index: tcl/tools/inputengine.tcl
 ===================================================================
---- tcl/tools/inputengine.tcl	(Revision 1073)
-+++ tcl/tools/inputengine.tcl	(Revision 1075)
+--- tcl/tools/inputengine.tcl	(Revision 1083)
++++ tcl/tools/inputengine.tcl	(Revision 1086)
 @@ -170,8 +170,8 @@
  
    proc saveHardwareOptions {} {
@@ -6303,8 +6535,8 @@ Index: tcl/tools/inputengine.tcl
            } \
 Index: tcl/tools/novag.tcl
 ===================================================================
---- tcl/tools/novag.tcl	(Revision 1073)
-+++ tcl/tools/novag.tcl	(Revision 1075)
+--- tcl/tools/novag.tcl	(Revision 1083)
++++ tcl/tools/novag.tcl	(Revision 1086)
 @@ -36,7 +36,7 @@
      
      if {[catch { set fd [open $serial r+ ] } err]} {
@@ -6316,8 +6548,8 @@ Index: tcl/tools/novag.tcl
      }
 Index: tcl/tools/optable.tcl
 ===================================================================
---- tcl/tools/optable.tcl	(Revision 1073)
-+++ tcl/tools/optable.tcl	(Revision 1075)
+--- tcl/tools/optable.tcl	(Revision 1083)
++++ tcl/tools/optable.tcl	(Revision 1086)
 @@ -68,7 +68,7 @@
      set w .progress
      toplevel $w
@@ -6515,8 +6747,8 @@ Index: tcl/tools/optable.tcl
        return
 Index: tcl/tools/pinfo.tcl
 ===================================================================
---- tcl/tools/pinfo.tcl	(Revision 1073)
-+++ tcl/tools/pinfo.tcl	(Revision 1075)
+--- tcl/tools/pinfo.tcl	(Revision 1083)
++++ tcl/tools/pinfo.tcl	(Revision 1086)
 @@ -56,7 +56,7 @@
        } else {
  	::plist::Open
@@ -6549,8 +6781,8 @@ Index: tcl/tools/pinfo.tcl
      ### If English, we can set the other four buttons likewise (and allign nicely)
 Index: tcl/tools/preport.tcl
 ===================================================================
---- tcl/tools/preport.tcl	(Revision 1073)
-+++ tcl/tools/preport.tcl	(Revision 1075)
+--- tcl/tools/preport.tcl	(Revision 1083)
++++ tcl/tools/preport.tcl	(Revision 1086)
 @@ -19,7 +19,7 @@
  proc ::preport::preportDlg {{player {}}} {
  
@@ -6665,8 +6897,8 @@ Index: tcl/tools/preport.tcl
      # if {$::hasEncoding  &&  $::langEncoding($::language) != ""} { catch {set report [encoding convertto $::langEncoding($::language) $report]} }
 Index: tcl/tools/sergame.tcl
 ===================================================================
---- tcl/tools/sergame.tcl	(Revision 1073)
-+++ tcl/tools/sergame.tcl	(Revision 1075)
+--- tcl/tools/sergame.tcl	(Revision 1083)
++++ tcl/tools/sergame.tcl	(Revision 1086)
 @@ -91,7 +91,7 @@
  
      # if no engines defined, bail out
@@ -6702,8 +6934,8 @@ Index: tcl/tools/sergame.tcl
      updateBoard -pgn
 Index: tcl/tools/tablebase.tcl
 ===================================================================
---- tcl/tools/tablebase.tcl	(Revision 1073)
-+++ tcl/tools/tablebase.tcl	(Revision 1075)
+--- tcl/tools/tablebase.tcl	(Revision 1083)
++++ tcl/tools/tablebase.tcl	(Revision 1086)
 @@ -159,7 +159,7 @@
    set f $w.info
    pack [frame $f.sec] -side top -pady 3
@@ -6836,8 +7068,8 @@ Index: tcl/tools/tablebase.tcl
  ####################################################################
 Index: tcl/tools/tacgame.tcl
 ===================================================================
---- tcl/tools/tacgame.tcl	(Revision 1073)
-+++ tcl/tools/tacgame.tcl	(Revision 1075)
+--- tcl/tools/tacgame.tcl	(Revision 1083)
++++ tcl/tools/tacgame.tcl	(Revision 1086)
 @@ -127,7 +127,7 @@
      }
  
@@ -6935,8 +7167,8 @@ Index: tcl/tools/tacgame.tcl
      updateBoard -pgn
 Index: tcl/tools/tactics.tcl
 ===================================================================
---- tcl/tools/tactics.tcl	(Revision 1073)
-+++ tcl/tools/tactics.tcl	(Revision 1075)
+--- tcl/tools/tactics.tcl	(Revision 1083)
++++ tcl/tools/tactics.tcl	(Revision 1086)
 @@ -50,7 +50,7 @@
      set found 0
  
@@ -7032,8 +7264,8 @@ Index: tcl/tools/tactics.tcl
    }
 Index: tcl/tools/uci.tcl
 ===================================================================
---- tcl/tools/uci.tcl	(Revision 1073)
-+++ tcl/tools/uci.tcl	(Revision 1075)
+--- tcl/tools/uci.tcl	(Revision 1083)
++++ tcl/tools/uci.tcl	(Revision 1086)
 @@ -484,7 +484,7 @@
      }
      set engineData [lindex $engines(list) $n]
