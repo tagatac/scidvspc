@@ -663,6 +663,7 @@ translate D FinderCtxBackup {Sicherungskopie}
 translate D FinderCtxCopy {Kopieren}
 translate D FinderCtxMove {Verschieben}
 translate D FinderCtxDelete {Löschen}
+translate D FinderCtxRename {Umbenanne}
 translate D FinderDirOpen {Verzeichnis öffnen}
 
 # Player finder:

@@ -675,6 +675,8 @@ translate R FinderCtxCopy {Копировать}
 translate R FinderCtxMove {Передвинуть}
 translate R FinderCtxDelete {Удалить}
 # ====== TODO To be translated ======
+translate R FinderCtxRename {Rename}
+# ====== TODO To be translated ======
 translate R FinderDirOpen {Open Directory}
 
 # Player finder:

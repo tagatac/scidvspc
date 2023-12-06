@@ -645,6 +645,8 @@ translate U FinderCtxBackup {Guardar}
 translate U FinderCtxCopy {Copiar}
 translate U FinderCtxMove {Mover}
 translate U FinderCtxDelete {Apagar}
+# ====== TODO To be translated ======
+translate U FinderCtxRename {Rename}
 translate U FinderDirOpen {Abrir Pasta}
 
 # Player finder:

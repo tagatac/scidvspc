@@ -714,6 +714,8 @@ translate G FinderCtxCopy {Αντιγραφή}
 translate G FinderCtxMove {Μετακίνηση}
 translate G FinderCtxDelete {Διαγραφή}
 # ====== TODO To be translated ======
+translate G FinderCtxRename {Rename}
+# ====== TODO To be translated ======
 translate G FinderDirOpen {Open Directory}
 
 # Player finder:

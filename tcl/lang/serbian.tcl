@@ -818,6 +818,8 @@ translate Y FinderCtxMove {Move}
 # ====== TODO To be translated ======
 translate Y FinderCtxDelete {Delete}
 # ====== TODO To be translated ======
+translate Y FinderCtxRename {Rename}
+# ====== TODO To be translated ======
 translate Y FinderDirOpen {Open Directory}
 
 # Player finder:

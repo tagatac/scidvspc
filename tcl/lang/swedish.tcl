@@ -702,6 +702,8 @@ translate W FinderCtxCopy {Kopiera}
 translate W FinderCtxMove {Flytta}
 translate W FinderCtxDelete {Ta bort}
 # ====== TODO To be translated ======
+translate W FinderCtxRename {Rename}
+# ====== TODO To be translated ======
 translate W FinderDirOpen {Open Directory}
 
 # Player finder:

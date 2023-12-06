@@ -299,7 +299,7 @@ proc ::file::finder::contextMenu {win fullPath x y} {
   $mctxt add command -label [tr FinderCtxBackup ] -command "::file::finder::backup [list $fullPath]"
   $mctxt add command -label [tr FinderCtxCopy ] -command "::file::finder::copy [list $fullPath]"
   $mctxt add command -label [tr FinderCtxMove ] -command "::file::finder::move [list $fullPath]"
-  $mctxt add command -label Rename              -command "::file::finder::rename [list $fullPath]"
+  $mctxt add command -label [tr FinderCtxRename] -command "::file::finder::rename [list $fullPath]"
   $mctxt add separator
   $mctxt add command -label [tr FinderCtxDelete ] -command "::file::finder::delete [list $fullPath]"
 

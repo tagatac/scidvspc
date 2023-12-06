@@ -689,6 +689,8 @@ translate P FinderCtxCopy {Kopiuj}
 translate P FinderCtxMove {Przenieś}
 translate P FinderCtxDelete {Usuń}
 # ====== TODO To be translated ======
+translate P FinderCtxRename {Rename}
+# ====== TODO To be translated ======
 translate P FinderDirOpen {Open Directory}
 
 # Player finder:

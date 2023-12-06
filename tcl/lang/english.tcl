@@ -635,6 +635,7 @@ translate E FinderCtxBackup {Backup}
 translate E FinderCtxCopy {Copy}
 translate E FinderCtxMove {Move}
 translate E FinderCtxDelete {Delete}
+translate E FinderCtxRename {Rename}
 translate E FinderDirOpen {Open Directory}
 
 # Player finder:

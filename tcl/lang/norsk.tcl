@@ -654,6 +654,8 @@ translate O FinderCtxBackup {Sikkerhetskopi}
 translate O FinderCtxCopy {Kopier}
 translate O FinderCtxMove {Flytt}
 translate O FinderCtxDelete {Slett}
+# ====== TODO To be translated ======
+translate O FinderCtxRename {Rename}
 translate O FinderDirOpen {Åpne mappe}
 
 # Player finder:

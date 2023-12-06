@@ -641,6 +641,8 @@ translate F FinderCtxBackup {Sauvegarder}
 translate F FinderCtxCopy {Copier}
 translate F FinderCtxMove {Déplacer}
 translate F FinderCtxDelete {Supprimer}
+# ====== TODO To be translated ======
+translate F FinderCtxRename {Rename}
 translate F FinderDirOpen {Ouvrir Répertoire}
 
 # Player finder:

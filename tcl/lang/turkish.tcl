@@ -627,6 +627,8 @@ translate T FinderCtxCopy {Kopyasını}
 translate T FinderCtxMove {hamle}
 translate T FinderCtxDelete {sil}
 # ====== TODO To be translated ======
+translate T FinderCtxRename {Rename}
+# ====== TODO To be translated ======
 translate T FinderDirOpen {Open Directory}
 
 # Player finder:
