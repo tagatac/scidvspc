@@ -1,7 +1,7 @@
 Index: src/namebase.h
 ===================================================================
---- src/namebase.h	(Revision 1083)
-+++ src/namebase.h	(Revision 1086)
+--- src/namebase.h	(revision 3405)
++++ src/namebase.h	(working copy)
 @@ -33,10 +33,10 @@
  const uint NUM_NAME_TYPES = 4;
  
@@ -19,8 +19,8 @@ Index: src/namebase.h
  
 Index: src/pgnparse.cpp
 ===================================================================
---- src/pgnparse.cpp	(Revision 1083)
-+++ src/pgnparse.cpp	(Revision 1086)
+--- src/pgnparse.cpp	(revision 3405)
++++ src/pgnparse.cpp	(working copy)
 @@ -376,7 +376,7 @@
              value[length-7] = 0;
              elo = strGetUnsigned (&(value[length-5]));
@@ -191,8 +191,8 @@ Index: src/pgnparse.cpp
              err = OK;
 Index: src/tkscid.cpp
 ===================================================================
---- src/tkscid.cpp	(Revision 1083)
-+++ src/tkscid.cpp	(Revision 1086)
+--- src/tkscid.cpp	(revision 3405)
++++ src/tkscid.cpp	(working copy)
 @@ -50,7 +50,7 @@
  static const uint REPORT_OPENING = 0;
  static const uint REPORT_PLAYER = 1;
@@ -3477,8 +3477,8 @@ Index: src/tkscid.cpp
      scid_book_movesupdate( (char*) argv[2], (char*) argv[3], slot, (char*) argv[5] );
 Index: tcl/bitmaps.tcl
 ===================================================================
---- tcl/bitmaps.tcl	(Revision 1083)
-+++ tcl/bitmaps.tcl	(Revision 1086)
+--- tcl/bitmaps.tcl	(revision 3405)
++++ tcl/bitmaps.tcl	(working copy)
 @@ -71,19 +71,19 @@
  ### Process custom chess pieces
  
@@ -3563,8 +3563,8 @@ Index: tcl/bitmaps.tcl
  ### end of bitmaps.tcl
 Index: tcl/board.tcl
 ===================================================================
---- tcl/board.tcl	(Revision 1083)
-+++ tcl/board.tcl	(Revision 1086)
+--- tcl/board.tcl	(revision 3405)
++++ tcl/board.tcl	(working copy)
 @@ -3012,7 +3012,7 @@
    if {[catch {
    package require img::window
@@ -3585,8 +3585,8 @@ Index: tcl/board.tcl
    if {[llength $filename]} {
 Index: tcl/config.tcl
 ===================================================================
---- tcl/config.tcl	(Revision 1083)
-+++ tcl/config.tcl	(Revision 1086)
+--- tcl/config.tcl	(revision 3405)
++++ tcl/config.tcl	(working copy)
 @@ -44,18 +44,18 @@
  
  ### Display directories
@@ -3613,8 +3613,8 @@ Index: tcl/config.tcl
  ### Setup for truetype (and PGN figurine) support
 Index: tcl/edit.tcl
 ===================================================================
---- tcl/edit.tcl	(Revision 1083)
-+++ tcl/edit.tcl	(Revision 1086)
+--- tcl/edit.tcl	(revision 3405)
++++ tcl/edit.tcl	(working copy)
 @@ -5,9 +5,9 @@
  proc fenErrorDialog {{msg {}}} {
  
@@ -3678,8 +3678,8 @@ Index: tcl/edit.tcl
      set setupBd {}
 Index: tcl/end.tcl
 ===================================================================
---- tcl/end.tcl	(Revision 1083)
-+++ tcl/end.tcl	(Revision 1086)
+--- tcl/end.tcl	(revision 3405)
++++ tcl/end.tcl	(working copy)
 @@ -123,7 +123,7 @@
    sc_game pop
    if {$err} {
@@ -4060,8 +4060,8 @@ Index: tcl/end.tcl
        # this sets initialDir(file) for all files, not just pgn... 
 Index: tcl/file/maint.tcl
 ===================================================================
---- tcl/file/maint.tcl	(Revision 1083)
-+++ tcl/file/maint.tcl	(Revision 1086)
+--- tcl/file/maint.tcl	(revision 3405)
++++ tcl/file/maint.tcl	(working copy)
 @@ -14,12 +14,12 @@
    set ftype {
      { "Scid databases" {".si4"} }
@@ -4212,10 +4212,11 @@ Index: tcl/file/maint.tcl
    pack $w.title -side top
    frame $w.tags
    pack $w.tags -side top -fill both -expand yes
-@@ -2146,10 +2146,11 @@
+@@ -2145,11 +2145,11 @@
+ proc doStripTags {tag} {
    global checkOption
  
-   set msg "Do you want to remove all occurences of \"$tag\" from $checkOption(AllGames) games ?"
+-  set msg "Do you want to remove all occurences of \"$tag\" from $checkOption(AllGames) games ?"
 +  set msg "Wollen Sie alle Vorkommen von \"$tag\" von $checkOption(AllGames) Partien entfernen?"
    set result [tk_messageBox -title Scid -parent .striptags \
        -icon question -type yesno -message $msg]
@@ -4225,7 +4226,7 @@ Index: tcl/file/maint.tcl
    busyCursor .
    set err [catch {sc_base tag strip $tag $checkOption(AllGames)} result]
    unbusyCursor .
-@@ -2323,7 +2324,7 @@
+@@ -2323,7 +2323,7 @@
      } else {
        set r [::utils::thousands [lindex $result 0]]
        set g [::utils::thousands [lindex $result 1]]
@@ -4234,7 +4235,7 @@ Index: tcl/file/maint.tcl
      }
    }
  
-@@ -2347,8 +2348,8 @@
+@@ -2347,8 +2347,8 @@
              -delete $twinSettings(delete)} result]} {
        set message $result
      } else {
@@ -4245,7 +4246,7 @@ Index: tcl/file/maint.tcl
      }
      $t insert end "   $message.\n"
    }
-@@ -2359,13 +2360,13 @@
+@@ -2359,13 +2359,13 @@
      set stats [sc_compact stats names]
      if {[lindex $stats 1] == 0  &&  [lindex $stats 3] == 0  && \
            [lindex $stats 5] == 0  &&  [lindex $stats 7] == 0} {
@@ -4261,7 +4262,7 @@ Index: tcl/file/maint.tcl
        }
      }
      $t see end
-@@ -2375,13 +2376,13 @@
+@@ -2375,13 +2375,13 @@
      mtoolAdd $t "$count: $::tr(CompactGames)..."
      incr count
      if {[compactGamesEmpty]} {
@@ -4277,7 +4278,7 @@ Index: tcl/file/maint.tcl
        }
      }
      $t see end
-@@ -2403,10 +2404,10 @@
+@@ -2403,10 +2403,10 @@
        ::tree::mutex_refresh
      }
      ::tree::treeFileSave $base
@@ -4292,8 +4293,8 @@ Index: tcl/file/maint.tcl
    ::windows::stats::Refresh
 Index: tcl/file.tcl
 ===================================================================
---- tcl/file.tcl	(Revision 1083)
-+++ tcl/file.tcl	(Revision 1086)
+--- tcl/file.tcl	(revision 3405)
++++ tcl/file.tcl	(working copy)
 @@ -93,7 +93,7 @@
  proc ::file::New {} {
    if {[sc_base count free] == 0} {
@@ -4427,8 +4428,8 @@ Index: tcl/file.tcl
        set ::initialDir(file) [file tail $fName]
 Index: tcl/game.tcl
 ===================================================================
---- tcl/game.tcl	(Revision 1083)
-+++ tcl/game.tcl	(Revision 1086)
+--- tcl/game.tcl	(revision 3405)
++++ tcl/game.tcl	(working copy)
 @@ -125,16 +125,16 @@
  proc ::game::LoadNextPrev {action {raise 1}} {
    global pgnWin statusBar
@@ -4451,8 +4452,8 @@ Index: tcl/game.tcl
    ::game::Load $number 1 $raise
 Index: tcl/language.tcl
 ===================================================================
---- tcl/language.tcl	(Revision 1083)
-+++ tcl/language.tcl	(Revision 1086)
+--- tcl/language.tcl	(revision 3405)
++++ tcl/language.tcl	(working copy)
 @@ -124,8 +124,8 @@
  
    lassign $args lang tag label underline helpMsg
@@ -4466,8 +4467,8 @@ Index: tcl/language.tcl
  
 Index: tcl/main.tcl
 ===================================================================
---- tcl/main.tcl	(Revision 1083)
-+++ tcl/main.tcl	(Revision 1086)
+--- tcl/main.tcl	(revision 3405)
++++ tcl/main.tcl	(working copy)
 @@ -1039,7 +1039,7 @@
    catch {source $fname}
    set newcount [expr {[array size ::photo] - $oldcount}]
@@ -4540,8 +4541,8 @@ Index: tcl/main.tcl
    pack $w.label -side top -pady 5 -padx 5
 Index: tcl/menus.tcl
 ===================================================================
---- tcl/menus.tcl	(Revision 1083)
-+++ tcl/menus.tcl	(Revision 1086)
+--- tcl/menus.tcl	(revision 3405)
++++ tcl/menus.tcl	(working copy)
 @@ -84,7 +84,7 @@
  $m add command -label FileNew -command ::file::New
  set helpMessage($m,[incr menuindex]) FileNew
@@ -4995,8 +4996,8 @@ Index: tcl/menus.tcl
  
 Index: tcl/search/header.tcl
 ===================================================================
---- tcl/search/header.tcl	(Revision 1083)
-+++ tcl/search/header.tcl	(Revision 1086)
+--- tcl/search/header.tcl	(revision 3405)
++++ tcl/search/header.tcl	(working copy)
 @@ -92,7 +92,7 @@
    set sIgnoreCol No
    set sSideToMove wb
@@ -5093,8 +5094,8 @@ Index: tcl/search/header.tcl
    listbox $w.list -yscrollcommand "$w.ybar set" -height 20 -width 60 \
 Index: tcl/start.tcl
 ===================================================================
---- tcl/start.tcl	(Revision 1083)
-+++ tcl/start.tcl	(Revision 1086)
+--- tcl/start.tcl	(revision 3405)
++++ tcl/start.tcl	(working copy)
 @@ -69,7 +69,7 @@
      append msg "tkscid program \nit uses is version [sc_info version].\n"
      append msg "Check that the path to tkscid is correct."
@@ -5104,6 +5105,15 @@ Index: tcl/start.tcl
    exit 1
  }
  
+@@ -332,7 +332,7 @@
+ set boardSize 60
+ 
+ # language for help pages and messages:
+-set language E
++set language D
+ set oldLang X
+ 
+ # Toolbar configuration/default visibility
 @@ -1388,7 +1388,7 @@
      if {$isMacBaseReady == 0} {
        if {$mac_args != 0} {
@@ -5213,11 +5223,13 @@ Index: tcl/start.tcl
      }
      set command [string trim [.splash.command get]]
      ::splash::add "# $command"
-@@ -2000,7 +2000,7 @@
+@@ -1999,8 +1999,8 @@
+ ::splash::add "(C) Steven Atkinson (stevenaaus@yahoo.com) 2008-2023"
  ::splash::add "(C) Pascal Georges 2006-2008"
  ::splash::add "(C) Shane Hudson 1999-2004"
- ::splash::add "(C) Gregor Cramer, Fulvio Benini and others."
+-::splash::add "(C) Gregor Cramer, Fulvio Benini and others."
 -::splash::add "Licenced under the GNU General Public License."
++::splash::add "(C) Christian Opitz, Gregor Cramer, Fulvio Benini and others."
 +::splash::add "Lizenziert unter GNU General Public License."
  ::splash::add ""
  
@@ -5248,8 +5260,8 @@ Index: tcl/start.tcl
  ::splash::add ""
 Index: tcl/tools/analysis.tcl
 ===================================================================
---- tcl/tools/analysis.tcl	(Revision 1083)
-+++ tcl/tools/analysis.tcl	(Revision 1086)
+--- tcl/tools/analysis.tcl	(revision 3405)
++++ tcl/tools/analysis.tcl	(working copy)
 @@ -232,7 +232,7 @@
    if {$::windowsOS} {
      ### Windows comes with it's own custom engines.dat, so shoul dnever reach here.
@@ -5390,8 +5402,8 @@ Index: tcl/tools/analysis.tcl
    pack $w.label -side top -pady 5 -padx 5
 Index: tcl/tools/calvar.tcl
 ===================================================================
---- tcl/tools/calvar.tcl	(Revision 1083)
-+++ tcl/tools/calvar.tcl	(Revision 1086)
+--- tcl/tools/calvar.tcl	(revision 3405)
++++ tcl/tools/calvar.tcl	(working copy)
 @@ -102,7 +102,7 @@
  
      # if no engines defined, bail out
@@ -5427,8 +5439,8 @@ Index: tcl/tools/calvar.tcl
        button $f.p$piece -image w${piece}20 -command "::calvar::promo $piece"
 Index: tcl/tools/comp.tcl
 ===================================================================
---- tcl/tools/comp.tcl	(Revision 1083)
-+++ tcl/tools/comp.tcl	(Revision 1086)
+--- tcl/tools/comp.tcl	(revision 3405)
++++ tcl/tools/comp.tcl	(working copy)
 @@ -27,7 +27,7 @@
    }
    toplevel $w
@@ -5674,8 +5686,8 @@ Index: tcl/tools/comp.tcl
  
 Index: tcl/tools/correspondence.tcl
 ===================================================================
---- tcl/tools/correspondence.tcl	(Revision 1083)
-+++ tcl/tools/correspondence.tcl	(Revision 1086)
+--- tcl/tools/correspondence.tcl	(revision 3405)
++++ tcl/tools/correspondence.tcl	(working copy)
 @@ -90,7 +90,7 @@
  		global ::Xfcc::xfccrc ::Xfcc::xfccrcfile
  		# file delete $xfccrcfile
@@ -5796,8 +5808,8 @@ Index: tcl/tools/correspondence.tcl
  
 Index: tcl/tools/email.tcl
 ===================================================================
---- tcl/tools/email.tcl	(Revision 1083)
-+++ tcl/tools/email.tcl	(Revision 1086)
+--- tcl/tools/email.tcl	(revision 3405)
++++ tcl/tools/email.tcl	(working copy)
 @@ -14,7 +14,7 @@
    }
    if {! [sc_base inUse] || [sc_base current] == 9} {
@@ -6011,8 +6023,8 @@ Index: tcl/tools/email.tcl
      ::tools::email::refresh
 Index: tcl/tools/fics.tcl
 ===================================================================
---- tcl/tools/fics.tcl	(Revision 1083)
-+++ tcl/tools/fics.tcl	(Revision 1086)
+--- tcl/tools/fics.tcl	(revision 3405)
++++ tcl/tools/fics.tcl	(working copy)
 @@ -77,7 +77,7 @@
  
      toplevel $w
@@ -6347,8 +6359,8 @@ Index: tcl/tools/fics.tcl
      }
 Index: tcl/tools/graphs.tcl
 ===================================================================
---- tcl/tools/graphs.tcl	(Revision 1083)
-+++ tcl/tools/graphs.tcl	(Revision 1086)
+--- tcl/tools/graphs.tcl	(revision 3405)
++++ tcl/tools/graphs.tcl	(working copy)
 @@ -14,12 +14,12 @@
    if {! [winfo exists $w]} { return }
    set ftypes {{"PostScript files" {.eps .ps}} {"All files" *}}
@@ -6417,8 +6429,8 @@ Index: tcl/tools/graphs.tcl
      }
 Index: tcl/tools/import.tcl
 ===================================================================
---- tcl/tools/import.tcl	(Revision 1083)
-+++ tcl/tools/import.tcl	(Revision 1086)
+--- tcl/tools/import.tcl	(revision 3405)
++++ tcl/tools/import.tcl	(working copy)
 @@ -137,8 +137,8 @@
    }
  
@@ -6502,8 +6514,8 @@ Index: tcl/tools/import.tcl
      }
 Index: tcl/tools/inputengine.tcl
 ===================================================================
---- tcl/tools/inputengine.tcl	(Revision 1083)
-+++ tcl/tools/inputengine.tcl	(Revision 1086)
+--- tcl/tools/inputengine.tcl	(revision 3405)
++++ tcl/tools/inputengine.tcl	(working copy)
 @@ -170,8 +170,8 @@
  
    proc saveHardwareOptions {} {
@@ -6535,8 +6547,8 @@ Index: tcl/tools/inputengine.tcl
            } \
 Index: tcl/tools/novag.tcl
 ===================================================================
---- tcl/tools/novag.tcl	(Revision 1083)
-+++ tcl/tools/novag.tcl	(Revision 1086)
+--- tcl/tools/novag.tcl	(revision 3405)
++++ tcl/tools/novag.tcl	(working copy)
 @@ -36,7 +36,7 @@
      
      if {[catch { set fd [open $serial r+ ] } err]} {
@@ -6548,8 +6560,8 @@ Index: tcl/tools/novag.tcl
      }
 Index: tcl/tools/optable.tcl
 ===================================================================
---- tcl/tools/optable.tcl	(Revision 1083)
-+++ tcl/tools/optable.tcl	(Revision 1086)
+--- tcl/tools/optable.tcl	(revision 3405)
++++ tcl/tools/optable.tcl	(working copy)
 @@ -68,7 +68,7 @@
      set w .progress
      toplevel $w
@@ -6747,8 +6759,8 @@ Index: tcl/tools/optable.tcl
        return
 Index: tcl/tools/pinfo.tcl
 ===================================================================
---- tcl/tools/pinfo.tcl	(Revision 1083)
-+++ tcl/tools/pinfo.tcl	(Revision 1086)
+--- tcl/tools/pinfo.tcl	(revision 3405)
++++ tcl/tools/pinfo.tcl	(working copy)
 @@ -56,7 +56,7 @@
        } else {
  	::plist::Open
@@ -6781,8 +6793,8 @@ Index: tcl/tools/pinfo.tcl
      ### If English, we can set the other four buttons likewise (and allign nicely)
 Index: tcl/tools/preport.tcl
 ===================================================================
---- tcl/tools/preport.tcl	(Revision 1083)
-+++ tcl/tools/preport.tcl	(Revision 1086)
+--- tcl/tools/preport.tcl	(revision 3405)
++++ tcl/tools/preport.tcl	(working copy)
 @@ -19,7 +19,7 @@
  proc ::preport::preportDlg {{player {}}} {
  
@@ -6897,8 +6909,8 @@ Index: tcl/tools/preport.tcl
      # if {$::hasEncoding  &&  $::langEncoding($::language) != ""} { catch {set report [encoding convertto $::langEncoding($::language) $report]} }
 Index: tcl/tools/sergame.tcl
 ===================================================================
---- tcl/tools/sergame.tcl	(Revision 1083)
-+++ tcl/tools/sergame.tcl	(Revision 1086)
+--- tcl/tools/sergame.tcl	(revision 3405)
++++ tcl/tools/sergame.tcl	(working copy)
 @@ -91,7 +91,7 @@
  
      # if no engines defined, bail out
@@ -6934,8 +6946,8 @@ Index: tcl/tools/sergame.tcl
      updateBoard -pgn
 Index: tcl/tools/tablebase.tcl
 ===================================================================
---- tcl/tools/tablebase.tcl	(Revision 1083)
-+++ tcl/tools/tablebase.tcl	(Revision 1086)
+--- tcl/tools/tablebase.tcl	(revision 3405)
++++ tcl/tools/tablebase.tcl	(working copy)
 @@ -159,7 +159,7 @@
    set f $w.info
    pack [frame $f.sec] -side top -pady 3
@@ -7068,8 +7080,8 @@ Index: tcl/tools/tablebase.tcl
  ####################################################################
 Index: tcl/tools/tacgame.tcl
 ===================================================================
---- tcl/tools/tacgame.tcl	(Revision 1083)
-+++ tcl/tools/tacgame.tcl	(Revision 1086)
+--- tcl/tools/tacgame.tcl	(revision 3405)
++++ tcl/tools/tacgame.tcl	(working copy)
 @@ -127,7 +127,7 @@
      }
  
@@ -7167,8 +7179,8 @@ Index: tcl/tools/tacgame.tcl
      updateBoard -pgn
 Index: tcl/tools/tactics.tcl
 ===================================================================
---- tcl/tools/tactics.tcl	(Revision 1083)
-+++ tcl/tools/tactics.tcl	(Revision 1086)
+--- tcl/tools/tactics.tcl	(revision 3405)
++++ tcl/tools/tactics.tcl	(working copy)
 @@ -50,7 +50,7 @@
      set found 0
  
@@ -7264,8 +7276,8 @@ Index: tcl/tools/tactics.tcl
    }
 Index: tcl/tools/uci.tcl
 ===================================================================
---- tcl/tools/uci.tcl	(Revision 1083)
-+++ tcl/tools/uci.tcl	(Revision 1086)
+--- tcl/tools/uci.tcl	(revision 3405)
++++ tcl/tools/uci.tcl	(working copy)
 @@ -484,7 +484,7 @@
      }
      set engineData [lindex $engines(list) $n]
