@@ -2157,17 +2157,14 @@ search for games that do not reach this position!
   <p>
   Each tree window is associated with a specific base, that is, if
   several bases are opened simultaneously, several tree windows may
-  exist. If the <term>Lock</term> button in the tree window is
+  exist. If <b>Tree-<gt>Options-<gt>Lock</b> is
   enabled, closing the tree window will also close the database
   associated with this specific tree. Additionally, this also closes
-  associated graph or best games windows. If the <term>Lock</term>
-  button is not checked closing the tree will leave all these windows
-  opened and just close the tree view of the base.
+  associated graph or best games windows.
   </p>
-  <p>
-  Note that opening a base as tree from the file menu will
-  automatically lock the database by default.
-  </p>
+  <p><i>
+  Opening a base <b>as tree</b> from the file menu will lock a database by default.
+  <\i></p>
 
   <h3><name Training>Training</name></h3>
   <p>
