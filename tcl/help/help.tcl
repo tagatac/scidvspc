@@ -4471,7 +4471,8 @@ set helpText(Book) {<h1>Book Window</h1>
 
 <p>
 <i>Scid comes with an altered version of Polyglot. The below features require the
-<url http://wbec-ridderkerk.nl/html/details1/PolyGlot.html>full version</url></i> of the command line tool. 
+<url https://sourceforge.net/projects/scidvspc/files/support files/polyglot1.5.zip/download>full version</url>
+of the <url http://wbec-ridderkerk.nl/html/details1/PolyGlot.html>command line tool</url></i>.
 </p>
 <h4>Making Opening Books</h4>
 <p>
