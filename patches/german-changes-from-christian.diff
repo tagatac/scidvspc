@@ -3068,6 +3068,15 @@ Index: src/tkscid.cpp
      }
  
      scidBaseT * base = db;
+@@ -14601,7 +14625,7 @@
+     if (strContains (rstr, "1/2")) { results[RESULT_Draw] = true; }
+     if (strContains (rstr, "="))   { results[RESULT_Draw] = true; }
+     if (strContains (rstr, "*"))   { results[RESULT_None] = true; }
+-    if (strCaseEqual (rstr, "all")) {
++    if (strCaseEqual (rstr, "alle")) {	// "alle" ist definiert in tree.tcl, Zeile 89, bestRes
+         results[RESULT_White] = results[RESULT_Black] = true;
+         results[RESULT_Draw] = results[RESULT_None] = true;
+     }
 @@ -14753,7 +14777,7 @@
  sc_tree_clean (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -4994,6 +5003,30 @@ Index: tcl/menus.tcl
        -command ::file::Exit
    set helpMessage($m.file,$idx) FileExit
  
+Index: tcl/search/board.tcl
+===================================================================
+--- tcl/search/board.tcl	(revision 3405)
++++ tcl/search/board.tcl	(working copy)
+@@ -211,7 +211,7 @@
+ 
+   ### Check test
+   pack [frame $w.mate] -side top -fill x -expand 1
+-  label $w.mate.label -text {Check Test} -font font_Bold
++  label $w.mate.label -text {Test auf Schachgebot} -font font_Bold
+   pack $w.mate.label -side top
+   pack [frame $w.mate.radio ] -side top 
+ 
+@@ -219,8 +219,8 @@
+   # (should we do it automaticslly if '+' or '#' are in entry field ?
+   # SAN_NO_CHECKTEST = 0, SAN_CHECKTEST  = 1, SAN_MATETEST = 2;
+   radiobutton $w.mate.radio.no -textvar ::tr(No) -variable checkTest -value 0
+-  radiobutton $w.mate.radio.check -text Check -variable checkTest -value 1
+-  radiobutton $w.mate.radio.mate -text Mate   -variable checkTest -value 2
++  radiobutton $w.mate.radio.check -text Schach -variable checkTest -value 1
++  radiobutton $w.mate.radio.mate -text Matt   -variable checkTest -value 2
+   pack $w.mate.radio.no $w.mate.radio.check $w.mate.radio.mate -side left -padx 15
+ 
+   addHorizontalRule $w
 Index: tcl/search/header.tcl
 ===================================================================
 --- tcl/search/header.tcl	(revision 3405)
@@ -6628,7 +6661,7 @@ Index: tcl/tools/optable.tcl
 -      question 0 "Full report" "Compact report" \
 -      "Theory table" "Cancel"]
 +  set t [tk_dialog .oprepWin.dialog "Berichtstyp auswählen" \
-+      "Select Report Type\n\nVoller Bericht (einschließlich Theorietabelle), kompakter Bericht (ohne Theorietabelle) oder nur die Theorietabelle." \
++      "Wählen Sie den Berichtstyp\n\nVoller Bericht (einschließlich Theorietabelle), kompakter Bericht (ohne Theorietabelle) oder nur die Theorietabelle." \
 +      question 0 "Voller Bericht" "Kompakter Bericht" \
 +      "Theorietabelle" "Abbruch"]
    if {$t == 3} { return }
@@ -6759,7 +6792,7 @@ Index: tcl/tools/optable.tcl
        return
 Index: tcl/tools/pinfo.tcl
 ===================================================================
---- tcl/tools/pinfo.tcl	(revision 3405)
+--- tcl/tools/pinfo.tcl	(revision 3408)
 +++ tcl/tools/pinfo.tcl	(working copy)
 @@ -56,7 +56,7 @@
        } else {
@@ -7352,3 +7385,67 @@ Index: tcl/tools/uci.tcl
      }
  
      # Some engines in analyze(gui?) mode may not react as expected to "quit"
+Index: tcl/windows/switcher.tcl
+===================================================================
+--- tcl/windows/switcher.tcl	(revision 3405)
++++ tcl/windows/switcher.tcl	(working copy)
+@@ -964,7 +964,7 @@
+       $f.menu.show add checkbutton -label [tr ShowIcons] -variable ::windows::switcher::icons -command ::windows::switcher::Refresh
+       $f.menu.show add checkbutton -label [tr ConfirmCopy] -variable ::windows::switcher::confirmCopy 
+       $f.menu.show add separator
+-      $f.menu.show add command -label "Switcher Colour" -command SetSwitcherColour
++      $f.menu.show add command -label [tr OptionsSwitcherColour] -command SetSwitcherColour
+       $f.menu.show add checkbutton -label [tr TreeOptSmallFont] -variable ::windows::gamelist::customFont -command {
+         ::windows::gamelist::configFont
+         ::windows::gamelist::Configure .glistWin.tree
+Index: tcl/windows/tree.tcl
+===================================================================
+--- tcl/windows/tree.tcl	(revision 3405)
++++ tcl/windows/tree.tcl	(working copy)
+@@ -47,7 +47,7 @@
+ 
+ proc ::tree::treeFileSave {base} {
+   if {[catch {sc_tree write $base} result]} {
+-    tk_messageBox -type ok -icon warning -title "Scid: Error writing file" -message $result -parent .treeWin$base
++    tk_messageBox -type ok -icon warning -title "Scid: Fehler beim Schreiben der Datei" -message $result -parent .treeWin$base
+   }
+ }
+ 
+@@ -86,7 +86,7 @@
+     status	""
+     bestMax	100 
+     order	frequency
+-    bestRes	All
++    bestRes	Alle
+   } {
+    set tree($i$baseNumber) $j
+   }
+@@ -1290,7 +1290,7 @@
+     grid columnconfig $w.blist 0 -weight 1 -minsize 0
+ 
+     label $w.b.result -text " $::tr(Result)" -font font_Small
+-    tk_optionMenu $w.b.res tree(bestRes$baseNumber) All 1-0 0-1 {1-0 0-1} {1/2-1/2}
++    tk_optionMenu $w.b.res tree(bestRes$baseNumber) Alle 1-0 0-1 {1-0 0-1} {1/2-1/2}
+     $w.b.res configure -font font_Small -direction right
+ 
+     if {$::tree::sortBest} {
+@@ -1299,7 +1299,7 @@
+       set tree(sortBest$baseNumber) Order
+     }
+     label $w.b.sort -text " $::tr(Sort)" -font font_Small
+-    tk_optionMenu $w.b.sortMenu tree(sortBest$baseNumber) Best Order
++    tk_optionMenu $w.b.sortMenu tree(sortBest$baseNumber) Beste Reihenfolge
+     $w.b.sortMenu configure -font font_Small -direction right
+ 
+     button $w.b.close -text $::tr(Close) -command "destroy $w" -width 9 -font font_Small
+@@ -1498,8 +1498,8 @@
+         $menu.addcol add command -label $tr(Glist$h) -command "::tree::bestInsertCol $w $i $col"
+       incr i
+     }
+-    $menu add cascade -label $tr(GlistAddField) -menu $menu.addcol
+-    $menu add command -label $tr(GlistRemoveThisGameFromFilter) -command "::tree::bestRemoveCol $w $col"
++    $menu add cascade -label "Spalte hinzufügen" -menu $menu.addcol
++    $menu add command -label "Spalte entfernen" -command "::tree::bestRemoveCol $w $col"
+ 
+     $menu add separator
+ 
