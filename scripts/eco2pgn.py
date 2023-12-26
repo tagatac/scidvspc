@@ -26,9 +26,9 @@ while 1:
     if not line: break
     line = line[:-1]
 
-    if re.match("\s*(#|$)", line): continue
+    if re.match("\\s*(#|$)", line): continue
 
-    match = re.match("(\S+)\s+\"([^\"]+)\"(\s+.+)?$", line)
+    match = re.match("(\\S+)\\s+\"([^\\\"]+)\"(\\s+.+)?$", line)
     if match:
         eco, variation, cont = match.groups()
 
@@ -41,10 +41,10 @@ while 1:
         if cont[-1] == '*' and cont[-2] != ' ':
             cont = cont[:-1] + ' *'
 
-    print ('[ECO "%s"]' % eco)
-    print ('[Variation "%s"]' % variation)
-    print ('[Result "*"]')
-    print
-    print (cont)
-    print
+    print('[ECO "%s"]' % eco)
+    print('[Variation "%s"]' % variation)
+    print('[Result "*"]')
+    print()
+    print(cont)
+    print()
 
