@@ -542,6 +542,10 @@ namespace eval epd {
     # choose analysis time
     set w .epdAnnotateConfig
 
+    if {[winfo exists $w]} {
+      raiseWin $w
+      return
+    }
     toplevel $w
     wm title $w "Analyze EPD"
     placeWinOverParent $w .epd$id
@@ -639,7 +643,7 @@ namespace eval epd {
       loadEpd $id
       after [expr $epdDelay * 1000 ] "set epdTimer($id) 1"
       vwait epdTimer($id)
-
+      set status {}
       if {$epdAnnotateMode > 0} {
         # find Best PV. (bestMoves is updated in updateEpdWin)
         # TODO xboard
