@@ -1,6 +1,6 @@
 Index: src/namebase.h
 ===================================================================
---- src/namebase.h	(revision 3405)
+--- src/namebase.h	(revision 3413)
 +++ src/namebase.h	(working copy)
 @@ -33,10 +33,10 @@
  const uint NUM_NAME_TYPES = 4;
@@ -19,7 +19,7 @@ Index: src/namebase.h
  
 Index: src/pgnparse.cpp
 ===================================================================
---- src/pgnparse.cpp	(revision 3405)
+--- src/pgnparse.cpp	(revision 3413)
 +++ src/pgnparse.cpp	(working copy)
 @@ -376,7 +376,7 @@
              value[length-7] = 0;
@@ -191,7 +191,7 @@ Index: src/pgnparse.cpp
              err = OK;
 Index: src/tkscid.cpp
 ===================================================================
---- src/tkscid.cpp	(revision 3405)
+--- src/tkscid.cpp	(revision 3413)
 +++ src/tkscid.cpp	(working copy)
 @@ -50,7 +50,7 @@
  static const uint REPORT_OPENING = 0;
@@ -2920,7 +2920,7 @@ Index: src/tkscid.cpp
      // Generate message
  
 -    sprintf (tempStr, "Scid found %u %s name correction%s.",
-+    sprintf (tempStr, "Scid hat %u Namenskorrekturen für %s gefunden%s.",
++    sprintf (tempStr, "Scid hat %u Namenskorrekturen für %s gefunden.",
               correctionCount, NAME_TYPE_STRING[nt],
               strPlural (correctionCount));
      Tcl_AppendResult (ti, tempStr, NULL);
@@ -3486,7 +3486,7 @@ Index: src/tkscid.cpp
      scid_book_movesupdate( (char*) argv[2], (char*) argv[3], slot, (char*) argv[5] );
 Index: tcl/bitmaps.tcl
 ===================================================================
---- tcl/bitmaps.tcl	(revision 3405)
+--- tcl/bitmaps.tcl	(revision 3413)
 +++ tcl/bitmaps.tcl	(working copy)
 @@ -71,19 +71,19 @@
  ### Process custom chess pieces
@@ -3572,7 +3572,7 @@ Index: tcl/bitmaps.tcl
  ### end of bitmaps.tcl
 Index: tcl/board.tcl
 ===================================================================
---- tcl/board.tcl	(revision 3405)
+--- tcl/board.tcl	(revision 3413)
 +++ tcl/board.tcl	(working copy)
 @@ -3012,7 +3012,7 @@
    if {[catch {
@@ -3594,7 +3594,7 @@ Index: tcl/board.tcl
    if {[llength $filename]} {
 Index: tcl/config.tcl
 ===================================================================
---- tcl/config.tcl	(revision 3405)
+--- tcl/config.tcl	(revision 3413)
 +++ tcl/config.tcl	(working copy)
 @@ -44,18 +44,18 @@
  
@@ -3622,7 +3622,7 @@ Index: tcl/config.tcl
  ### Setup for truetype (and PGN figurine) support
 Index: tcl/edit.tcl
 ===================================================================
---- tcl/edit.tcl	(revision 3405)
+--- tcl/edit.tcl	(revision 3413)
 +++ tcl/edit.tcl	(working copy)
 @@ -5,9 +5,9 @@
  proc fenErrorDialog {{msg {}}} {
@@ -3687,7 +3687,7 @@ Index: tcl/edit.tcl
      set setupBd {}
 Index: tcl/end.tcl
 ===================================================================
---- tcl/end.tcl	(revision 3405)
+--- tcl/end.tcl	(revision 3413)
 +++ tcl/end.tcl	(working copy)
 @@ -123,7 +123,7 @@
    sc_game pop
@@ -4067,9 +4067,55 @@ Index: tcl/end.tcl
        set initialDir(base) [file dirname $startbase]
        set initialDir(file) [file tail $startbase]
        # this sets initialDir(file) for all files, not just pgn... 
+Index: tcl/file/epd.tcl
+===================================================================
+--- tcl/file/epd.tcl	(revision 3413)
++++ tcl/file/epd.tcl	(working copy)
+@@ -227,9 +227,9 @@
+ 
+     # Right-mouse button cut/copy/paste menu:
+     menu $w.text.edit -tearoff 0
+-    $w.text.edit add command -label "Cut"  -command "tk_textCut $w.text"
+-    $w.text.edit add command -label "Copy" -command "tk_textCopy $w.text"
+-    $w.text.edit add command -label "Paste" -command "tk_textPaste $w.text"
++    $w.text.edit add command -label "Ausschneiden"  -command "tk_textCut $w.text"
++    $w.text.edit add command -label "Kopieren" -command "tk_textCopy $w.text"
++    $w.text.edit add command -label "Einfügen" -command "tk_textPaste $w.text"
+     bind $w.text <ButtonPress-3> "tk_popup $w.text.edit %X %Y"
+ 
+     bind $w <F1> { helpWindow EPD }
+@@ -294,7 +294,7 @@
+       addHorizontalRule $w
+       pack [frame $w.bottom] -expand 1 -fill x -side bottom
+ 
+-      label $w.top.txt -text "This EPD file has been altered.\nDo you wish to save it?"
++      label $w.top.txt -text "Diese EPD-Datei wurde geändert.\nWollen Sie sie speichern?"
+       pack $w.top.txt -padx 5 -pady 5 -side right
+ 
+       button $w.bottom.b1 -width 10 -text $::tr(Save)     -command {destroy .confirmEPDExit ; set ::epd::answer 0}
+@@ -790,16 +790,16 @@
+ 
+     if {! [winfo exists .epd$id]} { return }
+     set w [toplevel .epdStrip]
+-    wm title $w "Strip EPD Opcode"
++    wm title $w "EPD-Opcode entfernen"
+     placeWinOverParent $w .epd$id
+     wm resizable $w false false
+-    label $w.label -text "EPD opcode to be removed from $epdName($id)"
++    label $w.label -text "Von $epdName($id) zu entfernender EPD-Opcode"
+     entry $w.e -width 10  -textvariable stripField
+     pack $w.label $w.e -side top -pady 5 -padx 5
+     addHorizontalRule $w
+     set b [frame $w.buttons]
+     pack $b -side bottom -pady 5
+-    button $b.ok -text "Strip EPD field" -command "
++    button $b.ok -text "EPD-Feld entfernen" -command "
+       destroy $w
+       ::epd::stripEpdField $id \$stripField
+     "
 Index: tcl/file/maint.tcl
 ===================================================================
---- tcl/file/maint.tcl	(revision 3405)
+--- tcl/file/maint.tcl	(revision 3413)
 +++ tcl/file/maint.tcl	(working copy)
 @@ -14,12 +14,12 @@
    set ftype {
@@ -4302,7 +4348,7 @@ Index: tcl/file/maint.tcl
    ::windows::stats::Refresh
 Index: tcl/file.tcl
 ===================================================================
---- tcl/file.tcl	(revision 3405)
+--- tcl/file.tcl	(revision 3413)
 +++ tcl/file.tcl	(working copy)
 @@ -93,7 +93,7 @@
  proc ::file::New {} {
@@ -4437,7 +4483,7 @@ Index: tcl/file.tcl
        set ::initialDir(file) [file tail $fName]
 Index: tcl/game.tcl
 ===================================================================
---- tcl/game.tcl	(revision 3405)
+--- tcl/game.tcl	(revision 3413)
 +++ tcl/game.tcl	(working copy)
 @@ -125,16 +125,16 @@
  proc ::game::LoadNextPrev {action {raise 1}} {
@@ -4461,7 +4507,7 @@ Index: tcl/game.tcl
    ::game::Load $number 1 $raise
 Index: tcl/language.tcl
 ===================================================================
---- tcl/language.tcl	(revision 3405)
+--- tcl/language.tcl	(revision 3413)
 +++ tcl/language.tcl	(working copy)
 @@ -124,8 +124,8 @@
  
@@ -4476,7 +4522,7 @@ Index: tcl/language.tcl
  
 Index: tcl/main.tcl
 ===================================================================
---- tcl/main.tcl	(revision 3405)
+--- tcl/main.tcl	(revision 3413)
 +++ tcl/main.tcl	(working copy)
 @@ -1039,7 +1039,7 @@
    catch {source $fname}
@@ -4550,7 +4596,7 @@ Index: tcl/main.tcl
    pack $w.label -side top -pady 5 -padx 5
 Index: tcl/menus.tcl
 ===================================================================
---- tcl/menus.tcl	(revision 3405)
+--- tcl/menus.tcl	(revision 3413)
 +++ tcl/menus.tcl	(working copy)
 @@ -84,7 +84,7 @@
  $m add command -label FileNew -command ::file::New
@@ -5005,7 +5051,7 @@ Index: tcl/menus.tcl
  
 Index: tcl/search/board.tcl
 ===================================================================
---- tcl/search/board.tcl	(revision 3405)
+--- tcl/search/board.tcl	(revision 3413)
 +++ tcl/search/board.tcl	(working copy)
 @@ -211,7 +211,7 @@
  
@@ -5029,7 +5075,7 @@ Index: tcl/search/board.tcl
    addHorizontalRule $w
 Index: tcl/search/header.tcl
 ===================================================================
---- tcl/search/header.tcl	(revision 3405)
+--- tcl/search/header.tcl	(revision 3413)
 +++ tcl/search/header.tcl	(working copy)
 @@ -92,7 +92,7 @@
    set sIgnoreCol No
@@ -5127,8 +5173,17 @@ Index: tcl/search/header.tcl
    listbox $w.list -yscrollcommand "$w.ybar set" -height 20 -width 60 \
 Index: tcl/start.tcl
 ===================================================================
---- tcl/start.tcl	(revision 3405)
+--- tcl/start.tcl	(revision 3413)
 +++ tcl/start.tcl	(working copy)
+@@ -13,7 +13,7 @@
+ exec "`dirname "$0"`"/tkscid "$0" "$@"
+ 
+ set scidVersion 4.24
+-set scidVersionDate {May 1, 2023}
++set scidVersionDate {1. Mai 2023}
+ 
+ package require Tcl 8.5
+ package require Tk  8.5
 @@ -69,7 +69,7 @@
      append msg "tkscid program \nit uses is version [sc_info version].\n"
      append msg "Check that the path to tkscid is correct."
@@ -5293,7 +5348,7 @@ Index: tcl/start.tcl
  ::splash::add ""
 Index: tcl/tools/analysis.tcl
 ===================================================================
---- tcl/tools/analysis.tcl	(revision 3405)
+--- tcl/tools/analysis.tcl	(revision 3413)
 +++ tcl/tools/analysis.tcl	(working copy)
 @@ -232,7 +232,7 @@
    if {$::windowsOS} {
@@ -5435,7 +5490,7 @@ Index: tcl/tools/analysis.tcl
    pack $w.label -side top -pady 5 -padx 5
 Index: tcl/tools/calvar.tcl
 ===================================================================
---- tcl/tools/calvar.tcl	(revision 3405)
+--- tcl/tools/calvar.tcl	(revision 3413)
 +++ tcl/tools/calvar.tcl	(working copy)
 @@ -102,7 +102,7 @@
  
@@ -5472,7 +5527,7 @@ Index: tcl/tools/calvar.tcl
        button $f.p$piece -image w${piece}20 -command "::calvar::promo $piece"
 Index: tcl/tools/comp.tcl
 ===================================================================
---- tcl/tools/comp.tcl	(revision 3405)
+--- tcl/tools/comp.tcl	(revision 3413)
 +++ tcl/tools/comp.tcl	(working copy)
 @@ -27,7 +27,7 @@
    }
@@ -5719,7 +5774,7 @@ Index: tcl/tools/comp.tcl
  
 Index: tcl/tools/correspondence.tcl
 ===================================================================
---- tcl/tools/correspondence.tcl	(revision 3405)
+--- tcl/tools/correspondence.tcl	(revision 3413)
 +++ tcl/tools/correspondence.tcl	(working copy)
 @@ -90,7 +90,7 @@
  		global ::Xfcc::xfccrc ::Xfcc::xfccrcfile
@@ -5841,9 +5896,9 @@ Index: tcl/tools/correspondence.tcl
  
 Index: tcl/tools/email.tcl
 ===================================================================
---- tcl/tools/email.tcl	(revision 3405)
+--- tcl/tools/email.tcl	(revision 3413)
 +++ tcl/tools/email.tcl	(working copy)
-@@ -14,7 +14,7 @@
+@@ -14,12 +14,12 @@
    }
    if {! [sc_base inUse] || [sc_base current] == 9} {
      tk_messageBox -icon info -type ok \
@@ -5852,6 +5907,12 @@ Index: tcl/tools/email.tcl
      return
    }
  
+   toplevel $w
+-  wm title $w "Scid: Email Manager"
++  wm title $w "Scid: E-Mail-Manager"
+   wm minsize $w 25 10
+ 
+   bind $w <Destroy> {set .emailWin 0}
 @@ -32,7 +32,7 @@
    pack $w.b -side right -fill y
  
@@ -5870,7 +5931,7 @@ Index: tcl/tools/email.tcl
      set idx [llength $emailData]
      lappend emailData [list "" "" "" "" ""]
      modifyEmailDetails $idx
-@@ -63,11 +63,11 @@
+@@ -63,21 +63,21 @@
      ::tools::email::refresh
    }
  
@@ -5886,9 +5947,14 @@ Index: tcl/tools/email.tcl
 +  menubutton $b.time -text "Zeit" -underline 0 -indicatoron 1 \
      -menu $b.time.m -relief raised
    menu $b.time.m
-   $b.time.m add command -label "Received today" -underline 0 \
-@@ -77,7 +77,7 @@
-   $b.time.m add command -label "Edit..." -underline 0 \
+-  $b.time.m add command -label "Received today" -underline 0 \
++  $b.time.m add command -label "Heute erhalten" -underline 0 \
+     -command {::tools::email::TimesButton r}
+-  $b.time.m add command -label "Sent today" -underline 0 \
++  $b.time.m add command -label "Heute gesendet" -underline 0 \
+     -command {::tools::email::TimesButton s}
+-  $b.time.m add command -label "Edit..." -underline 0 \
++  $b.time.m add command -label "Editieren ..." -underline 0 \
      -command {::tools::email::TimesButton e}
  
 -  button $b.config -text "Settings" -command ::tools::email::config
@@ -6056,7 +6122,7 @@ Index: tcl/tools/email.tcl
      ::tools::email::refresh
 Index: tcl/tools/fics.tcl
 ===================================================================
---- tcl/tools/fics.tcl	(revision 3405)
+--- tcl/tools/fics.tcl	(revision 3413)
 +++ tcl/tools/fics.tcl	(working copy)
 @@ -77,7 +77,7 @@
  
@@ -6392,7 +6458,7 @@ Index: tcl/tools/fics.tcl
      }
 Index: tcl/tools/graphs.tcl
 ===================================================================
---- tcl/tools/graphs.tcl	(revision 3405)
+--- tcl/tools/graphs.tcl	(revision 3413)
 +++ tcl/tools/graphs.tcl	(working copy)
 @@ -14,12 +14,12 @@
    if {! [winfo exists $w]} { return }
@@ -6462,7 +6528,7 @@ Index: tcl/tools/graphs.tcl
      }
 Index: tcl/tools/import.tcl
 ===================================================================
---- tcl/tools/import.tcl	(revision 3405)
+--- tcl/tools/import.tcl	(revision 3413)
 +++ tcl/tools/import.tcl	(working copy)
 @@ -137,8 +137,8 @@
    }
@@ -6547,7 +6613,7 @@ Index: tcl/tools/import.tcl
      }
 Index: tcl/tools/inputengine.tcl
 ===================================================================
---- tcl/tools/inputengine.tcl	(revision 3405)
+--- tcl/tools/inputengine.tcl	(revision 3413)
 +++ tcl/tools/inputengine.tcl	(working copy)
 @@ -170,8 +170,8 @@
  
@@ -6580,7 +6646,7 @@ Index: tcl/tools/inputengine.tcl
            } \
 Index: tcl/tools/novag.tcl
 ===================================================================
---- tcl/tools/novag.tcl	(revision 3405)
+--- tcl/tools/novag.tcl	(revision 3413)
 +++ tcl/tools/novag.tcl	(working copy)
 @@ -36,7 +36,7 @@
      
@@ -6593,7 +6659,7 @@ Index: tcl/tools/novag.tcl
      }
 Index: tcl/tools/optable.tcl
 ===================================================================
---- tcl/tools/optable.tcl	(revision 3405)
+--- tcl/tools/optable.tcl	(revision 3413)
 +++ tcl/tools/optable.tcl	(working copy)
 @@ -68,7 +68,7 @@
      set w .progress
@@ -6792,7 +6858,7 @@ Index: tcl/tools/optable.tcl
        return
 Index: tcl/tools/pinfo.tcl
 ===================================================================
---- tcl/tools/pinfo.tcl	(revision 3408)
+--- tcl/tools/pinfo.tcl	(revision 3413)
 +++ tcl/tools/pinfo.tcl	(working copy)
 @@ -56,7 +56,7 @@
        } else {
@@ -6826,7 +6892,7 @@ Index: tcl/tools/pinfo.tcl
      ### If English, we can set the other four buttons likewise (and allign nicely)
 Index: tcl/tools/preport.tcl
 ===================================================================
---- tcl/tools/preport.tcl	(revision 3405)
+--- tcl/tools/preport.tcl	(revision 3413)
 +++ tcl/tools/preport.tcl	(working copy)
 @@ -19,7 +19,7 @@
  proc ::preport::preportDlg {{player {}}} {
@@ -6942,7 +7008,7 @@ Index: tcl/tools/preport.tcl
      # if {$::hasEncoding  &&  $::langEncoding($::language) != ""} { catch {set report [encoding convertto $::langEncoding($::language) $report]} }
 Index: tcl/tools/sergame.tcl
 ===================================================================
---- tcl/tools/sergame.tcl	(revision 3405)
+--- tcl/tools/sergame.tcl	(revision 3413)
 +++ tcl/tools/sergame.tcl	(working copy)
 @@ -91,7 +91,7 @@
  
@@ -6979,7 +7045,7 @@ Index: tcl/tools/sergame.tcl
      updateBoard -pgn
 Index: tcl/tools/tablebase.tcl
 ===================================================================
---- tcl/tools/tablebase.tcl	(revision 3405)
+--- tcl/tools/tablebase.tcl	(revision 3413)
 +++ tcl/tools/tablebase.tcl	(working copy)
 @@ -159,7 +159,7 @@
    set f $w.info
@@ -7113,7 +7179,7 @@ Index: tcl/tools/tablebase.tcl
  ####################################################################
 Index: tcl/tools/tacgame.tcl
 ===================================================================
---- tcl/tools/tacgame.tcl	(revision 3405)
+--- tcl/tools/tacgame.tcl	(revision 3413)
 +++ tcl/tools/tacgame.tcl	(working copy)
 @@ -127,7 +127,7 @@
      }
@@ -7212,7 +7278,7 @@ Index: tcl/tools/tacgame.tcl
      updateBoard -pgn
 Index: tcl/tools/tactics.tcl
 ===================================================================
---- tcl/tools/tactics.tcl	(revision 3405)
+--- tcl/tools/tactics.tcl	(revision 3413)
 +++ tcl/tools/tactics.tcl	(working copy)
 @@ -50,7 +50,7 @@
      set found 0
@@ -7309,7 +7375,7 @@ Index: tcl/tools/tactics.tcl
    }
 Index: tcl/tools/uci.tcl
 ===================================================================
---- tcl/tools/uci.tcl	(revision 3405)
+--- tcl/tools/uci.tcl	(revision 3413)
 +++ tcl/tools/uci.tcl	(working copy)
 @@ -484,7 +484,7 @@
      }
@@ -7385,22 +7451,35 @@ Index: tcl/tools/uci.tcl
      }
  
      # Some engines in analyze(gui?) mode may not react as expected to "quit"
+Index: tcl/windows/eco.tcl
+===================================================================
+--- tcl/windows/eco.tcl	(revision 3413)
++++ tcl/windows/eco.tcl	(working copy)
+@@ -203,7 +203,7 @@
+   set fname [file tail $fname]
+   # if {$fname == ""} { set fname "<none>" }
+ 
+-  $w.title insert end "$::tr(Database) $fname ([lindex [sc_base eco {}] 0] / [sc_base numGames [sc_base current]] games classified)" center
++  $w.title insert end "$::tr(Database) $fname ([lindex [sc_base eco {}] 0] von [sc_base numGames [sc_base current]] Partien klassifiziert)" center
+   $w.title configure -state disabled
+   set ::windows::eco::count $count
+ }
 Index: tcl/windows/switcher.tcl
 ===================================================================
---- tcl/windows/switcher.tcl	(revision 3405)
+--- tcl/windows/switcher.tcl	(revision 3413)
 +++ tcl/windows/switcher.tcl	(working copy)
 @@ -964,7 +964,7 @@
        $f.menu.show add checkbutton -label [tr ShowIcons] -variable ::windows::switcher::icons -command ::windows::switcher::Refresh
        $f.menu.show add checkbutton -label [tr ConfirmCopy] -variable ::windows::switcher::confirmCopy 
        $f.menu.show add separator
 -      $f.menu.show add command -label "Switcher Colour" -command SetSwitcherColour
-+      $f.menu.show add command -label [tr OptionsSwitcherColour] -command SetSwitcherColour
++	  $f.menu.show add command -label "Datenbankwechselfarbe" -command SetSwitcherColour
        $f.menu.show add checkbutton -label [tr TreeOptSmallFont] -variable ::windows::gamelist::customFont -command {
          ::windows::gamelist::configFont
          ::windows::gamelist::Configure .glistWin.tree
 Index: tcl/windows/tree.tcl
 ===================================================================
---- tcl/windows/tree.tcl	(revision 3405)
+--- tcl/windows/tree.tcl	(revision 3413)
 +++ tcl/windows/tree.tcl	(working copy)
 @@ -47,7 +47,7 @@
  
@@ -7448,4 +7527,17 @@ Index: tcl/windows/tree.tcl
 +    $menu add command -label "Spalte entfernen" -command "::tree::bestRemoveCol $w $col"
  
      $menu add separator
+ 
+@@ -1623,9 +1623,9 @@
+ 
+ proc ::tree::getCacheInfo { base } {
+   set ci [sc_tree cacheinfo $base]
+-  tk_messageBox -title "Cache Info" -type ok -icon info \
+-      -message "Base: [file tail [sc_base filename $base]]
+-Cache used : [lindex $ci 0] / [lindex $ci 1]" -parent .treeWin$base
++  tk_messageBox -title "Cache-Information" -type ok -icon info \
++      -message "Datenbank: [file tail [sc_base filename $base]]
++Benutzter Zwischen- speicher: [lindex $ci 0]/[lindex $ci 1]" -parent .treeWin$base
+ 
+ }
  

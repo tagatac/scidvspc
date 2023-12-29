@@ -1434,9 +1434,9 @@ Optionally, Head-to-Head and Total-Wins tie-breaks (in that order), can also be 
 </ul>
 
   <h4>ELO Performance Ratings Calculation</h4>
-  <p>To calculate ELO Performance ratings and ratings changes, Scid uses algorithms from the
-  <url http://www.fide.com/component/handbook/?view=article&id=172>FIDE handbook article 172</url>
-  , or older versions of this article. Some related discussion can be found <url 
+  <p>To calculate ELO Performance ratings and ratings changes, Scid (probably) uses algorithms from the
+  <url https://handbook.fide.com/chapter/TieBreakRegulationsPre2023>Pre 2023 FIDE handbook</url> (Todo - check current regulations).
+   Some related discussion can be found <url 
 http://www.chesschat.org/showthread.php?12161-Performance-ratings-models-for-100-and-0-scores>here</url>.
   </p>
  <p><i>Compared to some sources, Scid's Ratings Changes have small discrepencies, due to taking average opponent scores.
