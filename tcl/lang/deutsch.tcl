@@ -80,7 +80,7 @@ menuText D EditPaste "Partie aus Ablage einfügen" 19 \
   {Aktive Partie aus der Ablage hier einfügen}
 menuText D EditPastePGN "PGN-Partie aus Ablage einfügen..." 1 \
   {Interpretiere den Inhalt der Zwischenablage als PGN-Notation und füge ihn hier ein}
-menuText D EditSetup "Stellungseingabe..." 0 \
+menuText D EditSetup "Stellungseingabe" 0 \
   {Neue Stellung eingeben (FEN oder manuell)}
 menuText D EditCopyBoard "Stellung kopieren" 10 \
   {Aktuelle Brettposition in die Zwischenablage kopieren (im FEN-Format)}
@@ -869,7 +869,7 @@ menuText D OprepFileClose "Berichtsfenster schließen" 0
 menuText D OprepFavorites "Favoriten" 0
 menuText D OprepFavoritesAdd "Bericht hinzufügen..." 8
 menuText D OprepFavoritesEdit "Favoritenbericht editieren..." 0
-menuText D OprepFavoritesGenerate "Berichte erzeugen..." 9
+menuText D OprepFavoritesGenerate "Bericht erzeugen..." 9
 
 menuText D OprepHelp "Hilfe" 0
 menuText D OprepHelpReport "Hilfe Eröffnungsbericht" 0
@@ -1023,7 +1023,7 @@ translate D TwinCriteria1 {Ihre Auswahlkriterien der Dublettensuche haben eine h
 translate D TwinCriteria2 {Es wird empfohlen, daß bei der Auswahl "Nein" für "gleiche Züge" die Auswahl "Ja" für Farbe, Veranstaltung, Ort, Runde, Jahr und Monat ausgewählt wird.
 
 Wollen Sie fortsetzen und mit dieser Auswahl die Dubletten löschen? }
-translate D TwinCriteria3 {Es wird empfohlen, daß bei der Auswahl "Ja" für mindestens zwei der Parameter "gleicher Ort", "gleiche Runde" und "gleiches Jahr" gesetzt werden.
+translate D TwinCriteria3 {Es wird empfohlen, daß bei der Auswahl "Ja" mindestens zwei der Parameter "gleicher Ort", "gleiche Runde" und "gleiches Jahr" gesetzt werden.
 
 Wollen Sie fortsetzen und mit dieser Auswahl die Dubletten löschen?}
 translate D TwinCriteriaConfirm {Scid: Bestätigen der Dublettensuchparameter}
@@ -1952,7 +1952,7 @@ translateECO D {
   {Reversed QGD} {Abgel. Damengambit i.A.}
   {Queen's Indian} Damenindisch
   {Queen's Pawn} Damenbauer
-  {Queen's Pawn Game} Damenbauerspiel
+  {Queen's Pawn Game} Damenbauernspiel
   {Reversed Slav} {Slawisch i.A.}
   {Rubinstein Variation} Rubinstein-Variante
   {Russian Game} {Russische Partie}
@@ -2047,7 +2047,7 @@ set helpText(D,Intro) {<h1>Einführung</h1>
   von Zugeigenschaften</li>
 <li>Wiederherstellenschaltfläche und Werkzeugleisten</li>
 <li>Der Teil für das Schachbrett/die Figuren wurde überarbeitet und
-  enthält Unterstützung für benutzerdefinierte Felder und Figuren</li>
+  enthält Unterstützung für benutzerdefinierte Felder und Figuren.</li>
 <li>Anklickbare Tablebase-Züge</li>
 <li>Historien über letzte Partie und Spielerinformationen</li>
 <li>Fehlergetestetes Zurücknehmen und Wiederherstellen</li>
@@ -2071,8 +2071,8 @@ set helpText(D,GUI) {<h1>Scids Benutzerschnittstelle</h1>
   <br>
   <ht><a Docking><b>Angedockte Fenster</b></a></ht>
   <ht><a MainWindow>Das <b>Hauptbrett</b></a></ht>
-  <ht><a GameList>Partielistenfenster</a></ht>
-  <ht><a Menus>Die <b>Hauptmenüs</b></a></ht>
+  <ht><a GameList>Partienlistenfenster</a></ht>
+  <ht><a Menus>Das <b>Hauptmenü</b></a></ht>
   <ht><a Moves>Eingeben von <b>Zügen</b></a></ht>
   <br>
   <p><footer>Aktualisiert: Scid vs. PC 4.14 Dezember 2014</footer></p>
@@ -2132,8 +2132,7 @@ set helpText(D,BrowsingPGN) {<h1>PGN-Dateien und Scid</h1>
   empfohlen.</i></p>
 
 <p>Um PGN-Dateien zu öffnen, rufen Sie den
-  Dialog <run ::file::Open><green>Datei--<gt>Öffnen</green></run> auf,
-<a Switcher draganddrop>Ziehen und Ablegen (Drag and Drop)</a> oder das
+  Dialog <run ::file::Open><green>Datei--<gt>Öffnen</green></run> auf oder das
 <a Pgnscid>Pgnscid</a>-Werkzeug für schnelles Importieren und für eine
 Fehlersuche.</p>
 
@@ -2147,11 +2146,10 @@ Fehlersuche.</p>
   von <a Comment>Kommentaren</a> ermöglicht es Ihnen, sie zu
   editieren.</p>
 
-<p>Im <a MainWindow GameInfo>Partieinformationsfenster</a> sehen Sie
-  die Namen der Spieler und des Turniers. Diese Namen sind ebenfalls
-  anklickbar und zeigen dann Informationen über das Turnier und die
-  Spielerleistung. Dies ist der Anfang der Möglichkeiten der
-  Scid-Datenbanken.</p>
+<p>Im <a MainWindow GameInfo>Partieinformationsfenster</a> sehen Sie die Namen
+  der Spieler und des Turniers. Diese Namen sind ebenfalls anklickbar und zeigen
+  dann Informationen über die Spielerleistung und das Turnier. Dies ist der
+  Anfang der Möglichkeiten der Scid-Datenbanken.</p>
 
 <p>Wenn Sie eine PGN-Datei mit mehreren Partien geöffnet haben, dann
   ermöglicht Ihnen die <a GameList>Partienliste</a>, durch die Partien
@@ -2187,7 +2185,8 @@ set helpText(D,Scid) {<h1>Datenbanken und allgemeine Nutzung</h1>
   Ablagedatenbank als Mittel zum Ausschneiden und Einfügen.
   </i></p>
 
-  <p><i>Freie Datenbank Caissabase <url http://caissabase.co.uk/>http://caissabase.co.uk/</url>
+  <p><i>Eine frei verfügbare Datenbank ist Caissabase:
+  <url http://caissabase.co.uk/>http://caissabase.co.uk/</url>
   </i></p>
 
   <h4>Datenbanken benutzen</h4>
@@ -2218,13 +2217,13 @@ set helpText(D,Scid) {<h1>Datenbanken und allgemeine Nutzung</h1>
 
   <h4>Weitere Möglichkeiten und Informationen</h4>
   <ul>
-  <li><a Analysis Annotating>Automatische Partienkommentierung</a></li>
+  <li><a Analysis Annotating><b>Automatische Partienkommentierung</b></a></li>
   <li><a Bookmarks><b>Lesezeichen</b></a></li>
   <li><a CalVar><b>Training Variantenberechnung</b></a></li>
   <li><a Cmdline><b>Befehlszeilenoptionen</b></a></li>
   <li><a Compact><b>Eine Datenbank komprimieren</b></a></li>
   <li><a Correspondence><b>Fernschach</b></a></li>
-  <li><a Maintenance><b>Datenbankwartungsmittel</b></a></li>
+  <li><a Maintenance><b>Datenbankwartung</b></a></li>
   <li><a ECO><b>ECO-Codes</b></a></li>
   <li><a Email><b>E-Mail</b></a></li>
   <li><a EPD><b>EPD-Dateien</b></a></li>
@@ -2575,8 +2574,8 @@ set helpText(D,MainWindow) {<h1>Hauptfenster von Scid vs. PC</h1>
   <li> <button tb_flip> Brett drehen [Strg+f]</li>
   <li> <button tb_windows> Vergrößert offene Fenster [tab]. Diese
   Eigenschaft funktioniert nur, wenn Sie bei Ihrem Fenstermanager die
-  Methode für die Fokuswegnahme deaktivieren. (Rechtsklick zeigt das
-  Willkommensfenster)</li>
+  Methode für die Fokuswegnahme deaktivieren (Rechtsklick zeigt das
+  Willkommensfenster).</li>
   </ul>
   </p>
 
@@ -2700,7 +2699,8 @@ append helpText(D,Menus) {
   </ul>
 
   <h3><name Edit>Bearbeiten</name></h3>
-  <li><b>Stellungseingabe...</b>  Eine beliebige Brettstellung setzen</li>
+  <ul>
+  <li><b>Stellungseingabe</b>  Eine beliebige Brettstellung setzen</li>
   <li><b>Stellung kopieren</b>  Kopiert die FEN-Werte der
   aktuellen Brettstellung in die Zwischenablage.</li>
   <li><b>PGN-Stellung kopieren</b>  Kopiert die Zwischenablage auf die PGN-Partie.</li>
@@ -2731,7 +2731,8 @@ append helpText(D,Menus) {
   <li><b>Variante testen</b>  Ermöglicht einen <a Moves
   Trial>Versuchsmodus</a>, um eine temporäre Variante auszuprobieren,
   ohne die aktuelle Partie zu ändern.</li>
-
+  </ul>
+  
   <h3><name Game>Partie</name></h3>
   <ul>
   <li><b>Neue Partie</b>  Setzt die aktive Partie in einen
@@ -2745,7 +2746,7 @@ append helpText(D,Menus) {
   Angaben zur aktuellen Partie.</li>
   <li><b>Partien durchsuchen</b>  Zeigt eine einzelne Partie
   in einem separaten Fenster an. In diesem können weitere Partien angezeigt werden.</li>
-  <li><b>Alle Spiele</b>  Zeigt eine Liste mit allen Partien an.</li>
+  <li><b>Alle Partien</b>  Zeigt eine Liste mit allen Partien an.</li>
   <br>
   <li><b>Partie löschen</b>  Partie als gelöscht kennzeichnen
   (für ein endgültiges Löschen während einer Datenbankkomprimierung).</li>
@@ -2797,23 +2798,23 @@ append helpText(D,Menus) {
   <li><b>Kreuztabelle</b>  Erstellt für die aktuelle Partie eine <a Crosstable>Kreuztabelle</a>.</li>
   <li><b>Spielersuche</b>  Öffnet das Fenster <a PList>Spielersuche</a>.</li>
   <li><b>Turniersuche</b>  Öffnet das Fenster <a Tmt>Turniersuche</a>.</li>
-  <li><b>Wartungsfenster</b>  Öffnet das Fenster <a Maintenance>Wartung</a>.</li>
+  <li><b>Wartung</b>  Öffnet das Fenster <a Maintenance>Wartung</a>.</li>
   <li><b>ECO-Auswertung</b>  Öffnet das Fenster <a ECO browser>ECO-Auswertung</a>.</li>
   <li><b>Statistik</b> Öffnet das
   Fenster <term>Statistik</term>, das eine Zusammenfassung von Gewinn- und Verlustpartien im <a Filter>Filter</a> liefert.</li>
   <li><b>Zugbaum</b>  Öffnet das <a Tree>Zugbaumfenster</a>.</li>
   <li><b>Endspieltabellen</b>  Öffnet das Fenster mit <a TB>Endspiel</a>informationen.</li>
-  <li><b>Eröffnungsbuch</b>  Öffnet das Fenster mit Eröffnungsbüchern.</li>
+  <li><b>Eröffnungsbücher</b>  Öffnet das Fenster mit Eröffnungsbüchern.</li>
   <li><b>Fernschach</b>  Öffnet das Fernschachfenster.</li>
   </ul>
 
   <h3><name Tools>Werkzeuge</name></h3>
   <ul>
   <li><b>Analyse-Engine</b>  Konfiguriert die Analyse-Engine</li>
-  <li><b>Analyse-Engine #1</b>  Startet/stoppt
+  <li><b>Starte Engine #1</b>  Startet/stoppt
   die <a Analysis>Analyse-Engine Nr. 1 und zeigt die Bewertung der
   aktuellen Stellung</a>.
-  <li><b>Analyse-Engine #2</b>  wie vorstehend
+  <li><b>Starte Engine #2</b>  wie vorstehend
   <br>
   <li><b>Wartung</b>  Funktionen zur <a Maintenance>Datenbankwartung</a>.</li>
   <ul>
@@ -2825,10 +2826,11 @@ append helpText(D,Menus) {
   Datenbankkomprimierung durch.</li>
   <li><b>Sortieren...</b>  Sortiert die Datenbank nach Namen,
   Wertungszahl usw.</li>
-  <li><b>Schreibkorrektur Spieler/Ereignis/Ort/Runde...</b>
+  <li><b>Schreibkorrektur Spieler/Turnier/Ort/Runde...</b>
   Durchsucht die Schreibkorrekturdatei für mögliche Namenskorrekturen.</li>
   <li><b>Dubletten löschen...</b>  Findet <a Maintenance Twins>Dubletten</a> in der Datenbank.</li>
-  <li><b>Dubletten prüfen...</b>  Repariert eine fehlerhafte Datenbank.</li>
+  <li><b>Dubletten prüfen...</b>  Zeigt ein Fenster mit gefundenen Dubletten an.</li>
+  <li><b>Inkonsistenzen beseitigen</b>  Repariert eine fehlerhafte Datenbank.</li>
   </ul>
   <li><b>Buch abstimmen</b>  Zum Editieren von PolyGlot-Eröffnungsbüchern.</li>
   <li><b>Spielerbericht</b>  Erstellt für einen Spieler einen <a Reports Player>Eröffnungsbericht</a>.</li>
@@ -2837,11 +2839,11 @@ append helpText(D,Menus) {
   <li><b>E-Mail-Manager</b>  Öffnet/schließt das Fenster <a Email>E-Mail-Manager</a> für die Verwaltung von Fernschachpartien.</li>
   <li><b>Hardware verbinden</b>  Ermöglicht das Einrichten externer Hardwaregeräte.</li>
   <br>
-  <li><b>Rel. Filtergrafik</b>  Zeigt für <a Graphs Filter>gefilterte Partien</a> die Häufigkeit pro
+  <li><b>Relative Filtergrafik</b>  Zeigt für <a Graphs Filter>gefilterte Partien</a> die Häufigkeit pro
   1.000 Partien bezüglich Dekaden, Jahren, Elo und Anzahl der Spielzüge grafisch an.</li>
-  <li><b>Abs. Filtergrafik</b>  Wie vorstehend, jedoch in absoluten Zahlen.</li>
+  <li><b>Absolute Filtergrafik</b>  Wie vorstehend, jedoch in absoluten Zahlen.</li>
   <li><b>Ratingveränderung</b>  Zeigt eine <a Graphs Rating>Ratinggrafik</a> an.</li>
-  <li><b>Score Graph</b>  Zeigt für die aktuelle Partie eine <a Graphs Score>Grafik mit Bewertungszahlen</a>an.</li>
+  <li><b>Partiebewertungsgrafik</b>  Zeigt für die aktuelle Partie eine <a Graphs Score>Grafik mit Bewertungszahlen</a>an.</li>
   <br>
   <li><b>Partie exportieren</b>  Speichert die aktuelle Partie
   in eine Textdatei im Format PGN, HTML oder LaTeX. Siehe die
@@ -3049,7 +3051,7 @@ set helpText(D,Searches) {<h1>In Scid suchen</h1>
   Filter hinzufügen) einstelllen, was komplexe Suchaufgaben
   ermöglicht.
   </p>
-  <p>Wenn mit einem Suchen nach Partiedaten, Brettstellungen und
+  <p>Wenn mit einem Suchen nach Partiedaten, Brettstellungen oder
   Material/Muster eine passende Partie geladen wird, dann wird
   automatisch die betreffende Partiestellung angezeigt (außer im
   unwahrscheinlichen Fall, daß die Stellung nach dem 255. Zug liegt,
@@ -3152,7 +3154,7 @@ set helpText(D,Searches) {<h1>In Scid suchen</h1>
   jeder Linie muß gleich sein, andere Figuren können beliebig plaziert
   sein</li>
   <li> <b>Material</b> - bei gleichem Material können Bauern und
-  Figuren beliebig plaziert sein</li>
+  Figuren beliebig platziert sein</li>
   </ul>
   <p>Die Bauernsuche ist nützlich für das Eröffnungsstudium anhand der
   Bauernstruktur. Bei einer Suche nach Linien und Material kann man
@@ -3198,9 +3200,9 @@ set helpText(D,Searches) {<h1>In Scid suchen</h1>
   einen beliebig passenden Zug.</p>
   <p>Benutzen Sie zum Beispiel <b>Rh8 ? R1h7</b>, um
   Turmverdoppelungen in der h-Linie zu finden.</p>
-  <p>Die Option <b>Schachgebotstest</b> ermöglicht Zugeingaben in der
-  Form <b>Qh7+</b> (oder <b>Rh8#</b>), aber diese Schachgebote
-  verlangsamen die Suche ein wenig. Eine geeignete Wahl des
+  <p>Die Option <b>Test auf Schachgebot</b> ermöglicht Zugeingaben in der
+  Form <b>Qh7+</b> (oder <b>Rh8#</b>), aber diese Schachgebote verlangsamen die
+  Suche ein wenig. Eine geeignete Wahl des
   <b>Zugrechts</b> kann die Suche beschleunigen.</p>
 
   <h3><name Settings>Sucheinstellungen speichern</name></h3>
@@ -3257,8 +3259,8 @@ set helpText(D,CQL) {<h1>Schachabfragesprache CQL (Chess Query Language)</h1>
   </p>
   <p>Dank geht an Lewis Stiller und Gady Costeff für ihre innovative
   Arbeit an CQL.
-<br>Eine ziemlich technische Dokumentation für ihre Sprache kann auf
-  <url http://www.gadycosteff.com/cql>their CQL site</url> eingesehen
+<br>Eine ziemlich technische Dokumentation für ihre Sprache kann auf ihrer
+  <url http://www.gadycosteff.com/cql>CQL-Seite</url> eingesehen
   werden.
   </p>
 
@@ -3331,7 +3333,7 @@ set helpText(D,Clipbase) {<h1>Die Standarddatenbank</h1>
   </p>
   <p>Angenommen, Sie wollen sich auf einen Gegner vorbereiten und
   haben eine Datenbank durchsucht, so daß der <a Filter>Filter</a> nur
-  Partien enthält, in denen der Gegner Weiß hatte. Sie können diese
+  Partien enthält, in denen Ihr Gegner Weiß hatte. Sie können diese
   Partien in die Ablagedatenbank kopieren, indem Sie in
   der <a GameList>Partienliste</a>
   den <a Switcher>Datenbankwechsler</a> verwenden, um die Partien von
@@ -3345,8 +3347,8 @@ set helpText(D,Clipbase) {<h1>Die Standarddatenbank</h1>
   anderen kopieren, ohne die Ablagedatenbank als Zwischenschritt zu benutzen.
   </p>
   <p>Die Ablagedatenbank kann nicht geschlossen werden. Der
-  Menübefehl <green>Datei--<gt>Schließen</green> ist gleichbedeutend
-  mit diese zu leeren über <green>Bearbeiten--<gt>Ablage leeren</green>.
+  Menübefehl <green>Datei--<gt>Schließen</green> ist gleichbedeutend mit diese
+  über <green>Bearbeiten--<gt>Ablage leeren</green> zu leeren.
   </p>
   <p>Partien in der Ablagedatenbank belegen den Arbeitsspeicher Ihres
   Rechners. Bitte denken Sie daran, wenn Sie eine große Anzahl an
@@ -3522,17 +3524,16 @@ set helpText(D,Comment) {<h1>Der Kommentareditor</h1>
 
 set helpTitle(D,Crosstable) "Fenster Kreuztabelle"
 set helpText(D,Crosstable) {<h1>Das Fenster Kreuztabelle</h1>
-  <p>Die <run ::crosstab::Open><green>Kreuztabelle</green></run> zeigt
-  die Turniertabelle (für die aktuelle Partie) im Format jeder gegen
-  jeden, Schweizer System oder K.o.-System. Jede Partie, die bis
-  zu <b>zwölf Monaten vor oder nach</b> der aktuellen Partie gespielt
-  wurde, wird bei <b>identischer Turnierbezeichnung und Ort</b> als
-  zum Turnier gehörend betrachtet.
+  <p>Die <run ::crosstab::Open><green>Kreuztabelle</green></run> zeigt die
+  Turniertabelle (für die aktuelle Partie) im Format jeder gegen jeden,
+  Schweizer System oder K.o.-System. Jede Partie, die bis zu <b>zwölf Monate vor
+  oder nach</b> der aktuellen Partie gespielt wurde, wird bei <b>identischer
+  Bezeichnung von Turnier und Ort</b> als zum Turnier gehörend betrachtet.
   </p>
   <p><i>Für eine gute Kreuztabelle sollten <b>doppelte Partien</b> zum
   Löschen markiert sein und die Namen von Spielern, Veranstaltung
   und Ort sollten einheitlich geschrieben sein. Für weitere
-  Informationen siehe <a Maintenance>Database Maintenance</a>.
+  Informationen siehe <a Maintenance>Datenbankwartung</a>.
   </i></p>
 
   <h4>Merkmale</h4>
@@ -3574,25 +3575,24 @@ set helpText(D,Crosstable) {<h1>Das Fenster Kreuztabelle</h1>
   <ul>
   <li><b>Punktzahlen gruppieren</b> fügt eine Leerzeile nach
   Spielern mit gleicher Punktzahl ein.</li>
-  <li><b>Farbinformation</b> zeigt w/b im Schweizer System. Dies
+  <li><b>Farben (nur Schweizer System)</b> zeigt w/b im Schweizer System. Dies
   zeigt an, ob der Spieler Weiß (w) oder Schwarz (b) hatte.</li>
-  <li><b>Zeilenfarbe</b> schattiert jede zweite Zeile. Die Farbe
-  kann im Menü <green>Optionen--<gt>Hintergrundfabe--<gt>Zeilenfarbe Kreuztabelle</green>
+  <li><b>Farbige Zeilen</b> schattiert jede zweite Zeile. Die Farbe kann im
+  Kreuztabellenfenster über das Menü <green>Optionen--<gt>Zeilenfarbe</green>
   gewählt werden.</li>
   </ul>
 
   <h4>Berechnung der Elo-Leistung</h4>
-  <p>Um die Elo-Leistung und -Veränderung zu berechnen, benutzt Scid
-  Algorithmen von
-  <url http://www.fide.com/component/handbook/?view=article&id=172>FIDE
-  handbook article 172</url> oder älteren Versionen dieses
-  Artikels. Eine hierzu gehörende Diskussion kann bei
-  <url http://www.chesschat.org/showthread.php?12161-Performance-ratings-models-for-100-and-0-scores>here</url>
-  gefunden werden.
+  <p>Um die Elo-Leistung und -Veränderung zu berechnen, benutzt Scid Algorithmen
+  aus einem
+  <url http://www.fide.com/component/handbook/?view=article&id=172>Handbuch der
+  FIDE</url>. Eine hierzu gehörende Diskussion kann bei
+  <url http://www.chesschat.org/showthread.php?12161-Performance-ratings-models-for-100-and-0-scores>Chess
+  Chat</url> gefunden werden.
   </p>
   <p><i>Verglichen mit anderen Quellen haben Scids
   Bewertungsveränderungen kleine Diskrepanzen, weil die gegnerischen
-  Durchschnittsergebnisse genommen werden. Wer in einer zuverlässigen
+  Durchschnittsergebnisse genommen werden. Wer an einer zuverlässigen
   Aktualisierung der Statistiken von Scid interessiert ist, findet den
   relevanten Code in Crosstable::RatingChange.
 </i></p>
@@ -3701,10 +3701,9 @@ set helpText(D,Tmt) {<h1>Der Turnierfinder</h1>
   Ort und Veranstaltungsdatum haben oder sie wurden innerhalb von drei
   Monaten gegenseitig gespielt.
   </i></p>
-  <p>Die Turnierauswahlkriterien schließen die Anzahl der
-  Spieler/Partien, das Datum, durchschnittliche Elo-Zahl und Land
-  ein. Passen Sie diese Werte an und drücken <b>Aktualisieren</b>, um
-  die neuen Ergebnisse zu sehen.
+  <p>Die Turnierauswahlkriterien schließen die Anzahl der Spieler/Partien, das
+  Datum, die durchschnittliche Elo-Zahl und das Land ein. Passen Sie diese Werte
+  an und drücken <b>Aktualisieren</b>, um die neuen Ergebnisse zu sehen.
   </p>
   <p>Das Anklicken eines Turniers aktualisiert
   die <a Crosstable>Kreuztabelle</a>. Ein Rechtsklick lädt auch die
@@ -3730,12 +3729,12 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
   <p>Das <run ::windows::gamelist::Open><green>Partienlistenfenster</green></run>
   zeigt alle gefilterten Partien der aktuell geöffneten Datenbank/PGN-Datei.</p>
 
-  <p><i>Die Partienliste (und die Liste der besten Zugbaumpartien) hat jetzt die
-  Möglichkeit, die Schriftart zu konfigurieren. Sie wird über ein Kontextmenü im
-  Datenbankwechsler aktiviert und der Schrifttyp ist "Klein".</i></p>
+  <p><i>Man kann in der Partienliste die Schriftart konfigurieren. Sie wird über
+  ein Kontextmenü im Datenbankwechsler aktiviert und der Schrifttyp ist
+  "Klein".</i></p>
 
   <p>Unterhalb der Partienliste sind verschiedene Schaltflächen und
-  Eingabefelder und unten finden Sie
+  Eingabefelder und darunter finden Sie
   den <a Switcher>Datenbankwechsler</a>.</p>
   <p>Ein Klick auf einen Partieeintrag wählt die Partie aus. Um
   mehrere Partien auszuwählen, verwenden Sie Strg+Klick und
@@ -3746,13 +3745,12 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
   hinzuzufügen oder sie neu zu ordnen ("Hinzufügen" ordnet ebenfalls
   eine Spalte neu). Man kann auch den Spaltentext unterschiedlich
   ausrichten (links, rechts oder zentriert).</p>
-  <p>Schnelles Suchen kann durch Texteingabe im Kombinationsfeld und
-  Drücken der Enter-Taste oder durch Klicken auf
-  die <b>Filter</b>-Schaltfläche erfolgen. Benutzen Sie mit dem Filter
-  "+" als logisches "UND", z.B."Kasparov+Karpov". Analog erlaubt das
-  Eingabefeld das Suchen nach einer besonderen Partie durch Angabe
-  einer Zahl. Diese beiden Steuerelemente laden die Partie durch
-  Drücken von Strg+Enter.</p>
+  <p>Schnelles Suchen kann durch Texteingabe im Kombinationsfeld und Drücken der
+  Enter-Taste oder durch Klicken auf die <b>Filter</b>-Schaltfläche
+  erfolgen. Benutzen Sie den Filter "+" als logisches "UND",
+  z.B. "Kasparov+Karpov". Analog erlaubt das Eingabefeld das Suchen nach einer
+  besonderen Partie durch Angabe einer Zahl. Diese beiden Steuerelemente laden
+  die Partie durch Drücken von Strg+Enter.</p>
   <p><i>Um Partien zu sehen, die mit der aktuellen Stellung
   übereinstimmen, aktivieren Sie im <a Tree>Zugbaumfenster</a> "Filter
   anpassen". Dies ändert auch die Spalte "Züge", die dann die
@@ -3813,9 +3811,9 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
   <li><img tb_gnext> - lädt die nächste Filterpartie</li>
   <li><img tb_glast> - lädt die letzte Filterpartie</li>
   <br>
-  <li><b>Datenbank</b> - Datenbankkomprimierung</li>
-  <li><b>Aktuell</b> - hebt im Partielistenfenster die aktuell geladene Partie hervor</li>
-  <li><b>Zurücksetzen</b> - setzt den Partiefilter zurück</li>
+  <li><b>Komprimieren</b> - Datenbankkomprimierung</li>
+  <li><b>Aktuell</b> - hebt im Partienlistenfenster die aktuell geladene Partie hervor</li>
+  <li><b>Zurücksetzen</b> - setzt den Partienfilter zurück</li>
   <li><b>Invertieren</b> - negiert die Filterergebnisse</li>
   <li><b>Filter</b> - sucht/filtert den aktuellen Filter nach dem im Kombinationsfeld eingegebenen Text</li>
   </ul>
@@ -3836,8 +3834,10 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
   </ul>
 
   <h3>Weitere Funktionen</h3>
+
+  Drücken von
   <ul>
-  <li>Drücken von Entf entfernt die ausgewählte(n) Partie(n) aus dem Filter.</li>
+  <li>Entf - entfernt die ausgewählte(n) Partie(n) aus dem Filter</li>
   <li>Strg+Entf - wechselt das Löschkennzeichen</li>
   <li>Strg+a - wählt alle sichtbaren Partien aus</li>
   <li>Strg+n - invertiert den Filter</li>
@@ -3851,13 +3851,13 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
   <li>Drücken der Mausradtaste verbirgt die Symbolleiste.</li>
   </ul>
   <p><i>Die aktuelle Partienliste kann als Text über das Menü
-  Werkzeuge<gt>Alles im Filter exportieren exportiert werden</i></p>
+  Werkzeuge--<gt>Alles im Filter exportieren exportiert werden</i></p>
 
   <h3><name Browsing>Einzelne Partien durchsuchen und
   zusammenführen</name></h3>
   <p>Aus dem Kontextmenü der Partienliste können Sie eine
-  Partie <b>durchstöbern</b>. Das ist eine Partievorschau, die in
-  einem separaten Fenster ohne Kommentare oder Varianten angezeigt wird.
+  Partie <b>durchsuchen</b>. Dies liefert eine Partievorschau, die in einem
+  separaten Fenster ohne Kommentare oder Varianten angezeigt wird.
   </p>
   <p>Aus dieser Vorschau heraus können Sie diese Partie als Variante
   mit der aktuellen Partie <b>zusammenfügen</b>. Das Zusammenfügen
@@ -3885,7 +3885,7 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
   Optionen-<gt>FICS-<gt>Brettgröße festgelegt). Strg+Entf schaltet das
   Löschen um (angezeigt durch eine ausgegraute Partienummer).
 
-  <p>Das Drücken von Strg-Links/Rechts bewegt <b>alle</b> Bretter
+  <p>Das Drücken von Strg+Links/Rechts bewegt <b>alle</b> Bretter
   vorwärts oder zurück und in gleicher Weise zeigt Strg+Pos1/Ende alle
   Anfangs-/Endstellungen.</p>
 
@@ -4428,18 +4428,16 @@ set helpText(D,Tree) {<h1>Das Zugbaumfenster</h1>
   </p>
 
   <h3><name Lock>Das Zugbaumfenster sperren</name></h3>
-  <p>Jedes Zugbaumfenster ist mit einer besonderen Datenbank
-  verbunden. Das heißt, wenn mehrere Datenbanken gleichzeitig geöffnet
-  sind, dann können mehrere Zugbaumfenster vorhanden sein. Wenn die
-  Schaltfläche <term>Sperren</term> im Zugbaumfenster aktiviert ist,
-  dann wird das Schließen dieses Fensters auch die zugehörige
-  Datenbank schließen. Zusätzlich schließt dies auch das zugehörige
-  Grafikfenster oder das Fenster mit den besten Partien. Wenn
-  die <term>Sperren</term>-Schaltfläche nicht aktiv ist, dann läßt ein
-  Schließen des Zugbaumfensters alle übrigen Fenster geöffnet.
+  <p>Jedes Zugbaumfenster ist mit einer besonderen Datenbank verbunden. Das
+  heißt, wenn mehrere Datenbanken gleichzeitig geöffnet sind, dann können
+  mehrere Zugbaumfenster vorhanden sein.
+  Wenn <b>Zugbaum--<gt>Optionen--<gt>Anbinden</b> aktiviert ist, bewirkt das
+  Schließen des Baumfensters auch das Schließen der mit diesem speziellen Baum
+  verbundenen Datenbank. Außerdem wird dadurch auch das zugehörigen Grafik-
+  oder Beste-Partien-Fenster geschlossen.
   </p>
-  <p>Beachten Sie, daß das Öffnen einer Datenbank als Baum aus dem
-  Dateimenü heraus die Datenbank standardmäßig automatisch sperrt.
+  <p>Beachten Sie, daß das Öffnen einer Datenbank <b>als Baum</b> aus dem
+  Dateimenü heraus die Datenbank standardmäßig automatisch anbindet.
   </p>
 
   <h3><name Training>Training</name></h3>
@@ -4731,8 +4729,8 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   im <green><run ::maint::Open>Wartungsfenster</b></run></green>
   durchgeführt werden.
   </p>
-  <p>Die Arbeiten umfassen unter anderem <a Flags>Löschen (und andere
-  Partiemarkierungen)</a>, <a Maintenance Spellcheck>Namenskorrekturen</a>,
+  <p>Die Arbeiten umfassen unter anderem Löschen (und andere
+  <a Flags>Partiemarkierungen</a>), <a Maintenance Spellcheck>Namenskorrekturen</a>,
   <a Compact>Komprimieren</a> und <a Sorting>Sortieren</a>.
   </p>
   <p><i>Die Funktionen
@@ -4820,8 +4818,8 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   <p>Die Datei sollte bei Programmstart geladen werden. Sie kann auch
   <run readSpellCheckFile><green>manuell geladen</green></run> werden.
   <i>Aktualisierte Versionen sind von
-  <url http://sourceforge.net/projects/scid/files/Player
-  Data/>http://sourceforge.net/projects/scid/files/Player Data</url>
+  <url https://sourceforge.net/projects/scidvspc/files/player data/>
+  https://sourceforge.net/projects/scidvspc/files/player data</url>
   erhältlich.
   </i></p>
 
@@ -4839,7 +4837,7 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   werden.</i>
   </p>
   <p>Das Format für jede Korrektur ist:
-  <br><b>"Alter Name" <gt><gt>"Neuer Name"</b> (<b>N</b>) <b>Geburtsdatum</b>--<b>Todestag</b><br>
+  <br><b>"Alter Name" <gt><gt> "Neuer Name"</b> (<b>N</b>) <b>Geburtsdatum</b>--<b>Todestag</b><br>
   Vor "Alter Name" darf kein Leerzeichen sein, "N" stellt die Anzahl
   der Partien dar, die auf den ursprünglichen Spielernamen passen.
   </p>
@@ -4913,7 +4911,7 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   umgewandelt.
   </p>
 
-  <h3><name Tags>Zusätzliche Markierungen entfernen</name></h3>
+  <h3><name Tags>PGN-Markierungen entfernen</name></h3>
   <p>Diese Funktion durchsucht die Datenbank nach besonderen
   PGN-Markierungen (so wie "Annotator"). Dann kann man diese entfernen
   oder den Filter anpassen, um die betreffenden Partien anzuzeigen.
@@ -4950,10 +4948,9 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
 set helpTitle(D,Sorting) "Sortieren einer Datenbank"
 set helpText(D,Sorting) {<h1>Datenbanken sortieren</h1>
   <p>Scid hat eine schnelle und leistungsfähige Funktion für
-  das <run makeSortWin><green>Sortieren einer
-  Datenbank</green></run>. Es kann nach einzelnen Feldern
-  (z.B. Datum, Namen und ECO-Codes) oder nach mehreren sortiert
-  werden, bei dem das erste Feld die Priorität hat usw.
+  das <run makeSortWin><green>Sortieren einer Datenbank</green></run>. Es kann
+  nach einzelnen Feldern (z.B. Datum, Namen und ECO-Codes) oder nach mehreren
+  Feldern sortiert werden, bei dem das erste Feld die Priorität hat usw.
   </p>
 
   <p>Die verfügbaren Kriterien/Felder sind
@@ -4977,7 +4974,7 @@ set helpText(D,Sorting) {<h1>Datenbanken sortieren</h1>
   <li> Zufallsniveau
   </ul>
 
-  <p><i>ScidvsPC kann auch</i><a GameList MovingGames>einzelne Partien
+  <p><i>ScidvsPC kann auch</i><a GameList MovingGames> einzelne Partien
 	verschieben/neu ordnen</a>.</p>
 
   <h3>Sortieren ist dauerhaft</h3>
@@ -4985,7 +4982,7 @@ set helpText(D,Sorting) {<h1>Datenbanken sortieren</h1>
   ist, werden die Ergebnisse sofort gespeichert und die <b>Reihenfolge
   der Partie ist dauerhaft verändert</b>. Wenn dies nicht gewünscht
   ist, dann setzen Sie die Datenbank zuerst
-  im <a Maintenance>Wartungsfenster</a> in den <Nur-Lese-Zustand> oder
+  im <a Maintenance>Wartungsfenster</a> in den Nur-Lese-Zustand oder
   Sie sortieren die Partien in der Ablagedatenbank.
   </p>
   <p>Beim Sortieren einer Nur-Lesen-Datenbank (oder eines PGN-Archivs)
@@ -5050,7 +5047,7 @@ set helpText(D,Flags) {<h1>Partiekennzeichen</h1>
 
   <p>Sie können die <a Searches Header>Partiedatensuche</a>
   verwenden, um Partien mit einem bestimmten Kennzeichen zu finden,
-  das gesetzt bzw. nicht gesetzt ist, oder Sie benutzen die
+  das gesetzt bzw. nicht gesetzt ist oder Sie benutzen die
   Markierungen als Teil von komplexeren Suchvorgängen.
   </p>
   <p>Da alle Markierungen (außer Löschen und Taktik) keine besondere
@@ -5180,17 +5177,16 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   hat, ein negativer Wert steht für Vorteil für Schwarz. Dann folgen
   die Züge, auch bekannt als <b>Hauptvarianten</b> oder <b>PV</b>
   (Principal Variation).</p> <p>Die meisten UCI-Schachprogramme
-  ermöglichen es, sofort mehrere Züge zu analysieren (oder
-  <b>Zugfolgen</b>). Wenn man diese <b>MultiPV</b>-Funktion nutzt,
-  kann man die zweit- oder drittbesten (usw.) Fortsetzungen
-  erkennen. Die beste Zugfolge wird immer zuoberst angezeigt und
-  hervorgehoben. Wenn MultiPV unterstützt wird, kann das Auswahlfeld
-  verwendet werden, um die Anzahl der angezeigten Hauptfortsetzungen
-  festzulegen (dies kann dauerhaft im Fenster <a Analysis
-  List>Analyse-Engine</a> eingestellt werden). In diesem Fall werden
-  anstelle der Berechnungshistorie nur die resultierenden
-  Hauptfortsetzungen angezeigt. Dieses Auswahlfeld ist nicht aktiv,
-  wenn ein Schachprogramm diese Funktion nicht anbietet.  </p>
+  ermöglichen es, sofort mehrere Züge (oder
+  <b>Zugfolgen</b>) zu analysieren. Wenn man diese <b>MultiPV</b>-Funktion
+  nutzt, kann man die zweit- oder drittbesten (usw.) Fortsetzungen erkennen. Die
+  beste Zugfolge wird immer zuoberst angezeigt und hervorgehoben. Wenn MultiPV
+  unterstützt wird, kann das Auswahlfeld verwendet werden, um die Anzahl der
+  angezeigten Hauptfortsetzungen festzulegen (dies kann dauerhaft im
+  Fenster <a Analysis List>Analyse-Engine</a> eingestellt werden). In diesem
+  Fall werden anstelle der Berechnungshistorie nur die resultierenden
+  Hauptfortsetzungen angezeigt. Dieses Auswahlfeld ist nicht aktiv, wenn ein
+  Schachprogramm diese Funktion nicht anbietet.  </p>
 
   <h3><name Info>Zusatzinformationen</h3>
   <p>Unten gibt es einige weitere Informationen, die mit der
@@ -5219,16 +5215,14 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   Bewertungen, <a Comment>Kommentare</a>, <a Moves
   Informant>Informatorkennzeichen</a> und beste Züge hinzu.
 
-  <p>Es gibt auch die neue Möglichkeit, <b>verpaßte/kürzere
-  Mattführungen</b> hinzuzufügen. Dies fügt alle verpaßten und
-  kürzeren Mattzüge hinzu, die wenigstens ein paar Halbzüge kürzer
-  als die "Tiefe pro Zug" sind (bei einer höheren Anzahl an
-  Halbzügen sind die Hauptvarianten des Schachprogramms nicht
-  immer zuverlässig). Schließlich kann die hinzugefügte
-  Hauptvariante nicht vollständig sein, d.h. sie könnte nicht in
-  einem Matt enden. Dies ist der Meldung des Schachprogramms "Matt
-  in n" geschuldet, die aber nicht die ganze Zugfolge angibt, was
-  gemeinhin eine Eigentümlichkeit der UCI-Programme ist.
+  <p>Es gibt auch die neue Möglichkeit, <b>verpaßte/kürzere Mattführungen</b>
+  hinzuzufügen. Dies fügt alle verpaßten und kürzeren Mattzüge hinzu, die
+  wenigstens ein paar Halbzüge kürzer als die "Tiefe pro Zug" sind (bei einer
+  höheren Anzahl an Halbzügen sind die Hauptvarianten des Schachprogramms nicht
+  immer zuverlässig). Schließlich kann die hinzugefügte Hauptvariante nicht
+  vollständig sein, d.h., sie könnte nicht in einem Matt enden. Dies ist der
+  Meldung des Schachprogramms "Matt in n" geschuldet, die aber nicht die ganze
+  Zugfolge angibt, was gemeinhin eine Eigentümlichkeit der UCI-Programme ist.
   </p>
 
   <p><i>Die Kommentierungsschaltfläche wird nur
@@ -5261,10 +5255,10 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   <li><b>Abschneiden Schwelle</b> Oberhalb dieses Schwellenwertes
   keine Varianten mehr hinzufügen, da die Partie gewonnen ist.</li>
   <li><b>Bewertung/Varianten hinzufügen</b> Wählen Sie, ob
-  Bewrtungen und Varianten hinzugefügt werden sollen (Bewertungen
+  Bewertungen und Varianten hinzugefügt werden sollen (Bewertungen
   können dann mit der <a Graphs Score>Wertungsgrafik</a> genutzt werden).</li>
   <li><b>Welche Seite</b> Wählen Sie, welche Seite kommentiert
-  werden soll..</li>
+  werden soll.</li>
   <li><b>Format für die Bewertung</b> Wählen Sie, wie die einzelnen
   Bewertungen aussehen sollen. Wenn im
   Menü <green>PGN--<gt>Ausgabe--<gt>Feld-/Pfeilcodes verbergen</green>
@@ -5281,8 +5275,8 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   <li><b>Eröffnungsfehler finden</b> Nur nach Eröffnungsfehlern suchen
   (bis zur angegebenen Zugzahl)</li>
   <li><b>Taktische Übungen markieren</b> Dies kann benutzt werden, um
-  Übungen für die Trainingsfunktion <a FindBestMove>Finde den besten
-  Zug</a> zu erstellen (nur UCI).</li>
+  Übungen für die Trainingsfunktion <a FindBestMove>Besten
+  Zug finden</a> zu erstellen (nur UCI).</li>
  </ul>
   <p><i>Informatorwerte sind
   ebenfalls <run configInformant><green>konfigurierbar</green></run>.</i></p>
@@ -5296,11 +5290,11 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   Probiermodus wechselt.</p>
 
   <h3><name Training>Training</name></h3>
-  <p>Training <button tb_training> ist eine dürftig implementierte
-  Funktion Schachprogramm gegen Spieler und nur für das zweite und
-  dritte Schachprogramm (in der Schachprogrammliste) verfügbar. Die
-  Funktion <a ComputerGame>Gegen den Computer spielen</a> eignet
-  sich viel besser.
+  <p>Training <button tb_training> ist eine dürftig implementierte Funktion
+  "Schachprogramm gegen Spieler" und nur für das zweite und dritte
+  Schachprogramm (in der Schachprogrammliste) verfügbar. Die
+  Funktion <a ComputerGame>Gegen den Computer spielen</a> eignet sich viel
+  besser.
   </p>
 
   <p>Von der aktuellen Stellung aus (die das Partieende sein muß)
@@ -5327,8 +5321,8 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   </p>
 
   <h3>Einzelheiten</h3>
-  <p>Viele Schachprogramme erfordern eine Initialisierung oder eine
-  Eröffnungsbuchdatei in ihrem Startverzeichnis, um richtig zu
+  <p>Viele Schachprogramme erfordern in ihrem Startverzeichnis eine
+  Initialisierung oder eine Eröffnungsbuchdatei, um richtig zu
   funktionieren. Andere Programme wie Crafty und Phalanx schreiben
   Protokolldateien in das Verzeichnis, in dem sie starten, so daß hier
   Schreibzugriff erforderlich ist. Falls die Verzeichniseinstellung
@@ -5337,12 +5331,11 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   </p>
 
   <p>Wenn ein Programm nicht startet, versuchen Sie, seine
-  Verzeichniseinstellung zu ändern. Um zu verhindern, daß
-  Schachprogramme Protokolldateien in viele unterschiedliche
-  Verzeichnisse schreiben, empfehle ich, die
-  Schaltfläche <b>~/.scidvspc</b> auszuprobieren. Schachprogramme, die
-  Eröffnungsbücher und/oder ini-Dateien brauchen, benötigen jedoch
-  wahrscheinlich ihr eigenes Verzeichnis.
+  Verzeichniseinstellung zu ändern. Um zu verhindern, daß Schachprogramme
+  Protokolldateien in viele unterschiedliche Verzeichnisse schreiben, wird
+  empfohlen, die Schaltfläche <b>~/.scidvspc</b>
+  auszuprobieren. Schachprogramme, die Eröffnungsbücher und/oder ini-Dateien
+  brauchen, benötigen jedoch wahrscheinlich ihr eigenes Verzeichnis.
   </p>
   <p>UCI und XBoard (auch bekannt als WinBoard) sind zwei Protokolle
   für die Kommunikation mit Schachprogrammen und es ist notwendig,
@@ -5361,9 +5354,9 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   der Schaltfläche <term>Öffnen...</term> öffnet diese Seite im
   Webbrowser.
   </p>
-  <p>Nachdem das Schachprogramm konfiguriert wurde, versieht Scid es
-  vs. PC mit einem <b>Datumsstempel</b>, das dem Änderungszeitpunkt
-  des Programms entspricht.</p>
+  <p>Nachdem das Schachprogramm konfiguriert wurde, versieht es Scid vs. PC mit
+  einem <b>Datumsstempel</b>, das dem Änderungszeitpunkt des Programms
+  entspricht.</p>
 
   <h2><name UCI>UCI-Konfigurationsoptionen</name></h2>
   <p>UCI-Schachprogramme können durch Drücken der
@@ -5591,9 +5584,9 @@ set helpText(D,EPD) {<h1>EPD-Dateien</h1>
   und dem Analysemodus, der gestartet wird. Ein Anhalten der Engine
   beendet die Analyse.</p>
 
-  <p>Die beiden Modi sind <b>Count Best Moves</b> (Beste Züge zählen)
-  und <b>Annotate</b> (Kommentieren). Beide Modi bedeuten, daß mit
-  einer Engine alle Stellungen analysiert werden. Bei "Beste Züge" -
+  <p>Die beiden Modi sind <b>Beste Züge zählen</b>
+  und <b>Kommentieren</b>. Beide Modi bedeuten, daß mit
+  einer Engine alle Stellungen analysiert werden. Bei "Beste Züge zählen" -
   die vorhandenen Kommentare werden nach einem "bm"- oder "am"-Feld
   abgesucht - wird geschaut, ob diese mit der Computerbewertung
   übereinstimmen. Es wird dann bei der Ergänzung eine Anzahl von
@@ -5814,16 +5807,14 @@ set helpText(D,Reports) {<h1>Berichte</h1>
   </i></p>
 
   <h4>Funktionen</h4>
-  <p>Ein Klick auf das Brett dreht dieses um, ein Rechtsklick ändert
-  seine Größe. Die meisten farbigen Abschnitte im Berichtsfenster
-  sind anklickbar und lösen eine bestimmte Aktion
-  aus. Beispielsweise wird ein Klick auf einen Partiehinweis diese
-  Partie laden. Oder ein Klick auf ein Thema setzt den Filter für
-  passende Partien (Hinweis des Übersetzers: die Suche mit diesem
-  Filter erfolgt über das
-  Menü <green>Suchen--<gt>Material/Muster</green>, im Bereich
-  "Durchführung am aktuellen Filter" das Feld "UND (Beschränke
-  Filter)" auswählen und auf "Suchen" klicken).
+  <p>Ein Klick auf das Brett dreht dieses um, ein Rechtsklick ändert seine
+  Größe. Die meisten farbigen Abschnitte im Berichtsfenster sind anklickbar und
+  lösen eine bestimmte Aktion aus. Beispielsweise wird ein Klick auf einen
+  Partiehinweis diese Partie laden. Oder ein Klick auf ein Thema setzt den
+  Filter für passende Partien (Hinweis: die Suche mit diesem Filter erfolgt über
+  das Menü <green>Suchen--<gt>Material/Muster</green>, im Bereich "Durchführung
+  am aktuellen Filter" das Feld "UND (Beschränke Filter)" auswählen und auf
+  "Suchen" klicken).
   </p>
   <p><b>Partien zusammenfügen</b> fügt die fünfzig besten Partien aus dem
   Eröffnungsbericht in die aktuelle Partie als Varianten ein
@@ -5840,13 +5831,12 @@ set helpText(D,Reports) {<h1>Berichte</h1>
   <p>Das Menü <b>Favoriten</b> im Berichtsfenster ermöglicht es, eine
   Sammlung von bevorzugten Eröffnungsstellungen zu unterhalten.
   </p>
-  <p><b>Bericht hinzufügen</b> fügt die aktuelle Stellung als Favorit
-  hinzu und <b>Bericht erzeugen</b> erstellt einen Bericht für alle
-  diese Favoriten. Ein Dialogfenster erscheint, in welchem Sie Typ und
-  Format des Berichts festlegen können und wo die Berichtsdateien
-  gespeichert werden sollen. An jeden Berichtsdateinamen wird eine
-  passende Dateinamenserweiterung für das von Ihnen ausgewählte Format
-  angehängt (z.B. "html" für das HTML-Format).
+  <p><b>Bericht hinzufügen</b> fügt die aktuelle Stellung als Favorit hinzu
+  und <b>Bericht erzeugen</b> erstellt einen Bericht für alle diese
+  Favoriten. Ein Dialogfenster erscheint, in welchem Sie Typ und Format des
+  Berichts festlegen können und wo die Berichtsdatei gespeichert werden soll. An
+  jeden Berichtsdateinamen wird eine passende Dateinamenserweiterung für das von
+  Ihnen ausgewählte Format angehängt (z.B. "html" für das HTML-Format).
   </p>
 
   <h2><name Player>Spielerberichte</name></h2>
@@ -5889,12 +5879,11 @@ set helpText(D,PList) {<h1>Das Spielersuchfenster</h1>
 
 set helpTitle(D,PInfo) "Spielerinformationen"
 set helpText(D,PInfo) {<h1>Spielerinformationen</h1>
-  <p>Das Spielerinformationsfenster (Anmerkung des Übersetzers: man
-  erhält es durch Klick auf einen Spielernamen im
-  Partieinformationsbereich unterhalb des Schachbrettes) zeigt, falls
-  verfügbar, grundlegende Informationen. Es beruht auf der
-  Datei <a Maintenance Spellfile>spelling.ssp</a> und beinhaltet
-  Wertungszahlen, Herkunftsland, offizielle Titel und sogar Fotos.</p>
+  <p>Das Spielerinformationsfenster (man erhält es durch Klick auf einen
+  Spielernamen im Partieinformationsbereich unterhalb des Schachbrettes) zeigt,
+  falls verfügbar, grundlegende Informationen. Es beruht auf der
+  Datei <a Maintenance Spellfile>spelling.ssp</a> und beinhaltet Wertungszahlen,
+  Herkunftsland, offizielle Titel und sogar Fotos.</p>
 
   <p><b>Bitte mit Vorsicht benutzen.</b><i>Die Namen, die enthalten
   sind, könnten nicht eindeutig sein und die Anfangsbuchstaben von
@@ -5913,7 +5902,7 @@ set helpText(D,PInfo) {<h1>Spielerinformationen</h1>
   höher immer besser für den Spieler, egal ob mit Weiß oder
   Schwarz. Wenn man auf die grünen Zahlen klickt, dann wird
   der <a Filter>Filter</a> gemäß der Statistik gesetzt, die
-  dargestellt wird (Hinweis des Übersetzers: die Suche mit diesem
+  dargestellt wird (Hinweis: die Suche mit diesem
   Filter erfolgt über das
   Menü <green>Suchen--<gt>Partiedaten...</green>, im Bereich
   "Durchführung am aktuellen Filter" das Feld "UND (Beschränke
@@ -5955,7 +5944,7 @@ set helpText(D,PInfo) {<h1>Spielerinformationen</h1>
   im <a MainWindow GameInfo>Partieinformationsfenster</a>
   angezeigt. Ein Klick auf diese Bilder verkleinert sie. Um sie
   abzuschalten, entfernen Sie das Häkchen im Menüpunkt
-  <green>Optionen--<gt>Partieinformationen--<gt>Fotos zeigen</green>
+  <green>Optionen--<gt>Partieinformationen--<gt>Fotos zeigen</green>.
   </p>
 
   <p><footer>Aktualisiert: Scid vs. PC 4.17 März 2016</footer></p>
@@ -6897,7 +6886,7 @@ set helpText(D,ECO) {<h1>ECO-Codes</h1>
   <li>  <b>A2</b>  1.c4 e5: <i>Sizilianisch im Anzuge</i> </li>
   <li>  <b>A3</b>  1.c4 c5: <i>Englische Symmetrievariante</i> </li>
   <li>  <b>A4</b>  1.d4 ...: <i>Damenbauernspiele</i> </li>
-  <li>  <b>A5</b>  1.d4 Nf6 2.c4 ..: <i>Indische Verteidigung </i> </li>
+  <li>  <b>A5</b>  1.d4 Nf6 2.c4 ...: <i>Indische Verteidigung </i> </li>
   <li>  <b>A6</b>  1.d4 Nf6 2.c4 c5 3.d5 e6: <i>Moderne Benoni-Verteidigung</i> </li>
   <li>  <b>A7</b>  A6 + 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.Nf3 </li>
   <li>  <b>A8</b>  1.d4 f5: <i>Holländische Verteidigung</i> </li>
@@ -6937,7 +6926,7 @@ set helpText(D,ECO) {<h1>ECO-Codes</h1>
   <li>  <b>C8</b>  C7 + 4...Nf6 5.O-O: <i>Spanisch, geschlossen und offen</i>
   (<b>C80-C83</b>  5.O-O Nxe4: <i>Spanisch, offenes System</i>;
   <b>C84-C89</b>  5.O-O Be7: <i>Spanisch, geschlossenes System</i>) </li>
-  <li>  <b>C9</b>  C8 + 5...Be7 6.Re1 b5 7.Bb3 d6: <i>Spanish, geschlossen</i> </li>
+  <li>  <b>C9</b>  C8 + 5...Be7 6.Re1 b5 7.Bb3 d6: <i>Spanisch, geschlossen</i> </li>
   </ul>
 
   <p>
@@ -6963,7 +6952,7 @@ set helpText(D,ECO) {<h1>ECO-Codes</h1>
   <li>  <b>E0</b>  1.d4 Nf6 2.c4 e6: <i>Katalanisch</i> </li>
   <li>  <b>E1</b>  1.d4 Nf6 2.c4 e6 3.Nf3 (b6): <i>Damenindisch</i> </li>
   <li>  <b>E2</b>  1.d4 Nf6 2.c4 e6 3.Nc3 (Bb4): <i>Nimzo-Indisch</i> </li>
-  <li>  <b>E3</b>  E2 + 4.Bg5 or 4.Qc2: <i>Nimzo-Indisch</i> </li>
+  <li>  <b>E3</b>  E2 + 4.Bg5 oder 4.Qc2: <i>Nimzo-Indisch</i> </li>
   <li>  <b>E4</b>  E2 + 4.e3: <i>Nimzo-Indisch, Rubinstein-Variante</i> </li>
   <li>  <b>E5</b>  E4 + 4...O-O 5.Nf3: <i>Nimzo-Indisch, Hauptfortsetzung</i> </li>
   <li>  <b>E6</b>  1.d4 Nf6 2.c4 g6: <i>Königsindisch</i> </li>
@@ -7061,14 +7050,15 @@ set helpText(D,Book) {<h1>Eröffnungsbuchfenster</h1>
   <h2><name Polyglot>PolyGlot</name></h2>
 
   <p><i>Scid kommt mit einer modifizierten Version von PolyGlot. Die
-  nachstehenden Funktionen erfordern die volle Version des
-  Befehlszeilenwerkzeugs
-  (<url http://wbec-ridderkerk.nl/html/details1/PolyGlot.html>http://wbec-ridderkerk.nl/html/details1/PolyGlot.html</url>)</i>
+  nachstehenden Funktionen erfordern die
+  <url https://sourceforge.net/projects/scidvspc/files/support
+  files/polyglot1.5.zip/download>volle Version</url> des
+  <url http://wbec-ridderkerk.nl/html/details1/PolyGlot.html>Befehlszeilenwerkzeugs</url>.</i>
   </p>
 
   <h4>Eröffnungsbücher erstellen</h4>
 
-  <p>Entfernen Sie zuerst Partien. die keine Standardausgangsposition
+  <p>Entfernen Sie zuerst Partien, die keine Standardausgangsposition
   aufweisen. Man kann diese mit der <a Searches
   Header>Partiedatensuche</a> finden, indem das Merkmal
   Standardausgangsposition gesetzt wird (im Bereich "Finde Partien mit
@@ -7273,7 +7263,7 @@ set helpText(D,Correspondence) {<h1>Fernschach</h1>
   </p>
 
   <p>Der Konfigurationsdialog ist
-  in <run ::CorrespondenceChess::config><green>Spielen--</gt>Fernschach>Einstellungen...</green></run>
+  in <run ::CorrespondenceChess::config><green>Spielen--</gt>Fernschach--<gt>Einstellungen...</green></run>
   zu finden. Einzelheiten werden in <a CCSetupDialog>Fernschach
   konfigurieren</a> beschrieben. Drücken Sie <b>Ok</b>, um Ihre Optionen
   automatisch zu speichern.
@@ -7312,7 +7302,7 @@ set helpText(D,Correspondence) {<h1>Fernschach</h1>
   Schaltflächen nur zwischen den Partien in Scids Posteingang laufen,
   die als für Ihre aktuell laufenden Partien gehalten werden. Die
   Fernschachdatenbank könnte selbstverständlich viel mehr Partien
-  enthalten, aber normalerweise wollen Sie sie nicht alle durchgehen
+  enthalten, aber normalerweise wollen Sie sie nicht alle durchgehen,
   um herauszufinden, was Ihr Gegner in einer laufenden Partie gezogen
   hat.
   </p>
@@ -9110,7 +9100,7 @@ set helpText(D,ShortCuts) {<h1>Tastaturkurzbefehle</h1>
 <h4>Scid-Fenster</h4>
 <ul>
 <li><b>Strg-p</b> - PGN-Fenster</li>
-<li><b>Strg-l</b> - Partielistenfenster</li>
+<li><b>Strg-l</b> - Partienlistenfenster</li>
 <li><b>Strg-e</b> - Kommentareditor</li>
 <li><b>Strg-m</b> - Wartungsfenster</li>
 <li><b>Strg-i</b> - Partieinformationsfenster</li>
@@ -9202,7 +9192,7 @@ set helpText(D,ShortCuts) {<h1>Tastaturkurzbefehle</h1>
 <li><b>Strg-G</b> - Allgemeine (Partiedaten-) Suche</li>
 <li><b>Strg-i</b> - Partieinformationsfenster</li>
 <li><b>Strg-I</b> - PGN importieren</li>
-<li><b>Strg-l</b> - Partielistenfenster</li>
+<li><b>Strg-l</b> - Partienlistenfenster</li>
 <li><b>Strg-m</b> - Wartungsfenster</li>
 <li><b>Strg-M</b> - Materialsuche</li>
 <li><b>Strg-n</b> - Filter umkehren</li>

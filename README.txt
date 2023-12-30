@@ -171,6 +171,7 @@
 
   Other project files
   <https://sourceforge.net/project/showfiles.php?group_id=263836>
+  including german / deutsch versions
 
   4.  installation
 
