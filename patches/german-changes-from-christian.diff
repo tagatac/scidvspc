@@ -1,6 +1,6 @@
 Index: src/namebase.h
 ===================================================================
---- src/namebase.h	(revision 3413)
+--- src/namebase.h	(revision 3414)
 +++ src/namebase.h	(working copy)
 @@ -33,10 +33,10 @@
  const uint NUM_NAME_TYPES = 4;
@@ -19,7 +19,7 @@ Index: src/namebase.h
  
 Index: src/pgnparse.cpp
 ===================================================================
---- src/pgnparse.cpp	(revision 3413)
+--- src/pgnparse.cpp	(revision 3414)
 +++ src/pgnparse.cpp	(working copy)
 @@ -376,7 +376,7 @@
              value[length-7] = 0;
@@ -191,7 +191,7 @@ Index: src/pgnparse.cpp
              err = OK;
 Index: src/tkscid.cpp
 ===================================================================
---- src/tkscid.cpp	(revision 3413)
+--- src/tkscid.cpp	(revision 3414)
 +++ src/tkscid.cpp	(working copy)
 @@ -50,7 +50,7 @@
  static const uint REPORT_OPENING = 0;
@@ -3486,7 +3486,7 @@ Index: src/tkscid.cpp
      scid_book_movesupdate( (char*) argv[2], (char*) argv[3], slot, (char*) argv[5] );
 Index: tcl/bitmaps.tcl
 ===================================================================
---- tcl/bitmaps.tcl	(revision 3413)
+--- tcl/bitmaps.tcl	(revision 3414)
 +++ tcl/bitmaps.tcl	(working copy)
 @@ -71,19 +71,19 @@
  ### Process custom chess pieces
@@ -3572,7 +3572,7 @@ Index: tcl/bitmaps.tcl
  ### end of bitmaps.tcl
 Index: tcl/board.tcl
 ===================================================================
---- tcl/board.tcl	(revision 3413)
+--- tcl/board.tcl	(revision 3414)
 +++ tcl/board.tcl	(working copy)
 @@ -3012,7 +3012,7 @@
    if {[catch {
@@ -3594,7 +3594,7 @@ Index: tcl/board.tcl
    if {[llength $filename]} {
 Index: tcl/config.tcl
 ===================================================================
---- tcl/config.tcl	(revision 3413)
+--- tcl/config.tcl	(revision 3414)
 +++ tcl/config.tcl	(working copy)
 @@ -44,18 +44,18 @@
  
@@ -3620,9 +3620,30 @@ Index: tcl/config.tcl
  }
  
  ### Setup for truetype (and PGN figurine) support
+@@ -93,9 +93,9 @@
+ }
+ 
+ if {$graphFigurineAvailable} {
+-  ::splash::add "PGN chess figures (True type fonts) enabled."
++  ::splash::add "PGN-Schachfiguren (True Type-Fonts) sind aktiv."
+ } else {
+-  ::splash::add "PGN chess figures (True type fonts) disabled."
++  ::splash::add "PGN-Schachfiguren (True Type-Fonts) sind nicht aktiv."
+ }
+ 
+ if {$graphFigurineAvailable} {
+@@ -105,7 +105,7 @@
+ 
+ if {$unixOS && !$macOS} {
+   if {![catch {package require BWidget}]} {
+-    ::splash::add "BWidget found! Enabling custom Colour Selector"
++    ::splash::add "BWidget gefunden! Aktiviere selbsterstellte Farbauswahl."
+     set i 0
+     foreach c $::bwidgetBackgrounds {
+       ::SelectColor::setcolor $i $c
 Index: tcl/edit.tcl
 ===================================================================
---- tcl/edit.tcl	(revision 3413)
+--- tcl/edit.tcl	(revision 3414)
 +++ tcl/edit.tcl	(working copy)
 @@ -5,9 +5,9 @@
  proc fenErrorDialog {{msg {}}} {
@@ -3687,7 +3708,7 @@ Index: tcl/edit.tcl
      set setupBd {}
 Index: tcl/end.tcl
 ===================================================================
---- tcl/end.tcl	(revision 3413)
+--- tcl/end.tcl	(revision 3414)
 +++ tcl/end.tcl	(working copy)
 @@ -123,7 +123,7 @@
    sc_game pop
@@ -3719,15 +3740,26 @@ Index: tcl/end.tcl
      }
      return 0
    }
-@@ -225,7 +225,7 @@
+@@ -214,7 +214,7 @@
+ #   Set Export options for PGN, HTML and LaTeX laugh
+ 
+ proc setExportText {exportType} {
+-  global exportStartFile exportEndFile latexRendering
++  global exportStartFile exportEndFile LaTeXRendering
+ 
+   set w .setExportText$exportType
+ 
+@@ -225,8 +225,8 @@
  
    toplevel $w
    wm withdraw $w
 -  wm title $w "Set $exportType file export text"
+-  if {$exportType == "Latex"} {
 +  wm title $w "Dateiexporttext für $exportType setzen"
-   if {$exportType == "Latex"} {
++  if {$exportType == "LaTeX"} {
        bind $w <F1> {helpWindow LaTeX}
    }
+ 
 @@ -236,8 +236,8 @@
    set pane [::utils::pane::Create $w.pane start end 500 400 0.7]
    ::utils::pane::SetRange $w.pane 0.3 0.7
@@ -3739,11 +3771,15 @@ Index: tcl/end.tcl
      text $f.text -wrap none  \
          -yscroll "$f.ybar set" -xscroll "$f.xbar set"
      scrollbar $f.ybar -orient vertical -command "$f.text yview"
-@@ -255,18 +255,18 @@
+@@ -253,40 +253,40 @@
+   $pane.start.text insert end $exportStartFile($exportType)
+   $pane.end.text insert end $exportEndFile($exportType)
    
-   # Additional Latex options
-   if {$exportType == "Latex"} {
+-  # Additional Latex options
+-  if {$exportType == "Latex"} {
 -    label $w.descr -font font_Bold -text "LaTeX System Options"
++  # Additional LaTeX options
++  if {$exportType == "LaTeX"} {
 +    label $w.descr -font font_Bold -text "LaTeX-Systemoptionen"
      pack $w.descr -side top
  
@@ -3753,15 +3789,37 @@ Index: tcl/end.tcl
 +      pack [label $w.$f.label -text "Befehl für $f:"] -side left
        pack [entry $w.$f.entry -width 30] -side right -padx 2
      }
-     $w.rendering.entry insert 0  $latexRendering(engine)
-     $w.viewer.entry    insert 0  $latexRendering(viewer)
+-    $w.rendering.entry insert 0  $latexRendering(engine)
+-    $w.viewer.entry    insert 0  $latexRendering(viewer)
++    $w.rendering.entry insert 0  $LaTeXRendering(engine)
++    $w.viewer.entry    insert 0  $LaTeXRendering(viewer)
  
 -    button $w.buttons.default -text "Reset to Default" -command "
 +    button $w.buttons.default -text "Auf Voreinstellung zurücksetzen" -command "
        $pane.start.text delete 1.0 end
-       $pane.start.text insert end \$default_exportStartFile(Latex)
+-      $pane.start.text insert end \$default_exportStartFile(Latex)
++      $pane.start.text insert end \$default_exportStartFile(LaTeX)
        $pane.end.text delete 1.0 end
-@@ -286,7 +286,7 @@
+-      $pane.end.text insert end \$default_exportEndFile(Latex)
++      $pane.end.text insert end \$default_exportEndFile(LaTeX)
+       $w.rendering.entry delete 0 end
+       $w.viewer.entry   delete 0 end
+-      $w.rendering.entry insert 0 \$default_latexRendering(engine)
+-      $w.viewer.entry   insert 0 \$default_latexRendering(viewer)
++      $w.rendering.entry insert 0 \$default_LaTeXRendering(engine)
++      $w.viewer.entry   insert 0 \$default_LaTeXRendering(viewer)
+     "
+     dialogbutton $w.buttons.ok -text "OK" -command "
+-      set exportStartFile(Latex) \[$pane.start.text get 1.0 end-1c\]
+-      set exportEndFile(Latex)   \[$pane.end.text get 1.0 end-1c\]
+-      set latexRendering(engine) \[string trim \[$w.rendering.entry get\]\]
+-      set latexRendering(viewer) \[string trim \[$w.viewer.entry get\]\]
++      set exportStartFile(LaTeX) \[$pane.start.text get 1.0 end-1c\]
++      set exportEndFile(LaTeX)   \[$pane.end.text get 1.0 end-1c\]
++      set LaTeXRendering(engine) \[string trim \[$w.rendering.entry get\]\]
++      set LaTeXRendering(viewer) \[string trim \[$w.viewer.entry get\]\]
+       focus .main
+       destroy $w
      "        
      addHorizontalRule $w
    } else {
@@ -3824,9 +3882,12 @@ Index: tcl/end.tcl
          { "All files" {"*"} }
        }
        set title "an HTML file"
-@@ -565,7 +565,7 @@
+@@ -563,9 +563,9 @@
+       set idir $initialDir(html)
+       set default ".html"
      }
-     "Latex" {
+-    "Latex" {
++    "LaTeX" {
        set ftype {
 -        { "LaTeX files" {".tex" ".ltx"} }
 +        { "LaTeX-Dateien" {".tex" ".ltx"} }
@@ -3948,6 +4009,15 @@ Index: tcl/end.tcl
  	return 0
        }
      }
+@@ -1903,7 +1903,7 @@
+         }
+         "f"    -
+         "fast" {
+-          set message "Fast Database opens enabled. No Tablebases, ECO or Spelling files loaded."
++          set message "Schnelles Öffnen der Datenbank aktiviert. Keine Endspieldatenbanken, ECO- oder Rechtschreibdateien geladen."
+           ::splash::add $message error
+ 
+           set ::fastDBopen 1
 @@ -1938,7 +1938,7 @@
          "dock" -
          "nodock" {} ; # handled later
@@ -4069,8 +4139,80 @@ Index: tcl/end.tcl
        # this sets initialDir(file) for all files, not just pgn... 
 Index: tcl/file/epd.tcl
 ===================================================================
---- tcl/file/epd.tcl	(revision 3413)
+--- tcl/file/epd.tcl	(revision 3414)
 +++ tcl/file/epd.tcl	(working copy)
+@@ -107,8 +107,8 @@
+ 
+     if {[sc_epd available] < 1} {
+       if {$showErrors} {
+-        tk_messageBox -type ok -icon info -title "Too many EPD files open" \
+-            -message "You already have $maxEpd EPD files open; close one first."
++        tk_messageBox -type ok -icon info -title "Zuviele EPD-Dateien geöffnet" \
++            -message "Sie haben schon $maxEpd EPD-Dateien geöffnet; bitte zuerst eine schließen."
+       }
+       return 0
+     }
+@@ -124,9 +124,9 @@
+         set ::initialDir(epd) $::env(HOME)
+       }
+       if {$cmd == "create"} {
+-        set fname [tk_getSaveFile -initialdir $::initialDir(epd) -filetypes $new_types -title "Create an EPD file"]
++        set fname [tk_getSaveFile -initialdir $::initialDir(epd) -filetypes $new_types -title "EPD-Datei erstellen"]
+       } elseif {$cmd == "open"} {
+-        set fname [tk_getOpenFile -initialdir $::initialDir(epd) -filetypes $open_types -title "Open an EPD file"]
++        set fname [tk_getOpenFile -initialdir $::initialDir(epd) -filetypes $open_types -title "EPD-Datei öffnen"]
+       } else {
+         return 0
+       }
+@@ -136,7 +136,7 @@
+     # initialize the pbook internals
+     if {[catch {sc_epd $cmd $fname} result]} {
+       if {$showErrors} {
+-        tk_messageBox -type ok -icon error -title "Scid: EPD file error" \
++        tk_messageBox -type ok -icon error -title "Scid: EPD-Dateifehler" \
+             -message $result
+       }
+       # TODO - Handle case when fname is already open.  Currently, "epd open" fails,
+@@ -154,7 +154,7 @@
+     setWinLocation $w
+     setWinSize $w
+ 
+-    wm title $w "EPD file: $epdName($id)"
++    wm title $w "EPD-Datei: $epdName($id)"
+     wm minsize $w 40 1
+ 
+     frame $w.grid
+@@ -191,8 +191,8 @@
+     set m $w.menu.file
+     $m add command -label [tr FileNew] -underline 0 -command {::epd::newEpdWin create}
+     $m add command -label [tr FileOpen] -underline 0 -command {::epd::newEpdWin open}
+-    $m add command -label $tr(Save) -acc "control-s" -underline 0 -command "::epd::saveEpdWin $id"
+-    $m add command -label $tr(Close) -acc "control-w" -underline 0 -command "::epd::closeEpdWin $id"
++    $m add command -label $tr(Save) -acc "Strg-s" -underline 0 -command "::epd::saveEpdWin $id"
++    $m add command -label $tr(Close) -acc "Strg-w" -underline 0 -command "::epd::closeEpdWin $id"
+     wm protocol $w WM_DELETE_WINDOW "::epd::closeEpdWin $id"
+     bind $w <Destroy> "
+       wm protocol $w WM_DELETE_WINDOW {}
+@@ -200,14 +200,14 @@
+     "
+ 
+     set m $w.menu.tools
+-    $m add command -label $tr(PasteAnal) -accelerator "control-P" -underline 0 -command "::epd::pasteAnalysis $id"
+-    $m add command -label $tr(SortOpcodes) -accel "control-S" -underline 0 -command "::epd::sortEpdText $id"
+-    $m add command -label $tr(AddPosition) -accel "control-A" -underline 0 -command "::epd::addPosition $id"
+-    $m add command -label $tr(FindPos) -underline 5 -command "::epd::moveToDeepestMatch $id"
++    $m add command -label $tr(PasteAnal) -accelerator "Strg-P" -underline 0 -command "::epd::pasteAnalysis $id"
++    $m add command -label $tr(SortOpcodes) -accel "Strg-S" -underline 0 -command "::epd::sortEpdText $id"
++    $m add command -label $tr(AddPosition) -accel "Strg-A" -underline 0 -command "::epd::addPosition $id"
++    $m add command -label $tr(FindPos) -underline 0 -command "::epd::moveToDeepestMatch $id"
+     $m add separator
+ 
+     $m add command -label $tr(AnalPosition) -underline 5 -command "::epd::configAnnotateEpd $id"
+-    $m add command -label $tr(StripOpcodes) -accel "control-O" -underline 6 -command "::epd::chooseStripField $id"
++    $m add command -label $tr(StripOpcodes) -accel "Strg-O" -underline 8 -command "::epd::chooseStripField $id"
+ 
+     $w.menu.help add command -label "EPD [tr Help]" -underline 0 -acc "F1" -command "helpWindow EPD"
+     $w.menu.help add command -label [tr HelpIndex] -underline 0 -command "helpWindow Index"
 @@ -227,9 +227,9 @@
  
      # Right-mouse button cut/copy/paste menu:
@@ -4093,6 +4235,44 @@ Index: tcl/file/epd.tcl
        pack $w.top.txt -padx 5 -pady 5 -side right
  
        button $w.bottom.b1 -width 10 -text $::tr(Save)     -command {destroy .confirmEPDExit ; set ::epd::answer 0}
+@@ -335,8 +335,8 @@
+     #if { [.epd$id.text edit modified] } { storeEpdText $id }
+ 
+     if {[sc_epd readonly $id]} {
+-      tk_messageBox -type ok -icon error -title "EPD file error" \
+-        -message "Save failed\nEPD file is read-only."
++      tk_messageBox -type ok -icon error -title "EPD-Dateifehler" \
++        -message "Speichern fehlgeschlagen\nDie EPD-Datei ist nur lesbar."
+     } else {
+       sc_epd write $id
+     }
+@@ -547,7 +547,7 @@
+       return
+     }
+     toplevel $w
+-    wm title $w "Analyze EPD"
++    wm title $w "EPD-Analyse"
+     placeWinOverParent $w .epd$id
+ 
+     frame $w.seconds
+@@ -582,7 +582,7 @@
+       set i \[$w.engine.combo current\]
+       set isUCI \[lindex \[lindex \$engines(list) \$i\] 7\]
+       if {!\$isUCI} {
+-        tk_messageBox -type ok -icon info -title Oops -message {Only UCI engines supported} -parent .epdAnnotateConfig
++        tk_messageBox -type ok -icon info -title Hoppla -message {Es werden nur UCI-Engines unterstützt} -parent .epdAnnotateConfig
+         return
+       }
+       set name \[$w.engine.combo get\]
+@@ -611,7 +611,7 @@
+     set epdEngineName [string map {{ } _} $name]
+ 
+     set epdAnnotation 1
+-    $w.bottom.status configure -text "Analyzing with $epdEngineName ($epdDelay secs/move)"
++    $w.bottom.status configure -text "Analysiere mit $epdEngineName ($epdDelay sek/Zug)"
+     update
+ 
+     if {$epdAnnotateMode != 1} {
 @@ -790,16 +790,16 @@
  
      if {! [winfo exists .epd$id]} { return }
@@ -4102,7 +4282,7 @@ Index: tcl/file/epd.tcl
      placeWinOverParent $w .epd$id
      wm resizable $w false false
 -    label $w.label -text "EPD opcode to be removed from $epdName($id)"
-+    label $w.label -text "Von $epdName($id) zu entfernender EPD-Opcode"
++    label $w.label -text "Von $epdName($id) zu entfernender EPD-Opcode:"
      entry $w.e -width 10  -textvariable stripField
      pack $w.label $w.e -side top -pady 5 -padx 5
      addHorizontalRule $w
@@ -4113,9 +4293,49 @@ Index: tcl/file/epd.tcl
        destroy $w
        ::epd::stripEpdField $id \$stripField
      "
+@@ -821,8 +821,8 @@
+     if {$field == ""} {return}
+     set result [sc_epd strip $id $field]
+     updateEpdWin $id
+-    tk_messageBox -type ok -icon info -title "Scid: EPD field stripped" \
+-        -message "Scid stripped EPD field \"$field\" from $result positions." -parent .epd$id
++    tk_messageBox -type ok -icon info -title "Scid: EPD-Feld entfernt" \
++        -message "Scid entfernte das EPD-Feld \"$field\" von $result Stellungen." -parent .epd$id
+   }
+ 
+   ################################################################################
+@@ -837,8 +837,8 @@
+     if {[sc_epd exists $id]} { 
+       # get the node list index of the existing position
+       set idx [sc_epd index $id]
+-      #tk_messageBox -type ok -icon info -title "Position Already Exists" \
+-          -message "The position already exists at line [expr $idx + 1]."
++      #tk_messageBox -type ok -icon info -title "Stellung existiert bereits" \
++          -message "Die Stellung gibt es schon in Zeile [expr $idx + 1]."
+     } else {
+       # add the position internally...
+       sc_epd set $id ""
+Index: tcl/file/finder.tcl
+===================================================================
+--- tcl/file/finder.tcl	(revision 3414)
++++ tcl/file/finder.tcl	(working copy)
+@@ -471,11 +471,11 @@
+ 
+ proc ::file::finder::delete { f } {
+   if {[sc_base slot $f] != 0} {
+-    tk_messageBox -title Scid -icon error -type ok -message "Close base first" -parent .finder
++    tk_messageBox -title Scid -icon error -type ok -message "Zuerst Datenbank schließen" -parent .finder
+     return
+   }
+   set answer [tk_messageBox -title Scid -icon warning -type yesno -parent .finder \
+-                -message "Do you want to permanently delete $f ?"]
++                -message "Wollen Sie $f dauerhaft löschen?"]
+   if {$answer == "yes"} {
+     if { [string tolower [file extension $f]] == ".si4" } {
+       file delete "[file rootname $f].sg4" "[file rootname $f].sn4" "[file rootname $f].stc"
 Index: tcl/file/maint.tcl
 ===================================================================
---- tcl/file/maint.tcl	(revision 3413)
+--- tcl/file/maint.tcl	(revision 3414)
 +++ tcl/file/maint.tcl	(working copy)
 @@ -14,12 +14,12 @@
    set ftype {
@@ -4348,7 +4568,7 @@ Index: tcl/file/maint.tcl
    ::windows::stats::Refresh
 Index: tcl/file.tcl
 ===================================================================
---- tcl/file.tcl	(revision 3413)
+--- tcl/file.tcl	(revision 3414)
 +++ tcl/file.tcl	(working copy)
 @@ -93,7 +93,7 @@
  proc ::file::New {} {
@@ -4481,9 +4701,22 @@ Index: tcl/file.tcl
        sc_base type [sc_base current] 3
        set ::initialDir(pgn) [file dirname $fName]
        set ::initialDir(file) [file tail $fName]
+Index: tcl/game/browser.tcl
+===================================================================
+--- tcl/game/browser.tcl	(revision 3414)
++++ tcl/game/browser.tcl	(working copy)
+@@ -195,7 +195,7 @@
+ }
+ 
+   # The gnum is stored in title, and also used later 
+-  wm title $w "game $gnum ($filename)"
++  wm title $w "Partie $gnum ($filename)"
+   set ::gbrowser::boards($n) [sc_game summary -base $base -game $gnum boards]
+   set moves [sc_game summary -base $base -game $gnum moves]
+ 
 Index: tcl/game.tcl
 ===================================================================
---- tcl/game.tcl	(revision 3413)
+--- tcl/game.tcl	(revision 3414)
 +++ tcl/game.tcl	(working copy)
 @@ -125,16 +125,16 @@
  proc ::game::LoadNextPrev {action {raise 1}} {
@@ -4507,7 +4740,7 @@ Index: tcl/game.tcl
    ::game::Load $number 1 $raise
 Index: tcl/language.tcl
 ===================================================================
---- tcl/language.tcl	(revision 3413)
+--- tcl/language.tcl	(revision 3414)
 +++ tcl/language.tcl	(working copy)
 @@ -124,8 +124,8 @@
  
@@ -4522,7 +4755,7 @@ Index: tcl/language.tcl
  
 Index: tcl/main.tcl
 ===================================================================
---- tcl/main.tcl	(revision 3413)
+--- tcl/main.tcl	(revision 3414)
 +++ tcl/main.tcl	(working copy)
 @@ -1039,7 +1039,7 @@
    catch {source $fname}
@@ -4596,7 +4829,7 @@ Index: tcl/main.tcl
    pack $w.label -side top -pady 5 -padx 5
 Index: tcl/menus.tcl
 ===================================================================
---- tcl/menus.tcl	(revision 3413)
+--- tcl/menus.tcl	(revision 3414)
 +++ tcl/menus.tcl	(working copy)
 @@ -84,7 +84,7 @@
  $m add command -label FileNew -command ::file::New
@@ -4905,17 +5138,55 @@ Index: tcl/menus.tcl
  bind .main <Control-Z> ::tools::graphs::score::Raise
  set helpMessage($m,[incr menuindex]) ToolsScore
  
-@@ -679,8 +679,8 @@
+@@ -646,17 +646,17 @@
+ $m.exportcurrent add command -label ToolsExpCurrentHTMLJS -command {::html::exportCurrentGame}
+ set helpMessage($m.exportcurrent,2) ToolsExpCurrentHTMLJS
  
- $m.exportfilter add command -label ToolsExpFilterLatex -command {
+-$m.exportcurrent add command -label ToolsExpCurrentLaTeX -command {exportGames current Latex}
++$m.exportcurrent add command -label ToolsExpCurrentLaTeX -command {exportGames current LaTeX}
+ set helpMessage($m.exportcurrent,3) ToolsExpCurrentLaTeX
+ 
+ $m.exportcurrent add command -label ToolsExpCurrentLaTeX -command {
+-  ### $::scidLogDir must be usedhere, as previewLatex also looks there.
++  ### $::scidLogDir must be usedhere, as previewLaTeX also looks there.
+   ### and xelatex must be configure instead of pdflatex
+ 
+-  set latexFilename Game-Preview
+-  if {[exportGames current Latex [file join $::scidLogDir $latexFilename.tex]] != "0"} {
++  set LaTeXFilename Game-Preview
++  if {[exportGames current LaTeX [file join $::scidLogDir $LaTeXFilename.tex]] != "0"} {
+     update ; # todo - redraw . after progress window withdraws
+-    previewLatex $latexFilename {} .
++    previewLaTeX $LaTeXFilename {} .
+   }
+ }
+ 
+@@ -674,18 +674,18 @@
+ $m.exportfilter add command -label ToolsExpFilterHTMLJS -command {::html::exportCurrentFilter}
+ set helpMessage($m.exportfilter,2) ToolsExpFilterHTMLJS
+ 
+-$m.exportfilter add command -label ToolsExpFilterLaTeX -command {exportGames filter Latex}
++$m.exportfilter add command -label ToolsExpFilterLaTeX -command {exportGames filter LaTeX}
+ set helpMessage($m.exportfilter,3) ToolsExpFilterLaTeX
+ 
+-$m.exportfilter add command -label ToolsExpFilterLatex -command {
++$m.exportfilter add command -label ToolsExpFilterLaTeX -command {
    if {[sc_filter count] > 5} {
 -    tk_messageBox -type ok -icon info -title "Scid: Latex Preview" \
 -	-message {Latex Preview has a maximum of 5 games.}
 +    tk_messageBox -type ok -icon info -title "Scid: LaTeX-Vorschau"\
 +	-message {Die LaTeX-Vorschau hat ein Maximum von fünf Partien.}
    } else {
-     set latexFilename Games-Preview
-     if {[exportGames filter Latex [file join $::scidLogDir $latexFilename.tex]] != "0"} { 
+-    set latexFilename Games-Preview
+-    if {[exportGames filter Latex [file join $::scidLogDir $latexFilename.tex]] != "0"} { 
++    set LaTeXFilename Games-Preview
++    if {[exportGames filter LaTeX [file join $::scidLogDir $LaTeXFilename.tex]] != "0"} { 
+       update
+-      previewLatex $latexFilename {} .
++      previewLaTeX $LaTeXFilename {} .
+     }
+   }
+ }
 @@ -693,13 +693,13 @@
  $m.exportfilter add command -label ToolsExpFilterEPD -command {
    # Check that we have some games to export:
@@ -5013,6 +5284,22 @@ Index: tcl/menus.tcl
    } else {
      puts $optionF "# Scid vs. PC (version $scidVersion) Options file"
      puts $optionF "# This file contains commands in the Tcl language format."
+@@ -1056,13 +1056,13 @@
+       puts $optionF "set initialDir($type) [list $initialDir($type)]"
+     }
+     puts $optionF ""
+-    foreach type {PGN HTML Latex} {
++    foreach type {PGN HTML LaTeX} {
+       puts $optionF "set exportStartFile($type) [list $exportStartFile($type)]"
+       puts $optionF "set exportEndFile($type) [list $exportEndFile($type)]"
+     }
+     puts $optionF ""
+     foreach type {engine viewer} {
+-      puts $optionF "set latexRendering($type) [list $latexRendering($type)]"
++      puts $optionF "set LaTeXRendering($type) [list $LaTeXRendering($type)]"
+     }
+     puts $optionF ""
+     foreach i [lsort [array names informant]] {
 @@ -1084,7 +1084,7 @@
      }
  
@@ -5031,6 +5318,15 @@ Index: tcl/menus.tcl
    if {$::macWheelMouse} {
      bind .main <MouseWheel> {
        if {[expr -%D] < 0} { ::move::Back }
+@@ -1270,7 +1270,7 @@
+ 
+ set m .menu.options.export
+ menu $m -tearoff -1
+-foreach format {PGN HTML Latex} {
++foreach format {PGN HTML LaTeX} {
+   $m add command -label $format -underline 0 \
+       -command "setExportText $format"
+ }
 @@ -1584,7 +1584,7 @@
      # Only show menu items for open database slots
      if {$fname != {[empty]} } {
@@ -5049,9 +5345,88 @@ Index: tcl/menus.tcl
        -command ::file::Exit
    set helpMessage($m.file,$idx) FileExit
  
+Index: tcl/misc/misc.tcl
+===================================================================
+--- tcl/misc/misc.tcl	(revision 3414)
++++ tcl/misc/misc.tcl	(working copy)
+@@ -1127,7 +1127,7 @@
+ ### Merges ::optable::previewLaTeX and ::preport::previewLaTeX
+ #   TODO : test on windows and OS X
+ 
+-proc previewLatex {filename command parent} {
++proc previewLaTeX {filename command parent} {
+   
+   busyCursor $parent
+   update
+@@ -1138,7 +1138,7 @@
+   set dvifile $filename.dvi    
+   set fname [file join $tmpdir $filename]
+   set pdffile "$fname.pdf"
+-  set latexLog "$fname.log"
++  set LaTeXLog "$fname.log"
+ 
+   # Null command means that $filename.tex is already generated.
+   if {$command != ""} {
+@@ -1157,42 +1157,42 @@
+ 
+   # Defaults are set in tcl/start.tcl
+ 
+-  if {$::latexRendering(engine) == ""} {
+-    set latexEngine $::default_latexRendering(engine)
++  if {$::LaTeXRendering(engine) == ""} {
++    set LaTeXEngine $::default_LaTeXRendering(engine)
+   } else {
+-    set latexEngine $::latexRendering(engine)
++    set LaTeXEngine $::LaTeXRendering(engine)
+   }
+ 
+-  if {$::latexRendering(viewer) == ""} {
+-    set latexViewer $::default_latexRendering(viewer)
++  if {$::LaTeXRendering(viewer) == ""} {
++    set LaTeXViewer $::default_LaTeXRendering(viewer)
+   } else {
+-    set latexViewer $::latexRendering(viewer)
++    set LaTeXViewer $::LaTeXRendering(viewer)
+   }
+ 
+-  set err_engine "Unable to generate the report with command \"$latexEngine\".\n
+-Edit Options->Exporting->Latex to change the engine.\n
++  set err_engine "Unable to generate the report with command \"$LaTeXEngine\".\n
++Edit Options->Exporting->LaTeX to change the engine.\n
+ See $fname.log for details."
+ 
+-  set err_viewer "Unable to view the report with viewer \"$latexViewer\".\n
+-Edit Options->Exporting->Latex to change viewer.\n
++  set err_viewer "Unable to view the report with viewer \"$LaTeXViewer\".\n
++Edit Options->Exporting->LaTeX to change viewer.\n
+ See $fname.log for details."
+ 
+ 
+   if {$::windowsOS} {
+-      if {[catch {exec $::env(ComSpec) /c "cd '$tmpdir'  & $latexEngine '$texfile'" >& $latexLog }]} {             
++      if {[catch {exec $::env(ComSpec) /c "cd '$tmpdir'  & $LaTeXEngine '$texfile'" >& $LaTeXLog }]} {             
+         tk_messageBox -title "Scid Error" -icon warning -type ok -parent $parent -message $err_engine
+       } else {
+-        if {[catch {exec $::env(ComSpec) /c "$latexViewer $pdffile" >& $latexLog &}]} {
++        if {[catch {exec $::env(ComSpec) /c "$LaTeXViewer $pdffile" >& $LaTeXLog &}]} {
+             tk_messageBox -title "Scid Error" -icon warning -type ok -parent $parent -message $err_viewer
+         }
+       }      
+   } else {
+     # Linux / OS X
+-    if {[catch {exec /bin/sh -c "cd '$tmpdir' ; $latexEngine '$texfile'" >& $latexLog }]} {             
++    if {[catch {exec /bin/sh -c "cd '$tmpdir' ; $LaTeXEngine '$texfile'" >& $LaTeXLog }]} {             
+       unbusyCursor .  
+       tk_messageBox -title "Scid Error" -icon warning -type ok -parent $parent -message $err_engine
+     } else {
+-      if {[catch {exec /bin/sh -c "$latexViewer $pdffile" >& $latexLog &}]} {
++      if {[catch {exec /bin/sh -c "$LaTeXViewer $pdffile" >& $LaTeXLog &}]} {
+ 	  unbusyCursor .  
+ 	  tk_messageBox -title "Scid Error" -icon warning -type ok -parent $parent -message $err_viewer
+       }
 Index: tcl/search/board.tcl
 ===================================================================
---- tcl/search/board.tcl	(revision 3413)
+--- tcl/search/board.tcl	(revision 3414)
 +++ tcl/search/board.tcl	(working copy)
 @@ -211,7 +211,7 @@
  
@@ -5073,9 +5448,26 @@ Index: tcl/search/board.tcl
    pack $w.mate.radio.no $w.mate.radio.check $w.mate.radio.mate -side left -padx 15
  
    addHorizontalRule $w
+@@ -311,12 +311,12 @@
+ 
+   frame $w.s
+   label $w.s.strip -font font_Bold -textvar ::tr(CQLStrip)
+-  radiobutton $w.s.stripyes -text Yes -variable ::search::cqlStripSwitch -value 1
+-  radiobutton $w.s.stripno  -text No  -variable ::search::cqlStripSwitch -value 0
++  radiobutton $w.s.stripyes -textvar ::tr(Yes) -variable ::search::cqlStripSwitch -value 1
++  radiobutton $w.s.stripno  -textvar ::tr(No)  -variable ::search::cqlStripSwitch -value 0
+ 
+   label $w.s.comment -font font_Bold -textvar ::tr(CQLComments)
+-  radiobutton $w.s.commentyes -text Yes -variable ::search::cqlCommentSwitch -value 1 -command checkCQLSearch
+-  radiobutton $w.s.commentno  -text No  -variable ::search::cqlCommentSwitch -value 0 -command checkCQLSearch
++  radiobutton $w.s.commentyes -textvar ::tr(Yes) -variable ::search::cqlCommentSwitch -value 1 -command checkCQLSearch
++  radiobutton $w.s.commentno  -textvar ::tr(No) -variable ::search::cqlCommentSwitch -value 0 -command checkCQLSearch
+   pack $w.s.comment $w.s.commentyes $w.s.commentno [label $w.s.space -width 5] \
+        $w.s.strip   $w.s.stripyes   $w.s.stripno   -side left -pady 1
+ 
 Index: tcl/search/header.tcl
 ===================================================================
---- tcl/search/header.tcl	(revision 3413)
+--- tcl/search/header.tcl	(revision 3414)
 +++ tcl/search/header.tcl	(working copy)
 @@ -92,7 +92,7 @@
    set sIgnoreCol No
@@ -5173,7 +5565,7 @@ Index: tcl/search/header.tcl
    listbox $w.list -yscrollcommand "$w.ybar set" -height 20 -width 60 \
 Index: tcl/start.tcl
 ===================================================================
---- tcl/start.tcl	(revision 3413)
+--- tcl/start.tcl	(revision 3414)
 +++ tcl/start.tcl	(working copy)
 @@ -13,7 +13,7 @@
  exec "`dirname "$0"`"/tkscid "$0" "$@"
@@ -5202,7 +5594,87 @@ Index: tcl/start.tcl
  set oldLang X
  
  # Toolbar configuration/default visibility
-@@ -1388,7 +1388,7 @@
+@@ -830,20 +830,20 @@
+ set default_exportStartFile(PGN) {}
+ set default_exportEndFile(PGN) {}
+ 
+-set default_latexRendering(engine) {pdflatex -interaction=nonstopmode}
++set default_LaTeXRendering(engine) {pdflatex -interaction=nonstopmode}
+ if {$::windowsOS} {
+-  set default_latexRendering(viewer) start
++  set default_LaTeXRendering(viewer) start
+ } elseif {$::macOS} {
+   # Use open -a if you want to force to the built in preview
+-  set default_latexRendering(viewer) open
++  set default_LaTeXRendering(viewer) open
+ } else {
+-  set default_latexRendering(viewer) xdg-open ; # evince, okular
++  set default_LaTeXRendering(viewer) xdg-open ; # evince, okular
+ 
+   # Unused
+   if {0} {
+     if {[catch {exec xdg-mime query default application/pdf} result] == 0} {
+       # cool unix has a registered app for pdfs so lets use it
+-      set latexViewer "xdg-open"
++      set LaTeXViewer "xdg-open"
+     } else {
+       # try and detect the destop to make at least best guess
+       if {[info exists ::env(XDG_CURRENT_DESKTOP)]} {
+@@ -854,10 +854,10 @@
+ 	  default { set unixDesktop "unknown" }
+ 	}
+ 	switch $linuxDesktop {
+-	  gnome   {set latexViewer evince}
+-	  kde     {set latexViewer okular}
+-	  xfce    {set latexViewer evince}
+-	  default {set latexViewer xpdf}
++	  gnome   {set LaTeXViewer evince}
++	  kde     {set LaTeXViewer okular}
++	  xfce    {set LaTeXViewer evince}
++	  default {set LaTeXViewer xpdf}
+ 	}
+       }
+     }
+@@ -864,9 +864,10 @@
+   }
+ }
+ 
+-set default_exportStartFile(Latex) {\documentclass[10pt,DIV=20]{scrreprt}
+-% This is a LaTeX file generated by Scid.
+-% You must have the xskak, KOMAScript and pstricks packages installed to typeset this file.
++set default_exportStartFile(LaTeX) {\documentclass[10pt,DIV=20]{scrreprt}
++% This is a LaTeX file generated by $::scidName.
++% You must have the xskak, KOMAScript and
++% pstricks packages installed to typeset this file.
+ 
+ \usepackage{scrlayer-scrpage}
+ \usepackage{charter}
+@@ -905,7 +906,7 @@
+ 
+ \begin{document}
+ }
+-set default_exportEndFile(Latex) {\end{document}
++set default_exportEndFile(LaTeX) {\end{document}
+ }
+ 
+ set default_exportStartFile(HTML) {<html>
+@@ -916,13 +917,13 @@
+   </html>
+ }
+ 
+-foreach type {PGN HTML Latex} {
++foreach type {PGN HTML LaTeX} {
+   set exportStartFile($type) $default_exportStartFile($type)
+   set exportEndFile($type) $default_exportEndFile($type)
+ }
+ 
+ foreach type {engine viewer} {
+-  set latexRendering($type) $default_latexRendering($type)
++  set LaTeXRendering($type) $default_LaTeXRendering($type)
+ }
+ 
+ # autoRaise: defines whether the "raise" command should be used to raise
+@@ -1388,7 +1389,7 @@
      if {$isMacBaseReady == 0} {
        if {$mac_args != 0} {
          tk_messageBox -type ok -icon info -title Scid -message \
@@ -5211,7 +5683,7 @@ Index: tcl/start.tcl
          return
        } else {
          # Save file names for later use:
-@@ -1400,7 +1400,7 @@
+@@ -1400,7 +1401,7 @@
      # Are we busy opening files? if so, display message and do nothing
      if {$mac_busy != 0} {
        tk_messageBox -type ok -icon info -title Scid -message \
@@ -5220,7 +5692,7 @@ Index: tcl/start.tcl
        return
      }
  
-@@ -1417,8 +1417,8 @@
+@@ -1417,8 +1418,8 @@
        # Check for available slots:
        if {[sc_base count free] == 0} {
          tk_messageBox -type ok -icon info -title Scid \
@@ -5231,7 +5703,7 @@ Index: tcl/start.tcl
          #::splash::add "No slot available."
          return
        }
-@@ -1432,8 +1432,8 @@
+@@ -1432,8 +1433,8 @@
        if {$ext == ".sso"} {
          set ::fName $file
          if {[catch {uplevel "#0" {source $::fName}} errmsg]} {
@@ -5242,7 +5714,7 @@ Index: tcl/start.tcl
          } else {
            switch -- $::searchType {
              "Material" { ::search::material }
-@@ -1558,19 +1558,19 @@
+@@ -1558,19 +1559,19 @@
  
  set optionsFile [scidConfigFile options]
  
@@ -5267,7 +5739,7 @@ Index: tcl/start.tcl
    set png_image_support 1
    set boardStyle Merida1
  }
-@@ -1578,9 +1578,9 @@
+@@ -1578,9 +1579,9 @@
  set useGraphFigurine 1
  
  if {[catch {source $optionsFile} ]} {
@@ -5279,7 +5751,7 @@ Index: tcl/start.tcl
  }
  
  if { [string first "-dock" [lindex $argv 0]] > -1} {
-@@ -1899,7 +1899,7 @@
+@@ -1899,7 +1900,7 @@
  
    wm withdraw $w
    wm protocol $w WM_DELETE_WINDOW [list wm withdraw $w]
@@ -5288,7 +5760,7 @@ Index: tcl/start.tcl
  
    ### Pack in this order to resize nicely
    # buttons
-@@ -1922,9 +1922,9 @@
+@@ -1922,9 +1923,9 @@
    scrollbar $w.ybar -command [list $w.t yview]
  
    # Translations aren't set up yet, but these are handled in setLanguage
@@ -5300,7 +5772,7 @@ Index: tcl/start.tcl
        -font font_Small
  
    entry $w.find -width 10 -textvariable ::splash::find(find) -highlightthickness 0
-@@ -1937,8 +1937,8 @@
+@@ -1937,8 +1938,8 @@
        ::splash::add {}
        ::splash::add "$scidName $scidVersion Console"
        ::splash::add {------------------------------------}
@@ -5311,18 +5783,18 @@ Index: tcl/start.tcl
      }
      set command [string trim [.splash.command get]]
      ::splash::add "# $command"
-@@ -1999,8 +1999,8 @@
+@@ -1999,8 +2000,8 @@
  ::splash::add "(C) Steven Atkinson (stevenaaus@yahoo.com) 2008-2023"
  ::splash::add "(C) Pascal Georges 2006-2008"
  ::splash::add "(C) Shane Hudson 1999-2004"
 -::splash::add "(C) Gregor Cramer, Fulvio Benini and others."
 -::splash::add "Licenced under the GNU General Public License."
-+::splash::add "(C) Christian Opitz, Gregor Cramer, Fulvio Benini and others."
++::splash::add "(C) Christian Opitz, Gregor Cramer, Fulvio Benini und andere."
 +::splash::add "Lizenziert unter GNU General Public License."
  ::splash::add ""
  
  # add cached splash comments
-@@ -2016,11 +2016,11 @@
+@@ -2016,11 +2017,11 @@
  } else {
    set result Yes
  }
@@ -5337,7 +5809,7 @@ Index: tcl/start.tcl
  }
  if {[string match -nocase Linux $tcl_platform(os)]} {
    catch {
-@@ -2029,7 +2029,7 @@
+@@ -2029,7 +2030,7 @@
  }
  
  catch {
@@ -5348,7 +5820,7 @@ Index: tcl/start.tcl
  ::splash::add ""
 Index: tcl/tools/analysis.tcl
 ===================================================================
---- tcl/tools/analysis.tcl	(revision 3413)
+--- tcl/tools/analysis.tcl	(revision 3414)
 +++ tcl/tools/analysis.tcl	(working copy)
 @@ -232,7 +232,7 @@
    if {$::windowsOS} {
@@ -5438,6 +5910,24 @@ Index: tcl/tools/analysis.tcl
      if {$answer != "ok"} {
        return
      }
+@@ -1594,7 +1594,7 @@
+       sc_var create
+ 
+       if {$isBlunder == "2"} {
+-	sc_pos setComment "Mate in [expr {abs($analysis(prevmate$n))}]"
++	sc_pos setComment "Matt in [expr {abs($analysis(prevmate$n))}]"
+       }
+ 
+       set moves $analysis(prevmoves$n)
+@@ -1643,7 +1643,7 @@
+ 	sc_var create
+ 
+ 	if {$isBlunder == "2"} {
+-	  sc_pos setComment "Mate in [expr {abs($analysis(prevmate$n))}]..."
++	  sc_pos setComment "Matt in [expr {abs($analysis(prevmate$n))}]..."
+ 	}
+ 
+ 	set moves $analysis(prevmoves$n)
 @@ -2282,9 +2282,9 @@
      } else {
        set parent .
@@ -5490,7 +5980,7 @@ Index: tcl/tools/analysis.tcl
    pack $w.label -side top -pady 5 -padx 5
 Index: tcl/tools/calvar.tcl
 ===================================================================
---- tcl/tools/calvar.tcl	(revision 3413)
+--- tcl/tools/calvar.tcl	(revision 3414)
 +++ tcl/tools/calvar.tcl	(working copy)
 @@ -102,7 +102,7 @@
  
@@ -5527,7 +6017,7 @@ Index: tcl/tools/calvar.tcl
        button $f.p$piece -image w${piece}20 -command "::calvar::promo $piece"
 Index: tcl/tools/comp.tcl
 ===================================================================
---- tcl/tools/comp.tcl	(revision 3413)
+--- tcl/tools/comp.tcl	(revision 3414)
 +++ tcl/tools/comp.tcl	(working copy)
 @@ -27,7 +27,7 @@
    }
@@ -5774,7 +6264,7 @@ Index: tcl/tools/comp.tcl
  
 Index: tcl/tools/correspondence.tcl
 ===================================================================
---- tcl/tools/correspondence.tcl	(revision 3413)
+--- tcl/tools/correspondence.tcl	(revision 3414)
 +++ tcl/tools/correspondence.tcl	(working copy)
 @@ -90,7 +90,7 @@
  		global ::Xfcc::xfccrc ::Xfcc::xfccrcfile
@@ -5896,7 +6386,7 @@ Index: tcl/tools/correspondence.tcl
  
 Index: tcl/tools/email.tcl
 ===================================================================
---- tcl/tools/email.tcl	(revision 3413)
+--- tcl/tools/email.tcl	(revision 3414)
 +++ tcl/tools/email.tcl	(working copy)
 @@ -14,12 +14,12 @@
    }
@@ -6122,7 +6612,7 @@ Index: tcl/tools/email.tcl
      ::tools::email::refresh
 Index: tcl/tools/fics.tcl
 ===================================================================
---- tcl/tools/fics.tcl	(revision 3413)
+--- tcl/tools/fics.tcl	(revision 3414)
 +++ tcl/tools/fics.tcl	(working copy)
 @@ -77,7 +77,7 @@
  
@@ -6458,7 +6948,7 @@ Index: tcl/tools/fics.tcl
      }
 Index: tcl/tools/graphs.tcl
 ===================================================================
---- tcl/tools/graphs.tcl	(revision 3413)
+--- tcl/tools/graphs.tcl	(revision 3414)
 +++ tcl/tools/graphs.tcl	(working copy)
 @@ -14,12 +14,12 @@
    if {! [winfo exists $w]} { return }
@@ -6528,8 +7018,17 @@ Index: tcl/tools/graphs.tcl
      }
 Index: tcl/tools/import.tcl
 ===================================================================
---- tcl/tools/import.tcl	(revision 3413)
+--- tcl/tools/import.tcl	(revision 3414)
 +++ tcl/tools/import.tcl	(working copy)
+@@ -21,7 +21,7 @@
+ 
+   toplevel $w
+   wm state $w withdrawn
+-  wm title $w "Scid: Import PGN game"
++  wm title $w "Scid: Import PGN-Partie"
+ 
+   frame $w.b
+   pack $w.b -side bottom -pady 6 
 @@ -137,8 +137,8 @@
    }
  
@@ -6613,7 +7112,7 @@ Index: tcl/tools/import.tcl
      }
 Index: tcl/tools/inputengine.tcl
 ===================================================================
---- tcl/tools/inputengine.tcl	(revision 3413)
+--- tcl/tools/inputengine.tcl	(revision 3414)
 +++ tcl/tools/inputengine.tcl	(working copy)
 @@ -170,8 +170,8 @@
  
@@ -6646,7 +7145,7 @@ Index: tcl/tools/inputengine.tcl
            } \
 Index: tcl/tools/novag.tcl
 ===================================================================
---- tcl/tools/novag.tcl	(revision 3413)
+--- tcl/tools/novag.tcl	(revision 3414)
 +++ tcl/tools/novag.tcl	(working copy)
 @@ -36,7 +36,7 @@
      
@@ -6659,8 +7158,19 @@ Index: tcl/tools/novag.tcl
      }
 Index: tcl/tools/optable.tcl
 ===================================================================
---- tcl/tools/optable.tcl	(revision 3413)
+--- tcl/tools/optable.tcl	(revision 3414)
 +++ tcl/tools/optable.tcl	(working copy)
+@@ -40,8 +40,8 @@
+   </html>
+ }
+ 
+-set ::optable::_docStart(latex) $::exportStartFile(Latex)
+-set ::optable::_docEnd(latex) $::exportEndFile(Latex)
++set ::optable::_docStart(LaTeX) $::exportStartFile(LaTeX)
++set ::optable::_docEnd(LaTeX) $::exportEndFile(LaTeX)
+ 
+ proc ::optable::ConfigMenus {{lang ""}} {
+   if {! [winfo exists .oprepWin]} { return }
 @@ -68,7 +68,7 @@
      set w .progress
      toplevel $w
@@ -6679,6 +7189,46 @@ Index: tcl/tools/optable.tcl
        label $w.text$i -text "$i. $name"
        pack $w.text$i -side top
        canvas $w.c$i -width 400 -height 20  -relief solid -border 1
+@@ -118,8 +118,8 @@
+     }
+   }
+   set ::optable::_data(tree) $newTreeData
+-  # We latexifyTree here and not when we request "View Latex" to assure the report tree and latex tree are the same.
+-  ::optable::latexifyTree
++  # We LaTeXifyTree here and not when we request "View LaTeX" to assure the report tree and LaTeX tree are the same.
++  ::optable::LaTeXifyTree
+   set ::optable::_data(bdLaTeX) [sc_pos tex]
+   set ::optable::_data(bdHTML) [sc_pos html]
+   set ::optable::_data(bdLaTeX_flip) [sc_pos tex flip]
+@@ -153,7 +153,7 @@
+     }
+     $w.menu.file add command -label OprepFileText -command {::optable::saveReport text}
+     $w.menu.file add command -label OprepFileHtml -command {::optable::saveReport html}
+-    $w.menu.file add command -label OprepFileLaTeX -command {::optable::saveReport latex}
++    $w.menu.file add command -label OprepFileLaTeX -command {::optable::saveReport LaTeX}
+     $w.menu.file add separator
+     $w.menu.file add command -label OprepFileOptions -command ::optable::setOptions
+     $w.menu.file add separator
+@@ -181,8 +181,8 @@
+     ::htext::init $w.text
+     scrollbar $w.ybar -command "$w.text yview"
+     frame $w.b
+-    button $w.b.previewLatex -textvar ::tr(OprepViewLaTeX) \
+-        -command {previewLatex Scid-Opening-Report {::optable::report latex 1 $::optable::_flip} .oprepWin}
++    button $w.b.previewLaTeX -textvar ::tr(OprepViewLaTeX) \
++        -command {previewLaTeX Scid-Opening-Report {::optable::report LaTeX 1 $::optable::_flip} .oprepWin}
+     button $w.b.previewHTML -textvar ::tr(OprepViewHTML) \
+         -command ::optable::previewHTML
+     button $w.b.opts -text [tr OprepFileOptions] -command ::optable::setOptions
+@@ -215,7 +215,7 @@
+     pack $w.ybar -side right -fill y
+     pack $w.text -side left -fill both -expand yes
+     pack $w.b.close $w.b.find $w.b.update -side right -padx 2
+-    pack $w.b.previewLatex -side left -padx 2
++    pack $w.b.previewLaTeX -side left -padx 2
+     pack $w.b.previewHTML -side left -padx 2
+     pack $w.b.opts $w.b.lexclude $w.b.exclude $w.b.mergeGames -side left -padx 2
+     ::optable::ConfigMenus
 @@ -264,11 +264,11 @@
      if {$g == "" } {continue}
      set res [scan $g "%d:  <g_%d>" d1 game_number]
@@ -6718,7 +7268,12 @@ Index: tcl/tools/optable.tcl
    }
    puts $tempfile [::optable::report html 1 $::optable::_flip]
    close $tempfile
-@@ -418,32 +418,32 @@
+@@ -414,36 +414,36 @@
+ }
+ 
+ ###  Save the current opening report to a file.
+-#   "fmt" is the format: text, html or latex.
++#   "fmt" is the format: text, html or LaTeX.
  #   "type" is the report type: report, table, or both.
  
  proc ::optable::saveReport {fmt} {
@@ -6738,7 +7293,8 @@ Index: tcl/tools/optable.tcl
 +    { "Textdateien" {".txt"} }
 +    { "Alle Dateien"  {"*"}  }
    }
-   if {$fmt == "latex"} {
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
      set default ".tex"
      set ftype {
 -      { "LaTeX files" {".tex" ".ltx"} }
@@ -6773,6 +7329,263 @@ Index: tcl/tools/optable.tcl
    } else {
      if {$t == 2} {
        set report [::optable::table $fmt]
+@@ -472,7 +472,7 @@
+ 
+ ### Convert the plain text tree output used for text/html reports to a table for LaTeX output.
+ 
+-proc ::optable::latexifyTree {} {
++proc ::optable::LaTeXifyTree {} {
+   set ::optable::_data(moves) {}
+   if {! [info exists ::optable::_data(tree)]} { return }
+   set tree [split $::optable::_data(tree) "\n"]
+@@ -521,7 +521,7 @@
+   }
+   append ltree "\\hline\n"
+   append ltree "\\end{tabularx}\n"
+-  set ::optable::_data(latexTree) $ltree
++  set ::optable::_data(LaTeXTree) $ltree
+ }
+ 
+ proc ::optable::setupRatios {} {
+@@ -567,7 +567,7 @@
+ 
+ proc ::optable::_percent {x fmt} {
+   set p "%"
+-  if {$fmt == "latex"} { set p "\\%" }
++  if {$fmt == "LaTeX"} { set p "\\%" }
+   return "[expr $x / 10][sc_info decimal][expr $x % 10]$p"
+ }
+ 
+@@ -576,7 +576,7 @@
+   set n "\n"; set next " "; set p "%"
+   set white "1-0"; set draw "=-="; set black "0-1"
+ 
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
+     set next " & "; set n "\\\\\n"; set p "\\%"
+     set white "\\win"; set draw "\\draw"; set black "\\loss"
+     append s "\\begin{tabularx}{0.7\\textwidth}{Xccccccc}\n"
+@@ -584,7 +584,7 @@
+ 
+   if {$fmt == "html"} { append s "<pre>\n" }
+   if {$fmt == "ctext"} { append s "<tt>" }
+-  if {$fmt == "latex"} { append s "\\hline\n" }
++  if {$fmt == "LaTeX"} { append s "\\hline\n" }
+ 
+   set lenReport [string length $::tr(OprepReportGames)]
+   set lenAll [string length $::tr(OprepAllGames)]
+@@ -595,7 +595,7 @@
+ 
+   append s " [::utils::string::Pad {} $len] $next"
+   append s "[::utils::string::PadRight $score $slen] $next"
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
+     append s "\\multicolumn{3}{c}{$::tr(OprepLength)} & "
+     append s "\\multicolumn{3}{c}{$::tr(OprepFrequency)} $n "
+   } else {
+@@ -611,7 +611,7 @@
+   append s "[::utils::string::PadRight $white 5]  $next"
+   append s "[::utils::string::PadRight $draw  5]  $next"
+   append s "[::utils::string::PadRight $black 5]  $n"
+-  if {$fmt == "latex"} { append s "\\hline\n" }
++  if {$fmt == "LaTeX"} { append s "\\hline\n" }
+ 
+   set sc [sc_report $reportType score]
+   set wlen [sc_report $reportType avgLength 1]
+@@ -639,7 +639,7 @@
+   append s "[::utils::string::PadRight [::optable::_percent [lindex $df 1] $fmt] 6] $next"
+   append s "[::utils::string::PadRight [::optable::_percent [lindex $bf 1] $fmt] 6] $n"
+ 
+-  if {$fmt == "latex"} { append s "\\hline\n\\end{tabularx}\n" }
++  if {$fmt == "LaTeX"} { append s "\\hline\n\\end{tabularx}\n" }
+   if {$fmt == "html"} { append s "</pre>\n" }
+   if {$fmt == "ctext"} { append s "</tt>" }
+ 
+@@ -669,7 +669,7 @@
+   foreach i $rlist { if {$stats($i)} { set ratings 1 } }
+   foreach i $ylist { if {$stats($i)} { set years 1 } }
+ 
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
+     append s "\\begin{tabularx}{0.7\\textwidth}{X r r r r r @{.} l}\n\\hline\n"
+     append s "       & \\textbf{$games} & \\textbf{\\win} & \\textbf{\\draw} & \\textbf{\\loss} & "
+     append s "\\multicolumn{2}{c}\\textbf{$score} \\\\ \\hline \n"
+@@ -742,7 +742,7 @@
+ 
+ proc ::optable::_title {title} {
+   set fmt $::optable::_data(fmt)
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
+     return "\\begin{center}{\\LARGE \\color{blue}$title}\\end{center}\n\n"
+   } elseif {$fmt == "html"} {
+     return "<h2><center>$title</center></h2>\n\n"
+@@ -760,7 +760,7 @@
+   set fmt $::optable::_data(fmt)
+   incr ::optable::_data(sec)
+   set ::optable::_data(subsec) 0
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
+     return "\n\n\\section{$text}\n"
+   } elseif {$fmt == "html"} {
+     return "\n<h2>$::optable::_data(sec). $text</h2>\n"
+@@ -775,7 +775,7 @@
+ proc ::optable::_subsec {text} {
+   set fmt $::optable::_data(fmt)
+   incr ::optable::_data(subsec)
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
+     return "\n\\subsection{$text}\n\n"
+   } elseif {$fmt == "html"} {
+     return "\n<h3>$::optable::_data(sec).$::optable::_data(subsec) $text</h3>\n\n"
+@@ -805,7 +805,7 @@
+ 
+   set n "\n"; set p "\n\n"; set preText ""; set postText ""
+   set percent "%"; set bullet "  * "; set next ""
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
+     set n "\\\\\n"; set p "\n\n"
+     set preText "\\begin{tabularx}{0.8\\textwidth}{rX} \n";
+     set postText "\\end{tabularx}\n"
+@@ -834,12 +834,12 @@
+     # No starting Line so Report title is just a title
+     set line $::tr(OprepTitle)
+     append r [::optable::_title $line]
+-    if {$fmt == "latex"} {
++    if {$fmt == "LaTeX"} {
+       append r "\\newchessgame%\n"
+     }
+   } else {
+     # There is a starting Line
+-    if {$fmt == "latex"} {
++    if {$fmt == "LaTeX"} {
+       append r "\\newchessgame%\n"
+       append r "\\hidemoves{$line}%\n"
+       append r [::optable::_title "\\printchessgame"]
+@@ -848,12 +848,12 @@
+     }
+   }
+ 
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
+     append r "\\begin{tabularx}{1\\textwidth}{rX} \n"
+   } else {
+     append r "$preText"
+   }
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
+     if {$flipPos} {
+       append r "$multicolumnstart \\chessboard\[inverse\] $multicolumnend $n"
+     } else {
+@@ -870,14 +870,14 @@
+   }
+ 
+   set baseName [file tail [sc_base filename]]
+-  if {$fmt == "latex"} {
+-    # A latex f-me - underscores throw errors
++  if {$fmt == "LaTeX"} {
++    # A LaTeX f-me - underscores throw errors
+     set baseName [string map {_ -} $baseName]
+   }
+   append r "$n$tr(Database):$next $baseName "
+ 
+   append r "([::utils::thousands [sc_base numGames]] $games)$n"
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
+      append r "$tr(OprepReport):$next {\\printchessgame} ("
+   } else {
+      append r "$tr(OprepReport): $line ("
+@@ -932,10 +932,10 @@
+   if {$::optable(Popular) > 0} {
+     append r [::optable::_subsec $tr(OprepPopular)]
+     set next ""
+-    if {$fmt == "latex"} { set next " & " }
++    if {$fmt == "LaTeX"} { set next " & " }
+ 
+     # A table showing popularity by year ranges:
+-    if {$fmt == "latex"} {
++    if {$fmt == "LaTeX"} {
+       append r "\\begin{tabularx}{1\\textwidth}{Xcccccccc}\n\\hline\n"
+     } else {
+       append r $preText
+@@ -959,7 +959,7 @@
+       append r [::utils::string::PadCenter $::optable::_data(range$y) 8]
+     }
+     append r $n
+-    if {$fmt == "latex"} {
++    if {$fmt == "LaTeX"} {
+       append r "\\hline\n\\end{tabularx}\n"
+     } else {
+       append r $postText
+@@ -968,7 +968,7 @@
+     append r "$n"
+ 
+     # A table showing popularity in the last 1/5/10 years:
+-    if {$fmt == "latex"} {
++    if {$fmt == "LaTeX"} {
+       append r "\\begin{tabularx}{0.9\\textwidth}{rlX}\n"
+     }
+ 
+@@ -991,7 +991,7 @@
+       }
+       append r "$n"
+     }
+-    if {$fmt == "latex"} {
++    if {$fmt == "LaTeX"} {
+       append r "\\end{tabularx}\n"
+     }
+   }
+@@ -1059,7 +1059,7 @@
+     append r [::optable::_subsec $tr(OprepMoveOrders)]
+     set nOrders [sc_report opening moveOrders 0]
+     set maxOrders $::optable(MoveOrders)
+-    if {$fmt == "latex"} {
++    if {$fmt == "LaTeX"} {
+       append r "\\begin{center}\n"
+     }
+     if {$nOrders == 1} {
+@@ -1069,7 +1069,7 @@
+     } else {
+       append r [format $tr(OprepMoveOrdersMany) $nOrders $maxOrders]
+     }
+-    if {$fmt == "latex"} {
++    if {$fmt == "LaTeX"} {
+       append r "\n\\end{center}\n"
+       append r "\\begin{tabularx}{0.9\\textwidth}{rlX} \\hline \n"
+       append r [sc_report opening moveOrders $maxOrders]
+@@ -1081,8 +1081,8 @@
+   }
+   if {$::optable(MovesFrom)} {
+     append r [::optable::_subsec $tr(OprepMovesFrom)]
+-    if {$fmt == "latex"} {
+-      append r $::optable::_data(latexTree)
++    if {$fmt == "LaTeX"} {
++      append r $::optable::_data(LaTeXTree)
+     } else {
+       append r $preText
+       append r $::optable::_data(tree)
+@@ -1108,11 +1108,11 @@
+ 
+   if {$::optable(Endgames) > 0} {
+     append r [::optable::_subsec $tr(OprepEndgames)]
+-    if {$fmt == "latex"} {
++    if {$fmt == "LaTeX"} {
+       append r "\\begin{center}\n"
+     }
+     append r "$tr(OprepEndClass):$n"
+-    if {$fmt == "latex"} {
++    if {$fmt == "LaTeX"} {
+       append r "\\end{center}"
+     }
+     append r [sc_report opening endmat]
+@@ -1134,7 +1134,7 @@
+ 
+   # Eszet (ss) characters seem to be mishandled by LaTeX, even with
+   # the font encoding package, so convert them explicitly:
+-  if {$fmt == "latex"} { regsub -all ß $r {{\\ss}} r }
++  if {$fmt == "LaTeX"} { regsub -all ß $r {{\\ss}} r }
+ 
+   return $r
+ }
 @@ -1201,13 +1201,13 @@
    toplevel $w
    wm withdraw $w
@@ -6799,7 +7612,7 @@ Index: tcl/tools/optable.tcl
      return
    }
    set ::reportDir $::initialDir(report)
-@@ -1434,16 +1434,16 @@
+@@ -1434,28 +1434,28 @@
    }
    toplevel $w
    wm withdraw $w
@@ -6822,8 +7635,10 @@ Index: tcl/tools/optable.tcl
    pack [frame $w.fmt] -side top -padx 2
    radiobutton $w.fmt.text -text "Text" -variable reportFormat -value text
    radiobutton $w.fmt.html -text "HTML" -variable reportFormat -value html
-@@ -1451,11 +1451,11 @@
-   pack $w.fmt.text $w.fmt.html $w.fmt.latex -side left -padx 4
+-  radiobutton $w.fmt.latex -text "LaTeX" -variable reportFormat -value latex
+-  pack $w.fmt.text $w.fmt.html $w.fmt.latex -side left -padx 4
++  radiobutton $w.fmt.LaTeX -text "LaTeX" -variable reportFormat -value LaTeX
++  pack $w.fmt.text $w.fmt.html $w.fmt.LaTeX -side left -padx 4
    addHorizontalRule $w
    pack [frame $w.dir] -side top -padx 2 -pady 2
 -  label $w.dir.label -text "Save reports in the folder" -font font_Bold
@@ -6836,7 +7651,14 @@ Index: tcl/tools/optable.tcl
      if {$tmpdir != ""} {
        set ::reportDir [file nativename $tmpdir]
      }
-@@ -1495,8 +1495,8 @@
+@@ -1489,14 +1489,14 @@
+   switch $reportFormat {
+     "html" { set suffix ".html" }
+     "text" { set suffix ".txt" }
+-    "latex" { set suffix ".tex" }
++    "LaTeX" { set suffix ".tex" }
+   }
+ 
    set w .reportsProgress
    toplevel $w
    wm withdraw $w
@@ -6858,7 +7680,7 @@ Index: tcl/tools/optable.tcl
        return
 Index: tcl/tools/pinfo.tcl
 ===================================================================
---- tcl/tools/pinfo.tcl	(revision 3413)
+--- tcl/tools/pinfo.tcl	(revision 3414)
 +++ tcl/tools/pinfo.tcl	(working copy)
 @@ -56,7 +56,7 @@
        } else {
@@ -6892,7 +7714,7 @@ Index: tcl/tools/pinfo.tcl
      ### If English, we can set the other four buttons likewise (and allign nicely)
 Index: tcl/tools/preport.tcl
 ===================================================================
---- tcl/tools/preport.tcl	(revision 3413)
+--- tcl/tools/preport.tcl	(revision 3414)
 +++ tcl/tools/preport.tcl	(working copy)
 @@ -19,7 +19,7 @@
  proc ::preport::preportDlg {{player {}}} {
@@ -6951,6 +7773,35 @@ Index: tcl/tools/preport.tcl
        label $w.text$i -text "$i. $name"
        pack $w.text$i -side top
        canvas $w.c$i -width 400 -height 20  -relief solid -border 1
+@@ -237,7 +237,7 @@
+     $w.menu.file add command -label OprepFileHtml \
+       -command {::preport::saveReport html}
+     $w.menu.file add command -label OprepFileLaTeX \
+-      -command {::preport::saveReport latex}
++      -command {::preport::saveReport LaTeX}
+     $w.menu.file add separator
+     $w.menu.file add command -label OprepFileOptions \
+       -command ::preport::setOptions
+@@ -267,8 +267,8 @@
+     frame $w.b
+     button $w.b.opts -text [tr OprepFileOptions] -command ::preport::setOptions
+     button $w.b.help -textvar ::tr(Help) -command {helpWindow Reports Player}
+-    button $w.b.previewLatex -textvar ::tr(OprepViewLaTeX) \
+-      -command {previewLatex Scid-Player-Report {::preport::report latex 1} .preportWin}
++    button $w.b.previewLaTeX -textvar ::tr(OprepViewLaTeX) \
++      -command {previewLaTeX Scid-Player-Report {::preport::report LaTeX 1} .preportWin}
+     button $w.b.viewHTML -textvar ::tr(OprepViewHTML) -command ::preport::previewHTML
+     button $w.b.update -textvar ::tr(Update) -command ::preport::preportDlg
+     button $w.b.close -textvar ::tr(Close) -command "focus .main ; destroy $w"
+@@ -279,7 +279,7 @@
+     pack $w.b -side bottom -fill x
+     pack $w.scroll -side top -fill both -expand yes
+     pack $w.b.close $w.b.find $w.b.update -side right -padx 2 -pady 2
+-    pack $w.b.previewLatex $w.b.viewHTML $w.b.opts -side left -padx 2 -pady 2
++    pack $w.b.previewLaTeX $w.b.viewHTML $w.b.opts -side left -padx 2 -pady 2
+     ::preport::ConfigMenus
+     placeWinCenter $w
+     update
 @@ -414,8 +414,8 @@
    set tmpfile TempPlayerReport.html
    set fname [file nativename [file join $tmpdir $tmpfile]]
@@ -6971,7 +7822,8 @@ Index: tcl/tools/preport.tcl
 +    { "Textdateien" {".txt"} }
 +    { "Alle Dateien"  {"*"}  }
    }
-   if {$fmt == "latex"} {
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
      set default ".tex"
      set ftype {
 -      { "LaTeX files" {".tex" ".ltx"} }
@@ -7006,9 +7858,113 @@ Index: tcl/tools/preport.tcl
    } else {
      set report [::preport::report $fmt 1]
      # if {$::hasEncoding  &&  $::langEncoding($::language) != ""} { catch {set report [encoding convertto $::langEncoding($::language) $report]} }
+@@ -470,7 +470,7 @@
+ 
+ proc ::preport::_title {title} {
+   set fmt $::preport::_data(fmt)
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
+     return "\\begin{center}{\\LARGE \\color{blue}$title}\\end{center}\n\n"
+   } elseif {$fmt == "html"} {
+     return "<h2><center>$title</center></h2>\n\n"
+@@ -488,7 +488,7 @@
+   set fmt $::preport::_data(fmt)
+   incr ::preport::_data(sec)
+   set ::preport::_data(subsec) 0
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
+     return "\n\n\\section{$text}\n"
+   } elseif {$fmt == "html"} {
+     return "\n<h2>$::preport::_data(sec). $text</h2>\n"
+@@ -503,7 +503,7 @@
+ proc ::preport::_subsec {text} {
+   set fmt $::preport::_data(fmt)
+   incr ::preport::_data(subsec)
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
+     return "\n\\subsection{$text}\n\n"
+   } elseif {$fmt == "html"} {
+     return "\n<h3>$::preport::_data(sec).$::preport::_data(subsec) $text</h3>\n\n"
+@@ -535,7 +535,7 @@
+   set percent "%"; set bullet "  * ";
+   set ml ""; set mo "";
+   set va ""; set vo "";
+-  if {$fmt == "latex"} {
++  if {$fmt == "LaTeX"} {
+     set n "\\\\\n"; set p "\n\n"; set ls ": &";
+     set preText "\\begin{tabularx}{0.8\\textwidth}{rX} \n";
+     set postText "\\end{tabularx}\n"
+@@ -570,8 +570,8 @@
+     }
+   }
+ 
+-  if {$fmt == "latex"} {
+-    # A latex f-me - underscores throw errors
++  if {$fmt == "LaTeX"} {
++    # A LaTeX f-me - underscores throw errors
+     set propername [string map {_ -} $propername]
+   }
+ 
+@@ -580,15 +580,15 @@
+ 
+   ### New Board for Player Report
+   # Good fucking luck messing with this overloaded bullshit
+-  # Latex is a fucking piece of shit, but almost working
++  # LaTeX is a fucking piece of shit, but almost working
+   # ... we just need to set the board and make sure some stray $preText doesn't break it
+   if {$::preport::showBoard} {
+-    if {$fmt == "latex"} {
++    if {$fmt == "LaTeX"} {
+        append r "\\begin{tabularx}{1\\textwidth}{rX} \n"
+     } else {
+       append r "$preText"
+     }
+-    if {$fmt == "latex"} {
++    if {$fmt == "LaTeX"} {
+       if {$::preport::_flip} {
+ 	append r "$multicolumnstart \\chessboard\[inverse\] $multicolumnend $n"
+       } else {
+@@ -604,7 +604,7 @@
+       append r "<center><window .preportWin.text.bd></center>\n\n"
+     }
+   } else {
+-    if {$fmt == "latex"} {append r $preText}
++    if {$fmt == "LaTeX"} {append r $preText}
+   }
+ 
+   append r "$tr(Player)$ls$bb$propername$eb"
+@@ -618,7 +618,7 @@
+  set eco ""
+  if {$::preport::showBoard} {
+    set line [sc_report player line]
+-   if {$fmt == "latex"} {
++   if {$fmt == "LaTeX"} {
+      # broke - S.A
+      # append r "\\newchessgame%\n"
+      # append r "\\hidemoves{$line}%\\n"
+@@ -639,8 +639,8 @@
+   append r " $games)$n"
+ 
+   set baseName [file tail [sc_base filename]]
+-  if {$fmt == "latex"} {
+-    # A latex f-me - underscores throw errors
++  if {$fmt == "LaTeX"} {
++    # A LaTeX f-me - underscores throw errors
+     set baseName [string map {_ -} $baseName]
+   }
+ 
+@@ -742,7 +742,7 @@
+ 
+   # Eszet (ss) characters seem to be mishandled by LaTeX, even with
+   # the font encoding package, so convert them explicitly:
+-  if {$fmt == "latex"} { regsub -all � $r {{\\ss}} r }
++  if {$fmt == "LaTeX"} { regsub -all � $r {{\\ss}} r }
+ 
+   return $r
+ }
 Index: tcl/tools/sergame.tcl
 ===================================================================
---- tcl/tools/sergame.tcl	(revision 3413)
+--- tcl/tools/sergame.tcl	(revision 3414)
 +++ tcl/tools/sergame.tcl	(working copy)
 @@ -91,7 +91,7 @@
  
@@ -7045,8 +8001,26 @@ Index: tcl/tools/sergame.tcl
      updateBoard -pgn
 Index: tcl/tools/tablebase.tcl
 ===================================================================
---- tcl/tools/tablebase.tcl	(revision 3413)
+--- tcl/tools/tablebase.tcl	(revision 3414)
 +++ tcl/tools/tablebase.tcl	(working copy)
+@@ -8,13 +8,13 @@
+ set ::tb::online_available 0
+ 
+ if {[catch {package require http}]} {
+-  ::splash::add "Package 'http' not found. Disabling online tablebases."
++  ::splash::add "Paket 'http' nicht gefunden. Online Tablebases deaktiviert."
+ } else {
+-  ::splash::add "Package 'http' found."
++  ::splash::add "Paket 'http' gefunden."
+   if {[catch {package require tls}]} {
+-    ::splash::add "Package 'tls' not found. Disabling online tablebases."
++    ::splash::add "Pakte 'tls' nicht gefunden. Online Tablebases deaktiviert."
+   } else {
+-    ::splash::add "Package 'tls' found. Enabling online tablebases."
++    ::splash::add "Paket 'tls' gefunden. Online Tablebases aktiviert."
+     set ::tb::online_available 1
+   }
+ }
 @@ -159,7 +159,7 @@
    set f $w.info
    pack [frame $f.sec] -side top -pady 3
@@ -7179,7 +8153,7 @@ Index: tcl/tools/tablebase.tcl
  ####################################################################
 Index: tcl/tools/tacgame.tcl
 ===================================================================
---- tcl/tools/tacgame.tcl	(revision 3413)
+--- tcl/tools/tacgame.tcl	(revision 3414)
 +++ tcl/tools/tacgame.tcl	(working copy)
 @@ -127,7 +127,7 @@
      }
@@ -7204,14 +8178,14 @@ Index: tcl/tools/tacgame.tcl
      pack $w.fbuttons -side top -fill x -pady 3
  
 -    radiobutton $w.flevel.diff_random.cb -text $::tr(RandomLevel) -variable ::tacgame::randomLevel -value 1 -width 15  -anchor w
-+    radiobutton $w.flevel.diff_random.cb -text $::tr(RandomLevel) -variable ::tacgame::randomLevel -value 1 -width 20  -anchor w
++    radiobutton $w.flevel.diff_random.cb -text $::tr(RandomLevel) -variable ::tacgame::randomLevel -value 1 -width 25  -anchor w
      scale $w.flevel.diff_random.lMin -orient horizontal -from 1400 -to 2400 -length 100 -variable ::tacgame::levelMin -tickinterval 0 -resolution 50
      scale $w.flevel.diff_random.lMax -orient horizontal -from 1400 -to 2400 -length 100 -variable ::tacgame::levelMax -tickinterval 0 -resolution 50
      pack $w.flevel.diff_random.cb -side left
      pack $w.flevel.diff_random.lMin $w.flevel.diff_random.lMax -side left -expand 1
  
 -    radiobutton $w.flevel.diff_fixed.cb -text "$::tr(FixedLevel)\n($::tr(easy) - $::tr(hard))" -variable ::tacgame::randomLevel -value 0 -width 15  -anchor w
-+    radiobutton $w.flevel.diff_fixed.cb -text "$::tr(FixedLevel)\n($::tr(easy) - $::tr(hard))" -variable ::tacgame::randomLevel -value 0 -width 20  -anchor w
++    radiobutton $w.flevel.diff_fixed.cb -text "$::tr(FixedLevel)\n($::tr(easy) - $::tr(hard))" -variable ::tacgame::randomLevel -value 0 -width 25  -anchor w
      scale $w.flevel.diff_fixed.scale -orient horizontal -from 1400 -to 2400 -length 200 \
          -variable ::tacgame::levelFixed -tickinterval 0 -resolution 50
      pack $w.flevel.diff_fixed.cb -side left
@@ -7228,6 +8202,17 @@ Index: tcl/tools/tacgame.tcl
  
      # or choose a specific opening
      radiobutton $w.fopening.cbSpecific -text $::tr(SpecificOpening) -variable ::tacgame::openingType -value specific \
+@@ -248,8 +248,8 @@
+     # Time limit per move
+ 
+     checkbutton $w.flimit.blimit -text $::tr(limitanalysis) -variable ::tacgame::isLimitedAnalysisTime -relief flat
+-    scale $w.flimit.analysisTime -orient horizontal -from 1 -to 30 -length 200 -label $::tr(seconds) -variable ::tacgame::analysisTime -resolution 1
+-    pack $w.flimit.blimit $w.flimit.analysisTime -side left -expand yes -pady 5
++    scale $w.flimit.analysisTime -orient horizontal -from 1 -to 30 -length 230 -label $::tr(seconds) -variable ::tacgame::analysisTime -resolution 1
++    pack $w.flimit.blimit $w.flimit.analysisTime -side left -expand yes -pady 5 -padx 10
+ 
+     dialogbutton $w.fbuttons.play -text $::tr(Play) -command {
+       set ::tacgame::chosenOpening [.configWin.fopening.fOpeningList.lbOpening curselection]
 @@ -617,9 +617,9 @@
      # Try to execute the analysis program:
      if {[catch {set analysisCoach(pipe$n) [open "| [list $analysisCommand] $analysisArgs" "r+"]} result]} {
@@ -7278,7 +8263,7 @@ Index: tcl/tools/tacgame.tcl
      updateBoard -pgn
 Index: tcl/tools/tactics.tcl
 ===================================================================
---- tcl/tools/tactics.tcl	(revision 3413)
+--- tcl/tools/tactics.tcl	(revision 3414)
 +++ tcl/tools/tactics.tcl	(working copy)
 @@ -50,7 +50,7 @@
      set found 0
@@ -7375,7 +8360,7 @@ Index: tcl/tools/tactics.tcl
    }
 Index: tcl/tools/uci.tcl
 ===================================================================
---- tcl/tools/uci.tcl	(revision 3413)
+--- tcl/tools/uci.tcl	(revision 3414)
 +++ tcl/tools/uci.tcl	(working copy)
 @@ -484,7 +484,7 @@
      }
@@ -7451,9 +8436,146 @@ Index: tcl/tools/uci.tcl
      }
  
      # Some engines in analyze(gui?) mode may not react as expected to "quit"
+Index: tcl/utils/sound.tcl
+===================================================================
+--- tcl/utils/sound.tcl	(revision 3414)
++++ tcl/utils/sound.tcl	(working copy)
+@@ -26,11 +26,11 @@
+   variable soundFiles
+   variable soundFolder
+ 
+-  ::splash::add "Initializing Sound..."
++  ::splash::add "Aktiviere Ton..."
+ 
+   if {[catch {package require snack 2.0}]} {
+     set hasSnackPackage 0
+-    ::splash::add "   Snack sound package not found." 
++    ::splash::add "   Tonpaket Snack nicht gefunden." 
+     ### undefine procs
+     proc ::utils::sound::AnnounceMove {move} {}
+     proc ::utils::sound::PlayMove {sound} {}
+@@ -37,9 +37,9 @@
+     return
+   }
+ 
+-  ::splash::add "   Snack sound package found: Move speech enabled."
++  ::splash::add "   Tonpaket Snack gefunden: Zugsprache ist aktiv."
+   set devices [snack::audio outputDevices]
+-  ::splash::add "   Available output devices are: $devices"
++  ::splash::add "   Verfügbare Ausgabegeräte: $devices"
+ 
+   if {$::utils::sound::device != {}} {
+     ::utils::sound::SetDevice
+@@ -55,7 +55,7 @@
+ 
+   set numSounds [::utils::sound::ReadFolder]
+   set numSought [llength $soundFiles]
+-  ::splash::add "   Found $numSounds of $numSought sound files in $soundFolder"
++  ::splash::add "   $numSounds von $numSought Tondateien in $soundFolder gefunden"
+ }
+ 
+ 
+@@ -138,7 +138,7 @@
+   # foreach v {soundFolder announceNew announceForward announceBack announceTock}
+ 
+   toplevel $w
+-  wm title $w "Scid: Sound Options"
++  wm title $w "Scid: Optionen für Ton"
+   wm withdraw $w
+   wm resizable $w 0 0
+ 
+@@ -145,7 +145,7 @@
+   pack [frame $w.b] -side bottom -fill x -pady 2
+ 
+   if {! $::utils::sound::hasSnackPackage} {
+-    label $w.status -text "Scid could not find the Snack audio package at startup. Sound is disabled."
++    label $w.status -text "Scid konnte das Snack-Audiopaket beim Start nicht finden. Ton ist deaktiviert."
+     pack $w.status -side bottom
+   }
+ 
+@@ -254,8 +254,8 @@
+   variable soundFolder
+ 
+     set numSoundFiles [::utils::sound::ReadFolder]
+-    tk_messageBox -title "Scid: Sound Files" -type ok -icon info \
+-        -message "Found $numSoundFiles of [llength $::utils::sound::soundFiles] sound files in $::utils::sound::soundFolder"
++    tk_messageBox -title "Scid: Tondateien" -type ok -icon info \
++        -message "$numSoundFiles von [llength $::utils::sound::soundFiles] Tondateien in $::utils::sound::soundFolder gefunden"
+ }
+ 
+ ### Read sound files from the specified directory.
+@@ -283,9 +283,9 @@
+ proc ::utils::sound::SetDevice {args} {
+ 
+   if {[catch {snack::audio selectOutput $::utils::sound::device}]} {
+-    ::splash::add "   Failure setting Snack output device to $::utils::sound::device"
++    ::splash::add "   Fehler beim Setzen des Snack-Ausgabegeräts nach $::utils::sound::device"
+   } else {
+-    ::splash::add "   Succesfully set Snack output device to $::utils::sound::device"
++    ::splash::add "   Snack-Ausgabegerät erfolgreich nach $::utils::sound::device gesetzt"
+   }
+ }
+ 
+Index: tcl/utils/win.tcl
+===================================================================
+--- tcl/utils/win.tcl	(revision 3414)
++++ tcl/utils/win.tcl	(working copy)
+@@ -928,7 +928,7 @@
+ 
+ 
+ if {$::docking::USE_DOCKING} {
+-  ::splash::add "Docking mode enabled."
++  ::splash::add "Docking-Modus aktiviert."
+   pack [ttk::panedwindow .pw -orient vertical] -fill both -expand true
+   .pw add [ttk::notebook .nb] -weight 1
+   set docking::tbs(.nb) .pw
+@@ -938,7 +938,7 @@
+ ::docking::setTabStatus
+ 
+ if {!$::docking::USE_DOCKING} {
+-  ::splash::add "Docking mode disabled."
++  ::splash::add "Docking-Modus deaktiviert."
+   wm withdraw .main ; # gets remapped later
+ }
+ 
+Index: tcl/windows/book.tcl
+===================================================================
+--- tcl/windows/book.tcl	(revision 3414)
++++ tcl/windows/book.tcl	(working copy)
+@@ -439,7 +439,7 @@
+     }
+ 
+     ::createToplevel $w
+-    ::setTitle $w "$::tr(Book) Tuning"
++    ::setTitle $w "$::tr(Book) anpassen"
+     # wm resizable $w 0 0
+ 
+     bind $w <F1> { helpWindow BookTuningWindow }
+@@ -480,7 +480,7 @@
+     menubutton $w.left.add -text $::tr(AddMove) -menu $w.left.add.otherMoves -indicatoron 1
+     menu $w.left.add.otherMoves
+ 
+-    menubutton $w.left.remove -text "$::tr(GlistRemoveThisGameFromFilter) $::tr(GlistMoveField)" -menu $w.left.remove.otherMoves -indicatoron 1
++    menubutton $w.left.remove -text "Partie aus Filter entfernen/verschieben" -menu $w.left.remove.otherMoves -indicatoron 1
+     menu $w.left.remove.otherMoves
+ 
+     button $w.left.addline -text $::tr(AddLine) -relief flat -command ::book::addLine
+Index: tcl/windows/crosstab.tcl
+===================================================================
+--- tcl/windows/crosstab.tcl	(revision 3414)
++++ tcl/windows/crosstab.tcl	(working copy)
+@@ -138,7 +138,7 @@
+           -type ok -icon warning -parent .crosstabWin \
+           -message "Unable to save the file: $fname\n\n"
+       } else {
+-        catch {sc_game crosstable latex $crosstab(sort) $crosstab(type) \
++        catch {sc_game crosstable LaTeX $crosstab(sort) $crosstab(type) \
+                  $crosstab(ratings) $crosstab(countries) $crosstab(tallies) $crosstab(titles) \
+                  $crosstab(colors) $crosstab(groups) $crosstab(ages) \
+                  $crosstab(breaks) $crosstab(cnumbers) $crosstab(deleted) $crosstab(threewin) $crosstab(tiewin) $crosstab(tiehead)} \
 Index: tcl/windows/eco.tcl
 ===================================================================
---- tcl/windows/eco.tcl	(revision 3413)
+--- tcl/windows/eco.tcl	(revision 3414)
 +++ tcl/windows/eco.tcl	(working copy)
 @@ -203,7 +203,7 @@
    set fname [file tail $fname]
@@ -7464,9 +8586,22 @@ Index: tcl/windows/eco.tcl
    $w.title configure -state disabled
    set ::windows::eco::count $count
  }
+Index: tcl/windows/gamelist.tcl
+===================================================================
+--- tcl/windows/gamelist.tcl	(revision 3414)
++++ tcl/windows/gamelist.tcl	(working copy)
+@@ -1073,7 +1073,7 @@
+         set name $col
+       }
+       set answer [tk_messageBox -parent $w -title Scid -type yesno -default yes -icon question \
+-          -message "[tr GlistSort] \"[file tail [sc_base filename]]\" by $name ?"]
++          -message "[tr GlistSort] \"[file tail [sc_base filename]]\" nach $name?"]
+       if {$answer != "yes"} { return }
+     }
+ 
 Index: tcl/windows/switcher.tcl
 ===================================================================
---- tcl/windows/switcher.tcl	(revision 3413)
+--- tcl/windows/switcher.tcl	(revision 3414)
 +++ tcl/windows/switcher.tcl	(working copy)
 @@ -964,7 +964,7 @@
        $f.menu.show add checkbutton -label [tr ShowIcons] -variable ::windows::switcher::icons -command ::windows::switcher::Refresh
@@ -7479,7 +8614,7 @@ Index: tcl/windows/switcher.tcl
          ::windows::gamelist::Configure .glistWin.tree
 Index: tcl/windows/tree.tcl
 ===================================================================
---- tcl/windows/tree.tcl	(revision 3413)
+--- tcl/windows/tree.tcl	(revision 3414)
 +++ tcl/windows/tree.tcl	(working copy)
 @@ -47,7 +47,7 @@
  
@@ -7499,6 +8634,15 @@ Index: tcl/windows/tree.tcl
    } {
     set tree($i$baseNumber) $j
    }
+@@ -157,7 +157,7 @@
+   $w.menu.mask add command -label TreeMaskFillWithLine -command "::tree::mask::fillWithLine"
+   $w.menu.mask add command -label TreeMaskFillWithGame -command "::tree::mask::fillWithGame"
+   $w.menu.mask add command -label TreeMaskFillWithBase -command "::tree::mask::fillWithBase $baseNumber"
+-  $w.menu.mask add command -label Help -command {helpWindow TreeMasks}
++  $w.menu.mask add command -label Hilfe -command {helpWindow TreeMasks}
+ 
+   foreach {label value} {
+     Alpha alpha
 @@ -1290,7 +1290,7 @@
      grid columnconfig $w.blist 0 -weight 1 -minsize 0
  
@@ -7541,3 +8685,66 @@ Index: tcl/windows/tree.tcl
  
  }
  
+@@ -1832,9 +1832,9 @@
+   if {$filename != ""} {
+     if {![file readable $filename]} {
+       if {$parent == "autoLoad"} {
+-	::splash::add "Can't read mask file $filename" error
++	::splash::add "Kann Maskendatei $filename nicht lesen." error
+       } else {
+-	tk_messageBox -title Oops -type ok -icon info -message "Mask: no such file \"$filename\""
++	tk_messageBox -title Hoppla -type ok -icon info -message "Maske: keine Datei \"$filename\" vorhanden."
+       }
+     } else {
+       set ::initialDir(stm) [file dirname $filename]
+@@ -1894,8 +1894,8 @@
+     }
+ 
+     set answer [tk_dialog .unsaved "[tr TreeMask] [tr altered]" \
+-      "[tr TreeMask] \"[file rootname [file tail $::tree::mask::maskFile]]\" has been [tr altered].
+-      [tr DoYouWantToSaveFirst] ?" \
++      "[tr TreeMask] \"[file rootname [file tail $::tree::mask::maskFile]]\" wurde [tr altered].
++      [tr DoYouWantToSaveFirst]?" \
+       question {} [tr Save] [tr DontSave]]
+ 
+     if {$answer == 0} {
+@@ -2410,9 +2410,9 @@
+ 
+   if {$op == ""} {
+     set reply [tk_dialog .booktune $::tr(AddLine) \
+-      {Add all/white/black moves (to current position) to mask ?} \
++      {Alle weißen/schwarzen Züge der Maske hinzufügen (bis zur aktuellen Stellung)?} \
+       question 0 \
+-      {  All  } $::tr(White) $::tr(Black) $::tr(Cancel) ]
++      {  Alle  } $::tr(White) $::tr(Black) $::tr(Cancel) ]
+ 
+     if {$reply == 3} {return}
+     if {$reply == 1} {set reply white}
+@@ -2563,9 +2563,9 @@
+   frame $w.fcb
+   pack $w.fcb -fill x -side bottom
+ 
+-  checkbutton $w.fcb.unfold -font font_Small -text Unfold -variable ::tree::mask::displayMask_unfold \
++  checkbutton $w.fcb.unfold -font font_Small -text Entfalten -variable ::tree::mask::displayMask_unfold \
+     -command ::tree::mask::updateDisplayMask
+-  checkbutton $w.fcb.nag -font font_Small -text Nags/Markers -variable ::tree::mask::displayMask_showNag \
++  checkbutton $w.fcb.nag -font font_Small -text NAGs/Marker -variable ::tree::mask::displayMask_showNag \
+     -command ::tree::mask::updateDisplayMask
+   checkbutton $w.fcb.comment -font font_Small -text [::tr Comments] -variable ::tree::mask::displayMask_showComment \
+     -command ::tree::mask::updateDisplayMask
+@@ -2842,13 +2842,13 @@
+   grid $w.f1.color  -column 4 -row 1 -padx 2
+   
+   # Move comment
+-  checkbutton $w.f1.movecommentl -font font_Small -text "Move comment" -variable ::tree::mask::searchMask_usemovecomment
++  checkbutton $w.f1.movecommentl -font font_Small -text "Zugkommentar" -variable ::tree::mask::searchMask_usemovecomment
+   entry $w.f1.movecomment -font font_Small -textvariable ::tree::mask::searchMask_movecomment -width 12
+   grid $w.f1.movecommentl -column 5 -row 0 -padx 2 -pady 2
+   grid $w.f1.movecomment  -column 5 -row 1 -padx 2
+   
+   # Position comment
+-  checkbutton $w.f1.poscommentl -font font_Small -text "Position comment" -variable ::tree::mask::searchMask_useposcomment
++  checkbutton $w.f1.poscommentl -font font_Small -text "Stellungskommentar" -variable ::tree::mask::searchMask_useposcomment
+   entry $w.f1.poscomment -font font_Small -textvariable ::tree::mask::searchMask_poscomment -width 12
+   grid $w.f1.poscommentl -column 6 -row 0 -padx 2 -pady 2
+   grid $w.f1.poscomment  -column 6 -row 1 -padx 2

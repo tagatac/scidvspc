@@ -175,7 +175,7 @@ menuText D ToolsTrainTactics "Taktikaufgaben lösen"  3 {Taktische Aufgaben lös
 menuText D ToolsTrainCalvar "Varianten berechnen"  0 {Training zum Berechnen von Varianten}
 menuText D ToolsTrainFindBestMove "Besten Zug finden"  0 {Find best move}
 menuText D ToolsTrainFics "Internet (FICS)"  0 {Internetpartie auf freechess.org}
-menuText D ToolsBookTuning "Buch abstimmen" 0 {Buch abstimmen}
+menuText D ToolsBookTuning "Eröffnungsbuch anpassen" 0 {Eröffnungsbuch anpassen}
 menuText D ToolsMaint "Wartung" 0 {Das Scid-Datenbankwartungsfenster}
 menuText D ToolsMaintWin "Wartungfenster" 0 \
   {Datenbank-Wartungsfenster öffnen/schließen}
@@ -1515,7 +1515,7 @@ translate D PositionsPlayed {gespielte Positionen}
 translate D Success {Erfolgreich}
 translate D DubiousMoves {Zweifelhafte Züge}
 translate D ConfigureTactics {Taktik konfigurieren}
-translate D ResetScores {Punkte zurücksetzten}
+translate D ResetScores {Punkte zurücksetzen}
 translate D LoadingBase {Lade Datenbank}
 translate D Tactics {Taktik}
 translate D ShowSolution {Lösung zeigen}
@@ -2230,7 +2230,7 @@ set helpText(D,Scid) {<h1>Datenbanken und allgemeine Nutzung</h1>
   <li><a Export><b>Partien exportieren</b></a></li>
   <li><a Import><b>Partien importieren</b></a></li>
   <li><a LaTeX><b>LaTeX mit Scid benutzen</b></a></li>
-  <li><a Options><b>Optionen und Voreinstellungen</b></a></li>
+  <li><a Options><b>Optionen und Einstellungen</b></a></li>
   <li><a PTracker><b>Figurenverteilung</b></a></li>
   <li><a Pgnscid><b>Pgnscid: PGN-Dateien konvertieren</b></a></li>
   <li><a NAGs>Standard <b>NAG-Kommentarwerte</b></a></li>
@@ -2832,7 +2832,7 @@ append helpText(D,Menus) {
   <li><b>Dubletten prüfen...</b>  Zeigt ein Fenster mit gefundenen Dubletten an.</li>
   <li><b>Inkonsistenzen beseitigen</b>  Repariert eine fehlerhafte Datenbank.</li>
   </ul>
-  <li><b>Buch abstimmen</b>  Zum Editieren von PolyGlot-Eröffnungsbüchern.</li>
+  <li><b>Eröffnungsbuch anpassen</b>  Zum Editieren von PolyGlot-Eröffnungsbüchern.</li>
   <li><b>Spielerbericht</b>  Erstellt für einen Spieler einen <a Reports Player>Eröffnungsbericht</a>.</li>
   <li><b>Eröffnungsbericht</b>  Erstellt für die aktuelle Brettstellung einen <a Reports Opening>Eröffnungsbericht</a>.</li>
   <li><b>Figurenverteilung</b>  Öffnet ein Fenster für die Ermittlung der <a PTracker>Figurenverteilung</a>.</li>
@@ -3248,7 +3248,7 @@ set helpText(D,CQL) {<h1>Schachabfragesprache CQL (Chess Query Language)</h1>
   Schlüsselwörter (besonders <b>silent</b>) diese
   Schaltflächen. Andere CQL-Befehle lassen auch das Hinzufügen anderer
   Kommentare und die Bearbeitung von Varianten zu. Diese zusätzlichen
-  Kommentare werden *nicht* mit der Entfernenschaltfläche beseitigt
+  Kommentare werden *nicht* mit der Entfernenschaltfläche beseitigt,
   auch irgendwelche Kommentare in Varianten werden nicht entfernt.
   </p>
   <p>Es ist erwähnenswert, daß für viele einfache CQL-Suchen die
@@ -3999,7 +3999,7 @@ set helpText(D,Export) {<h1>Partien exportieren</h1>
   <p>Scid vs. PC bietet auch die Option, Scid-Kennzeichen
   beizubehalten, einschließlich des Löschkennzeichens. Dies erlaubt
   es, Partien nach PGN zu exportieren, ein paar Textänderungen in der
-  Datei durchzuführen (z.B.), und dann die Partien zurückzuladen unter
+  Datei durchzuführen (z.B.) und dann die Partien zurückzuladen unter
   Beibehaltung der Datenbankkennzeichen.
   </p>
 
@@ -4034,6 +4034,7 @@ set helpText(D,Export) {<h1>Partien exportieren</h1>
   benutzen</a>,
   </p>
 
+  <br>
   <b><name PDF>LaTeX nach PDF konvertieren</name></b>
   <p>Dies kann man auf Unix-Systemen mit dem Befehl <b>pdflatex</b>
   erreichen. Eine schnelle Konvertierung hat die Form
@@ -4051,7 +4052,7 @@ set helpText(D,Export) {<h1>Partien exportieren</h1>
   weniger Stellungen als (nicht standardkonforme) Partien anzeigen, da
   EPD-Dateien doppelte Stellungen verwerfen.</p>
 
-  <p><i>Noch zu implemetieren: Unterstützung EPD-Zähler für Halbzüge
+  <p><i>Noch zu implementieren: Unterstützung EPD-Zähler für Halbzüge
   und ganze Züge (hmvc und fmvn) mit Speichern und Laden... Dies würde
   aber die Verwendung von reinem FEN zerreißen.</i></p>
 
@@ -4119,7 +4120,7 @@ set helpText(D,LaTeX) {<h1>LaTeX mit Scid benutzen</h1>
   </p>
 
   <p><i>Scid vs. PC verwendet nicht mehr Chess12 für die
-  LaTeX-Ausgabe. Die neue Skak-Implementation ist nahezu vollständig,
+  LaTeX-Ausgabe. Die neue xskak-Implementation ist nahezu vollständig,
   aber nicht ganz. Es bleibt zu tun: Kommentare innerhalb von
   Varianten implementieren, Rochadediagramme und Hinzufügen einer
   "Zusammenfassen"-Option, die Diagramme und Ergebnisgrafiken
@@ -4320,7 +4321,7 @@ set helpText(D,PTracker) {<h1>Das Figurenverteilungsfenster</h1>
   Figurenbeobachtung mit einem geöffneten <a Tree>Zugbaum</a>. Durch
   die Verfolgung der Figuren können Sie in der aktuellen Eröffnung
   Trends erkennen wie Bauernvorstöße, Randspringer und wo die Läufer
-  meistens plaziert sind. Sie mögen es nützlich finden den
+  meistens plaziert sind. Sie mögen es nützlich finden, den
   Zugbereich so zu setzen, daß nach dem aktuellen Zug in der Partie
   gestartet wird, so daß die Züge, die zur aktuellen Stellung führen,
   nicht in der Statistik mit auftauchen.
@@ -4547,11 +4548,11 @@ set helpText(D,TreeMasks) {<h1>Die Zugbaummasken</h1>
   geöffnet oder erstellt werden (neben anderen Funktionen).
   </p>
   <p>Wenn einmal eine Maske geöffnet ist, können im Zugbaumfenster
-  durch <b>Rechtsklick auf den Zügen</b> Kommentare, NAGs
+  durch <b>Rechtsklick auf den Zügen</b> Kommentare, NAGs,
   Markierungen (usw., siehe unten) hinzugefügt werden.
   </p>
   <p>Ganze Züge können während des Rechtsklicks
-  durch <b>Gedrückthalten der Strg-Taste</b> markiert werden. D.h.,
+  durch <b>Gedrückthalten der Strg-Taste</b> markiert werden. Das heißt,
   für die meisten Tätigkeiten werden alle *vorhergehenden* Züge auf diese
   Weise markiert. Die Ausnahme ist "Von Maske entfernen", was alle
   *nachfolgenden* Züge entfernt.
@@ -5406,12 +5407,12 @@ set helpText(D,Tourney) {<h1>Computerturniere</h1>
 
   <p>Bestimmen Sie zuerst die Einzelheiten Ihres Turniers. Die
   konfigurierbaren Abschnitte beinhalten: die <b>Anzahl der
-  Schachprograme</b>, den <b>Veranstaltungsnamen</b>,
+  Schachprogramme</b>, den <b>Veranstaltungsnamen</b>,
   die <b>Zeitkontrolle</b> und die <b>Spieldauer</b>. Wenn Sie die
   Zeitkontrolle pro Partie wählen, dann wird <b>Zeige Uhren</b> die
   dem Schachprogramm verbleibende Restzeit anzeigen.
 </p>
-  <p><b>Zeit pro Zug</b> ist die beste Zeitkontrollmethode. Das
+  <p><b>Zeit pro Partie</b> ist die beste Zeitkontrollmethode. Das
   erste Auswahlfeld ist die Grundzeit für die Partie, das zweite
   gibt den Zeitzuschlag pro Zug an (beide Angaben sind in
   Sekunden). Schnellschachpartien können beispielsweise mit einem
@@ -5584,14 +5585,13 @@ set helpText(D,EPD) {<h1>EPD-Dateien</h1>
   und dem Analysemodus, der gestartet wird. Ein Anhalten der Engine
   beendet die Analyse.</p>
 
-  <p>Die beiden Modi sind <b>Beste Züge zählen</b>
-  und <b>Kommentieren</b>. Beide Modi bedeuten, daß mit
-  einer Engine alle Stellungen analysiert werden. Bei "Beste Züge zählen" -
-  die vorhandenen Kommentare werden nach einem "bm"- oder "am"-Feld
-  abgesucht - wird geschaut, ob diese mit der Computerbewertung
-  übereinstimmen. Es wird dann bei der Ergänzung eine Anzahl von
-  korrekten besten Zügen angezeigt. Der Modus "Kommentieren" speichert
-  einfach die Engine-Bewertung in verschiedenen Opcodes, ohne daß der
+  <p>Die beiden Modi sind <b>Beste Züge zählen</b> und <b>Automatisch
+  kommentieren</b>. Beide Modi bedeuten, daß mit einer Engine alle Stellungen
+  analysiert werden. Bei "Beste Züge zählen" - die vorhandenen Kommentare werden
+  nach einem "bm"- oder "am"-Feld abgesucht - wird geschaut, ob diese mit der
+  Computerbewertung übereinstimmen. Es wird dann bei der Ergänzung eine Anzahl
+  von korrekten besten Zügen angezeigt. Der Modus "Automatisch kommentieren"
+  speichert einfach die Engine-Bewertung in verschiedenen Opcodes, ohne daß der
   beste Zug geprüft wird. Die verwendeten Opcodes sind <b>acd</b>,
   <b>acn</b>, <b>ce</b>, <b>dm</b> und <b>pv</b>. Und zu guter Letzt
   können diese beiden Modi auch zusammen laufen. In diesem Fall wird
@@ -5600,7 +5600,7 @@ set helpText(D,EPD) {<h1>EPD-Dateien</h1>
   der letzten EPD-Stellung gespeicherte Resultat.</p>
 
   <p><i>Der Kommentierungsmodus entfernt zuerst obige Opcodes aus
-  allen Stellungen. Um irgendwelche durchgeführten Änderungen
+  allen Stellungen. Um irgendwelche durchgeführte Änderungen
   rückgängig zu machen, schließen Sie einfach das Fenster, ohne die
   Datei zu speichern.</i></p>
 
@@ -6619,7 +6619,7 @@ set helpText(D,NAGs) {<h1>NAG-Werte</h1>
   <li>  4 Grober Fehler: ??</li>
   <li>  5 Interessanter Zug: !?</li>
   <li>  6 Zweifelhafter Zug: ?!</li>
-  <li>  7 Erzwungender Zug: forced</li>
+  <li>  7 Erzwungener Zug: forced</li>
   <li>  8 Einziger Zug. Keine vernünftige Alternativen.: □</li>
   <li>  9 Schlechtester Zug: worst</li>
   <li> 10 Remisstellung: =</li>
@@ -7131,18 +7131,18 @@ set helpText(D,ComputerGame) {
   <p>Andere Konfigurationsabschnitte sind einfach, ausgenommen:
   </p>
   <ul>
-  <li><b>Feste Tiefe (Fixed Depth)</b> setzt nicht die Zeit pro
+  <li><b>Feste Tiefe</b> setzt nicht die Zeit pro
   Partie, sondern die Tiefe, die das Programm in Halbzügen rechnet. Da
   dies die Möglichkeit verhindert, erforderlichenfalls tiefer zu
   rechnen, sieht das Programm bestimmte Mattführungen und
   Kombinationen nicht, das Programm spielt vielleicht schwächer und
   bietet so einen besseren Partner für Trainingszwecke.
   </li>
-  <li><b>Knoten (Nodes)</b> ist ähnlich wie die Suchtiefe, aber hier
+  <li><b>Knoten</b> ist ähnlich wie die Suchtiefe, aber hier
   muß das Schachprogramm nach der Bewertung einer bestimmten Anzahl an
   Stellungen ziehen.
   </li>
-  <li><b>Ständiges Berechnen (Permanent thinking)</b> (manchmal auch
+  <li><b>Berechnen im Hintergrund</b> (manchmal auch
   als "nachdenken" (ponder) bezeichnet) ermöglicht dem Schachprogramm
   auch dann zu rechnen, wenn der Gegner am Zug ist. Falls dies
   ausgeschaltet ist, beendet das Schachprogramm die Analyse, wenn der
@@ -7667,7 +7667,7 @@ set helpText(D,CCeMailChess) {<h1>Fernschach per E-Mail</h1>
   <p>Scid verarbeitet Ihr Postfach nicht automatisch. Dies würde, wenn
   man den großen Umfang an möglichen Einrichtungen für Post
   berücksichtigt, eine riesige Menge an Programmcode erfordern. Aus
-  diesem Grund setzt Scid auf Ihr normals E-Mail-Programm, das für
+  diesem Grund setzt Scid auf Ihr normales E-Mail-Programm, das für
   diesen Zweck weitaus geeigneter ist als Scid es je sein kann. Um
   eine Partie nach Scid zu bekommen, speichern Sie einfach die
   angehängte PGN-Datei in den Posteingang von Scid und und verarbeiten
@@ -7687,7 +7687,7 @@ set helpText(D,CCeMailChess) {<h1>Fernschach per E-Mail</h1>
   Einrichtung eines Mime-Handlers mittels <term>.mailcap</term>
   einfach genug.)
   </p>
-  <p><b>Hinweis</b> Durch Vewendung von <button tb_CC_delete> können
+  <p><b>Hinweis</b> Durch Verwendung von <button tb_CC_delete> können
   Sie Ihre gesamten Postein- und -ausgangsverzeichnisse leeren.
   </p>
 
@@ -8131,9 +8131,8 @@ set helpText(D,FICSlogin) {<h1>FICS-Anmeldung</h1>
   ein Konto erstellen. Falls Sie beim Anmelden Probleme haben,
   versuchen Sie "Timeseal" abzuwählen.</i></p>
 
-  <p>Die nachfolgende Beschreibung bezieht sich auf das
-  Konfigurationsfenster
-  in <run ::fics::config><green>Spielen--<gt>Internetpartie</green></run>.
+  <p>Die nachfolgende Beschreibung bezieht sich auf das Konfigurationsfenster
+  in <run ::fics::config><green>Spielen--<gt>Internet (FICS)</green></run>.
   </p>
   
   <ul>
@@ -8195,7 +8194,7 @@ set helpTitle(D,FICSfindopp) "FICS: einen Spielpartner finden"
 set helpText(D,FICSfindopp) {<h1>Einen Spielpartner finden</h1>
   
   <p>Es gibt mehrere Wege, um eine Partie zu beginnen. Die einfachsten
-  sind die Schaltflächen <b>Gegner suchen</b> und <b>Herausforderungen
+  sind die Schaltflächen <b>Gegner suchen</b> und <b>Angebot
   Grafik</b>.
   </p>
 
@@ -8228,9 +8227,9 @@ set helpText(D,FICSfindopp) {<h1>Einen Spielpartner finden</h1>
   </ul>
   </p>
 
-  <h3>Herausforderungen Grafik</h3>
+  <h3>Angebot Grafik</h3>
 
-  <p>Die Schaltfläche <b>Herausforderungen Grafik</b> zeigt alle
+  <p>Die Schaltfläche <b>Angebot Grafik</b> zeigt alle
   laufenden Spielangebote. Wenn Sie Ihren Mauszeiger über einen
   Eintrag bewegen, werden Einzelheiten angezeigt und ein Klick auf
   einen Eintrag bittet zu einer neuen Partie. Manchmal müssen Sie
@@ -8435,7 +8434,7 @@ set helpText(D,FICSwidget) {<h1>FICS benutzen</h1>
 
   <p>Die FICS-Schaltflächen sind ziemlich selbsterklärend, die
   erwähnenswertesten sind <a FICSfindopp>Gegner suchen und
-  Herausforderungen Grafik</a>. Andere Schaltflächen enthalten:
+  Angebot Grafik</a>. Andere Schaltflächen enthalten:
   <br>
   <ul>
   <li><term>Mitteilungen</term> Zeigt Nachrichten vom Kanal tells.</li>
@@ -8600,7 +8599,7 @@ set helpText(D,BookTuning) {<h1>Eröffnungsbuch anpassen</h1>
   kann man den Wert anpassen, der irgendeinem Zug in einem
   Eröffnungsbuch zugeordnet ist. Um durch die Verästelungen des
   Eröffnungsbuches zu navigieren, kann man auf die Fortsetzung im
-  Fenster "Eröffnungsbuch Tuning" klicken oder sich wie üblich in der
+  Fenster "Eröffnungsbuch anpassen" klicken oder sich wie üblich in der
   Partie bewegen. Die Wahrscheinlichkeit kann über die Spinbox
   (Drehfeld) angepaßt werden. Die anderen Werte bleiben gleich bis sie
   neu berechnet werden, wenn einmal <b>Speichern</b> gedrückt
