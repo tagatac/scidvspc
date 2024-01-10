@@ -1894,7 +1894,7 @@ proc ::tree::mask::askForSave {{parent .}} {
     }
 
     set answer [tk_dialog .unsaved "[tr TreeMask] [tr altered]" \
-      "[tr TreeMask] \"[file rootname [file tail $::tree::mask::maskFile]]\" has been [tr altered].
+      "Mask \"[file rootname [file tail $::tree::mask::maskFile]]\" has been altered.
       [tr DoYouWantToSaveFirst] ?" \
       question {} [tr Save] [tr DontSave]]
 

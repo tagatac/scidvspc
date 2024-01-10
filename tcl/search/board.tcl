@@ -286,7 +286,7 @@ set ::search::cqlStripSwitch 0
 set ::search::cqlCommentSwitch 0
 
 proc ::search::cql {} {
-  global glstart
+  global glstart tr
 
   set w .scql
   if {[winfo exists $w]} {
@@ -298,7 +298,7 @@ proc ::search::cql {} {
 
   toplevel $w
   wm withdraw $w
-  wm title $w "CQL $::tr(Search)"
+  wm title $w "CQL $tr(Search)"
   setWinLocation $w
   setWinSize $w
 
@@ -306,17 +306,17 @@ proc ::search::cql {} {
   #bind $w <Return> "$w.b.search invoke"
   bind $w <F1> { helpWindow CQL }
 
-  label $w.type -textvar ::tr(CQLLabel) -font font_Bold
+  label $w.type -textvar tr(CQLLabel) -font font_Bold
   pack  $w.type -side top
 
   frame $w.s
-  label $w.s.strip -font font_Bold -textvar ::tr(CQLStrip)
-  radiobutton $w.s.stripyes -text Yes -variable ::search::cqlStripSwitch -value 1
-  radiobutton $w.s.stripno  -text No  -variable ::search::cqlStripSwitch -value 0
+  label $w.s.strip -font font_Bold -textvar tr(CQLStrip)
+  radiobutton $w.s.stripyes -textvar tr(Yes) -variable ::search::cqlStripSwitch -value 1
+  radiobutton $w.s.stripno  -textvar tr(No)  -variable ::search::cqlStripSwitch -value 0
 
-  label $w.s.comment -font font_Bold -textvar ::tr(CQLComments)
-  radiobutton $w.s.commentyes -text Yes -variable ::search::cqlCommentSwitch -value 1 -command checkCQLSearch
-  radiobutton $w.s.commentno  -text No  -variable ::search::cqlCommentSwitch -value 0 -command checkCQLSearch
+  label $w.s.comment -font font_Bold -textvar tr(CQLComments)
+  radiobutton $w.s.commentyes -textvar tr(Yes) -variable ::search::cqlCommentSwitch -value 1 -command checkCQLSearch
+  radiobutton $w.s.commentno  -textvar tr(No)  -variable ::search::cqlCommentSwitch -value 0 -command checkCQLSearch
   pack $w.s.comment $w.s.commentyes $w.s.commentno [label $w.s.space -width 5] \
        $w.s.strip   $w.s.stripyes   $w.s.stripno   -side left -pady 1
 
@@ -326,9 +326,9 @@ proc ::search::cql {} {
       -fill black -text "0:00 / 0:00"
 
   frame $w.b
-  dialogbutton $w.b.stop -textvar ::tr(Stop) -command sc_progressBar -state disabled
+  dialogbutton $w.b.stop -textvar tr(Stop) -command sc_progressBar -state disabled
 
-  dialogbutton $w.b.search -textvar ::tr(Search) -command {
+  dialogbutton $w.b.search -textvar tr(Search) -command {
     set w .scql
 
     $w.status     configure -text {}
@@ -375,12 +375,12 @@ proc ::search::cql {} {
     $w.status configure -text $str
   }
 
-  dialogbutton $w.b.cancel -textvar ::tr(Close) -command "focus .main ; destroy $w"
+  dialogbutton $w.b.cancel -textvar tr(Close) -command "focus .main ; destroy $w"
 
   packbuttons right $w.b.cancel $w.b.stop $w.b.search
 
-  dialogbutton $w.b.save -textvar ::tr(Save) -command ::search::cqlSave
-  dialogbutton $w.b.load -textvar ::tr(LoadGame) -command ::search::cqlLoad
+  dialogbutton $w.b.save -textvar tr(Save) -command ::search::cqlSave
+  dialogbutton $w.b.load -textvar tr(LoadGame) -command ::search::cqlLoad
 
   packbuttons left  $w.b.save $w.b.load
 
