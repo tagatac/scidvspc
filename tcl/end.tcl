@@ -1657,7 +1657,7 @@ proc standardWheelMouseBindings {} {
 
 standardWheelMouseBindings 
 
-bindWheeltoFont .splash
+bindWheeltoFont .splash.t
 
 proc standardShortcuts {w} {
   bind $w <Control-o> ::file::Open

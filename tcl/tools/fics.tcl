@@ -365,7 +365,7 @@ namespace eval fics {
     text $w.console.text -bg $::fics::consolebg -fg $::fics::consolefg -wrap word -yscrollcommand "$w.console.scroll set" -width 40 -height 10 -font font_Fixed
     ### is font_Regular working here ? &&&
     bindMouseWheel $w $w.console.text 
-    bindWheeltoFixed $w
+    bindWheeltoFixed $w.console.text
     bind $w <F11>  toggleFullScreen
 
     pack $w.console.scroll -side right -fill y 

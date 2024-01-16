@@ -151,7 +151,7 @@ proc ::commenteditor::Open {} {
   bind $w <Control-Right> {::commenteditor::storeComment; ::move::Forward}
   bind $w <Control-Home> {::commenteditor::storeComment; ::move::Start}
   bind $w <Control-End>  {::commenteditor::storeComment; ::move::End}
-  bindWheeltoFont $w
+  bindWheeltoFont $w.cf.text
 
   bind $w.cf.text <Control-a> {.commentWin.cf.text tag add sel 0.0 end-1c ; break}
   bind $w.cf.text <Control-z> {catch {.commentWin.cf.text edit undo} ; break}; # Control-z is default text binding anyway

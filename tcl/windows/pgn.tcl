@@ -250,7 +250,7 @@ namespace eval pgn {
     # Add variation navigation bindings:
     bind $w <KeyPress-v> [bind . <KeyPress-v>]
     bind $w <KeyPress-z> [bind . <KeyPress-z>]
-    bindWheeltoFont $w
+    bindWheeltoFont $w.text
     bind $w <Configure> "recordWinSize $w"
 
     $w.text tag add Current 0.0 0.0

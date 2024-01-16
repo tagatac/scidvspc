@@ -106,7 +106,6 @@ proc ::tree::Open {{baseNumber 0}} {
 
   # Bind left button to close ctxt menu:
   bind $w <ButtonPress-1> "::tree::hideCtxtMenu $baseNumber"
-  bindWheeltoFixed $w
 
   standardShortcuts $w
 
@@ -250,6 +249,7 @@ proc ::tree::Open {{baseNumber 0}} {
 
   # middle button toggles buttonbar
   bind $w.f.tl <Button-2> "$w.menu.opt invoke \"[tr TreeOptShowFrame]\""
+  bindWheeltoFixed $w.f.tl
 
   bind $w <Configure> "recordWinSize $w"
 

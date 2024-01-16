@@ -96,7 +96,7 @@ proc ::file::finder::Open {} {
   dialogbutton $w.b.close -textvar ::tr(Close) -command "destroy $w"
   bind $w <Escape>        "$w.b.close invoke"
   bind $w <Control-slash> "$w.b.close invoke"
-  bindWheeltoFont $w
+  bindWheeltoFont $w.t.text
 
   # Bind left button to close ctxt menu:
   bind $w <ButtonPress-1> {
