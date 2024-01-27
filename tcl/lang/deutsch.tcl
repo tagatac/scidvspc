@@ -2095,7 +2095,7 @@ set helpText(D,FICS) {<h1>FICS</h1>
 </p>
 
 <p>Um FICS zu starten, rufen
-Sie <run ::fics::config><green>Spielen--<gt>Internetpartie</green></run>
+Sie <run ::fics::config><green>Spielen--<gt>Internet (FICS)</green></run>
 auf.
 </p>
 
@@ -2389,7 +2389,7 @@ append helpText(D,Index) {
   <h3><name M>M</name></h3>
   <ul>
   <li><a Searches Material>Material-/Mustersuche</a></li>
-  <li><a TacticsTrainer>"Matt in ..n.."-Puzzle</a></li>
+  <li><a TacticsTrainer>"Matt in ..N.."-Puzzle</a></li>
   <li><a Formats>Maximalzahl an Partien</a></li>
   <li><a Menus Edit>Menü Bearbeiten</a></li>
   <li><a Menus File>Menü Datei</a></li>
@@ -2696,6 +2696,11 @@ append helpText(D,Menus) {
   geschlossen, wenn der Zugbaum geschlossen wird.</li>
   <br>
   <li><b>Ende</b>  Beendet Scid. </li>
+  </ul>
+
+  <h3><name Play>Spielen</name></h3>
+  <ul>
+  <li> Spielen gegen Computer, online spielen und Training.</li>
   </ul>
 
   <h3><name Edit>Bearbeiten</name></h3>
@@ -3298,7 +3303,7 @@ set helpText(D,CQL) {<h1>Schachabfragesprache CQL (Chess Query Language)</h1>
 
 set helpTitle(D,Filter) "Der Filter"
 set helpText(D,Filter) {<h1>Der Filter</h1>
-  <p>Scids Filter stellt eine Auswahl an Prtien aus der aktuellen
+  <p>Scids Filter stellt eine Auswahl an Partien aus der aktuellen
   Datenbank (oder PGN-Archiv) dar. Gefilterte Partien werden in
   der <a GameList>Partienliste</a> angezeigt.
   </p>
@@ -3573,7 +3578,7 @@ set helpText(D,Crosstable) {<h1>Das Fenster Kreuztabelle</h1>
 
   <h4>Weitere Optionen</h4>
   <ul>
-  <li><b>Punktzahlen gruppieren</b> fügt eine Leerzeile nach
+  <li><b>Punktgruppen</b> fügt eine Leerzeile nach
   Spielern mit gleicher Punktzahl ein.</li>
   <li><b>Farben (nur Schweizer System)</b> zeigt w/b im Schweizer System. Dies
   zeigt an, ob der Spieler Weiß (w) oder Schwarz (b) hatte.</li>
@@ -4347,18 +4352,6 @@ set helpText(D,PTracker) {<h1>Das Figurenverteilungsfenster</h1>
   <p><footer>Aktualisiert: Scid 3.6.2, Dezember 2006</footer></p>
 }
 
-
-set helpTitle(D,Repertoire) "Der Repertoireeditor"
-set helpText(D,Repertoire) {<h1>Der Repertoireeditor</h1>
-
-  <p>Der Repertoireeditor wurde seit Scid vs. PC 4.2 entfernt.
-  <br>Ähnliche und leistungsfähigere Funktioen stehen
-  in den <a TreeMasks>Zugbaummasken</a> zur Verfügung.
-  </p>
-
-  <p><footer>Aktualisiert: Scid vs. PC 4.2, November 2010</footer></p>
-}
-
 set helpTitle(D,Tree) "Zugbaumfenster"
 set helpText(D,Tree) {<h1>Das Zugbaumfenster</h1>
 
@@ -4394,7 +4387,7 @@ set helpText(D,Tree) {<h1>Das Zugbaumfenster</h1>
   mit der mittleren Maustaste zeigt/verbirgt die Symbolleiste.
   </p>
   <p>Die Züge im Baumfenster können sortiert werden nach Zug
-  (alphabetisch), ECO-code, Häufigkeit oder Ergebnis.
+  (alphabetisch), ECO-Code, Häufigkeit oder Ergebnis.
   </p>
   <p>Das Kontrollkästchen <b>Filter anpassen</b> ändert die
   Partienliste/den Filter, so daß nur Partien angezeigt werden, die
@@ -8013,10 +8006,10 @@ set helpText(D,CCXfccSetupDialog) {<h1>Xfcc-Servereinstellung</h1>
 
 # Tactics Trainer
 # Renamed to Puzzles S.A
-set helpTitle(D,TacticsTrainer) "Matt in ..n..-Puzzle"
-set helpText(D,TacticsTrainer) {<h1>"Matt in ..n.."-Puzzle</h1>
+set helpTitle(D,TacticsTrainer) "Matt in ..N..-Puzzle"
+set helpText(D,TacticsTrainer) {<h1>"Matt in ..N.."-Puzzle</h1>
 
-  <p>Scids <run ::tactics::config><green>Matt in ...</green></run> ist
+  <p>Scids <run ::tactics::config><green>Matt in N</green></run> ist
   ein nützliches Mittel, um Ihre Schachfähigkeiten zu verbessern. Die
   Funktion ist einfach geradlinig, obwohl sie nicht besonders
   ausgefeilt ist. Sie wurde eingebaut unter Verwendung von speziellen
@@ -8661,7 +8654,7 @@ set helpText(D,BookTuning) {<h1>Eröffnungsbuch anpassen</h1>
 set helpTitle(Eboards) "Electronic Chessboards"
 set helpText(Eboards) {<h1>Elektronische Schachbretter</h1>
 
-  <p>Graham O'Neill' hat seit einiger Zeit Treiber für zahlreiche elektronische
+  <p>Graham O'Neill hat seit einiger Zeit Treiber für zahlreiche elektronische
   Schachbretter herausgegeben. Auf <url https://goneill.co.nz/chess.php>Graham's
   Chess page</url> findet man viele Informationen, einschließlich
   Windows-Unterstützung für
@@ -8704,7 +8697,7 @@ set helpText(Eboards) {<h1>Elektronische Schachbretter</h1>
 set helpText(D,Novag) {<h1>Schachbrett von Novag Citrine</h1>
 
   <p><b>Dieser Abschnitt beschreibt die alte Novag-Unterstützung von
-  SCID. Wahrscheinlich wollen Sie Grahams <a Eboards>Eboard-Engine</a>
+  Scid. Wahrscheinlich wollen Sie Grahams <a Eboards>Eboard-Engine</a>
   verwenden.</b></p>
 
   <p>Das Novag Citrine ist ein Holzschachbrett, das sich über eine
@@ -8726,7 +8719,7 @@ set helpText(D,Novag) {<h1>Schachbrett von Novag Citrine</h1>
 set helpTitle(D,HardwareConfig) "Mit externer Hardware verbinden"
 set helpText(D,HardwareConfig) {<h1>Mit externer Hardware verbinden</h1>
 
-  <p><b>Dieser Abschnitt beschreibt SCIDs alte Hardware-Unterstützung. Sie
+  <p><b>Dieser Abschnitt beschreibt Scids alte Hardware-Unterstützung. Sie
   wollen wahrscheinlich Grahams <a Eboards>Eboards engine</a> verwenden.</b></p>
 
   <p>Scid unterstützt zwei Arten von externer Hardware, die
@@ -8787,7 +8780,7 @@ set helpText(D,HardwareConfig) {<h1>Mit externer Hardware verbinden</h1>
 
   <h3>Input Engine/DGT</h3>
 
-  <p><b>Dieser Abschnitt beschreibt SCIDs alte
+  <p><b>Dieser Abschnitt beschreibt Scids alte
   Hardware-Unterstützung. Wahrscheinlich wollen Sie
   Grahams <a Eboards>Eboards-Engine</a> verwenden.</b></p>
 

@@ -652,7 +652,7 @@ append helpText(Menus) {
   <li><b>Exit</b>  Exit Scid. </li>
   </ul>
 
-  <h3><name Edit>Play</name></h3>
+  <h3>Play</h3>
   <ul>
   <li> Play against computer, online, and training.</li>
   </ul>
