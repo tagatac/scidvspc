@@ -3167,7 +3167,7 @@ Game::WritePGNGraphToLatex(TextBuffer * tb)
         }
         tb->PrintString("\\hrulefill\n\\\\\n");
         tb->PrintString("\\end{@twocolumnfalse}\n]\n");
-
+        tb->PrintLine("\n\\newchessgame");
         return OK;
 }
 
@@ -3295,7 +3295,7 @@ Game::WritePGNtoLaTeX(TextBuffer * tb, uint stopLocation)
         tb->PrintString(RESULT_LONGSTR[Result]);
         tb->PrintString("\\\\\n");
         tb->PrintString("\\end{tabularx}\n\\\\[1ex]");
-        tb->PrintLine("}\n\\newchessgame\n");
+        tb->PrintLine("}\n");
 
         // Note the current position and
         // move, so we can reconstruct the game state afterwards:
@@ -3509,7 +3509,7 @@ Game::WritePGNtoLaTeX(TextBuffer * tb, uint stopLocation)
                 inMainline = false;
         }
 
-        tb->PrintString("\n{\\textbf ");
+        tb->PrintString("\n\\textbf{");
         tb->PrintWord(RESULT_LONGSTR [Result]);
         tb->PrintString("}\n \\hrule ");
         tb->NewLine();
