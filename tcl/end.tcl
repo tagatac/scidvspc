@@ -1492,6 +1492,7 @@ proc gameQuickSave {} {
   } else {
     sc_game save [sc_game number]
     updateBoard -pgn
+    ::windows::stats::Refresh
   } 
 }
 
