@@ -144,9 +144,10 @@ proc ::commenteditor::Open {} {
   scrollbar $w.cf.scroll -command ".commentWin.cf.text yview"
   # bindFocusColors $w.cf.text
   # "break" stops subsequent built-in bindings from executing
-  bind $w.cf.text <FocusOut> ::commenteditor::storeComment
+  bind $w <FocusOut> "
+    if {\"%W\" == {.commentWin}} {::commenteditor::storeComment}
+  "
   bind $w.cf.text <Control-Return> "$w.b.ok invoke ; break"
-  bind $w.nf.tf.text <FocusOut> ::commenteditor::storeComment
   bind $w <Control-Left>  {::commenteditor::storeComment; ::move::Back}
   bind $w <Control-Right> {::commenteditor::storeComment; ::move::Forward}
   bind $w <Control-Home> {::commenteditor::storeComment; ::move::Start}
@@ -183,13 +184,9 @@ proc ::commenteditor::Open {} {
                 destroy .commentWin"
   set helpMessage(E,$w.b.ok) {Apply changes and exit}
 
-  dialogbutton $w.b.apply -textvar ::tr(Apply) -font font_Small -command ::commenteditor::storeComment
-  set helpMessage(E,$w.b.apply) {Apply changes}
-
   dialogbutton $w.b.clear -textvar ::tr(Clear) -font font_Small -pady 1 -command "
       $w.cf.text delete 0.0 end
       focus $w.cf.text"
-  set helpMessage(E,$w.b.apply) {Apply Changes}
 
   frame $w.b.space -width 20
   dialogbutton $w.b.cancel -textvar ::tr(Cancel) -font font_Small \
@@ -197,7 +194,7 @@ proc ::commenteditor::Open {} {
                 destroy .commentWin"
   set helpMessage(E,$w.b.cancel) {Close comment editor window}
 
-  pack $w.b.hide $w.b.clear $w.b.apply $w.b.ok $w.b.cancel -side left -padx 5
+  pack $w.b.hide $w.b.clear $w.b.ok $w.b.cancel -side left -padx 5
 
   ### Insert-mark frame
 
