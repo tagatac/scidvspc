@@ -1625,38 +1625,41 @@ bind .main <Control-f> {
 }
 bind .main <minus><minus> "addMove null null"
 
-proc standardWheelMouseBindings {} {
-  # MouseWheel in main window
+proc standardWheelMouseBindings {w} {
+  # MouseWheel in (main) window
+  if {$::macOS && !$::macWheelMouse } {return}
   if {$::windowsOS || $::macOS} {
-  if {$::windowsOS || $::macWheelMouse } {
-    bind .main <MouseWheel> {
+    bind $w <MouseWheel> {
       if {[expr -%D] < 0} { ::move::Back }
       if {[expr -%D] > 0} { ::move::Forward }
     }
-    if { $::docking::USE_DOCKING } {
-      bindWheeltoFont .main
-    } else {
-      bind .main <Control-MouseWheel> {
-	if {[expr -%D] < 0} {::board::resize .main.board +1}
-	if {[expr -%D] > 0} {::board::resize .main.board -1}
+    if {$w == ".main"} {
+      if { $::docking::USE_DOCKING } {
+	bindWheeltoFont $w
+      } else {
+	bind $w <Control-MouseWheel> {
+	  if {[expr -%D] < 0} {::board::resize .main.board +1}
+	  if {[expr -%D] > 0} {::board::resize .main.board -1}
+	}
       }
     }
-  }
   } else {
-    bind .main <Button-4> ::move::Back
-    bind .main <Button-5> ::move::Forward
-    bind .main <Shift-Button-4> {::move::Back 10}
-    bind .main <Shift-Button-5> {::move::Forward 10}
-    if { $::docking::USE_DOCKING } {
-      bindWheeltoFont .main
-    } else {
-      bind .main <Control-Button-4> {::board::resize .main.board +1}
-      bind .main <Control-Button-5> {::board::resize .main.board -1}
+    bind $w <Button-4> ::move::Back
+    bind $w <Button-5> ::move::Forward
+    bind $w <Shift-Button-4> {::move::Back 10}
+    bind $w <Shift-Button-5> {::move::Forward 10}
+    if {$w == ".main"} {
+      if { $::docking::USE_DOCKING } {
+	bindWheeltoFont $w
+      } else {
+	bind $w <Control-Button-4> {::board::resize .main.board +1}
+	bind $w <Control-Button-5> {::board::resize .main.board -1}
+      }
     }
   }
 }
 
-standardWheelMouseBindings 
+standardWheelMouseBindings .main
 
 bindWheeltoFont .splash.t
 

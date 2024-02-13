@@ -491,15 +491,7 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
     $w.c bind title <ButtonPress-1> "tk_popup $w.menu.options %X %Y"
     bind $w <Escape> "destroy $w"
     bind $w <space>  toggleEngineAnalysis
-    if {$::windowsOS || $::macOS} {
-      bind $w.c <MouseWheel> {
-	if {[expr -%D] < 0} { ::move::Back }
-	if {[expr -%D] > 0} { ::move::Forward }
-      }
-    } else {
-      bind $w.c <Button-4> ::move::Back
-      bind $w.c <Button-5> ::move::Forward
-    }
+    standardWheelMouseBindings $w.c
 
     ::tools::graphs::score::ConfigMenus
     ::createToplevelFinalize $w

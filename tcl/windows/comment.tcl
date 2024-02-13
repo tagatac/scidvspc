@@ -252,6 +252,7 @@ proc ::commenteditor::Open {} {
     ::board::bind $board $square <ButtonPress-3> [namespace code \
         [list InsertMark $board [expr {$square + 64}]]]
   }
+  standardWheelMouseBindings $insertBoard.board.bd
 
   ### Type/Shape (pseudo-radio)buttons
 
