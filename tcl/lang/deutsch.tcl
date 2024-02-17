@@ -3067,7 +3067,7 @@ set helpText(D,Searches) {<h1>In Scid suchen</h1>
   <br>
   <br>
   <i>Stellungssuchen können auch mittels
-  des <a Tree>Zugbaumfensters</a> durchgeführt wrden.</a>.</i>
+  des <a Tree>Zugbaumfensters</a> durchgeführt werden.</a>.</i>
   </p>
 
   <h3><name Header>Partiedatensuche</name></h3>
@@ -3848,7 +3848,7 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
   <li>Strg+n - invertiert den Filter</li>
   <li>Strg+r - setzt den Filter zurück</li>
   <li>Strg+c - kopiert die Partie in die Ablagedatenbank</li>
-  <li>Strg+v - fügt die Partie aus der Ablagedatenbank in die akuelle
+  <li>Strg+v - fügt die Partie aus der Ablagedatenbank in die aktuelle
   Datenbank ein</li>
   <br>
   <li>Die Spaltenbreite kann durch Ziehen der Spaltenränder verändert
@@ -5304,7 +5304,7 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   und <b>gestartet</b> werden.
   </p>
 
-  <p>Scid vs. PC installiert standardäßig ein paar Schachprogramme. Um
+  <p>Scid vs. PC installiert standardmäßig ein paar Schachprogramme. Um
   ein neues Programm hinzuzufügen, müssen Sie wissen,
   welcher <b>Befehl</b> und welche etwaigen <b>Parameter</b>
   erforderlich sind, ob es das Protokoll <b>UCI</b> oder <b>XBoard</b>
@@ -6136,7 +6136,7 @@ set helpText(D,TB) {<h1>Endspieldatenbanken</h1>
   <p>Die Zusammenfassung umfaßt die Häufigkeit (wieviele Partien pro
   Million erreichen eine Stellung mit diesem Material, berechnet aus
   einer Datenbank mit mehr als 600.000 Partien auf Meisterniveau), die
-  längste Mattzufolge für eine Seite und die Anzahl der beiderseitigen
+  längste Mattzugfolge für eine Seite und die Anzahl der beiderseitigen
   Zugzwangzüge. Ein beiderseitiger Zugzwangzug ist eine Stellung, in
   der <ul><li>Weiß am Zug remisiert und Schwarz am Zug verliert</li>
   oder <li>Weiß am Zug verliert und Schwarz am Zug remisiert</li>
@@ -6924,7 +6924,7 @@ set helpText(D,ECO) {<h1>ECO-Codes</h1>
 
   <p>
   <b><blue><run ::windows::eco::Refresh D>D</run></blue></b>
-  1.d4 d5; 1.d4 Nf6 2.c4 g6 with 3...d5
+  1.d4 d5; 1.d4 Nf6 2.c4 g6 mit 3...d5
   <ul>
   <li>  <b>D0</b>   1.d4 d5: <i>Damenbauernspiel</i> </li>
   <li>  <b>D1</b>   1.d4 d5 2.c4 c6: <i>Slawische Verteidigung</i> </li>
@@ -6933,7 +6933,7 @@ set helpText(D,ECO) {<h1>ECO-Codes</h1>
   <li>  <b>D4</b>  D3 + 3.Nc3 Nf6 4.Nf3 c5/c6: <i>Tarrasch; halbslawische Verteidigung</i> </li>
   <li>  <b>D5</b>  D3 + 3.Nc3 Nf6 4.Bg5: <i>Abgelehntes Damengambit, moderne Variante</i> </li>
   <li>  <b>D6</b>  D5 + 4...Be7 5.e3 O-O 6.Nf3 Nbd7: <i>Abgelehntes Damengambit, orthodoxe Verteidigung</i> </li>
-  <li>  <b>D7</b>  1.d4 Nf6 2.c4 g6 with 3...d5: <i>Grünfeld</i> </li>
+  <li>  <b>D7</b>  1.d4 Nf6 2.c4 g6 mit 3...d5: <i>Grünfeld</i> </li>
   <li>  <b>D8</b>  1.d4 Nf6 2.c4 g6 3.Nc3 d5: <i>Grünfeld</i> </li>
   <li>  <b>D9</b>  1.d4 Nf6 2.c4 g6 3.Nc3 d5 4.Nf3: <i>Grünfeld</i> </li>
   </ul>
@@ -7319,7 +7319,7 @@ set helpText(D,Correspondence) {<h1>Fernschach</h1>
   </p>
   <p>Beachten Sie, daß, wenn Sie Ihre Spielernamen korrekt
   eingerichtet haben (mittels <green>Meine Spielernamen...</green> im
-  Menü Optionen), Scid das Schachbrett für Sie dreht, damit Sie immr
+  Menü Optionen), Scid das Schachbrett für Sie dreht, damit Sie immer
   von unten nach oben spielen. Siehe auch <a Options
   MyPlayerNames>Meine Spielernamen</a> für Details.
   </p>
@@ -7607,7 +7607,7 @@ set helpText(D,CCeMailChess) {<h1>Fernschach per E-Mail</h1>
   Form <term>user@host.org</term> gespeichert wird.
   </li>
   <li><term>BlackNA</term>: enthält die E-Mail-Adresse des
-  Schwarzspieler, ähnlich wie WhiteNA.
+  Schwarzspielers, ähnlich wie WhiteNA.
   </li>
   <li><term>CmailGameName</term>: enthält eine <b>eindeutige</b>
   Kennung für die Partie. Dies wird verwendet, um Partien
@@ -7689,7 +7689,7 @@ set helpText(D,CCeMailChess) {<h1>Fernschach per E-Mail</h1>
   <p>Nachdem Sie Ihren Zug gemacht haben, senden Sie ihn über das Menü
   entweder per <green>Zug per E-Mail senden</green> oder
   durch <green>Zug senden</green>, was gleichbedeutend ist
-  mit <button tb_CC_Send>. Letzeres bringt Scid dazu, die Partie als
+  mit <button tb_CC_Send>. Letzteres bringt Scid dazu, die Partie als
   E-Mail-Fernschach zu erkennen und sie per E-Mail zu senden, während
   die erstere Methode Scid zwingt, eine E-Mail-Nachricht zu erstellen.
   </p>
@@ -8319,7 +8319,7 @@ set helpText(D,FICSobserve) {<h1>FICS: weitere Funktionen</h1>
 
   <h3>Spielern folgen</h3>
 
-  <p>Das FICS-Kommand <b>follow</b> erlaubt es, den Partien eines
+  <p>Das FICS-Kommando <b>follow</b> erlaubt es, den Partien eines
   bestimmten Spielers zu folgen. Die Verwendung von <b>follow+</b> in
   ScidvsPC ermöglicht das Verfolgen und automatische Speichern der
   Partien.</p>
@@ -8434,7 +8434,7 @@ set helpText(D,FICSwidget) {<h1>FICS benutzen</h1>
   <li><term>Rufe</term> Zeigt Nachrichten von shouts und cshouts.</li>
   <li><term>Leeren</term> Löscht das
   Befehlseingabefeld. <term>Strg+Leeren</term> entfernt alle
-  vorhergenden Nachrichten.</li>
+  vorhergehenden Nachrichten.</li>
   <li><term>Nächste</term> Sendet "next" für die nächste
   Hilfeinformationsseite.</li>
   <li><term>Revanche</term> Fordert zu einer Revanchepartie mit dem
@@ -9211,7 +9211,7 @@ set helpText(D,ShortCuts) {<h1>Tastaturkurzbefehle</h1>
 <li><b>Strg-hoch</b> - Vorherige Partie laden</li>
 <li><b>Strg-runter</b> - Nächste Partie laden</li>
 <li><b>Strg-Pos1</b> - Erste Partie laden</li>
-<li><b>Strg-Ende</b> - Letze Partie laden</li>
+<li><b>Strg-Ende</b> - Letzte Partie laden</li>
 <li></li>
 
 <li><b>Strg-1</b> - Zur ersten geöffneten Datenbank wechseln</li>
