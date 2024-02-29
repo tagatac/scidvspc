@@ -2391,7 +2391,10 @@ checkDuplicate (scidBaseT * base,
     // of the games (or both) have only one move or no moves, return true
     // as long as they have the same year, site and round:
 
-    if (ie1->GetNumHalfMoves() <= 2  ||  ie2->GetNumHalfMoves() <= 2) {
+    // And also check the playername is not "?" and using the full name.
+
+    if ((ie1->GetNumHalfMoves() <= 2  ||  ie2->GetNumHalfMoves() <= 2)  \
+         && strcmp(ie1->GetWhiteName(base->nb),"?") != 0 ) {
         if (ie1->GetYear() == ie2->GetYear()  &&
             ie1->GetSite() == ie2->GetSite()  &&
             ie1->GetRound() == ie2->GetRound()) {
