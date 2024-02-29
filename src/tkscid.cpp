@@ -2230,12 +2230,9 @@ sc_base_type (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 //
 //    Furthermore, the moves of one game should, after truncating, be the
 //    same as the moves of the other game, for them to be duplicates.
-//    We do not check this, but do check that their home pawn change
+//    This is only checked after first checking that their home pawn change
 //    lists are the same (for the length of the shorter change list) which
-//    is an approximation but is *much* faster to check.
-//
-//    All the data needed for detecting dupicates is in the Index file,
-//    so no games need to be decoded.
+//    is an approximation but is *much* faster.
 
 struct gNumListT {
     uint gNumber;
@@ -2391,7 +2388,7 @@ checkDuplicate (scidBaseT * base,
     // of the games (or both) have only one move or no moves, return true
     // as long as they have the same year, site and round:
 
-    // And also check the playername is not "?" and using the full name.
+    // Hmm..... Add a sanity check, that playername is not "?" - S.A.
 
     if ((ie1->GetNumHalfMoves() <= 2  ||  ie2->GetNumHalfMoves() <= 2)  \
          && strcmp(ie1->GetWhiteName(base->nb),"?") != 0 ) {
