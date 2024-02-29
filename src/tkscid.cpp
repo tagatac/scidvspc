@@ -2388,11 +2388,13 @@ checkDuplicate (scidBaseT * base,
     // of the games (or both) have only one move or no moves, return true
     // as long as they have the same year, site and round:
 
-    // Hmm..... Add a sanity check, that playername is not "?" - S.A.
+    // Hmm..... Add some sanity checks to this 2 move skip, that whiteplayername, eventname are not "?" - S.A.
 
-    if ((ie1->GetNumHalfMoves() <= 2  ||  ie2->GetNumHalfMoves() <= 2)  \
-         && strcmp(ie1->GetWhiteName(base->nb),"?") != 0 ) {
-        if (ie1->GetYear() == ie2->GetYear()  &&
+    if (ie1->GetNumHalfMoves() <= 2 || ie2->GetNumHalfMoves() <= 2) {
+        if (
+            strcmp(ie1->GetWhiteName(base->nb),"?") != 0 &&
+            strcmp(ie1->GetEventName(base->nb),"?") != 0 &&
+            ie1->GetYear() == ie2->GetYear()  &&
             ie1->GetSite() == ie2->GetSite()  &&
             ie1->GetRound() == ie2->GetRound()) {
             return true;
