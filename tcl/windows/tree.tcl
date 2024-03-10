@@ -636,6 +636,7 @@ proc ::tree::displayLines {baseNumber moves} {
   set lMoves {}
   set w .treeWin$baseNumber
   set nextmove [sc_game info nextMove]
+  set ::tree::barHeight [expr [font configure font_Fixed -size] - 3]
 
   $w.f.tl configure -state normal
   $w.f.tl delete 1.0 end
@@ -694,7 +695,7 @@ proc ::tree::displayLines {baseNumber moves} {
   } else {
     set padding [expr {[string length [lrange $::tr(TreeTitleRow) 2 end]] + 5}]
   }
-  $w.f.tl window create end-${padding}c -create "canvas %W.g -width 60 -height 12 -highlightthickness 0"
+  $w.f.tl window create end-${padding}c -create "canvas %W.g -width 60 -height $::tree::barHeight -highlightthickness 0"
 
   ### Hmmm - some of the markers (images) might be 17 or 18 width, and they make the
   ### bargraph stick out a little. todo - resize all markers to 16
@@ -824,9 +825,9 @@ proc ::tree::displayLines {baseNumber moves} {
 
   # blank bargraph in total
   if {$::tree::short} {
-    $w.f.tl window create end-13c -create "canvas %W.h -width 60 -height 12 -highlightthickness 0"
+    $w.f.tl window create end-13c -create "canvas %W.h -width 60 -height $::tree::barHeight -highlightthickness 0"
   } else {
-    $w.f.tl window create end-32c -create "canvas %W.h -width 60 -height 12 -highlightthickness 0"
+    $w.f.tl window create end-32c -create "canvas %W.h -width 60 -height $::tree::barHeight -highlightthickness 0"
   }
 
   }
@@ -909,7 +910,7 @@ proc ::tree::displayLines {baseNumber moves} {
 }
 
 proc createCanvas {w wonx lossx baseNumber move} {
-  canvas $w -width 60 -height 12 -bg grey75
+  canvas $w -width 60 -height $::tree::barHeight -bg grey75
 
   # duplicate the binding for this line
   bind $w <Button-1> "::tree::selectCallback $baseNumber $move ; break"
@@ -920,10 +921,10 @@ proc createCanvas {w wonx lossx baseNumber move} {
   # (There's some +/- 1 to acount for widget borders)
 
   if {$wonx > 0.1} {
-    $w create rectangle 0 0 $wonx 12 -fill white -width 0 ;# limegreen
+    $w create rectangle 0 0 $wonx $::tree::barHeight -fill white -width 0 ;# limegreen
   }
   if {$lossx < 60.9} {
-    $w create rectangle $lossx 0 61 12 -fill grey10 ;# indianred3
+    $w create rectangle $lossx 0 61 $::tree::barHeight -fill grey10 ;# indianred3
   }
   return $w
 }
