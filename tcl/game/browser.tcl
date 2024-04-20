@@ -109,18 +109,10 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
 
     set ::gbrowser::autoplay($n) 0
 
-    dialogbutton $w.b.load -textvar ::tr(LoadGame) -command "
-      if {!\[checkBaseInUse $base $w\]} {
-	return
-      }
-      sc_base switch $base
-      if {\[::game::Load $gnum 0\] != -1} {
-        set flipped \[::board::isFlipped $w.bd\]
-	destroy $w
-	sc_move ply \$::gbrowser::ply($n)
-        ::board::flip .main.board \$flipped
-	updateBoard -pgn
-      }"
+    dialogbutton $w.b.load -textvar ::tr(LoadGame) -command "::gbrowser::LoadGame $w $base $gnum $n"
+
+    # Control click doesn't close browser window
+    bind $w.b.load <Control-Button-1> "::gbrowser::LoadGame $w $base $gnum $n 0 ; break"
 
     dialogbutton $w.b.merge -textvar ::tr(MergeGame) -command "mergeGame $base $gnum"
 
@@ -377,3 +369,18 @@ proc ::gbrowser::autoplay {n} {
   }
 }
 
+proc ::gbrowser::LoadGame {w base gnum n {close 1}} {
+    if {![checkBaseInUse $base $w]} {
+      return
+    }
+    sc_base switch $base
+    if {[::game::Load $gnum 0] != -1} {
+      set flipped [::board::isFlipped $w.bd]
+      if {$close} {
+        destroy $w
+      }
+      sc_move ply $::gbrowser::ply($n)
+      ::board::flip .main.board $flipped
+      updateBoard -pgn
+    }
+}

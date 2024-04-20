@@ -9595,10 +9595,11 @@ sc_game_summary (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         default: return errorResult (ti, usage);
     }
 
-    Game * g = scratchGame;
+    Game *g;
     if (gnum == 0) {
         g = base->game;
     } else {
+        g = scratchGame;
         // Load the specified game number:
         if (! base->inUse) {
             return errorResult (ti, "This database is not in use.");

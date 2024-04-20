@@ -1652,15 +1652,16 @@ is done from the Maintenance window.</i></p>
 
   <h3><name Browsing>Browsing and Merging Single Games</name></h3>
   <p>
-  From the Gamelist context menu, one may <b>Browse</b> a game. This is a game
-  preview which displays in a separate window, without comments or variations.
+  From the Gamelist context menu (and various other places), one may open a Game Browser window. This is a simple, persistent game
+  preview, without comments or variations.
   </p>
   <p>
-  From this preview, one may <b>Merge</b> the game back into the
+  Features of this preview include <b>Merging</b> the game back into the
   current one as a variation. The merge starts from where the games differ (taking transpositions into account),
   and you can change the last move number to be merged, according to whether
   you are interested in adding the whole game or just its next few moves.
   </p>
+<p>The <b>Load</b> button will load the game (switching bases if necessary) onto the main board. (Control-Key + Load does not close the Browser window).</p>
 <p>Next/Previous games can be loaded by Control+Down/Up keys. The board size <b>can be resized</b> by Control+Wheelmouse or Control+Shift+Left/Right.</p>
 <p>To automatically <b>show the last move</b>, select Search-<gt>FilterToLastMove - though the shown ply is also affected by the Tree Window (if open).</p>
 

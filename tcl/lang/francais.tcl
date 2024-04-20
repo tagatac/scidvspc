@@ -1380,7 +1380,7 @@ translate F WhitePieces {Pièces blanches}
 translate F BlackPieces {Pièces noires}
 translate F WhiteBorder {Bordure des pièces blanches}
 translate F BlackBorder {Bordure des pièces noires}
-translate F ArrowMain   {Flèche pricipale}
+translate F ArrowMain   {Flèche principale}
 translate F ArrowVar    {Flèches variantes}
 translate F ShowArrows  {Montrer les flèches}
 
