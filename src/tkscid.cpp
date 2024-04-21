@@ -9614,7 +9614,7 @@ sc_game_summary (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             return errorResult (ti, "Error loading game.");
         }
         g->Clear();
-        if (g->Decode (base->bbuf, GAME_DECODE_NONE) != OK) {
+        if (g->Decode (base->bbuf, GAME_DECODE_COMMENTS) != OK) {
             return errorResult (ti, "Error decoding game.");
         }
         g->LoadStandardTags (ie, base->nb);
@@ -9637,7 +9637,7 @@ sc_game_summary (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
         const char * site = g->GetSiteStr();
         if (! strIsUnknownName(site))
-	  dstr->Append ("  ", site);
+            dstr->Append ("  ", site);
 
         char dateStr [20];
         date_DecodeToString (g->GetDate(), dateStr);
@@ -9646,7 +9646,7 @@ sc_game_summary (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         if (dateStr[7] == '.'  &&  dateStr[8] == '?') { dateStr[7] = 0; }
         dstr->Append ("\n",dateStr, "  ");
 
-	uint m = (g->GetNumHalfMoves() + 1) / 2;
+        uint m = (g->GetNumHalfMoves() + 1) / 2;
         dstr->Append ("  ", m , " ", translate (ti,"Moves"));
 
         dstr->Append ("   (" , RESULT_LONGSTR[g->GetResult()] , ")");
@@ -9656,48 +9656,89 @@ sc_game_summary (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     }
 
     // Here, a list of the boards or moves is requested:
+    // Moves now returns a double list, to include comments
+    const char *tempStr;
+          char *tempStrClean;
     g->SaveState();
     g->MoveToPly (0);
-    while (1) {
-        if (mode == MODE_BOARDS) {
+
+    if (mode == MODE_BOARDS) {
+        while (1) {
             char boardStr[100];
             g->GetCurrentPos()->MakeLongStr (boardStr);
             Tcl_AppendElement (ti, boardStr);
-        } else {
-            colorT toMove = g->GetCurrentPos()->GetToMove();
-            uint moveCount = g->GetCurrentPos()->GetFullMoveCount();
-            char san [20];
-            g->GetSAN (san);
-            if (san[0] != 0) {
-                char temp[40];
-                if (toMove == WHITE) {
-                    sprintf (temp, "%u.%s", moveCount, san);
-                } else {
-                    strCopy (temp, san);
-                }
-                byte * nags = g->GetNextNags();
-                if (*nags != 0) {
-                    for (uint nagCount = 0 ; nags[nagCount] != 0; nagCount++) {
-                        char nagstr[20];
-                        game_printNag (nags[nagCount], nagstr, true,
-                                       PGN_FORMAT_Plain);
-                        if (nagCount > 0  ||
-                              (nagstr[0] != '!' && nagstr[0] != '?')) {
-                            strAppend (temp, " ");
-                        }
-                        strAppend (temp, nagstr);
-                    }
-                }
-                Tcl_AppendElement (ti, temp);
-            } else {
-                Tcl_AppendElement (ti, (char *)RESULT_LONGSTR[g->GetResult()]);
-            }
-        }
-        if (g->MoveForward() != OK) { break; }
-    }
+            if (g->MoveForward() != OK) { break; }
+         }
+     } else { // MODE_MOVES
 
-    g->RestoreState();
-    return TCL_OK;
+          // initial comment
+          tempStr = g->GetMoveComment();
+          if (tempStr) {
+              // todo free string memory
+              tempStrClean = strDuplicate(tempStr);
+              strTrimMarkCodes (tempStrClean);
+              if (tempStrClean && *tempStrClean && !strIsScore((const char *)tempStrClean)) {
+                  Tcl_AppendElement (ti, tempStrClean);
+              } else {
+                  Tcl_AppendElement (ti, "");
+              }
+          } else {
+              Tcl_AppendElement (ti, "");
+          }
+
+          while (1) {
+
+              colorT toMove = g->GetCurrentPos()->GetToMove();
+              uint moveCount = g->GetCurrentPos()->GetFullMoveCount();
+              char san [20];
+              g->GetSAN (san);
+              if (san[0] != 0) {
+                  char temp[40];
+                  if (toMove == WHITE) {
+                      sprintf (temp, "%u.%s", moveCount, san);
+                  } else {
+                      strCopy (temp, san);
+                  }
+                  byte * nags = g->GetNextNags();
+                  if (*nags != 0) {
+                      for (uint nagCount = 0 ; nags[nagCount] != 0; nagCount++) {
+                          char nagstr[20];
+                          game_printNag (nags[nagCount], nagstr, true, PGN_FORMAT_Plain);
+                          if (nagCount > 0  || (nagstr[0] != '!' && nagstr[0] != '?')) {
+                              strAppend (temp, " ");
+                          }
+                          strAppend (temp, nagstr);
+                      }
+                  }
+
+                  Tcl_AppendElement (ti, temp);
+
+                  if (g->MoveForward() != OK) {
+                    // unused now ? S.A
+                    break;
+                  }
+                  // GetMoveComment is a funny thing. Get comment is out of sync with the move
+                  tempStr = g->GetMoveComment();
+                  if (tempStr) {
+                      tempStrClean = strDuplicate(tempStr);
+                      strTrimMarkCodes (tempStrClean);
+                      if (tempStrClean && *tempStrClean && !strIsScore((const char *)tempStrClean)) {
+                          Tcl_AppendElement (ti, tempStrClean);
+                      } else {
+                          Tcl_AppendElement (ti, "");
+                      }
+                  } else {
+                      Tcl_AppendElement (ti, "");
+                  }
+              } else {
+                  Tcl_AppendElement (ti, (char *)RESULT_LONGSTR[g->GetResult()]);
+                  break;
+              }
+          }
+      }
+
+      g->RestoreState();
+      return TCL_OK;
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~

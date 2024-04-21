@@ -1653,7 +1653,7 @@ is done from the Maintenance window.</i></p>
   <h3><name Browsing>Browsing and Merging Single Games</name></h3>
   <p>
   From the Gamelist context menu (and various other places), one may open a Game Browser window. This is a simple, persistent game
-  preview, without comments or variations.
+  preview without variations, using the colours of the PGN window.
   </p>
   <p>
   Features of this preview include <b>Merging</b> the game back into the

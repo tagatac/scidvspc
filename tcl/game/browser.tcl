@@ -59,8 +59,9 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
     set t $w.t.text
     $t configure -cursor {}
     event generate $t <ButtonRelease-1>
-    $t tag configure header -foreground darkBlue
+    $t tag configure header -foreground $::pgnColor(Header)
     $t tag configure Current -background $::pgnColor(Current)
+    $t tag configure commentTag -fore $::pgnColor(Comment)
 
     bind $w <F1> {helpWindow GameList Browsing}
     bind $w <Escape> "destroy $w"
@@ -160,15 +161,9 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
     $w.b.next configure -command   "::gbrowser::load $w $base $gnum $ply +1"
     $w.b.last configure -command   "::gbrowser::load $w $base $gnum $ply end"
 
-    $w.b.load configure -command "
-      if {!\[checkBaseInUse $base $w\]} {
-        return
-      }
-      sc_base switch $base
-      ::game::Load $gnum 0
-      destroy $w
-      sc_move ply \$::gbrowser::ply($n)
-      updateBoard -pgn"
+    $w.b.load configure -command "::gbrowser::LoadGame $w $base $gnum $n"
+    bind $w.b.load <Control-Button-1> "::gbrowser::LoadGame $w $base $gnum $n 0 ; break"
+
     $w.b.merge configure -command "mergeGame $base $gnum"
   }
 
@@ -216,7 +211,10 @@ if {0} {
 
   set m 1
 
-  foreach i $moves {
+  # initial comment
+  $t insert end "[lindex $moves 0] " commentTag
+
+  foreach {i j} [lrange $moves 1 end-1] {
     set moveTag m$m
     $t insert end [::trans $i] $moveTag
     $t insert end " "
@@ -226,7 +224,13 @@ if {0} {
     $t tag bind $moveTag <Any-Leave> \
       "$t tag configure $moveTag -underline 0"
     incr m
+    if {$j != ""} {
+      $t insert end "[string map {"\n" { }} $j] " commentTag
+    }
   }
+
+  # result
+  $t insert end [lindex $moves end]
 
   ::gbrowser::update $n $ply
 }
