@@ -782,7 +782,12 @@ Crosstable::PrintAllPlayAll (DString * dstr, uint playerLimit)
         dstr->Append (stemp);
     }
     if (PrintRatings) {
-        dstr->Append (StartBoldCol, " Rtng", EndBoldCol);
+        if (OutputFormat == CROSSTABLE_Hypertext) {
+            sprintf (stemp, "<blue><run set ::crosstab(sort) rating ; ::crosstab::Refresh> Rtng</run></blue>");
+            dstr->Append (stemp);
+        } else {
+            dstr->Append (StartBoldCol, " Rtng", EndBoldCol);
+        }
     }
     if (PrintTitles) {
         dstr->Append (StartBoldCol, "  Ti", EndBoldCol);
@@ -791,16 +796,29 @@ Crosstable::PrintAllPlayAll (DString * dstr, uint playerLimit)
         dstr->Append (StartBoldCol, " Age", EndBoldCol);
     }
     if (PrintCountries) {
-        dstr->Append (StartBoldCol, " Nat", EndBoldCol);
+      if (OutputFormat == CROSSTABLE_Hypertext) {
+          sprintf (stemp, "<blue><run set ::crosstab(sort) country ; ::crosstab::Refresh> Nat</run></blue>");
+          dstr->Append (stemp);
+      } else {
+          dstr->Append (StartBoldCol, " Nat", EndBoldCol);
+      }
     }
     if (OutputFormat == CROSSTABLE_LaTeX) {
         // Todo : fix LateX Score column allignment with 3 points for win.
         dstr->Append (" \\multicolumn{2}{c}{\\bf Score} & ");
     } else {
-        if (ThreeWin) 
-	  dstr->Append ("  ", StartBoldCol, "Score", EndBoldCol, " ");
-        else
-	  dstr->Append ("   ", StartBoldCol, " Score ", EndBoldCol, "   ");
+        if (OutputFormat == CROSSTABLE_Hypertext) {
+            sprintf (stemp, "<blue><run set ::crosstab(sort) score ; ::crosstab::Refresh>Score</run></blue>");
+        } else {
+            sprintf (stemp, "Score");
+        }
+
+        if (ThreeWin)
+          dstr->Append ("  ", StartBoldCol, stemp, EndBoldCol, " ");
+        else {
+          dstr->Append ("   ", StartBoldCol, " ");
+          dstr->Append (stemp," ", EndBoldCol, "   ");
+        }
     }
     if (PrintTiebreaks) {
         dstr->Append (StartBoldCol, " (Tie) ", EndBoldCol);
@@ -972,7 +990,12 @@ Crosstable::PrintSwiss (DString * dstr, uint playerLimit)
         dstr->Append (stemp);
     }
     if (PrintRatings) {
-        dstr->Append (StartBoldCol, " Rtng", EndBoldCol);
+        if (OutputFormat == CROSSTABLE_Hypertext) {
+            sprintf (stemp, "<blue><run set ::crosstab(sort) rating ; ::crosstab::Refresh> Rtng</run></blue>");
+            dstr->Append (stemp);
+        } else {
+            dstr->Append (StartBoldCol, " Rtng", EndBoldCol);
+        }
     }
     if (PrintTitles) {
         dstr->Append (StartBoldCol, "  Ti", EndBoldCol);
@@ -981,15 +1004,28 @@ Crosstable::PrintSwiss (DString * dstr, uint playerLimit)
         dstr->Append (StartBoldCol, " Age", EndBoldCol);
     }
     if (PrintCountries) {
-        dstr->Append (StartBoldCol, " Nat", EndBoldCol);
+      if (OutputFormat == CROSSTABLE_Hypertext) {
+          sprintf (stemp, "<blue><run set ::crosstab(sort) country ; ::crosstab::Refresh> Nat</run></blue>");
+          dstr->Append (stemp);
+      } else {
+          dstr->Append (StartBoldCol, " Nat", EndBoldCol);
+      }
     }
     if (OutputFormat == CROSSTABLE_LaTeX) {
         dstr->Append (" \\multicolumn{2}{c}{\\bf Score} & ");
     } else {
+        if (OutputFormat == CROSSTABLE_Hypertext) {
+            sprintf (stemp, "<blue><run set ::crosstab(sort) score ; ::crosstab::Refresh>Score</run></blue>");
+        } else {
+            sprintf (stemp, "Score");
+        }
+
         if (ThreeWin) 
-	  dstr->Append ("  ", StartBoldCol, "Score", EndBoldCol, " ");
-        else
-	  dstr->Append ("   ", StartBoldCol, " Score ", EndBoldCol, "   ");
+	  dstr->Append ("  ", StartBoldCol, stemp, EndBoldCol, " ");
+        else {
+	  dstr->Append ("   ", StartBoldCol, " ");
+	  dstr->Append (stemp," ", EndBoldCol, "   ");
+        }
     }
     if (PrintTiebreaks) {
         dstr->Append (StartBoldCol, "(Tie)", EndBoldCol);
