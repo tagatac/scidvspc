@@ -9655,8 +9655,8 @@ sc_game_summary (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         return TCL_OK;
     }
 
-    // Here, a list of the boards or moves is requested:
-    // Moves now returns a double list, to include comments
+    // List of the Boards or Moves
+    // Moves now returns a double list n the form "premovecommment m1 c1 m2 c2 ... mN cN result"
     const char *tempStr;
           char *tempStrClean;
     g->SaveState();
@@ -9669,12 +9669,11 @@ sc_game_summary (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             Tcl_AppendElement (ti, boardStr);
             if (g->MoveForward() != OK) { break; }
          }
-     } else { // MODE_MOVES
+     } else { // mode == MODE_MOVES
 
           // initial comment
           tempStr = g->GetMoveComment();
           if (tempStr) {
-              // todo free string memory
               tempStrClean = strDuplicate(tempStr);
               strTrimMarkCodes (tempStrClean);
               if (tempStrClean && *tempStrClean && !strIsScore((const char *)tempStrClean)) {
@@ -9682,6 +9681,7 @@ sc_game_summary (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
               } else {
                   Tcl_AppendElement (ti, "");
               }
+              delete[] tempStrClean;
           } else {
               Tcl_AppendElement (ti, "");
           }
@@ -9727,6 +9727,7 @@ sc_game_summary (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
                       } else {
                           Tcl_AppendElement (ti, "");
                       }
+                      delete[] tempStrClean;
                   } else {
                       Tcl_AppendElement (ti, "");
                   }
@@ -11068,6 +11069,7 @@ sc_pos (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 	    if (tempStrClean && !strIsScore((const char *)tempStrClean)) {
 		Tcl_AppendResult (ti, tempStrClean, NULL);
 	    }
+            delete[] tempStrClean;
         }
         break;
 

@@ -1667,7 +1667,7 @@ is done from the Maintenance window.</i></p>
 
   <h3>Browsing Multiple Games</h3>
   <p>
-  Scid vs PC can also browse multiple games (in a grid format) via right-clicking a selection of games.
+  Scid vs PC can also browse multiple games (in a grid format) via right-clicking a selection of games in the gamelist.
   Left/Right/Home/End keys will walk through a game. Double-click or Control+Enter will load the game.
   'f' flips the board. Control+Wheel mouse resizes the boards (default board size is determined by
   Options-<gt>FICS-<gt>BoardSize). Control+Delete toggles Delete (indicated by a greyed Game Number).

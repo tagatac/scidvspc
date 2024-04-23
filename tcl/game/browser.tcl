@@ -211,18 +211,18 @@ if {0} {
 
   set m 1
 
-  # initial comment
-  $t insert end "[lindex $moves 0] " commentTag
+  set initialComment [lindex $moves 0]
+  if {$initialComment != ""} {
+    $t insert end "$initialComment " commentTag
+  }
 
   foreach {i j} [lrange $moves 1 end-1] {
     set moveTag m$m
     $t insert end [::trans $i] $moveTag
     $t insert end " "
     $t tag bind $moveTag <ButtonRelease-1> "::gbrowser::update $n $m"
-    $t tag bind $moveTag <Any-Enter> \
-      "$t tag configure $moveTag -underline 1"
-    $t tag bind $moveTag <Any-Leave> \
-      "$t tag configure $moveTag -underline 0"
+    $t tag bind $moveTag <Any-Enter> "$t tag configure $moveTag -underline 1"
+    $t tag bind $moveTag <Any-Leave> "$t tag configure $moveTag -underline 0"
     incr m
     if {$j != ""} {
       $t insert end "[string map {"\n" { }} $j] " commentTag
@@ -230,7 +230,7 @@ if {0} {
   }
 
   # result
-  $t insert end [lindex $moves end]
+  $t insert end [lindex $moves end] header
 
   ::gbrowser::update $n $ply
 }
