@@ -541,43 +541,43 @@ $m.utils add command -label ToolsMaintWin -accelerator "control-m" -command ::ma
 set helpMessage($m.utils,0) ToolsMaintWin
 
 $m.utils add command -label ToolsMaintNameEditor -command nameEditor 
-set helpMessage($m.utils,0) ToolsMaintNameEditor
+set helpMessage($m.utils,1) ToolsMaintNameEditor
 
 $m.utils add command -label ToolsMaintNameExtra -command extraTags 
-set helpMessage($m.utils,0) ToolsMaintNameExtra
+set helpMessage($m.utils,2) ToolsMaintNameExtra
 
 $m.utils add command -label ToolsMaintCompact -command makeCompactWin
-set helpMessage($m.utils,1) ToolsMaintCompact
+set helpMessage($m.utils,3) ToolsMaintCompact
 
 $m.utils add command -label ToolsMaintSort -command makeSortWin
-set helpMessage($m.utils,3) ToolsMaintSort
+set helpMessage($m.utils,4) ToolsMaintSort
 
 $m.utils add separator
 
 $m.utils add command -label ToolsMaintNamePlayer -command {openSpellCheckWin Player}
-set helpMessage($m.utils,1) ToolsMaintNamePlayer
+set helpMessage($m.utils,6) ToolsMaintNamePlayer
 
 $m.utils add command -label ToolsMaintNameEvent -command {openSpellCheckWin Event}
-set helpMessage($m.utils,2) ToolsMaintNameEvent
+set helpMessage($m.utils,7) ToolsMaintNameEvent
 
 $m.utils add command -label ToolsMaintNameSite -command {openSpellCheckWin Site}
-set helpMessage($m.utils.3) ToolsMaintNameSite
+set helpMessage($m.utils.8) ToolsMaintNameSite
 
 $m.utils add command -label ToolsMaintNameRound -command {openSpellCheckWin Round}
-set helpMessage($m.utils,4) ToolsMaintNameRound
+set helpMessage($m.utils,9) ToolsMaintNameRound
 
 $m.utils add separator
 
 $m.utils add command -label ToolsMaintDelete -state disabled -command markTwins
-set helpMessage($m.utils,5) ToolsMaintDelete
+set helpMessage($m.utils,11) ToolsMaintDelete
 
 $m.utils add command -label ToolsMaintTwin -command updateTwinChecker
-set helpMessage($m.utils,6) ToolsMaintTwin
+set helpMessage($m.utils,12) ToolsMaintTwin
 
 $m.utils add separator
 
 $m.utils add command -label ToolsMaintFixBase -command ::maint::fixCorruptedBase
-set helpMessage($m.utils,10) ToolsMaintFixBase
+set helpMessage($m.utils,14) ToolsMaintFixBase
 
 # **********
 
