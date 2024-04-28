@@ -275,7 +275,7 @@ proc ::maint::Open {} {
   button $w.db.dups    -textvar ::tr(DeleteTwins)     -command "markTwins $w"
   button $w.db.cleaner -textvar ::tr(Cleaner)         -command cleanerWin
   button $w.db.autoload -textvar ::tr(AutoloadGame)   -command "::maint::SetAutoloadGame $w"
-  button $w.db.strip -textvar ::tr(StripTags)         -command "stripExtraTags $w"
+  button $w.db.strip -textvar ::tr(StripTags)         -command "extraTags $w"
 
   button $w.db.stripcom -text "[tr EditStrip] [tr Comments]" -command "stripCommentsVars comments $w"
   button $w.db.stripvar -text "[tr EditStrip] [tr Variations]"   -command "stripCommentsVars variations $w"
@@ -2036,13 +2036,13 @@ proc doAllocateRatings {parent} {
 }
 
 
-### Strip and filter extra PGN tags
+### Strip, add and filter Extra PGN tags
 
 array set pgnTags {}
 
-proc stripExtraTags {{parent .}} {
+proc extraTags {{parent .}} {
   global pgnTags
-  set w .striptags
+  set w .extratags
 
   if {[winfo exists $w]} {
     destroy $w
@@ -2069,6 +2069,8 @@ proc stripExtraTags {{parent .}} {
   toplevel $w
   wm withdraw $w
   wm title $w "$::tr(StripTags)"
+  setWinLocation $w
+  setWinSize $w
 
   bind $w <F1> {helpWindow Maintenance Tags}
 
@@ -2095,12 +2097,12 @@ proc stripExtraTags {{parent .}} {
   pack $w.tags.list -side left -fill both -expand yes
   pack $w.tags.scroll -side right -fill y
 
-  populateStripTags
+  populateExtraTags
 
   bind $w.tags.list <Double-ButtonRelease-1> "$w.buttons.find invoke; break"
 
   dialogbutton $w.buttons.find -text $::tr(Filter) -command {
-    if {[catch {set tag [lindex [.striptags.tags.list get [.striptags.tags.list cursel]] 0]}] || \
+    if {[catch {set tag [lindex [.extratags.tags.list get [.extratags.tags.list cursel]] 0]}] || \
          $tag == {}} {
       return
     }
@@ -2108,16 +2110,16 @@ proc stripExtraTags {{parent .}} {
   }
 
   dialogbutton $w.buttons.strip -text $::tr(StripTag) -command {
-    if {[catch {set tag [lindex [.striptags.tags.list get [.striptags.tags.list cursel]] 0]}] || \
+    if {[catch {set tag [lindex [.extratags.tags.list get [.extratags.tags.list cursel]] 0]}] || \
          $tag == {}} {
       return
     }
     set removed [doStripTags $tag]
     if {$removed > 0} {
       ::game::Reload 
-      .striptags.tags.list delete 0 end
+      .extratags.tags.list delete 0 end
       set pgnTags($tag) [expr {$pgnTags($tag) - $removed}]
-      populateStripTags
+      populateExtraTags
     }
   }
 
@@ -2128,17 +2130,17 @@ proc stripExtraTags {{parent .}} {
 
   # raise $parent 
 
-  placeWinOverParent $w $parent
+  bind $w <Configure> "recordWinSize $w"
   wm state $w normal
 }
 
-proc populateStripTags {} {
+proc populateExtraTags {} {
   global pgnTags
 
   set tags [lsort [array names pgnTags]]
   foreach tag $tags {
     set text [format "%-18s %12s" $tag $pgnTags($tag)]
-    .striptags.tags.list insert end $text
+    .extratags.tags.list insert end $text
   }
 }
 
@@ -2146,7 +2148,7 @@ proc doStripTags {tag} {
   global checkOption
 
   set msg "Do you want to remove all occurences of \"$tag\" from $checkOption(AllGames) games ?"
-  set result [tk_messageBox -title Scid -parent .striptags \
+  set result [tk_messageBox -title Scid -parent .extratags \
       -icon question -type yesno -message $msg]
   if {$result == "no"} { return 0 }
   progressWindow Scid "Removing the PGN tag $tag." $::tr(Stop) sc_progressBar
@@ -2156,7 +2158,7 @@ proc doStripTags {tag} {
   closeProgressWindow
   if {$err} {
     set count 0
-    tk_messageBox -title Scid -parent .striptags -type ok -icon info -message $result
+    tk_messageBox -title Scid -parent .extratags -type ok -icon info -message $result
   } else {
     set count $result
   }
@@ -2172,13 +2174,7 @@ proc findStripTags {tag} {
   sc_base tag find $tag $checkOption(AllGames)
   unbusyCursor .
   # closeProgressWindow
-puts "::pgnTags($tag) $::pgnTags($tag)"
-  if {$::pgnTags($tag) > 0 && [sc_filter count] > 0} {
-    ::game::LoadNextPrev first 0
-  } else {
-puts refresh
-    ::windows::gamelist::Refresh
-  }
+  ::windows::gamelist::Refresh
 }
 
 

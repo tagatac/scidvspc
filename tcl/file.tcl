@@ -305,6 +305,9 @@ proc refreshWindows {{all no}} {
     ### They *should* be done *sometime* when doing a base switch
     ::plist::refresh
     ::tourney::refresh
+    if {[winfo exists .extratags]} {
+      extraTags
+    }
   }
 
   updateMenuStates

@@ -867,7 +867,9 @@ proc ::windows::switcher::releaseMouseEvent {fromBase x y dest r s} {
   set toBase [string range $dropPoint 21 21]
 
   if {$toBase == $fromBase} {
-    ::file::SwitchToBase $toBase
+    if {$toBase != [sc_base current]} {
+      ::file::SwitchToBase $toBase
+    }
   } else {
     copyFilter $fromBase $toBase
     ::windows::switcher::Refresh

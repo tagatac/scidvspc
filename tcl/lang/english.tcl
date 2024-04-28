@@ -178,6 +178,7 @@ menuText E ToolsMaintNamePlayer "Spellcheck Player Names" 11 {Spellcheck player 
 menuText E ToolsMaintNameEvent "Spellcheck Event Names" 11 {Spellcheck event names using the spellcheck file}
 menuText E ToolsMaintNameSite "Spellcheck Site Names" 11 {Spellcheck site names using the spellcheck file}
 menuText E ToolsMaintNameRound "Spellcheck Round Names" 11 {Spellcheck round names using the spellcheck file}
+menuText E ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText E ToolsMaintFixBase "Repair base" 0 {Try to repair a corrupted base}
 
 menuText E ToolsConnectHardware "Eboards/External Hardware" 0 {Connect external hardware}
@@ -965,8 +966,9 @@ translate E CompactDatabase {Compact database}
 translate E SortDatabase {Sort database}
 translate E AddEloRatings {Add Elo ratings}
 translate E AutoloadGame {Autoload game}
-translate E StripTags {Strip extra tags}
+translate E StripTags {Extra Tags}
 translate E StripTag {Strip tag}
+translate E AddTag {Add Tag}
 translate E CheckGames {Check games}
 translate E Cleaner {Cleaner}
 translate E CleanerHelp {
