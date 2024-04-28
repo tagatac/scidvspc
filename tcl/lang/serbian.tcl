@@ -193,6 +193,8 @@ menuText Y ToolsMaintNameSite "Provera pravopisa imena mesta..." 11 \
 menuText Y ToolsMaintNameRound "Provera pravopisa kola..." 11 \
   {Provera pravopisa kola pomoæu spellcheck fajla}
 # ====== TODO To be translated ======
+menuText Y ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
+# ====== TODO To be translated ======
 menuText Y ToolsMaintFixBase "Repair base" 0 {Try to repair a corrupted base}
 # ====== TODO To be translated ======
 menuText Y ToolsConnectHardware "Connect Hardware" 0 {Connect external hardware}
@@ -1221,6 +1223,8 @@ translate Y AddEloRatings {Dodaj Elo rejtinge}
 translate Y AutoloadGame {Autoload game number} ;# ***
 translate Y StripTags {Strip PGN tags} ;# ***
 translate Y StripTag {Strip tag} ;# ***
+# ====== TODO To be translated ======
+translate Y AddTag {Add Tag}
 # ====== TODO To be translated ======
 translate Y CheckGames {Check games}
 translate Y Cleaner {Èistaè}

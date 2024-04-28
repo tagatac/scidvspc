@@ -154,6 +154,8 @@ menuText T ToolsMaintNamePlayer "Oyuncu İsimleri" 11 {İmla dosyası kullanarak
 menuText T ToolsMaintNameEvent "Etkinlik İsimleri" 11 {İmla dosyası kullanarak olay adlarını yazım denetimi}
 menuText T ToolsMaintNameSite "yer Adları" 11 {İmla dosyası kullanarak yer adlarını yazım denetimi}
 menuText T ToolsMaintNameRound "Tur İsimleri" 11 {Spellcheck round names using the spellcheck file}
+# ====== TODO To be translated ======
+menuText T ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText T ToolsMaintFixBase "tabanı Onarın" 0 {Bozuk bir tabanı onarmaya çalışın}
 
 menuText T ToolsConnectHardware "Donanımı Bağla" 0 {Harici donanımı bağlayın}
@@ -972,6 +974,8 @@ translate T AddEloRatings {Elo Reyting ekle}
 translate T AutoloadGame {Otomatik yükle oyunu}
 translate T StripTags {Ekstra etiketleri kaldır}
 translate T StripTag {etiketi kaldır}
+# ====== TODO To be translated ======
+translate T AddTag {Add Tag}
 translate T CheckGames {Oyunları kontrol et}
 translate T Cleaner {temizleyici}
 translate T CleanerHelp {

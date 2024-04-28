@@ -218,6 +218,8 @@ menuText B ToolsMaintNameSite "Verificacao Ortografica de Lugares..." 11 \
   {Verifica a correcao dos nomes de lugares usando o arquivo de correcao ortografica}
 menuText B ToolsMaintNameRound "Verificacao Ortografica de Rodadas..." 11 \
   {Verificacao dos nomes de rodadas usando o arquivo de correcao ortografica}
+# ====== TODO To be translated ======
+menuText B ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 
 menuText B ToolsMaintFixBase "Corrigir base corrompida" 0 {Tenta corrigir uma base corrompida}
 
@@ -1167,6 +1169,8 @@ translate B AddEloRatings {Adicionar ratings}
 translate B AutoloadGame {Carregar autom. o jogo numero}
 translate B StripTags {Remover tags PGN} 
 translate B StripTag {Remover tag} 
+# ====== TODO To be translated ======
+translate B AddTag {Add Tag}
 
 translate B CheckGames {Marcar jogos}
 translate B Cleaner {Limpador}

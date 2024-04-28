@@ -202,6 +202,8 @@ menuText S ToolsMaintNameSite "Corrección de nombres de lugares" 11 \
   {Comprobación ortográfica de lugares usando el archivo de comprobación ortográfica}
 menuText S ToolsMaintNameRound "Corrección de nombre de rondas" 11 \
   {Comprobación ortográfica de rondas usando el archivo de comprobación ortográfica}
+# ====== TODO To be translated ======
+menuText S ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText S ToolsMaintFixBase "Reparar base corrupta" 0 {Intenta reparar una base corrupta}
 menuText S ToolsConnectHardware "Conectar hardware" 0 {Conectar  hardware externo}
 menuText S ToolsConnectHardwareConfigure "Configurar..." 0 {Configurar conexión a hardware externo}
@@ -1047,6 +1049,8 @@ translate S AddEloRatings {Añadir clasificación Elo}
 translate S AutoloadGame {Autocargar partida}
 translate S StripTags {Quitar etiquetas PGN}
 translate S StripTag {Quitar etiquetas}
+# ====== TODO To be translated ======
+translate S AddTag {Add Tag}
 translate S CheckGames {Revisar partidas}
 translate S Cleaner {MultiHerramienta}
 translate S CleanerHelp {

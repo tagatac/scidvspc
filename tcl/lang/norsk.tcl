@@ -186,6 +186,8 @@ menuText O ToolsMaintNamePlayer "Kontroller spillere..." 0 {Sammenlign navn med 
 menuText O ToolsMaintNameEvent "Kontroller turneringer..." 11 {Sammenlign turneringer med stavekontroll-filen}
 menuText O ToolsMaintNameSite "Kontroller stedsnavn..." 12 {Sammenlign stedsnavn med stavekontroll-filen}
 menuText O ToolsMaintNameRound "Kontroller runde-navn..." 11 {Sammenlign rundenavn med stavekontroll-filen}
+# ====== TODO To be translated ======
+menuText O ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText O ToolsMaintFixBase "Reparer database" 0 {Prøver å reparere en ødelagt database}
 
 menuText O ToolsConnectHardware "Koble til eksternt brett" 0 {Koble til eksternt brett}
@@ -994,6 +996,8 @@ translate O AddEloRatings {Legg til ELO-ratinger}
 translate O AutoloadGame {Start med parti nummer}
 translate O StripTags {Fjern PGN-merker}
 translate O StripTag {Fjern merke}
+# ====== TODO To be translated ======
+translate O AddTag {Add Tag}
 translate O CheckGames {Sjekk partier}
 translate O Cleaner {Opprydding}
 translate O CleanerHelp {

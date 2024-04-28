@@ -180,6 +180,8 @@ menuText W ToolsMaintNameSite "Stavningskontrollera platser..." 21 \
   {Stavningskontrollera platser utifrån rättstavningsfilen}
 menuText W ToolsMaintNameRound "Stavningskontrollera ronder..." 21 \
   {Stavningskontrollera ronder utifrån rättstavningsfilen}
+# ====== TODO To be translated ======
+menuText W ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText W ToolsMaintFixBase "Fixa trasig databas" 0 {Försök att fixa en trasig databas}
 menuText W ToolsConnectHardware "Anslut hårdvara" 0 {Anslut extern hårdvara}
 menuText W ToolsConnectHardwareConfigure "Konfigurera..." 0 {Konfigurera extern hårdvara och anslutning}
@@ -1068,6 +1070,8 @@ translate W AddEloRatings {Lägg till Elorating}
 translate W AutoloadGame {Ladda partinummer automatiskt}
 translate W StripTags {Avlägsna PGN-taggar}
 translate W StripTag {Avlägsna taggar}
+# ====== TODO To be translated ======
+translate W AddTag {Add Tag}
 translate W CheckGames {Kontrollera partier}
 translate W Cleaner {Snygga till databasen}
 translate W CleanerHelp {

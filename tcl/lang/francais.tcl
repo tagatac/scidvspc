@@ -184,6 +184,8 @@ menuText F ToolsMaintNameSite "Corriger les noms de lieux.." 21 \
   {Vérifier l'orthographe des noms de lieux}
 menuText F ToolsMaintNameRound "Corriger les noms des rondes..." 22 \
   {Vérifier l'orthographe des noms de rondes}
+# ====== TODO To be translated ======
+menuText F ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText F ToolsMaintFixBase "Réparer base" 0 {Essaie de réparer une base corrompue}
 menuText F ToolsConnectHardware "Brancher hardware" 0 {Brancher hardware extérieur}
 menuText F ToolsConnectHardwareConfigure "Configurer..." 0 {Configurer la connexion au hardware extérieur}
@@ -980,6 +982,8 @@ translate F AddEloRatings {Ajouter les classements Elo}
 translate F AutoloadGame {Chargement automatique du numéro de partie}
 translate F StripTags {Enlever les marqueurs PGN}
 translate F StripTag {Enlever les marqueurs}
+# ====== TODO To be translated ======
+translate F AddTag {Add Tag}
 translate F CheckGames {Vérifier les parties}
 translate F Cleaner {Nettoyer}
 translate F CleanerHelp {

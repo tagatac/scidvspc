@@ -182,6 +182,8 @@ menuText P ToolsMaintNameSite "Sprawdź pisownię nazw miejscowości..." 22 \
   {Sprawdź pisownię nazw miejscowości przy pomocy pliku miejscowości}
 menuText P ToolsMaintNameRound "Sprawdź numery rund..." 15 \
   {Sprawdź numery rund przy pomocy pliku}
+# ====== TODO To be translated ======
+menuText P ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText P ToolsMaintFixBase "Napraw bazę" 0 {Spróbuj naprawić uszkodzoną bazę}
 
 menuText P ToolsConnectHardware "Podłącz urządzenie" 0 {Podłącz zewnętrzne urządzenie}
@@ -1051,6 +1053,8 @@ translate P AddEloRatings {Dodaj rankingi ELO}
 translate P AutoloadGame {Domyślna partia}
 translate P StripTags {Usuń znaczniki PGN} 
 translate P StripTag {Usuń znacznik}
+# ====== TODO To be translated ======
+translate P AddTag {Add Tag}
 translate P CheckGames {Sprawdź partie}
 translate P Cleaner {Zestaw zadań}
 translate P CleanerHelp {

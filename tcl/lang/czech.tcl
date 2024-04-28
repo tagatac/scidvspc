@@ -188,6 +188,8 @@ menuText C ToolsMaintNameSite "Kontrola pravopisu míst..." 19 \
 menuText C ToolsMaintNameRound "Kontrola pravopisu kol..." 19 \
   {Kontrola pravopisu kol s vyu¾itím souboru pro kontrolu pravopisu}
 # ====== TODO To be translated ======
+menuText C ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
+# ====== TODO To be translated ======
 menuText C ToolsMaintFixBase "Repair base" 0 {Try to repair a corrupted base}
 # ====== TODO To be translated ======
 menuText C ToolsConnectHardware "Connect Hardware" 0 {Connect external hardware}
@@ -1141,6 +1143,8 @@ translate C AddEloRatings {Pøidat ELO rating}
 translate C AutoloadGame {Automaticky otevírat partii è.}
 translate C StripTags {Odstranit PGN znaèky}
 translate C StripTag {Odstranit znaèku}
+# ====== TODO To be translated ======
+translate C AddTag {Add Tag}
 # ====== TODO To be translated ======
 translate C CheckGames {Check games}
 translate C Cleaner {Èi¹tìní databáze}

@@ -199,6 +199,8 @@ menuText D ToolsMaintNameSite "Schreibkorrektur Ort..." 17 \
   {Schreibkorrektur der Orte mit Hilfe der .ssp-Datei}
 menuText D ToolsMaintNameRound "Schreibkorrektur Runde..." 17 \
   {Schreibkorrektur der Runden mit Hilfe der .ssp-Datei}
+# ====== TODO To be translated ======
+menuText D ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText D ToolsMaintFixBase "Inkonsistenzen beseitigen" 0 {Versuche eine inkonsistente Datenbank zu reparieren}
 menuText D ToolsConnectHardware "Hardware verbinden" 0 {Externe Hardware mit Scid verbinden}
 menuText D ToolsConnectHardwareConfigure "Konfigurieren..." 0 {Hardware und Verbindung konfigurieren}
@@ -991,6 +993,8 @@ translate D AddEloRatings {ELO-Zahlen hinzufügen}
 translate D AutoloadGame {Automatisch Partie Nr. laden}
 translate D StripTags {PGN-Markierungen entfernen}
 translate D StripTag {Markierung entfernen}
+# ====== TODO To be translated ======
+translate D AddTag {Add Tag}
 translate D CheckGames {Konsistenzprüfung}
 translate D Cleaner {Bereiniger}
 translate D CleanerHelp {

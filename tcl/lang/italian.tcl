@@ -179,6 +179,8 @@ menuText I ToolsMaintNameSite "Controllo di nomi di siti..." 21 \
 menuText I ToolsMaintNameRound "Controllo di nomi di turni..." 21 \
   {Controllo di nomi di turni mediante il file di verifica}
 # ====== TODO To be translated ======
+menuText I ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
+# ====== TODO To be translated ======
 menuText I ToolsMaintFixBase "Repair base" 0 {Try to repair a corrupted base}
 # ====== TODO To be translated ======
 menuText I ToolsConnectHardware "Connect Hardware" 0 {Connect external hardware}
@@ -1142,6 +1144,8 @@ translate I AddEloRatings {Aggiungi punteggio Elo}
 translate I AutoloadGame {Numero della partita che si caricher� automaticamente}
 translate I StripTags {Toglie i PGN tags}
 translate I StripTag {Toglie i tag}
+# ====== TODO To be translated ======
+translate I AddTag {Add Tag}
 # ====== TODO To be translated ======
 translate I CheckGames {Check games}
 translate I Cleaner {Manutentore Globale}

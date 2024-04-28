@@ -188,6 +188,8 @@ menuText N ToolsMaintNameSite "Corrigeer naam plaats..." 15 \
   {Controleer plaatsnamen via spelling-bestand}
 menuText N ToolsMaintNameRound "Corrigeer ronde..." 10 \
   {Controleer rondenamen via spelling-bestand}
+# ====== TODO To be translated ======
+menuText N ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText N ToolsMaintFixBase "Herstel beschadigde database" 0 {Proberen een beschadigde database te herstellen}
 menuText N ToolsConnectHardware "Verbind hardware" 0 {Externe hardware verbinden cq aansluiten}
 menuText N ToolsConnectHardwareConfigure "Configureer..." 0 {Configureer externe hardware en verbinding}
@@ -1073,6 +1075,8 @@ translate N AddEloRatings {Toevoegen Elo classificatie}
 translate N AutoloadGame {Auto-laden partij nummer}
 translate N StripTags {Verwijder PGN labels}
 translate N StripTag {Verwijder label}
+# ====== TODO To be translated ======
+translate N AddTag {Add Tag}
 translate N CheckGames {Controleer partijen}
 translate N Cleaner {Reiniger}
 translate N CleanerHelp {

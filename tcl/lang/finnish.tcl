@@ -154,6 +154,8 @@ menuText L ToolsMaintNamePlayer "Tarkasta pelaajien nimien tavutus" 11 {Tarkasta
 menuText L ToolsMaintNameEvent "Tarkasta tapahtumien nimien tavutus" 11 {Tarkasta tapahtumien nimien tavutus käyttäen tavutuksen tarkastustiedostoa}
 menuText L ToolsMaintNameSite "Tarkasta paikannimien tavutus" 11 {Tarkasta paikannimien tavutus käyttäen tavutuksen tarkastustiedostoa}
 menuText L ToolsMaintNameRound "Tarkista kierroksen nimien tavutus" 11 {Tarkasta kierroksen nimien tavutus käyttäen tavutuksen tarkastustiedostoa}
+# ====== TODO To be translated ======
+menuText L ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText L ToolsMaintFixBase "Korjaa tietokanta" 0 {Yritä korjata vahingoittunut tietokanta}
 
 menuText L ToolsConnectHardware "Yhdistä hardware" 0 {Yhditä ulkoinen hardware}
@@ -974,6 +976,8 @@ translate L AddEloRatings {Lisää Elo-luvut}
 translate L AutoloadGame {Lataa peli automaattisesti}
 translate L StripTags {Poista ylimääräiset tagit}
 translate L StripTag {Poista tag}
+# ====== TODO To be translated ======
+translate L AddTag {Add Tag}
 translate L CheckGames {Tarkista pelit}
 translate L Cleaner {Puhdistaja}
 translate L CleanerHelp {

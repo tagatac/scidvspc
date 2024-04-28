@@ -192,6 +192,8 @@ menuText H ToolsMaintNameSite "Helynevek ellenõrzése..." 0 \
 menuText H ToolsMaintNameRound "Fordulónevek ellenõrzése..." 0 \
   {A helyesírás-ellenõrzõ fájl segítségével ellenõrzi a fordulók nevét.}
 # ====== TODO To be translated ======
+menuText H ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
+# ====== TODO To be translated ======
 menuText H ToolsMaintFixBase "Repair base" 0 {Try to repair a corrupted base}
 # ====== TODO To be translated ======
 menuText H ToolsConnectHardware "Connect Hardware" 0 {Connect external hardware}
@@ -1151,6 +1153,8 @@ translate H AutoloadGame {Játszmasorszám automatikus betöltése}
 #Igaz ez?
 translate H StripTags {PGN-címkék eltüntetése}
 translate H StripTag {Címke eltüntetése}
+# ====== TODO To be translated ======
+translate H AddTag {Add Tag}
 # ====== TODO To be translated ======
 translate H CheckGames {Check games}
 translate H Cleaner {Takarító}

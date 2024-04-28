@@ -176,6 +176,8 @@ menuText R ToolsMaintNameSite "Проверка названий мест..." 18
   {Проверка названий мест с помощью файла правописания}
 menuText R ToolsMaintNameRound "Проверка названий раундов..." 20 \
   {Проверка названий раундов с помощью файла правописания}
+# ====== TODO To be translated ======
+menuText R ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText R ToolsMaintFixBase "Исправить повреждённую базу" 0 {Попытаться исправить повреждённую базу}
 menuText R ToolsConnectHardware "Подключение к оборудованию" 0 {Подключение к внешнему оборудованию}
 menuText R ToolsConnectHardwareConfigure "Настройка..." 0 {Настройка внешнего оборудования и подключения}
@@ -1035,6 +1037,8 @@ translate R AddEloRatings {Добавить рейтинги Эло}
 translate R AutoloadGame {Автозагрузка номера партии}
 translate R StripTags {Удалить теги PGN}
 translate R StripTag {Удалить теги}
+# ====== TODO To be translated ======
+translate R AddTag {Add Tag}
 translate R CheckGames {Проверенные партии}
 translate R Cleaner {Чистильщик}
 translate R CleanerHelp {

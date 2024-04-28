@@ -179,6 +179,8 @@ menuText U ToolsMaintNameSite "Verificação Ortográfica de Lugares..." 11 \
   {Verifica a correcao dos nomes de lugares usando o arquivo de correcao ortografica}
 menuText U ToolsMaintNameRound "Verificação Ortográfica de Rodadas..." 11 \
   {Verificação dos nomes de rodadas usando o arquivo de correcao ortografica}
+# ====== TODO To be translated ======
+menuText U ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText U ToolsMaintFixBase "Reparar a base" 0 {Tenta reparar uma base corrupto}
 menuText U ToolsConnectHardware "Ligar Hardware" 0 {Connect external hardware}
 menuText U ToolsConnectHardwareConfigure "Configurar..." 0 {Configure external hardware and connection}
@@ -980,6 +982,8 @@ translate U AddEloRatings {Adicionar Elo}
 translate U AutoloadGame {Carregar autom. o jogo n.º}
 translate U StripTags {Apagar etiquetas PGN} ;# ***
 translate U StripTag {Apagar etiqueta} ;# ***
+# ====== TODO To be translated ======
+translate U AddTag {Add Tag}
 translate U CheckGames {Verificar jogos}
 translate U Cleaner {Limpador}
 translate U CleanerHelp {

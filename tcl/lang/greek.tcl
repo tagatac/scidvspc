@@ -193,6 +193,8 @@ menuText G ToolsMaintNameSite "Συλλαβισμός Ονομάτων Τοπο�
   {Έλεγχος ονομάτων τοποθεσιών με την χρήση σχετικού αρχείου τοποθεσιών}
 menuText G ToolsMaintNameRound "Έλεγχος Γύρων Αγώνων" 8 \
   {Έλεγχος γύρων αγώνων με την χρήση σχετικού αρχείου γύρων}
+# ====== TODO To be translated ======
+menuText G ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText G ToolsMaintFixBase "Επιδιόρθωση Βάσης Δεδομένων" 7 {Προσπάθεια επιδιόρθωσης χαλασμένης Βάσης Δεδομένων}
 
 
@@ -1083,6 +1085,8 @@ translate G AddEloRatings {Προσθήκη ELO σε παρτίδες}
 translate G AutoloadGame {Αυτόματη Φόρτωση Παρτίδας}
 translate G StripTags {Αφαίρεση Ετικετών PGN}
 translate G StripTag {Αφαίρεση Ετικέτας}
+# ====== TODO To be translated ======
+translate G AddTag {Add Tag}
 translate G CheckGames {Έλεγχος παρτίδων}
 translate G Cleaner {Καθαριστής}
 translate G CleanerHelp {
