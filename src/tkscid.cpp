@@ -2667,38 +2667,27 @@ sc_base_duplicates (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv
     return setUintResult (ti, deletedCount);
 }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// sc_base_tag:
-//   Produce a list of PGN tags used in the database,
-//   or strip an unwanted non-essential tag from the
-//   database. It cannot be used for in-index tags
-//   such as ratings, ECO or EventDate, or the FEN
-//   or Setup tags.
-//   The command has three subcommands:
-//      find <tag>: set the filter to contain all games
-//                  that have the specified tag.
-//      list: return a even-sized list, where each pair
-//            of elements is a tag name and its frequency,
-//            for all non-standard tags stored as Extra
-//            tags in the game file of the database.
-//      strip <tag>: Remove all occurences of the
-//                   specified tag from the database.
+
+// Handle/Strip/Add 'extra' tags.
+// Cannot be used for in-index tags such as White, ratings, ECO, EventDate or the FEN or SetUp tags.
+
 int
 sc_base_tag (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
-    const char * usage = "Usage: sc_base tag [find <tagname> | list | strip <tagname> [filter|all]]";
+    const char * usage = "Usage: sc_base tag [list | [find | strip] <tagname> [filter|all] | add <tagname> <tagvalue> [filter|all]]";
     const char * options[] = {
-        "find", "list", "strip", NULL
+        "find", "list", "strip", "add", NULL
     };
     enum {
-        TAG_FIND, TAG_LIST, TAG_STRIP
+        TAG_FIND, TAG_LIST, TAG_STRIP, TAG_ADD
     };
 
     bool showProgress = startProgressBar();
+    // printf ("showProgress %u\n",showProgress);
 
-    const char * tag = NULL;  // For "find" or "strip" commands
-    NameBase * tagnb = NULL;  // For "list" command; tags are collected
-                              // as if they were player names.
+    const char * tag = NULL;  // For find, strip, add
+    const char * value = NULL;// For add
+    NameBase * tagnb = NULL;  // For "list" command; tags are collected as if they were player names.
 
     if (! db->inUse) {
         return errorResult (ti, errMsgNotOpen(ti));
@@ -2718,6 +2707,12 @@ sc_base_tag (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         if (argc != 5) { return errorResult (ti,usage); }
         tag = argv[3];
         limitToFilter = (argv[4][0] == 'f');
+        break;
+    case TAG_ADD:
+        if (argc != 6) { return errorResult (ti,usage); }
+        tag = argv[3];
+        value = argv[4];
+        limitToFilter = (argv[5][0] == 'f');
         break;
     default:
         return errorResult (ti, usage);
@@ -2750,8 +2745,7 @@ sc_base_tag (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         IndexEntry * ie = db->idx->FetchEntry (gnum);
         if (ie->GetLength() == 0) { continue; }
         db->bbuf->Empty();
-        if (db->gfile->ReadGame (db->bbuf, ie->GetOffset(),
-                                 ie->GetLength()) != OK) {
+        if (db->gfile->ReadGame (db->bbuf, ie->GetOffset(), ie->GetLength()) != OK) {
             continue;
         }
         if (g->Decode (db->bbuf, GAME_DECODE_ALL) != OK) {
@@ -2769,9 +2763,14 @@ sc_base_tag (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
                 // The tag was found and stripped. Re-save the game,
                 // remembering to load its standard tags first:
                 g->LoadStandardTags (ie, db->nb);
-                 if (sc_savegame (ti, g, gnum+1, db) != OK) { return TCL_ERROR; }
+                if (sc_savegame (ti, g, gnum+1, db) != OK) { return TCL_ERROR; }
                 nEditedGames++;
             }
+        } else if (cmd == TAG_ADD) {
+            g->AddPgnTag (tag,value);
+            g->LoadStandardTags (ie, db->nb);
+            if (sc_savegame (ti, g, gnum+1, db) != OK) { return TCL_ERROR; }
+            nEditedGames++;
         } else {
             ASSERT (cmd == TAG_LIST);
             uint numtags = g->GetNumExtraTags();
@@ -2787,12 +2786,14 @@ sc_base_tag (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             }
         }
     }
+    // if (showProgress) { updateProgressBar (ti, 1, 1); } todo - fix me
+
     setMainFilter (db);
 
     // Done searching through all games.
 
-    // If necessary, update index and name files:
-    if (cmd == TAG_STRIP  &&  nEditedGames > 0) {
+    // If necessary, update index and name files
+    if ((cmd == TAG_STRIP || cmd == TAG_ADD)  &&  nEditedGames > 0) {
         db->gfile->FlushAll();
         if (db->idx->WriteHeader() != OK) {
             return errorResult (ti, "Error writing index file.");
@@ -2802,7 +2803,7 @@ sc_base_tag (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         }
     }
 
-    if (cmd == TAG_STRIP) {
+    if (cmd == TAG_STRIP || cmd == TAG_ADD) {
         setUintResult (ti, nEditedGames);
     }
 

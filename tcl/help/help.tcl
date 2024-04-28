@@ -2576,12 +2576,12 @@ For example - the first two examples remove four digit ELOs from player names. T
   <p>
   The PGN format includes a set of compulsory tags (such as White, Event and EventDate).
   In Scid, these are handled by the <run nameEditor><green>Name Editor</green></run>.
-  The Extra Tags window allows modifying the other, non-standard tags such as Annotator, PlyCount, Depth, TimeControl.
+  The <run extraTags><green>Extra Tags</green></run> window allows modifying the other, non-standard tags such as Annotator, PlyCount, Depth, TimeControl.
   </p>
   <p>
   Features are: Finding, Filtering, Stripping, and Adding/Creating new tags.
   </p>
-  <p><i>Please use with caution. Altering game tags is a powerful feature, and generally not undoable.</i></p>
+  <p><i>Please use with caution. Bulk editing game tags is a powerful feature, and generally not undoable. Some tags are not allowable, such as  "FEN" and "SetUp", and it is defintely *not* a good idea to duplicate lesser compulsory tags suck as "WhiteElo".</i></p>
 
   <h3><name Check>Check Games</name></h3>
   <p>

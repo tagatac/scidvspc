@@ -2074,7 +2074,7 @@ proc extraTags {{parent .}} {
 
   bind $w <F1> {helpWindow Maintenance Tags}
 
-  label $w.title -text "PGN tags ([file tail [sc_base filename]])" -font font_Bold
+  label $w.title -text "$::tr(StripTags) ([file tail [sc_base filename]])" -font font_Bold
   pack $w.title -side top
   frame $w.tags
   pack $w.tags -side top -fill both -expand yes
@@ -2123,8 +2123,10 @@ proc extraTags {{parent .}} {
     }
   }
 
+  dialogbutton $w.buttons.add -text $::tr(GlistAddField) -command addExtraTag
+
   dialogbutton $w.buttons.cancel -text $::tr(Close) -command "destroy $w"
-  pack $w.buttons.find $w.buttons.strip -side left -padx 5 -pady 3
+  pack $w.buttons.find $w.buttons.strip $w.buttons.add -side left -padx 5 -pady 3
   pack $w.buttons.cancel -side right -padx 5 -pady 3
   bind $w <Escape> "$w.buttons.cancel invoke"
 
@@ -2132,6 +2134,52 @@ proc extraTags {{parent .}} {
 
   bind $w <Configure> "recordWinSize $w"
   wm state $w normal
+}
+
+proc addExtraTag {} {
+  set w [toplevel .exTagDialog]
+  wm title $w "Scid: $::tr(StripTags)"
+
+  label $w.label -text "Enter Tag Name and Value"
+  pack $w.label -side top -pady 5 -padx 5
+
+  frame $w.entries
+  entry $w.entries.tag -textvariable ::tmp1 -width 14
+  entry $w.entries.value -textvariable ::tmp2 -width 14
+  bind $w <Escape> { .exTagDialog.buttons.cancel invoke }
+  pack $w.entries -side top -pady 5
+  pack $w.entries.tag $w.entries.value -side left -padx 5
+
+  set b [frame $w.buttons]
+  pack $b -side top -fill x
+  dialogbutton $b.load -text "OK" -command {
+    global tmp1 tmp2
+    destroy .exTagDialog
+    set errorMsg {}
+    set noMatch {SetUp BlackElo WhiteElo FEN WhiteRatingType BlackRatingType WhiteEstimateElo BlackEstimateElo EcoCode}
+    if {$tmp1 == "" || $tmp2 == ""} {
+      set errorMsg "Null string found."
+    } elseif {[regexp {\s} $tmp1]} {
+      set errorMsg "Tag has whitespace/unprintables."
+    } elseif {[set match [lsearch $noMatch $tmp1]] > -1} {
+      set errorMsg "\"[lindex $noMatch $match]\" is an illegal Extra Tag"
+    }
+    if {$errorMsg != ""} {
+      tk_messageBox -title Oops -icon warning -type ok -message $errorMsg -parent .extratags
+    } else {
+      sc_base tag add $tmp1 $tmp2 $::checkOption(AllGames)
+      ::game::Reload 
+      # Reboot! Todo - fixme ??
+      extraTags
+    }
+  }
+  dialogbutton $b.cancel -text $::tr(Cancel) -command {
+    destroy .exTagDialog
+    focus .extratags
+  }
+  packbuttons right $b.cancel $b.load
+
+  placeWinOverParent $w .extratags
 }
 
 proc populateExtraTags {} {
