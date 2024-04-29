@@ -173,6 +173,8 @@ menuText G ToolsBookTuning "Ρυθμ.Βιβλ.Ανοίγματος" 5 {Ρυθμ�
 menuText G ToolsMaint "Συντήρηση" 0 {Εργαλεία συντήρησης βάσεων δεδομένων}
 menuText G ToolsMaintWin "Παράθυρο Συντήρησης" 0 \
   {Ανοίγμα/Κλείσιμο παραθύρου Συντήρησης βάσης δεδομένων}
+# ====== TODO To be translated ======
+menuText G ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText G ToolsMaintCompact "Συμπίεση Βάσης Δεδομένων" 0 \
   {Συμπιέση αρχείων βάσης δεδομένων απομακρύνοντας διαγραμμένες παρτίδες και μη χρησιμοποιημένα ονόματα}
 menuText G ToolsMaintClass "Προσθήκη ECO στις Παρτίδες" 1 \
@@ -194,7 +196,6 @@ menuText G ToolsMaintNameSite "Συλλαβισμός Ονομάτων Τοπο�
 menuText G ToolsMaintNameRound "Έλεγχος Γύρων Αγώνων" 8 \
   {Έλεγχος γύρων αγώνων με την χρήση σχετικού αρχείου γύρων}
 # ====== TODO To be translated ======
-menuText G ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText G ToolsMaintFixBase "Επιδιόρθωση Βάσης Δεδομένων" 7 {Προσπάθεια επιδιόρθωσης χαλασμένης Βάσης Δεδομένων}
 
 
@@ -231,7 +232,6 @@ menuText G ToolsExpFilterLaTeX "Εξαγωγή σε LaTeX" 3 \
   {Εγγραφή Όλων των φιλτραρισμένων παρτίδων σε αρχείο LaTeX}
 # ====== TODO To be translated ======
 menuText G ToolsExpFilterEPD "Export Filter to EPD/FEN" 17 {Write all filtered games to an EPD File}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText G ToolsExpFilterGames "Export Gamelist to Text" 19 {Print a formatted Gamelist.}
 menuText G ToolsImportOne "Εισαγωγή Κειμένου PGN" 9 \
@@ -273,7 +273,6 @@ menuText G OptionsColour "Χρώμα Φόντου" 7 {Προπιλεγμένο �
 menuText G OptionsBackColour "Background" 0 {Default text widget color}
 # ====== TODO To be translated ======
 menuText G OptionsBackColourGlobal "Global" 0 {Global background color}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText G OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
 # ====== TODO To be translated ======

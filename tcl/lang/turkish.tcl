@@ -144,6 +144,8 @@ menuText T ToolsBookTuning "Kitap ayarı" 0 {Book tuning}
 
 menuText T ToolsMaint "Bakım" 0 {Scid database maintenance tools}
 menuText T ToolsMaintWin "Bakım penceresi" 0 {Open/close the Scid database maintenance window}
+# ====== TODO To be translated ======
+menuText T ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText T ToolsMaintCompact "sıkıştırılmış veritabanı dosyaları, silinen oyunları ve kullanılmayan isimleri kaldırma" 0 {sıkıştırılmış veritabanı dosyaları, silinen oyunları ve kullanılmayan isimleri kaldırma}
 menuText T ToolsMaintClass "ECO-kodlarını hesapla" 2 {Tüm oyunların ECO kodunu yeniden hesapla}
 menuText T ToolsMaintSort "Veritabanındaki tüm oyunları sırala" 0 {Veritabanındaki tüm oyunları sırala}
@@ -155,7 +157,6 @@ menuText T ToolsMaintNameEvent "Etkinlik İsimleri" 11 {İmla dosyası kullanara
 menuText T ToolsMaintNameSite "yer Adları" 11 {İmla dosyası kullanarak yer adlarını yazım denetimi}
 menuText T ToolsMaintNameRound "Tur İsimleri" 11 {Spellcheck round names using the spellcheck file}
 # ====== TODO To be translated ======
-menuText T ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText T ToolsMaintFixBase "tabanı Onarın" 0 {Bozuk bir tabanı onarmaya çalışın}
 
 menuText T ToolsConnectHardware "Donanımı Bağla" 0 {Harici donanımı bağlayın}

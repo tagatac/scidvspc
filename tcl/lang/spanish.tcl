@@ -182,6 +182,8 @@ menuText S ToolsMaint "Mantenimiento" 0 \
   {Herramientas de mantenimiento de la base de datos Scid}
 menuText S ToolsMaintWin "Mantenimiento" 0 \
   {Abre/cierra la ventana de mantenimiento de la base de datos Scid}
+# ====== TODO To be translated ======
+menuText S ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText S ToolsMaintCompact "Compactar base de datos..." 0 \
   {Compacta los archivos de la base de datos, quitando partidas borradas y nombres no usados}
 menuText S ToolsMaintClass "Clasificar partidas por ECO..." 24 \
@@ -203,7 +205,6 @@ menuText S ToolsMaintNameSite "Corrección de nombres de lugares" 11 \
 menuText S ToolsMaintNameRound "Corrección de nombre de rondas" 11 \
   {Comprobación ortográfica de rondas usando el archivo de comprobación ortográfica}
 # ====== TODO To be translated ======
-menuText S ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText S ToolsMaintFixBase "Reparar base corrupta" 0 {Intenta reparar una base corrupta}
 menuText S ToolsConnectHardware "Conectar hardware" 0 {Conectar  hardware externo}
 menuText S ToolsConnectHardwareConfigure "Configurar..." 0 {Configurar conexión a hardware externo}

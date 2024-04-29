@@ -543,8 +543,8 @@ set helpMessage($m.utils,0) ToolsMaintWin
 $m.utils add command -label ToolsMaintNameEditor -command nameEditor 
 set helpMessage($m.utils,1) ToolsMaintNameEditor
 
-$m.utils add command -label ToolsMaintNameExtra -command extraTags 
-set helpMessage($m.utils,2) ToolsMaintNameExtra
+$m.utils add command -label ToolsMaintExtra -command extraTags 
+set helpMessage($m.utils,2) ToolsMaintExtra
 
 $m.utils add command -label ToolsMaintCompact -command makeCompactWin
 set helpMessage($m.utils,3) ToolsMaintCompact
@@ -1597,10 +1597,10 @@ proc updateMenuStates {} {
     }
   }
 
-  foreach i {Compact Delete} {
+  foreach i {Compact Extra Delete} {
     $m.tools.utils entryconfig [tr ToolsMaint$i] -state disabled
   }
-  foreach i {Editor Player Event Site Round Extra} {
+  foreach i {Editor Player Event Site Round} {
     $m.tools.utils entryconfig [tr ToolsMaintName$i] -state disabled
   }
 
@@ -1628,7 +1628,8 @@ proc updateMenuStates {} {
     $m.file entryconfig [tr FileClose] -state normal
     if {! $isReadOnly} {
       $m.tools.utils entryconfig [tr ToolsMaintDelete] -state normal
-      foreach i {Editor Player Event Site Round Extra} {
+      $m.tools.utils entryconfig [tr ToolsMaintExtra] -state normal
+      foreach i {Editor Player Event Site Round} {
         $m.tools.utils entryconfig [tr ToolsMaintName$i] -state normal
       }
 
@@ -1789,11 +1790,11 @@ proc setLanguageMenus {{lang ""}} {
     configMenuText .menu.tools [tr Tools$tag $oldLang] Tools$tag $lang
   }
 
-  foreach tag {Win Compact Delete Twin Sort FixBase} {
+  foreach tag {Win Compact Extra Delete Twin Sort FixBase} {
     # Maintenance used to be in .menu.file but is now in .menu.tools
     configMenuText .menu.tools.utils [tr ToolsMaint$tag $oldLang] ToolsMaint$tag $lang
   }
-  foreach tag {Editor Player Event Site Round Extra} {
+  foreach tag {Editor Player Event Site Round} {
     configMenuText .menu.tools.utils [tr ToolsMaintName$tag $oldLang] ToolsMaintName$tag $lang
   }
 

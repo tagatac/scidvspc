@@ -171,6 +171,8 @@ menuText H ToolsBookTuning "Book tuning" 0 {Book tuning}
 menuText H ToolsMaint "Gondozás" 0 {SCID adatbázisgondozó eszközök}
 menuText H ToolsMaintWin "Adatbázisgondozó ablak" 0 \
   {Kinyitja/becsukja az SCID adatbázisgondozó ablakot.}
+# ====== TODO To be translated ======
+menuText H ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText H ToolsMaintCompact "Adatbázis tömörítése..." 10 \
   {Eltávolítja az adatbázisból a törölt játszmákat és a használaton kívül álló neveket.}
 menuText H ToolsMaintClass "Osztályba sorolás..." 0 \
@@ -192,8 +194,6 @@ menuText H ToolsMaintNameSite "Helynevek ellenõrzése..." 0 \
 menuText H ToolsMaintNameRound "Fordulónevek ellenõrzése..." 0 \
   {A helyesírás-ellenõrzõ fájl segítségével ellenõrzi a fordulók nevét.}
 # ====== TODO To be translated ======
-menuText H ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
-# ====== TODO To be translated ======
 menuText H ToolsMaintFixBase "Repair base" 0 {Try to repair a corrupted base}
 # ====== TODO To be translated ======
 menuText H ToolsConnectHardware "Connect Hardware" 0 {Connect external hardware}
@@ -203,8 +203,6 @@ menuText H ToolsConnectHardwareConfigure "Configure..." 0 {Configure external ha
 menuText H ToolsConnectHardwareNovagCitrineConnect "Connect Novag Citrine" 0 {Connect Novag Citrine}
 # ====== TODO To be translated ======
 menuText H ToolsConnectHardwareInputEngineConnect "Connect Input Engine" 0 {Connect Input Engine (e.g. DGT)}
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText H ToolsPInfo "Játékosinformáció"  0 \
   {Kinyitja/frissíti a játékos adatait tartalmazó ablakot.}
@@ -236,7 +234,6 @@ menuText H ToolsExpFilterLaTeX "Szûrõ exportálása LaTeX-fájlba..." 18 \
   {LaTeX-fájlba írja az összes szûrt játszmát.}
 # ====== TODO To be translated ======
 menuText H ToolsExpFilterEPD "Export Filter to EPD/FEN" 17 {Write all filtered games to an EPD File}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText H ToolsExpFilterGames "Export Gamelist to Text" 19 {Print a formatted Gamelist.}
 menuText H ToolsImportOne "PGN-játszma importálása..." 0 \
@@ -277,7 +274,6 @@ menuText H OptionsColour "Colour" 0 {Default text widget color}
 menuText H OptionsBackColour "Background" 0 {Default text widget color}
 # ====== TODO To be translated ======
 menuText H OptionsBackColourGlobal "Global" 0 {Global background color}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText H OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
 # ====== TODO To be translated ======
@@ -842,7 +838,6 @@ translate H AnnotateNotBest {Ha a játszmában nem a legjobbat lépték}
 translate H AnnotateBlundersOnly {When game move is an obvious blunder}
 # ====== TODO To be translated ======
 translate H BlundersNotBest {Blunders/Not Best}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 translate H AnnotateTitle {Állítsa Jegyzet}
 # ====== TODO To be translated ======
@@ -1513,9 +1508,6 @@ translate H NameEditWith {Erre}
 translate H NameEditMatches {Egyezések: Ctrl+1...Ctrl+9 választ.}
 # ====== TODO To be translated ======
 translate H MatchPattern {Match Pattern}
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
 
 # Classify window:
 translate H Classify {Osztályoz}
@@ -1689,9 +1681,6 @@ translate H blunder {blunder}
 # ====== TODO To be translated ======
 translate H Noinfo {-- No info --}
 # ====== TODO To be translated ======
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
 translate H moveblunderthreshold {move is a blunder if loss is greater than}
 # ====== TODO To be translated ======
 translate H limitanalysis {limit engine analysis time}
@@ -1852,12 +1841,9 @@ translate H TimeMode {Time mode}
 # ====== TODO To be translated ======
 translate H TimeBonus {Time + bonus}
 # ====== TODO To be translated ======
-# ====== TODO To be translated ======
 translate H TimeMin {min}
 # ====== TODO To be translated ======
 translate H TimeSec {sec}
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 translate H AllExercisesDone {All exercises done}
 # ====== TODO To be translated ======
@@ -1900,7 +1886,6 @@ translate H RemLine {Remove Line}
 translate H Calvar {Calculation of variations}
 # ====== TODO To be translated ======
 translate H ConfigureCalvar {Configuration}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 translate H Reti {Reti}
 # ====== TODO To be translated ======

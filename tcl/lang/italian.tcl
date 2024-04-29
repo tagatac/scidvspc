@@ -158,6 +158,8 @@ menuText I ToolsBookTuning "Raffina il libro delle aperture" 0 {Raffina il libro
 menuText I ToolsMaint "Gestione" 0 {Strumenti di gestione di un database Scid}
 menuText I ToolsMaintWin "Finestra di Gestione" 0 \
   {Apre/chiude la finestra di gestione di un database Scid}
+# ====== TODO To be translated ======
+menuText I ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText I ToolsMaintCompact "Compatta database..." 0 \
   {Compatta i file di database, rimuovendo le partite cancellate e i nomi non usati}
 menuText I ToolsMaintClass "Classificazione ECO di partite..." 2 \
@@ -178,8 +180,6 @@ menuText I ToolsMaintNameSite "Controllo di nomi di siti..." 21 \
   {Controllo di nomi di siti mediante il file di verifica}
 menuText I ToolsMaintNameRound "Controllo di nomi di turni..." 21 \
   {Controllo di nomi di turni mediante il file di verifica}
-# ====== TODO To be translated ======
-menuText I ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 # ====== TODO To be translated ======
 menuText I ToolsMaintFixBase "Repair base" 0 {Try to repair a corrupted base}
 # ====== TODO To be translated ======
@@ -218,7 +218,6 @@ menuText I ToolsExpFilterLaTeX "Esporta filtro in un file LaTeX..." 17 \
   {Scrive tutte le partite filtrate in un file LaTeX}
 # ====== TODO To be translated ======
 menuText I ToolsExpFilterEPD "Export Filter to EPD/FEN" 17 {Write all filtered games to an EPD File}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText I ToolsExpFilterGames "Export Gamelist to Text" 19 {Print a formatted Gamelist.}
 menuText I ToolsImportOne "Importa una partita in formato PGN..." 0 \
@@ -261,7 +260,6 @@ menuText I OptionsColour "Colour" 0 {Default text widget color}
 menuText I OptionsBackColour "Background" 0 {Default text widget color}
 # ====== TODO To be translated ======
 menuText I OptionsBackColourGlobal "Global" 0 {Global background color}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText I OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
 # ====== TODO To be translated ======
@@ -736,7 +734,6 @@ translate I AddMoveToMaskFirst {Add move to mask first}
 translate I OpenAMaskFileFirst {Open a mask file first}
 # ====== TODO To be translated ======
 translate I positions {positions}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 translate I Moves {Moves}
 
@@ -1476,9 +1473,6 @@ translate I NameEditWith {con}
 translate I NameEditMatches {Corrispondenze: Digita da Ctrl+1 ad Ctrl+9 per scegliere}
 # ====== TODO To be translated ======
 translate I MatchPattern {Match Pattern}
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
 
 # Classify window:
 translate I Classify {Classifica}
@@ -1731,7 +1725,6 @@ translate I Engine {Engine}
 # ====== TODO To be translated ======
 translate I TimeMode {Time mode}
 translate I TimeBonus {Tempo + bonus}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 translate I TimeMin {min}
 # ====== TODO To be translated ======

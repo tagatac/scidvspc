@@ -156,6 +156,8 @@ menuText R ToolsBookTuning "Настройка книги" 0 {Настройка
 menuText R ToolsMaint "Обслуживание" 2 {Инструменты обслуживания базы данных Scid}
 menuText R ToolsMaintWin "Окно обслуживания" 0 \
   {Открыть/закрыть окно обслуживания базы данных Scid}
+# ====== TODO To be translated ======
+menuText R ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText R ToolsMaintCompact "Сжать базу данных..." 0 \
   {Сжать файлы базы данных, выкинуть удалённые партии и неиспользуемые имена}
 menuText R ToolsMaintClass "ECO-классификация партии..." 0 \
@@ -177,7 +179,6 @@ menuText R ToolsMaintNameSite "Проверка названий мест..." 18
 menuText R ToolsMaintNameRound "Проверка названий раундов..." 20 \
   {Проверка названий раундов с помощью файла правописания}
 # ====== TODO To be translated ======
-menuText R ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText R ToolsMaintFixBase "Исправить повреждённую базу" 0 {Попытаться исправить повреждённую базу}
 menuText R ToolsConnectHardware "Подключение к оборудованию" 0 {Подключение к внешнему оборудованию}
 menuText R ToolsConnectHardwareConfigure "Настройка..." 0 {Настройка внешнего оборудования и подключения}

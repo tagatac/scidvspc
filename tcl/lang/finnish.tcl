@@ -144,6 +144,8 @@ menuText L ToolsBookTuning "Avauskirjaston virittäminen" 0 {Avauskirjaston virit
 
 menuText L ToolsMaint "Ylläpito" 0 {Scid-tietokannan ylläpitotyökalut}
 menuText L ToolsMaintWin "Ylläpitoikkuna" 0 {Avaa/sulje Scid-tietokannan ylläpitoikkuna}
+# ====== TODO To be translated ======
+menuText L ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText L ToolsMaintCompact "Kompakti tietokanta" 0 {Kompaktin tietokannnan tiedostot joista on poistettu hävitetyt pelit ja käyttämättömät nimet}
 menuText L ToolsMaintClass "ECO-luokittele pelit" 2 {Laske uudestaan ECO-koodit kaikille peleille}
 menuText L ToolsMaintSort "Lajittele tietokanta" 0 {Lajittele kaikki pelit tietokannassa}
@@ -155,7 +157,6 @@ menuText L ToolsMaintNameEvent "Tarkasta tapahtumien nimien tavutus" 11 {Tarkast
 menuText L ToolsMaintNameSite "Tarkasta paikannimien tavutus" 11 {Tarkasta paikannimien tavutus käyttäen tavutuksen tarkastustiedostoa}
 menuText L ToolsMaintNameRound "Tarkista kierroksen nimien tavutus" 11 {Tarkasta kierroksen nimien tavutus käyttäen tavutuksen tarkastustiedostoa}
 # ====== TODO To be translated ======
-menuText L ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText L ToolsMaintFixBase "Korjaa tietokanta" 0 {Yritä korjata vahingoittunut tietokanta}
 
 menuText L ToolsConnectHardware "Yhdistä hardware" 0 {Yhditä ulkoinen hardware}

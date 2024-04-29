@@ -198,6 +198,8 @@ menuText B ToolsBookTuning "Sintonizar Livro" 0 {Sintonizar livro de aberturas}
 menuText B ToolsMaint "Manutencao" 0 {Ferramentas de manutencao de bases de dados Scid}
 menuText B ToolsMaintWin "Janela de Manutencao" 0 \
   {Abre/Fecha a janela de manutencao de bases de dados Scid}
+# ====== TODO To be translated ======
+menuText B ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText B ToolsMaintCompact "Compactar base de dados..." 0 \
   {Compacta arquivos de bases de dados, removendo jogos deletados e nomes nao utilizados}
 menuText B ToolsMaintClass "Classificar jogos por ECO..." 2 \
@@ -219,7 +221,6 @@ menuText B ToolsMaintNameSite "Verificacao Ortografica de Lugares..." 11 \
 menuText B ToolsMaintNameRound "Verificacao Ortografica de Rodadas..." 11 \
   {Verificacao dos nomes de rodadas usando o arquivo de correcao ortografica}
 # ====== TODO To be translated ======
-menuText B ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 
 menuText B ToolsMaintFixBase "Corrigir base corrompida" 0 {Tenta corrigir uma base corrompida}
 

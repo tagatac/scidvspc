@@ -168,6 +168,7 @@ menuText E ToolsBookTuning "Book tuning" 0 {Book tuning}
 
 menuText E ToolsMaint "Maintenance" 0 {Scid database maintenance tools}
 menuText E ToolsMaintWin "Maintenance Window" 0 {Open/close the Scid database maintenance window}
+menuText E ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText E ToolsMaintCompact "Compact Database" 0 {Compact database files, removing deleted games and unused names}
 menuText E ToolsMaintClass "ECO-Classify Games" 2 {Recompute the ECO code of all games}
 menuText E ToolsMaintSort "Sort Database" 0 {Sort all games in the database}
@@ -178,7 +179,6 @@ menuText E ToolsMaintNamePlayer "Spellcheck Player Names" 11 {Spellcheck player 
 menuText E ToolsMaintNameEvent "Spellcheck Event Names" 11 {Spellcheck event names using the spellcheck file}
 menuText E ToolsMaintNameSite "Spellcheck Site Names" 11 {Spellcheck site names using the spellcheck file}
 menuText E ToolsMaintNameRound "Spellcheck Round Names" 11 {Spellcheck round names using the spellcheck file}
-menuText E ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText E ToolsMaintFixBase "Repair base" 0 {Try to repair a corrupted base}
 
 menuText E ToolsConnectHardware "Eboards/External Hardware" 0 {Connect external hardware}

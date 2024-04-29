@@ -162,6 +162,8 @@ menuText P ToolsBookTuning "Konfiguracja książki debiutowej" 0 {Konfiguruj ksi
 menuText P ToolsMaint "Obsługa" 1 {Narzędzia obsługi bazy Scid}
 menuText P ToolsMaintWin "Obsługa" 0 \
   {Otwórz/zamknij obsługę bazy Scid}
+# ====== TODO To be translated ======
+menuText P ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText P ToolsMaintCompact "Porządkuj bazę..." 0 \
   {Porządkuj bazę, usuwając skasowane partie i nieużywane nazwiska}
 menuText P ToolsMaintClass "Klasyfikacja debiutowa partii..." 0 \
@@ -183,7 +185,6 @@ menuText P ToolsMaintNameSite "Sprawdź pisownię nazw miejscowości..." 22 \
 menuText P ToolsMaintNameRound "Sprawdź numery rund..." 15 \
   {Sprawdź numery rund przy pomocy pliku}
 # ====== TODO To be translated ======
-menuText P ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText P ToolsMaintFixBase "Napraw bazę" 0 {Spróbuj naprawić uszkodzoną bazę}
 
 menuText P ToolsConnectHardware "Podłącz urządzenie" 0 {Podłącz zewnętrzne urządzenie}
@@ -219,7 +220,6 @@ menuText P ToolsExpFilterLaTeX "Do pliku LaTeX..." 9 \
 # ====== TODO To be translated ======
 menuText P ToolsExpFilterEPD "Export Filter to EPD/FEN" 17 {Write all filtered games to an EPD File}
 # ====== TODO To be translated ======
-# ====== TODO To be translated ======
 menuText P ToolsExpFilterGames "Export Gamelist to Text" 19 {Print a formatted Gamelist.}
 menuText P ToolsImportOne "Wklej partię w formacie PGN..." 0 \
   {Pobierz partię z pliku PGN}
@@ -253,7 +253,6 @@ menuText P OptionsColour "Kolor tła" 0 {Domyślny kolor tła}
 menuText P OptionsBackColour "Background" 0 {Default text widget color}
 # ====== TODO To be translated ======
 menuText P OptionsBackColourGlobal "Global" 0 {Global background color}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText P OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
 # ====== TODO To be translated ======

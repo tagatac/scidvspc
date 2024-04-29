@@ -179,6 +179,8 @@ menuText D ToolsBookTuning "Eröffnungsbuch anpassen" 0 {Eröffnungsbuch anpasse
 menuText D ToolsMaint "Wartung" 0 {Das Scid-Datenbankwartungsfenster}
 menuText D ToolsMaintWin "Wartungfenster" 0 \
   {Datenbank-Wartungsfenster öffnen/schließen}
+# ====== TODO To be translated ======
+menuText D ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText D ToolsMaintCompact "Datenbank komprimieren..." 10 \
   {Datenbank komprimieren, gelöschte Spiele und unbenutzte Namen entfernen}
 menuText D ToolsMaintClass "Partien ECO-klassifizieren..." 8 \
@@ -200,7 +202,6 @@ menuText D ToolsMaintNameSite "Schreibkorrektur Ort..." 17 \
 menuText D ToolsMaintNameRound "Schreibkorrektur Runde..." 17 \
   {Schreibkorrektur der Runden mit Hilfe der .ssp-Datei}
 # ====== TODO To be translated ======
-menuText D ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText D ToolsMaintFixBase "Inkonsistenzen beseitigen" 0 {Versuche eine inkonsistente Datenbank zu reparieren}
 menuText D ToolsConnectHardware "Hardware verbinden" 0 {Externe Hardware mit Scid verbinden}
 menuText D ToolsConnectHardwareConfigure "Konfigurieren..." 0 {Hardware und Verbindung konfigurieren}

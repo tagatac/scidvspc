@@ -176,6 +176,8 @@ menuText O ToolsBookTuning "Bokjustering" 0 {Finjuster åpningsbok}
 
 menuText O ToolsMaint "Vedlikehold" 0 {Verktøy for å vedlikeholde Scid-databasen}
 menuText O ToolsMaintWin "Vedlikeholdsvindu" 0 {Åpne/lukk Scids vedlikeholdsvindu}
+# ====== TODO To be translated ======
+menuText O ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText O ToolsMaintCompact "Komprimer database..." 0 {Sletter ubrukte partier og navn}
 menuText O ToolsMaintClass "ECO-klassifiser partier..." 0 {Regn om ECO-koden for alle partier}
 menuText O ToolsMaintSort "Sorter database..." 0 {Sorter alle partier i databasen}
@@ -187,7 +189,6 @@ menuText O ToolsMaintNameEvent "Kontroller turneringer..." 11 {Sammenlign turner
 menuText O ToolsMaintNameSite "Kontroller stedsnavn..." 12 {Sammenlign stedsnavn med stavekontroll-filen}
 menuText O ToolsMaintNameRound "Kontroller runde-navn..." 11 {Sammenlign rundenavn med stavekontroll-filen}
 # ====== TODO To be translated ======
-menuText O ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText O ToolsMaintFixBase "Reparer database" 0 {Prøver å reparere en ødelagt database}
 
 menuText O ToolsConnectHardware "Koble til eksternt brett" 0 {Koble til eksternt brett}

@@ -172,6 +172,8 @@ menuText Y ToolsBookTuning "Book tuning" 0 {Book tuning}
 menuText Y ToolsMaint "Odr¾avanje" 0 {Alati za odr¾avanje Scid baze podataka}
 menuText Y ToolsMaintWin "Prozor odr¾avanja" 0 \
   {Otvori/zatvori prozor odr¾avanja Scid baze podataka}
+# ====== TODO To be translated ======
+menuText Y ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText Y ToolsMaintCompact "Komprimuj bazu..." 0 \
   {Uèini fajlove baze kompaktnijim, uklanjajuæi obrisane partije i nekori¹æena imena}
 menuText Y ToolsMaintClass "E©O-Klasifikacija partija..." 2 \
@@ -193,8 +195,6 @@ menuText Y ToolsMaintNameSite "Provera pravopisa imena mesta..." 11 \
 menuText Y ToolsMaintNameRound "Provera pravopisa kola..." 11 \
   {Provera pravopisa kola pomoæu spellcheck fajla}
 # ====== TODO To be translated ======
-menuText Y ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
-# ====== TODO To be translated ======
 menuText Y ToolsMaintFixBase "Repair base" 0 {Try to repair a corrupted base}
 # ====== TODO To be translated ======
 menuText Y ToolsConnectHardware "Connect Hardware" 0 {Connect external hardware}
@@ -204,8 +204,6 @@ menuText Y ToolsConnectHardwareConfigure "Configure..." 0 {Configure external ha
 menuText Y ToolsConnectHardwareNovagCitrineConnect "Connect Novag Citrine" 0 {Connect Novag Citrine}
 # ====== TODO To be translated ======
 menuText Y ToolsConnectHardwareInputEngineConnect "Connect Input Engine" 0 {Connect Input Engine (e.g. DGT)}
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText Y ToolsPInfo "Informacije o igraèu"  0 \
   {Otvori/osve¾i informacije o igraèu}
@@ -237,7 +235,6 @@ menuText Y ToolsExpFilterLaTeX "Izvezi filtrirane partije u LaTeX fajl..." 28 \
   {Snimi sve filtrirane partije u LaTeX fajl}
 # ====== TODO To be translated ======
 menuText Y ToolsExpFilterEPD "Export Filter to EPD/FEN" 17 {Write all filtered games to an EPD File}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText Y ToolsExpFilterGames "Export Gamelist to Text" 19 {Print a formatted Gamelist.}
 menuText Y ToolsImportOne "Uvezi jednu PGN partiju..." 0 \
@@ -292,7 +289,6 @@ menuText Y OptionsColour "Colour" 0 {Default text widget color}
 menuText Y OptionsBackColour "Background" 0 {Default text widget color}
 # ====== TODO To be translated ======
 menuText Y OptionsBackColourGlobal "Global" 0 {Global background color}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText Y OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
 # ====== TODO To be translated ======
@@ -783,7 +779,6 @@ translate Y OpenAMaskFileFirst {Open a mask file first}
 # ====== TODO To be translated ======
 translate Y positions {positions}
 # ====== TODO To be translated ======
-# ====== TODO To be translated ======
 translate Y Moves {Moves}
 
 # Finder window:
@@ -913,7 +908,6 @@ translate Y AnnotateNotBest {When game move is not best move} ;# ***
 translate Y AnnotateBlundersOnly {When game move is an obvious blunder}
 # ====== TODO To be translated ======
 translate Y BlundersNotBest {Blunders/Not Best}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 translate Y AnnotateTitle {Configure Annotation}
 # ====== TODO To be translated ======
@@ -1586,9 +1580,6 @@ translate Y NameEditWith {sa}
 translate Y NameEditMatches {Podudara se: Pritisni Ctrl+1 do Ctrl+9 za izbor}
 # ====== TODO To be translated ======
 translate Y MatchPattern {Match Pattern}
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
 
 # Classify window:
 translate Y Classify {Klasifikuj}
@@ -1762,9 +1753,6 @@ translate Y blunder {blunder}
 # ====== TODO To be translated ======
 translate Y Noinfo {-- No info --}
 # ====== TODO To be translated ======
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
 translate Y moveblunderthreshold {move is a blunder if loss is greater than}
 # ====== TODO To be translated ======
 translate Y limitanalysis {limit engine analysis time}
@@ -1925,12 +1913,9 @@ translate Y TimeMode {Time mode}
 # ====== TODO To be translated ======
 translate Y TimeBonus {Time + bonus}
 # ====== TODO To be translated ======
-# ====== TODO To be translated ======
 translate Y TimeMin {min}
 # ====== TODO To be translated ======
 translate Y TimeSec {sec}
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 translate Y AllExercisesDone {All exercises done}
 # ====== TODO To be translated ======
@@ -1973,7 +1958,6 @@ translate Y RemLine {Remove Line}
 translate Y Calvar {Calculation of variations}
 # ====== TODO To be translated ======
 translate Y ConfigureCalvar {Configuration}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 translate Y Reti {Reti}
 # ====== TODO To be translated ======

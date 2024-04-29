@@ -159,6 +159,8 @@ menuText U ToolsBookTuning "Editar o Livro" 0 {Editar o livro de aberturas}
 menuText U ToolsMaint "Manutenção" 0 {Ferramentas de manutencao de bases de dados Scid}
 menuText U ToolsMaintWin "Janela de Manutenção" 0 \
   {Abre/Fecha a janela de manutencao de bases de dados Scid}
+# ====== TODO To be translated ======
+menuText U ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText U ToolsMaintCompact "Compactar Base..." 0 \
   {Compacta arquivos de bases de dados, removendo jogos deletados e nomes nao utilizados}
 menuText U ToolsMaintClass "Classificar jogos por ECO..." 2 \
@@ -180,7 +182,6 @@ menuText U ToolsMaintNameSite "Verificação Ortográfica de Lugares..." 11 \
 menuText U ToolsMaintNameRound "Verificação Ortográfica de Rodadas..." 11 \
   {Verificação dos nomes de rodadas usando o arquivo de correcao ortografica}
 # ====== TODO To be translated ======
-menuText U ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText U ToolsMaintFixBase "Reparar a base" 0 {Tenta reparar uma base corrupto}
 menuText U ToolsConnectHardware "Ligar Hardware" 0 {Connect external hardware}
 menuText U ToolsConnectHardwareConfigure "Configurar..." 0 {Configure external hardware and connection}

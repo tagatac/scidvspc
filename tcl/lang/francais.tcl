@@ -166,6 +166,8 @@ menuText F ToolsBookTuning "Config. bibliothèque" 0 {Configuration fine d'une bi
 menuText F ToolsMaint "Maintenance" 0 {Maintenance de la base}
 menuText F ToolsMaintWin "Fenêtre de maintenance" 0 \
   {Ouvrir/Fermer la fenêtre de maintenance}
+# ====== TODO To be translated ======
+menuText F ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText F ToolsMaintCompact "Compacter la base..." 0 \
   {Compacter la base: supprimer les parties effacées et les noms non utilisés}
 menuText F ToolsMaintClass "Classer les parties suivant ECO" 2 \
@@ -185,7 +187,6 @@ menuText F ToolsMaintNameSite "Corriger les noms de lieux.." 21 \
 menuText F ToolsMaintNameRound "Corriger les noms des rondes..." 22 \
   {Vérifier l'orthographe des noms de rondes}
 # ====== TODO To be translated ======
-menuText F ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText F ToolsMaintFixBase "Réparer base" 0 {Essaie de réparer une base corrompue}
 menuText F ToolsConnectHardware "Brancher hardware" 0 {Brancher hardware extérieur}
 menuText F ToolsConnectHardwareConfigure "Configurer..." 0 {Configurer la connexion au hardware extérieur}

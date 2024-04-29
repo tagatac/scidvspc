@@ -160,6 +160,8 @@ menuText W ToolsBookTuning "Bokfininställning" 0 {Bokfininställning}
 menuText W ToolsMaint "Databasverktyg" 0 {Scids databasverktyg}
 menuText W ToolsMaintWin "Verktygsfönster" 0 \
   {Öppna/ stäng verktygsfönstret}
+# ====== TODO To be translated ======
+menuText W ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText W ToolsMaintCompact "Komprimera databasen..." 0 \
   {Komprimera databasen, avlägsna raderade partier och oanvända namn}
 menuText W ToolsMaintClass "Klassificera partier enligt ECO..." 2 \
@@ -181,7 +183,6 @@ menuText W ToolsMaintNameSite "Stavningskontrollera platser..." 21 \
 menuText W ToolsMaintNameRound "Stavningskontrollera ronder..." 21 \
   {Stavningskontrollera ronder utifrån rättstavningsfilen}
 # ====== TODO To be translated ======
-menuText W ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText W ToolsMaintFixBase "Fixa trasig databas" 0 {Försök att fixa en trasig databas}
 menuText W ToolsConnectHardware "Anslut hårdvara" 0 {Anslut extern hårdvara}
 menuText W ToolsConnectHardwareConfigure "Konfigurera..." 0 {Konfigurera extern hårdvara och anslutning}
@@ -215,7 +216,6 @@ menuText W ToolsExpFilterLaTeX "Exportera till LaTeX..." 15 \
   {Spara alla filterade partier till en LaTeX-fil}
 # ====== TODO To be translated ======
 menuText W ToolsExpFilterEPD "Export Filter to EPD/FEN" 17 {Write all filtered games to an EPD File}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText W ToolsExpFilterGames "Export Gamelist to Text" 19 {Print a formatted Gamelist.}
 menuText W ToolsImportOne "Importera ett parti i PGN-format..." 0 \
@@ -251,7 +251,6 @@ menuText W OptionsColour "Bakgrundsfärg" 0 {Standardtextfärg}
 menuText W OptionsBackColour "Background" 0 {Default text widget color}
 # ====== TODO To be translated ======
 menuText W OptionsBackColourGlobal "Global" 0 {Global background color}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText W OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
 # ====== TODO To be translated ======

@@ -2092,7 +2092,7 @@ proc extraTags {{parent .}} {
   pack $w.buttons -side bottom -fill x -before $w.tags
 
   listbox $w.tags.list -yscrollcommand "$w.tags.scroll set" \
-      -exportselection 1 -font font_Fixed -width 32
+      -exportselection 1 -font font_Fixed
   scrollbar $w.tags.scroll -command "$w.tags.list yview"
   pack $w.tags.list -side left -fill both -expand yes
   pack $w.tags.scroll -side right -fill y

@@ -168,6 +168,8 @@ menuText N ToolsBookTuning "Openingenboek afstemmen" 0 {Openingenboek afstemmen}
 menuText N ToolsMaint "Onderhoud" 3 {Onderhoud ScidvsPC database}
 menuText N ToolsMaintWin "Onderhoudsvenster" 2 \
   {Open/sluit het ScidvsPC onderhoudsvenster}
+# ====== TODO To be translated ======
+menuText N ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText N ToolsMaintCompact "Reorganiseer database..." 0 \
   {Reorganiseer database bestanden}
 menuText N ToolsMaintClass "Partijen ECO-classificeren..." 10 \
@@ -189,7 +191,6 @@ menuText N ToolsMaintNameSite "Corrigeer naam plaats..." 15 \
 menuText N ToolsMaintNameRound "Corrigeer ronde..." 10 \
   {Controleer rondenamen via spelling-bestand}
 # ====== TODO To be translated ======
-menuText N ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
 menuText N ToolsMaintFixBase "Herstel beschadigde database" 0 {Proberen een beschadigde database te herstellen}
 menuText N ToolsConnectHardware "Verbind hardware" 0 {Externe hardware verbinden cq aansluiten}
 menuText N ToolsConnectHardwareConfigure "Configureer..." 0 {Configureer externe hardware en verbinding}
@@ -224,7 +225,6 @@ menuText N ToolsExpFilterLaTeX "Filter in LaTeX-formaat exporteren..." 10 \
   {Schrijf selectie naar LaTex-bestand}
 # ====== TODO To be translated ======
 menuText N ToolsExpFilterEPD "Export Filter to EPD/FEN" 17 {Write all filtered games to an EPD File}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText N ToolsExpFilterGames "Export Gamelist to Text" 19 {Print a formatted Gamelist.}
 menuText N ToolsImportOne "Een PGN partij importeren..." 16 \
@@ -261,7 +261,6 @@ menuText N OptionsColour "Achtergrondkleur" 0 {Standaard widget tekstkleur}
 menuText N OptionsBackColour "Background" 0 {Default text widget color}
 # ====== TODO To be translated ======
 menuText N OptionsBackColourGlobal "Global" 0 {Global background color}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText N OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
 # ====== TODO To be translated ======

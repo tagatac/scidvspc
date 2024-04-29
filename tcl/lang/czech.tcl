@@ -167,6 +167,8 @@ menuText C ToolsBookTuning "Book tuning" 0 {Book tuning}
 menuText C ToolsMaint "Údr¾ba" 2 {Nástroje pro údr¾bu databáze Scidu}
 menuText C ToolsMaintWin "Okno údr¾by" 0 \
   {Otevøít/zavøít okno pro údr¾bu Scid databáze}
+# ====== TODO To be translated ======
+menuText C ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
 menuText C ToolsMaintCompact "Kompaktování databáze..." 13 \
   {Kompaktování databázových souborù, odstranìní vymazaných partií a nepou¾ívaných jmen}
 menuText C ToolsMaintClass "ECO klasifikace partií..." 0 \
@@ -188,8 +190,6 @@ menuText C ToolsMaintNameSite "Kontrola pravopisu míst..." 19 \
 menuText C ToolsMaintNameRound "Kontrola pravopisu kol..." 19 \
   {Kontrola pravopisu kol s vyu¾itím souboru pro kontrolu pravopisu}
 # ====== TODO To be translated ======
-menuText C ToolsMaintNameExtra "Extra Tags" 0 {Extra Tags}
-# ====== TODO To be translated ======
 menuText C ToolsMaintFixBase "Repair base" 0 {Try to repair a corrupted base}
 # ====== TODO To be translated ======
 menuText C ToolsConnectHardware "Connect Hardware" 0 {Connect external hardware}
@@ -199,8 +199,6 @@ menuText C ToolsConnectHardwareConfigure "Configure..." 0 {Configure external ha
 menuText C ToolsConnectHardwareNovagCitrineConnect "Connect Novag Citrine" 0 {Connect Novag Citrine}
 # ====== TODO To be translated ======
 menuText C ToolsConnectHardwareInputEngineConnect "Connect Input Engine" 0 {Connect Input Engine (e.g. DGT)}
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText C ToolsPInfo "Informace o hráèích"  0 \
   {Otevøít/aktualizovat okno s informacemi o hráèích}
@@ -232,7 +230,6 @@ menuText C ToolsExpFilterLaTeX "Export filtrovaných partií do LaTeX souboru..." 
   {Zapsat v¹echny filtrované partie do LaTeX souboru}
 # ====== TODO To be translated ======
 menuText C ToolsExpFilterEPD "Export Filter to EPD/FEN" 17 {Write all filtered games to an EPD File}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText C ToolsExpFilterGames "Export Gamelist to Text" 19 {Print a formatted Gamelist.}
 menuText C ToolsImportOne "Import jedné PGN partie..." 7 \
@@ -272,7 +269,6 @@ menuText C OptionsColour "Colour" 0 {Default text widget color}
 menuText C OptionsBackColour "Background" 0 {Default text widget color}
 # ====== TODO To be translated ======
 menuText C OptionsBackColourGlobal "Global" 0 {Global background color}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 menuText C OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
 # ====== TODO To be translated ======
@@ -1504,8 +1500,6 @@ translate C NameEditMatches {Shoduje se: Stiskni Ctrl+1 a¾ Ctrl+9 pro výbìr}
 # ====== TODO To be translated ======
 translate C MatchPattern {Match Pattern}
 # ====== TODO To be translated ======
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
 
 # Classify window:
 translate C Classify {Klasifikace}
@@ -1679,9 +1673,6 @@ translate C blunder {blunder}
 # ====== TODO To be translated ======
 translate C Noinfo {-- No info --}
 # ====== TODO To be translated ======
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
 translate C moveblunderthreshold {move is a blunder if loss is greater than}
 # ====== TODO To be translated ======
 translate C limitanalysis {limit engine analysis time}
@@ -1842,12 +1833,9 @@ translate C TimeMode {Time mode}
 # ====== TODO To be translated ======
 translate C TimeBonus {Time + bonus}
 # ====== TODO To be translated ======
-# ====== TODO To be translated ======
 translate C TimeMin {min}
 # ====== TODO To be translated ======
 translate C TimeSec {sec}
-# ====== TODO To be translated ======
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 translate C AllExercisesDone {All exercises done}
 # ====== TODO To be translated ======
@@ -1890,7 +1878,6 @@ translate C RemLine {Remove Line}
 translate C Calvar {Calculation of variations}
 # ====== TODO To be translated ======
 translate C ConfigureCalvar {Configuration}
-# ====== TODO To be translated ======
 # ====== TODO To be translated ======
 translate C Reti {Reti}
 # ====== TODO To be translated ======
