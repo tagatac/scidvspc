@@ -2786,9 +2786,11 @@ sc_base_tag (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             }
         }
     }
-    // if (showProgress) { updateProgressBar (ti, 1, 1); } todo - fix me
+    if (showProgress) 
+        updateProgressBar (ti, 1, 1);
 
-    setMainFilter (db);
+    if (cmd != TAG_LIST)
+        setMainFilter (db);
 
     // Done searching through all games.
 

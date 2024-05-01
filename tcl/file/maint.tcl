@@ -2123,7 +2123,7 @@ proc extraTags {{parent .}} {
     }
   }
 
-  dialogbutton $w.buttons.add -text $::tr(GlistAddField) -command addExtraTag
+  dialogbutton $w.buttons.add -text $::tr(GlistAddField) -command doAddTag
 
   dialogbutton $w.buttons.cancel -text $::tr(Close) -command "destroy $w"
   pack $w.buttons.find $w.buttons.strip $w.buttons.add -side left -padx 5 -pady 3
@@ -2136,7 +2136,7 @@ proc extraTags {{parent .}} {
   wm state $w normal
 }
 
-proc addExtraTag {} {
+proc doAddTag {} {
   set w [toplevel .exTagDialog]
   wm title $w "Scid: $::tr(StripTags)"
 
@@ -2167,9 +2167,21 @@ proc addExtraTag {} {
     if {$errorMsg != ""} {
       tk_messageBox -title Oops -icon warning -type ok -message $errorMsg -parent .extratags
     } else {
-      sc_base tag add $tmp1 $tmp2 $::checkOption(AllGames)
-      ::game::Reload 
-      # Reboot! Todo - fixme ??
+      progressWindow Scid "Adding tag pair $tmp1 \"$tmp2\"." $::tr(Stop) sc_progressBar
+      busyCursor .
+
+      set err [catch {
+	  sc_base tag add $tmp1 $tmp2 $::checkOption(AllGames)
+      } result ]
+
+      unbusyCursor .
+      closeProgressWindow
+      if {$err} {
+	tk_messageBox -title Scid -parent .extratags -type ok -icon info -message $result
+      } else {
+	tk_messageBox -title Scid -parent .extratags -type ok -icon info -message "$result $tmp1 \"$tmp2\" tags added."
+      }
+      ::game::Reload ; # Todo - fixme ??
       extraTags
     }
   }
@@ -2201,7 +2213,9 @@ proc doStripTags {tag} {
   if {$result == "no"} { return 0 }
   progressWindow Scid "Removing the PGN tag $tag." $::tr(Stop) sc_progressBar
   busyCursor .
-  set err [catch {sc_base tag strip $tag $checkOption(AllGames)} result]
+  set err [catch {
+    sc_base tag strip $tag $checkOption(AllGames)
+  } result]
   unbusyCursor .
   closeProgressWindow
   if {$err} {
