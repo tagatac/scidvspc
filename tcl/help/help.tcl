@@ -312,6 +312,7 @@ append helpText(Index) {
   <li><a EPD>EPD Files</a></li>
   <li><a EPD opcodes>EPD Opcodes</a></li>
   <li><a Export>Exporting Games</a></li>
+  <li><a Maintenance Tags>Extra Tags</a></li>
   </ul>
 
   <h3><name F>F</name></h3>
@@ -2507,8 +2508,10 @@ perform a <a Compact>namebase compaction</a>.
   <p>
   The format of each correction is:
   <br><b>"Old Name" <gt><gt> "New Name"</b> (<b>N</b>) <b>Birthdate</b>--<b>Deathdate</b><br>
-  There should be no space before "Old Name", and "N" represents the number of games matching the original player name.
-  </p>
+  There should be no space before "Old Name", and "N" represents the number of games matching the original player name.</p>
+  <p><i>Note - because of our implementation, some poorly defined names (eg Events/White/Black) can
+  be changed - eg those with a '"' in a name, and the missing space in "Kramnik,V" will get converted to "Kramnik, V"
+  </i></p>
   <p>
   One may discard any correction by deleting it, or adding a
   space or any other character at the start of the line.  Player names with a
@@ -2547,16 +2550,6 @@ For example - the first two examples remove four digit ELOs from player names. T
   </i>
   </p>
 
-
-  <h3><name Cleaner>The Cleaner</name></h3>
-  <p>
-  The <run cleanerWin><green>Cleaner</green></run> window
-  is a tool for doing a number of maintenance tasks at one time.
-  You can choose which tasks you want to do, and Scid will
-  perform them on the current database without requiring user interaction.
-  This is especially useful for maintenance of large databases.
-  </p>
-
   <h3><name Autoload>Autoloading a Game</name></h3>
   <p>
   When a database is opened, one may automatically load a particular game
@@ -2568,20 +2561,24 @@ For example - the first two examples remove four digit ELOs from player names. T
   <h3><name CV>Strip Comments/Variations</name></h3>
   <p>
   <b>Use with caution</b>. Bulk stripping Comments and Variations cannot be undone.
-  Additionally, because of our implementation, some poorly defined names (eg Events/White/Black) can be changed -
- eg those with a '"' in a name, and the missing space in "Kramnik,V" will get converted to "Kramnik, V"
   </p>
 
   <h3><name Tags>Extra Tags</name></h3>
   <p>
-  The PGN format includes a set of compulsory tags (such as White, Event and EventDate).
-  In Scid, these are handled by the <run nameEditor><green>Name Editor</green></run>.
-  The <run extraTags><green>Extra Tags</green></run> window allows modifying the other, non-standard tags such as Annotator, PlyCount, Depth, TimeControl.
+  The PGN format includes a set of compulsory tags (such as White, Event and Date).
+  In Scid, these are handled by the <a Maintenance Editing>Name Editor</a>.
+  The <run extraTags><green>Extra Tags</green></run> window facilitates modifying the other, non-standard tags such as Annotator, PlyCount, Depth, TimeControl.
   </p>
   <p>
-  Features are: Finding, Filtering, Stripping, and Adding/Creating new tags.
+  Features are: Finding, Filtering, Stripping, and Adding/Creating new tags.</p>
+  <p><i>Adding Extra Tags will quickly increase the size of Scid's gamefile. Any
+  changes will cause the tags to be totally rewritten, with space not reclaimed
+  until the game file is <a Compact>compacted</a>.</i>
   </p>
-  <p><i>Please use with caution. Bulk editing game tags is a powerful feature, and generally not undoable. Some tags are not allowable, such as  "FEN" and "SetUp", and it is defintely *not* a good idea to duplicate lesser compulsory tags suck as "WhiteElo".</i></p>
+  <p><i>Please use with caution. Bulk editing game tags is a powerful feature,
+  and generally not undoable. Additionally, there are other restrictions. Tag
+  Names may not contain punctuation (except underscore), contain spaces, or match
+  tags such as FEN, SetUp, WhiteElo and more.</i></p>
 
   <h3><name Check>Check Games</name></h3>
   <p>
@@ -2598,6 +2595,15 @@ For example - the first two examples remove four digit ELOs from player names. T
   </p>
   <p>
   Any errors are reported.
+  </p>
+
+  <h3><name Cleaner>The Cleaner</name></h3>
+  <p>
+  The <run cleanerWin><green>Cleaner</green></run> window
+  is a tool for doing a number of maintenance tasks at one time.
+  You can choose which tasks you want to do, and Scid will
+  perform them on the current database without requiring user interaction.
+  This is especially useful for maintenance of large databases.
   </p>
 
   <h3>Repair a Base</h3>

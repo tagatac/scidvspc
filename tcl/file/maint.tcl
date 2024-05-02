@@ -2156,11 +2156,14 @@ proc doAddTag {} {
     global tmp1 tmp2
     destroy .exTagDialog
     set errorMsg {}
-    set noMatch {SetUp BlackElo WhiteElo FEN WhiteRatingType BlackRatingType WhiteEstimateElo BlackEstimateElo EcoCode}
+    set noMatch {Round Date Result SetUp BlackElo WhiteElo FEN WhiteRatingType BlackRatingType WhiteEstimateElo BlackEstimateElo EcoCode}
     if {$tmp1 == "" || $tmp2 == ""} {
       set errorMsg "Null string found."
     } elseif {[regexp {\s} $tmp1]} {
-      set errorMsg "Tag has whitespace/unprintables."
+      set errorMsg "Tag \"$tmp1\" has whitespace."
+    } elseif {[regexp {[[:punct:]]} [string map {_ {}} $tmp1]]} {
+      # '_' is only allowable punctuation
+      set errorMsg "Tag \"$tmp1\" has illegal punctuation."
     } elseif {[set match [lsearch $noMatch $tmp1]] > -1} {
       set errorMsg "\"[lindex $noMatch $match]\" is an illegal Extra Tag"
     }

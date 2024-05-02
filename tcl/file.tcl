@@ -306,6 +306,7 @@ proc refreshWindows {{all no}} {
     ::plist::refresh
     ::tourney::refresh
     if {[winfo exists .extratags]} {
+      update ; # Hmmm... needed for proper progressBar operation when swapping bases.
       extraTags
     }
   }
