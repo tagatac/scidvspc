@@ -2137,6 +2137,8 @@ proc extraTags {{parent .}} {
 }
 
 proc doAddTag {} {
+  set ::checkOption(AllGames) filter
+
   set w [toplevel .exTagDialog]
   wm title $w "Scid: $::tr(StripTags)"
 
@@ -2156,7 +2158,7 @@ proc doAddTag {} {
     global tmp1 tmp2
     destroy .exTagDialog
     set errorMsg {}
-    set noMatch {Round Date Result SetUp BlackElo WhiteElo FEN WhiteRatingType BlackRatingType WhiteEstimateElo BlackEstimateElo EcoCode}
+    set noMatch {ECO Round Date Result SetUp BlackElo WhiteElo FEN WhiteRatingType BlackRatingType WhiteEstimateElo BlackEstimateElo EcoCode}
     if {$tmp1 == "" || $tmp2 == ""} {
       set errorMsg "Null string found."
     } elseif {[regexp {\s} $tmp1]} {
@@ -2179,11 +2181,12 @@ proc doAddTag {} {
 
       unbusyCursor .
       closeProgressWindow
-      if {$err} {
-	tk_messageBox -title Scid -parent .extratags -type ok -icon info -message $result
-      } else {
-	tk_messageBox -title Scid -parent .extratags -type ok -icon info -message "$result $tmp1 \"$tmp2\" tags added."
+
+      if {!$err} {
+	set result "$result $tmp1 \"$tmp2\" tags added."
       }
+      tk_messageBox -title Scid -parent .extratags -type ok -icon info -message $result
+
       ::game::Reload ; # Todo - fixme ??
       extraTags
     }
@@ -2239,7 +2242,8 @@ proc findStripTags {tag} {
   sc_base tag find $tag $checkOption(AllGames)
   unbusyCursor .
   # closeProgressWindow
-  ::windows::gamelist::Refresh
+
+  ::windows::gamelist::SetStart 1
 }
 
 
