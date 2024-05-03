@@ -54,13 +54,17 @@ proc ::move::showVarArrows {} {
   }
 }
 
-proc ::move::Start {} {
+proc ::move::Start {{var 0}} {
   if {$::fics::playing == 2} {
       ::fics::writechan {backward 256} noecho
       return
   }
   set ::pause 1
-  sc_move start
+  if {$var && ![sc_pos isAt vstart]} {
+    sc_move startVar
+  } else {
+    sc_move start
+  }
   updateBoard
   if {[winfo exists .pgnWin.text]} {
     .pgnWin.text see 0.0

@@ -1587,8 +1587,13 @@ bind .main.board.bd <ButtonRelease-2> {releaseSquare .main.board %x %y}
 foreach i {o q r n k O Q R B N K} {
   bind .main <$i> "moveEntry_Char [string toupper $i]"
 }
-foreach i {a b c d e f g h 1 2 3 4 5 6 7 8} {
+foreach i {a b c d e f g h} {
   bind .main <Key-$i> "moveEntry_Char $i"
+}
+
+foreach i {1 2 3 4 5 6 7 8} {
+  bind .main <Key-$i>    "moveEntry_Char $i"
+  bind .main <Key-KP_$i> "moveEntry_Char $i"
 }
 
 if {$::macOS} {
@@ -1613,8 +1618,10 @@ proc clearAllMoves {} {
 
 bind .main <Tab> {raiseAllWindows 1}
 
-bind .main <Return> addAnalysisMove
-bind .main <Control-Return> addAnalysisVariation
+bind .main <Return>   addAnalysisMove
+bind .main <KP_Enter> addAnalysisMove
+bind .main <Control-Return>   addAnalysisVariation
+bind .main <Control-KP_Enter> addAnalysisVariation
 bind .main <space>  toggleEngineAnalysis
 
 bind .main <v> showVars
@@ -1690,7 +1697,7 @@ proc standardShortcuts {w} {
 
   ### These should probably be moved to a different proc/place - S.A.
   # as we are often resolving conflicts *after* calling standardShortcuts
-  bind $w <Home>  ::move::Start
+  bind $w <Home>  {::move::Start 1}
   bind $w <Up> {
     if {[sc_var level] > 0} {
       .main.button.exitVar invoke

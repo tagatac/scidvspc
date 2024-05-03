@@ -7194,7 +7194,7 @@ The window manager may interfere with some shortcuts.
 <li><b>right</b> - Forward one move</li>
 <li><b>up</b> - Back five moves/exit variation</li>
 <li><b>down</b> - Forward five moves</li>
-<li><b>home</b> - Goto start</li>
+<li><b>home</b> - Goto start/variation start</li>
 <li><b>end</b> - Goto end/variation end</li>
 <li><b>control-g</b> - Goto move number</li>
 <li><b>control-f</b> - Flip Board</li>
@@ -7352,7 +7352,7 @@ The window manager may interfere with some shortcuts.
 <li><b>right</b> - Forward one move</li>
 <li><b>up</b> - Back five moves/exit variation</li>
 <li><b>down</b> - Forward five moves</li>
-<li><b>home</b> - Goto start</li>
+<li><b>home</b> - Goto start/variation start</li>
 <li><b>end</b> - Goto end/variation end</li>
 <li></li>
 
