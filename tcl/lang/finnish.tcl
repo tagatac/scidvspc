@@ -975,7 +975,8 @@ translate L CompactDatabase {Kompakti tietokanta}
 translate L SortDatabase {Lajittele tietokanta}
 translate L AddEloRatings {Lis‰‰ Elo-luvut}
 translate L AutoloadGame {Lataa peli automaattisesti}
-translate L StripTags {Poista ylim‰‰r‰iset tagit}
+# ====== TODO To be translated ======
+translate L StripTags {Extra Tags}
 translate L StripTag {Poista tag}
 # ====== TODO To be translated ======
 translate L AddTag {Add Tag}

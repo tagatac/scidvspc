@@ -179,8 +179,7 @@ menuText D ToolsBookTuning "Eröffnungsbuch anpassen" 0 {Eröffnungsbuch anpasse
 menuText D ToolsMaint "Wartung" 0 {Das Scid-Datenbankwartungsfenster}
 menuText D ToolsMaintWin "Wartungfenster" 0 \
   {Datenbank-Wartungsfenster öffnen/schließen}
-# ====== TODO To be translated ======
-menuText D ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
+menuText D ToolsMaintExtra "Extramarkierungen" 0 {Extra Tags}
 menuText D ToolsMaintCompact "Datenbank komprimieren..." 10 \
   {Datenbank komprimieren, gelöschte Spiele und unbenutzte Namen entfernen}
 menuText D ToolsMaintClass "Partien ECO-klassifizieren..." 8 \
@@ -992,7 +991,7 @@ translate D CompactDatabase {Komprimieren}
 translate D SortDatabase {Datenbank sortieren}
 translate D AddEloRatings {ELO-Zahlen hinzufügen}
 translate D AutoloadGame {Automatisch Partie Nr. laden}
-translate D StripTags {PGN-Markierungen entfernen}
+translate D StripTags {Extramarkierungen}
 translate D StripTag {Markierung entfernen}
 # ====== TODO To be translated ======
 translate D AddTag {Add Tag}

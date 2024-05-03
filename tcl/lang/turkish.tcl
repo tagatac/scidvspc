@@ -973,7 +973,8 @@ translate T CompactDatabase {Kompakt veritabanı}
 translate T SortDatabase {Veritabanını sıralama}
 translate T AddEloRatings {Elo Reyting ekle}
 translate T AutoloadGame {Otomatik yükle oyunu}
-translate T StripTags {Ekstra etiketleri kaldır}
+# ====== TODO To be translated ======
+translate T StripTags {Extra Tags}
 translate T StripTag {etiketi kaldır}
 # ====== TODO To be translated ======
 translate T AddTag {Add Tag}

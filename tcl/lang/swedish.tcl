@@ -1067,7 +1067,8 @@ translate W CompactDatabase {Komprimera databasen}
 translate W SortDatabase {Sortera databasen}
 translate W AddEloRatings {Lägg till Elorating}
 translate W AutoloadGame {Ladda partinummer automatiskt}
-translate W StripTags {Avlägsna PGN-taggar}
+# ====== TODO To be translated ======
+translate W StripTags {Extra Tags}
 translate W StripTag {Avlägsna taggar}
 # ====== TODO To be translated ======
 translate W AddTag {Add Tag}

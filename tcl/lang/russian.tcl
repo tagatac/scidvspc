@@ -1036,7 +1036,8 @@ translate R CompactDatabase {Сжать базу данных}
 translate R SortDatabase {Сортировать базу данных}
 translate R AddEloRatings {Добавить рейтинги Эло}
 translate R AutoloadGame {Автозагрузка номера партии}
-translate R StripTags {Удалить теги PGN}
+# ====== TODO To be translated ======
+translate R StripTags {Extra Tags}
 translate R StripTag {Удалить теги}
 # ====== TODO To be translated ======
 translate R AddTag {Add Tag}

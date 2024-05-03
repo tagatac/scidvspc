@@ -2078,18 +2078,19 @@ proc extraTags {{parent .}} {
   pack $w.title -side top
   frame $w.tags
   pack $w.tags -side top -fill both -expand yes
-  addHorizontalRule $w
 
   frame $w.filter
   radiobutton $w.filter.all -textvar ::tr(SelectAllGames) -variable checkOption(AllGames) -value all
   radiobutton $w.filter.filter -textvar ::tr(SelectFilterGames) -variable checkOption(AllGames) -value filter
 
-  pack $w.filter.all $w.filter.filter -side left  -padx 5
-  pack $w.filter -side top -expand 1
+  pack $w.filter.all $w.filter.filter -side left -padx 5
+  pack $w.filter -side top  -expand 0
   addHorizontalRule $w
 
   frame $w.buttons
-  pack $w.buttons -side bottom -fill x -before $w.tags
+  frame $w.buttons2
+  pack $w.buttons2 -side bottom -fill x -before $w.tags
+  pack $w.buttons -side bottom -fill x  -before $w.tags
 
   listbox $w.tags.list -yscrollcommand "$w.tags.scroll set" \
       -exportselection 1 -font font_Fixed
@@ -2125,10 +2126,12 @@ proc extraTags {{parent .}} {
 
   dialogbutton $w.buttons.add -text $::tr(GlistAddField) -command doAddTag
 
-  dialogbutton $w.buttons.cancel -text $::tr(Close) -command "destroy $w"
-  pack $w.buttons.find $w.buttons.strip $w.buttons.add -side left -padx 5 -pady 3
-  pack $w.buttons.cancel -side right -padx 5 -pady 3
-  bind $w <Escape> "$w.buttons.cancel invoke"
+  dialogbutton $w.buttons2.cancel -text $::tr(Close) -command "destroy $w"
+  dialogbutton $w.buttons2.help -text $::tr(Help) -command "helpWindow Maintenance Tags"
+
+  pack $w.buttons.find $w.buttons.strip $w.buttons.add -side left -padx 5 -pady 2 -expand 1
+  pack $w.buttons2.cancel $w.buttons2.help -side right -padx 5 -pady 5
+  bind $w <Escape> "$w.buttons2.cancel invoke"
 
   # raise $parent 
 
@@ -2138,8 +2141,12 @@ proc extraTags {{parent .}} {
 
 proc doAddTag {} {
   set ::checkOption(AllGames) filter
-
-  set w [toplevel .exTagDialog]
+  set w .exTagDialog
+  if {[winfo exists $w]} {
+    raiseWin $w
+    return
+  }
+  toplevel $w
   wm title $w "Scid: $::tr(StripTags)"
 
   label $w.label -text "Enter Tag Name and Value"
@@ -2156,23 +2163,23 @@ proc doAddTag {} {
   pack $b -side top -fill x
   dialogbutton $b.load -text "OK" -command {
     global tmp1 tmp2
-    destroy .exTagDialog
     set errorMsg {}
     set noMatch {ECO Round Date Result SetUp BlackElo WhiteElo FEN WhiteRatingType BlackRatingType WhiteEstimateElo BlackEstimateElo EcoCode}
     if {$tmp1 == "" || $tmp2 == ""} {
       set errorMsg "Null string found."
     } elseif {[regexp {\s} $tmp1]} {
       set errorMsg "Tag \"$tmp1\" has whitespace."
-    } elseif {[regexp {[[:punct:]]} [string map {_ {}} $tmp1]]} {
-      # '_' is only allowable punctuation
-      set errorMsg "Tag \"$tmp1\" has illegal punctuation."
+    } elseif {![regexp {^[[:alnum:]_]*$} $tmp1]} {
+      # only letters, digits and _ allowed
+      set errorMsg "Tag \"$tmp1\" has illegal characters."
     } elseif {[set match [lsearch $noMatch $tmp1]] > -1} {
       set errorMsg "\"[lindex $noMatch $match]\" is an illegal Extra Tag"
     }
     if {$errorMsg != ""} {
-      tk_messageBox -title Oops -icon warning -type ok -message $errorMsg -parent .extratags
+      tk_messageBox -title Oops -icon warning -type ok -message $errorMsg -parent .exTagDialog
     } else {
-      progressWindow Scid "Adding tag pair $tmp1 \"$tmp2\"." $::tr(Stop) sc_progressBar
+      destroy .exTagDialog
+      progressWindow Scid "Adding tag pair \[$tmp1 \"$tmp2\"\]." $::tr(Stop) sc_progressBar
       busyCursor .
 
       set err [catch {
@@ -2183,7 +2190,7 @@ proc doAddTag {} {
       closeProgressWindow
 
       if {!$err} {
-	set result "$result $tmp1 \"$tmp2\" tags added."
+	set result "$result \[$tmp1 \"$tmp2\"\] tags added."
       }
       tk_messageBox -title Scid -parent .extratags -type ok -icon info -message $result
 
@@ -2203,7 +2210,7 @@ proc doAddTag {} {
 proc populateExtraTags {} {
   global pgnTags
 
-  set tags [lsort [array names pgnTags]]
+  set tags [lsort -nocase [array names pgnTags]]
   foreach tag $tags {
     set text [format "%-18s %12s" $tag $pgnTags($tag)]
     .extratags.tags.list insert end $text
@@ -2213,7 +2220,7 @@ proc populateExtraTags {} {
 proc doStripTags {tag} {
   global checkOption
 
-  set msg "Do you want to remove all occurences of \"$tag\" from $checkOption(AllGames) games ?"
+  set msg "Do you want to remove all occurences of \"$tag\" from $checkOption(AllGames) games?"
   set result [tk_messageBox -title Scid -parent .extratags \
       -icon question -type yesno -message $msg]
   if {$result == "no"} { return 0 }

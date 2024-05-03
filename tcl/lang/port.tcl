@@ -981,7 +981,8 @@ translate U CompactDatabase {Compactar Base}
 translate U SortDatabase {Ordenar Base}
 translate U AddEloRatings {Adicionar Elo}
 translate U AutoloadGame {Carregar autom. o jogo n.º}
-translate U StripTags {Apagar etiquetas PGN} ;# ***
+# ====== TODO To be translated ======
+translate U StripTags {Extra Tags}
 translate U StripTag {Apagar etiqueta} ;# ***
 # ====== TODO To be translated ======
 translate U AddTag {Add Tag}

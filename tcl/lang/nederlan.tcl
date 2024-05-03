@@ -1072,7 +1072,8 @@ translate N CompactDatabase {Database compact maken = optimaliseren}
 translate N SortDatabase {Database sorteren}
 translate N AddEloRatings {Toevoegen Elo classificatie}
 translate N AutoloadGame {Auto-laden partij nummer}
-translate N StripTags {Verwijder PGN labels}
+# ====== TODO To be translated ======
+translate N StripTags {Extra Tags}
 translate N StripTag {Verwijder label}
 # ====== TODO To be translated ======
 translate N AddTag {Add Tag}

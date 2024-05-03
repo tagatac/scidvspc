@@ -1137,7 +1137,8 @@ translate C CompactDatabase {Kompaktovat databázi}
 translate C SortDatabase {Øadit databázi}
 translate C AddEloRatings {Pøidat ELO rating}
 translate C AutoloadGame {Automaticky otevírat partii è.}
-translate C StripTags {Odstranit PGN znaèky}
+# ====== TODO To be translated ======
+translate C StripTags {Extra Tags}
 translate C StripTag {Odstranit znaèku}
 # ====== TODO To be translated ======
 translate C AddTag {Add Tag}

@@ -2566,13 +2566,13 @@ For example - the first two examples remove four digit ELOs from player names. T
 
   <h3><name Tags>Extra Tags</name></h3>
   <p>
-  The PGN format includes a set of compulsory tags (such as White, Event and Date).
+  The <url http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm>PGN format</url> includes a set of compulsory tags (such as White, Event and Date).
   In Scid, these are handled by the <a Maintenance Editing>Name Editor</a>.
   The <run extraTags><green>Extra Tags</green></run> window facilitates modifying the other, non-standard tags such as Annotator, PlyCount, Depth, TimeControl.
   </p>
   <p>
   Features are: Finding, Filtering, Stripping, and Adding/Creating new tags (filter only).</p>
-  <p><i>Adding Extra Tags will quickly increase the size of Scid's gamefile. Any
+  <p><i>Adding Extra Tags will quickly increase the size of Scid's Gamefile. Any
   changes will cause the tags to be totally rewritten, with space not reclaimed
   until the game file is <a Compact>compacted</a>.</i>
   </p>

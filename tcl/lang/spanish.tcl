@@ -1048,7 +1048,8 @@ translate S CompactDatabase {Compactar base de datos}
 translate S SortDatabase {Ordenar base de datos}
 translate S AddEloRatings {Añadir clasificación Elo}
 translate S AutoloadGame {Autocargar partida}
-translate S StripTags {Quitar etiquetas PGN}
+# ====== TODO To be translated ======
+translate S StripTags {Extra Tags}
 translate S StripTag {Quitar etiquetas}
 # ====== TODO To be translated ======
 translate S AddTag {Add Tag}

@@ -1145,8 +1145,9 @@ translate H CompactDatabase {Adatbázis tömörítése}
 translate H SortDatabase {Adatbázis rendezése}
 translate H AddEloRatings {Élõ-értékszámok hozzáadása}
 translate H AutoloadGame {Játszmasorszám automatikus betöltése}
+# ====== TODO To be translated ======
+translate H StripTags {Extra Tags}
 #Igaz ez?
-translate H StripTags {PGN-címkék eltüntetése}
 translate H StripTag {Címke eltüntetése}
 # ====== TODO To be translated ======
 translate H AddTag {Add Tag}

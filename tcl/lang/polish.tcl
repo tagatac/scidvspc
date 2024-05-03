@@ -1050,7 +1050,8 @@ translate P CompactDatabase {Uporządkuj bazę}
 translate P SortDatabase {Sortuj bazę}
 translate P AddEloRatings {Dodaj rankingi ELO}
 translate P AutoloadGame {Domyślna partia}
-translate P StripTags {Usuń znaczniki PGN} 
+# ====== TODO To be translated ======
+translate P StripTags {Extra Tags}
 translate P StripTag {Usuń znacznik}
 # ====== TODO To be translated ======
 translate P AddTag {Add Tag}

@@ -981,7 +981,8 @@ translate F CompactDatabase {Compacter la base}
 translate F SortDatabase {Trier la base}
 translate F AddEloRatings {Ajouter les classements Elo}
 translate F AutoloadGame {Chargement automatique du numéro de partie}
-translate F StripTags {Enlever les marqueurs PGN}
+# ====== TODO To be translated ======
+translate F StripTags {Extra Tags}
 translate F StripTag {Enlever les marqueurs}
 # ====== TODO To be translated ======
 translate F AddTag {Add Tag}

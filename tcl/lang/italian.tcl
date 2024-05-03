@@ -1139,7 +1139,8 @@ translate I CompactDatabase {Compatta database}
 translate I SortDatabase {Ordina database}
 translate I AddEloRatings {Aggiungi punteggio Elo}
 translate I AutoloadGame {Numero della partita che si caricher� automaticamente}
-translate I StripTags {Toglie i PGN tags}
+# ====== TODO To be translated ======
+translate I StripTags {Extra Tags}
 translate I StripTag {Toglie i tag}
 # ====== TODO To be translated ======
 translate I AddTag {Add Tag}

@@ -995,7 +995,8 @@ translate O CompactDatabase {Komprimer database}
 translate O SortDatabase {Sorter database}
 translate O AddEloRatings {Legg til ELO-ratinger}
 translate O AutoloadGame {Start med parti nummer}
-translate O StripTags {Fjern PGN-merker}
+# ====== TODO To be translated ======
+translate O StripTags {Extra Tags}
 translate O StripTag {Fjern merke}
 # ====== TODO To be translated ======
 translate O AddTag {Add Tag}

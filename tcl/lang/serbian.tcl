@@ -1215,7 +1215,8 @@ translate Y CompactDatabase {Komprimuj bazu}
 translate Y SortDatabase {Sortiraj bazu}
 translate Y AddEloRatings {Dodaj Elo rejtinge}
 translate Y AutoloadGame {Autoload game number} ;# ***
-translate Y StripTags {Strip PGN tags} ;# ***
+# ====== TODO To be translated ======
+translate Y StripTags {Extra Tags}
 translate Y StripTag {Strip tag} ;# ***
 # ====== TODO To be translated ======
 translate Y AddTag {Add Tag}

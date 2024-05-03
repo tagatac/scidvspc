@@ -1168,7 +1168,8 @@ translate B CompactDatabase {Compactar base de dados}
 translate B SortDatabase {Ordenar base de dados}
 translate B AddEloRatings {Adicionar ratings}
 translate B AutoloadGame {Carregar autom. o jogo numero}
-translate B StripTags {Remover tags PGN} 
+# ====== TODO To be translated ======
+translate B StripTags {Extra Tags}
 translate B StripTag {Remover tag} 
 # ====== TODO To be translated ======
 translate B AddTag {Add Tag}

@@ -1082,7 +1082,8 @@ translate G CompactDatabase {Συμπίεση Βάσης}
 translate G SortDatabase {Ταξινόμηση Βάσης}
 translate G AddEloRatings {Προσθήκη ELO σε παρτίδες}
 translate G AutoloadGame {Αυτόματη Φόρτωση Παρτίδας}
-translate G StripTags {Αφαίρεση Ετικετών PGN}
+# ====== TODO To be translated ======
+translate G StripTags {Extra Tags}
 translate G StripTag {Αφαίρεση Ετικέτας}
 # ====== TODO To be translated ======
 translate G AddTag {Add Tag}
