@@ -2049,7 +2049,7 @@ proc extraTags {{parent .}} {
   }
 
   set ::interrupt 0
-  progressWindow Scid "Searching for extra PGN tags." $::tr(Cancel) "set ::interrupt 1; sc_progressBar"
+  progressWindow Scid "Searching for Extra PGN tags." $::tr(Cancel) "set ::interrupt 1; sc_progressBar"
   busyCursor .
   set err [catch {sc_base tag list} result]
   unbusyCursor .
@@ -2195,6 +2195,7 @@ proc doAddTag {} {
       tk_messageBox -title Scid -parent .extratags -type ok -icon info -message $result
 
       ::game::Reload ; # Todo - fixme ??
+      update
       extraTags
     }
   }

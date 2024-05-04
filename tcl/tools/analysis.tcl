@@ -2533,11 +2533,14 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   $w.text configure -state disabled
   bind $w <Destroy> "destroyAnalysisWin $n %W"
   bind $w <Escape> "focus .main ; destroy $w"
-  bind $w <Return> "addAnalysisMove $n"
-  bind $w <Control-Return> "addAnalysisVariation $n"
+  bind $w <Return>   "addAnalysisMove $n"
+  bind $w <KP_Enter> "addAnalysisMove $n"
+  bind $w <Control-Return>   "addAnalysisVariation $n"
+  bind $w <Control-KP_Enter> "addAnalysisVariation $n"
   bind $w <space>  "$w.b.startStop invoke"
   foreach i {1 2 3 4 5} {
-    bind $w <Key-$i>  "set analysis(multiPVCount$n) $i ; changePVSize $n"
+    bind $w <Key-$i>    "set analysis(multiPVCount$n) $i ; changePVSize $n"
+    bind $w <Key-KP_$i> "set analysis(multiPVCount$n) $i ; changePVSize $n"
   }
   wm minsize $w 25 0
   bindMouseWheel $w $w.hist.text
