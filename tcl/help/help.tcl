@@ -1888,27 +1888,27 @@ set helpText(LaTeX) {<h1>Using LaTeX with Scid</h1>
   used by Scid for previewing player and opening reports and exporting games -
   but it is tough to install and use.
   </p>
-  <p><i>
-  Scid vs. PC no longer uses Chess12 for LaTeX output. The new Skak implementation is mostly complete,
-but not quite. It remains todo: Implement comments inside variations, castling diagrams, and adding a
-"Compact" option which disables diagrams and score graphs and restricts the game header to (half the page width).
-  </i></p>
   <h2>Installation</h2>
-  The author installed texlive on Linux Mint 17 (Ubuntu 14.04), and additonally these packages
+  <p>
+  Scid vs. PC uses Texlive and Skak for LaTeX output.  Typical linux packages may include:
   </p>
   <ul>
-<li>latex-xcolor (xcolor.sty)</li>
+<li>texlive</li>
+<li>texlive-base</li>
+<li>texlive-font-utils</li>
 <li>texlive-games (xskak.sty)</li>
 <li>texlive-generic-extra, (lambda.sty) </li>
+<li>texlive-latex-base (xifthen.sty)</li>
 <li>texlive-latex-extra (xifthen.sty)</li>
 <li>pgf (pgfcore.sty)</li>
 <li>lmodern (lmodern.sty)</li>
 <li>texlive-pstricks (pstricks-add.sty)</li>
+<li>texlive-science (siunitx.sty)</li>
 <li>texlive-xetex (xelatex)</li>
   </ul>
 <h2>Generating PDF</h2>
 <p>Latex will generally need to be converted to PDF. Scid's Latex preview function will do this, but for manually
-converting to pdf, use this command <b>xelatex file.tex</b></p>
+converting to pdf, try the xelatex or pdflatex commands</p>
 
 <p>The older method for doing this is<ul>
 <li>latex file.tex       // This will create a file.dvi file</li>
@@ -1941,7 +1941,7 @@ Ileano writes<ul>
 Also ...  add "PATH=$PATH:/Library/TeX/Root/bin/x86_64-darwin" to the startup scripts</li></ul>
 </p>
 
-  <p><footer>Updated: Scid vs. PC 4.17, Sept 2016</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.25, May 2024</footer></p>
 }
 
 set helpTitle(PGN) "PGN Window"
@@ -2568,7 +2568,7 @@ For example - the first two examples remove four digit ELOs from player names. T
   <p>
   The <url http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm>PGN format</url> includes a set of compulsory tags (such as White, Event and Date).
   In Scid, these are handled by the <a Maintenance Editing>Name Editor</a>.
-  The <run extraTags><green>Extra Tags</green></run> window facilitates modifying the other, non-standard tags such as Annotator, PlyCount, Depth, TimeControl.
+  The <run extraTags><green>Extra Tags</green></run> window facilitates modifying optional tags such as Annotator, PlyCount, Depth, TimeControl.
   </p>
   <p>
   Features are: Finding, Filtering, Stripping, and Adding/Creating new tags (filter only).</p>
@@ -6314,6 +6314,37 @@ set helpText(Sound) {<h1>Sound</h1>
 set helpTitle(Changelog) "Scid vs PC Changelog"
 set helpText(Changelog) {<h1>Changelog</h1>
 
+<h4>4.25 (May 20, 2024)</h4>
+<ul>
+<li>Extra Tags - bulk add Extra Tag feature</li>
+<li>Enable pattern matching in the Name Editor</li>
+<li>Show Comments in Game Preview/Browser windows, change colours to match PGN, and ControlKey+Load does not close the Browser window</li>
+<li>LaTex Game Export - draw Marks in chess diagrams, and other minor changes (from Bruno)</li>
+<li>Crosstable: add clickable column headings for Nationality, Rating and Score</li>
+<li>Engine Annotation - Score last move in case of checkmate (and stalemate)</li>
+<li>Tree mask - Options to hide Markers (default), disable tooltips, and make the mask move colour steelblue</li>
+<li></li>
+<li>Engine - Right-clicking AddAllVars adds all first moves only</li>
+<li>Comment Editor - Remove 'Apply' button, instead automatically apply miniboard changes. Add wheelmouse move-forward/back bindings</li>
+<li>Player Info - don't show 'filtered games' stats if they duplicate the normal stats</li>
+<li>Make the Tree Bargraph height similar to the font height (for high def displays)</li>
+<li>Add a few Keypad bindings, re suggestion from Patrick</li>
+<li>Pressing Home-key inside a variation moves to var start instead of game start</li>
+</ul>
+
+<br>
+<b>General Bugs</b>
+<ul>
+<li>Twin Game checker minor fixes</li>
+<li>Some spinboxes (annotate(blunder)) had erroneous error checking and threw exceptions</li>
+<li>Some graphs didn't show the correct final/current year, gah!</li>
+<li>Minor optable.tcl fixes/clean-up. Opening Table max games is now 100,000 (was 25,000)</li>
+<li>Add current decade to Opening report Current popularity</li>
+<li>EPD analysis hardening</li>
+<li>For a few widgets - dont scroll text windows when using control-scroll to alter font size</li>
+<li>Update stats/etc on Game quickSave</li>
+</ul>
+
 <h4>4.24 (May 1, 2023)</h4>
 <ul>
 <li>Gamelist (and Best games) 'Copy to filter' context-menu/feature</li>
@@ -7087,91 +7118,6 @@ Game move/reorder feature:
 <li>OS X: Pad out flag buttons in Header search</li>
 <li>base_open_failure was erroneously closing wrong base</li>
 <li>Windows Preview HTML for Reports is fixed</li>
-</ul>
-
-<h4>4.8 (August 12, 2012)</h4>
-<b>General</b>
-<ul>
-<li>Drag and Drop file open(s) on Windows and Unix</li>
-<li>Custom background images (jpegs, gifs and pngs)</li>
-<li>Random sort pgn feature</li>
-<li>Crosstable now have +/-/= subtotals</li>
-<li>(and Player Stats format changed from +/=/- to +/-/=)</li>
-<li>General PGN search has ignore case option</li>
-<li>Board Search gets it's combobox updated when DBs are opened and closed</li>
-<li>Save game before PGN Import</li>
-<li>Save game: enable the use of 'prev game tags' for existing games. This allows easy addition of the same tags to consecutive existing games</li>
-<li>Remove the 'Scid: ' prefix from several window titles</li>
-<li>Update some translations</li>
-<li>Show Linux version/distro in the startup window</li>
-<li>Add a patch to make toolbar buttons raise only (instead of toggle open/shut)</li>
-<li>Add a patch for Chess960 support (from Ben Hague). Unfinished</li>
-</ul>
-
-<br>
-<b>Analysis</b>
-<ul>
-<li>UCI: properly handle UCI buttons. Previously they were invoked at every engine restart</li>
-<li>Right clicking 'Add Var' button adds Engine Score comment only</li>
-<li>Replace ponder on/off with hard/easy for xboard engines</li>
-<li>Super quick engine infos can happen before Scid's PV is inited properly. So we have to default to PV = 1</li>
-<li>Allow xboard engines to use lowercase 'b' for bishop promotion (eg a7b8b)</li>
-<li>Don't send an erroneous 'isready' (with 'uci') to quiet analysis engines</li>
-<li>Right clicking the widget allows to disable line wrapping</li>
-<li>Don't add a line to analysis history if moves are null</li>
-</ul>
-
-<br>
-<b>Tree</b>
-<ul>
-<li>Move ECO stats to the end of line</li>
-<li>Several Mask refinements - notably Searches are much more readable and previously clicking on searched lines didn't work</li>
-<li>Fix up minor bugs about castling moves (OO, O-O, O-O-O)</li>
-</ul>
-
-<br>
-<b>Computer Tournament</b>
-<ul>
-<li>Computer Tournament Book feature</li>
-<li>Dont' kill tournament if engine crashes</li>
-<li>Only pack the first 10 engine combos (which allows for big tournaments)</li>
-<li>Fix up Xboard time/move command order. Xboard engines should behave much better</li>
-<li>Various other tweaks</li>
-</ul>
-
-<br>
-<b>Gamelist</b>
-<ul>
-<li>Show altered games in red</li>
-<li>Control-wheelmouse scrolls up/down one page</li>
-<li>Switcher now has text on two lines (if icons are shown)</li>
-</ul>
-
-<br>
-<b>FICS</b>
-<ul>
-<li>Digital clocks now (optionally) on the main board</li>
-<li>Better integration of FICS "examine" and "observe" features</li>
-<li>FICS has it's own options menu</li>
-<li>bind F9 to xtell instead of tell</li>
-<li>Change the move.wav sound from tick-tock to a short click</li>
-</ul>
-
-<br>
-<b>OS X</b>
-<ul>
-<li>Filter graph bugfix</li>
-<li>Material Search properly shows the little buttons</li>
-<li>Copy and Paste text from disabled OSX text widgets (engines, help, gameinfo)</li>
-<li>Buttons 2 and 3 are swapped around</li>
-</ul>
-
-<br>
-<b>General Bugs</b>
-<ul>
-<li>Work arounds for wish 8.5.12 and 8.5.8 issues</li>
-<li>Analysis logs can badly break autoscroll, so use normal frames and scrollbars</li>
-<li>Handle PGN parsing of unspecified promotions (b8 becomes b8=Q , for eg)</li>
 </ul>
 }
 
