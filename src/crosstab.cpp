@@ -773,7 +773,13 @@ Crosstable::PrintAllPlayAll (DString * dstr, uint playerLimit)
         dstr->Append ("r}\n");
     }
     dstr->Append (StartRow);
-    if (OutputFormat == CROSSTABLE_Html) {
+    if (OutputFormat == CROSSTABLE_Hypertext) {
+        strPad (stemp, "", PlayerNumWidth + 2, ' ');
+        dstr->Append (stemp);
+        dstr->Append ("<blue><run set ::crosstab(sort) name ; ::crosstab::Refresh>Player</run></blue>");
+        strPad (stemp, "", LongestNameLen - 6, ' ');
+        dstr->Append (stemp);
+    } else if (OutputFormat == CROSSTABLE_Html) {
         dstr->Append ("<th></th> <th>Player</th> ");
     } else if (OutputFormat == CROSSTABLE_LaTeX) {
         dstr->Append ("  & \\bf Player & ");
@@ -783,7 +789,7 @@ Crosstable::PrintAllPlayAll (DString * dstr, uint playerLimit)
     }
     if (PrintRatings) {
         if (OutputFormat == CROSSTABLE_Hypertext) {
-            sprintf (stemp, "<blue><run set ::crosstab(sort) rating ; ::crosstab::Refresh> Rtng</run></blue>");
+            sprintf (stemp, " <blue><run set ::crosstab(sort) rating ; ::crosstab::Refresh>Rtng</run></blue>");
             dstr->Append (stemp);
         } else {
             dstr->Append (StartBoldCol, " Rtng", EndBoldCol);
@@ -797,7 +803,7 @@ Crosstable::PrintAllPlayAll (DString * dstr, uint playerLimit)
     }
     if (PrintCountries) {
       if (OutputFormat == CROSSTABLE_Hypertext) {
-          sprintf (stemp, "<blue><run set ::crosstab(sort) country ; ::crosstab::Refresh> Nat</run></blue>");
+          sprintf (stemp, " <blue><run set ::crosstab(sort) country ; ::crosstab::Refresh>Nat</run></blue>");
           dstr->Append (stemp);
       } else {
           dstr->Append (StartBoldCol, " Nat", EndBoldCol);
@@ -981,7 +987,13 @@ Crosstable::PrintSwiss (DString * dstr, uint playerLimit)
         dstr->Append ("r}\n");
     }
     dstr->Append (StartRow);
-    if (OutputFormat == CROSSTABLE_Html) {
+    if (OutputFormat == CROSSTABLE_Hypertext) {
+        strPad (stemp, "", PlayerNumWidth + 2, ' ');
+        dstr->Append (stemp);
+        dstr->Append ("<blue><run set ::crosstab(sort) name ; ::crosstab::Refresh>Player</run></blue>");
+        strPad (stemp, "", LongestNameLen - 6, ' ');
+        dstr->Append (stemp);
+    } else if (OutputFormat == CROSSTABLE_Html) {
         dstr->Append ("<th></th> <th>Player</th> ");
     } else if (OutputFormat == CROSSTABLE_LaTeX) {
         dstr->Append ("  & \\bf Player & ");
@@ -991,7 +1003,7 @@ Crosstable::PrintSwiss (DString * dstr, uint playerLimit)
     }
     if (PrintRatings) {
         if (OutputFormat == CROSSTABLE_Hypertext) {
-            sprintf (stemp, "<blue><run set ::crosstab(sort) rating ; ::crosstab::Refresh> Rtng</run></blue>");
+            sprintf (stemp, " <blue><run set ::crosstab(sort) rating ; ::crosstab::Refresh>Rtng</run></blue>");
             dstr->Append (stemp);
         } else {
             dstr->Append (StartBoldCol, " Rtng", EndBoldCol);
@@ -1005,7 +1017,7 @@ Crosstable::PrintSwiss (DString * dstr, uint playerLimit)
     }
     if (PrintCountries) {
       if (OutputFormat == CROSSTABLE_Hypertext) {
-          sprintf (stemp, "<blue><run set ::crosstab(sort) country ; ::crosstab::Refresh> Nat</run></blue>");
+          sprintf (stemp, " <blue><run set ::crosstab(sort) country ; ::crosstab::Refresh>Nat</run></blue>");
           dstr->Append (stemp);
       } else {
           dstr->Append (StartBoldCol, " Nat", EndBoldCol);
