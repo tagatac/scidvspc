@@ -1890,7 +1890,7 @@ set helpText(LaTeX) {<h1>Using LaTeX with Scid</h1>
   </p>
   <h2>Installation</h2>
   <p>
-  Scid vs. PC uses Texlive and Skak for LaTeX output.  Typical linux packages may include:
+  Scid vs. PC uses Texlive and Xskak for LaTeX output.  Typical linux packages may include:
   </p>
   <ul>
 <li>texlive</li>

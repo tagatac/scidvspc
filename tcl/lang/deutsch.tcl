@@ -179,7 +179,7 @@ menuText D ToolsBookTuning "Eröffnungsbuch anpassen" 0 {Eröffnungsbuch anpasse
 menuText D ToolsMaint "Wartung" 0 {Das Scid-Datenbankwartungsfenster}
 menuText D ToolsMaintWin "Wartungfenster" 0 \
   {Datenbank-Wartungsfenster öffnen/schließen}
-menuText D ToolsMaintExtra "Extramarkierungen" 0 {Extra Tags}
+menuText D ToolsMaintExtra "Extramarkierungen" 0 {Extramarkierungen}
 menuText D ToolsMaintCompact "Datenbank komprimieren..." 10 \
   {Datenbank komprimieren, gelöschte Spiele und unbenutzte Namen entfernen}
 menuText D ToolsMaintClass "Partien ECO-klassifizieren..." 8 \
@@ -200,7 +200,6 @@ menuText D ToolsMaintNameSite "Schreibkorrektur Ort..." 17 \
   {Schreibkorrektur der Orte mit Hilfe der .ssp-Datei}
 menuText D ToolsMaintNameRound "Schreibkorrektur Runde..." 17 \
   {Schreibkorrektur der Runden mit Hilfe der .ssp-Datei}
-# ====== TODO To be translated ======
 menuText D ToolsMaintFixBase "Inkonsistenzen beseitigen" 0 {Versuche eine inkonsistente Datenbank zu reparieren}
 menuText D ToolsConnectHardware "Hardware verbinden" 0 {Externe Hardware mit Scid verbinden}
 menuText D ToolsConnectHardwareConfigure "Konfigurieren..." 0 {Hardware und Verbindung konfigurieren}
@@ -993,8 +992,7 @@ translate D AddEloRatings {ELO-Zahlen hinzufügen}
 translate D AutoloadGame {Automatisch Partie Nr. laden}
 translate D StripTags {Extramarkierungen}
 translate D StripTag {Markierung entfernen}
-# ====== TODO To be translated ======
-translate D AddTag {Add Tag}
+translate D AddTag {Markierung hinzufügen}
 translate D CheckGames {Konsistenzprüfung}
 translate D Cleaner {Bereiniger}
 translate D CleanerHelp {
@@ -1401,10 +1399,8 @@ translate D CopyErrNotOpen {ist nicht geöffnet}
 translate D LightSquares {Helle Felder}
 translate D DarkSquares {Dunkle Felder}
 translate D SelectedSquares {Ausgewählte Felder}
-# ====== TODO To be translated ======
-translate D SelectedOutline {Selected Box}
-# ====== TODO To be translated ======
-translate D SuggestedSquares {Suggested}
+translate D SelectedOutline {Ausgewählte Box}
+translate D SuggestedSquares {Vorgeschlagen}
 translate D Grid {Gitter}
 translate D Previous {Vorherige}
 translate D WhitePieces {Weiße Steine}
@@ -2128,8 +2124,9 @@ auf.
 set helpTitle(D,BrowsingPGN) "PGN"
 set helpText(D,BrowsingPGN) {<h1>PGN-Dateien und Scid</h1>
 
-<p>PGN ist das Standardformat für Schachpartien und Scid kann
-  glücklicherweise große Partiearchive öffnen.
+<p>PGN ist das
+  <url http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm>Standardformat</url>
+  für Schachpartien und Scid kann glücklicherweise große Partiearchive öffnen.
 <i>Aber PGN ist nicht das native Format der Datenbanken von Scid. Man
   muß ein wenig lernen, aber die Benutzung
   von <a Scid>Scid-Datenbanken</a> anstelle von PGN wird sehr
@@ -2304,6 +2301,7 @@ append helpText(D,Index) {
   <li><a ECO Browser>ECO-Lesefenster</a></li>
   <li><a ECO Codes>ECO-Codespezifikation</a></li>
   <li><a Moves>Eingabe von Zügen</a></li>
+  <li><a Eboards>Elektronische Schachbretter</a> (Novag, DGT...)</li>
   <li><a Maintenance Ratings>Elo-Wertungszahlen hinzufügen</a></li>
   <li><a TB>Endspieldatenbanken</a></li>
   <li><a Analysis>Engines</a></li>
@@ -2319,7 +2317,7 @@ append helpText(D,Index) {
   <li><a Book>Eröffnungsbücher</a></li>
   <li><a ECO>Eröffnungsklassifikation (ECO)</a></li>
   <li><a Repertoire>Eröffnungsrepertoire</a></li>
-  <li><a Eboards>Elektronische Schachbretter</a> (Novag, DGT...)</li>
+  <li><a Maintenance Tags>Extramarkierungen</a></li>
   </ul>
 
   <h3><name F>F</name></h3>
@@ -3864,17 +3862,23 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
 
   <h3><name Browsing>Einzelne Partien durchsuchen und
   zusammenführen</name></h3>
-  <p>Aus dem Kontextmenü der Partienliste können Sie eine
-  Partie <b>durchsuchen</b>. Dies liefert eine Partievorschau, die in einem
-  separaten Fenster ohne Kommentare oder Varianten angezeigt wird.
+
+  <p>Aus dem Kontextmenü der Partienliste (und verschiedenen anderen Stellen)
+  können Sie ein Partiebrowserfenster öffnen. Dies ist eine einfache dauerhafte
+  Partievorschau ohne Kommentare oder Varianten unter Verwendung der Farben des
+  pgn-Fensters.</p>
+
+  <p>Merkmale dieser Vorschau beinhalten ein <b>Zusammenfügen</b> der Partie mit
+  der aktuellen Partie. Das Zusammenfügen beginnt an der Stelle, an der sich die
+  Partien unterscheiden (Umstellungen werden berücksichtigt). Sie können die
+  letzte Zugnummer, die hinzugefügt werden soll, ändern, je nachdem, ob Sie die
+  ganze Partie oder nur ihre nächsten paar Züge hinzufügen wollen.
   </p>
-  <p>Aus dieser Vorschau heraus können Sie diese Partie als Variante
-  mit der aktuellen Partie <b>zusammenfügen</b>. Das Zusammenfügen
-  beginnt an der Stelle, an der sich die Partien unterscheiden
-  (Umstellungen werden berücksichtigt). Sie können die letzte
-  Zugnummer, die hinzugefügt werden soll, ändern, je nachdem, ob Sie
-  die ganze Partie oder nur ihre nächsten paar Züge hinzufügen wollen.
-  </p>
+  
+  <p>Die Schaltfläche <b>Laden</b> lädt die Partie (mit Wechsel der Datenbanken,
+  falls notwendig) in das Hauptbrett (Taste Strg + Laden schließt nicht das
+  Browserfenster).</p>
+  
   <p>Nächste/vorherige Partien können mittels der Tasten
   Strg+runter/hoch geladen werden. Die Brettgröße kann mit
   Strg+Mausrad oder mit Strg+Umschalt+Links/Rechts <b>angepaßt<b>
@@ -3885,14 +3889,13 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
 
   <h3>Mehrere Partien durchsuchen</h3>
 
-  <p>Scid vs PC kann auch (in einem Rasterformat) mehrere Partien
-  mittels Rechtsklick aus einer Auswahl von Partien durchsuchen. Die
-  Tasten Links/Rechts/Pos1/Ende wandern durch eine Partie. Ein
-  Doppelklick oder Strg+Enter lädt eine Partie. Die Taste 'f' dreht
-  das Brett. Strg+Mausrad ändert die Größe der Bretter (die
-  standardmäßige Brettgröße wird durch
-  Optionen-<gt>FICS-<gt>Brettgröße festgelegt). Strg+Entf schaltet das
-  Löschen um (angezeigt durch eine ausgegraute Partienummer).
+  <p>Scid vs PC kann auch (in einem Rasterformat) mehrere Partien mittels
+  Rechtsklick aus einer Auswahl von Partien in der Partienliste durchsuchen. Die
+  Tasten Links/Rechts/Pos1/Ende wandern durch eine Partie. Ein Doppelklick oder
+  Strg+Enter lädt eine Partie. Die Taste 'f' dreht das Brett. Strg+Mausrad
+  ändert die Größe der Bretter (die standardmäßige Brettgröße wird durch
+  Optionen-<gt>FICS-<gt>Brettgröße festgelegt). Strg+Entf schaltet das Löschen
+  um (angezeigt durch eine ausgegraute Partienummer).</p>
 
   <p>Das Drücken von Strg+Links/Rechts bewegt <b>alle</b> Bretter
   vorwärts oder zurück und in gleicher Weise zeigt Strg+Pos1/Ende alle
@@ -4128,34 +4131,32 @@ set helpText(D,LaTeX) {<h1>LaTeX mit Scid benutzen</h1>
   verwendet. Es ist aber schwierig zu installieren und zu benutzen.
   </p>
 
-  <p><i>Scid vs. PC verwendet nicht mehr Chess12 für die
-  LaTeX-Ausgabe. Die neue xskak-Implementation ist nahezu vollständig,
-  aber nicht ganz. Es bleibt zu tun: Kommentare innerhalb von
-  Varianten implementieren, Rochadediagramme und Hinzufügen einer
-  "Zusammenfassen"-Option, die Diagramme und Ergebnisgrafiken
-  ausblendet und den Partiekopf (auf halbe Seitengröße) beschränkt.
-  </i></p>
-
   <h2>Installation</h2>
-  Der Autor installierte texlive auf Linux Mint 17 (Ubuntu 14.04) und
-  zusätzlich diese Pakete:
+
+  <p>Scid vs. PC verwendet für die LaTeX-Ausgabe Texlive und xskak. Typische
+  Linux-Pakete können beinhalten:
   </p>
   <ul>
-  <li>latex-xcolor (xcolor.sty)</li>
+  <li>texlive</li>
+  <li>texlive-base</li>
+  <li>texlive-font-utils</li>
   <li>texlive-games (xskak.sty)</li>
   <li>texlive-generic-extra, (lambda.sty) </li>
+  <li>texlive-latex-base (xifthen.sty)</li>
   <li>texlive-latex-extra (xifthen.sty)</li>
   <li>pgf (pgfcore.sty)</li>
   <li>lmodern (lmodern.sty)</li>
   <li>texlive-pstricks (pstricks-add.sty)</li>
+  <li>texlive-science (siunitx.sty)</li>
   <li>texlive-xetex (xelatex)</li>
   </ul>
 
   <h2>PDF erstellen</h2>
+
   <p>LaTeX muß im Allgemeinen nach PDF konvertiert werden. Die
-  LaTeX-Vorschaufunktion von Scid erledigt dies. Für ein manuelles
-  Konvertieren nach pdf benutzen Sie den Befehl <b>xelatex
-  datei.tex</b></p>
+  LaTeX-Vorschaufunktion von Scid erledigt dies. Für ein manuelles Konvertieren
+  nach pdf versuchen Sie den Befehl xelatex oder pdflatex.
+  </p>
 
   <p>Die ältere Methode hierfür ist
   <ul>
@@ -4193,7 +4194,7 @@ set helpText(D,LaTeX) {<h1>LaTeX mit Scid benutzen</h1>
   Also ...  add "PATH=$PATH:/Library/TeX/Root/bin/x86_64-darwin" to the startup scripts.</li></ul>
   </p>
 
-  <p><footer>Aktualisiert: Scid vs. PC 4.17, September 2016</footer></p>
+  <p><footer>Aktualisiert: Scid vs. PC 4.25, Mai 2024</footer></p>
 }
 
 set helpTitle(D,PGN) "PGN-Fenster"
@@ -4839,6 +4840,12 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   Vor "Alter Name" darf kein Leerzeichen sein, "N" stellt die Anzahl
   der Partien dar, die auf den ursprünglichen Spielernamen passen.
   </p>
+
+  <p><i>Hinweis - aufgrund unserer Implementierung können einige schlecht
+  definierte Namen (z.B. Events/White/Black) geändert werden - z.B. werden
+  solche mit einem '"' im Namen und dem fehlenden Leerzeichen in "Kramnik,V" in
+  "Kramnik, V" umgewandelt.</i></p>
+
   <p>Man kann jede Korrektur durch Löschen verwerfen oder ein
   Leerzeichen oder sonstiges Zeichen am Zeilenanfang
   hinzufügen. Spielernamen, die <b>nur einen Familiennamen</b>
@@ -4880,16 +4887,6 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   verwenden.</i>
   </p>
 
-
-  <h3><name Cleaner>Der Bereiniger</name></h3>
-  <p>Das <run cleanerWin><green>Bereiniger</green></run>fenster ist
-  ein Werkzeug, um mehrere Wartungsaufgaben gleichzeitig
-  durchzuführen. Sie können wählen, welche Aufgaben Sie durchführen
-  wollen und Scid führt sie für die aktuelle Datenbank aus, ohne daß
-  weitere Benutzereingriffe erforderlich sind. Dies ist besonders für
-  große Datenbanken nützlich.
-  </p>
-
   <h3><name Autoload>Automatisch eine Partie laden</name></h3>
   <p>Wenn eine Datenbank geöffnet wird, will man vielleicht, daß eine
   bestimmte Partie automatisch geladen wird. Benutzen Sie hierfür im
@@ -4899,21 +4896,36 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   Partienummer 16.777.214 (ungefähr 2^(8*3)).</i>
   </p>
 
-  <h3><name Tags>Kommentare/Varianten entfernen</name></h3>
+  <h3><name CV>Kommentare/Varianten entfernen</name></h3>
   <p><b>Mit Vorsicht verwenden</b>. Das massenweise Entfernen von
   Kommentaren und Varianten kann nicht rückgängig gemacht
-  werden. Außerdem können sich aufgrund unserer Implementierung einige
-  mangelhaft definierte Namen (z.B. bei Veranstaltung/Weiß/Schwarz)
-  verändern, beispielsweise jene mit einem Apostroph im Namen und das
-  fehlende Leerzeichen in "Kramnik,V" wird zu "Kramnik, V"
-  umgewandelt.
+  werden.
   </p>
 
-  <h3><name Tags>PGN-Markierungen entfernen</name></h3>
-  <p>Diese Funktion durchsucht die Datenbank nach besonderen
-  PGN-Markierungen (so wie "Annotator"). Dann kann man diese entfernen
-  oder den Filter anpassen, um die betreffenden Partien anzuzeigen.
-  </p>
+  <h3><name Tags>Extramarkierungen</name></h3>
+  <p>Das
+  <url http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm>PGN-Format</url>
+  enthält eine Reihe obligatorischer Markierungen (wie White, Event und
+  Date). In Scid werden diese vom <a Maintenance Editing>Namenseditor</a>
+  verwaltet. Das Fenster <run extraTags><green>Zusätzliche
+  Markierungen</green></run> erleichtert das Ändern optionaler Markierungen wie
+  Annotator, PlyCount, Depth, TimeControl.</p>
+  
+  <p>Zu den Funktionen gehören: Suchen, Filtern, Entfernen und
+  Hinzufügen/Erstellen neuer Markierungen (nur Filter).</p>
+
+  <p><i>Das Hinzufügen zusätzlicher Tags vergrößert die Größe der Partiendatei
+  von Scid schnell. Alle Änderungen führen dazu, dass die Markierungen
+  vollständig neu geschrieben werden, wobei der Speicherplatz erst
+  wiederhergestellt wird, wenn die Partiendatei <a Compact>komprimiert</a>
+  ist.</i></p>
+
+  <p><i>Bitte mit Vorsicht verwenden. Die Massenbearbeitung von
+  Partiemarkierungen ist eine leistungsstarke Funktion und kann im Allgemeinen
+  nicht rückgängig gemacht werden. Darüber hinaus gibt es weitere
+  Einschränkungen. Markierungsnamen dürfen keine Satzzeichen (außer
+  Unterstriche) oder Leerzeichen enthalten oder mit Markierungen wie FEN, SetUp,
+  WhiteElo und anderen übereinstimmen.</i></p>
 
   <h3><name Check>Konsistenzprüfung</name></h3>
   <p>Diese Funktion führt Überprüfungen an jeder (Filter-)Partie durch.
@@ -4928,6 +4940,15 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   * und wurde dekodiert.
   </p>
   <p>Etwaige Fehler werden angezeigt.
+  </p>
+
+  <h3><name Cleaner>Der Bereiniger</name></h3>
+  <p>Das <run cleanerWin><green>Bereiniger</green></run>fenster ist
+  ein Werkzeug, um mehrere Wartungsaufgaben gleichzeitig
+  durchzuführen. Sie können wählen, welche Aufgaben Sie durchführen
+  wollen und Scid führt sie für die aktuelle Datenbank aus, ohne daß
+  weitere Benutzereingriffe erforderlich sind. Dies ist besonders für
+  große Datenbanken nützlich.
   </p>
 
   <h3>Eine Datenbank reparieren</h3>
@@ -9029,7 +9050,38 @@ set helpText(D,Sound) {<h1>Ton</h1>
 set helpTitle(D,Changelog) "Scid vs PC Änderungshistorie"
 set helpText(D,Changelog) {<h1>Änderungshistorie</h1>
 
-<h4>4.24 (Mai 1, 2023)</h4>
+<h4>4.25 (May 20, 2024)</h4>
+<ul>
+<li>Extra Tags - bulk add Extra Tag feature</li>
+<li>Enable pattern matching in the Name Editor</li>
+<li>Show Comments in Game Preview/Browser windows, change colours to match PGN, and ControlKey+Load does not close the Browser window</li>
+<li>LaTex Game Export - draw Marks in chess diagrams, and other minor changes (from Bruno)</li>
+<li>Crosstable: add clickable column headings for Nationality, Rating and Score</li>
+<li>Engine Annotation - Score last move in case of checkmate (and stalemate)</li>
+<li>Tree mask - Options to hide Markers (default), disable tooltips, and make the mask move colour steelblue</li>
+<li></li>
+<li>Engine - Right-clicking AddAllVars adds all first moves only</li>
+<li>Comment Editor - Remove 'Apply' button, instead automatically apply miniboard changes. Add wheelmouse move-forward/back bindings</li>
+<li>Player Info - don't show 'filtered games' stats if they duplicate the normal stats</li>
+<li>Make the Tree Bargraph height similar to the font height (for high def displays)</li>
+<li>Add a few Keypad bindings, re suggestion from Patrick</li>
+<li>Pressing Home-key inside a variation moves to var start instead of game start</li>
+</ul>
+
+<br>
+<b>General Bugs</b>
+<ul>
+<li>Twin Game checker minor fixes</li>
+<li>Some spinboxes (annotate(blunder)) had erroneous error checking and threw exceptions</li>
+<li>Some graphs didn't show the correct final/current year, gah!</li>
+<li>Minor optable.tcl fixes/clean-up. Opening Table max games is now 100,000 (was 25,000)</li>
+<li>Add current decade to Opening report Current popularity</li>
+<li>EPD analysis hardening</li>
+<li>For a few widgets - dont scroll text windows when using control-scroll to alter font size</li>
+<li>Update stats/etc on Game quickSave</li>
+</ul>
+  
+<h4>4.24 (May 1, 2023)</h4>
 <ul>
 <li>Gamelist (and Best games) 'Copy to filter' context-menu/feature</li>
 <li>Support for Graham O'Neill's (UCI engine) eboard drivers</li>
@@ -9075,7 +9127,7 @@ set helpText(D,ShortCuts) {<h1>Tastaturkurzbefehle</h1>
 <li><b>→</b> - Einen Zug vorwärts</li>
 <li><b>↑</b> - Fünf Züge zurück/Variante beenden</li>
 <li><b>↓</b> - Fünf Züge vorwärts</li>
-<li><b>Pos1</b> - Zum Anfang gehen</li>
+<li><b>Pos1</b> - Zum Partie-/Variantenanfang gehen</li>
 <li><b>Ende</b> - Zum Partie-/Variantenende gehen</li>
 <li><b>Strg-g</b> - Gehe zum Zug Nr.</li>
 <li><b>Strg-f</b> - Brett drehen</li>
@@ -9233,7 +9285,7 @@ set helpText(D,ShortCuts) {<h1>Tastaturkurzbefehle</h1>
 <li><b>rechts</b> - Einen Zug vorwärts</li>
 <li><b>hoch</b> - Fünf Züge zurück/Variante beenden</li>
 <li><b>runter</b> - Fünf Züge vorwärts</li>
-<li><b>Pos1</b> - Zum Anfang gehen</li>
+<li><b>Pos1</b> - Zum Partie-/Variantenanfang gehen</li>
 <li><b>Ende</b> - Zum Partie-/Variantenende gehen</li>
 <li></li>
 
