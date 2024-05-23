@@ -115,6 +115,7 @@ uint   strSingleSpace (char * str);
 bool   strIsAllWhitespace (const char * str);
 bool   strIsUnknownName (const char * str);
 
+char **strExplode(char *original, char separator);
 bool   strIsScore(const char *str);
 double strGetScore(const char *str);
 

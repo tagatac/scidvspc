@@ -462,13 +462,22 @@ public:
     void      GetNextMoveUCI (char * str);
 
     bool      CommentEmpty ( const char * comment);
+
+    void      LaTexWriteChessboard (TextBuffer * tb, const char * san, const char *comment);
+    void      LaTexDrawMarkCodes(TextBuffer * tb, const char *originalStr);
+    void      LaTexWriteComment (TextBuffer * tb, const char * preStr,
+                            const char * comment, const char * postStr, bool needNewLine);
+    errorT    LaTexWriteMoveList (TextBuffer * tb, uint plyCount,
+                             moveT * oldCurrentMove,
+                             bool printMoveNum, bool inComment);
+    errorT    LaTexWritePGN (TextBuffer * tb, uint stopLocation);
+
     void      WriteComment (TextBuffer * tb, const char * preStr,
                             const char * comment, const char * postStr);
     errorT    WriteMoveList (TextBuffer * tb, uint plyCount,
                              moveT * oldCurrentMove,
                              bool printMoveNum, bool inComment);
     errorT    WritePGN (TextBuffer * tb, uint stopLocation);
-    errorT    WritePGNtoLaTeX(TextBuffer * tb, uint stopLocation);
     errorT    WritePGNGraphToLatex(TextBuffer * tb);
     errorT    WriteToPGN (TextBuffer * tb);
     errorT    MoveToLocationInPGN (TextBuffer * tb, uint stopLocation);

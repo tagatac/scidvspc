@@ -800,6 +800,44 @@ strIsUnknownName (const char * str)
     return false;
 }
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// strExplode()
+//
+char **strExplode(char *original, char separator)
+{
+    char *ptr;
+    int nbr = 0;
+    char **tab;
+    char **ptab;
+
+    ptr = original;
+    while (*ptr != 0)
+    {
+        if (*ptr == separator)
+            nbr++;
+        ptr++;
+    }
+    nbr++;
+
+    ptab = tab = new char *[nbr + 1];
+
+    ptr = original;
+    *ptab = ptr;
+    while (*ptr != 0)
+    {
+        if (*ptr == separator)
+        {
+            *ptr = 0;
+            ptab++;
+            *ptab = ptr + 1;
+        }
+        ptr++;
+    }
+    ptab++;
+    *ptab = NULL;
+    return tab;
+}
+
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // strIsScore():
