@@ -2834,7 +2834,7 @@ with the format "stat01: time nodes ply mvleft mvtot mvname". The results can be
   At the bottom is some additional technical info, shown/hidden by pressing the <button tb_info 32> button.
   These are -
   <br>
-  <br><b>Depth</b>  The search depth already reached by
+  <br><b>Depth</b> ( / Selective Depth)  The search depth (/ seldepth) already reached by
   the engines calculations (in half moves).
   <br><b>Nodes</b>  The number of positions analyzed for the current
   result (and the number of positions per second).

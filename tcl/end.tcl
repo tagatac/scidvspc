@@ -600,7 +600,11 @@ proc exportGames {selection exportType {fName {}}} {
   if {$exportFilter} {
     progressWindow Scid "Exporting games" $::tr(Stop) sc_progressBar
   }
- # tk_messageBox -title "Debug" -type ok -icon error -message "Export Type $exportType" 
+  # nasty hack to notify latex export the board should be flipped
+  if {$exportType == "Latex"} {
+    set exportFlags(scidFlags) [::board::isFlipped .main.board]
+  }
+# tk_messageBox -title "Debug" -type ok -icon error -message "Export Type $exportType" 
   busyCursor .
   set error [catch {
   sc_base export $selection $exportType $fName -append $exportFlags(append) \

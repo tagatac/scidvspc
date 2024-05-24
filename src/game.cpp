@@ -2450,13 +2450,10 @@ void Game::LaTexWriteChessboard(TextBuffer * tb, const char *san, const char *co
     {
         LaTexDrawMarkCodes(tb, comment);
     }
-    /*
-     * TODO : flip board ?
-     if (FlipBoard)
-     {
-     tb->PrintString(",inverse");
-     }
-     */
+    if (PgnStyle & PGN_STYLE_SCIDFLAGS)
+    {
+    tb->PrintString(",inverse");
+    }
     if (VarDepth > 0)
     {
         tb->PrintString(",tinyboard");
