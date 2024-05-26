@@ -1473,7 +1473,6 @@ proc gsave { gnum } {
     }
   }
 
-  updateBoard -pgn
   ::windows::stats::Refresh
   updateTitle
   return 1
@@ -1495,7 +1494,6 @@ proc gameQuickSave {} {
     gameAdd
   } else {
     sc_game save [sc_game number]
-    updateBoard -pgn
     ::windows::stats::Refresh
   } 
 }
@@ -1971,10 +1969,13 @@ if {[catch {
   setLanguage E
 }
 
+if {0} {
+# does windows need these now ? They are recalled further down S.A.
 updateTitle
 updateBoard
 updateStatusBar
 update idle
+}
 
 # Try to find tablebases:
 if {$loadAtStart(tb)} {
