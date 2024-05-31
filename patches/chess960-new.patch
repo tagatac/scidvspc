@@ -1,6 +1,6 @@
 Index: Makefile.conf
 ===================================================================
---- Makefile.conf	(revision 3396)
+--- Makefile.conf	(revision 3457)
 +++ Makefile.conf	(working copy)
 @@ -292,7 +292,7 @@
  	install -m 755 -d $(SHAREDIR)
@@ -35,7 +35,7 @@ Index: Makefile.conf
  
 Index: Makefile.conf.darwin
 ===================================================================
---- Makefile.conf.darwin	(revision 3396)
+--- Makefile.conf.darwin	(revision 3457)
 +++ Makefile.conf.darwin	(working copy)
 @@ -288,7 +288,7 @@
  	install -m 755 -d $(SHAREDIR)
@@ -70,7 +70,7 @@ Index: Makefile.conf.darwin
  
 Index: Makefile.mingw
 ===================================================================
---- Makefile.mingw	(revision 3396)
+--- Makefile.mingw	(revision 3457)
 +++ Makefile.mingw	(working copy)
 @@ -91,7 +91,7 @@
  CQL_INCLUDE = -Isrc/cql -Isrc -I$(TCL_DIR)/include
@@ -94,11 +94,11 @@ Index: Makefile.mingw
  tcscid.exe: src/tcscid.o $(OBJS) $(CQLOBJS_I) $(SCID_XOBJS) $(CHARSETCONVOBJS)
 Index: Scid vs PC.iss
 ===================================================================
---- Scid vs PC.iss	(revision 3396)
+--- Scid vs PC.iss	(revision 3457)
 +++ Scid vs PC.iss	(working copy)
 @@ -1,6 +1,6 @@
  
- #define AppVersion '4.24'
+ #define AppVersion '4.25'
 -#define AppName    'Scid vs PC'
 +#define AppName    'Scid vs PC 960'
  #define ActiveTclUrl 'http://www.activestate.com/activetcl/downloads'
@@ -122,9 +122,9 @@ Index: Scid vs PC.iss
  [Code]
 Index: src/game.cpp
 ===================================================================
---- src/game.cpp	(revision 3396)
+--- src/game.cpp	(revision 3457)
 +++ src/game.cpp	(working copy)
-@@ -446,7 +446,8 @@
+@@ -478,7 +478,8 @@
  void
  Game::SaveState ()
  {
@@ -134,7 +134,7 @@ Index: src/game.cpp
      SavedPos->CopyFrom (CurrentPos);
      SavedMove = CurrentMove;
      SavedPlyCount = CurrentPlyCount;
-@@ -463,6 +464,7 @@
+@@ -495,6 +496,7 @@
      if (SavedMove) {
          ASSERT (SavedPos != NULL);
          CurrentPos->CopyFrom (SavedPos);
@@ -142,7 +142,7 @@ Index: src/game.cpp
          CurrentMove = SavedMove;
          CurrentPlyCount = SavedPlyCount;
          VarDepth = SavedVarDepth;
-@@ -531,7 +533,7 @@
+@@ -563,7 +565,7 @@
      MoveChunk = NULL;
      AllocateMoreMoves();
      StartPos = NULL;
@@ -151,7 +151,7 @@ Index: src/game.cpp
      KeepDecodedMoves = true;
      SavedPos = NULL;
      SavedMove = NULL;
-@@ -614,6 +616,10 @@
+@@ -646,6 +648,10 @@
  
      // Set up standard start
      CurrentPos->StdStart();
@@ -162,7 +162,7 @@ Index: src/game.cpp
      KeepDecodedMoves = true;
  }
  
-@@ -688,8 +694,12 @@
+@@ -720,8 +726,12 @@
      }
      VarDepth = 0;
      if (!StartPos) { StartPos = new Position; }
@@ -175,7 +175,7 @@ Index: src/game.cpp
      // Now make the material signature:
      FinalMatSig = matsig_Make (StartPos->GetMaterial());
      NonStandardStart = true;
-@@ -705,7 +715,7 @@
+@@ -737,7 +747,7 @@
  Game::SetStartFen (const char * fenStr)
  {
      // First try to read the position:
@@ -184,7 +184,7 @@ Index: src/game.cpp
      errorT err = pos->ReadFromFEN (fenStr);
      if (err != OK) { delete pos; return err; }
  
-@@ -717,6 +727,7 @@
+@@ -749,6 +759,7 @@
      VarDepth = 0;
      if (StartPos) { delete StartPos; }
      StartPos = pos;
@@ -192,7 +192,7 @@ Index: src/game.cpp
      CurrentPos->CopyFrom (StartPos);
      // Now make the material signature:
      FinalMatSig = matsig_Make (StartPos->GetMaterial());
-@@ -893,6 +904,8 @@
+@@ -925,6 +936,8 @@
          CurrentPos->CopyFrom (StartPos);
      } else {
          CurrentPos->StdStart();
@@ -201,7 +201,7 @@ Index: src/game.cpp
      }
      CurrentPlyCount = 0;
      for (ushort i=0; i < hmNumber; i++) {
-@@ -1307,6 +1320,7 @@
+@@ -1339,6 +1352,7 @@
      ASSERT (CurrentMove != NULL);
      while (MoveExitVariation() == OK);  // exit variations
      if (!StartPos) { StartPos = new Position; }
@@ -209,7 +209,7 @@ Index: src/game.cpp
      StartPos->CopyFrom (CurrentPos);
      NonStandardStart = true;
      CurrentMove->prev->marker = END_MARKER;
-@@ -3675,7 +3689,7 @@
+@@ -4144,7 +4158,7 @@
  // encodeKing(): encoding of King moves.
  //
  static inline void
@@ -218,7 +218,7 @@ Index: src/game.cpp
  {
      // Valid King difference-from-old-square values are:
      // -9, -8, -7, -1, 1, 7, 8, 9, and -2 and 2 for castling.
-@@ -3685,6 +3699,31 @@
+@@ -4154,6 +4168,31 @@
  
      ASSERT(sm->pieceNum == 0);  // Kings MUST be piece Number zero.
      int diff = (int) sm->to - (int) sm->from;
@@ -250,7 +250,7 @@ Index: src/game.cpp
      static const byte val[] = {
      /* -9 -8 -7 -6 -5 -4 -3 -2 -1  0  1   2  3  4  5  6  7  8  9 */
          1, 2, 3, 0, 0, 0, 0, 9, 4, 0, 5, 10, 0, 0, 0, 0, 6, 7, 8
-@@ -3707,7 +3746,7 @@
+@@ -4176,7 +4215,7 @@
  // decodeKing(): decoding of King moves.
  //
  static inline errorT
@@ -259,7 +259,7 @@ Index: src/game.cpp
  {
      static const int sqdiff[] = {
          0, -9, -8, -7, -1, 1, 7, 8, 9, -2, 2
-@@ -3719,8 +3758,34 @@
+@@ -4188,8 +4227,34 @@
      }
  
      if (val < 1  ||  val > 10) { return ERROR_Decode; }
@@ -296,7 +296,7 @@ Index: src/game.cpp
  }
  
  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-@@ -4051,7 +4116,7 @@
+@@ -4520,7 +4585,7 @@
          err = decodeBishop (val & 15, sm);
          break;
      case KING:
@@ -305,7 +305,7 @@ Index: src/game.cpp
          break;
      // For queen moves: Rook-like moves are in 1 byte, diagonals are in 2.
      case QUEEN:
-@@ -4068,7 +4133,7 @@
+@@ -4537,7 +4602,7 @@
  //  Encode one move and output it to the bytebuffer.
  //
  static void
@@ -314,7 +314,7 @@ Index: src/game.cpp
  {
      simpleMoveT * sm = &(m->moveData);
      pieceT pt = piece_Type(sm->movingPiece);
-@@ -4076,7 +4141,7 @@
+@@ -4545,7 +4610,7 @@
      typedef void encodeFnType (ByteBuffer *, simpleMoveT *);
      static encodeFnType * encodeFn[] = {
          NULL         /* 0 */,
@@ -323,7 +323,7 @@ Index: src/game.cpp
          encodeQueen  /*2=QUEEN*/,
          encodeRook   /*3=ROOK*/,
          encodeBishop /*4=BISHOP*/,
-@@ -4084,7 +4149,10 @@
+@@ -4553,7 +4618,10 @@
          encodePawn   /*6=PAWN*/
      };
      ASSERT (pt >= KING  &&  pt <= PAWN);
@@ -335,7 +335,7 @@ Index: src/game.cpp
  }
  
  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-@@ -4093,7 +4161,7 @@
+@@ -4562,7 +4630,7 @@
  //
  static errorT
  encodeVariation (ByteBuffer * buf, moveT * m, uint * subVarCount,
@@ -344,7 +344,7 @@ Index: src/game.cpp
  {
      ASSERT (m != NULL);
  
-@@ -4102,8 +4170,8 @@
+@@ -4571,8 +4639,8 @@
          buf->PutByte (ENCODE_COMMENT);
      }
  
@@ -355,7 +355,7 @@ Index: src/game.cpp
          for (uint i=0; i < (uint) m->nagCount; i++) {
              buf->PutByte (ENCODE_NAG);
              buf->PutByte (m->nags[i]);
-@@ -4117,10 +4185,14 @@
+@@ -4586,10 +4654,14 @@
              for (uint i=0; i < m->numVariations; i++) {
                  *subVarCount += 1;
                  buf->PutByte (ENCODE_START_MARKER);
@@ -371,7 +371,7 @@ Index: src/game.cpp
          m = m->next;
      }
      // At end, we output the end-variation or end-game token.
-@@ -4423,7 +4495,10 @@
+@@ -4892,7 +4964,10 @@
      // Now the movelist:
      uint varCount = 0;
      uint nagCount = 0;
@@ -383,7 +383,7 @@ Index: src/game.cpp
      if (err != OK) { return err; }
  
      // Now do the comments
-@@ -4611,6 +4686,7 @@
+@@ -5080,6 +5155,7 @@
              NonStandardStart = 0;
              return err;
          }
@@ -391,7 +391,7 @@ Index: src/game.cpp
          CurrentPos->CopyFrom (StartPos);
      }
  
-@@ -4660,6 +4736,7 @@
+@@ -5129,6 +5205,7 @@
              NonStandardStart = 0;
              return err;
          }
@@ -401,7 +401,7 @@ Index: src/game.cpp
  
 Index: src/gfile.h
 ===================================================================
---- src/gfile.h	(revision 3396)
+--- src/gfile.h	(revision 3457)
 +++ src/gfile.h	(working copy)
 @@ -23,8 +23,7 @@
  #include "mfile.h"
@@ -415,7 +415,7 @@ Index: src/gfile.h
  // The block structure type:
 Index: src/index.h
 ===================================================================
---- src/index.h	(revision 3396)
+--- src/index.h	(revision 3457)
 +++ src/index.h	(working copy)
 @@ -30,8 +30,8 @@
  //////////////////////////////////////////////////////////////////////
@@ -430,7 +430,7 @@ Index: src/index.h
  // max. number of games is 2^(3*8)-1-1,
 Index: src/movelist.h
 ===================================================================
---- src/movelist.h	(revision 3396)
+--- src/movelist.h	(revision 3457)
 +++ src/movelist.h	(working copy)
 @@ -46,6 +46,11 @@
      squareT  epSquare;       // pre-move information
@@ -446,7 +446,7 @@ Index: src/movelist.h
  inline bool isNullMove (simpleMoveT * sm)
 Index: src/namebase.h
 ===================================================================
---- src/namebase.h	(revision 3396)
+--- src/namebase.h	(revision 3457)
 +++ src/namebase.h	(working copy)
 @@ -55,8 +55,7 @@
  const caseFlagT
@@ -460,7 +460,7 @@ Index: src/namebase.h
  
 Index: src/position.cpp
 ===================================================================
---- src/position.cpp	(revision 3396)
+--- src/position.cpp	(revision 3457)
 +++ src/position.cpp	(working copy)
 @@ -14,6 +14,7 @@
  
@@ -1271,7 +1271,7 @@ Index: src/position.cpp
  
 Index: src/position.h
 ===================================================================
---- src/position.h	(revision 3396)
+--- src/position.h	(revision 3457)
 +++ src/position.h	(working copy)
 @@ -24,6 +24,8 @@
  #include "sqset.h"
@@ -1330,7 +1330,7 @@ Index: src/position.h
      squareT *   GetList (colorT c)    { return List[c]; }
 Index: src/tkscid.cpp
 ===================================================================
---- src/tkscid.cpp	(revision 3399)
+--- src/tkscid.cpp	(revision 3457)
 +++ src/tkscid.cpp	(working copy)
 @@ -504,8 +504,8 @@
      clipbase->backupCache->SetPolicy (TREECACHE_Oldest);
@@ -1350,7 +1350,7 @@ Index: src/tkscid.cpp
      if (db->nb->ReadNameFile() != OK) {
          base_open_failure(oldBaseNum);
          return errorResult (ti, "Error opening name file.");
-@@ -3443,115 +3442,10 @@
+@@ -3448,115 +3447,10 @@
  
  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  // sc_base_upgrade:
@@ -1467,7 +1467,7 @@ Index: src/tkscid.cpp
      return TCL_OK;
  }
  
-@@ -15755,6 +15649,7 @@
+@@ -15813,6 +15707,7 @@
          char cboard [40];
          pos->PrintCompactStrFlipped (cboard);
          posFlip->ReadFromCompactStr ((byte *) cboard);
@@ -1477,7 +1477,7 @@ Index: src/tkscid.cpp
      }
 Index: tcl/edit.tcl
 ===================================================================
---- tcl/edit.tcl	(revision 3396)
+--- tcl/edit.tcl	(revision 3457)
 +++ tcl/edit.tcl	(working copy)
 @@ -67,6 +67,9 @@
        set fenStr "$s1 $s2 [lrange $fenStr 2 end]"
@@ -1530,9 +1530,9 @@ Index: tcl/edit.tcl
    pack $sr.b.invert	-side top -padx 5 -pady 1
 Index: tcl/end.tcl
 ===================================================================
---- tcl/end.tcl	(revision 3399)
+--- tcl/end.tcl	(revision 3457)
 +++ tcl/end.tcl	(working copy)
-@@ -2026,7 +2026,7 @@
+@@ -2042,7 +2042,7 @@
  
  if {$defaultDBs != {}} {
    if {$argc == 0 && $mac_args == 0} {
@@ -1543,7 +1543,7 @@ Index: tcl/end.tcl
        set argc [llength $argv]
 Index: tcl/file/bookmark.tcl
 ===================================================================
---- tcl/file/bookmark.tcl	(revision 3396)
+--- tcl/file/bookmark.tcl	(revision 3457)
 +++ tcl/file/bookmark.tcl	(working copy)
 @@ -243,7 +243,7 @@
      if {[string compare -nocase [string range $fname end-3 end] .pgn] == 0} {
@@ -1556,7 +1556,7 @@ Index: tcl/file/bookmark.tcl
    # Find and load the best database game matching the bookmark:
 Index: tcl/file/finder.tcl
 ===================================================================
---- tcl/file/finder.tcl	(revision 3396)
+--- tcl/file/finder.tcl	(revision 3457)
 +++ tcl/file/finder.tcl	(working copy)
 @@ -316,8 +316,8 @@
  
@@ -1639,7 +1639,7 @@ Index: tcl/file/finder.tcl
        } elseif {$ext == ".epd"} {
 Index: tcl/file/maint.tcl
 ===================================================================
---- tcl/file/maint.tcl	(revision 3396)
+--- tcl/file/maint.tcl	(revision 3457)
 +++ tcl/file/maint.tcl	(working copy)
 @@ -12,7 +12,7 @@
  ################################################################################
@@ -1652,7 +1652,7 @@ Index: tcl/file/maint.tcl
    if {$fName == ""} { return }
 Index: tcl/file/recent.tcl
 ===================================================================
---- tcl/file/recent.tcl	(revision 3396)
+--- tcl/file/recent.tcl	(revision 3457)
 +++ tcl/file/recent.tcl	(working copy)
 @@ -75,7 +75,7 @@
  
@@ -1665,7 +1665,7 @@ Index: tcl/file/recent.tcl
    for {set i 1} {$i <= [sc_base count total]} {incr i} {
 Index: tcl/file.tcl
 ===================================================================
---- tcl/file.tcl	(revision 3396)
+--- tcl/file.tcl	(revision 3457)
 +++ tcl/file.tcl	(working copy)
 @@ -97,8 +97,8 @@
      return
@@ -1772,7 +1772,7 @@ Index: tcl/file.tcl
      }
    } elseif {[string match "*.epd" [string tolower $fName]]} {
      # EPD file:
-@@ -392,14 +391,14 @@
+@@ -396,14 +395,14 @@
  
  # ::file::Upgrade
  #
@@ -1790,7 +1790,7 @@ Index: tcl/file.tcl
      return
    }
  
-@@ -406,36 +405,30 @@
+@@ -410,36 +409,30 @@
    set msg [string trim $::tr(ConfirmUpgrade)]
    set res [tk_messageBox -title Scid -type yesno -icon info -message $msg]
    if {$res == "no"} { return }
@@ -1835,7 +1835,7 @@ Index: tcl/file.tcl
    }
  
    # Depending on how file is opened, windows can have "\" file separators
-@@ -449,8 +442,8 @@
+@@ -453,8 +446,8 @@
    set bsize 0
  
    ### wrong i think
@@ -1846,7 +1846,7 @@ Index: tcl/file.tcl
  
    if {! [catch {file size $gfile} err]} { set bsize $err }
    set showProgress 0
-@@ -575,14 +568,14 @@
+@@ -579,14 +572,14 @@
    if {$fName == ""} {
      if {[sc_info gzip]} {
        set ftype {
@@ -1865,7 +1865,7 @@ Index: tcl/file.tcl
          { "PGN files" {".pgn" ".PGN"} }
        }
      }
-@@ -599,10 +592,10 @@
+@@ -603,10 +596,10 @@
  
  
    if {[file extension $fName] == ""} {
@@ -1878,7 +1878,7 @@ Index: tcl/file.tcl
      ::file::Upgrade [file rootname $fName]
      return
    }
-@@ -609,7 +602,7 @@
+@@ -613,7 +606,7 @@
  
    ### Check it is not already open
    # Name handling is a little clumsy, but is tested
@@ -1887,7 +1887,7 @@ Index: tcl/file.tcl
      set rName [file rootname $fName]
    } else {
      set rName $fName
-@@ -623,7 +616,7 @@
+@@ -627,7 +620,7 @@
  
    set err 0
    busyCursor .
@@ -1896,7 +1896,7 @@ Index: tcl/file.tcl
      set fName [file rootname $fName]
      if {[catch {openBase $fName} result]} {
        unbusyCursor .
-@@ -633,7 +626,7 @@
+@@ -637,7 +630,7 @@
      } else {
        set ::initialDir(base) [file dirname $fName]
        set ::initialDir(file) [file tail $fName]
@@ -1905,7 +1905,7 @@ Index: tcl/file.tcl
      }
    } else {
      # PGN file:
-@@ -775,7 +768,7 @@
+@@ -779,7 +772,7 @@
        append message \n\n [join $rejectList \n]
      }
      set detail [tr UriRejectedDetail]
@@ -1916,9 +1916,9 @@ Index: tcl/file.tcl
  
 Index: tcl/help/help.tcl
 ===================================================================
---- tcl/help/help.tcl	(revision 3399)
+--- tcl/help/help.tcl	(revision 3457)
 +++ tcl/help/help.tcl	(working copy)
-@@ -4417,6 +4417,7 @@
+@@ -4426,6 +4426,7 @@
    <li>Project page  <url http://sourceforge.net/projects/scidvspc>http://sourceforge.net/projects/scidvspc</url></li>
    <li>Online documentation <url http://scidvspc.sourceforge.net/doc/Contents.htm>http://scidvspc.sourceforge.net/doc/Contents.htm</url></li>
    <br>
@@ -1928,9 +1928,9 @@ Index: tcl/help/help.tcl
    <li>FICS <url http://www.freechess.org>www.freechess.org</url></li>
 Index: tcl/lang/english.tcl
 ===================================================================
---- tcl/lang/english.tcl	(revision 3399)
+--- tcl/lang/english.tcl	(revision 3457)
 +++ tcl/lang/english.tcl	(working copy)
-@@ -1384,15 +1384,13 @@
+@@ -1387,15 +1387,13 @@
  # Upgrading databases:
  translate E Upgrading {Upgrading}
  translate E ConfirmOpenNew {
@@ -1950,7 +1950,7 @@ Index: tcl/lang/english.tcl
  
 Index: tcl/main.tcl
 ===================================================================
---- tcl/main.tcl	(revision 3396)
+--- tcl/main.tcl	(revision 3457)
 +++ tcl/main.tcl	(working copy)
 @@ -1333,6 +1333,7 @@
  #   piece from the user.
@@ -2009,7 +2009,7 @@ Index: tcl/main.tcl
        # dont add null move in check or mate
 Index: tcl/misc/misc.tcl
 ===================================================================
---- tcl/misc/misc.tcl	(revision 3396)
+--- tcl/misc/misc.tcl	(revision 3457)
 +++ tcl/misc/misc.tcl	(working copy)
 @@ -1201,4 +1201,187 @@
    unbusyCursor .  
@@ -2201,7 +2201,7 @@ Index: tcl/misc/misc.tcl
  # end of misc.tcl
 Index: tcl/start.tcl
 ===================================================================
---- tcl/start.tcl	(revision 3400)
+--- tcl/start.tcl	(revision 3457)
 +++ tcl/start.tcl	(working copy)
 @@ -41,7 +41,7 @@
  if {![catch {tk windowingsystem} wsystem] && $wsystem == "aqua"} {
@@ -2230,7 +2230,7 @@ Index: tcl/start.tcl
    set scidLogDir [file nativename [file join $scidUserDir "log"]]
  }
  
-@@ -1446,8 +1446,8 @@
+@@ -1449,8 +1449,8 @@
        if {$ext == ".sg4" || $ext == ".sn4"} {
          set file "[file rootname $file].si4"
        }
@@ -2241,19 +2241,19 @@ Index: tcl/start.tcl
        }
  
        # Check if base is already opened
-@@ -1997,6 +1997,7 @@
+@@ -2005,6 +2005,7 @@
  ::splash::add "http://scidvspc.sourceforge.net"
  ::splash::add ""
- ::splash::add "(C) Steven Atkinson (stevenaaus@yahoo.com) 2008-2023"
+ ::splash::add "(C) Steven Atkinson (stevenaaus@yahoo.com) 2008-2024"
 +::splash::add "(C) Britton Farrar (brittonfarrar@gmail.com) 2016"
  ::splash::add "(C) Pascal Georges 2006-2008"
  ::splash::add "(C) Shane Hudson 1999-2004"
  ::splash::add "(C) Gregor Cramer, Fulvio Benini and others."
 Index: tcl/tools/analysis.tcl
 ===================================================================
---- tcl/tools/analysis.tcl	(revision 3396)
+--- tcl/tools/analysis.tcl	(revision 3457)
 +++ tcl/tools/analysis.tcl	(working copy)
-@@ -3909,6 +3909,7 @@
+@@ -3912,6 +3912,7 @@
      # proc is called for any change in board position (including new games, and simple moves)
      set nonStdStart [sc_game startBoard]
      if {$nonStdStart} {
@@ -2263,7 +2263,7 @@ Index: tcl/tools/analysis.tcl
        set analysis(startpos$n) startpos
 Index: tcl/tools/fics.tcl
 ===================================================================
---- tcl/tools/fics.tcl	(revision 3396)
+--- tcl/tools/fics.tcl	(revision 3457)
 +++ tcl/tools/fics.tcl	(working copy)
 @@ -2262,6 +2262,7 @@
        wm title $::dot_w "$::scidName: $white - $black (game $game: $::fics::timecontrol)"
@@ -2299,7 +2299,7 @@ Index: tcl/tools/fics.tcl
        ### Stop clock
 Index: tcl/tools/sergame.tcl
 ===================================================================
---- tcl/tools/sergame.tcl	(revision 3396)
+--- tcl/tools/sergame.tcl	(revision 3457)
 +++ tcl/tools/sergame.tcl	(working copy)
 @@ -349,6 +349,10 @@
        ::sergame::sendToEngine $n "setoption name Ponder value false"
@@ -2314,7 +2314,7 @@ Index: tcl/tools/sergame.tcl
        set fields [split [lindex $openingList $chosenOpening] ":"]
 Index: tcl/tools/tactics.tcl
 ===================================================================
---- tcl/tools/tactics.tcl	(revision 3396)
+--- tcl/tools/tactics.tcl	(revision 3457)
 +++ tcl/tools/tactics.tcl	(working copy)
 @@ -153,7 +153,7 @@
      # go through all bases and take descriptions
@@ -2327,7 +2327,7 @@ Index: tcl/tools/tactics.tcl
          sc_base open [file rootname $file]
 Index: tcl/tools/uci.tcl
 ===================================================================
---- tcl/tools/uci.tcl	(revision 3396)
+--- tcl/tools/uci.tcl	(revision 3457)
 +++ tcl/tools/uci.tcl	(working copy)
 @@ -22,7 +22,7 @@
  

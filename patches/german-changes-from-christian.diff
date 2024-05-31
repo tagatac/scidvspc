@@ -1,56 +1,56 @@
 Index: src/game.cpp
 ===================================================================
---- src/game.cpp	(Revision 1204)
-+++ src/game.cpp	(Revision 1205)
-@@ -3129,7 +3129,7 @@
+--- src/game.cpp	(revision 3457)
++++ src/game.cpp	(working copy)
+@@ -2872,7 +2872,7 @@
+     date_DecodeToString(Date, dateStr);
+     tb->PrintString("\\twocolumn[\n\\begin{@twocolumnfalse}\n");
+     tb->PrintLine("{\n\\center\n\\begin{tabularx}{0.9\\textwidth}{rllXr}\n");
+-    tb->PrintString("White:");
++    tb->PrintString("Weiß:");
+     tb->PauseTranslations();
+     tb->PrintString(" & ");
+     tb->ResumeTranslations();
+@@ -2896,7 +2896,7 @@
+         tb->PrintString(")");
+     }
+     tb->PrintString("\\\\\n");
+-    tb->PrintString("Black:");
++    tb->PrintString("Schwarz:");
+     tb->PauseTranslations();
+     tb->PrintString(" & ");
+     tb->ResumeTranslations();
+@@ -2919,7 +2919,7 @@
+     tb->PrintString("\\\\\n");
+     if (EcoCode != 0)
+     {
+-        tb->PrintString("Opening ECO:");
++        tb->PrintString("Eröffnungs-ECO:");
+         tb->PauseTranslations();
+         tb->PrintString(" & ");
+         tb->ResumeTranslations();
+@@ -2947,7 +2947,7 @@
+     }
+     tb->PrintString(dateStr);
+     tb->PrintString("\\\\\n");
+-    tb->PrintString("Result:");
++    tb->PrintString("Ergebnis:");
+     tb->PauseTranslations();
+     tb->PrintString(" & ");
+     tb->ResumeTranslations();
+@@ -3968,7 +3968,7 @@
+ 
          if (scoresFound) {
-                 sprintf(temp, "\\begin{minipage}{\\textwidth}\n");
-                 tb->PrintString(temp);
--                tb->PrintString("Analysis Scoregraph:\n{\n\\center\n");
-+                tb->PrintString("Analysebewertungsgrafik:\n{\n\\center\n");
-                 sprintf(temp, "\\psset{linewidth=0.7pt, yunit=%0.4f\\paperheight, xunit=%0.4f\\textwidth}\n", yscale, latexUnitSize );
-                 tb->PrintString(temp);
-                 sprintf(temp, "\\pspicture[](%d,%d)(%d,%d)\n", minX-1, minY, ((lastX > maxX) ? lastX : maxX), maxY);
-@@ -3472,7 +3472,7 @@
-         date_DecodeToString(Date, dateStr);
-         tb->PrintString("\\twocolumn[\n\\begin{@twocolumnfalse}\n");
-         tb->PrintLine("{\n\\center\n\\begin{tabularx}{0.9\\textwidth}{rllXr}\n");
--        tb->PrintString("White:");
-+        tb->PrintString("Weiß:");
-         tb->PauseTranslations();
-         tb->PrintString(" & ");
-         tb->ResumeTranslations();
-@@ -3494,7 +3494,7 @@
-                 tb->PrintString(")");
-         }
-         tb->PrintString("\\\\\n");
--        tb->PrintString("Black:");
-+        tb->PrintString("Schwarz:");
-         tb->PauseTranslations();
-         tb->PrintString(" & ");
-         tb->ResumeTranslations();
-@@ -3514,7 +3514,7 @@
-         }
-         tb->PrintString("\\\\\n");
-         if (EcoCode != 0) {
--                tb->PrintString("Opening ECO:");
-+                tb->PrintString("Eröffnungs-ECO:");
-                 tb->PauseTranslations();
-                 tb->PrintString(" & ");
-                 tb->ResumeTranslations();
-@@ -3538,7 +3538,7 @@
-         }
-         tb->PrintString(dateStr);
-         tb->PrintString("\\\\\n");
--        tb->PrintString("Result:");
-+        tb->PrintString("Ergebnis:");
-         tb->PauseTranslations();
-         tb->PrintString(" & ");
-         tb->ResumeTranslations();
+                 tb->PrintString("\\begin{minipage}{\\textwidth/2}\n");
+-                tb->PrintString("Analysis Scoregraph:\n");
++                tb->PrintString("Analysebewertungsgrafik:\n");
+                 tb->PrintString("\\begin{center}\n");
+                 tb->PrintString("\\begin{tikzpicture}\n");
+                 tb->PrintString("\\begin{axis}[\n");
 Index: src/namebase.h
 ===================================================================
---- src/namebase.h	(Revision 1204)
-+++ src/namebase.h	(Revision 1205)
+--- src/namebase.h	(revision 3457)
++++ src/namebase.h	(working copy)
 @@ -33,10 +33,10 @@
  const uint NUM_NAME_TYPES = 4;
  
@@ -68,8 +68,8 @@ Index: src/namebase.h
  
 Index: src/pgnparse.cpp
 ===================================================================
---- src/pgnparse.cpp	(Revision 1204)
-+++ src/pgnparse.cpp	(Revision 1205)
+--- src/pgnparse.cpp	(revision 3457)
++++ src/pgnparse.cpp	(working copy)
 @@ -376,7 +376,7 @@
              value[length-7] = 0;
              elo = strGetUnsigned (&(value[length-5]));
@@ -240,8 +240,8 @@ Index: src/pgnparse.cpp
              err = OK;
 Index: src/tkscid.cpp
 ===================================================================
---- src/tkscid.cpp	(Revision 1204)
-+++ src/tkscid.cpp	(Revision 1205)
+--- src/tkscid.cpp	(revision 3457)
++++ src/tkscid.cpp	(working copy)
 @@ -50,7 +50,7 @@
  static const uint REPORT_OPENING = 0;
  static const uint REPORT_PLAYER = 1;
@@ -3501,8 +3501,8 @@ Index: src/tkscid.cpp
      scid_book_movesupdate( (char*) argv[2], (char*) argv[3], slot, (char*) argv[5] );
 Index: tcl/bitmaps.tcl
 ===================================================================
---- tcl/bitmaps.tcl	(Revision 1204)
-+++ tcl/bitmaps.tcl	(Revision 1205)
+--- tcl/bitmaps.tcl	(revision 3457)
++++ tcl/bitmaps.tcl	(working copy)
 @@ -71,19 +71,19 @@
  ### Process custom chess pieces
  
@@ -3587,8 +3587,8 @@ Index: tcl/bitmaps.tcl
  ### end of bitmaps.tcl
 Index: tcl/board.tcl
 ===================================================================
---- tcl/board.tcl	(Revision 1204)
-+++ tcl/board.tcl	(Revision 1205)
+--- tcl/board.tcl	(revision 3457)
++++ tcl/board.tcl	(working copy)
 @@ -3012,7 +3012,7 @@
    if {[catch {
    package require img::window
@@ -3609,8 +3609,8 @@ Index: tcl/board.tcl
    if {[llength $filename]} {
 Index: tcl/config.tcl
 ===================================================================
---- tcl/config.tcl	(Revision 1204)
-+++ tcl/config.tcl	(Revision 1205)
+--- tcl/config.tcl	(revision 3457)
++++ tcl/config.tcl	(working copy)
 @@ -44,18 +44,18 @@
  
  ### Display directories
@@ -3658,8 +3658,8 @@ Index: tcl/config.tcl
        ::SelectColor::setcolor $i $c
 Index: tcl/edit.tcl
 ===================================================================
---- tcl/edit.tcl	(Revision 1204)
-+++ tcl/edit.tcl	(Revision 1205)
+--- tcl/edit.tcl	(revision 3457)
++++ tcl/edit.tcl	(working copy)
 @@ -5,9 +5,9 @@
  proc fenErrorDialog {{msg {}}} {
  
@@ -3737,8 +3737,8 @@ Index: tcl/edit.tcl
      set setupBd {}
 Index: tcl/end.tcl
 ===================================================================
---- tcl/end.tcl	(Revision 1204)
-+++ tcl/end.tcl	(Revision 1205)
+--- tcl/end.tcl	(revision 3457)
++++ tcl/end.tcl	(working copy)
 @@ -123,7 +123,7 @@
    sc_game pop
    if {$err} {
@@ -3883,16 +3883,16 @@ Index: tcl/end.tcl
          { "All files" {"*"} }
        }
        set title "a LaTeX file"
-@@ -600,7 +600,7 @@
-   if {$exportFilter} {
-     progressWindow Scid "Exporting games" $::tr(Stop) sc_progressBar
+@@ -604,7 +604,7 @@
+   if {$exportType == "Latex"} {
+     set exportFlags(scidFlags) [::board::isFlipped .main.board]
    }
-- # tk_messageBox -title "Debug" -type ok -icon error -message "Export Type $exportType" 
-+ # tk_messageBox -title "Debug" -type ok -icon error -message "Exporttyp $exportType" 
+-# tk_messageBox -title "Debug" -type ok -icon error -message "Export Type $exportType" 
++# tk_messageBox -title "Debug" -type ok -icon error -message "Exporttyp $exportType" 
    busyCursor .
    set error [catch {
    sc_base export $selection $exportType $fName -append $exportFlags(append) \
-@@ -619,7 +619,7 @@
+@@ -623,7 +623,7 @@
    unbusyCursor .
  
    if {$error} {
@@ -3901,7 +3901,7 @@ Index: tcl/end.tcl
    }
  
    if {$exportType == "HTML"} {
-@@ -639,7 +639,7 @@
+@@ -643,7 +643,7 @@
  
    if {[sc_filter count] < 1} {
      tk_messageBox -type ok -icon info -title Scid \
@@ -3910,7 +3910,7 @@ Index: tcl/end.tcl
      return
    }
  
-@@ -680,7 +680,7 @@
+@@ -684,7 +684,7 @@
    pack $w.preview -side top -fill x
    pack $w.xbar -side top -fill x
    pack [frame $w.b] -side bottom -fill x -pady 5
@@ -3919,7 +3919,7 @@ Index: tcl/end.tcl
    dialogbutton $w.b.ok -text "OK" -command saveExportGList
    dialogbutton $w.b.close -textvar ::tr(Cancel) -command "destroy $w"
    bind $w <Escape> "destroy $w"
-@@ -716,7 +716,7 @@
+@@ -720,7 +720,7 @@
    global glexport env
    set ftypes {{"Text files" {.txt}} {"All files" *}}
    set fname [tk_getSaveFile -filetypes $ftypes -parent .glexport \
@@ -3928,7 +3928,7 @@ Index: tcl/end.tcl
    if {$fname == ""} { return }
    set showProgress 0
    if {[sc_filter count] >= 20000} { set showProgress 1 }
-@@ -1056,20 +1056,20 @@
+@@ -1060,20 +1060,20 @@
  
    if {![sc_base inUse]} {
      # We can't load a game, no database is open
@@ -3955,7 +3955,7 @@ Index: tcl/end.tcl
      return
    }
  
-@@ -1217,7 +1217,7 @@
+@@ -1221,7 +1221,7 @@
  
    # Eco
  
@@ -3964,7 +3964,7 @@ Index: tcl/end.tcl
    ttk::entry $f.ecoentry -width 6  -textvariable eco -justify right
    grid $f.ecolabel -row 10 -column 0 -sticky w
    grid $f.ecoentry -row 10 -column 2 -sticky w
-@@ -1339,13 +1339,13 @@
+@@ -1343,13 +1343,13 @@
  
    frame $w.buttons
    if {$gnum == 0} {
@@ -3981,7 +3981,7 @@ Index: tcl/end.tcl
      } else {
        set extraTags [.save.g.extratext get 1.0 end-1c]
        if {[gsave $gsaveNum]} {
-@@ -1434,13 +1434,13 @@
+@@ -1438,13 +1438,13 @@
        set $i "?"
      }
      if {[string bytelength [set $i]] > 255} {
@@ -3998,7 +3998,7 @@ Index: tcl/end.tcl
  	return 0
        }
      }
-@@ -1914,7 +1914,7 @@
+@@ -1916,7 +1916,7 @@
          }
          "f"    -
          "fast" {
@@ -4007,7 +4007,7 @@ Index: tcl/end.tcl
            ::splash::add $message error
  
            set ::fastDBopen 1
-@@ -1949,7 +1949,7 @@
+@@ -1951,7 +1951,7 @@
          "dock" -
          "nodock" {} ; # handled later
          default {
@@ -4016,7 +4016,7 @@ Index: tcl/end.tcl
          }
        }
      } else {
-@@ -1975,7 +1975,7 @@
+@@ -1980,7 +1980,7 @@
  # Try to find tablebases:
  if {$loadAtStart(tb)} {
    if {[sc_info tb]} {
@@ -4025,7 +4025,7 @@ Index: tcl/end.tcl
      set tbDirs {}
      foreach i {1 2 3 4} {
        if {$initialDir(tablebase$i) != ""} {
-@@ -1989,9 +1989,9 @@
+@@ -1994,9 +1994,9 @@
        set result [sc_info tb $tbDirs]
      }
      if {$result == 0} {
@@ -4037,7 +4037,7 @@ Index: tcl/end.tcl
      }
    }
  }
-@@ -2004,12 +2004,12 @@
+@@ -2009,12 +2009,12 @@
    if {[catch { sc_eco read $ecoFile_fullname } result]} {
      # Hmmm - failed. So try "scid.eco" in the current directory:
      if {[catch {sc_eco read "scid.eco"} result]} {
@@ -4053,7 +4053,7 @@ Index: tcl/end.tcl
    }
  }
  
-@@ -2018,10 +2018,10 @@
+@@ -2023,10 +2023,10 @@
  set spellCheckFileExists 0
  if {$loadAtStart(spell)} {
    if {[catch {sc_name read $spellCheckFile} result]} {
@@ -4067,7 +4067,7 @@ Index: tcl/end.tcl
      set spellCheckFileExists 1
    }
  }
-@@ -2038,15 +2038,15 @@
+@@ -2043,15 +2043,15 @@
  if {$defaultDBs != {}} {
    if {$argc == 0 && $mac_args == 0} {
      if {[file readable [lindex $defaultDBs 0]] || [file readable "[lindex $defaultDBs 0].si4"]} {
@@ -4086,7 +4086,7 @@ Index: tcl/end.tcl
    }
  }
  
-@@ -2071,22 +2071,22 @@
+@@ -2076,22 +2076,22 @@
      break
    }
    if {[string match "*.epd*" $startbase]} {
@@ -4114,7 +4114,7 @@ Index: tcl/end.tcl
      set errMessage ""
      set err [catch { ::file::Open $startbase} errMessage]
      if {$err} {
-@@ -2094,9 +2094,9 @@
+@@ -2099,9 +2099,9 @@
        ### Umm... they are. ? S.A.
        set errMessage "$errMessage\nCould not open database \"$startbase\""
        ::splash::add $errMessage error
@@ -4128,8 +4128,8 @@ Index: tcl/end.tcl
        # this sets initialDir(file) for all files, not just pgn... 
 Index: tcl/file/epd.tcl
 ===================================================================
---- tcl/file/epd.tcl	(Revision 1204)
-+++ tcl/file/epd.tcl	(Revision 1205)
+--- tcl/file/epd.tcl	(revision 3457)
++++ tcl/file/epd.tcl	(working copy)
 @@ -107,8 +107,8 @@
  
      if {[sc_epd available] < 1} {
@@ -4306,8 +4306,8 @@ Index: tcl/file/epd.tcl
        sc_epd set $id ""
 Index: tcl/file/finder.tcl
 ===================================================================
---- tcl/file/finder.tcl	(Revision 1204)
-+++ tcl/file/finder.tcl	(Revision 1205)
+--- tcl/file/finder.tcl	(revision 3457)
++++ tcl/file/finder.tcl	(working copy)
 @@ -471,11 +471,11 @@
  
  proc ::file::finder::delete { f } {
@@ -4324,8 +4324,8 @@ Index: tcl/file/finder.tcl
        file delete "[file rootname $f].sg4" "[file rootname $f].sn4" "[file rootname $f].stc"
 Index: tcl/file/maint.tcl
 ===================================================================
---- tcl/file/maint.tcl	(Revision 1204)
-+++ tcl/file/maint.tcl	(Revision 1205)
+--- tcl/file/maint.tcl	(revision 3457)
++++ tcl/file/maint.tcl	(working copy)
 @@ -14,12 +14,12 @@
    set ftype {
      { "Scid databases" {".si4"} }
@@ -4580,8 +4580,8 @@ Index: tcl/file/maint.tcl
    ::windows::stats::Refresh
 Index: tcl/file/spellchk.tcl
 ===================================================================
---- tcl/file/spellchk.tcl	(Revision 1204)
-+++ tcl/file/spellchk.tcl	(Revision 1205)
+--- tcl/file/spellchk.tcl	(revision 3457)
++++ tcl/file/spellchk.tcl	(working copy)
 @@ -120,7 +120,7 @@
    button $f.ok -textvar ::tr(MakeCorrections) -underline 0 -command {
      if {[sc_base current] != 9} {
@@ -4593,8 +4593,8 @@ Index: tcl/file/spellchk.tcl
  
 Index: tcl/file.tcl
 ===================================================================
---- tcl/file.tcl	(Revision 1204)
-+++ tcl/file.tcl	(Revision 1205)
+--- tcl/file.tcl	(revision 3457)
++++ tcl/file.tcl	(working copy)
 @@ -93,7 +93,7 @@
  proc ::file::New {} {
    if {[sc_base count free] == 0} {
@@ -4728,8 +4728,8 @@ Index: tcl/file.tcl
        set ::initialDir(file) [file tail $fName]
 Index: tcl/game/browser.tcl
 ===================================================================
---- tcl/game/browser.tcl	(Revision 1204)
-+++ tcl/game/browser.tcl	(Revision 1205)
+--- tcl/game/browser.tcl	(revision 3457)
++++ tcl/game/browser.tcl	(working copy)
 @@ -182,7 +182,7 @@
  }
  
@@ -4741,8 +4741,8 @@ Index: tcl/game/browser.tcl
  
 Index: tcl/game.tcl
 ===================================================================
---- tcl/game.tcl	(Revision 1204)
-+++ tcl/game.tcl	(Revision 1205)
+--- tcl/game.tcl	(revision 3457)
++++ tcl/game.tcl	(working copy)
 @@ -125,16 +125,16 @@
  proc ::game::LoadNextPrev {action {raise 1}} {
    global pgnWin statusBar
@@ -4765,8 +4765,8 @@ Index: tcl/game.tcl
    ::game::Load $number 1 $raise
 Index: tcl/language.tcl
 ===================================================================
---- tcl/language.tcl	(Revision 1204)
-+++ tcl/language.tcl	(Revision 1205)
+--- tcl/language.tcl	(revision 3457)
++++ tcl/language.tcl	(working copy)
 @@ -124,8 +124,8 @@
  
    lassign $args lang tag label underline helpMsg
@@ -4780,8 +4780,8 @@ Index: tcl/language.tcl
  
 Index: tcl/main.tcl
 ===================================================================
---- tcl/main.tcl	(Revision 1204)
-+++ tcl/main.tcl	(Revision 1205)
+--- tcl/main.tcl	(revision 3457)
++++ tcl/main.tcl	(working copy)
 @@ -1039,7 +1039,7 @@
    catch {source $fname}
    set newcount [expr {[array size ::photo] - $oldcount}]
@@ -4854,8 +4854,8 @@ Index: tcl/main.tcl
    pack $w.label -side top -pady 5 -padx 5
 Index: tcl/menus.tcl
 ===================================================================
---- tcl/menus.tcl	(Revision 1204)
-+++ tcl/menus.tcl	(Revision 1205)
+--- tcl/menus.tcl	(revision 3457)
++++ tcl/menus.tcl	(working copy)
 @@ -84,7 +84,7 @@
  $m add command -label FileNew -command ::file::New
  set helpMessage($m,[incr menuindex]) FileNew
@@ -5318,8 +5318,8 @@ Index: tcl/menus.tcl
  
 Index: tcl/misc/misc.tcl
 ===================================================================
---- tcl/misc/misc.tcl	(Revision 1204)
-+++ tcl/misc/misc.tcl	(Revision 1205)
+--- tcl/misc/misc.tcl	(revision 3457)
++++ tcl/misc/misc.tcl	(working copy)
 @@ -12,7 +12,7 @@
  
    proc trigger {var warn} {
@@ -5431,8 +5431,8 @@ Index: tcl/misc/misc.tcl
    }     
 Index: tcl/search/board.tcl
 ===================================================================
---- tcl/search/board.tcl	(Revision 1204)
-+++ tcl/search/board.tcl	(Revision 1205)
+--- tcl/search/board.tcl	(revision 3457)
++++ tcl/search/board.tcl	(working copy)
 @@ -211,7 +211,7 @@
  
    ### Check test
@@ -5455,8 +5455,8 @@ Index: tcl/search/board.tcl
    addHorizontalRule $w
 Index: tcl/search/header.tcl
 ===================================================================
---- tcl/search/header.tcl	(Revision 1204)
-+++ tcl/search/header.tcl	(Revision 1205)
+--- tcl/search/header.tcl	(revision 3457)
++++ tcl/search/header.tcl	(working copy)
 @@ -92,7 +92,7 @@
    set sIgnoreCol No
    set sSideToMove wb
@@ -5553,8 +5553,8 @@ Index: tcl/search/header.tcl
    listbox $w.list -yscrollcommand "$w.ybar set" -height 20 -width 60 \
 Index: tcl/start.tcl
 ===================================================================
---- tcl/start.tcl	(Revision 1204)
-+++ tcl/start.tcl	(Revision 1205)
+--- tcl/start.tcl	(revision 3457)
++++ tcl/start.tcl	(working copy)
 @@ -69,7 +69,7 @@
      append msg "tkscid program \nit uses is version [sc_info version].\n"
      append msg "Check that the path to tkscid is correct."
@@ -5573,7 +5573,7 @@ Index: tcl/start.tcl
  set oldLang X
  
  # Toolbar configuration/default visibility
-@@ -1388,7 +1388,7 @@
+@@ -1391,7 +1391,7 @@
      if {$isMacBaseReady == 0} {
        if {$mac_args != 0} {
          tk_messageBox -type ok -icon info -title Scid -message \
@@ -5582,7 +5582,7 @@ Index: tcl/start.tcl
          return
        } else {
          # Save file names for later use:
-@@ -1400,7 +1400,7 @@
+@@ -1403,7 +1403,7 @@
      # Are we busy opening files? if so, display message and do nothing
      if {$mac_busy != 0} {
        tk_messageBox -type ok -icon info -title Scid -message \
@@ -5591,7 +5591,7 @@ Index: tcl/start.tcl
        return
      }
  
-@@ -1417,8 +1417,8 @@
+@@ -1420,8 +1420,8 @@
        # Check for available slots:
        if {[sc_base count free] == 0} {
          tk_messageBox -type ok -icon info -title Scid \
@@ -5602,7 +5602,7 @@ Index: tcl/start.tcl
          #::splash::add "No slot available."
          return
        }
-@@ -1432,8 +1432,8 @@
+@@ -1435,8 +1435,8 @@
        if {$ext == ".sso"} {
          set ::fName $file
          if {[catch {uplevel "#0" {source $::fName}} errmsg]} {
@@ -5613,7 +5613,7 @@ Index: tcl/start.tcl
          } else {
            switch -- $::searchType {
              "Material" { ::search::material }
-@@ -1558,19 +1558,19 @@
+@@ -1561,19 +1561,19 @@
  
  set optionsFile [scidConfigFile options]
  
@@ -5638,7 +5638,7 @@ Index: tcl/start.tcl
    set png_image_support 1
    set boardStyle Merida1
  }
-@@ -1578,9 +1578,9 @@
+@@ -1581,9 +1581,9 @@
  set useGraphFigurine 1
  
  if {[catch {source $optionsFile} ]} {
@@ -5649,8 +5649,8 @@ Index: tcl/start.tcl
 +  ::splash::add "Einstellungen von  \"$optionsFile\" geladen."
  }
  
- if { [string first "-dock" [lindex $argv 0]] > -1} {
-@@ -1899,7 +1899,7 @@
+ # Hack to unset previous exportStartFile(Latex)
+@@ -1907,7 +1907,7 @@
  
    wm withdraw $w
    wm protocol $w WM_DELETE_WINDOW [list wm withdraw $w]
@@ -5659,7 +5659,7 @@ Index: tcl/start.tcl
  
    ### Pack in this order to resize nicely
    # buttons
-@@ -1922,9 +1922,9 @@
+@@ -1930,9 +1930,9 @@
    scrollbar $w.ybar -command [list $w.t yview]
  
    # Translations aren't set up yet, but these are handled in setLanguage
@@ -5671,7 +5671,7 @@ Index: tcl/start.tcl
        -font font_Small
  
    entry $w.find -width 10 -textvariable ::splash::find(find) -highlightthickness 0
-@@ -1937,8 +1937,8 @@
+@@ -1945,8 +1945,8 @@
        ::splash::add {}
        ::splash::add "$scidName $scidVersion Console"
        ::splash::add {------------------------------------}
@@ -5682,8 +5682,8 @@ Index: tcl/start.tcl
      }
      set command [string trim [.splash.command get]]
      ::splash::add "# $command"
-@@ -1999,8 +1999,8 @@
- ::splash::add "(C) Steven Atkinson (stevenaaus@yahoo.com) 2008-2023"
+@@ -2007,8 +2007,8 @@
+ ::splash::add "(C) Steven Atkinson (stevenaaus@yahoo.com) 2008-2024"
  ::splash::add "(C) Pascal Georges 2006-2008"
  ::splash::add "(C) Shane Hudson 1999-2004"
 -::splash::add "(C) Gregor Cramer, Fulvio Benini and others."
@@ -5693,7 +5693,7 @@ Index: tcl/start.tcl
  ::splash::add ""
  
  # add cached splash comments
-@@ -2012,15 +2012,15 @@
+@@ -2020,15 +2020,15 @@
  # lotsa stuff may break if this is not the case.
  
  if {[catch {.splash.t configure -insertforeground blue}]} {
@@ -5714,7 +5714,7 @@ Index: tcl/start.tcl
  }
  if {[string match -nocase Linux $tcl_platform(os)]} {
    catch {
-@@ -2029,7 +2029,7 @@
+@@ -2037,7 +2037,7 @@
  }
  
  catch {
@@ -5725,8 +5725,8 @@ Index: tcl/start.tcl
  ::splash::add ""
 Index: tcl/tools/analysis.tcl
 ===================================================================
---- tcl/tools/analysis.tcl	(Revision 1204)
-+++ tcl/tools/analysis.tcl	(Revision 1205)
+--- tcl/tools/analysis.tcl	(revision 3457)
++++ tcl/tools/analysis.tcl	(working copy)
 @@ -232,7 +232,7 @@
    if {$::windowsOS} {
      ### Windows comes with it's own custom engines.dat, so shoul dnever reach here.
@@ -5885,8 +5885,8 @@ Index: tcl/tools/analysis.tcl
    pack $w.label -side top -pady 5 -padx 5
 Index: tcl/tools/calvar.tcl
 ===================================================================
---- tcl/tools/calvar.tcl	(Revision 1204)
-+++ tcl/tools/calvar.tcl	(Revision 1205)
+--- tcl/tools/calvar.tcl	(revision 3457)
++++ tcl/tools/calvar.tcl	(working copy)
 @@ -102,7 +102,7 @@
  
      # if no engines defined, bail out
@@ -5922,8 +5922,8 @@ Index: tcl/tools/calvar.tcl
        button $f.p$piece -image w${piece}20 -command "::calvar::promo $piece"
 Index: tcl/tools/comp.tcl
 ===================================================================
---- tcl/tools/comp.tcl	(Revision 1204)
-+++ tcl/tools/comp.tcl	(Revision 1205)
+--- tcl/tools/comp.tcl	(revision 3457)
++++ tcl/tools/comp.tcl	(working copy)
 @@ -27,7 +27,7 @@
    }
    toplevel $w
@@ -6169,8 +6169,8 @@ Index: tcl/tools/comp.tcl
  
 Index: tcl/tools/correspondence.tcl
 ===================================================================
---- tcl/tools/correspondence.tcl	(Revision 1204)
-+++ tcl/tools/correspondence.tcl	(Revision 1205)
+--- tcl/tools/correspondence.tcl	(revision 3457)
++++ tcl/tools/correspondence.tcl	(working copy)
 @@ -90,7 +90,7 @@
  		global ::Xfcc::xfccrc ::Xfcc::xfccrcfile
  		# file delete $xfccrcfile
@@ -6291,8 +6291,8 @@ Index: tcl/tools/correspondence.tcl
  
 Index: tcl/tools/email.tcl
 ===================================================================
---- tcl/tools/email.tcl	(Revision 1204)
-+++ tcl/tools/email.tcl	(Revision 1205)
+--- tcl/tools/email.tcl	(revision 3457)
++++ tcl/tools/email.tcl	(working copy)
 @@ -14,12 +14,12 @@
    }
    if {! [sc_base inUse] || [sc_base current] == 9} {
@@ -6517,8 +6517,8 @@ Index: tcl/tools/email.tcl
      ::tools::email::refresh
 Index: tcl/tools/fics.tcl
 ===================================================================
---- tcl/tools/fics.tcl	(Revision 1204)
-+++ tcl/tools/fics.tcl	(Revision 1205)
+--- tcl/tools/fics.tcl	(revision 3457)
++++ tcl/tools/fics.tcl	(working copy)
 @@ -77,7 +77,7 @@
  
      toplevel $w
@@ -6853,8 +6853,8 @@ Index: tcl/tools/fics.tcl
      }
 Index: tcl/tools/graphs.tcl
 ===================================================================
---- tcl/tools/graphs.tcl	(Revision 1204)
-+++ tcl/tools/graphs.tcl	(Revision 1205)
+--- tcl/tools/graphs.tcl	(revision 3457)
++++ tcl/tools/graphs.tcl	(working copy)
 @@ -14,12 +14,12 @@
    if {! [winfo exists $w]} { return }
    set ftypes {{"PostScript files" {.eps .ps}} {"All files" *}}
@@ -6923,8 +6923,8 @@ Index: tcl/tools/graphs.tcl
      }
 Index: tcl/tools/import.tcl
 ===================================================================
---- tcl/tools/import.tcl	(Revision 1204)
-+++ tcl/tools/import.tcl	(Revision 1205)
+--- tcl/tools/import.tcl	(revision 3457)
++++ tcl/tools/import.tcl	(working copy)
 @@ -21,7 +21,7 @@
  
    toplevel $w
@@ -7017,8 +7017,8 @@ Index: tcl/tools/import.tcl
      }
 Index: tcl/tools/inputengine.tcl
 ===================================================================
---- tcl/tools/inputengine.tcl	(Revision 1204)
-+++ tcl/tools/inputengine.tcl	(Revision 1205)
+--- tcl/tools/inputengine.tcl	(revision 3457)
++++ tcl/tools/inputengine.tcl	(working copy)
 @@ -170,8 +170,8 @@
  
    proc saveHardwareOptions {} {
@@ -7074,8 +7074,8 @@ Index: tcl/tools/inputengine.tcl
            } \
 Index: tcl/tools/novag.tcl
 ===================================================================
---- tcl/tools/novag.tcl	(Revision 1204)
-+++ tcl/tools/novag.tcl	(Revision 1205)
+--- tcl/tools/novag.tcl	(revision 3457)
++++ tcl/tools/novag.tcl	(working copy)
 @@ -36,7 +36,7 @@
      
      if {[catch { set fd [open $serial r+ ] } err]} {
@@ -7087,8 +7087,8 @@ Index: tcl/tools/novag.tcl
      }
 Index: tcl/tools/optable.tcl
 ===================================================================
---- tcl/tools/optable.tcl	(Revision 1204)
-+++ tcl/tools/optable.tcl	(Revision 1205)
+--- tcl/tools/optable.tcl	(revision 3457)
++++ tcl/tools/optable.tcl	(working copy)
 @@ -68,7 +68,7 @@
      set w .progress
      toplevel $w
@@ -7286,8 +7286,8 @@ Index: tcl/tools/optable.tcl
        return
 Index: tcl/tools/pinfo.tcl
 ===================================================================
---- tcl/tools/pinfo.tcl	(Revision 1204)
-+++ tcl/tools/pinfo.tcl	(Revision 1205)
+--- tcl/tools/pinfo.tcl	(revision 3457)
++++ tcl/tools/pinfo.tcl	(working copy)
 @@ -56,7 +56,7 @@
        } else {
  	::plist::Open
@@ -7320,8 +7320,8 @@ Index: tcl/tools/pinfo.tcl
      ### If English, we can set the other four buttons likewise (and allign nicely)
 Index: tcl/tools/preport.tcl
 ===================================================================
---- tcl/tools/preport.tcl	(Revision 1204)
-+++ tcl/tools/preport.tcl	(Revision 1205)
+--- tcl/tools/preport.tcl	(revision 3457)
++++ tcl/tools/preport.tcl	(working copy)
 @@ -19,7 +19,7 @@
  proc ::preport::preportDlg {{player {}}} {
  
@@ -7436,8 +7436,8 @@ Index: tcl/tools/preport.tcl
      # if {$::hasEncoding  &&  $::langEncoding($::language) != ""} { catch {set report [encoding convertto $::langEncoding($::language) $report]} }
 Index: tcl/tools/sergame.tcl
 ===================================================================
---- tcl/tools/sergame.tcl	(Revision 1204)
-+++ tcl/tools/sergame.tcl	(Revision 1205)
+--- tcl/tools/sergame.tcl	(revision 3457)
++++ tcl/tools/sergame.tcl	(working copy)
 @@ -91,7 +91,7 @@
  
      # if no engines defined, bail out
@@ -7473,8 +7473,8 @@ Index: tcl/tools/sergame.tcl
      updateBoard -pgn
 Index: tcl/tools/tablebase.tcl
 ===================================================================
---- tcl/tools/tablebase.tcl	(Revision 1204)
-+++ tcl/tools/tablebase.tcl	(Revision 1205)
+--- tcl/tools/tablebase.tcl	(revision 3457)
++++ tcl/tools/tablebase.tcl	(working copy)
 @@ -8,13 +8,13 @@
  set ::tb::online_available 0
  
@@ -7625,8 +7625,8 @@ Index: tcl/tools/tablebase.tcl
  ####################################################################
 Index: tcl/tools/tacgame.tcl
 ===================================================================
---- tcl/tools/tacgame.tcl	(Revision 1204)
-+++ tcl/tools/tacgame.tcl	(Revision 1205)
+--- tcl/tools/tacgame.tcl	(revision 3457)
++++ tcl/tools/tacgame.tcl	(working copy)
 @@ -127,7 +127,7 @@
      }
  
@@ -7735,8 +7735,8 @@ Index: tcl/tools/tacgame.tcl
      updateBoard -pgn
 Index: tcl/tools/tactics.tcl
 ===================================================================
---- tcl/tools/tactics.tcl	(Revision 1204)
-+++ tcl/tools/tactics.tcl	(Revision 1205)
+--- tcl/tools/tactics.tcl	(revision 3457)
++++ tcl/tools/tactics.tcl	(working copy)
 @@ -50,7 +50,7 @@
      set found 0
  
@@ -7832,8 +7832,8 @@ Index: tcl/tools/tactics.tcl
    }
 Index: tcl/tools/uci.tcl
 ===================================================================
---- tcl/tools/uci.tcl	(Revision 1204)
-+++ tcl/tools/uci.tcl	(Revision 1205)
+--- tcl/tools/uci.tcl	(revision 3457)
++++ tcl/tools/uci.tcl	(working copy)
 @@ -484,7 +484,7 @@
      }
      set engineData [lindex $engines(list) $n]
@@ -7910,8 +7910,8 @@ Index: tcl/tools/uci.tcl
      # Some engines in analyze(gui?) mode may not react as expected to "quit"
 Index: tcl/utils/sound.tcl
 ===================================================================
---- tcl/utils/sound.tcl	(Revision 1204)
-+++ tcl/utils/sound.tcl	(Revision 1205)
+--- tcl/utils/sound.tcl	(revision 3457)
++++ tcl/utils/sound.tcl	(working copy)
 @@ -26,11 +26,11 @@
    variable soundFiles
    variable soundFolder
@@ -7990,8 +7990,8 @@ Index: tcl/utils/sound.tcl
  
 Index: tcl/utils/win.tcl
 ===================================================================
---- tcl/utils/win.tcl	(Revision 1204)
-+++ tcl/utils/win.tcl	(Revision 1205)
+--- tcl/utils/win.tcl	(revision 3457)
++++ tcl/utils/win.tcl	(working copy)
 @@ -928,7 +928,7 @@
  
  
@@ -8012,8 +8012,8 @@ Index: tcl/utils/win.tcl
  
 Index: tcl/windows/book.tcl
 ===================================================================
---- tcl/windows/book.tcl	(Revision 1204)
-+++ tcl/windows/book.tcl	(Revision 1205)
+--- tcl/windows/book.tcl	(revision 3457)
++++ tcl/windows/book.tcl	(working copy)
 @@ -439,7 +439,7 @@
      }
  
@@ -8043,8 +8043,8 @@ Index: tcl/windows/book.tcl
      busyCursor .
 Index: tcl/windows/eco.tcl
 ===================================================================
---- tcl/windows/eco.tcl	(Revision 1204)
-+++ tcl/windows/eco.tcl	(Revision 1205)
+--- tcl/windows/eco.tcl	(revision 3457)
++++ tcl/windows/eco.tcl	(working copy)
 @@ -203,7 +203,7 @@
    set fname [file tail $fname]
    # if {$fname == ""} { set fname "<none>" }
@@ -8056,8 +8056,8 @@ Index: tcl/windows/eco.tcl
  }
 Index: tcl/windows/gamelist.tcl
 ===================================================================
---- tcl/windows/gamelist.tcl	(Revision 1204)
-+++ tcl/windows/gamelist.tcl	(Revision 1205)
+--- tcl/windows/gamelist.tcl	(revision 3457)
++++ tcl/windows/gamelist.tcl	(working copy)
 @@ -1073,7 +1073,7 @@
          set name $col
        }
@@ -8069,8 +8069,8 @@ Index: tcl/windows/gamelist.tcl
  
 Index: tcl/windows/switcher.tcl
 ===================================================================
---- tcl/windows/switcher.tcl	(Revision 1204)
-+++ tcl/windows/switcher.tcl	(Revision 1205)
+--- tcl/windows/switcher.tcl	(revision 3457)
++++ tcl/windows/switcher.tcl	(working copy)
 @@ -966,7 +966,7 @@
        $f.menu.show add checkbutton -label [tr ShowIcons] -variable ::windows::switcher::icons -command ::windows::switcher::Refresh
        $f.menu.show add checkbutton -label [tr ConfirmCopy] -variable ::windows::switcher::confirmCopy 
@@ -8082,8 +8082,8 @@ Index: tcl/windows/switcher.tcl
          ::windows::gamelist::Configure .glistWin.tree
 Index: tcl/windows/tree.tcl
 ===================================================================
---- tcl/windows/tree.tcl	(Revision 1204)
-+++ tcl/windows/tree.tcl	(Revision 1205)
+--- tcl/windows/tree.tcl	(revision 3457)
++++ tcl/windows/tree.tcl	(working copy)
 @@ -47,7 +47,7 @@
  
  proc ::tree::treeFileSave {base} {
