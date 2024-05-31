@@ -6319,7 +6319,7 @@ set helpText(Changelog) {<h1>Changelog</h1>
 <li>Extra Tags - bulk add Extra Tag feature</li>
 <li>Enable pattern matching in the Name Editor</li>
 <li>Show Comments in Game Preview/Browser windows, change colours to match PGN, and ControlKey+Load does not close the Browser window</li>
-<li>LaTex Game Export - draw Marks in chess diagrams, and other minor changes (from Bruno)</li>
+<li>LaTex Game Export - draw Marks in chess diagrams, indent variations, and other minor changes (from Bruno)</li>
 <li>Crosstable: add clickable column headings for Nationality, Rating and Score</li>
 <li>Engine Annotation - Score last move in case of checkmate (and stalemate)</li>
 <li>Tree mask - Options to hide Markers (default), disable tooltips, and make the mask move colour steelblue</li>

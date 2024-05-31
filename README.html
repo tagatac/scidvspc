@@ -122,15 +122,15 @@ project is authored by
 
 
 <P>Source 
-<A HREF="http://sourceforge.net/projects/scidvspc/files/source/scid_vs_pc-4.24.tgz/download">scid_vs_pc-4.24.tgz</A></P>
+<A HREF="http://sourceforge.net/projects/scidvspc/files/source/scid_vs_pc-4.25.tgz/download">scid_vs_pc-4.25.tgz</A></P>
 <P>Windows 
-<A HREF="http://sourceforge.net/projects/scidvspc/files/windows/Scid%20vs%20PC-4.24.exe/download">Scid vs PC-4.24.exe</A></P>
+<A HREF="http://sourceforge.net/projects/scidvspc/files/windows/Scid%20vs%20PC-4.25.exe/download">Scid vs PC-4.25.exe</A></P>
 <P>Windows 64 bit 
-<A HREF="http://sourceforge.net/projects/scidvspc/files/windows-64bit/Scid%20vs%20PC-4.24.x64.exe/download">Scid vs PC-4.24.x64.exe</A></P>
+<A HREF="http://sourceforge.net/projects/scidvspc/files/windows-64bit/Scid%20vs%20PC-4.25.x64.exe/download">Scid vs PC-4.25.x64.exe</A></P>
 <P>Mac 
-<A HREF="http://sourceforge.net/projects/scidvspc/files/mac/ScidvsMac-4.24.dmg/download">ScidvsMac-4.24.dmg</A></P>
+<A HREF="http://sourceforge.net/projects/scidvspc/files/mac/ScidvsMac-4.25.dmg/download">ScidvsMac-4.25.dmg</A></P>
 <P>Mac 64bit (beta) 
-<A HREF="https://sourceforge.net/projects/scidvspc/files/mac-64bit-unsupported/ScidvsMac-4.24.x64.dmg/download">ScidvsMac-4.24.x64.dmg</A></P>
+<A HREF="https://sourceforge.net/projects/scidvspc/files/mac-64bit-unsupported/ScidvsMac-4.25.x64.dmg/download">ScidvsMac-4.25.x64.dmg</A></P>
 <P>
 <H3>Other resources</H3>
 
@@ -159,8 +159,8 @@ use <B>./configure BINDIR=/usr/bin/ SHAREDIR=/usr/share/scid/</B></P>
 <P>Installing from source:</P>
 <HR>
 <PRE>
-tar -xzf scid_vs_pc-4.24.tgz
-cd scid_vs_pc-4.24
+tar -xzf scid_vs_pc-4.25.tgz
+cd scid_vs_pc-4.25
 ./configure
 make
 sudo make install
@@ -188,7 +188,7 @@ C:\Users\[USERNAME]\AppData\Local\VirtualStore\Program Files\Scid vs PC</P>
 
 
 <P>The 
-<A HREF="#download_">ScidvsMac-4.24 app</A> should include everything you need. Simply drag and drop the App into /Applications (or similar). It cannot be run from the dmg disk image.</P>
+<A HREF="#download_">ScidvsMac-4.25 app</A> should include everything you need. Simply drag and drop the App into /Applications (or similar). It cannot be run from the dmg disk image.</P>
 <P>Due to complicated build reasons, only Yosemite (OS X 10.10) and
 later are now supported.  Additionally, Catalina has removed 32-bit app
 support, and it is only supported by our beta ScidvsMac-x64 app,
@@ -428,10 +428,40 @@ Chessbase databases and many chess variants.</P>
 <A NAME="changes_"></A> </P>
 <H2><A NAME="s7">7.</A> <A HREF="#toc7">changes </A></H2>
 
+<P>
+<H3>Scid vs. PC 4.25</H3>
+<P>
+<UL>
+<LI>Extra Tags - bulk add Extra Tag feature .</LI>
+<LI>Enable pattern matching in the Name Editor .</LI>
+<LI>Show Comments in Game Preview/Browser windows, change colours to match PGN, and ControlKey+Load does not close the Browser window .</LI>
+<LI>LaTex Game Export - draw Marks in chess diagrams, indent variations, and other minor changes (from Bruno) .</LI>
+<LI>Crosstable: add clickable column headings for Nationality, Rating and Score .</LI>
+<LI>Engine Annotation - Score last move in case of checkmate (and stalemate) .</LI>
+<LI>Tree mask - Options to hide Markers (default), disable tooltips, and make the mask move colour steelblue .</LI>
+
+<LI>Engine - Right-clicking AddAllVars adds all first moves only .</LI>
+<LI>Comment Editor - Remove 'Apply' button, instead automatically apply miniboard changes. Add wheelmouse move-forward/back bindings .</LI>
+<LI>Player Info - don't show 'filtered games' stats if they duplicate the normal stats .</LI>
+<LI>Make the Tree Bargraph height similar to the font height (for high def displays) .</LI>
+<LI>Add a few Keypad bindings, re suggestion from Patrick .</LI>
+<LI>Pressing Home-key inside a variation moves to var start instead of game start .</LI>
+<BR><BR>
+General Bugs
+<LI>Twin Game checker minor fixes .</LI>
+<LI>Some spinboxes (annotate(blunder)) had erroneous error checking and threw exceptions .</LI>
+<LI>Some graphs didn't show the correct final/current year, gah! .</LI>
+<LI>Minor optable.tcl fixes/clean-up. Opening Table max games is now 100,000 (was 25,000) .</LI>
+<LI>Add current decade to Opening report Current popularity .</LI>
+<LI>EPD analysis hardening .</LI>
+<LI>For a few widgets - dont scroll text windows when using control-scroll to alter font size .</LI>
+<LI>Update stats/etc on Game quickSave.</LI>
+</UL>
+</P>
+
 
 <P>
 <H3>Scid vs. PC 4.24</H3>
-
 <P>
 <UL>
 <LI>Gamelist (and Best games) 'Copy to filter' context-menu/feature.</LI>
