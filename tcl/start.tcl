@@ -1586,6 +1586,11 @@ if {[catch {source $optionsFile} ]} {
   ::splash::add "Loaded options from \"$optionsFile\"."
 }
 
+# Hack to unset previous exportStartFile(Latex)
+if {[string match *pstricks-add* $exportStartFile(Latex)]} {
+  set exportStartFile(Latex) $default_exportStartFile(Latex)
+}
+
 if { [string first "-dock" [lindex $argv 0]] > -1} {
   set windowsDock 1
 }

@@ -3975,7 +3975,7 @@ Game::WritePGNGraphToLatex(TextBuffer * tb)
                 tb->PrintString("ymajorgrids = true,\n");
                 tb->PrintString("xtick align=inside,\n");
                 tb->PrintString("],\n");
-                tb->PrintString("\\addplot+[sharp plot, solid, mark=., mark options={solid}] coordinates{");
+                tb->PrintString("\\addplot+[sharp plot, no markers] coordinates{");
                 for (int x = 1; x < scoreHalfMoves; x++) {
                     sprintf(temp, " (%.1f,%.2f)", ((float)x)/2+1, scores[x]);
                     tb->PrintString(temp);
