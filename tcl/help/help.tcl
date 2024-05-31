@@ -1902,7 +1902,7 @@ set helpText(LaTeX) {<h1>Using LaTeX with Scid</h1>
 <li>texlive-latex-extra (xifthen.sty)</li>
 <li>pgf (pgfcore.sty)</li>
 <li>lmodern (lmodern.sty)</li>
-<li>texlive-pstricks (pstricks-add.sty)</li>
+<li>texlive-pictures (pgfplots.sty)</li>
 <li>texlive-science (siunitx.sty)</li>
 <li>texlive-xetex (xelatex)</li>
   </ul>
