@@ -23,7 +23,7 @@ const char * evalNagsLatex [] =
 	"forced",  // $7
 	"{\\onlymove}",  	// $8
 	"worst",  // $9
-	"{\\equal}",  		// $10
+	"{\\protect\\equal}",  		// $10
 	"",  // $11
 	"{$\\leftrightarrows$}",  // $12 
 	"{\\unclear}",  	// $13
