@@ -925,7 +925,7 @@ proc ::tools::graphs::rating::Refresh {{player {}}} {
       ::utils::graph::redraw ratings
       recordWinSize .rgraph
     }
-    bind $w.c <Button-3> ::tools::graphs::rating::Refresh
+    bind $w.c <Button-1> ::tools::graphs::rating::Refresh
     bind $w <Escape> "destroy $w"
     bind $w <Destroy> {set ::tools::graphs::rating::players {}}
 

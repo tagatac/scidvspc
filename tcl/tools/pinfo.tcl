@@ -137,6 +137,14 @@ proc playerInfo {{player ""} {raise 0}} {
     $w.menu.players add command -label $i -command [list playerInfo $i]
   }
 
+  # update bastardized Player Ratings graph too (tcl/tools/graphs.tcl)
+  if {[winfo exists .rgraph.players]} {
+    .rgraph.players delete 0 end
+    foreach i $playerInfoHistory {
+      .rgraph.players add command -label $i -command [list ::tools::graphs::rating::Refresh $i]
+    }
+  }
+
   ### Make FIDEID open relevant url
   regsub {FIDEID ([0-9]+)} $pinfo {<run openURL http://ratings.fide.com/card.phtml?event=%\1 ; ::windows::stats::Refresh>FIDEID \1</run>} pinfo
 
