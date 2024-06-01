@@ -1459,9 +1459,13 @@ proc ::windows::gamelist::ReorderGameN {} {
 }
 
 
-proc browseGames {{tree .glistWin.tree}} {
+proc browseGames {{tree .glistWin.tree} {base {}}} {
   global tr browse myPlayerNames
   array set browse {}
+
+  if {$base == {}} {
+    set base [sc_base current]
+  }
 
   set w .preview
   if {[winfo exists $w]} {
@@ -1501,7 +1505,6 @@ proc browseGames {{tree .glistWin.tree}} {
     set key Delete
   }
 
-  set base  [sc_base current]
   set items [$tree selection]
   set browse(items) $items
   set browse(games) {}
@@ -1539,7 +1542,7 @@ proc browseGames {{tree .glistWin.tree}} {
 
     ::board::new $g.bd [expr {$::fics::size * 5 + 20}] 1
 
-    set header [sc_game summary -game $game header]
+    set header [sc_game summary -base $base -game $game header]
     set offset [string first { -- } $header]
     set white [string trim [string range $header 0 $offset]]
     incr offset 4
@@ -1547,13 +1550,13 @@ proc browseGames {{tree .glistWin.tree}} {
     # hmm - treating this text as a list may be bad S.A.
     set result [lindex $header end]
     set halfmoves [lindex $header end-2]
-    set boards [sc_game summary -game $game boards]
+    set boards [sc_game summary -base $base -game $game boards]
 
     set browse(white$game) $white
     set browse(black$game) $black
     set browse(boards$game) $boards
 
-    set ply [sc_filter ply $game]
+    set ply [sc_filter ply $game $base]
     if {$ply > 0} { incr ply -1 }
     set max [expr {[llength $boards] - 1} ]
     if {$ply > $max || $ply == 0} {set ply $max}

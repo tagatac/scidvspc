@@ -1553,7 +1553,7 @@ proc ::tree::bestPopup {baseNumber w x y X Y} {
       $menu add command -label $tr(LoadGame) -command "::tree::bestLoadSelection $baseNumber"
       $menu add command -label $tr(MergeGame) -command "::tree::bestMerge $baseNumber"
     } else {
-      $menu add command -label $tr(Browse) -command "browseGames $w.tree"
+      $menu add command -label $tr(Browse) -command "browseGames $w.tree $baseNumber"
     }
     if {$baseNumber != [sc_info clipbase]} {
       $menu add command -label [tr EditCopy] -command "::tree::bestCopyFilter $baseNumber"
