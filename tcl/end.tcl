@@ -1473,6 +1473,7 @@ proc gsave { gnum } {
     }
   }
 
+  updateBoard -pgn
   ::windows::stats::Refresh
   updateTitle
   return 1
