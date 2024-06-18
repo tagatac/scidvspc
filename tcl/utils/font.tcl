@@ -5,16 +5,9 @@
 # at codearchive.com (I dont think there was an author listed for it) and
 # simplified it for use with Scid.
 
-# God f-ing knows what's happening here really S.A
+# God f-ing knows what's happening here really - S.A
 # Tcl sucks so bad when design is bad. Scid's font feature is powerful... but hard to follow
 
-### FontDialog:
-
-# Creates a font dialog to select a font.
-# Returns 1 if user chose a font, 0 otherwise.
-# (Returns ... something S.A)
-# Naming everything $fr sucks (fixed)
-# Grid fatality head shot too. Actually, it's nice now that it resizes properly.
 
 ### Default fonts are defined in start.tcl
 # There's still a minor bug:
@@ -23,6 +16,10 @@
 font create font_Sample
 
 proc FontDialog {name {parent .}} {
+  # Creates a font dialog to select a font.
+  # Returns a 4 element list if user chose a font, {} otherwise - S.A
+  # Grid fatality head shot too. Actually, it's nice now that it resizes properly.
+
   global fd_family fd_style fd_size fd_close
   global fd_strikeout fd_underline fontOptions
 
@@ -30,7 +27,6 @@ proc FontDialog {name {parent .}} {
   if {[winfo exists $w]} { destroy $w }
 
   set options $fontOptions($name)
-  set fixedOnly [expr {$name == "Fixed"}]
   set font_name font_$name
 
   set fd_family {}
@@ -41,13 +37,14 @@ proc FontDialog {name {parent .}} {
   update
   busyCursor .
 
-  set unsorted_fam [font families]
-  set families [lsort $unsorted_fam]
-  if {$fixedOnly} {
+  set families [lsort -unique [font families]]
+  if {$name == "Fixed"} {
     set fams $families
     set families {}
     foreach f $fams {
-      if {[font metrics [list $f] -fixed] == 1} { lappend families $f }
+      if {[font metrics [list $f] -fixed] == 1} {
+        lappend families $f
+      }
     }
   }
 
@@ -117,7 +114,7 @@ proc FontDialog {name {parent .}} {
   grid columnconfigure $w 1 -weight 2
   grid columnconfigure $w 2 -weight 1
 
-  ### Family listbox.
+  ### Family listbox
 
   frame $w.family_list -bd 0
   listbox $w.family_list.list -height 6 -selectmode single -width 22 \
@@ -131,7 +128,7 @@ proc FontDialog {name {parent .}} {
   bind $w.family_list.list <Double-Button-1> "FontDialogFamily $w.family_list.list $font_name $w.family_entry"
   bind $w.family_list.list <<ListboxSelect>> "FontDialogFamily $w.family_list.list $font_name $w.family_entry 1"
 
-  ### Style listbox.
+  ### Style listbox
 
   frame $w.style_list -bd 0
   listbox $w.style_list.list -height 6 -selectmode single -width 11 \
@@ -145,7 +142,7 @@ proc FontDialog {name {parent .}} {
   bind $w.style_list.list <Double-Button-1> "FontDialogStyle $w.style_list.list $font_name $w.style_entry"
   bind $w.style_list.list <<ListboxSelect>> "FontDialogStyle $w.style_list.list $font_name $w.style_entry 1"
 
-  ### Size listbox.
+  ### Size listbox
 
   frame $w.size_list -bd 0
   listbox $w.size_list.list -height 6 -selectmode single -width 5 \
@@ -232,19 +229,15 @@ proc FontDialog {name {parent .}} {
 
   destroy $w
 
-  # Cancel button (Restore old font characteristics)
   if { $fd_close == 0 } {
-    font configure $font_name -family $family \
-      -size $size -slant $slant -weight $weight
+    # Cancel (Restore old font characteristics)
+    font configure $font_name -family $family -size $size -slant $slant -weight $weight
     return {}
-  }
-
-  # Ok button
-  if { $fd_close == 1 } {
+  } elseif { $fd_close == 1 } {
+    # Ok
     return [list $fd_family $fd_size [FontWeight $fd_style] [FontSlant $fd_style]]
   } else {
-
-  # Default button
+    # Default
     return {}
   }
 }
@@ -256,14 +249,18 @@ proc FontDialogFixed {parent} {
   global fontOptions
 
   set fontOptions(temp) [FontDialog Fixed $parent]
-  if {$fontOptions(temp) != {}} { set fontOptions(Fixed) $fontOptions(temp) }
+  if {$fontOptions(temp) != {}} {
+    set fontOptions(Fixed) $fontOptions(temp)
+  }
 }
 
 proc FontDialogRegular {parent} {
   global fontOptions graphFigurineAvailable
 
   set fontOptions(temp) [FontDialog Regular $parent]
-  if {$fontOptions(temp) != {}} { set fontOptions(Regular) $fontOptions(temp) }
+  if {$fontOptions(temp) != {}} {
+    set fontOptions(Regular) $fontOptions(temp)
+  }
 
   set font [font configure font_Regular -family]
   set fontsize [font configure font_Regular -size]
@@ -287,14 +284,18 @@ proc FontDialogMenu {parent} {
   global fontOptions
 
   set fontOptions(temp) [FontDialog Menu $parent]
-  if {$fontOptions(temp) != ""} { set fontOptions(Menu) $fontOptions(temp) }
+  if {$fontOptions(temp) != ""} {
+    set fontOptions(Menu) $fontOptions(temp)
+  }
 }
 
 proc FontDialogSmall {parent} {
   global fontOptions
 
   set fontOptions(temp) [FontDialog Small $parent]
-  if {$fontOptions(temp) != ""} { set fontOptions(Small) $fontOptions(temp) }
+  if {$fontOptions(temp) != ""} {
+    set fontOptions(Small) $fontOptions(temp)
+  }
 
   set font [font configure font_Small -family]
   set fontsize [font configure font_Small -size]
