@@ -20,6 +20,8 @@
 # There's still a minor bug:
 # Set Regular font to italic -> quit Scid & restart -> bold font no longer italic
 
+font create font_Sample
+
 proc FontDialog {name {parent .}} {
   global fd_family fd_style fd_size fd_close
   global fd_strikeout fd_underline fontOptions
@@ -35,6 +37,9 @@ proc FontDialog {name {parent .}} {
   set fd_style {}
   set fd_size {}
   set fd_close  -1
+
+  update
+  busyCursor .
 
   set unsorted_fam [font families]
   set families [lsort $unsorted_fam]
@@ -123,8 +128,8 @@ proc FontDialog {name {parent .}} {
     $w.family_list.list insert end $f
   }
 
-  bind $w.family_list.list <Double-Button-1> \
-    "FontDialogFamily $w.family_list.list $font_name $w.family_entry"
+  bind $w.family_list.list <Double-Button-1> "FontDialogFamily $w.family_list.list $font_name $w.family_entry"
+  bind $w.family_list.list <<ListboxSelect>> "FontDialogFamily $w.family_list.list $font_name $w.family_entry 1"
 
   ### Style listbox.
 
@@ -137,8 +142,8 @@ proc FontDialog {name {parent .}} {
     $w.style_list.list insert end $i
   }
 
-  bind $w.style_list.list <Double-Button-1> \
-    "FontDialogStyle $w.style_list.list $font_name $w.style_entry"
+  bind $w.style_list.list <Double-Button-1> "FontDialogStyle $w.style_list.list $font_name $w.style_entry"
+  bind $w.style_list.list <<ListboxSelect>> "FontDialogStyle $w.style_list.list $font_name $w.style_entry 1"
 
   ### Size listbox.
 
@@ -152,6 +157,7 @@ proc FontDialog {name {parent .}} {
   }
 
   bind $w.size_list.list <Double-Button-1> "FontDialogSize $w.size_list.list $font_name $w.size_entry"
+  bind $w.size_list.list <<ListboxSelect>> "FontDialogSize $w.size_list.list $font_name $w.size_entry 1"
 
   pack $w.family_list.scroll -side right -expand 0 -fill y -padx 3
   pack $w.family_list.list   -side left  -expand 1 -fill both
@@ -208,14 +214,14 @@ proc FontDialog {name {parent .}} {
   pack  $w.sample.l_sample -side top -fill x -pady 4
   pack  $w.sample.sample -side top -pady 4 -ipadx 10 -ipady 10
 
-  grid config $w.sample -column 0 -columnspan 3 -row 20 \
-    -rowspan 2 -sticky snew -pady 10 -padx 2
+  grid config $w.sample -column 0 -columnspan 3 -row 20 -rowspan 2 -sticky snew -pady 10 -padx 2
 
   bind $w <Escape> "$w.buttons.cancel invoke"
   bind $w <Configure> "recordWinSize $w"
-  update
   placeWinOverParent $w $parent
   wm state $w normal
+  unbusyCursor .
+  update
 
   ### Tried to change this thing... but gave up.
   ### Spent a whole 12 hours on this file i think S.A
@@ -297,7 +303,8 @@ proc FontDialogSmall {parent} {
   font configure font_Tiny -family $font -size [expr $fontsize - 1]
 }
 
-proc FontDialogFamily { listname font_name entrywidget } {
+proc FontDialogFamily { listname font_name entrywidget {sampleOnly 0}} {
+
   # Get selected text from list.
   catch {
     set item_num [$listname curselection]
@@ -308,11 +315,11 @@ proc FontDialogFamily { listname font_name entrywidget } {
     $entrywidget insert end $item
 
     # Use this family in the font and regenerate font.
-    FontDialogRegen $font_name
+    FontDialogRegen $font_name $sampleOnly
   }
 }
 
-proc FontDialogStyle { listname font_name entrywidget } {
+proc FontDialogStyle { listname font_name entrywidget {sampleOnly 0}} {
   # Get selected text from list.
   catch {
     set item_num [$listname curselection]
@@ -323,11 +330,11 @@ proc FontDialogStyle { listname font_name entrywidget } {
     $entrywidget insert end $item
 
     # Use this family in the font and regenerate font.
-    FontDialogRegen $font_name
+    FontDialogRegen $font_name $sampleOnly
   }
 }
 
-proc FontDialogSize { listname font_name entrywidget } {
+proc FontDialogSize { listname font_name entrywidget {sampleOnly 0}} {
   # Get selected text from list.
   catch {
     set item_num [$listname curselection]
@@ -338,7 +345,7 @@ proc FontDialogSize { listname font_name entrywidget } {
     $entrywidget insert end $item
 
     # Use this family in the font and regenerate font.
-    FontDialogRegen $font_name
+    FontDialogRegen $font_name $sampleOnly
   }
 }
 
@@ -356,19 +363,27 @@ proc FontSlant {style} {
   return "roman"
 }
 
-### FontDialogRegen: Regenerates font from attributes.
+### Regenerates font from attributes.
 
-proc FontDialogRegen { font_name } {
+proc FontDialogRegen {font_name {sampleOnly 0}} {
   global fd_family fd_style fd_size graphFigurineAvailable
 
-  set weight "normal"
   if { $fd_style == "Bold Italic" || $fd_style == "Bold" } {
-    set weight "bold"
+    set weight bold
+  } else {
+    set weight normal
   }
 
-  set slant "roman"
   if { $fd_style == "Bold Italic" || $fd_style == "Italic" } {
-    set slant "italic"
+    set slant italic
+  } else {
+    set slant roman
+  }
+
+  font configure font_Sample -family $fd_family -size $fd_size -slant $slant -weight $weight
+  .fontdialog.sample.sample configure -font font_Sample
+  if {$sampleOnly} {
+    return
   }
 
   # Change font to have new characteristics.
