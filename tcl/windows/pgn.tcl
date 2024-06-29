@@ -269,9 +269,13 @@ namespace eval pgn {
 
     if {![winfo exists .pgnWin]} {return}
 
-    # Column mode tabbing is broke for large fonts
-    # The problem is lots spaces (in lieu of nags) are mixed with the tabs
-    # We have to change tab spacing according to font size
+    # # Column mode tabbing is broke for large fonts
+    # # The problem is lots spaces (in lieu of nags) are mixed with the tabs
+    # # We have to change tab spacing according to font size
+
+    # Column mode now works as we remove unneeded spaces in ::pgn::Refresh S.A.
+    # So, the below code could probably be simplified... if i  knew exactly what it was doing :)
+    # c stands for centimeter
 
     set t1 [expr $fd_size / 10.0]c
     set t2 [expr $fd_size / 8.0]c
@@ -530,13 +534,10 @@ namespace eval pgn {
 	$w.text tag configure Current -background $pgnColor(Current)
     }
   }
-  ################################################################################
-  # ::pgn::Refresh
-  #
-  #    Updates the PGN window. If $pgnNeedsUpdate == 0, then the
-  #    window text is not regenerated; only the current and next move
-  #    tags will be updated.
-  ################################################################################
+
+  ###  Update the PGN window.
+  ###  If $pgnNeedsUpdate == 0, then the window text is not regenerated; only the current and next move tags will be updated.
+
   proc Refresh {{pgnNeedsUpdate 0}} {
     global useGraphFigurine
 
@@ -556,6 +557,12 @@ namespace eval pgn {
         -space $::pgn::moveNumberSpaces -format $format -column $::pgn::columnFormat \
         -short $::pgn::shortHeader -markCodes $::pgn::stripMarks \
         -unicode $useGraphFigurine]
+
+    # Spaces mixed with Tabs breaks column mode
+    if {$::pgn::columnFormat} {
+      regsub -all {\ +\t} $pgnStr "\t" pgnStr
+    }
+
     # debug puts $pgnStr
 
     if {$pgnNeedsUpdate} {

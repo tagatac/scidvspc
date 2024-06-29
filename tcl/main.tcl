@@ -809,12 +809,13 @@ proc updateBoard {args} {
   set selectedSq -1 ; # necessary for bugfix ?
   foreach arg $args {
     if {! [string compare $arg "-pgn"]} { set pgnNeedsUpdate 1 }
+    if {! [string compare $arg "-header"]} { set pgnNeedsUpdate 2 }
     if {! [string compare $arg "-animate"]} { set animate 1 }
     if {! [string compare $arg "-switch"]} { set ::pgn::prevOffset 0 }
   }
 
   # Todo - verify this call is not redundant. We also call Refresh late in updateBoard3
-  if {$pgnNeedsUpdate} { ::pgn::Refresh $pgnNeedsUpdate }
+  # if {$pgnNeedsUpdate} { ::pgn::Refresh $pgnNeedsUpdate }
 
   # Remove marked squares informations.
   # (This must be done _before_ updating the board!)
@@ -930,7 +931,10 @@ proc updateBoard3 {pgnNeedsUpdate} {
 
   updatePlayerPhotos
   ::epd::updateEpdWins
-  updateAnalysisWindows
+  if {$pgnNeedsUpdate != "2"} {
+    #  pgnNeedsUpdate == 2 is header only
+    updateAnalysisWindows
+  }
   ::utils::graph::updateMove
 
   ::commenteditor::Refresh
