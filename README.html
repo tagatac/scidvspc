@@ -147,12 +147,11 @@ project is authored by
 <P>
 <H3>Linux , Unix</H3>
 
-
 <P><EM>Installing from source is reccommended, though there exists deb packages of some versions (from third parties) in the 
 <A HREF="https://sourceforge.net/projects/scidvspc/files/linux%20packages/">linux packages</A></EM></P>
 <P>Scid vs. PC requires Wish (Tcl/Tk) 8.5 or later and a C++ compiler. 
 Example packages required include "tcl, tk, tcl-devel, tk-devel" and
-"gcc-c++ , libstdc++"; but of course will vary with your distribution.</P>
+"gcc-c++ , libstdc++"; but will vary with your distribution.</P>
 <P>The default installation directory is <B>/usr/local</B>, which is generally empty, but any
 version of Scid here will be overwritten. To install into <B>/usr</B> (for eg)
 use <B>./configure BINDIR=/usr/bin/ SHAREDIR=/usr/share/scid/</B></P>
@@ -169,7 +168,7 @@ scid
 <HR>
 </P>
 
-<P>Extra chess pieces (such as Berlin) are now enabled by default for Wish 8.6, but 8.5 requires installing TkImg. Sound support requires Snack.<BR>
+<P>Extra chess pieces (such as Berlin) are now enabled by default for Wish 8.6, but 8.5 requires installing TkImg. Sound support requires the buggy library Snack.<BR>
 If your distro does not provide these packages ("tkimg", "tcl-snack"), you can install from source using these links (both of which have fixes applied).<BR>
 <A HREF="https://sourceforge.net/project/downloading.php?group_id=263836&amp;filename=tkimg1.3.scidvspc.tar.bz2">TkImg</A>, 
 <A HREF="http://sourceforge.net/projects/scidvspc/files/support%20files/snack2.2.10.scidvspc.tgz/download">Snack</A>.</P>
@@ -189,10 +188,9 @@ C:\Users\[USERNAME]\AppData\Local\VirtualStore\Program Files\Scid vs PC</P>
 
 <P>The 
 <A HREF="#download_">ScidvsMac-4.25 app</A> should include everything you need. Simply drag and drop the App into /Applications (or similar). It cannot be run from the dmg disk image.</P>
-<P>Due to complicated build reasons, only Yosemite (OS X 10.10) and
-later are now supported.  Additionally, Catalina has removed 32-bit app
-support, and it is only supported by our beta ScidvsMac-x64 app,
-as 64-bit Wish is not as robust as the old version.</P>
+<P>  Due to technical build reasons, only Mac OSX 10.10 and later
+  are supported. Previous versions (including Snow Leopard) should install Scid vs Mac 4.16).
+  Additionally, Newer macOS have removed 32-bit app support, and are only supported by our beta ScidvsMac-x64 app, which is not as robust as the 32 bit version.</P>
 <P>To compile from source - once you have XCode installed - please read <B>ScidvsMac-HowTo.rtfd</B> in the source tarball for some older information.</P>
 <P><EM>Users upgrading may have to remove (or edit) <B>$HOME/.scidvspc/config/engines.dat</B>
 to properly configure the chess engines.</EM></P>
@@ -432,29 +430,29 @@ Chessbase databases and many chess variants.</P>
 <H3>Scid vs. PC 4.25</H3>
 <P>
 <UL>
-<LI>Extra Tags - bulk add Extra Tag feature .</LI>
-<LI>Enable pattern matching in the Name Editor .</LI>
-<LI>Show Comments in Game Preview/Browser windows, change colours to match PGN, and ControlKey+Load does not close the Browser window .</LI>
-<LI>LaTex Game Export - draw Marks in chess diagrams, indent variations, and other minor changes (from Bruno) .</LI>
-<LI>Crosstable: add clickable column headings for Nationality, Rating and Score .</LI>
-<LI>Engine Annotation - Score last move in case of checkmate (and stalemate) .</LI>
-<LI>Tree mask - Options to hide Markers (default), disable tooltips, and make the mask move colour steelblue .</LI>
+<LI>Extra Tags - bulk add Extra Tag feature.</LI>
+<LI>Enable pattern matching in the Name Editor.</LI>
+<LI>Show Comments in Game Preview/Browser windows, change colours to match PGN, and ControlKey+Load does not close the Browser window.</LI>
+<LI>LaTex Game Export - draw Marks in chess diagrams, indent variations, and other minor changes (from Bruno).</LI>
+<LI>Crosstable: add clickable column headings for Nationality, Rating and Score.</LI>
+<LI>Engine Annotation - Score last move in case of checkmate (and stalemate).</LI>
+<LI>Tree mask - Options to hide Markers (default), disable tooltips, and make the mask move colour steelblue.</LI>
 
-<LI>Engine - Right-clicking AddAllVars adds all first moves only .</LI>
-<LI>Comment Editor - Remove 'Apply' button, instead automatically apply miniboard changes. Add wheelmouse move-forward/back bindings .</LI>
-<LI>Player Info - don't show 'filtered games' stats if they duplicate the normal stats .</LI>
-<LI>Make the Tree Bargraph height similar to the font height (for high def displays) .</LI>
-<LI>Add a few Keypad bindings, re suggestion from Patrick .</LI>
-<LI>Pressing Home-key inside a variation moves to var start instead of game start .</LI>
+<LI>Engine - Right-clicking AddAllVars adds all first moves only.</LI>
+<LI>Comment Editor - Remove 'Apply' button, instead automatically apply miniboard changes. Add wheelmouse move-forward/back bindings.</LI>
+<LI>Player Info - don't show 'filtered games' stats if they duplicate the normal stats.</LI>
+<LI>Make the Tree Bargraph height similar to the font height (for high def displays).</LI>
+<LI>Add a few Keypad bindings, re suggestion from Patrick.</LI>
+<LI>Pressing Home-key inside a variation moves to var start instead of game start.</LI>
 <BR><BR>
 General Bugs
-<LI>Twin Game checker minor fixes .</LI>
-<LI>Some spinboxes (annotate(blunder)) had erroneous error checking and threw exceptions .</LI>
-<LI>Some graphs didn't show the correct final/current year, gah! .</LI>
-<LI>Minor optable.tcl fixes/clean-up. Opening Table max games is now 100,000 (was 25,000) .</LI>
-<LI>Add current decade to Opening report Current popularity .</LI>
-<LI>EPD analysis hardening .</LI>
-<LI>For a few widgets - dont scroll text windows when using control-scroll to alter font size .</LI>
+<LI>Twin Game checker minor fixes.</LI>
+<LI>Some spinboxes (annotate(blunder)) had erroneous error checking and threw exceptions.</LI>
+<LI>Some graphs didn't show the correct final/current year, gah!.</LI>
+<LI>Minor optable.tcl fixes/clean-up. Opening Table max games is now 100,000 (was 25,000).</LI>
+<LI>Add current decade to Opening report Current popularity.</LI>
+<LI>EPD analysis hardening.</LI>
+<LI>For a few widgets - dont scroll text windows when using control-scroll to alter font size.</LI>
 <LI>Update stats/etc on Game quickSave.</LI>
 </UL>
 </P>

@@ -154,7 +154,7 @@
 
   Scid vs. PC requires Wish (Tcl/Tk) 8.5 or later and a C++ compiler.
   Example packages required include "tcl, tk, tcl-dev, tk-dev" and
-  "gcc, g++ , libstdc++"; but of course will vary with your distribution.
+  "gcc, g++ , libstdc++"; but will vary with your distribution.
 
   The default installation directory is /usr/local, which is generally
   empty, but any version of Scid here will be overwritten. To install
@@ -175,7 +175,7 @@
 
   Extra chess pieces (such as Berlin) are now enabled by default for
   Wish 8.6, but 8.5 requires installing TkImg. Sound support requires
-  Snack.
+  the buggy library Snack.
   If your distro does not provide these packages ("tkimg", "tcl-snack"),
   you can install from source using these links (both of which have
   fixes applied).
@@ -211,10 +211,9 @@
   drag and drop the App into /Applications (or similar). It cannot be
   run from the dmg disk image.
 
-  Due to complicated build reasons, only Yosemite (OS X 10.10) and later
-  are now supported. Additionally, Catalina has removed 32-bit app
-  support, and it is only supported by our beta ScidvsMac-x64 app, as
-  64-bit Wish is not as robust as the old version.
+  Due to technical build reasons, only Mac OSX 10.10 and later
+  are supported. Previous versions (including Snow Leopard) should install Scid vs Mac 4.16).
+  Additionally, Newer macOS have removed 32-bit app support, and are only supported by our beta ScidvsMac-x64 app, which is not as robust as the 32 bit version.
 
   To compile from source - once you have XCode installed - please read
   ScidvsMac-HowTo.rtfd in the source tarball for some older information.
