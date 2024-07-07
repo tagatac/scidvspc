@@ -32,50 +32,71 @@ proc pasteFEN {} {
   setTrialMode 0
   sc_game new
 
-  set fenStr ""
-  if {[catch {set fenStr [selection get -selection PRIMARY]} ]} {
-    catch {set fenStr [selection get -selection CLIPBOARD]}
+  set fen1 {}
+  set fen2 {}
+  catch {set fen1 [selection get -selection PRIMARY]} 
+  catch {set fen2 [selection get -selection CLIPBOARD]}
+  # Remove unicode chars, and a leading text \uxxxx which firefox can insert somehow S.A.
+  catch {
+    regsub -all {[\u0080-\uffff]} $fen1 "" fen1
+    regsub -all {\\u....} $fen1 "" fen1
+    regsub -all {[\u0080-\uffff]} $fen2 "" fen2
+    regsub -all {\\u....} $fen2 "" fen2
   }
-  catch {set fenStr [validateFEN [string trim $fenStr]]}
+
+  if {$fen1 == {}} {
+    set fen $fen2
+  } else {
+    sc_game push
+    # use PRIMARY (fen1) unless it looks funny
+    if {[catch {sc_game startBoard $fen1}]} {
+      set fen $fen2
+    } else {
+      set fen $fen1
+    }
+    sc_game pop
+  }
+
+  catch {set setupFen [sanityCheckFENCastling [string trim $fen]]}
 
   set fenExplanation {FEN is the standard representation of a chess position, for example:
 "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"}
 
-  if {$fenStr == ""} {
+  if {$fen == ""} {
     set msg "The clipboard is empty.\n\n$fenExplanation"
     fenErrorDialog $msg
     return
   }
 
   ### If FEN is prepended "FEN:", then strip this prefix
-  if {[string match -nocase fen:* $fenStr]} {
-    set fenStr [string trim [string range $fenStr 4 end]]
+  if {[string match -nocase fen:* $fen]} {
+    set fen [string trim [string range $fen 4 end]]
   }
 
   ### If the first arg ends with "/", then remove it, Some people seem to use this
   # (eg 8/3r1pk1/2p1b3/2p3p1/2P1P3/1P3P2/4KB2/2R5/ B)
   # and lowercase the second letter.
   catch {
-      set s1 [lindex $fenStr 0]
+      set s1 [lindex $fen 0]
       if {[string index $s1 end] == "/"} { 
         set s1 [string range $s1 0 end-1]
       }
-      set s2 [lindex $fenStr 1]
+      set s2 [lindex $fen 1]
       if {$s2 == "W" || $s2 == "B"} {
 	set s2 [string tolower $s2]
       }
-      set fenStr "$s1 $s2 [lrange $fenStr 2 end]"
+      set fen "$s1 $s2 [lrange $fen 2 end]"
   }
 
-  if {[catch {sc_game startBoard $fenStr}]} {
+  if {[catch {sc_game startBoard $fen}]} {
     # Trim length, and remove newlines for error dialog
-    if {[string length $fenStr] > 80} {
-      set fenStr [string range $fenStr 0 80]
-      append fenStr "..."
+    if {[string length $fen] > 80} {
+      set fen [string range $fen 0 80]
+      append fen "..."
     }
-    set fenStr [string map {\n { }} $fenStr]
+    # set fen [string map {\n { }} $fen]
 
-    set msg "\"$fenStr\"\nis not a valid FEN.\n\n $fenExplanation"
+    set msg "\"$fen\"is not a valid FEN.\n\n $fenExplanation"
 
     fenErrorDialog $msg
   }
@@ -134,14 +155,14 @@ set setupFen {}
 
 proc makeSetupFen {args} {
   global setupFen setupBd moveNum pawnNum toMove castling epFile
-  set fenStr ""
+  set fen ""
   set errorStr [validateSetup]
   if {$errorStr != ""} {
     set setupFen "Invalid board: $errorStr"
     return
   }
   for {set bRow 56} {$bRow >= 0} {incr bRow -8} {
-    if {$bRow < 56} { append fenStr "/" }
+    if {$bRow < 56} { append fen "/" }
     set emptyRun 0
     for {set bCol 0} {$bCol < 8} {incr bCol} {
       set sq [expr {$bRow + $bCol} ]
@@ -150,40 +171,40 @@ proc makeSetupFen {args} {
         incr emptyRun
       } else {
         if {$emptyRun > 0} {
-          append fenStr $emptyRun
+          append fen $emptyRun
           set emptyRun 0
         }
-        append fenStr $piece
+        append fen $piece
       }
     }
-    if {$emptyRun > 0} { append fenStr $emptyRun }
+    if {$emptyRun > 0} { append fen $emptyRun }
   }
-  append fenStr " " [string tolower [string index $toMove 0]] " "
+  append fen " " [string tolower [string index $toMove 0]] " "
   if {$castling == ""} {
-    append fenStr "- "
+    append fen "- "
   } else {
-    append fenStr $castling " "
+    append fen $castling " "
   }
   if {$epFile == ""  ||  $epFile == "-"} {
-    append fenStr "-"
+    append fen "-"
   } else {
-    append fenStr $epFile
+    append fen $epFile
     if {$toMove == "White"} {
-      append fenStr "6"
+      append fen "6"
     } else {
-      append fenStr "3"
+      append fen "3"
     }
   }
   # We assume a halfmove clock of zero:
-  # append fenStr " 0 " $moveNum
+  # append fen " 0 " $moveNum
 
   if {[string is integer -strict $pawnNum]} {
-      append fenStr " $pawnNum " $moveNum
+      append fen " $pawnNum " $moveNum
   } else {
-      append fenStr " 0 " $moveNum
+      append fen " 0 " $moveNum
   }
 
-  set setupFen $fenStr
+  set setupFen $fen
 }
 
 # validateSetup:
@@ -304,7 +325,7 @@ proc exitSetupBoard {} {
   # We always always creating a new game before entering setup board, so no point making undoPoint
   # sc_game undoPoint
 
-  set setupFen [validateFEN $setupFen]
+  set setupFen [sanityCheckFENCastling $setupFen]
 
   if {$setupFen == $::defaultFen} {
     sc_game new
@@ -326,40 +347,33 @@ proc exitSetupBoard {} {
 }
 
 
+### Do a sanity check on castling
+### Helpful because illegal FENs crash engines and we could also have one for enpassant
 
-# The way setupFen is passed here needs fixing
+proc sanityCheckFENCastling {fen} {
 
-proc validateFEN {fen} {
-  global setupFen
-
-  #### Do a sanity check on castling
-  #    .. helpful because illegal FENs crash engines
-  #    and we could also have one for enpassant
-
+  # Castling part of the fen
   set c [lindex $fen 2]
-
-  set setupFen $fen
 
   # todo: missing space (K1w) breaks it
   # r1rbn1k1/2qb1p1p/3p4/5P2/p1p5/P1B4P/1PBQ1PP1/R3R1K1w KQkq - 0 1
 
-  if {![validatePiece r 1 1]} {set c [string map {q {}} $c]}
-  if {![validatePiece k 5 1]} {set c [string map {k {} q {}} $c]}
-  if {![validatePiece r 8 1]} {set c [string map {k {}} $c]}
+  if {![validatePiece $fen r 1 1]} {set c [string map {q {}} $c]}
+  if {![validatePiece $fen k 5 1]} {set c [string map {k {} q {}} $c]}
+  if {![validatePiece $fen r 8 1]} {set c [string map {k {}} $c]}
 
-  if {![validatePiece R 1 8]} {set c [string map {Q {}} $c]}
-  if {![validatePiece K 5 8]} {set c [string map {K {} Q {}} $c]}
-  if {![validatePiece R 8 8]} {set c [string map {K {}} $c]}
+  if {![validatePiece $fen R 1 8]} {set c [string map {Q {}} $c]}
+  if {![validatePiece $fen K 5 8]} {set c [string map {K {} Q {}} $c]}
+  if {![validatePiece $fen R 8 8]} {set c [string map {K {}} $c]}
 
   if {$c == {}} {set c {-}}
   return "[lreplace $fen 2 2 $c]"
 }
 
 
-proc validatePiece {piece x y} {
-  global setupFen
+proc validatePiece {fen piece x y} {
 
-  # Look at setupFen and return true if "$piece" resides at square x,y. S.A
+  # Check fen and return true if "$piece" resides at square x,y. S.A
 
   set pos [expr $x - 1 + ($y - 1) * 8]
   set square 0
@@ -367,7 +381,7 @@ proc validatePiece {piece x y} {
   while {1} {
     # process each char in the Fen until we get past where the piece should be
 
-    set ch [string index $setupFen $i]
+    set ch [string index $fen $i]
     incr i
 
     if {$ch == {/}}		{continue}
