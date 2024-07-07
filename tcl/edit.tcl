@@ -12,15 +12,11 @@ proc fenErrorDialog {{msg {}}} {
 
 }
 
-#   Copies the FEN of the current position to the text clipboard.
-
 proc copyFEN {} {
   setClipboard [sc_pos fen]
 }
 
-#   Bypasses the board setup window and tries to paste the current
-#   text selection as the setup position, producing a message box
-#   if the selection does not appear to be a valid FEN string.
+# Bypasses the board setup window and tries to paste the current text selection as the setup position
 
 proc pasteFEN {} {
 
@@ -44,12 +40,16 @@ proc pasteFEN {} {
     regsub -all {\\u....} $fen2 "" fen2
   }
 
+  ### Strip any "FEN:" prefix
+  if {[string match -nocase fen:* $fen1]} { set fen1 [string trim [string range $fen1 4 end]] }
+  if {[string match -nocase fen:* $fen2]} { set fen2 [string trim [string range $fen2 4 end]] }
+
   if {$fen1 == {}} {
     set fen $fen2
   } else {
     sc_game push
     # use PRIMARY (fen1) unless it looks funny
-    if {[catch {sc_game startBoard $fen1}]} {
+    if {[catch {sc_game startBoard $fen1}] && $fen2 != ""} {
       set fen $fen2
     } else {
       set fen $fen1
@@ -57,20 +57,11 @@ proc pasteFEN {} {
     sc_game pop
   }
 
-  catch {set setupFen [sanityCheckFENCastling [string trim $fen]]}
-
-  set fenExplanation {FEN is the standard representation of a chess position, for example:
-"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"}
+  catch {set fen [sanityCheckFENCastling [string trim $fen]]}
 
   if {$fen == ""} {
-    set msg "The clipboard is empty.\n\n$fenExplanation"
-    fenErrorDialog $msg
+    fenErrorDialog "The clipboard is empty.\n"
     return
-  }
-
-  ### If FEN is prepended "FEN:", then strip this prefix
-  if {[string match -nocase fen:* $fen]} {
-    set fen [string trim [string range $fen 4 end]]
   }
 
   ### If the first arg ends with "/", then remove it, Some people seem to use this
@@ -89,16 +80,17 @@ proc pasteFEN {} {
   }
 
   if {[catch {sc_game startBoard $fen}]} {
-    # Trim length, and remove newlines for error dialog
     if {[string length $fen] > 80} {
       set fen [string range $fen 0 80]
       append fen "..."
     }
     # set fen [string map {\n { }} $fen]
 
-    set msg "\"$fen\"is not a valid FEN.\n\n $fenExplanation"
+    fenErrorDialog "\"$fen\" is not a valid FEN.
 
-    fenErrorDialog $msg
+FEN is the standard representation of a chess position, for example:
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+
   }
   updateBoard -pgn
 }
