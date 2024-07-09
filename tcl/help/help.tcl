@@ -1561,9 +1561,9 @@ set helpTitle(GameList) "Game List window"
 set helpText(GameList) {<h1>The Game List</h1>
 
 <p>The <run ::windows::gamelist::Open><green>Game List</green></run>
-shows all filter games in the currently open database/PGN file.</p>
+shows all <a GameList Del>filter</a> games in the currently open database/PGN file.</p>
 
-<p><i>The Gamelist (and Bestgames) now have the option of configurable fonts. They are enabled via a context menu in the Switcher, and the font type is "Small".</i></p>
+<p><i>The Gamelist (and Bestgames) now have the option of configurable fonts. They are enabled via a context menu in the Switcher, and the font type is "Small". Horizontal scrolling can be achieved using Shift+Wheelmouse.</i></p>
 
 <p>Below the Game List are various buttons and entries,
 and at the bottom you'll find the <a Switcher>Database Switcher</a>.</p>

@@ -412,7 +412,10 @@ proc ::windows::gamelist::Open {} {
   if {$::windowsOS || $::macOS} {
     # Does this work fine on OSX ?
     # http://sourceforge.net/tracker/?func=detail&aid=2931538&group_id=12997&atid=112997
-    bind $w <Shift-MouseWheel> {break}
+    bind $w <Shift-MouseWheel> {
+      if {[expr -%D] < 0} {.glistWin.tree xview scroll -50 units}
+      if {[expr -%D] > 0} {.glistWin.tree xview scroll  50 units}
+    }
     bind $w <MouseWheel> {
       if {[expr -%D] < 0} { ::windows::gamelist::Scroll -1}
       if {[expr -%D] > 0} { ::windows::gamelist::Scroll 1}
@@ -422,8 +425,8 @@ proc ::windows::gamelist::Open {} {
       if {[expr -%D] > 0} { ::windows::gamelist::Scroll $glistSize}
     }
   } else {
-    bind $w <Shift-Button-4> "$w.tree xview scroll -40 units"
-    bind $w <Shift-Button-5> "$w.tree xview scroll 40 units"
+    bind $w <Shift-Button-4> "$w.tree xview scroll -50 units"
+    bind $w <Shift-Button-5> "$w.tree xview scroll 50 units"
     bind $w <Button-4> {::windows::gamelist::Scroll -1}
     bind $w <Button-5> {::windows::gamelist::Scroll 1}
     bind $w <Control-Button-4> {::windows::gamelist::Scroll -$glistSize}
