@@ -1110,8 +1110,10 @@ proc ::windows::switcher::Refresh {} {
 
       if {[sc_base isReadOnly $i] && ![string match -nocase *pgn $name]} {
         $w.c.f$i.menu entryconfigure 2 -state disabled
-        set name "$name ($::tr(readonly))"
+        # keep the filename a reasonable length, otherwise the filter stats aren't shown. Also changed in gamelist::setGamelistTitle
+        set name "[string range $name 0 14] ($::tr(readonly))"
       } else {
+        set name [string range $name 0 19]
         $w.c.f$i.menu entryconfigure 2 -state normal
       }
 

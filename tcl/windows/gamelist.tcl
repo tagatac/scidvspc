@@ -1119,7 +1119,7 @@ proc setGamelistTitle {} {
   if {![string match {\[*\]} $fname]} {
     set fname "\[$fname\]"
   }
-
+  set fname [string range $fname 0 20]
   setTitle .glistWin "[tr WindowsGList]: $fname [sc_filter count]/[sc_base numGames] $::tr(games)" 
 }
 
