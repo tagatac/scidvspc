@@ -11,7 +11,7 @@ proc ::plist::defaults {} {
   set ::plist::name ""
   set ::plist::country no
   set ::plist::minGames 1
-  set ::plist::maxGames 9999
+  set ::plist::maxGames 100000
   set ::plist::minElo 0
   set ::plist::maxElo 3000
   set ::plist::size 1000
@@ -22,8 +22,8 @@ proc ::plist::defaults {} {
 
 trace variable ::plist::minElo w [list ::utils::validate::Integer [sc_info limit elo] 0]
 trace variable ::plist::maxElo w [list ::utils::validate::Integer [sc_info limit elo] 0]
-trace variable ::plist::minGames w [list ::utils::validate::Integer 9999 0]
-trace variable ::plist::maxGames w [list ::utils::validate::Integer 9999 0]
+trace variable ::plist::minGames w [list ::utils::validate::Integer 100000 0]
+trace variable ::plist::maxGames w [list ::utils::validate::Integer 1000000 1]
 
 proc ::plist::Open {} {
   set w .plist
@@ -83,7 +83,7 @@ proc ::plist::Open {} {
   pack $f.games $f.gmin $f.gto $f.gmax -side left
 
  foreach entry {gmin gmax} {
-    $f.$entry configure -width 5 -justify right -font $font
+    $f.$entry configure -width 7 -justify right -font $font
     bindFocusColors $f.$entry
     bind $f.$entry <FocusOut> +::plist::check
   }

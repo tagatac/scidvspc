@@ -43,7 +43,7 @@ proc playerInfo {{player ""} {raise 0}} {
       set ::plist::name [lindex $playerInfoName 0]
       # Don't try to match any specific country here, or numgames, elo
       set ::plist::minGames 1
-      set ::plist::maxGames 9999
+      set ::plist::maxGames 100000
       set ::plist::minElo 0
       set ::plist::maxElo 3000
       if {$::plist::country != "no"} {
