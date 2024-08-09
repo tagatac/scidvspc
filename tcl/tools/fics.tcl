@@ -2598,9 +2598,10 @@ namespace eval fics {
     set ::fics::playing 0
     set ::fics::mainGame -1
     set ::pause 0
-    # Hmmm... why do we need to catch these ?
+    # Do we need to catch these still.
+    # ping leaves a zombie process until scid exits or ping restarts
     catch { ::close $::fics::sockchan }
-    catch { ::close $::fics::sockping }
+    catch { ::close $::fics::sockping r}
     after cancel ::fics::clearPing
     if { ! $::windowsOS } { catch { exec -- kill -s INT [ $::fics::timeseal_pid ] }  }
 

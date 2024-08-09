@@ -971,11 +971,10 @@ proc ::windows::gamelist::checkAltered {} {
     $w tag configure current_deleted -foreground indianred3
   } else {
     if {$::macOS} {
-      # Hmmm - now we arent highlighting current games with selection, use blue2 to work with deleted tag
       # OSX treeview selection colour is different
     }
-    $w tag configure current -foreground blue2
-    $w tag configure current_deleted -foreground SteelBlue
+    $w tag configure current -foreground $::windows::gamelist::currColor ;# blue2
+    $w tag configure current_deleted -foreground [::gradient $::windows::gamelist::currColor .5 .]
   }
 }
 
