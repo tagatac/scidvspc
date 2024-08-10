@@ -522,6 +522,7 @@ proc updateVarMenus {} {
   if {$numVars > 0} {
     set varList [sc_var list]
     set move [sc_game info nextMove]
+    set showLongVars [expr {[sc_pos location] + 1 ==  [sc_game info halfmoves]}]
     if {$move == ""} { set move "($::tr(empty))" }
     .main.button.intoVar.menu add command -label "0: $move" -command "sc_move forward; updateBoard" -underline 0
     for {set i 0} {$i < $numVars} {incr i} {
@@ -530,6 +531,11 @@ proc updateVarMenus {} {
       if {$move == ""} {
 	set move "($::tr(empty))"
 	set state disabled
+      } elseif {$showLongVars} {
+        # Show more moves if at game end
+	sc_var moveInto $i
+	append move [getNextMoves 2]
+	sc_var exit
       }
       set str "[expr {$i + 1}]: $move"
       set commandStr "sc_var moveInto $i; updateBoard"
