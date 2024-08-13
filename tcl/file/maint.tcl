@@ -60,7 +60,6 @@ proc ::maint::SetGameFlags {flag type value} {
     }
     default { return }
   }
-  updateBoard
   ::windows::stats::Refresh
 }
 
@@ -229,10 +228,8 @@ proc ::maint::Open {} {
 
   foreach flag {delete mark} on {Delete Mark} off {Undelete Unmark} {
     foreach b {Current Filter All} {
-      button $w.$flag.on$b -textvar "::tr($on$b)" -font $font \
-          -command "::maint::SetGameFlags $flag [string tolower $b] 1"
-      button $w.$flag.off$b -textvar "::tr($off$b)" -font $font \
-          -command "::maint::SetGameFlags $flag [string tolower $b] 0"
+      button $w.$flag.on$b -textvar "::tr($on$b)" -font $font -command "::maint::SetGameFlags $flag [string tolower $b] 1"
+      button $w.$flag.off$b -textvar "::tr($off$b)" -font $font -command "::maint::SetGameFlags $flag [string tolower $b] 0"
     }
 
     grid $w.$flag.title -columnspan 3 -row 0 -column 0 -sticky n
@@ -509,7 +506,7 @@ proc ::maint::SetAutoloadGame {{parent .}} {
   wm state $w normal
 }
 
-### Find twin games and (optionally) marks them for deletion.
+### Find twin games and (optionally) mark them for deletion.
 
 proc markTwins {{parent .}} {
   global twinSettings
@@ -1028,13 +1025,13 @@ proc updateTwinChecker {} {
     foreach i {left right} width {20 24} {
       set f $w.f.$i
       pack [frame $f.title] -side top -fill x
-      label $f.title.label -font font_Bold -text [concat $::tr(game) " 0 "]
+      button $f.title.label -font font_Bold -text [concat [string toupper $::tr(game) 0 0] " 0 "]
       checkbutton $f.title.d -text $::tr(Deleted) -pady 5 \
           -variable twincheck($i) -font font_Small
       label $f.title.note -font font_Small
       pack $f.title.label -side left
       pack $f.title.note $f.title.d -side right -padx 3
-      label $f.tmt -font font_Small -text "" -anchor w -width 1 -relief sunken
+      button $f.tmt -font font_Small -text "" -anchor w -width 1 -relief sunken
       pack $f.tmt -side bottom -fill x
       autoscrollframe $f.t text $f.t.text -height 16 -width $width -takefocus 0 -wrap word
       # hmmm - for some packing reason the left and right widgets are different widths &&&
@@ -1079,6 +1076,15 @@ proc updateTwinChecker {} {
       if {$twincheck(left)} {.twinchecker.f.left.title.d invoke}
       if {$twincheck(right)} {.twinchecker.f.right.title.d invoke}
     }
+    bind $w <KeyPress-U> {
+      busyCursor .
+      sc_game flag delete all 0
+      set twincheck(left) 0
+      set twincheck(right) 0
+      updateStatusBar
+      ::windows::gamelist::Refresh
+      unbusyCursor .
+    }
     # wm resizable $w 0 1
     bind $w <Configure> "recordWinSize $w"
   } else {
@@ -1086,36 +1092,34 @@ proc updateTwinChecker {} {
   }
 
   set gn [sc_game number]
-  set dup 0
-  if {$gn > 0} {
-    set dup [sc_game info duplicate]
-  }
   set twincheck(left) 0
   set twincheck(right) 0
 
-  $w.f.left.title.label configure -text [concat $::tr(game) " $gn  "]
+  $w.f.left.title.label configure -text [concat [string toupper $::tr(game) 0 0]  " $gn  "] -command "::game::Load $gn"
 
   if {$gn > 0} {
+    set dup [sc_game info duplicate]
     set twincheck(left) [sc_game flag delete $gn]
-    $w.f.left.title.d configure -command "sc_game flag delete $gn invert; updateBoard"
+    $w.f.left.title.d configure -command "sc_game flag delete $gn invert; updateStatusBar"
     $w.f.left.title.d configure -state normal
     set tmt [sc_game crosstable count +deleted]
-    $w.f.left.tmt configure -text [concat $::tr(TwinCheckTournament) $tmt]
+    $w.f.left.tmt configure -text [concat $::tr(TwinCheckTournament) $tmt] -command "::crosstab::Open $gn"
   } else {
+    set dup 0
     $w.f.left.title.d configure -state disabled
-    $w.f.left.tmt configure -text ""
+    $w.f.left.tmt configure -text "" -command ""
   }
   if {$dup > 0} {
     set twincheck(right) [sc_game flag delete $dup]
-    $w.f.right.title.label configure -text [concat $::tr(game) " $dup  "]
-    $w.f.right.title.d configure -command "sc_game flag delete $dup invert; updateBoard"
+    $w.f.right.title.label configure -text [concat [string toupper $::tr(game) 0 0]  " $dup  "] -command "::game::Load $dup"
+    $w.f.right.title.d configure -command "sc_game flag delete $dup invert; updateStatusBar"
     $w.f.right.title.d configure -state normal
     set tmt [sc_game crosstable count -game $dup +deleted]
-    $w.f.right.tmt configure -text [concat $::tr(TwinCheckTournament) $tmt]
+    $w.f.right.tmt configure -text [concat $::tr(TwinCheckTournament) $tmt] -command "::crosstab::Open $dup"
   } else {
     $w.f.right.title.label configure -text $::tr(TwinCheckNoTwin)
     $w.f.right.title.d configure -state disabled
-    $w.f.right.tmt configure -text ""
+    $w.f.right.tmt configure -text "" -command ""
   }
 
   $w.b.share configure -state disabled -command {}
@@ -2117,10 +2121,18 @@ proc extraTags {{parent .}} {
     }
     set removed [doStripTags $tag]
     if {$removed > 0} {
-      ::game::Reload 
-      .extratags.tags.list delete 0 end
-      set pgnTags($tag) [expr {$pgnTags($tag) - $removed}]
-      populateExtraTags
+      if {$::interrupt} { 
+        # Previous tag values were not accurate
+	::game::Reload ; # Todo - fixme ??
+	update
+	extraTags
+      } else {
+        # Calculate new tag count
+	::game::Reload 
+	.extratags.tags.list delete 0 end
+	set pgnTags($tag) [expr {$pgnTags($tag) - $removed}]
+	populateExtraTags
+      }
     }
   }
 

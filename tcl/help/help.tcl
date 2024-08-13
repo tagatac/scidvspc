@@ -2454,11 +2454,13 @@ set helpText(Maintenance) {<h1>Database Maintenance</h1>
   Scid vs. PC shows a inline comparison of game variations and comments.
   </p>
   <p>
-  Use the Arrow Keys to progress through the games, "1", "2" and "t" keys to
-  toggle the Delete Fields, and "u" to Undelete both games.
+  Use the arrow buttons (or left,right keys) to progress through the games, "1", "2" and "t" keys to
+  toggle the Delete fields, "u" to undelete both games, "U" to undelete all games, and "s" to share tags.
+  <i>NB - to actually delete games, you must <a Compact>compact</a> the database.</i>
   </p>
-  <p>
-  <i>To actually delete the games, you must <a Compact>compact</a> the database.</i>
+<p>
+  Scid vs PC also enables a few new clickables. The "Game N" button allows one to load either game (NB left and right may become reversed),
+  and the "Games in Tournament" bars will show a crosstable for the tournament <b>minus any deleted games</b>.
   </p>
 
   <h3><name Editing>Editing Names</name></h3>
@@ -2616,7 +2618,7 @@ For example - the first two examples remove four digit ELOs from player names. T
   back in a consistent and usable state.
   </p>
 
-  <p><footer>Updated: Scid vs. PC 4.25, Nov 2023</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.26, Aug 2024</footer></p>
 }
 
 set helpTitle(Sorting) "Sorting a database"
