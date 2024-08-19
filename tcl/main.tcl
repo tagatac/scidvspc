@@ -820,8 +820,8 @@ proc updateBoard {args} {
     if {! [string compare $arg "-switch"]} { set ::pgn::prevOffset 0 }
   }
 
-  # Todo - verify this call is not redundant. We also call Refresh late in updateBoard3
-  # if {$pgnNeedsUpdate} { ::pgn::Refresh $pgnNeedsUpdate }
+  # Seems needed. eg - annotating game, vars don't get added if the below is omitted
+  if {$pgnNeedsUpdate} { ::pgn::Refresh $pgnNeedsUpdate }
 
   # Remove marked squares informations.
   # (This must be done _before_ updating the board!)
