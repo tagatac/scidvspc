@@ -1,7 +1,7 @@
 # port.tcl:
 # Scid in Portuguese.
 # Translated by G. Silva (martinus at FICS)
-# Last edited 2019-03-24
+# Last edited 2024-09-19
 
 addLanguage U {Portuguese} 0 ;#iso8859-1
 
@@ -726,8 +726,7 @@ translate U AnnotateBlundersOnly {Quando a jogada é um grande erro}
 translate U BlundersNotBest {Apenas grandes erros}
 translate U AnnotateTitle {Configurar Anotação}
 translate U AnnotateMissedMates {Quando há xequemate mais rápido}
-# ====== TODO To be translated ======
-translate U AnnotateEnd {At end of game}
+translate U AnnotateEnd {No final da partida}
 translate U BlundersThreshold {Limiar}
 translate U ScoreFormat {Formato da avaliação}
 translate U CutOff {Não anotar:}
@@ -932,17 +931,11 @@ translate U GlistUndeleteAllGames {Recuperar todos os jogos no filtro}
 translate U GlistAlignL {Alinhar à esquerda}
 translate U GlistAlignR {Alinhar à direita}
 translate U GlistAlignC {Alinhar ao centro}
-# ====== TODO To be translated ======
-translate U GlistMoveFieldUp {Move up}
-# ====== TODO To be translated ======
-translate U GlistMoveFieldDown {Move down}
-# ====== TODO To be translated ======
-translate U GlistMoveFieldFirst {Move to first}
-# ====== TODO To be translated ======
-translate U GlistMoveFieldLast {Move to last}
-# ====== TODO To be translated ======
-translate U GlistMoveFieldN {Move to N}
-
+translate U GlistMoveFieldUp {Mover para cima}
+translate U GlistMoveFieldDown {Mover para baixo}
+translate U GlistMoveFieldFirst {Mover para o primeiro}
+translate U GlistMoveFieldLast {Mover para o último}
+translate U GlistMoveFieldN {Mover para N}
 # Maintenance window:
 translate U DatabaseName {Nome da base de dados:}
 translate U TypeIcon {Icone de Tipo:}
@@ -981,11 +974,9 @@ translate U CompactDatabase {Compactar Base}
 translate U SortDatabase {Ordenar Base}
 translate U AddEloRatings {Adicionar Elo}
 translate U AutoloadGame {Carregar autom. o jogo n.º}
-# ====== TODO To be translated ======
-translate U StripTags {Extra Tags}
+translate U StripTags {Etiquetas extra}
 translate U StripTag {Apagar etiqueta} ;# ***
-# ====== TODO To be translated ======
-translate U AddTag {Add Tag}
+translate U AddTag {Adicionar etiqueta}
 translate U CheckGames {Verificar jogos}
 translate U Cleaner {Limpador}
 translate U CleanerHelp {
@@ -1156,8 +1147,7 @@ translate U ClearGameDialog {Este jogo foi alterado.  Você realmente quer contin
 translate U ExitUnsaved {As seguintes bases têm alterações não gravadas. Se sair agora, essas alterações serão perdidas.} ;# ***
 translate U ChangeTextDialog {Configurar a cor geral do texto obriga a recomeçar o Scid.}
 translate U ChangeDockDialog {Mudar ligação a hardware obriga a recomeçar o Scid.}
-# ====== TODO To be translated ======
-translate U FontSelectDialog "This is some sample text\nDouble click above to change font, then select 'ok'\nAaBbCcDdEeFfGgHhIiJjKkLlMm 0123456789. +=-"
+translate U FontSelectDialog "Isto é um texto de exemplo\Dê um duplo clic acima da letra mudada, depois selecion 'ok'\nAaBbCcDdEeFfGgHhIiJjKkLlMm 0123456789. +=-"
 translate U ExitNow {Sair agora?}
 
 # Import window:
@@ -1241,8 +1231,7 @@ translate U OprepTheoryTable {Tabela de Teoria}
 translate U OprepTableComment {Gerada a partir dos %u jogos com rating mais alto.}
 translate U OprepExtraMoves {Movimentos com nota extra na Tabela de Teoria}
 translate U OprepMaxTableGames {Qtde. Máxima de jogos na tabela de teoria}
-# ====== TODO To be translated ======
-translate U OprepMaxGames {Maximum games for statistics}
+translate U OprepMaxGames {Máximo de jogos para estatística}
 translate U OprepViewHTML {Ver HTML} ;# ***
 translate U OprepViewLaTeX {Ver LaTeX} ;# ***
 
@@ -1307,8 +1296,7 @@ translate U NameEditSelect {Jogos para editar}
 translate U NameEditReplace {Substituir}
 translate U NameEditWith {com}
 translate U NameEditMatches {Confere: Pressione Ctrl+1 a Ctrl+9 para selecionar}
-# ====== TODO To be translated ======
-translate U MatchPattern {Match Pattern}
+translate U MatchPattern {Corresponder ao padrão}
 
 # Classify window:
 translate U Classify {Classificar}
@@ -1348,8 +1336,7 @@ translate U ExportComments {Exportar comentarios?}
 translate U ExportVariations {Exportar variantes?}
 translate U IndentComments {Alinhar Comentarios?}
 translate U IndentVariations {Alinhar Variantes?}
-# ====== TODO To be translated ======
-translate U InsertNewlines {Insert newlines every 80 chars?}
+translate U InsertNewlines {Introduzir linha a cada 80 carateres?}
 translate U ExportColumnStyle {Estilo Coluna (um movimento por linha)?}
 translate U ExportSymbolStyle {Estilo de anotação simbólica:}
 translate U ExportStripMarks {Apagar dos comentários as marcas de casa/seta?} ;# ***
@@ -1378,11 +1365,9 @@ translate U CopyErrNotOpen {não está aberta}
 translate U LightSquares {Casas Brancas}
 translate U DarkSquares {Casas Pretas}
 translate U SelectedSquares {Casas selecionadas}
-# ====== TODO To be translated ======
-translate U SelectedOutline {Selected Box}
-# ====== TODO To be translated ======
-translate U SuggestedSquares {Suggested}
-translate U Grid {Grid}
+translate U SelectedOutline {Selecionar caixa}
+translate U SuggestedSquares {Sugerido}
+translate U Grid {Quadrícula}
 translate U Previous {Escolhas}
 translate U WhitePieces {Peças Brancas}
 translate U BlackPieces {Peças Pretas}
@@ -1459,8 +1444,7 @@ translate U moveblunderthreshold {movimento é erro se perder mais de}
 translate U limitanalysis {limitar tempo de análise do programa}
 translate U seconds {segundos}
 translate U Abort {Abortar}
-# ====== TODO To be translated ======
-translate U Quit {Quit}
+translate U Quit {Sair}
 translate U Resume {Retomar}
 translate U Restart {Recomeçar}
 translate U OutOfOpening {Fora da abertura}
@@ -1513,8 +1497,7 @@ translate U WinWonGame {Jogar até ao mate}
 translate U Lines {Linhas}
 translate U ConfigureUCIengine {Configurar programa UCI}
 translate U SpecificOpening {Escolher abertura}
-# ====== TODO To be translated ======
-translate U ImportECO {Import ECO}
+translate U ImportECO {Importar ECO}
 translate U StartNewGame {Iniciar novo jogo}
 translate U FixedLevel {Nível fixo}
 translate U Opening {Abertura}
