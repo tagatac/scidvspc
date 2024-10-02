@@ -3459,7 +3459,7 @@ players.
 
 <h3><name Photos>Player Photos</name></h3>
 <p>To enable player photos, place Scid Photo Files (such as "FIDE.spf" from 
-<url http://scid.sourceforge.net/download.html>Scid download page</url>),
+<url https://sourceforge.net/projects/scid/files/Player Data/>Scid download page</url>),
 into Scid vs. PC's user directory.
 On Linux and Macs this is "$HOME/.scidvspc", or "Scid vs PC/bin" on Windows.
 The <a Console>Splash Window</a> will help you find it's location, and

@@ -153,7 +153,10 @@ proc ::search::usefile {{file {}}} {
 }
 
 proc ::search::loadFirstGame {} {
+    set current [sc_base current]
+    # Disable adjust tree for this base to avoid loading-at-ply changing the just-set search filter
+    set ::tree(adjustfilter$current) 0
     set ::glstart 1
-    set ::glistStart([sc_base current]) 1
+    set ::glistStart($current) 1
     ::game::Load [sc_filter first]
 }

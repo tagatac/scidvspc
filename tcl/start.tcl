@@ -117,7 +117,7 @@ set ::pause 0
 set ::defaultBackground white
 set ::defaultForeground black
 # custom SelectColor colors (if available)
-set ::bwidgetBackgrounds {#ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff}
+set ::bwidgetBackgrounds {#ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff}
 set ::defaultGraphBackground white
 set ::enableBackground 0
 set ::enableForeground 0
