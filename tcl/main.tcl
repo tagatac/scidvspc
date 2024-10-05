@@ -514,6 +514,15 @@ if { $macOS } {
 
 proc updateVarMenus {} {
   set numVars [sc_var count]
+  if {$numVars == 0} {
+    .main.button.intoVar configure -state disabled
+    .menu.edit entryconfig [tr EditDelete] -state disabled
+    .menu.edit entryconfig [tr EditFirst] -state disabled
+    .menu.edit entryconfig [tr EditMain] -state disabled
+  } else {
+    .main.button.intoVar configure -state normal
+    .menu.edit entryconfig [tr EditDelete] -state normal
+  }
   .main.button.intoVar.menu delete 0 end
   .menu.edit.del delete 0 end
   .menu.edit.first delete 0 end
@@ -884,17 +893,6 @@ if  {$::gameInfo(showMarks)} {
     .menu.edit entryconfig [tr EditAdd] -state normal
     .menu.edit entryconfig [tr EditPasteVar] -state normal
     .main.button.addVar configure -state normal
-  }
-  if {[sc_var count] == 0} {
-    .main.button.intoVar configure -state disabled
-    .menu.edit entryconfig [tr EditDelete] -state disabled
-    .menu.edit entryconfig [tr EditFirst] -state disabled
-    .menu.edit entryconfig [tr EditMain] -state disabled
-  } else {
-    .main.button.intoVar configure -state normal
-    .menu.edit entryconfig [tr EditDelete] -state normal
-    .menu.edit entryconfig [tr EditFirst] -state normal
-    .menu.edit entryconfig [tr EditMain] -state normal
   }
 
   # FICS examine mode 

@@ -1815,6 +1815,7 @@ proc addAnalysisVariation {{n -1}} {
   }
 
   ::pgn::Refresh 1
+  updateVarMenus
 
   # Scroll down one line
   # Often the current move is at the bottom of the viewable, and new var will not be shown
@@ -1908,6 +1909,7 @@ proc addAllVariations {{n 1} {rightclick 0}} {
   }
 
   ::pgn::Refresh 1 
+  updateVarMenus
   updateStatusBar
   ::tools::graphs::score::Refresh
 }
