@@ -475,7 +475,7 @@ namespace eval pgn {
     set bd [sc_pos board]
     sc_game pop
 
-    if {[::board::isFlipped .main.board]} {
+    if {[::board::isFlipped]} {
       set bd [string reverse [lindex $bd 0]]
     }
 

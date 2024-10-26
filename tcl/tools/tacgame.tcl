@@ -410,7 +410,7 @@ namespace eval tacgame {
       set player_name [getMyPlayerName]
       if {$player_name == ""} {set player_name {?}}
       set ai_name "Phalanx $::tacgame::level ELO"
-      if { [::board::isFlipped .main.board] } {
+      if { [::board::isFlipped] } {
         set tmp_name $ai_name
         set ai_name $player_name
         set player_name $tmp_name
@@ -570,7 +570,7 @@ namespace eval tacgame {
     if {$player_name == ""} {set player_name {?}}
     set ai_name "Phalanx $::tacgame::level ELO"
 
-    if { [::board::isFlipped .main.board] } {
+    if { [::board::isFlipped] } {
       sc_game tags set -white $ai_name
       sc_game tags set -black $player_name
     } else  {

@@ -378,7 +378,7 @@ namespace eval sergame {
       sc_game tags set -event "UCI Game"
       set player_name [getMyPlayerName]
       if {$player_name == ""} {set player_name {?}}
-      if { [::board::isFlipped .main.board] } {
+      if { [::board::isFlipped] } {
         sc_game tags set -white "$::sergame::engineName"
 	sc_game tags set -black $player_name
       } else  {

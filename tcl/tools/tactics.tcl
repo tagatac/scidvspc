@@ -465,7 +465,7 @@ namespace eval tactics {
   # flips the board if necessary so the side to move is at the bottom
   ################################################################################
   proc sideToMoveAtBottom {} {
-    if { [sc_pos side] == "white" && [::board::isFlipped .main.board] || [sc_pos side] == "black" &&  ![::board::isFlipped .main.board] } {
+    if { [sc_pos side] == "white" && [::board::isFlipped] || [sc_pos side] == "black" &&  ![::board::isFlipped] } {
       toggleRotateBoard
     }
   }
@@ -476,8 +476,8 @@ namespace eval tactics {
 
   # We should probably disable "flip board" button, as it breaks game
   proc isPlayerTurn {} {
-    if { [sc_pos side] == "white" &&  ![::board::isFlipped .main.board] || \
-         [sc_pos side] == "black" &&  [::board::isFlipped .main.board] } {
+    if { [sc_pos side] == "white" &&  ![::board::isFlipped] || \
+         [sc_pos side] == "black" &&  [::board::isFlipped] } {
       return 1
     } else {
       return 0
@@ -510,8 +510,8 @@ namespace eval tactics {
     updateMenuStates
     updateTitle
     updateStatusBar
-    if { [sc_pos side] == "white" && [::board::isFlipped .main.board] \
-      || [sc_pos side] == "black" &&  ![::board::isFlipped .main.board] } {
+    if { [sc_pos side] == "white" && [::board::isFlipped] \
+      || [sc_pos side] == "black" &&  ![::board::isFlipped] } {
       ::board::flip .main.board
     }
     updateBoard -pgn

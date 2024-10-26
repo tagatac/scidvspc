@@ -555,8 +555,8 @@ proc compNM {n m k name1 name2} {
   }
   if {$comp(type) == "First plays others"} {
     # Show games from first players view
-    if {( $n == $comp(firstN) &&  [::board::isFlipped .main.board] ) || \
-	( $m == $comp(firstN) && ![::board::isFlipped .main.board] ) } {
+    if {( $n == $comp(firstN) &&  [::board::isFlipped] ) || \
+	( $m == $comp(firstN) && ![::board::isFlipped] ) } {
       ::board::flip .main.board
     }
   }

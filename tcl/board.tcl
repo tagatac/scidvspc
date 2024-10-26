@@ -2518,7 +2518,7 @@ proc ::board::update {w {board ""} {animate 0} {resize 0}} {
   }
 }
 
-proc ::board::isFlipped {w} {
+proc ::board::isFlipped {{w .main.board}} {
   return $::board::_flip($w)
 }
 
@@ -2526,7 +2526,7 @@ proc ::board::isFlipped {w} {
 
 proc ::board::opponentColor {} {
   # Engine always plays for the upper side
-  if {[::board::isFlipped .main.board]} {
+  if {[::board::isFlipped]} {
     return white
   } else  {
     return black

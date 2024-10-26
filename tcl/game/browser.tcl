@@ -48,7 +48,7 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
 
     pack [frame $w.b] -side bottom -fill x
 
-    ::board::new $w.bd $::gbrowser::size 1 [::board::isFlipped .main.board]
+    ::board::new $w.bd $::gbrowser::size 1 [::board::isFlipped]
     # $w.bd configure -relief solid -borderwidth 1
     pack $w.bd -side left -padx 4 -pady 4
 

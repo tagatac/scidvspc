@@ -225,7 +225,7 @@ proc ::tb::Open {} {
   ### Board
 
   ::board::new $f.board 25
-  if {[::board::isFlipped .main.board]} {
+  if {[::board::isFlipped]} {
     ::board::flip  $f.board
   }
   $f.board configure -relief solid -borderwidth 1

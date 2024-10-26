@@ -97,7 +97,7 @@ rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 proc copyGame {} {
   catch {sc_clipbase copy}
-  set ::glistFlipped([sc_info clipbase]) [::board::isFlipped .main.board] 
+  set ::glistFlipped([sc_info clipbase]) [::board::isFlipped] 
   # is updateBoard needed ?
   updateBoard
   ::windows::switcher::Refresh
@@ -106,7 +106,7 @@ proc copyGame {} {
 
 proc pasteGame {} {
   sc_clipbase paste
-  if {$::glistFlipped([sc_info clipbase]) != [::board::isFlipped .main.board]} { 
+  if {$::glistFlipped([sc_info clipbase]) != [::board::isFlipped]} { 
     ::board::flip .main.board
   } 
   updateBoard -pgn
@@ -505,7 +505,7 @@ proc setupBoard {} {
   }
   ::board::coords $sbd
 
-  if { [::board::isFlipped .main.board] } {
+  if { [::board::isFlipped] } {
      ::board::flip $sbd
   }
 

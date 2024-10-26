@@ -602,7 +602,7 @@ proc exportGames {selection exportType {fName {}}} {
   }
   # nasty hack to notify latex export the board should be flipped
   if {$exportType == "Latex"} {
-    set exportFlags(scidFlags) [::board::isFlipped .main.board]
+    set exportFlags(scidFlags) [::board::isFlipped]
   }
 # tk_messageBox -title "Debug" -type ok -icon error -message "Export Type $exportType" 
   busyCursor .

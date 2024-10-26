@@ -234,7 +234,7 @@ proc ::commenteditor::Open {} {
   ### A small board
 
   set board [::board::new $insertBoard.board 35]
-  if {[::board::isFlipped .main.board]} {
+  if {[::board::isFlipped]} {
     ::board::flip  $insertBoard.board
   }
   ::board::showMarks $board 1

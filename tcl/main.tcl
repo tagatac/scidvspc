@@ -1209,7 +1209,7 @@ proc mapPhotos {} {
     .main.photoW configure -image photoW -anchor ne
     place .main.photoW -in .main.gameInfo -x -$distance -y 0 -rely 0.0 -relx 1.0 -relheight 1 -anchor ne
   } else  {
-    if {[::board::isFlipped .main.board]} {
+    if {[::board::isFlipped]} {
       .main.photoB configure -image photoW2 -anchor ne
       .main.photoW configure -image photoB2 -anchor ne
     } else {

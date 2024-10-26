@@ -1186,7 +1186,7 @@ namespace eval fics {
       } else {
         set ::fics::timecontrol {}
       }
-      if { [::board::isFlipped .main.board] } {
+      if { [::board::isFlipped] } {
         if { [ string match -nocase $white $::fics::reallogin ] } { ::board::flip .main.board }
       } else {
         if { [ string match -nocase $black $::fics::reallogin ] } { ::board::flip .main.board }
@@ -1623,7 +1623,7 @@ namespace eval fics {
 	  ### If we're already observing a game, move it back to a small board
 	  ::fics::demote_mainGame 
           # unflip when loading new game ??
-	  if {\[::board::isFlipped .main.board\] ^ \[::board::isFlipped $w.bottom.game$game.bd\]} {::board::flip .main.board}
+	  if {\[::board::isFlipped\] ^ \[::board::isFlipped $w.bottom.game$game.bd\]} {::board::flip .main.board}
 
 	  ### Restarting observe ensures we get a parseStyle12 line straight away
 	  ::fics::unobserveGame $game
