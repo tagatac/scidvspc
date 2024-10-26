@@ -2581,8 +2581,13 @@ proc ::board::flip {w {newstate -1}} {
   }
   ::board::ficslabels $w
 
-  if {$w == ".main.board" && [winfo exists .commentWin.markFrame.insertBoard.board]} {
-    ::board::flip .commentWin.markFrame.insertBoard.board
+  if {$w == ".main.board"} {
+    if {[winfo exists .commentWin.markFrame.insertBoard.board]} {
+      ::board::flip .commentWin.markFrame.insertBoard.board
+    }
+    if {[winfo exists .tbWin.pos.board]} {
+      ::board::flip .tbWin.pos.board
+    }
   }
 }
 

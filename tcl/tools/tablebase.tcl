@@ -225,6 +225,9 @@ proc ::tb::Open {} {
   ### Board
 
   ::board::new $f.board 25
+  if {[::board::isFlipped .main.board]} {
+    ::board::flip  $f.board
+  }
   $f.board configure -relief solid -borderwidth 1
   if {$::tbBoard} {
     pack $f.board -side bottom -before $f.text -pady 3
