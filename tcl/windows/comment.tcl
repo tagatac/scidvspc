@@ -61,7 +61,16 @@ proc ::commenteditor::Open {} {
   # wm state $w withdrawn
 
   bind $w <F1> {helpWindow Comment}
-  bind $w <Escape> "destroy  $w"
+  bind $w <Escape> {
+    if {$::commenteditor::showBoard == 0} {
+       # Hide big board
+       set ::commenteditor::showBoard 1
+       ::commenteditor::toggleBoard
+    } else {
+      destroy  .commentWin
+    }
+  }
+
   bind $w <Destroy> ""
   bind $w <Configure> "recordWinSize $w"
   # standardShortcuts $w
