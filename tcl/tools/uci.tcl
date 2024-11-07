@@ -975,7 +975,7 @@ namespace eval uci {
       if {$oldpwd != ""} { catch {cd $oldpwd} }
       tk_messageBox -title "Error starting engine" -icon warning -type ok \
           -message "Unable to start the program:\n$analysisCommand:\n$result"
-      return
+      return 0
     }
 
     set analysis(pipe$n) $uciInfo(pipe$n)
@@ -993,6 +993,7 @@ namespace eval uci {
       update
       after 100
     }
+    return 1
   }
 
   ### ::uci::sendToEngine

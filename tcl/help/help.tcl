@@ -4546,7 +4546,7 @@ limited the coach is allowed to think in the background.</i></p>
   <b>Opening Books</b> and <b>Specific Openings</b> to follow can also be selected.
   </p>
   <p><i>
-  It is now possible to play (or train with) any opening found in the ECO window,  using the "Import ECO" button.
+  It is now possible to play (or train with) any opening found in the <a ECO Browser>ECO Window</a>. With this window open at the desired line, select the "Import ECO" button.
   </i></p>
   <p>
   Other configuration items are straight forward except:

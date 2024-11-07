@@ -300,9 +300,7 @@ namespace eval sergame {
       set ::sergame::fixednodes [.configSerGameWin.ftime.nodesvalue get]
       set ::sergame::movetime [.configSerGameWin.ftime.movetimevalue get]
       
-      destroy .configSerGameWin
       ::sergame::play $n
-      focus .main
     }
     bind $w.fengines.fEnginesList.lbEngines <Double-Button-1> "$w.fbuttons.play invoke"
 
@@ -331,7 +329,9 @@ namespace eval sergame {
     set ::lFen {}
     set ::drawShown 0
 
-    ::uci::startSilentEngine $n
+    if {![::uci::startSilentEngine $n]} {
+      return 0
+    }
     ::uci::sendUCIoptions $n 1
 
     set ::uci::uciInfo(prevscore$n) 0.0
@@ -493,6 +493,10 @@ namespace eval sergame {
     set ::sergame::wentOutOfBook 0
     if {$::sergame::useBook} {
       set ::sergame::bookMovesLeft [::book::getMove $::sergame::bookToUse $::sergame::bookSlot all]
+    }
+    if {[winfo exists .configSerGameWin]} {
+      destroy .configSerGameWin
+      focus .main
     }
     ::sergame::engineGo
   }
