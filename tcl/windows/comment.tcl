@@ -571,6 +571,7 @@ proc ::commenteditor::Refresh {} {
   set offset  0
   ::board::mark::clear $board
   $text delete 1.0 end
+if {$comment != {}} {
   foreach {mark pos duplicate} [::board::mark::getEmbeddedCmds $comment] {
     foreach {type square arg color} $mark {begin end} $pos {break}  ;# set
     set square [::board::sq $square]
@@ -591,6 +592,7 @@ proc ::commenteditor::Refresh {} {
   }
   $text insert insert [string range $comment $offset end]
   $text mark set insert 1.0 ; # Set cursor to the top
+}
 
   .commentWin.cf.text configure -undo 1
   if { $::commenteditor::showBoard == 0} {

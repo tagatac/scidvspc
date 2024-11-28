@@ -1695,17 +1695,12 @@ proc scoreToNag {score} {
   }
 }
 
-################################################################################
-#
-################################################################################
 proc pushAnalysisData {lastVar n} {
   global analysis stack
   lappend stack [list $analysis(prevscore$n) $analysis(score$n) \
       $analysis(prevmoves$n) $analysis(moves$n) $lastVar ]
 }
-################################################################################
-#
-################################################################################
+
 proc popAnalysisData {n} {
   global analysis stack
   # the start of analysis is in the middle of a variation

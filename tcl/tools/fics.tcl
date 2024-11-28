@@ -1191,8 +1191,8 @@ namespace eval fics {
       } else {
         if { [ string match -nocase $black $::fics::reallogin ] } { ::board::flip .main.board }
       }
-      updateBoard -pgn -animate
       wm title $::dot_w "$::scidName: $white - $black ($::fics::timecontrol)"
+      updateBoard -pgn -animate
 
       if {$::fics::sound} {
 	::utils::sound::PlayMove sound_start
@@ -1220,6 +1220,7 @@ namespace eval fics {
 
     if {[string match "\{Game *" $line]} {
       if {[string match {* Creating *} $line]} {
+        # why scan local vars then return ? S.A
 	scan $line "\{Game %d %s" num tmp
         return
       }
