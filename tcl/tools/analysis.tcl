@@ -431,7 +431,7 @@ proc ::enginelist::choose {} {
   label $w.buttons2.logengines        -textvar tr(LogEngines)
   entry $w.buttons2.logmax            -textvar analysis(logMax) -width 6
   label $w.buttons2.ply               -textvar tr(MaxPly)
-  spinbox $w.buttons2.maxply -width 4 -textvar analysis(maxPly) -from 0 -to 20 -increment 1
+  spinbox $w.buttons2.maxply -width 4 -textvar analysis(maxPly) -from 0 -to 50 -increment 1
   checkbutton $w.buttons2.wrap   -text [tr GInfoWrap] -variable analysis(wrapPV)
   dialogbutton $w.buttons2.start -textvar tr(Start) -command {
     makeAnalysisWin [lindex [.enginelist.list.list curselection] 0] settime
@@ -938,7 +938,7 @@ proc initAnnotation {n} {
 
     frame $w.depth 
     label $w.depth.label -textvar tr(DepthPerMove) -width 22
-    spinbox $w.depth.spDepth -width 4 -textvar annotate(WantedDepth) -from 10 -to 30 -increment 1
+    spinbox $w.depth.spDepth -width 4 -textvar annotate(WantedDepth) -from 10 -to 100 -increment 1
 
     pack $w.depth -side top -pady 3 
     pack $w.depth.label -side left
@@ -3660,6 +3660,8 @@ proc initAnalysisBoard {n} {
   if {![winfo exists $w.frame.bd]} {
     frame $w.frame
     ::board::new $w.frame.bd [expr {$analysis(boardSize) * 5 + 20}] 0 $::board::_flip(.main.board)
+    set ::board::_coords($w.frame.bd) $::boardCoords
+    ::board::coords $w.frame.bd
     button $w.frame.close -image arrow_close -font font_Small -relief flat -command "
       set analysis(showBoard$n) 0
       pack forget $w.frame
@@ -3715,6 +3717,8 @@ proc updateAnalysisBoard {n {moves {}}} {
   }
 
   set bd .analysisWin$n.frame.bd
+  set ::board::_coords($bd) $::boardCoords
+  ::board::coords $bd
   if {$::board::_flip($bd) != $::board::_flip(.main.board)} {
     ::board::flip $bd
   }

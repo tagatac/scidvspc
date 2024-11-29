@@ -1345,18 +1345,22 @@ proc ::board::new {w {psize 40} {showmat 0} {flip 0}} {
     $bd create rectangle $x1 $y1 $x2 $y2 -tag sq$i -outline ""
     ::board::colorSquare $w $i
   }
-
+  if {[string match .analysisWin* $w]} {
+    set font font_Small
+  } else {
+    set font font_Large
+  }
   # Set up coordinate labels:
   for {set i 1} {$i <= 8} {incr i} {
-    label $w.lrank$i -text [expr {9 - $i}] -font font_Large
+    label $w.lrank$i -text [expr {9 - $i}] -font $font
     grid $w.lrank$i -row $i -column 2 -sticky e
-    label $w.rrank$i -text [expr {9 - $i}] -font font_Large
+    label $w.rrank$i -text [expr {9 - $i}] -font $font
     grid $w.rrank$i -row $i -column 11 -sticky w
   }
   foreach i {1 2 3 4 5 6 7 8} file {a b c d e f g h} {
-    label $w.tfile$file -text $file -font font_Large
+    label $w.tfile$file -text $file -font $font
     grid $w.tfile$file -row 0 -column [expr $i + 2] -sticky s
-    label $w.bfile$file -text $file -font font_Large
+    label $w.bfile$file -text $file -font $font
     grid $w.bfile$file -row 9 -column [expr $i + 2] -sticky n
   }
 
@@ -2554,11 +2558,19 @@ proc ::board::flip {w {newstate -1}} {
   }
 
   # Change coordinate labels:
-  for {set i 1} {$i <= 8} {incr i} {
-    set value [expr {9 - [$w.lrank$i cget -text]} ]
-    $w.lrank$i configure -text $value
-    $w.rrank$i configure -text $value
+  if {$flip} {
+    for {set i 1} {$i <= 8} {incr i} {
+      $w.lrank$i configure -text $i
+      $w.rrank$i configure -text $i
+    }
+  } else {
+    for {set i 1} {$i <= 8} {incr i} {
+      set value [expr {9 - $i}]
+      $w.lrank$i configure -text $value
+      $w.rrank$i configure -text $value
+    }
   }
+
   if {$flip} {
     foreach file {a b c d e f g h} newvalue {h g f e d c b a} {
       $w.tfile$file configure -text $newvalue
@@ -2766,7 +2778,7 @@ proc ::board::stm {w} {
 }
 
 # Display/update coordinates around the edge of the board 
-# Currently only used by .main.board and setupBoard
+# Currently only used by .main.board and setupBoard and .analysisWin
 # Values are 0 (none), 1 (single sided coords), 2 (double sided)
 
 proc ::board::coords {w} {
