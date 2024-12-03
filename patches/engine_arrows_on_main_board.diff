@@ -1,0 +1,50 @@
+I'm not really into this idea, but a quick and dirty implementation of analysis arrows in the main board instead of mini board.
+Work needs to be done to fix the broken clickable arrows. S.A.
+Index: tcl/board.tcl
+===================================================================
+--- tcl/board.tcl	(revision 3485)
++++ tcl/board.tcl	(working copy)
+@@ -2021,7 +2021,8 @@
+   # main     board arrows come with varnum integer
+   # analysis board arrows come with varnum  m$MOVE, to allow for clickable moves
+ 
+-  if {[scan $varnum m%s uciMove] == 1} {set small 1} else {set small 0}
++  # if {[scan $varnum m%s uciMove] == 1} {set small 1} else {set small 0}
++set small [expr {$pathName != ".main.board.bd"}]
+ 
+   if {$from < 0  ||  $from > 63 || $to < 0 || $to   > 63} { return }
+ 
+Index: tcl/move.tcl
+===================================================================
+--- tcl/move.tcl	(revision 3483)
++++ tcl/move.tcl	(working copy)
+@@ -4,7 +4,7 @@
+ namespace eval ::move {}
+ 
+ proc ::move::drawVarArrows {} {
+-  if {! $::showVarArrows || $::autoplayMode} { return 0 }
++  if {! $::showVarArrows || $::analysis(boardShowsVar) || $::autoplayMode} { return 0 }
+   # if {[winfo exists .coachWin]} { return 0 }
+   # if {[winfo exists .serGameWin]} { return 0 }
+   
+Index: tcl/tools/analysis.tcl
+===================================================================
+--- tcl/tools/analysis.tcl	(revision 3485)
++++ tcl/tools/analysis.tcl	(working copy)
+@@ -3712,7 +3712,7 @@
+ proc updateAnalysisBoard {n {moves {}}} {
+   global analysis
+ 
+-  if {!$analysis(showBoard$n)} {
++  if {!$analysis(showBoard$n) && !$analysis(boardShowsVar$n)} {
+     return
+   }
+ 
+@@ -3757,6 +3757,7 @@
+     if {!$analysis(lockEngine$n)} {
+       ::board::update $bd [sc_pos board]
+     }
++set bd .main.board
+     $bd.bd delete var
+     set m [lindex $move 0]
+     if {$m != ""} {
