@@ -1771,7 +1771,7 @@ namespace eval fics {
         {Draw request sent*} { ::commenteditor::appendComment "$::fics::reallogin offers draw"
                           $t insert end "$line\n"
                         }
-	{->>tell *}	{ $t insert end "$line\n" tells }
+	{->>tell *} - {* whispers: *} - {* kibitzes: *} { $t insert end "$line\n" tells }
     	{->>*}		{ $t insert end "$line\n" command }
 
 	{*[A-Za-z]\(*\): *} { $t insert end "$line\n" channel }
@@ -2291,6 +2291,10 @@ namespace eval fics {
       if {[string match -nocase $white $::fics::reallogin] ||
           [string match -nocase $black $::fics::reallogin]} {
 	catch {::game::Save}
+      }
+
+      if {$::trialMode} {
+        setTrialMode 0 0
       }
 
       sc_game new
