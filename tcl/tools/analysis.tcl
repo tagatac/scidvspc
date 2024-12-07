@@ -106,8 +106,9 @@ proc resetEngine {n} {
   set analysis(logWait$n) 0
   set analysis(logUpdate$n) {}
   set analysis(seenWDL$n) 0
-  set analysis(mainPVVCount$n) 3      ;# how much of mainpv to show visually on analysis board
-  set analysis(mainPVLengthSeen$n) 0
+  set analysis(boardSeqCount$n) 3      ;# how much of mainpv to show visually on analysis board
+  set analysis(boardSeqLengthSeen$n) 0  ;# used to decide when to update the visualisation
+  set analysis(boardSeqDepthSeen$n) 0   ;# used to decide when to update the visualisation
 }
 
 resetEngines
@@ -2415,10 +2416,14 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   "
   ::utils::tooltip::Set $w.b.showboard $tr(ShowAnalysisBoard)
 
-  set analysis(mainPVVCount$n) 3
-  set analysis(mainPVLengthSeen$n) 0
-  spinbox $w.b.mainpvvcount -from 0 -to 8 -increment 1 -textvar analysis(mainPVVCount$n) -justify center \
-    -width 2 -font font_Small -command "changeMainPVVCount $n"
+  set analysis(boardSeqCount$n) 3
+  set analysis(boardSeqLengthSeen$n) 0
+  set analysis(boardSeqDepthSeen$n) 0
+  spinbox $w.b.mainpvvcount -from 0 -to 8 -increment 1 -textvar analysis(boardSeqCount$n) -justify center \
+    -width 2 -font font_Small -command "
+      set analysis(boardSeqLengthSeen$n) 0
+      set analysis(boardSeqDepthSeen$n) 0
+    "
   ::utils::tooltip::Set $w.b.mainpvvcount "MainPV visualisation length"
 
   button $w.b.exclude -image tb_exclude -command "excludeMovePopup $n" -relief $relief
@@ -2729,13 +2734,6 @@ proc toggleMovesDisplay {n} {
     updateAnalysisBoard $n
     $h configure -state disabled
   }
-}
-
-proc changeMainPVVCount { n } {
-
-  global analysis
-  set analysis(mainPVLengthSeen$n) 0
-
 }
 
 ################################################################################
@@ -3674,6 +3672,11 @@ proc initAnalysisBoard {n} {
   if {![winfo exists $w.frame.bd]} {
     frame $w.frame
     ::board::new $w.frame.bd [expr {$analysis(boardSize) * 5 + 20}] 0 $::board::_flip(.main.board)
+
+    # Hmmm - all boards have to have the same font size
+    set fontSize [expr ($analysis(boardSize) * 5 + 20)/2 - 2]
+    set analysis(boardSeqFont) "{courier 10 pitch} $fontSize"
+
     set ::board::_coords($w.frame.bd) $::boardCoords
     ::board::coords $w.frame.bd
     button $w.frame.close -image arrow_close -font font_Small -relief flat -command "
@@ -3729,12 +3732,13 @@ proc toggleEngineInfo {n} {
   updateAnalysisText $n
 }
 
-# C Hanish Menon
-proc boardVisualizeMoves {board n moves visCount colorLine colorNum colorNumShadow} {
-  set tbox [::board::mark::GetBox $board 0 0.8]
-  set tsize1 [expr int([lindex $tbox 4] * 0.5)]
-  set tsize2 [expr int([lindex $tbox 4] * 0.4)]
-  set tfont2 "{courier 10 pitch} $tsize2"
+
+### author C Hanish Menon, hacked by S.A.
+
+# Visualise up to visCount moves on the specified board
+
+proc boardVisualizeMoves {board n moves visCount} {
+  $board delete bvm
   set im 0
   foreach cm $moves {
     incr im
@@ -3742,14 +3746,19 @@ proc boardVisualizeMoves {board n moves visCount colorLine colorNum colorNumShad
       break
     }
     if {$cm != ""} {
+      # Get squares involved wrt the current move
       set sq_start [::board::sq [string range $cm 0 1]]
       set sq_end   [::board::sq [string range $cm 2 3]]
+
+      # Show an arrow between start and end squares
       set coord [::board::mark::GetArrowCoords $board $sq_start $sq_end $::board::arrowLength]
-      $board create line $coord -fill $colorLine -arrow last -width 1 -arrowshape {4 6 2} -tag var
+      $board create line $coord -fill $::engineLineColor -arrow last -width 1 -arrowshape {4 6 2} -tag bvm
+
+      # and the move number midway along the line
       set xmid [expr ([lindex $coord 0] + [lindex $coord 2]) / 2]
       set ymid [expr ([lindex $coord 1] + [lindex $coord 3]) / 2]
-      $board create text $xmid $ymid -fill black -tag var -font $tfont2 -text $im -anchor c
-      # $board raise var all
+      $board create text [expr $xmid+1] [expr $ymid+1] -fill [gradient $::engineLineColor -.5] -font $::analysis(boardSeqFont) -text $im -anchor c -tag bvm
+      $board create text $xmid          $ymid          -fill [gradient $::engineLineColor -.3] -font $::analysis(boardSeqFont) -text $im -anchor c -tag bvm
     }
   }
 }
@@ -3824,9 +3833,12 @@ proc updateAnalysisBoard {n {moves {}}} {
     } else {
       # Hanish's feature
       # Show some amount of the initial part of the Main PV using thin arrows
-      if {$analysis(uci$n) && [expr [llength $moves] > $analysis(mainPVLengthSeen$n)/2]} {
-	set analysis(mainPVLengthSeen$n) [llength $moves]
-	boardVisualizeMoves $bd.bd $n $moves $analysis(mainPVVCount$n) $::analMainPVLineColor $::analMainPVNumColor $::analMainPVNumColorShadow
+      if {$analysis(uci$n) && ([expr [llength $moves] > $analysis(boardSeqLengthSeen$n)/2] || [expr $analysis(depth$n) > ($analysis(boardSeqDepthSeen$n)+1)])} {
+        set analysis(boardSeqLengthSeen$n) [llength $moves]
+        set analysis(boardSeqDepthSeen$n) $analysis(depth$n)
+        boardVisualizeMoves $bd.bd $n $moves $analysis(boardSeqCount$n)
+      } else {
+        $bd.bd raise bvm
       }
     }
   } else {
