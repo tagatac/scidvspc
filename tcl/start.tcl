@@ -422,10 +422,13 @@ set analysis(wrapPV) 0
 set analysis(showBoard) 0
 set analysis(showEngineInfo) 0
 set analysis(boardSize) 2
-set analysis(boardShowsVar) 1
+set analysis(boardType) Arrows
 
 # Colors
 
+set analMainPVNumColor        #fe019a		;# used to identify relative move seq number in analysis board mainpv visualisation 39ff14
+set analMainPVNumColorShadow  #b0b0b0		;# used to identify relative move seq number in analysis board mainpv visualisation 39ff14
+set analMainPVLineColor       #606060		;# used to identify move seq lines in analysis board mainpv visualisation
 set lite        #f3f3f3
 set dark        #7389b6		;# dark and lite square colors
 set highcolor   #b0d0e0		;# color when something is selected

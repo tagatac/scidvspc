@@ -106,6 +106,8 @@ proc resetEngine {n} {
   set analysis(logWait$n) 0
   set analysis(logUpdate$n) {}
   set analysis(seenWDL$n) 0
+  set analysis(mainPVVCount$n) 3      ;# how much of mainpv to show visually on analysis board
+  set analysis(mainPVLengthSeen$n) 0
 }
 
 resetEngines
@@ -441,8 +443,7 @@ proc ::enginelist::choose {} {
   checkbutton $w.buttons3.showBoard -textvar tr(Board) -variable analysis(showBoard)
   label       $w.buttons3.sizeLabel     -text [tr OptionsFicsSize]
   spinbox     $w.buttons3.size -width 3 -textvar analysis(boardSize) -from 1 -to 5 -increment 1
-  checkbutton $w.buttons3.showVar -textvar tr(ShowArrows) -variable analysis(boardShowsVar) -command "
-    catch \{$w.frame.bd.bd delete var\}"
+  ttk::combobox $w.buttons3.showVar -width 10 -textvariable analysis(boardType)  -values {Arrows Sequential Position} -postcommand "catch \{$w.frame.bd.bd delete var\}"
   checkbutton $w.buttons3.lowpriority -variable analysis(lowPriority) -textvar tr(LowPriority)
   checkbutton $w.buttons3.logname     -variable analysis(logName) -textvar tr(LogName)
 
@@ -2344,7 +2345,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   standardShortcuts $w
 
   set analysis(showBoard$n) $analysis(showBoard)
-  set analysis(boardShowsVar$n) $analysis(boardShowsVar)
+  set analysis(boardType$n) $analysis(boardType)
 
   frame $w.b
   pack  $w.b -side top -fill x
@@ -2414,6 +2415,12 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   "
   ::utils::tooltip::Set $w.b.showboard $tr(ShowAnalysisBoard)
 
+  set analysis(mainPVVCount$n) 3
+  set analysis(mainPVLengthSeen$n) 0
+  spinbox $w.b.mainpvvcount -from 0 -to 8 -increment 1 -textvar analysis(mainPVVCount$n) -justify center \
+    -width 2 -font font_Small -command "changeMainPVVCount $n"
+  ::utils::tooltip::Set $w.b.mainpvvcount "MainPV visualisation length"
+
   button $w.b.exclude -image tb_exclude -command "excludeMovePopup $n" -relief $relief
   ::utils::tooltip::Set $w.b.exclude $tr(ExcludeMove)
   trace variable analysis(exclude$n) w "excludeToolTip $n"
@@ -2458,7 +2465,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   }
 
   pack $w.b.startStop $w.b.move $w.b.line $w.b.alllines \
-       $w.b.multipv $w.b.annotatebut $w.b.lockengine $w.b.showboard $w.b.exclude $w.b.priority $w.b.showinfo \
+       $w.b.multipv $w.b.annotatebut $w.b.lockengine $w.b.showboard $w.b.mainpvvcount $w.b.exclude $w.b.priority $w.b.showinfo \
        $w.b.update $w.b.finishGame -side left
   if {!$showAnnoButton} {
     pack forget $w.b.annotatebut
@@ -2722,6 +2729,13 @@ proc toggleMovesDisplay {n} {
     updateAnalysisBoard $n
     $h configure -state disabled
   }
+}
+
+proc changeMainPVVCount { n } {
+
+  global analysis
+  set analysis(mainPVLengthSeen$n) 0
+
 }
 
 ################################################################################
@@ -3668,9 +3682,9 @@ proc initAnalysisBoard {n} {
     "
     pack $w.frame.bd $w.frame.close -side left -anchor n
     bind $w.frame.bd.bd <Button-2> "
-      set analysis(boardShowsVar$n) \[expr \!\$analysis(boardShowsVar$n)\]
-      updateAnalysisBoard $n
-   "
+      $w.frame.bd.bd delete var
+      nextBoardType $n
+    "
   }
   if {$analysis(lockEngine$n)} {
     ::board::update $w.frame.bd $analysis(lockPos$n)
@@ -3694,6 +3708,14 @@ proc initAnalysisBoard {n} {
   }
 }
 
+proc nextBoardType {n} {
+      set list "Arrows Sequential Position"
+      set i [lsearch $list $::analysis(boardType$n)]
+      set i [expr ($i+1) % 3]
+      set ::analysis(boardType$n) [lindex $list $i]
+      updateAnalysisBoard $n
+}
+
 proc toggleEngineInfo {n} {
   global analysis
 
@@ -3705,6 +3727,31 @@ proc toggleEngineInfo {n} {
     pack forget .analysisWin$n.text
   }
   updateAnalysisText $n
+}
+
+# C Hanish Menon
+proc boardVisualizeMoves {board n moves visCount colorLine colorNum colorNumShadow} {
+  set tbox [::board::mark::GetBox $board 0 0.8]
+  set tsize1 [expr int([lindex $tbox 4] * 0.5)]
+  set tsize2 [expr int([lindex $tbox 4] * 0.4)]
+  set tfont2 "{courier 10 pitch} $tsize2"
+  set im 0
+  foreach cm $moves {
+    incr im
+    if {$im > $visCount} {
+      break
+    }
+    if {$cm != ""} {
+      set sq_start [::board::sq [string range $cm 0 1]]
+      set sq_end   [::board::sq [string range $cm 2 3]]
+      set coord [::board::mark::GetArrowCoords $board $sq_start $sq_end $::board::arrowLength]
+      $board create line $coord -fill $colorLine -arrow last -width 1 -arrowshape {4 6 2} -tag var
+      set xmid [expr ([lindex $coord 0] + [lindex $coord 2]) / 2]
+      set ymid [expr ([lindex $coord 1] + [lindex $coord 3]) / 2]
+      $board create text $xmid $ymid -fill black -tag var -font $tfont2 -text $im -anchor c
+      # $board raise var all
+    }
+  }
 }
 
 ### Update the small analysis board in the analysis window,
@@ -3723,11 +3770,12 @@ proc updateAnalysisBoard {n {moves {}}} {
     ::board::flip $bd
   }
 
-  # New feature to show arrows
-  if {$analysis(boardShowsVar$n)} {
+  if {$analysis(boardType$n) != "Position"} {
+    # Board type is Arrows or Sequential
     set offset 0
     set move [lindex $moves $offset]
     if {!$analysis(uci$n)} {
+      # TODO - S.A.
       # Xboard - skip non-moves matching *. (eg "4.", or "...")
       while {[string match *. $move]} {
         incr offset
@@ -3758,21 +3806,31 @@ proc updateAnalysisBoard {n {moves {}}} {
       ::board::update $bd [sc_pos board]
     }
     $bd.bd delete var
-    set m [lindex $move 0]
-    if {$m != ""} {
-      set sq_start [::board::sq [string range $m 0 1]]
-      set sq_end   [::board::sq [string range $m 2 3]]
-      ::board::mark::add $bd varComment$m $sq_start $sq_end $::engineLineColor
-
-    }
-    foreach m [lrange $move 1 end] {
+    if {$analysis(boardType$n) == "Arrows"} {
+      set m [lindex $move 0]
       if {$m != ""} {
-        set sq_start [::board::sq [string range $m 0 1]]
-        set sq_end   [::board::sq [string range $m 2 3]]
-        ::board::mark::add $bd varComment$m $sq_start $sq_end $::varcolor
+	set sq_start [::board::sq [string range $m 0 1]]
+	set sq_end   [::board::sq [string range $m 2 3]]
+	::board::mark::add $bd varComment$m $sq_start $sq_end $::engineLineColor
+
+      }
+      foreach m [lrange $move 1 end] {
+	if {$m != ""} {
+	  set sq_start [::board::sq [string range $m 0 1]]
+	  set sq_end   [::board::sq [string range $m 2 3]]
+	  ::board::mark::add $bd varComment$m $sq_start $sq_end $::varcolor
+	}
+      }
+    } else {
+      # Hanish's feature
+      # Show some amount of the initial part of the Main PV using thin arrows
+      if {$analysis(uci$n) && [expr [llength $moves] > $analysis(mainPVLengthSeen$n)/2]} {
+	set analysis(mainPVLengthSeen$n) [llength $moves]
+	boardVisualizeMoves $bd.bd $n $moves $analysis(mainPVVCount$n) $::analMainPVLineColor $::analMainPVNumColor $::analMainPVNumColorShadow
       }
     }
   } else {
+    # Board Type shows final position after PV
     if {$analysis(lockEngine$n)} {
       return
     }
@@ -3823,7 +3881,8 @@ proc sendPosToEngineUCI {n  {delay 0}} {
           }
           # $h insert 1.0 "[tr No] [tr Moves]"
 	  $h configure -state disabled
-	  if {$analysis(boardShowsVar$n)} {
+	  if {$analysis(boardType$n)!="Position"} {
+            # TODO check this ^^^^ if
 	    updateAnalysisBoard $n
 	  }
           return
