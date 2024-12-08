@@ -56,6 +56,19 @@ proc bindMouseWheel {win text} {
   }
 }
 
+# Resize a board with mousewheel
+
+proc bindMouseWheelBoard {win board} {
+  if {$::windowsOS || $::macOS} {
+    # TODO
+    # bind $win <Control-Shift-MouseWheel> {break}
+    # bind $win <Control-MouseWheel> "$text yview scroll \[expr -(%D / 120)\] units"
+  } else {
+    bind $win <Control-Button-4> "::board::resize $board +1 ; break"
+    bind $win <Control-Button-5> "::board::resize $board -1 ; break"
+  }
+}
+
 # dialogbuttonframe:
 #   Creates a frame that will be shown at the bottom of a
 #   dialog window. It takes two parameters: the frame widget

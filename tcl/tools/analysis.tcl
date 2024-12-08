@@ -444,7 +444,8 @@ proc ::enginelist::choose {} {
   checkbutton $w.buttons3.showBoard -textvar tr(Board) -variable analysis(showBoard)
   label       $w.buttons3.sizeLabel     -text [tr OptionsFicsSize]
   spinbox     $w.buttons3.size -width 3 -textvar analysis(boardSize) -from 1 -to 5 -increment 1
-  ttk::combobox $w.buttons3.showVar -width 10 -textvariable analysis(boardType)  -values {Arrows Sequential Position} -postcommand "catch \{$w.frame.bd.bd delete var\}"
+  ttk::combobox $w.buttons3.showVar -width 10 -textvariable analysis(boardType)  -values {Arrows Sequential Position} \
+                 -postcommand "catch \{$w.frame.bd.bd delete var bvm\}"
   checkbutton $w.buttons3.lowpriority -variable analysis(lowPriority) -textvar tr(LowPriority)
   checkbutton $w.buttons3.logname     -variable analysis(logName) -textvar tr(LogName)
 
@@ -2541,7 +2542,14 @@ proc makeAnalysisWin {{n 0} {options {}}} {
       by moving backward or forward or making a new move.)"
   $w.text configure -state disabled
   bind $w <Destroy> "destroyAnalysisWin $n %W"
-  bind $w <Escape> "focus .main ; destroy $w"
+  bind $w <Escape> "
+    if \{\$::analysis(showBoard$n)\} \{
+       $w.frame.close invoke
+    \} else \{
+       focus .main ; destroy $w
+    \}
+  "
+
   bind $w <Return>   "addAnalysisMove $n"
   bind $w <KP_Enter> "addAnalysisMove $n"
   bind $w <Control-Return>   "addAnalysisVariation $n"
@@ -2553,7 +2561,8 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   }
   wm minsize $w 25 0
   bindMouseWheel $w $w.hist.text
-  bindWheeltoFixed $w
+  bindWheeltoFixed $w.hist.text
+  bindMouseWheelBoard $w $w.frame.bd
 
   if {$analysis(uci$n)} {
     fileevent $analysis(pipe$n) readable "::uci::processAnalysisInput $n"
@@ -3595,6 +3604,7 @@ proc updateAnalysisText {n} {
     if {$pos == 1.0} {
       $h yview moveto 1
     }
+    updateAnalysisBoard $n $analysis(moves$n)
   } else {
   }
 
@@ -3604,8 +3614,6 @@ proc updateAnalysisText {n} {
     $t insert end [::trans $moves] blue
   }
   $t configure -state disabled
-
-  updateAnalysisBoard $n $analysis(moves$n)
 }
 
 
@@ -3685,7 +3693,7 @@ proc initAnalysisBoard {n} {
     "
     pack $w.frame.bd $w.frame.close -side left -anchor n
     bind $w.frame.bd.bd <Button-2> "
-      $w.frame.bd.bd delete var
+      $w.frame.bd.bd delete var bvm
       nextBoardType $n
     "
   }
@@ -3752,13 +3760,17 @@ proc boardVisualizeMoves {board n moves visCount} {
 
       # Show an arrow between start and end squares
       set coord [::board::mark::GetArrowCoords $board $sq_start $sq_end $::board::arrowLength]
-      $board create line $coord -fill $::engineLineColor -arrow last -width 1 -arrowshape {4 6 2} -tag bvm
+      $board create line $coord -fill $::engineLineColor -arrow last -width 2 -arrowshape {4 7 3} -tag bvm
 
       # and the move number midway along the line
+
+      # Get text widget fg color in case we are using a custom foreground S.A.
+      set numColor [.analysisWin$n.hist.text cget -foreground]
+
       set xmid [expr ([lindex $coord 0] + [lindex $coord 2]) / 2]
       set ymid [expr ([lindex $coord 1] + [lindex $coord 3]) / 2]
-      $board create text [expr $xmid+1] [expr $ymid+1] -fill [gradient $::engineLineColor -.5] -font $::analysis(boardSeqFont) -text $im -anchor c -tag bvm
-      $board create text $xmid          $ymid          -fill [gradient $::engineLineColor -.3] -font $::analysis(boardSeqFont) -text $im -anchor c -tag bvm
+      # $board create text [expr $xmid+1] [expr $ymid+1] -fill [gradient $::engineLineColor -.5] -font $::analysis(boardSeqFont) -text $im -anchor c -tag bvm
+      $board create text $xmid          $ymid            -fill $numColor -font $::analysis(boardSeqFont) -text $im -anchor c -tag bvm
     }
   }
 }
@@ -3832,13 +3844,21 @@ proc updateAnalysisBoard {n {moves {}}} {
       }
     } else {
       # Hanish's feature
-      # Show some amount of the initial part of the Main PV using thin arrows
-      if {$analysis(uci$n) && ([expr [llength $moves] > $analysis(boardSeqLengthSeen$n)/2] || [expr $analysis(depth$n) > ($analysis(boardSeqDepthSeen$n)+1)])} {
-        set analysis(boardSeqLengthSeen$n) [llength $moves]
-        set analysis(boardSeqDepthSeen$n) $analysis(depth$n)
-        boardVisualizeMoves $bd.bd $n $moves $analysis(boardSeqCount$n)
+      if {[sc_pos moves] == {}} {
+	set analysis(boardSeqLengthSeen$n) 0
+	set analysis(boardSeqDepthSeen$n) 0 
       } else {
-        $bd.bd raise bvm
+        # Show some amount of the initial part of the Main PV using thin arrows
+	if {$analysis(uci$n) && 
+	    ([llength $moves] > $analysis(boardSeqLengthSeen$n)/2 || 
+	    $analysis(depth$n) > ($analysis(boardSeqDepthSeen$n)+1) ||
+	    $analysis(scoremate$n) != "")} {
+	  set analysis(boardSeqLengthSeen$n) [llength $moves]
+	  set analysis(boardSeqDepthSeen$n) $analysis(depth$n)
+	  boardVisualizeMoves $bd.bd $n $moves $analysis(boardSeqCount$n)
+	} else {
+	  $bd.bd raise bvm
+	}
       }
     }
   } else {

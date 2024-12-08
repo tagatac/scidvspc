@@ -262,6 +262,8 @@ proc ::commenteditor::Open {} {
         [list InsertMark $board [expr {$square + 64}]]]
   }
   standardWheelMouseBindings $insertBoard.board.bd
+  bindMouseWheelBoard .commentWin $insertBoard.board
+
 
   ### Type/Shape (pseudo-radio)buttons
 
