@@ -60,9 +60,8 @@ proc bindMouseWheel {win text} {
 
 proc bindMouseWheelBoard {win board} {
   if {$::windowsOS || $::macOS} {
-    # TODO
-    # bind $win <Control-Shift-MouseWheel> {break}
-    # bind $win <Control-MouseWheel> "$text yview scroll \[expr -(%D / 120)\] units"
+    bind $win <Control-Shift-MouseWheel> {break}
+    bind $win <Control-MouseWheel> "::board::resize $board \[expr \{%D>0 ? 1 : -1\}\] ; break"
   } else {
     bind $win <Control-Button-4> "::board::resize $board +1 ; break"
     bind $win <Control-Button-5> "::board::resize $board -1 ; break"

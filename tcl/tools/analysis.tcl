@@ -444,8 +444,8 @@ proc ::enginelist::choose {} {
   checkbutton $w.buttons3.showBoard -textvar tr(Board) -variable analysis(showBoard)
   label       $w.buttons3.sizeLabel     -text [tr OptionsFicsSize]
   spinbox     $w.buttons3.size -width 3 -textvar analysis(boardSize) -from 1 -to 5 -increment 1
-  ttk::combobox $w.buttons3.showVar -width 10 -textvariable analysis(boardType)  -values {Arrows Sequential Position} \
-                 -postcommand "catch \{$w.frame.bd.bd delete var bvm\}"
+  ttk::combobox $w.buttons3.showVar -width 8 -textvariable analysis(boardType) -state readonly \
+      -values {Arrows Sequential Position} -postcommand "catch \{$w.frame.bd.bd delete var bvm\}"
   checkbutton $w.buttons3.lowpriority -variable analysis(lowPriority) -textvar tr(LowPriority)
   checkbutton $w.buttons3.logname     -variable analysis(logName) -textvar tr(LogName)
 
@@ -3683,7 +3683,7 @@ proc initAnalysisBoard {n} {
 
     # Hmmm - all boards have to have the same font size
     set fontSize [expr ($analysis(boardSize) * 5 + 20)/2 - 2]
-    set analysis(boardSeqFont) "{courier 10 pitch} $fontSize"
+    set analysis(boardSeqFont) "{courier 10 pitch} $fontSize bold"
 
     set ::board::_coords($w.frame.bd) $::boardCoords
     ::board::coords $w.frame.bd
@@ -3720,7 +3720,7 @@ proc initAnalysisBoard {n} {
 }
 
 proc nextBoardType {n} {
-      set list "Arrows Sequential Position"
+      set list {Arrows Sequential Position}
       set i [lsearch $list $::analysis(boardType$n)]
       set i [expr ($i+1) % 3]
       set ::analysis(boardType$n) [lindex $list $i]
@@ -3743,14 +3743,21 @@ proc toggleEngineInfo {n} {
 
 ### author C Hanish Menon, hacked by S.A.
 
-# Visualise up to visCount moves on the specified board
+# Visualise moves sequence on a board
 
-proc boardVisualizeMoves {board n moves visCount} {
+# Get text widget fg color in case we are using a custom foreground S.A.
+if {![info exists analysis(boardSeqNumColor]} {
+  set analysis(boardSeqNumColor) [.splash.t cget -foreground]
+}
+
+proc boardVisualizeMoves {board n moves} {
+  global analysis
+
   $board delete bvm
   set im 0
   foreach cm $moves {
     incr im
-    if {$im > $visCount} {
+    if {$im > $analysis(boardSeqCount$n)} {
       break
     }
     if {$cm != ""} {
@@ -3759,18 +3766,15 @@ proc boardVisualizeMoves {board n moves visCount} {
       set sq_end   [::board::sq [string range $cm 2 3]]
 
       # Show an arrow between start and end squares
-      set coord [::board::mark::GetArrowCoords $board $sq_start $sq_end $::board::arrowLength]
+      set coord [::board::mark::GetArrowCoords $board $sq_start $sq_end [expr $::board::arrowLength*0.33]]
       $board create line $coord -fill $::engineLineColor -arrow last -width 2 -arrowshape {4 7 3} -tag bvm
 
       # and the move number midway along the line
 
-      # Get text widget fg color in case we are using a custom foreground S.A.
-      set numColor [.analysisWin$n.hist.text cget -foreground]
-
       set xmid [expr ([lindex $coord 0] + [lindex $coord 2]) / 2]
       set ymid [expr ([lindex $coord 1] + [lindex $coord 3]) / 2]
-      # $board create text [expr $xmid+1] [expr $ymid+1] -fill [gradient $::engineLineColor -.5] -font $::analysis(boardSeqFont) -text $im -anchor c -tag bvm
-      $board create text $xmid          $ymid            -fill $numColor -font $::analysis(boardSeqFont) -text $im -anchor c -tag bvm
+      # $board create text [expr $xmid+1] [expr $ymid+1] -fill [gradient $analysis(boardSeqNumColor) -.5] -font $analysis(boardSeqFont) -text $im -anchor c -tag bvm
+      $board create text $xmid $ymid -fill $analysis(boardSeqNumColor) -font $analysis(boardSeqFont) -text $im -anchor c -tag bvm
     }
   }
 }
@@ -3855,7 +3859,7 @@ proc updateAnalysisBoard {n {moves {}}} {
 	    $analysis(scoremate$n) != "")} {
 	  set analysis(boardSeqLengthSeen$n) [llength $moves]
 	  set analysis(boardSeqDepthSeen$n) $analysis(depth$n)
-	  boardVisualizeMoves $bd.bd $n $moves $analysis(boardSeqCount$n)
+	  boardVisualizeMoves $bd.bd $n $moves
 	} else {
 	  $bd.bd raise bvm
 	}
