@@ -3745,11 +3745,6 @@ proc toggleEngineInfo {n} {
 
 # Visualise moves sequence on a board
 
-# Get text widget fg color in case we are using a custom foreground S.A.
-if {![info exists analysis(boardSeqNumColor]} {
-  set analysis(boardSeqNumColor) [.splash.t cget -foreground]
-}
-
 proc boardVisualizeMoves {board n moves} {
   global analysis
 
@@ -3856,7 +3851,7 @@ proc updateAnalysisBoard {n {moves {}}} {
 	if {$analysis(uci$n) && 
 	    ([llength $moves] > $analysis(boardSeqLengthSeen$n)/2 || 
 	    $analysis(depth$n) > ($analysis(boardSeqDepthSeen$n)+1) ||
-	    $analysis(scoremate$n) != "")} {
+	    $analysis(scoremate$n) != 0)} {
 	  set analysis(boardSeqLengthSeen$n) [llength $moves]
 	  set analysis(boardSeqDepthSeen$n) $analysis(depth$n)
 	  boardVisualizeMoves $bd.bd $n $moves
