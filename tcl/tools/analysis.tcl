@@ -106,7 +106,6 @@ proc resetEngine {n} {
   set analysis(logWait$n) 0
   set analysis(logUpdate$n) {}
   set analysis(seenWDL$n) 0
-  set analysis(boardSeqCount$n) 3      ;# how much of mainpv to show visually on analysis board
   set analysis(boardSeqLengthSeen$n) 0  ;# used to decide when to update the visualisation
   set analysis(boardSeqDepthSeen$n) 0   ;# used to decide when to update the visualisation
 }
@@ -1175,7 +1174,7 @@ proc okAnnotation {n} {
   }
 
   resetAnalysis $n
-
+  catch {.analysisWin$n.frame.bd.bd delete var bvm}
   set ::useAnalysisBookName [$w.usebook.comboBooks get]
   set ::book::lastBook1 $::useAnalysisBookName
   set ::prevNag {}
@@ -2417,16 +2416,6 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   "
   ::utils::tooltip::Set $w.b.showboard $tr(ShowAnalysisBoard)
 
-  set analysis(boardSeqCount$n) 3
-  set analysis(boardSeqLengthSeen$n) 0
-  set analysis(boardSeqDepthSeen$n) 0
-  spinbox $w.b.mainpvvcount -from 0 -to 8 -increment 1 -textvar analysis(boardSeqCount$n) -justify center \
-    -width 2 -font font_Small -command "
-      set analysis(boardSeqLengthSeen$n) 0
-      set analysis(boardSeqDepthSeen$n) 0
-    "
-  ::utils::tooltip::Set $w.b.mainpvvcount "MainPV visualisation length"
-
   button $w.b.exclude -image tb_exclude -command "excludeMovePopup $n" -relief $relief
   ::utils::tooltip::Set $w.b.exclude $tr(ExcludeMove)
   trace variable analysis(exclude$n) w "excludeToolTip $n"
@@ -2455,6 +2444,14 @@ proc makeAnalysisWin {{n 0} {options {}}} {
     # $w.b.finishGame configure -state disabled
   }
 
+  set analysis(boardSeqCount$n) 3
+  spinbox $w.b.seqCount -from 1 -to 8 -increment 1 -textvar analysis(boardSeqCount$n) -justify center \
+    -width 2 -font font_Small -command "
+      set analysis(boardSeqLengthSeen$n) 0
+      set analysis(boardSeqDepthSeen$n) 0
+    "
+  ::utils::tooltip::Set $w.b.seqCount "MainPV visualisation length"
+
   checkbutton $w.b.training -image tb_training  -indicatoron false -width 32 -height 32 \
     -command "toggleAutomove $n" -variable analysis(automove$n) -relief $relief
   ::utils::tooltip::Set $w.b.training $tr(Training)
@@ -2471,12 +2468,14 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   }
 
   pack $w.b.startStop $w.b.move $w.b.line $w.b.alllines \
-       $w.b.multipv $w.b.annotatebut $w.b.lockengine $w.b.showboard $w.b.mainpvvcount $w.b.exclude $w.b.priority $w.b.showinfo \
-       $w.b.update $w.b.finishGame -side left
+       $w.b.multipv $w.b.annotatebut $w.b.lockengine $w.b.showboard $w.b.exclude $w.b.priority $w.b.showinfo \
+       $w.b.update $w.b.finishGame $w.b.seqCount -side left
   if {!$showAnnoButton} {
     pack forget $w.b.annotatebut
   }
-  pack $w.b.multipv -fill y -pady 2
+  pack $w.b.multipv $w.b.seqCount -fill y -pady 2
+  $w.b.multipv configure -state readonly
+  $w.b.seqCount configure -state readonly
 
   if {$n == 1 || $n == 2} {
     # training only works with engines 1 and 2
@@ -2491,7 +2490,6 @@ proc makeAnalysisWin {{n 0} {options {}}} {
 
   # pack  $w.b.showinfo 
   if {$analysis(uci$n)} {
-    $w.b.multipv configure -state readonly
     pack forget $w.b.update
     $w.b.update  configure -state disabled
     text $w.text -height 2 -font font_Small -wrap none
@@ -3777,9 +3775,9 @@ proc boardVisualizeMoves {board n moves} {
 ### Update the small analysis board in the analysis window,
 
 proc updateAnalysisBoard {n {moves {}}} {
-  global analysis
+  global analysis annotate
 
-  if {!$analysis(showBoard$n)} {
+  if {!$analysis(showBoard$n) || $annotate(Engine) > -1} {
     return
   }
 

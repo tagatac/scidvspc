@@ -2760,7 +2760,7 @@ making for easier <a Analysis Debugging>Debugging</a>.
   <p>Starting them can be done in various ways
   By <run ::startAnalysisWin F2><green>pressing F2</green></run>
   , F3 or F4 from the Configuration Widget, or via the <b>Tools--<gt>Start Engine</b> menu.
-  Additionally, Engine 1 can be start/stopped by <b>double-clicking the status-bar</b>.
+  Additionally, the second listed engine can be start/stopped by <b>double-clicking the status-bar</b>.
   Right-clicking the status-bar will dock/undock the engine,
   which, when running docked, will run at low CPU priority.<p>
 
@@ -2796,7 +2796,7 @@ making for easier <a Analysis Debugging>Debugging</a>.
   Hover cursor over this button to see stats for locked game.
   After a while, to add this analysis to game, return to the locked position, 
   press Pause, Unlock, and Add Variation.</li>
-  <li> <button tb_coords 32> <b>Show Board</b> displays a small working board with clickable arrows.
+  <li> <button tb_coords 32> <b>Show Board</b> displays a small <a Analysis Board>analysis board</a>.
   If engine is locked the board displays the locked position, otherwise middle-click toggles between display modes.</li>
   <li> <button tb_exclude 32> <b>Exclude Move(s)</b> helps refine the engine's search list (mainly UCI engines only). Hovering mouse shows the current excluded moves.</li>
   <li> <button tb_cpu 32> <b>Low CPU priority</b> 
@@ -2847,7 +2847,18 @@ with the format "stat01: time nodes ply mvleft mvtot mvname". The results can be
   engines hash, and the current CPU load.
   </p>
 
-  <h1>Features</h1>
+  <h3><name Board>Analysis Board</h3>
+
+  <p>Clicking <button tb_coords 32> will toggle a small board which can take on three modes, Arrows, Sequential and Position.
+The default mode and size are set in the <a Analysis List>Engine Configuration</a> window, and can also be toggled by pressing the middle mouse button.
+Pressing control-wheelmouse can resize this board.
+</p><p>
+<br><b>Position</b> is the original mode. It displays the board's position after the engines line has been played.
+<br><b>Arrows</b> will display clickable arrows for the engine's move, or multiple arrows if PV is enabled.
+<br><b>Sequential</b> will show the line as a numbered sequence of small (unclickable) arrows. The length of moves shown is by default 3 but can be changed in the last spinbox in the engine toolbar. The line colour is selected by Options-<gt>Colours-<gt>EngineArrows.
+</p>
+
+  <h1>Other Features</h1>
 
   <h3><name Annotating>Annotating Games</name></h3>
   <p>
