@@ -1777,10 +1777,9 @@ if { 0 && $::docking::USE_DOCKING} {
 
 ### Status Bar
 
-label .main.statusbar -textvariable statusBar -relief sunken -anchor w -width 1 -font font_Small
-label .main.statusbarpady -text {} -relief flat
+label .main.statusbar -textvar statusBar -relief sunken -anchor w -width 1 -font font_Small
 
-# double-left-click starts/stops engine 1
+# double-click starts/stops engine 1
 bind .main.statusbar <Double-Button-1> {
   makeAnalysisWin 1
   if {[winfo exists .analysisWin1] && $::analysis(mini)} {
@@ -1792,7 +1791,7 @@ bind .main.statusbar <Double-Button-1> {
 # todo mac button patch
 bind .main.statusbar <Button-2> {::file::SwitchToNextBase ; break}
 
-# Right-click toggles window size
+# Right-click toggles if engine1 is shown in status bar
 bind .main.statusbar <Button-3>  {
   toggleMini
   if {[winfo exists .analysisWin1] && $::analysis(mini)} {

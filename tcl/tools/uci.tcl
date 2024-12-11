@@ -16,9 +16,8 @@ namespace eval uci {
   set oldOptions ""
   array set check ""
 
-  # infoToken contains a list of known info tokens (used to find the end of "pv" tokens)
-  set infoToken {depth seldepth time nodes pv multipv score cp wdl mate lowerbound upperbound currmove currmovenumber hashfull nps tbhits sbhits cpuload string refutation currline}
-  # MJB - inserted "wdl" for win/draw/lose data
+  # Unused S.A. # infoToken contains a list of known info tokens (used to find the end of "pv" tokens)
+  # set infoToken {depth seldepth time nodes pv multipv score cp wdl mate lowerbound upperbound currmove currmovenumber hashfull nps tbhits sbhits cpuload string refutation currline}
 
   set optionToken {name type default min max var }
   set optionImportant {MultiPV Hash OwnBook BookFile UCI_LimitStrength UCI_Elo Ponder Threads {Skill Level}}

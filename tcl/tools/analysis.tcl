@@ -2346,7 +2346,12 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   standardShortcuts $w
 
   set analysis(showBoard$n) $analysis(showBoard)
-  set analysis(boardType$n) $analysis(boardType)
+  if {!$::analysis(uci$n) && $analysis(boardType) == "Sequential"} {
+    # no sequential mode for xboard engines
+    set analysis(boardType$n) Arrows
+  } else {
+    set analysis(boardType$n) $analysis(boardType)
+  }
 
   frame $w.b
   pack  $w.b -side top -fill x
@@ -3721,6 +3726,10 @@ proc nextBoardType {n} {
       set list {Arrows Sequential Position}
       set i [lsearch $list $::analysis(boardType$n)]
       set i [expr ($i+1) % 3]
+      if {$i == 1 && !$::analysis(uci$n)} {
+        # no sequential mode for xboard engines
+        incr i
+      }
       set ::analysis(boardType$n) [lindex $list $i]
       updateAnalysisBoard $n
 }
