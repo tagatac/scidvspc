@@ -46,7 +46,8 @@ proc resetEngine {n} {
   set analysis(score$n) 0             ;# Current score in pawns
   set analysis(scoremate$n) 0
   set analysis(prevscore$n) 0         ;# Immediately previous score in centipawns
-  set analysis(prevmoves$n) {}        ;# Immediately previous best line out from engine
+  # prevmoves is now also used as previous moves sent to updateAnalysisBoard (for board redraws with change of mode)
+  set analysis(prevmoves$n) {}        ;# Immediately previous best line out from engine (annotation)
   set analysis(nodesraw$n) 0          ;# Number of nodes searched
   set analysis(nodes$n) 0             ;# Number of (kilo)nodes searched
   set analysis(depth$n) 0             ;# Depth in ply
@@ -1174,6 +1175,7 @@ proc okAnnotation {n} {
   }
 
   resetAnalysis $n
+  set analysis(prevmoves$n) {}
   catch {.analysisWin$n.frame.bd.bd delete var bvm}
   set ::useAnalysisBookName [$w.usebook.comboBooks get]
   set ::book::lastBook1 $::useAnalysisBookName
@@ -2502,8 +2504,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
     # pack forget $w.b.showinfo
     # $w.b.showinfo configure -state disabled
 
-    pack forget $w.b.multipv 
-    pack forget $w.b.alllines
+    pack forget $w.b.multipv $w.b.alllines $w.b.seqCount
     $w.b.multipv configure -state disabled
     $w.b.alllines configure -state disabled
     text $w.text -height 3 -font font_Small -wrap none
@@ -3731,7 +3732,7 @@ proc nextBoardType {n} {
         incr i
       }
       set ::analysis(boardType$n) [lindex $list $i]
-      updateAnalysisBoard $n
+      updateAnalysisBoard $n $::analysis(prevmoves$n)
 }
 
 proc toggleEngineInfo {n} {
@@ -3789,6 +3790,7 @@ proc updateAnalysisBoard {n {moves {}}} {
   if {!$analysis(showBoard$n) || $annotate(Engine) > -1} {
     return
   }
+  set analysis(prevmoves$n) $moves
 
   set bd .analysisWin$n.frame.bd
   set ::board::_coords($bd) $::boardCoords
