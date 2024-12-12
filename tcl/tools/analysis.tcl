@@ -109,6 +109,7 @@ proc resetEngine {n} {
   set analysis(seenWDL$n) 0
   set analysis(boardSeqLengthSeen$n) 0  ;# used to decide when to update the visualisation
   set analysis(boardSeqDepthSeen$n) 0   ;# used to decide when to update the visualisation
+  set analysis(boardSeqMode$n) 2
 }
 
 resetEngines
@@ -2546,13 +2547,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
       by moving backward or forward or making a new move.)"
   $w.text configure -state disabled
   bind $w <Destroy> "destroyAnalysisWin $n %W"
-  bind $w <Escape> "
-    if \{\$::analysis(showBoard$n)\} \{
-       $w.frame.close invoke
-    \} else \{
-       focus .main ; destroy $w
-    \}
-  "
+  bind $w <Escape> "focus .main ; destroy $w"
 
   bind $w <Return>   "addAnalysisMove $n"
   bind $w <KP_Enter> "addAnalysisMove $n"
@@ -2564,9 +2559,23 @@ proc makeAnalysisWin {{n 0} {options {}}} {
     bind $w <Key-KP_$i> "set analysis(multiPVCount$n) $i ; changePVSize $n"
   }
   wm minsize $w 25 0
-  bindMouseWheel $w $w.hist.text
+  # bindMouseWheel $w $w.hist.text
   bindWheeltoFixed $w.hist.text
-  bindMouseWheelBoard $w $w.frame.bd
+  bindMouseWheelBoard $w.frame.bd.bd $w.frame.bd
+
+# Wheelmouse toggles between visualize modes. Currently unused S.A.
+if {0} {
+  if {$::windowsOS || $::macOS} {
+  # TODO
+    bind $w.frame.bd <MouseWheel> {
+      if {[expr -%D] < 0} {.configAnnotation.f.sf yview scroll -1 units}
+      if {[expr -%D] > 0} {.configAnnotation.f.sf yview scroll +1 units}
+    }
+  } else {
+      bind $w.frame.bd.bd <Button-4> "set analysis(boardSeqMode$n) \[expr (\$analysis(boardSeqMode$n)+1) \%% 3\] ; updateAnalysisBoard $n \$analysis(prevmoves$n)"
+      bind $w.frame.bd.bd <Button-5> "set analysis(boardSeqMode$n) \[expr (\$analysis(boardSeqMode$n)-1) \%% 3\] ; updateAnalysisBoard $n \$analysis(prevmoves$n)"
+  }
+}
 
   if {$analysis(uci$n)} {
     fileevent $analysis(pipe$n) readable "::uci::processAnalysisInput $n"
@@ -3757,10 +3766,17 @@ proc boardVisualizeMoves {board n moves} {
   global analysis
 
   $board delete bvm
-  set im 0
+  set im -1
+  set mc 0
   foreach cm $moves {
     incr im
-    if {$im > $analysis(boardSeqCount$n)} {
+    if {($analysis(boardSeqMode$n) <= 1)} {
+      if {$im % 2 != $analysis(boardSeqMode$n)} {
+        continue
+      }
+    }
+    incr mc
+    if {$mc > $analysis(boardSeqCount$n)} {
       break
     }
     if {$cm != ""} {
@@ -3770,14 +3786,14 @@ proc boardVisualizeMoves {board n moves} {
 
       # Show an arrow between start and end squares
       set coord [::board::mark::GetArrowCoords $board $sq_start $sq_end [expr $::board::arrowLength*0.33]]
-      $board create line $coord -fill $::engineLineColor -arrow last -width 2 -arrowshape {4 7 3} -tag bvm
+      $board create line $coord -fill $::engineLineColor -arrow last -width 2 -arrowshape {5 7 3} -tag bvm
 
       # and the move number midway along the line
 
       set xmid [expr ([lindex $coord 0] + [lindex $coord 2]) / 2]
       set ymid [expr ([lindex $coord 1] + [lindex $coord 3]) / 2]
-      # $board create text [expr $xmid+1] [expr $ymid+1] -fill [gradient $analysis(boardSeqNumColor) -.5] -font $analysis(boardSeqFont) -text $im -anchor c -tag bvm
-      $board create text $xmid $ymid -fill $analysis(boardSeqNumColor) -font $analysis(boardSeqFont) -text $im -anchor c -tag bvm
+      # $board create text [expr $xmid+1] [expr $ymid+1] -fill [gradient $analysis(boardSeqNumColor) -.5] -font $analysis(boardSeqFont) -text $mc -anchor c -tag bvm
+      $board create text $xmid $ymid -fill $analysis(boardSeqNumColor) -font $analysis(boardSeqFont) -text $mc -anchor c -tag bvm
     }
   }
 }
@@ -3853,20 +3869,20 @@ proc updateAnalysisBoard {n {moves {}}} {
     } else {
       # Hanish's feature
       if {[sc_pos moves] == {}} {
-	set analysis(boardSeqLengthSeen$n) 0
-	set analysis(boardSeqDepthSeen$n) 0 
+        set analysis(boardSeqLengthSeen$n) 0
+        set analysis(boardSeqDepthSeen$n) 0 
       } else {
         # Show some amount of the initial part of the Main PV using thin arrows
-	if {$analysis(uci$n) && 
-	    ([llength $moves] > $analysis(boardSeqLengthSeen$n)/2 || 
-	    $analysis(depth$n) > ($analysis(boardSeqDepthSeen$n)+1) ||
-	    $analysis(scoremate$n) != 0)} {
-	  set analysis(boardSeqLengthSeen$n) [llength $moves]
-	  set analysis(boardSeqDepthSeen$n) $analysis(depth$n)
-	  boardVisualizeMoves $bd.bd $n $moves
-	} else {
-	  $bd.bd raise bvm
-	}
+        if {$analysis(uci$n) && 
+            ([llength $moves] > $analysis(boardSeqLengthSeen$n)/2 || 
+            $analysis(depth$n) > ($analysis(boardSeqDepthSeen$n)+1) ||
+            $analysis(scoremate$n) != 0)} {
+          set analysis(boardSeqLengthSeen$n) [llength $moves]
+          set analysis(boardSeqDepthSeen$n) $analysis(depth$n)
+          boardVisualizeMoves $bd.bd $n $moves
+        } else {
+          $bd.bd raise bvm
+        }
       }
     }
   } else {
