@@ -2457,6 +2457,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
     -width 2 -font font_Small -command "
       set analysis(boardSeqLengthSeen$n) 0
       set analysis(boardSeqDepthSeen$n) 0
+      updateAnalysisBoard $n redraw
     "
   ::utils::tooltip::Set $w.b.seqCount "MainPV visualisation length"
 
@@ -2561,21 +2562,6 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   wm minsize $w 25 0
   # bindMouseWheel $w $w.hist.text
   bindWheeltoFixed $w.hist.text
-  bindMouseWheelBoard $w.frame.bd.bd $w.frame.bd
-
-# Wheelmouse toggles between visualize modes. Currently unused S.A.
-if {0} {
-  if {$::windowsOS || $::macOS} {
-  # TODO
-    bind $w.frame.bd <MouseWheel> {
-      if {[expr -%D] < 0} {.configAnnotation.f.sf yview scroll -1 units}
-      if {[expr -%D] > 0} {.configAnnotation.f.sf yview scroll +1 units}
-    }
-  } else {
-      bind $w.frame.bd.bd <Button-4> "set analysis(boardSeqMode$n) \[expr (\$analysis(boardSeqMode$n)+1) \%% 3\] ; updateAnalysisBoard $n \$analysis(prevmoves$n)"
-      bind $w.frame.bd.bd <Button-5> "set analysis(boardSeqMode$n) \[expr (\$analysis(boardSeqMode$n)-1) \%% 3\] ; updateAnalysisBoard $n \$analysis(prevmoves$n)"
-  }
-}
 
   if {$analysis(uci$n)} {
     fileevent $analysis(pipe$n) readable "::uci::processAnalysisInput $n"
@@ -3682,14 +3668,12 @@ proc addMoveNumbers { e pv } {
   return $ret
 }
 
-###  Toggle whether the small analysis board is shown
-###  ... not really an init, but updateAnalysisBoard is already taken
+###  Init / Toggle small analysis board 
 
 proc initAnalysisBoard {n} {
   global analysis
   set w .analysisWin$n
 
-  # init if doesnt exist
   if {![winfo exists $w.frame.bd]} {
     frame $w.frame
     ::board::new $w.frame.bd [expr {$analysis(boardSize) * 5 + 20}] 0 $::board::_flip(.main.board)
@@ -3702,13 +3686,26 @@ proc initAnalysisBoard {n} {
     ::board::coords $w.frame.bd
     button $w.frame.close -image arrow_close -font font_Small -relief flat -command "
       set analysis(showBoard$n) 0
-      pack forget $w.frame
-    "
+      pack forget $w.frame"
+
     pack $w.frame.bd $w.frame.close -side left -anchor n
     bind $w.frame.bd.bd <Button-2> "
       $w.frame.bd.bd delete var bvm
-      nextBoardType $n
-    "
+      nextBoardType $n"
+
+    bindMouseWheelBoard $w.frame.bd.bd $w.frame.bd "updateAnalysisBoard $n redraw"
+    # Wheelmouse toggles between visualize modes.
+    if {$::windowsOS || $::macOS} {
+    # TODO
+      bind $w.frame.bd <MouseWheel> {
+        if {[expr -%D] < 0} {.configAnnotation.f.sf yview scroll -1 units}
+        if {[expr -%D] > 0} {.configAnnotation.f.sf yview scroll +1 units}
+      }
+    } else {
+      bind $w.frame.bd.bd <Button-4> "set analysis(boardSeqMode$n) \[expr (\$analysis(boardSeqMode$n)-1) \%% 3\] ; updateAnalysisBoard $n redraw"
+      bind $w.frame.bd.bd <Button-5> "set analysis(boardSeqMode$n) \[expr (\$analysis(boardSeqMode$n)+1) \%% 3\] ; updateAnalysisBoard $n redraw"
+    }
+
   }
   if {$analysis(lockEngine$n)} {
     ::board::update $w.frame.bd $analysis(lockPos$n)
@@ -3741,7 +3738,7 @@ proc nextBoardType {n} {
         incr i
       }
       set ::analysis(boardType$n) [lindex $list $i]
-      updateAnalysisBoard $n $::analysis(prevmoves$n)
+      updateAnalysisBoard $n redraw
 }
 
 proc toggleEngineInfo {n} {
@@ -3786,7 +3783,7 @@ proc boardVisualizeMoves {board n moves} {
 
       # Show an arrow between start and end squares
       set coord [::board::mark::GetArrowCoords $board $sq_start $sq_end [expr $::board::arrowLength*0.33]]
-      $board create line $coord -fill $::engineLineColor -arrow last -width 2 -arrowshape {5 7 3} -tag bvm
+      $board create line $coord -fill [expr {($im+[sc_pos location]) % 2 ? "grey40" : "white"}] -arrow last -width 2 -arrowshape {5 7 3} -tag bvm
 
       # and the move number midway along the line
 
@@ -3806,7 +3803,11 @@ proc updateAnalysisBoard {n {moves {}}} {
   if {!$analysis(showBoard$n) || $annotate(Engine) > -1} {
     return
   }
-  set analysis(prevmoves$n) $moves
+  if {$moves == "redraw"} {
+    set moves $analysis(prevmoves$n)
+  } else {
+    set analysis(prevmoves$n) $moves
+  }
 
   set bd .analysisWin$n.frame.bd
   set ::board::_coords($bd) $::boardCoords
