@@ -3696,16 +3696,14 @@ proc initAnalysisBoard {n} {
     bindMouseWheelBoard $w.frame.bd.bd $w.frame.bd "updateAnalysisBoard $n redraw"
     # Wheelmouse toggles between visualize modes.
     if {$::windowsOS || $::macOS} {
-    # TODO
-      bind $w.frame.bd <MouseWheel> {
-        if {[expr -%D] < 0} {.configAnnotation.f.sf yview scroll -1 units}
-        if {[expr -%D] > 0} {.configAnnotation.f.sf yview scroll +1 units}
-      }
+      bind $w.frame.bd.bd <MouseWheel> "
+        if \{\[expr -%D\] < 0\} \{set analysis(boardSeqMode$n) \[expr (\$analysis(boardSeqMode$n)-1) \%% 3\] ; updateAnalysisBoard $n redraw\}
+        if \{\[expr -%D\] > 0\} \{set analysis(boardSeqMode$n) \[expr (\$analysis(boardSeqMode$n)+1) \%% 3\] ; updateAnalysisBoard $n redraw\}
+     "
     } else {
       bind $w.frame.bd.bd <Button-4> "set analysis(boardSeqMode$n) \[expr (\$analysis(boardSeqMode$n)-1) \%% 3\] ; updateAnalysisBoard $n redraw"
       bind $w.frame.bd.bd <Button-5> "set analysis(boardSeqMode$n) \[expr (\$analysis(boardSeqMode$n)+1) \%% 3\] ; updateAnalysisBoard $n redraw"
     }
-
   }
   if {$analysis(lockEngine$n)} {
     ::board::update $w.frame.bd $analysis(lockPos$n)
@@ -3765,6 +3763,7 @@ proc boardVisualizeMoves {board n moves} {
   $board delete bvm
   set im -1
   set mc 0
+  set ply [sc_pos location]
   foreach cm $moves {
     incr im
     if {($analysis(boardSeqMode$n) <= 1)} {
@@ -3783,7 +3782,7 @@ proc boardVisualizeMoves {board n moves} {
 
       # Show an arrow between start and end squares
       set coord [::board::mark::GetArrowCoords $board $sq_start $sq_end [expr $::board::arrowLength*0.33]]
-      $board create line $coord -fill [expr {($im+[sc_pos location]) % 2 ? "grey40" : "white"}] -arrow last -width 2 -arrowshape {5 7 3} -tag bvm
+      $board create line $coord -fill [expr {($im+$ply) % 2 ? "grey40" : "white"}] -arrow last -width 2 -arrowshape {5 7 3} -tag bvm
 
       # and the move number midway along the line
 

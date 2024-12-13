@@ -61,7 +61,7 @@ proc bindMouseWheel {win text} {
 proc bindMouseWheelBoard {win board {command  {}}} {
   if {$::windowsOS || $::macOS} {
     bind $win <Control-Shift-MouseWheel> {break}
-    bind $win <Control-MouseWheel> "::board::resize $board \[expr \{%D>0 ? 1 : -1\}\] ; break"
+    bind $win <Control-MouseWheel> "::board::resize $board \[expr \{%D>0 ? 1 : -1\}\] ; eval $command ; break"
   } else {
     bind $win <Control-Button-4> "::board::resize $board +1 ; eval $command ; break"
     bind $win <Control-Button-5> "::board::resize $board -1 ; eval $command ; break"
