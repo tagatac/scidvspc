@@ -1371,7 +1371,7 @@ namespace eval fics {
         3 - 5 {
             # hmmm - we assume any line length 3 or 5 is a game moves line. ???
 
-            # set moves m1, m2 (todo: store times)
+            # set moves m1, m2
             if {$length == "5"} {
               if {[scan $line "%d. %s (%s %s (%s" t1 m1 t2 m2 t3] != 5} {
                 ### puts "waitForMoves failed processing: $line"
@@ -1392,16 +1392,23 @@ namespace eval fics {
 	    # 1.  d4      (0:00)     d6      (0:00)
 	    # 2.  c4      (0:25)     Bf5     (0:01)
 
-	    catch { sc_move addSan $m1 }
-	    if { $::fics::storeclk } {
-              sc_pos setComment "\[%emt [string trim $t2 {)}]\]"
-            }
-	    if {$m2 != ""} {
-	      catch { sc_move addSan $m2 }
+	    if {![catch { sc_move addSan $m1 }]} {
 	      if { $::fics::storeclk } {
-		sc_pos setComment "\[%emt [string trim $t3 {)}]\]"
+		sc_pos setComment "\[%emt [string trim $t2 {)}]\]"
 	      }
-	    }
+	      if {$m2 != ""} {
+		if {![catch { sc_move addSan $m2 }]} {
+		  if { $::fics::storeclk } {
+		    sc_pos setComment "\[%emt [string trim $t3 {)}]\]"
+		  }
+	        } else {
+                   updateConsole "Error adding move \"$m2\""
+                }
+              }
+            } else {
+              updateConsole "Error adding move \"$m1\""
+            }
+
 	    if {[sc_pos fen] == $::fics::waitForMoves } {
               ### Game reconstructed successfully
 	      set ::fics::waitForMoves ""
