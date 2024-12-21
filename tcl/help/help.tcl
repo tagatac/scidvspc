@@ -1326,8 +1326,8 @@ set helpTitle(Comment) "Comment Editor"
 set helpText(Comment) {<h1>The Comment Editor</h1>
   <p>
   The <run ::commenteditor::Open><green>Comment Editor</green></run> lets you add
-  comments and <a NAGs>annotations</a>, and also includes a small board for drawing arrows (etc). <i>These three sections can be shown/hidden by pressing the <img bookmark_down> button, though if sections are missing, try resizing the window.</i>
-  </p>
+  comments and <a NAGs>annotations</a>, and also includes a small board for drawing arrows (etc).
+  <i>These three sections can be shown/hidden by pressing the <img bookmark_down> button, though if sections are missing, try resizing the window. If the comment window is not receiving focus, click on the upper left corner.</i></p>
 
   <h3>Comments</h3>
   <p>

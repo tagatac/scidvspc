@@ -2335,6 +2335,7 @@ namespace eval fics {
       set ::fics::mutex 0
       updateBoard -pgn
       wm title $::dot_w "$::scidName: $white - $black (game $game: $::fics::timecontrol)"
+      after idle ::tools::graphs::score::Refresh
 
       if {$::fics::playing != 1 && $::fics::playing != -1 && $::fics::observedGames != {}} {
 	catch {.fics.bottom.game${::fics::primary}.w.result configure -font font_Small}
