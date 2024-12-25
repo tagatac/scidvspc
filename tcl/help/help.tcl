@@ -2749,8 +2749,10 @@ set helpText(Analysis) {<h1>Analysis Windows</h1>
   <p> Scid vs. PC has powerful chess analysis features. Multiple engines can
 run simultaneously; they can be matched against each other in a <a
 Tourney>Computer Tournament</a>, and log files can be browsed from within the app -
-making for easier <a Analysis Debugging>Debugging</a>.
-</p>
+making for easier <a Analysis Debugging>Debugging</a>.</p>
+  <p><i>ScidvsPC now has an engine <b>Score Bar</b>. Double-clicking the status bar will run the second listed engine docked in the status bar,
+with an overlayed score bar. Right-clicking it will dock/undock the engine.</i></p>
+
 
   <h3>Getting Started</h3>
 
@@ -2760,10 +2762,7 @@ making for easier <a Analysis Debugging>Debugging</a>.
   <p>Starting them can be done in various ways
   By <run ::startAnalysisWin F2><green>pressing F2</green></run>
   , F3 or F4 from the Configuration Widget, or via the <b>Tools--<gt>Start Engine</b> menu.
-  Additionally, the second listed engine can be start/stopped by <b>double-clicking the status-bar</b>.
-  Right-clicking the status-bar will dock/undock the engine,
-  which, when running docked, will run at low CPU priority.<p>
-
+  </p>
   <p>
   <b>Space Bar</b> makes the engine start/stop. Pressing <b>Enter</b> will
   add the engine's current best move, and <b>Control+Enter</b>, the whole line.

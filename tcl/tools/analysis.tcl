@@ -2036,7 +2036,9 @@ proc destroyAnalysisWin {n W} {
   }
 
   if { $n == 1 && $analysis(mini)} {
-    toggleMini
+    set analysis(mini) 0
+    .main.statusbar configure -font font_Small
+    updateStatusBar
   }
 
   # Cancel scheduled commands
@@ -2619,7 +2621,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   }
   # necessary on windows because the UI sometimes starves, also keep latest priority setting
   # if ($::windowsOS)
-  if {$analysis(priority$n) == {idle} || $analysis(lowPriority) || ($n==1 && $analysis(mini)) } {
+  if {$analysis(priority$n) == {idle} || $analysis(lowPriority) } {
     set analysis(priority$n) idle
     setAnalysisPriority $n
   }
@@ -2629,12 +2631,16 @@ proc makeAnalysisWin {{n 0} {options {}}} {
 }
 
 ### Dock/undock Engine1 in statusbar
+# Lots of messing around with the fixed font to allow an overlayed score bar (implemented as a text widget with black and white tags).
 
 proc toggleMini {} {
 
   global analysisWin1 analysis
 
   if {![winfo exists .analysisWin1]} {
+    .main.statusbar configure -font font_Small
+    .main.statusbar tag remove Black 1.0 end
+    .main.statusbar tag remove White 1.0 end
     updateStatusBar
     return
   }
@@ -2646,19 +2652,18 @@ proc toggleMini {} {
     if {!$::docking::USE_DOCKING} {
       catch {wm state .analysisWin1 withdrawn}
     }
+    .main.statusbar configure -font font_Fixed
     update
-    set analysis(priority1) idle ; # nice priority
   } else {
     # make window big
     if {!$::docking::USE_DOCKING} {
       catch {wm state .analysisWin1 normal}
     }
+    .main.statusbar configure -font font_Small
     updateStatusBar
     update
     .analysisWin1.hist.text yview moveto 1
-    set analysis(priority1) normal ; # normal priority
   }
-  setAnalysisPriority 1
 }
 
 
@@ -3315,6 +3320,10 @@ proc toggleEngineAnalysis {{n -1}} {
       $h delete 1.0 end
       $h configure -state disabled
     } 
+
+    if { $n == 1 && $analysis(mini) } {
+      set ::statusBar " [lindex $analysis(name1) 0]:"
+    }
     if {$analysis(uci$n) && $::uci::goCommand != "go infinite"} {
       ::utils::tooltip::Set $b $::uci::goCommand
     } else {
@@ -3592,7 +3601,7 @@ proc updateAnalysisText {n} {
       if {[string is ascii -strict %s]} {
 	set s [string range $line [string first {[} $line] 50]
 	if {$s != {}} {
-	  set ::statusBar "   [lindex $analysis(name1) 0]: [string map {\n {}} $s]"
+	  set ::statusBar " [lindex $analysis(name1) 0]: [string map {\n {}} $s]"
 	}
       }
     } 
@@ -3931,10 +3940,17 @@ proc sendPosToEngineUCI {n  {delay 0}} {
 	  $h configure -state normal
 	  $h delete 1.0 end
           if {[sc_pos isCheck]} {
+	    if {[sc_pos side] == "black"} {
+	      set analysis(score$n) 327.0
+	    } else {
+	      set analysis(score$n) -327.0
+	    }
 	    $h insert 1.0 ($tr(checkmate))
           } else {
+            set analysis(score$n) 0.0
 	    $h insert 1.0 ($tr(stalemate))
           }
+	  set ::statusBar " [lindex $analysis(name1) 0]: \[$analysis(score$n)\]"
           # $h insert 1.0 "[tr No] [tr Moves]"
 	  $h configure -state disabled
 	  if {$analysis(boardType$n)!="Position"} {

@@ -1111,6 +1111,7 @@ proc resizeMainBoard {} {
   set w [winfo width .main]
   set h [winfo height .main]
   set bd .main.board
+  set ::statusBarWidth [expr [winfo width .main.statusbar]/[font measure font_Fixed "0"]]
   
   ### calculate available height
 
