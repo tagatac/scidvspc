@@ -2371,6 +2371,9 @@ if { $::docking::USE_DOCKING } {
 
 wm deiconify $dot_w
 focus .main
+after idle {
+  set ::statusBarWidth [expr [winfo width .main.statusbar]/[font measure font_Fixed "0"]]
+}
 
 ### Raise pgn import window if open
 if {[winfo exists .ipgnWin]} {
