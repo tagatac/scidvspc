@@ -3676,7 +3676,7 @@ proc initAnalysisBoard {n} {
 
   if {![winfo exists $w.frame.bd]} {
     frame $w.frame
-    ::board::new $w.frame.bd [expr {$analysis(boardSize) * 5 + 20}] 0 $::board::_flip(.main.board)
+    ::board::new $w.frame.bd [expr {$analysis(boardSize) * 5 + 20}] 1 $::board::_flip(.main.board) 0 1
 
     # Hmmm - all boards have to have the same font size
     set fontSize [expr ($analysis(boardSize) * 5 + 20)/2 - 2]
@@ -3809,6 +3809,7 @@ proc updateAnalysisBoard {n {moves {}}} {
   }
 
   set bd .analysisWin$n.frame.bd
+  ::board::update_evalbar $bd $analysis(score$n)
   set ::board::_coords($bd) $::boardCoords
   ::board::coords $bd
   if {$::board::_flip($bd) != $::board::_flip(.main.board)} {

@@ -416,15 +416,12 @@ pack $bb.start $bb.back $bb.forward $bb.end \
 
 ### Main Board Init
 
-::board::new .main.board $boardSize 1
+::board::new .main.board $boardSize $::gameInfo(showMaterial) 0 $::boardSTM 0
 #.main.board.bd configure -relief solid -border 2
 ::board::showMarks .main.board $::gameInfo(showMarks)
 if {$boardCoords} {
   set ::board::_coords(.main.board) $boardCoords
   ::board::coords .main.board
-}
-if {$boardSTM} {
-  ::board::togglestm .main.board
 }
 
 ### Game Information Widget Init
