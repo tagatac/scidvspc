@@ -983,7 +983,7 @@ $m add command -label OptionsSave -command {
     gameInfo(show) gameInfo(photos) gameInfo(wrap) gameInfo(showStatus) 
     gameInfo(fullComment) gameInfo(showMarks) gameInfo(showMenu) gameInfo(showTool) 
     gameInfo(showMaterial) gameInfo(showFEN) gameInfo(showButtons) gameInfo(showTB) 
-    engines(F2) engines(F3) engines(F4) analysis(logMax) analysis(logName) analysis(maxPly) analysis(lowPriority) analysis(boardSize) analysis(boardType) analysis(showBoard) analysis(showEngineInfo) analysis(wrapPV) analysis(boardSeqNumColor)
+    analysis(mini) engines(F2) engines(F3) engines(F4) analysis(logMax) analysis(logName) analysis(maxPly) analysis(lowPriority) analysis(boardSize) analysis(boardType) analysis(showBoard) analysis(showEngineInfo) analysis(wrapPV) analysis(boardSeqNumColor)
     scidBooksDir scidBasesDir 
     ::book::lastBook1 ::book::lastBook2 ::book::lastTuning ::book::sortAlpha 
     ::book::showTwo ::book::oppMovesVisible ::gbrowser::size 

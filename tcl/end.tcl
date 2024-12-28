@@ -1777,44 +1777,15 @@ if { 0 && $::docking::USE_DOCKING} {
 
 ### Status Bar
 
-text .main.statusbar -relief sunken -height 1 -takefocus 0 -setgrid 1 -insertwidth 0 -font font_Small
-.main.statusbar tag configure White -background white
-.main.statusbar tag configure Black -background black -foreground white
-# TODO fix for custom colours S.A.
-
-set statusBarWidth [expr [winfo width .main.statusbar]/[font measure font_Fixed "0"]]
-
-trace variable statusBar w {eval catch updateStatusBarVar}
-
-proc updateStatusBarVar {args} {
-  global statusBar statusBarWidth analysis
-  set w .main.statusbar
-  $w configure -state normal
-  $w delete 1.0 end
-
-  if {$analysis(mini) && $analysis(analyzeMode1)} {
-    ### Pad out the status bar with spaces and overlay with White/Black scorebar S.A.
-    set statusBar2 [format %-${statusBarWidth}s $statusBar]
-    set X [expr int($statusBarWidth/2.0 * (1.0 + $analysis(score1)/5.0))]
-    $w insert end [string range $statusBar2 0 $X] White
-    $w insert end [string range $statusBar2 $X+1 end] Black
-  } else {
-    $w insert end $statusBar
-  }
-  $w configure -state disabled
-}
+label .main.statusbar -textvar statusBar -relief sunken -anchor w -width 1 -font font_Small
 
 # double-click starts/stops engine 1
 bind .main.statusbar <Double-Button-1> {
-  set ::analysis(mini) 1
-  .main.statusbar configure -font font_Fixed
-
-  if {![winfo exists .analysisWin1]} {
-    makeAnalysisWin 1
-  } else {
-    toggleEngineAnalysis 1
+  makeAnalysisWin 1
+  if {[winfo exists .analysisWin1] && $::analysis(mini)} {
+    set ::statusBar "   [lindex $::analysis(name1) 0]:"
+    update
   }
-  break
 }
 
 # todo mac button patch
@@ -1824,7 +1795,7 @@ bind .main.statusbar <Button-2> {::file::SwitchToNextBase ; break}
 bind .main.statusbar <Button-3>  {
   toggleMini
   if {[winfo exists .analysisWin1] && $::analysis(mini)} {
-    set ::statusBar " [lindex $::analysis(name1) 0]:"
+    set ::statusBar "   [lindex $::analysis(name1) 0]:"
     update
   }
   break
@@ -2371,9 +2342,6 @@ if { $::docking::USE_DOCKING } {
 
 wm deiconify $dot_w
 focus .main
-after idle {
-  set ::statusBarWidth [expr [winfo width .main.statusbar]/[font measure font_Fixed "0"]]
-}
 
 ### Raise pgn import window if open
 if {[winfo exists .ipgnWin]} {

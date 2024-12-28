@@ -1104,8 +1104,6 @@ proc setMenu {w m} {
 proc resizeMainBoard {} {
   global gameInfo board
 
-  set ::statusBarWidth [expr [winfo width .main.statusbar]/[font measure font_Fixed "0"]]
-
   if { ! $::docking::USE_DOCKING } { return }
   
   bind .main <Configure> {}
