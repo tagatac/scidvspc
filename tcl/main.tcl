@@ -251,6 +251,13 @@ proc toggleMat {} {
   ::board::togglematerial
 }
 
+proc toggleEval {} {
+  global gameInfo
+  set gameInfo(showMaterial) [expr {1 + $gameInfo(showMaterial)} ]
+  if { $gameInfo(showMaterial) > 2 } { set gameInfo(showMaterial) 0 }
+  ::board::togglematerial
+}
+
 image create photo autoplay_off -data {
 R0lGODlhHgAeAKU6AAAAAAUFBQcHBwkJCQ0NDRISEhgYGCIiIi4uLkBA/0FB
 /0ND/llZWUZG/khI/UtL/EtL/U1N/E5O/E9P+2JiYlBQ+1FR+2ZmZlZW+Wlp
@@ -416,7 +423,7 @@ pack $bb.start $bb.back $bb.forward $bb.end \
 
 ### Main Board Init
 
-::board::new .main.board $boardSize $::gameInfo(showMaterial) 0 $::boardSTM 0
+::board::new .main.board $boardSize $::gameInfo(showMaterial) 0 $::boardSTM $::gameInfo(showEval)
 #.main.board.bd configure -relief solid -border 2
 ::board::showMarks .main.board $::gameInfo(showMarks)
 if {$boardCoords} {
@@ -468,6 +475,7 @@ $m add checkbutton -label GInfoHideNext \
 
 $m add command -label GInfoMaterial -command toggleMat
 $m add command -label GInfoCoords -command toggleCoords
+$m add command -label "Toggle Eval" -command ::board::toggleeval
 
 if { $::docking::USE_DOCKING } {
   foreach i {0 1 2 3 4 6 10 11} {

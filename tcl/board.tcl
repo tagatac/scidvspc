@@ -1388,9 +1388,10 @@ proc ::board::new {w {psize 40} {showmat 0} {flip 0} {stm 0} {evalbar 0}} {
   ### Hmm... is this correct ? &&&
   set ::board::_showmat($w) [expr $::gameInfo(showMaterial) && $::board::_showmat($w)]
 
-  canvas $w.evalbar -width 8 -height $bsize
+  canvas $w.evalbar -width [expr {int(ceil($::board::_size($w)/10.0))}] -height $bsize
+
   if {$::board::_showEvalbar($w)} {
-    grid $w.evalbar -row 1 -column 12 -rowspan 8
+    grid $w.evalbar -row 1 -column 12 -rowspan 8 -padx 2
   }
 
   if {$::board::_showmat($w)} {
@@ -2530,6 +2531,9 @@ proc ::board::update {w {board ""} {animate 0} {resize 0}} {
       ::board::material $w
     }
   }
+  if {$::mainEngine > -1} {
+    ::board::update_evalbar $w
+  }
 
   # Animate board changes if requested:
   if {$animate  &&  $board != $oldboard} {
@@ -2602,7 +2606,6 @@ proc ::board::flip {w {newstate -1}} {
     }
   }
   ::board::update $w
-  ::board::update_evalbar $w $::board::_eval($w)
 
   if {$::board::_showmat($w)} {
     ::board::togglematerial $w
@@ -2635,10 +2638,13 @@ proc ::board::togglematerial {{w .main.board}} {
 }
 
 proc ::board::toggleeval {{w .main.board}} {
-  if {[set ::board::_eval($w) [expr !$::board::_eval($w)]]} {
-    grid configure $w.evalbar -row 1 -column 12 -rowspan 8
+  if {[set ::board::_showEvalbar($w) [expr !$::board::_showEvalbar($w)]]} {
+    grid configure $w.evalbar -row 1 -column 12 -rowspan 8 -padx 2
   } else {
     catch {grid remove $w.evalbar}
+  }
+  if {$w == ".main.board"} {
+    set ::gameInfo(showEval) $::board::_showEvalbar($w)
   }
 }
 
@@ -3135,29 +3141,19 @@ proc ::board::update_evalbar_linlog {w eval} {
     if {$eval < 0.0} { set wlen [expr $wlen*-1] }
   }
 
+  set width [expr {int(ceil($::board::_size($w)/10.0))}]
+  set width2 [expr {$width * 2}]
   # 2 1 0 -1 -2 ie 4 3 2 1 0
-
-  if {$wlen < 0} {set color black} {set color white}
-  if {$::board::_flip($w) == 0} {
-    if {$color == "white"} {
-      set y1 [expr (4.0-($wlen+2.0))*$unitLen]
-      set y2 $height
-    } else {
-      set y1 0
-      set y2 [expr (4.0-($wlen+2.0))*$unitLen]
-    }
-  } else {
-    if {$color == "white"} {
-      set y1 0
-      set y2 [expr (($wlen+2.0))*$unitLen]
-    } else {
-      set y1 [expr (($wlen+2.0))*$unitLen]
-      set y2 $height
-    }
-  }
-
   $w.evalbar delete evalbar
-  $w.evalbar create line 4 $y1 4 $y2 -width 8 -fill $color -tag evalbar
+  if {$::board::_flip($w)} {
+    set X [expr (($wlen+2.0))*$unitLen]
+    $w.evalbar create line $width  0 $width $X      -width $width2 -fill white -tag evalbar
+    $w.evalbar create line $width $X $width $height -width $width2 -fill black -tag evalbar
+  } else {
+    set X [expr (4.0-($wlen+2.0))*$unitLen]
+    $w.evalbar create line $width  0 $width $X      -width $width2 -fill black -tag evalbar
+    $w.evalbar create line $width $X $width $height -width $width2 -fill white -tag evalbar
+  }
 }
 
 #
@@ -3207,13 +3203,18 @@ proc ::board::update_evalbar_simplin {w eval} {
 # Show evalbar only if enabled when creating the board or changed directly later.
 #
 
-proc ::board::update_evalbar {w eval} {
-  if {! [winfo exists $w]} { return }
-  if {! $::board::_showEvalbar($w)} {
-    $w.evalbar delete evalbar
+proc ::board::update_evalbar {w {eval {}}} {
+  if {! [winfo exists $w]} {
     return
   }
-  ::board::update_evalbar_linlog $w $eval
+  if {$eval == {}} {
+    set eval $::board::_eval($w)
+  }
+  if {$eval == "clear"} {
+    $w.evalbar delete evalbar
+  } else {
+    ::board::update_evalbar_linlog $w $eval
+  }
 }
 
 

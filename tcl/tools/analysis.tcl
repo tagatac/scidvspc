@@ -19,6 +19,7 @@
 set analysisBookSlot 1
 set useAnalysisBookName ""
 set wentOutOfBook 0
+set mainEngine -1
 
 # Todo: these should be in analysis array
 
@@ -1401,18 +1402,10 @@ proc addScore {n type {novar 0}} {
       ### Last move , don't attempt to score as it comes out wrong/negative and breaks the score graph
       # But should we use scoreToMate and not score mating moves at all... but it's nice to see the graph maxed out
 
-      # S.A. 2023
-      # Ok, hack to score the last move - which may or may-not be set by the engine (I'm unsure).
+      # S.A. 2024
+      # Ok, hack to score the last move - but this may not be necessary now as we call getScoreNoMoves somewhere else
       set type single
-      if {[sc_pos isCheck]} {
-	if {[sc_pos side] == "black"} {
-	  set analysis(score$n) 327.0
-	} else {
-	  set analysis(score$n) -327.0
-	}
-      } else {
-	set analysis(score$n) 0
-      }
+      set analysis(score$n) [getScoreNoMoves]
     }
 
     switch $type {
@@ -2717,6 +2710,22 @@ proc formatAnalysisScore {n} {
   return $text
 }
 
+proc getScoreNoMoves {{updateMainEval 0}} {
+  if {[sc_pos isCheck]} {
+    if {[sc_pos side] == "black"} {
+      set val 327.0
+    } else {
+      set val -327.0
+    }
+  } else {
+    set val 0
+  }
+  if {$updateMainEval && $::gameInfo(showEval)} {
+    ::board::update_evalbar .main.board $val
+  }
+  return $val
+}
+
 ### Toggle whether Move History is shown (now also controls line wrap)
 
 proc toggleMovesDisplay {n} {
@@ -3324,6 +3333,7 @@ proc toggleEngineAnalysis {{n -1}} {
     set analysis(exclude$n) ""
   } else  {
     startAnalyzeMode $n
+    after idle {::board::update_evalbar .main.board}
     $b configure -image tb_pause
     if {$analysis(uci$n) && $::uci::goCommand != "go infinite"} {
       ::utils::tooltip::Set $b $::uci::goCommand
@@ -3451,6 +3461,10 @@ proc updateAnalysisText {n} {
   }
 
   set score $analysis(score$n)
+
+  if {$n == $::mainEngine && $::gameInfo(showEval)} {
+    ::board::update_evalbar .main.board $score
+  }
 
   set t .analysisWin$n.text
 
@@ -3676,7 +3690,7 @@ proc initAnalysisBoard {n} {
 
   if {![winfo exists $w.frame.bd]} {
     frame $w.frame
-    ::board::new $w.frame.bd [expr {$analysis(boardSize) * 5 + 20}] 1 $::board::_flip(.main.board) 0 1
+    ::board::new $w.frame.bd [expr {$analysis(boardSize) * 5 + 20}] 0 $::board::_flip(.main.board) 0 1
 
     # Hmmm - all boards have to have the same font size
     set fontSize [expr ($analysis(boardSize) * 5 + 20)/2 - 2]
@@ -3809,6 +3823,7 @@ proc updateAnalysisBoard {n {moves {}}} {
   }
 
   set bd .analysisWin$n.frame.bd
+
   ::board::update_evalbar $bd $analysis(score$n)
   set ::board::_coords($bd) $::boardCoords
   ::board::coords $bd
@@ -3938,6 +3953,7 @@ proc sendPosToEngineUCI {n  {delay 0}} {
           }
           # $h insert 1.0 "[tr No] [tr Moves]"
 	  $h configure -state disabled
+          set analysis(score$n) [getScoreNoMoves 1]
 	  if {$analysis(boardType$n)!="Position"} {
             # TODO check this ^^^^ if
 	    updateAnalysisBoard $n
@@ -3981,11 +3997,20 @@ proc sendPosToEngineUCI {n  {delay 0}} {
 }
 
 proc updateAnalysisWindows {} {
+  set ::mainEngine -1
   for {set i 0} {$i < [llength $::engines(list)]} {incr i} {
     if {[winfo exists .analysisWin$i]} {
-      updateAnalysis $i
+      if {"[updateAnalysis $i]" != "inactive"} {
+	if {$::mainEngine < 0} {
+	  set ::mainEngine $i
+	}
+      }
     }
   }
+  if {$::mainEngine < 0 && $::gameInfo(showEval)} {
+    ::board::update_evalbar .main.board clear
+  } 
+  
 }
 
 ###   Update an analysis window by sending the current board
@@ -4004,7 +4029,7 @@ proc updateAnalysis {{n 0} {reset 1}} {
       $analysis(pipe$n) == {} ||
       !$analysis(seen$n) ||
       !$analysis(analyzeMode$n) } {
-    return
+    return inactive
   }
   # analysis(seen$n)        - output has been seen from the analysis program yet
   # analysis(analyzeMode$n) - analysis is running
