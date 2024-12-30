@@ -2531,8 +2531,23 @@ proc ::board::update {w {board ""} {animate 0} {resize 0}} {
       ::board::material $w
     }
   }
-  if {$::mainEngine > -1} {
-    ::board::update_evalbar $w
+
+  if {$::board::_showEvalbar($w)} {
+    if { $w == ".main.board"} {
+      if {$::mainEngine > -1} {
+	::board::update_evalbar $w
+      } else {
+	# no engine running, try to get score from comment
+	set score [sc_pos getScore]
+	if {$score == ""} {
+	  # no data for eval bar
+	  set score clear
+	} 
+	::board::update_evalbar $w $score
+      }
+    } else {
+      ::board::update_evalbar $w
+    }
   }
 
   # Animate board changes if requested:

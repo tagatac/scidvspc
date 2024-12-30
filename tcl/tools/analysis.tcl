@@ -4007,10 +4007,6 @@ proc updateAnalysisWindows {} {
       }
     }
   }
-  if {$::mainEngine < 0 && $::gameInfo(showEval)} {
-    ::board::update_evalbar .main.board clear
-  } 
-  
 }
 
 ###   Update an analysis window by sending the current board

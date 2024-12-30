@@ -11023,17 +11023,17 @@ sc_pos (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         "fen", "getComment", "getCleanComment", "getNags", "hash", "html",
         "isAt", "isCheck", "isInsufficient", "isLegal", "isPromotion",
         "matchMoves", "moveNumber", "pgnBoard", "pgnOffset", "pieceCount",
-        "probe", "setComment", "side", "tex", "moves", "movesUci", "location", NULL
+        "probe", "setComment", "side", "tex", "moves", "movesUci", "location", "getScore", NULL
     };
     enum {
         POS_ADDNAG, POS_ANALYZE, POS_BESTSQ, POS_BOARD, POS_CLEARNAGS,
         POS_FEN, POS_GETCOMMENT, POST_CLEANCOMMENT, POS_GETNAGS, POS_HASH, POS_HTML,
         POS_ISAT, POS_ISCHECK, POS_ISINSUFFICENT, POS_ISLEGAL, POS_ISPROMO, POS_MATCHMOVES, POS_MOVENUM,
         POS_PGNBOARD, POS_PGNOFFSET, POS_PIECECOUNT, POS_PROBE,
-        POS_SETCOMMENT, POS_SIDE, POS_TEX, POS_MOVES, POS_MOVES_UCI, LOCATION
+        POS_SETCOMMENT, POS_SIDE, POS_TEX, POS_MOVES, POS_MOVES_UCI, LOCATION, POS_SCORE
     };
 
-    char boardStr[200];
+    char boardStr[200]="";
     int index = -1;
     if (argc > 1) { index = strUniqueMatch (argv[1], options); }
 
@@ -11167,6 +11167,28 @@ sc_pos (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     case LOCATION: //TODO: doesn't work for variations (perhaps use sc_pos pgnOffset ??)
         return setUintResult (ti, db->game->GetCurrentPly());
+
+    case POS_SCORE:
+        // duplicate get-score logic from proc addScoreToList S.A.
+        tempStr = db->game->GetMoveComment();
+        if (!tempStr) {
+	    Tcl_AppendResult (ti, "", NULL);
+        } else {
+	    while (*tempStr != 0  &&  *tempStr != '+'  &&  *tempStr != '-') {
+		tempStr++;
+	    }
+	    if (*tempStr == 0  || ! isdigit(*(tempStr+1)) ||
+		  (*tempStr == '-' && isdigit(*(tempStr-1)))) {
+		Tcl_AppendResult (ti, "", NULL);
+	    } else {
+		// OK, now we have found "+[digit]" or "-[digit]" in the tempStr,
+		float f;
+		sscanf (tempStr, "%f", &f);
+		sprintf (boardStr, "%.2f", f);
+		Tcl_AppendResult (ti, boardStr, NULL);
+	    }
+        }
+	break;
 
     default:
         return InvalidCommand (ti, "sc_pos", options);
