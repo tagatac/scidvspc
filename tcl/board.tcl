@@ -2658,9 +2658,6 @@ proc ::board::toggleeval {{w .main.board}} {
   } else {
     catch {grid remove $w.evalbar}
   }
-  if {$w == ".main.board"} {
-    set ::gameInfo(showEval) $::board::_showEvalbar($w)
-  }
 }
 
 proc ::board::ficslabels {{w .main.board}} {
