@@ -375,6 +375,8 @@ menuText O GInfoMenuBar "Menylinje"  0
 menuText O GInfoToolBar "Verktøylinje"  0
 menuText O GInfoButtonBar "Knapperad"  0
 menuText O GInfoStatusBar "Statuslinje"  0
+# ====== TODO To be translated ======
+menuText O GInfoEvalBar "Score Bar" 0
 
 translate O FlipBoard {Snu brettet}
 translate O RaiseWindows {Vinduer til forgrunnen}

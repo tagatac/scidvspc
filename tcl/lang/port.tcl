@@ -363,6 +363,8 @@ menuText U GInfoMenuBar "Barra do Menú"  0
 menuText U GInfoToolBar "Barra de Funções"  0
 menuText U GInfoButtonBar "Barra Inferior"  0
 menuText U GInfoStatusBar "Barra de Estado"  0
+# ====== TODO To be translated ======
+menuText U GInfoEvalBar "Score Bar" 0
 translate U FlipBoard {Rodar Tabuleiro}
 translate U RaiseWindows {Ativar janelas}
 translate U AutoPlay {Jogo automático}

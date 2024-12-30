@@ -409,6 +409,8 @@ menuText S GInfoMenuBar "Barra de Menús"  0
 menuText S GInfoToolBar "Barra de Herramientas"  0
 menuText S GInfoButtonBar "Botón de Barra"  0
 menuText S GInfoStatusBar "Barra de Estado"  0
+# ====== TODO To be translated ======
+menuText S GInfoEvalBar "Score Bar" 0
 
 translate S FlipBoard {Girar el tablero}
 translate S RaiseWindows {Aumentar ventanas}

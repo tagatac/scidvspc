@@ -346,6 +346,8 @@ menuText L GInfoToolBar "Työkalurivi"  0
 menuText L GInfoButtonBar "Painikerivi"  0
 # TODO
 menuText L GInfoStatusBar "Status Bar"  0
+# ====== TODO To be translated ======
+menuText L GInfoEvalBar "Score Bar" 0
 
 translate L FlipBoard {Käännä lauta}
 translate L RaiseWindows {Nosta ikkunat}

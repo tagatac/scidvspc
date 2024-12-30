@@ -393,6 +393,8 @@ menuText W GInfoButtonBar "Button Bar"  0
 # ====== TODO To be translated ======
 menuText W GInfoStatusBar "Status Bar"  0
 # ====== TODO To be translated ======
+menuText W GInfoEvalBar "Score Bar" 0
+# ====== TODO To be translated ======
 translate W FlipBoard {Flip board}
 # ====== TODO To be translated ======
 translate W RaiseWindows {Raise windows}

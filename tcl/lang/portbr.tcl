@@ -452,6 +452,8 @@ menuText B GInfoToolBar "Barra de Ferramentas"  0
 menuText B GInfoButtonBar "Barra de Botoes"  0
 
 menuText B GInfoStatusBar "Barra de Status"  0
+# ====== TODO To be translated ======
+menuText B GInfoEvalBar "Score Bar" 0
 
 translate B FlipBoard {Virar tabuleiro}
 

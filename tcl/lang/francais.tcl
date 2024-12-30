@@ -365,6 +365,8 @@ menuText F GInfoMenuBar "Barre de Menu"  0
 menuText F GInfoToolBar "Barre d'outils"  0
 menuText F GInfoButtonBar "Barre à boutons"  0
 menuText F GInfoStatusBar "Barre d'état"  0
+# ====== TODO To be translated ======
+menuText F GInfoEvalBar "Score Bar" 0
 translate F FlipBoard {Retourner l'échiquier}
 translate F RaiseWindows {Fenêtre d'arbitrage}
 translate F AutoPlay {Lecture automatique}

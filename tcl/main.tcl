@@ -446,15 +446,13 @@ $m add checkbutton -label GInfoMenuBar -variable gameInfo(showMenu) -command sho
 $m add checkbutton -label GInfoToolBar -variable gameInfo(showTool) -command toggleToolbar
 $m add checkbutton -label GInfoButtonBar -variable gameInfo(showButtons) -command toggleButtonBar
 $m add checkbutton -label WindowsGameinfo -variable gameInfo(show) -command showGameInfo
+$m add checkbutton -label GInfoEvalBar -variable gameInfo(showEval) -command ::board::toggleeval
 $m add checkbutton -label GInfoStatusBar -variable gameInfo(showStatus) -command toggleStatus
 
 $m add separator
 
-$m add checkbutton -label GInfoShow \
-    -variable boardSTM -offvalue 0 -onvalue 1 -command {::board::togglestm .main.board}
-
-$m add checkbutton -label OptionsMovesHighlightLastMove \
-    -variable ::highlightLastMove -offvalue 0 -onvalue 1 -command updateBoard
+$m add checkbutton -label GInfoShow -variable boardSTM -offvalue 0 -onvalue 1 -command {::board::togglestm .main.board}
+$m add checkbutton -label OptionsMovesHighlightLastMove -variable ::highlightLastMove -offvalue 0 -onvalue 1 -command updateBoard
 
 $m add checkbutton -label GInfoFEN -variable gameInfo(showFEN) -offvalue 0 -onvalue 1 -command {
   checkGameInfoHeight
@@ -468,10 +466,9 @@ $m add checkbutton -label GInfoHideNext \
 
 $m add command -label GInfoMaterial -command toggleMat
 $m add command -label GInfoCoords -command toggleCoords
-$m add checkbutton -label "Eval Bar" -variable gameInfo(showEval) -command ::board::toggleeval
 
 if { $::docking::USE_DOCKING } {
-  foreach i {0 1 2 3 4 6 10 11} {
+  foreach i {0 1 2 3 4 5 7 11 12} {
     $m entryconfigure $i -command "[.main.gameInfo.menu entrycget $i -command] ; resizeMainBoard"
   }
 }

@@ -345,6 +345,8 @@ menuText T GInfoMenuBar "Menü çubuğu"  0
 menuText T GInfoToolBar "Araç Çubuğu"  0
 menuText T GInfoButtonBar "Düğme Çubuğu"  0
 menuText T GInfoStatusBar "Durum çubuğu"  0
+# ====== TODO To be translated ======
+menuText T GInfoEvalBar "Score Bar" 0
 
 translate T FlipBoard {Tahtayı çevir}
 translate T RaiseWindows {Gizle-göster}

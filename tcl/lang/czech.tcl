@@ -421,6 +421,8 @@ menuText C GInfoButtonBar "Button Bar"  0
 # ====== TODO To be translated ======
 menuText C GInfoStatusBar "Status Bar"  0
 # ====== TODO To be translated ======
+menuText C GInfoEvalBar "Score Bar" 0
+# ====== TODO To be translated ======
 translate C FlipBoard {Flip board}
 # ====== TODO To be translated ======
 translate C RaiseWindows {Raise windows}

@@ -358,6 +358,7 @@ menuText E GInfoMenuBar "Menu Bar"  0
 menuText E GInfoToolBar "Tool Bar"  0
 menuText E GInfoButtonBar "Button Bar"  0
 menuText E GInfoStatusBar "Status Bar"  0
+menuText E GInfoEvalBar "Score Bar" 0
 
 translate E FlipBoard {Flip board}
 translate E RaiseWindows {Raise windows}

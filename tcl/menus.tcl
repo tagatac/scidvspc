@@ -1111,10 +1111,9 @@ $m add checkbutton -label "Enable Wheelmouse " -variable macWheelMouse -command 
 }
 
 menu $m.ginfo -tearoff 1
-$m.ginfo add checkbutton -label GInfoHideNext \
-    -variable gameInfo(hideNextMove) -offvalue 0 -onvalue 1 -command updateBoard
-$m.ginfo add checkbutton -label GInfoShow \
-    -variable boardSTM -offvalue 0 -onvalue 1 -command {::board::togglestm .main.board}
+$m.ginfo add checkbutton -label GInfoHideNext -variable gameInfo(hideNextMove) -offvalue 0 -onvalue 1 -command updateBoard
+$m.ginfo add checkbutton -label GInfoShow -variable boardSTM -offvalue 0 -onvalue 1 -command {::board::togglestm .main.board}
+$m.ginfo add checkbutton -label GInfoEvalBar -variable gameInfo(showEval) -command ::board::toggleeval
 $m.ginfo add checkbutton -label GInfoFEN -variable gameInfo(showFEN) -offvalue 0 -onvalue 1 -command {
   checkGameInfoHeight
   if {!$::gameInfo(show)} {
@@ -1844,10 +1843,8 @@ proc setLanguageMenus {{lang ""}} {
         OptionsFonts$tag $lang
   }
 
-  foreach tag {HideNext Show Coords Material FEN Marks Wrap FullComment Photos \
-        TBNothing TBResult TBAll} {
-    configMenuText .menu.options.ginfo [tr GInfo$tag $oldLang] \
-        GInfo$tag $lang
+  foreach tag {HideNext Show EvalBar Coords Material FEN Marks Wrap FullComment Photos TBNothing TBResult TBAll} {
+    configMenuText .menu.options.ginfo [tr GInfo$tag $oldLang] GInfo$tag $lang
   }
   configMenuText .menu.options.entry [tr OptionsShowVarPopup $oldLang] OptionsShowVarPopup $lang
   # S.A. here's how to fix these f-ing menus. &&&
@@ -1899,7 +1896,7 @@ proc setLanguageMenus {{lang ""}} {
   # Its' proably tied in with my half-baked Gamelist Widget, and FLAGS
   #  foreach tag {HideNext Show Coords Material FEN Marks Wrap FullComment Photos TBNothing TBResult TBAll Delete Mark} 
 
-  foreach tag {HideNext Show Coords Material FEN MenuBar ToolBar ButtonBar StatusBar} {
+  foreach tag {HideNext Show Coords Material FEN MenuBar ToolBar ButtonBar StatusBar EvalBar} {
     configMenuText .main.gameInfo.menu [tr GInfo$tag $oldLang] GInfo$tag $lang
   }
   configMenuText .main.gameInfo.menu [tr OptionsMovesHighlightLastMove $oldLang] OptionsMovesHighlightLastMove $lang

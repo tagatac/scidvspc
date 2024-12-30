@@ -378,6 +378,8 @@ menuText D GInfoMenuBar "Menüleiste"  0
 menuText D GInfoToolBar "Werkzeugleiste"  0
 menuText D GInfoButtonBar "Schalterleiste"  0
 menuText D GInfoStatusBar "Statusleiste"  0
+# ====== TODO To be translated ======
+menuText D GInfoEvalBar "Score Bar" 0
 translate D FlipBoard {Brett drehen}
 translate D RaiseWindows {Fenster vergrößern}
 translate D AutoPlay {Abspielen}
