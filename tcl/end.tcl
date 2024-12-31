@@ -1719,7 +1719,7 @@ proc standardShortcuts {w} {
   bind $w <Control-C> ::copyFEN
   bind $w <Control-V> ::pasteFEN
   bind $w <Control-s> ::gameReplace
-  bind $w <Control-S> ::gameAdd
+  bind $w <Control-S> {.main.gameInfo.menu invoke 4} ; # ::board::toggleeval
 
   if {$::macOS} {
     bind $w <Command-f>  toggleFullScreen

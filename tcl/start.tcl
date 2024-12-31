@@ -1162,13 +1162,17 @@ proc resizeMainBoard {} {
   incr width_used [expr {$::fd_size * $::boardCoords}]
 
   if {$::board::_stm($bd)} {
-    incr width_used [ lindex [ grid bbox $bd 1 1] 2 ]
-    incr width_used 10
+    incr width_used [ lindex [ grid bbox $bd 1 1] 2 ] ; $ stmgap
+    incr width_used [winfo width $bd.stm]
   }
   if {$::board::_showmat($bd)} {
     # we can't rely on board::_matwidth($bd) or the bbox of 12,1 because matwidth is being set afterwards
     incr width_used 30
   }
+  if {$::board::_showEvalbar($bd)} {
+    incr width  [lindex [ grid bbox $bd 12 1] 2]
+  }
+
   # Not quite perfect for some reason (-16)
   set availw [expr $w - $width_used -16] 
   

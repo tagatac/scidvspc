@@ -2503,11 +2503,12 @@ proc ::board::update {w {board ""} {animate 0} {resize 0}} {
   }
 
   # Update side-to-move icon
-  grid remove $w.wtm $w.btm
   if {$::board::_stm($w)} {
-    set side [string index $::board::_data($w) 65]
-    if {$side == "w"} { grid configure $w.wtm }
-    if {$side == "b"} { grid configure $w.btm }
+    if {[string index $::board::_data($w) 65] == "w"} {
+       grid remove $w.btm ; grid configure $w.wtm
+    } else {
+       grid remove $w.wtm ; grid configure $w.btm
+    }
   }
 
   # Redraw marks and arrows

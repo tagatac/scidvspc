@@ -578,9 +578,10 @@ set helpText(MainWindow) {<h1>Scid vs. PC's Main Window</h1>
   Display options for this window are in <green>Options-<gt>Game Information</green>.
   </p>
 
-  <h4>Material Values</h4>
+  <h4>Material Values and Score Bar</h4>
   <p>
-  On the right hand side of the board the <b>material</b> balance is displayed by small chess pieces.
+  On the right hand side of the board the material balance is displayed by small chess pieces.
+  Beside it (if enabled) is a Score Bar, which shows the first Engine's Evaluation (if one is running), or a Score found in the position's comment.
   </p>
 
   <h4><name Status>The Status Bar</name></h4>
@@ -7182,6 +7183,7 @@ The window manager may interfere with some shortcuts.
 <li><b>control-X</b> - Crosstable</li>
 <li><b>control-b</b> - Book window</li>
 <li><b>control-B</b> - Setup board</li>
+<li><b>control-S</b> - Score Bar</li>
 <li><b>control-Z</b> - Score graph</li>
 <li><b>escape</b> - Close window</li>
 </ul>
@@ -7210,7 +7212,6 @@ The window manager may interfere with some shortcuts.
 <h4>Games and Databases</h4>
 <ul>
 <li><b>control-s</b> - Save game</li>
-<li><b>control-S</b> - Add game</li>
 <li></li>
 <li><b>control-up</b> - Previous game</li>
 <li><b>control-down</b> - Next game</li>
@@ -7276,7 +7277,7 @@ The window manager may interfere with some shortcuts.
 <li><b>control-P</b> - Player finder</li>
 <li><b>control-r</b> - Reset Filter</li>
 <li><b>control-s</b> - Save game</li>
-<li><b>control-S</b> - Add game</li>
+<li><b>control-S</b> - Score Bar</li>
 <li><b>control-t</b> - Tree window</li>
 <li><b>control-T</b> - Tournament finder</li>
 <li><b>control-u</b> - Load game number</li>
