@@ -1162,7 +1162,7 @@ proc resizeMainBoard {} {
   incr width_used [expr {$::fd_size * $::boardCoords}]
 
   if {$::board::_stm($bd)} {
-    incr width_used [ lindex [ grid bbox $bd 1 1] 2 ] ; $ stmgap
+    incr width_used [ lindex [ grid bbox $bd 1 1] 2 ] ; # stmgap
     incr width_used [winfo width $bd.stm]
   }
   if {$::board::_showmat($bd)} {
