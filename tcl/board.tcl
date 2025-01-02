@@ -2535,17 +2535,7 @@ proc ::board::update {w {board ""} {animate 0} {resize 0}} {
 
   if {$::board::_showEvalbar($w)} {
     if { $w == ".main.board"} {
-      if {$::mainEngine > -1} {
-	::board::update_evalbar $w
-      } else {
-	# no engine running, try to get score from comment
-	set score [sc_pos getScore]
-	if {$score == ""} {
-	  # no data for eval bar
-	  set score clear
-	} 
-	::board::update_evalbar $w $score
-      }
+      ::board::updateMainEvalBar
     } else {
       ::board::update_evalbar $w
     }
@@ -2653,8 +2643,12 @@ proc ::board::togglematerial {{w .main.board}} {
   # ::board::ficslabels $w
 }
 
-proc ::board::toggleeval {{w .main.board}} {
+proc ::board::toggleeval {} {
+  set w .main.board
   if {[set ::board::_showEvalbar($w) [expr !$::board::_showEvalbar($w)]]} {
+     # make sure fucking bar is uptodate in height
+    # $w.evalbar configure -height [expr {$::board::_size($w) * 8 + $::board::_border($w) * 9} ]
+    ::board::updateMainEvalBar
     grid configure $w.evalbar -row 1 -column 12 -rowspan 8 -padx 2
   } else {
     catch {grid remove $w.evalbar}
@@ -3142,7 +3136,6 @@ proc ::board::update_evalbar_linlog {w eval} {
   if {! [winfo exists $w]} { return }
 
   set ::board::_eval($w) $eval
-
   set height [$w.evalbar cget -height]
   set unitLen [expr $height/4]
 
@@ -3230,6 +3223,19 @@ proc ::board::update_evalbar {w {eval {}}} {
   }
 }
 
+proc ::board::updateMainEvalBar {{w .main.board}} {
+  if {$::mainEngine > -1} {
+    ::board::update_evalbar $w
+  } else {
+    # no engine running, try to get score from comment
+    set score [sc_pos getScore]
+    if {$score == ""} {
+      # no data for eval bar
+      set score clear
+    }
+    ::board::update_evalbar $w $score
+  }
+}
 
 ###
 ### End of file: board.tcl
