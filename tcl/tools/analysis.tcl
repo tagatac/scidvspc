@@ -3444,6 +3444,17 @@ proc toggleLockEngine {n} {
   updateAnalysis $n
 }
 
+### Retrieve Scores of all PVs' in MultiPV
+
+proc multipv_scores {n} {
+  global analysis
+  set pvEvals {}
+  foreach pv $analysis(multiPVraw$n) {
+    lappend pvEvals [lindex $pv 1]
+  }
+  return $pvEvals
+}
+
 ### Update the text in an analysis window.
 
 proc updateAnalysisText {n} {
@@ -3693,7 +3704,7 @@ proc initAnalysisBoard {n} {
 
   if {![winfo exists $w.frame.bd]} {
     frame $w.frame
-    ::board::new $w.frame.bd [expr {$analysis(boardSize) * 5 + 20}] 0 $::board::_flip(.main.board) 0 1
+    ::board::new $w.frame.bd [expr {$analysis(boardSize) * 5 + 20}] 0 $::board::_flip(.main.board) 0 1 1
 
     # Hmmm - all boards have to have the same font size
     set fontSize [expr ($analysis(boardSize) * 5 + 20)/2 - 2]
@@ -3828,6 +3839,10 @@ proc updateAnalysisBoard {n {moves {}}} {
   set bd .analysisWin$n.frame.bd
 
   ::board::update_evalbar $bd $analysis(score$n)
+  if {$::board::enableMPVTls} {
+    ::board::update_mpvtls $bd [multipv_scores $n]
+  }
+
   set ::board::_coords($bd) $::boardCoords
   ::board::coords $bd
   if {$::board::_flip($bd) != $::board::_flip(.main.board)} {

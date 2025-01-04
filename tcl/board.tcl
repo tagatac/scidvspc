@@ -1301,9 +1301,10 @@ proc ::board::san {sqno} {
 #   The psize option should be a piece bitmap size supported
 #   in Scid (see the boardSizes variable in start.tcl).
 #   The showmat parameter adds a frame to display material balance
-#   evalbar if true adds a evalbar
+#   evalbar adds an evalbar
+#   (mpvtls shows traffic light color coded MultiPV score bar, if ::board::enableMPVTls == 1)
 
-proc ::board::new {w {psize 40} {showmat 0} {flip 0} {stm 0} {evalbar 0}} {
+proc ::board::new {w {psize 40} {showmat 0} {flip 0} {stm 0} {evalbar 0} {mpvtls 0}} {
   if {[winfo exists $w]} { return }
 
   set ::board::_size($w) $psize
@@ -1322,6 +1323,7 @@ proc ::board::new {w {psize 40} {showmat 0} {flip 0} {stm 0} {evalbar 0}} {
   set ::board::_showmat($w) $showmat
   set ::board::_showEvalbar($w) $evalbar
   set ::board::_eval($w) 0
+  set ::board::_showMPVTls($w) $mpvtls
 
   set border $::board::_border($w)
   set bsize [expr {$psize * 8 + $border * 9} ]
@@ -1377,10 +1379,8 @@ proc ::board::new {w {psize 40} {showmat 0} {flip 0} {stm 0} {evalbar 0}} {
 
   # Material canvas init
   set ::board::_matwidth($w) [boardSize_plus_n -7 $w]
-  if {$::board::_showmat($w)} {
-    canvas $w.mat -width $::board::_matwidth($w) -height [expr $::board::_size($w) * 8] \
-      -insertborderwidth 0 -borderwidth 0 -highlightthickness 0
-  }
+  canvas $w.mat -width $::board::_matwidth($w) -height [expr $::board::_size($w) * 8] \
+    -insertborderwidth 0 -borderwidth 0 -highlightthickness 0
 
   grid $w.wtm -row 8 -column 0
   grid $w.btm -row 1 -column 0
@@ -1394,8 +1394,13 @@ proc ::board::new {w {psize 40} {showmat 0} {flip 0} {stm 0} {evalbar 0}} {
     grid $w.evalbar -row 1 -column 12 -rowspan 8 -padx 2
   }
 
+  canvas $w.mpvtls -width [expr {int(ceil($::board::_size($w)/5.0))}] -height $bsize
+  if {($::board::_showMPVTls($w) && $::board::enableMPVTls)} {
+    grid $w.mpvtls -row 1 -column 13 -rowspan 8
+  }
+
   if {$::board::_showmat($w)} {
-    grid $w.mat -row 1 -column 13 -rowspan 8
+    grid $w.mat -row 1 -column 14 -rowspan 8
   }
 
   ::board::stm $w
@@ -2634,7 +2639,7 @@ proc ::board::togglematerial {{w .main.board}} {
   # while ::board::_showmat($w) is window specific.
 
   if {$::gameInfo(showMaterial)} {
-    grid configure $w.mat -row 1 -column 13 -rowspan 8
+    grid configure $w.mat -row 1 -column 14 -rowspan 8
     ::board::material $w
   } else {
     catch {grid remove $w.mat}
@@ -2652,6 +2657,15 @@ proc ::board::toggleeval {} {
     grid configure $w.evalbar -row 1 -column 12 -rowspan 8 -padx 2
   } else {
     catch {grid remove $w.evalbar}
+  }
+}
+
+proc ::board::togglempvtls {{w .main.board}} {
+  if {!$::board::enableMPVTls} { return }
+  if {[set ::board::_showMPVTls($w) [expr !$::board::_showMPVTls($w)]]} {
+    grid configure $w.mpvtls -row 1 -column 13 -rowspan 8
+  } else {
+    catch {grid remove $w.mpvtls}
   }
 }
 
@@ -3125,11 +3139,12 @@ proc boardToFile { format filepath } {
 }
 
 #
-# Draw a eval bar => lin (-1 to +1) + log for beyond
-# -1.00 to +1.00 eval maps to -1sq to +1sq around mid point (ie ~ loss or gain a pawn)
-# -3.16 to +3.16 eval maps to -2sq to +2sq around mid point (ie ~ loss or gain a minor piece)
-# -10.0 to +10.0 eval maps to -3sq to +3sq around mid point
-# -31.6 to +31.6 eval maps to -4sq to +4sq around mid point (anything beyond clips to these)
+# Draw a eval bar => lin (-2 to +2) + log for beyond
+# -1.00 to +1.00 eval maps upto -1sq to +1sq around mid point (ie ~ loss or gain a pawn)
+# -2.00 to +2.00 eval maps upto -2sq to +2sq around mid point
+# -3.16 to +3.16 eval maps to -2.5sq to +2.5sq around mid point (ie ~ loss or gain a minor piece)
+# -5.00 to +5.00 eval maps to -3sq to +3sq around mid point (ie ~ loss or gain of rook)
+# -12.6 to +12.6 eval maps to -4sq to +4sq around mid point (anything beyond clips to these)
 #
 
 proc ::board::update_evalbar_linlog {w eval} {
@@ -3139,10 +3154,10 @@ proc ::board::update_evalbar_linlog {w eval} {
   set height [$w.evalbar cget -height]
   set unitLen [expr $height/4]
 
-  if {($eval >= -1) && ($eval <= 1)} {
+  if {($eval >= -2) && ($eval <= 2)} {
     set wlen [expr $eval/2]
   } else {
-    set wlen [expr log10(abs($eval*1000*3.16))-3.0]
+    set wlen [expr (log10(abs($eval*1000*3.16))-3.0)*1.2489]
     if {$wlen > 2.0} { set wlen 2.0 }
     if {$eval < 0.0} { set wlen [expr $wlen*-1] }
   }
@@ -3210,9 +3225,6 @@ proc ::board::update_evalbar_simplin {w eval} {
 #
 
 proc ::board::update_evalbar {w {eval {}}} {
-  if {! [winfo exists $w]} {
-    return
-  }
   if {$eval == {}} {
     set eval $::board::_eval($w)
   }
@@ -3234,6 +3246,55 @@ proc ::board::updateMainEvalBar {{w .main.board}} {
       set score clear
     }
     ::board::update_evalbar $w $score
+  }
+}
+
+# Show MultiPV scores based traffic lights bar,
+# so that one gets a quick hint of how good or bad or tricky or ... the position is
+# Red (good for Black),and Green (good for White)
+
+proc eval2tlcolor {eval} {
+  if {$eval > 0.2} {
+      # Green
+      if {$eval > 5} {set neval 5} {set neval $eval}
+      set deltaRatio [expr (($neval-0.2)/5.0)]
+      set color [format "#%02xf800" [expr int((1-$deltaRatio)*240)]]
+  } elseif {$eval > -0.2} {
+      # Yellow
+      set color #f8f800
+  } else {
+      # Red
+      if {$eval < -5} {set neval -5} {set neval $eval}
+      set deltaRatio [expr ((abs($neval)-0.2)/5.0)]
+      set color [format "#f8%02x00" [expr int((1-$deltaRatio)*240)]]
+  }
+  return $color
+}
+
+proc ::board::update_mpvtls {w evals} {
+  if {! $::board::_showMPVTls($w)} {
+    $w.mpvtls delete mpvtls
+    return
+  }
+
+  set numEvals [llength $evals]
+  if {$numEvals <= 0} { return }
+
+  set height [$w.mpvtls cget -height]
+  set unitLen [expr $height/$numEvals]
+
+  set width [$w.mpvtls cget -width]
+  set x [expr $width/2]
+
+  $w.mpvtls delete mpvtls
+  set y2 0
+  set icnt 0
+  foreach eval $evals {
+    incr icnt
+    set color [eval2tlcolor $eval]
+    set y1 $y2
+    set y2 [expr $icnt*$unitLen]
+    $w.mpvtls create line $x $y1 $x $y2 -width $width -fill $color -tag mpvtls
   }
 }
 
