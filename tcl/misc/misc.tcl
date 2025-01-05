@@ -58,7 +58,7 @@ proc bindMouseWheel {win text} {
 
 # Resize a board with mousewheel
 
-proc bindMouseWheelBoard {win board {command  {}}} {
+proc bindControlMouseWheelResizeBoard {win board {command  {}}} {
   if {$::windowsOS || $::macOS} {
     bind $win <Control-Shift-MouseWheel> {break}
     bind $win <Control-MouseWheel> "::board::resize $board \[expr \{%D>0 ? 1 : -1\}\] ; eval $command ; break"
@@ -66,6 +66,19 @@ proc bindMouseWheelBoard {win board {command  {}}} {
     bind $win <Control-Button-4> "::board::resize $board +1 ; eval $command ; break"
     bind $win <Control-Button-5> "::board::resize $board -1 ; eval $command ; break"
   }
+}
+
+proc bindWheelMouseCommand {w command1 command2} {
+    # Wheelmouse toggles between visualize modes.
+    if {$::windowsOS || $::macOS} {
+      bind $w <MouseWheel> "
+        if \{%D > 0\} \{eval \"$command1\"\}
+        if \{%D < 0\} \{eval \"$command2\"\}
+      "
+    } else {
+      bind $w <Button-4> "eval \"$command1\""
+      bind $w <Button-5> "eval \"$command2\""
+    }
 }
 
 # dialogbuttonframe:

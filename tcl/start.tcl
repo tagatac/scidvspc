@@ -424,6 +424,7 @@ set analysis(showEngineInfo) 0
 set analysis(boardSize) 2
 set analysis(boardType) Arrows
 set analysis(boardSeqNumColor) black
+set analysis(boardSeqCount) 3
 
 # Colors
 

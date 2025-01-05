@@ -437,7 +437,8 @@ proc ::enginelist::choose {} {
   entry $w.buttons2.logmax            -textvar analysis(logMax) -width 6
   label $w.buttons2.ply               -textvar tr(MaxPly)
   spinbox $w.buttons2.maxply -width 4 -textvar analysis(maxPly) -from 0 -to 50 -increment 1
-  checkbutton $w.buttons2.wrap   -text [tr GInfoWrap] -variable analysis(wrapPV)
+  checkbutton $w.buttons2.wrap -text [tr GInfoWrap] -variable analysis(wrapPV)
+  checkbutton $w.buttons2.logname -variable analysis(logName) -textvar tr(LogName)
   dialogbutton $w.buttons2.start -textvar tr(Start) -command {
     makeAnalysisWin [lindex [.enginelist.list.list curselection] 0] settime
   }
@@ -445,11 +446,17 @@ proc ::enginelist::choose {} {
   checkbutton $w.buttons3.info      -textvar tr(FICSInfo) -variable analysis(showEngineInfo)
   checkbutton $w.buttons3.showBoard -textvar tr(Board) -variable analysis(showBoard)
   label       $w.buttons3.sizeLabel     -text [tr OptionsFicsSize]
-  spinbox     $w.buttons3.size -width 3 -textvar analysis(boardSize) -from 1 -to 5 -increment 1
+  spinbox     $w.buttons3.size -width 2 -textvar analysis(boardSize) -from 1 -to 5 -increment 1 -justify center
   ttk::combobox $w.buttons3.showVar -width 8 -textvariable analysis(boardType) -state readonly \
       -values {Arrows Sequential Position} -postcommand "catch \{$w.frame.bd.bd delete var bvm\}"
+
+  label       $w.buttons3.seqLabel -text {Seq Count}
+  spinbox $w.buttons3.seqCount -from 1 -to 8 -increment 1 -textvar analysis(boardSeqCount) -justify center -width 2
+  ::utils::tooltip::Set $w.buttons3.seqCount "MainPV visualisation length"
+
+  checkbutton $w.buttons3.trafficlights -variable ::board::enableMPVTls -text "Colour Bar"
+
   checkbutton $w.buttons3.lowpriority -variable analysis(lowPriority) -textvar tr(LowPriority)
-  checkbutton $w.buttons3.logname     -variable analysis(logName) -textvar tr(LogName)
 
   # Right-click inits engine but doesn't start
   bind $w.buttons2.start <Button-3> {
@@ -462,10 +469,11 @@ proc ::enginelist::choose {} {
 
   pack $w.buttons.up $w.buttons.down $w.buttons.log $w.buttons.uci $w.buttons.edit $w.buttons.add $w.buttons.copy $w.buttons.delete -side left -expand yes
 
-  pack $w.buttons3.info $w.buttons3.showBoard $w.buttons3.space $w.buttons3.sizeLabel $w.buttons3.size $w.buttons3.showVar $w.buttons3.lowpriority $w.buttons3.logname -side left -padx 5
+  pack $w.buttons3.info $w.buttons3.showBoard $w.buttons3.space $w.buttons3.sizeLabel $w.buttons3.size $w.buttons3.showVar \
+       $w.buttons3.seqLabel $w.buttons3.seqCount $w.buttons3.trafficlights $w.buttons3.lowpriority -side left -padx 5
 
   pack $w.buttons2.close $w.buttons2.start -side right -padx 5 
-  pack $w.buttons2.logengines $w.buttons2.logmax $w.buttons2.ply $w.buttons2.maxply $w.buttons2.wrap -side left -padx 5
+  pack $w.buttons2.logengines $w.buttons2.logmax $w.buttons2.ply $w.buttons2.maxply $w.buttons2.wrap $w.buttons2.logname -side left -padx 5
 
   focus $w.buttons2.start
   # Focus is now set to listbox (in ::enginelist::listEngines) for keyboard shortcuts
@@ -908,15 +916,9 @@ proc initAnnotation {n} {
   ### pack everything inside a scrolled frame, as this widget gets too tall
   pack [frame $w.f] -side top -expand 1 -fill both
 
-  if {$::windowsOS || $::macOS} {
-    bind $w <MouseWheel> {
-      if {[expr -%D] < 0} {.configAnnotation.f.sf yview scroll -1 units}
-      if {[expr -%D] > 0} {.configAnnotation.f.sf yview scroll +1 units}
-    }
-  } else {
-      bind $w <Button-4> ".configAnnotation.f.sf yview scroll -1 units"
-      bind $w <Button-5> ".configAnnotation.f.sf yview scroll +1 units"
-  }
+  bindWheelMouseCommand $w \
+   {.configAnnotation.f.sf yview scroll -1 units} \
+   {.configAnnotation.f.sf yview scroll +1 units}
 
   set w $w.f
 
@@ -2445,15 +2447,6 @@ proc makeAnalysisWin {{n 0} {options {}}} {
     # $w.b.finishGame configure -state disabled
   }
 
-  set analysis(boardSeqCount$n) 3
-  spinbox $w.b.seqCount -from 1 -to 8 -increment 1 -textvar analysis(boardSeqCount$n) -justify center \
-    -width 2 -font font_Small -command "
-      set analysis(boardSeqLengthSeen$n) 0
-      set analysis(boardSeqDepthSeen$n) 0
-      updateAnalysisBoard $n redraw
-    "
-  ::utils::tooltip::Set $w.b.seqCount "MainPV visualisation length"
-
   checkbutton $w.b.training -image tb_training  -indicatoron false -width 32 -height 32 \
     -command "toggleAutomove $n" -variable analysis(automove$n) -relief $relief
   ::utils::tooltip::Set $w.b.training $tr(Training)
@@ -2471,13 +2464,12 @@ proc makeAnalysisWin {{n 0} {options {}}} {
 
   pack $w.b.startStop $w.b.move $w.b.line $w.b.alllines \
        $w.b.multipv $w.b.annotatebut $w.b.lockengine $w.b.showboard $w.b.exclude $w.b.priority $w.b.showinfo \
-       $w.b.update $w.b.finishGame $w.b.seqCount -side left
+       $w.b.update $w.b.finishGame -side left
   if {!$showAnnoButton} {
     pack forget $w.b.annotatebut
   }
-  pack $w.b.multipv $w.b.seqCount -fill y -pady 2
+  pack $w.b.multipv -fill y -pady 2
   $w.b.multipv configure -state readonly
-  $w.b.seqCount configure -state readonly
 
   if {$n == 1 || $n == 2} {
     # training only works with engines 1 and 2
@@ -3721,17 +3713,12 @@ proc initAnalysisBoard {n} {
       $w.frame.bd.bd delete var bvm
       nextBoardType $n"
 
-    bindMouseWheelBoard $w.frame.bd.bd $w.frame.bd "updateAnalysisBoard $n redraw"
-    # Wheelmouse toggles between visualize modes.
-    if {$::windowsOS || $::macOS} {
-      bind $w.frame.bd.bd <MouseWheel> "
-        if \{\[expr -%D\] < 0\} \{set analysis(boardSeqMode$n) \[expr (\$analysis(boardSeqMode$n)-1) \%% 3\] ; updateAnalysisBoard $n redraw\}
-        if \{\[expr -%D\] > 0\} \{set analysis(boardSeqMode$n) \[expr (\$analysis(boardSeqMode$n)+1) \%% 3\] ; updateAnalysisBoard $n redraw\}
-     "
-    } else {
-      bind $w.frame.bd.bd <Button-4> "set analysis(boardSeqMode$n) \[expr (\$analysis(boardSeqMode$n)-1) \%% 3\] ; updateAnalysisBoard $n redraw"
-      bind $w.frame.bd.bd <Button-5> "set analysis(boardSeqMode$n) \[expr (\$analysis(boardSeqMode$n)+1) \%% 3\] ; updateAnalysisBoard $n redraw"
-    }
+    bindControlMouseWheelResizeBoard $w.frame.bd.bd $w.frame.bd "updateAnalysisBoard $n redraw"
+
+    bindWheelMouseCommand $w.frame.bd.bd \
+      "set analysis(boardSeqMode$n) \[expr (\$::analysis(boardSeqMode$n)-1) \%% 3\] ; updateAnalysisBoard $n redraw" \
+      "set analysis(boardSeqMode$n) \[expr (\$::analysis(boardSeqMode$n)+1) \%% 3\] ; updateAnalysisBoard $n redraw"
+
   }
   if {$analysis(lockEngine$n)} {
     ::board::update $w.frame.bd $analysis(lockPos$n)
@@ -3800,7 +3787,7 @@ proc boardVisualizeMoves {board n moves} {
       }
     }
     incr mc
-    if {$mc > $analysis(boardSeqCount$n)} {
+    if {$mc > $analysis(boardSeqCount)} {
       break
     }
     if {$cm != ""} {
