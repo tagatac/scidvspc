@@ -251,7 +251,7 @@ namespace eval pgn {
     bind $w <KeyPress-v> [bind . <KeyPress-v>]
     bind $w <KeyPress-z> [bind . <KeyPress-z>]
     bindWheeltoFont $w.text
-    bind $w <Configure> "recordWinSize $w"
+    bind $w.text <Configure> "recordWinSize $w"
 
     $w.text tag add Current 0.0 0.0
 

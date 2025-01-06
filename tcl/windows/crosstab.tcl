@@ -337,7 +337,7 @@ proc ::crosstab::Open {{game {}}} {
   bind $w <Destroy> {}
   ::crosstab::Refresh $game
 
-  bind $w <Configure> "recordWinSize $w"
+  bind $w.b <Configure> "recordWinSize $w"
   ::createToplevelFinalize $w
 }
 

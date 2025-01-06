@@ -251,7 +251,7 @@ proc ::tree::Open {{baseNumber 0}} {
   bind $w.f.tl <Button-2> "$w.menu.opt invoke \"[tr TreeOptShowFrame]\""
   bindWheeltoFixed $w.f.tl
 
-  bind $w <Configure> "recordWinSize $w"
+  bind $w <Configure> "if {\"%W\" == \"$w\"} {recordWinSize $w}"
 
   ### Tree statusbar now unused
   # label $w.status -width 1 -anchor w -font font_Small -relief sunken -textvar tree(status$baseNumber)

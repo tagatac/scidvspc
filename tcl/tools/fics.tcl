@@ -558,7 +558,7 @@ namespace eval fics {
 
     bind $w <Control-q> ::fics::close
     bind $w <Destroy>   ::fics::close
-    bind $w <Configure> "::fics::recordFicsSize $w"
+    bind $w.console <Configure> "::fics::recordFicsSize $w"
     bind $w <F1> {helpWindow FICS}
     bind $w <Button-3> {
       tk_popup .menu.options.fics %X %Y

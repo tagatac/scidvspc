@@ -556,6 +556,7 @@ proc ::windows::gamelist::Open {} {
   catch {wm state $w normal}
   ::createToplevelFinalize $w
 
+  # lots of events, but seem needed to keep pagination
   bind $w <Configure> {::windows::gamelist::Configure %W }
 
   update

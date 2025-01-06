@@ -72,7 +72,6 @@ proc ::commenteditor::Open {} {
   }
 
   bind $w <Destroy> ""
-  bind $w <Configure> "recordWinSize $w"
   # standardShortcuts $w
   # bind $w <Left> {}
   # bind $w <Right> {}
@@ -317,6 +316,7 @@ proc ::commenteditor::Open {} {
   ::commenteditor::Refresh
 
   focus $w.cf.text
+  bind $w.b <Configure> "recordWinSize $w"
   ::createToplevelFinalize $w
 }
 

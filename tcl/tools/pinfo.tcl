@@ -110,7 +110,7 @@ proc playerInfo {{player ""} {raise 0}} {
 
     setWinSize $w
     catch {wm state $w normal}
-    bind $w <Configure> "recordWinSize $w"
+    bind $w.text <Configure> "recordWinSize $w"
     ::createToplevelFinalize $w
   } else {
     # Generating a player report refreshs stats, which refreshes this proc

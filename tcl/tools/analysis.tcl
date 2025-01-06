@@ -2609,7 +2609,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
     setAnalysisPriority $n
   }
   # Use an arbitary window to bind to <Configure>, but some work better than others
-  bind $w <Configure> " if {\"%W\" == \"$w.b\"} {recordWinSize $w ; placePopupButton $n}"
+  bind $w <Configure> "if {\"%W\" == \"$w.b\"} {recordWinSize $w ; placePopupButton $n}"
   placePopupButton $n
   if {$::mainEngine == -1 && $analysis(autostart$n)} {
      after idle "set ::mainEngine $n ; ::board::update_evalbar .main.board"
