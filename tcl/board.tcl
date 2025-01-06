@@ -2509,13 +2509,17 @@ proc ::board::update {w {board ""} {animate 0} {resize 0}} {
 
   # Update side-to-move icon
   if {$::board::_stm($w)} {
-    if {[string index $::board::_data($w) 65] == "w"} {
+    set side [string index $::board::_data($w) 65]
+    if {$side == "w"} {
        grid remove $w.btm ; grid configure $w.wtm
-    } else {
+    } elseif {$side == "b"} {
        grid remove $w.wtm ; grid configure $w.btm
+    } else {
+       grid remove $w.wtm $w.btm
     }
+  } else {
+     grid remove $w.wtm $w.btm
   }
-
   # Redraw marks and arrows
   if {$::board::_showMarks($w)} {
     ::board::mark::drawAll $w
