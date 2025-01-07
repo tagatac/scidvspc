@@ -41,6 +41,7 @@ if {0} {
 if {![catch {tk windowingsystem} wsystem] && $wsystem == "aqua"} {
   # Note - we don't currently support installing on Mac in the unix fashion (ie /usr)
   set macOS 1
+  set macCocoa [expr {!("AppKit" ni [winfo server .])}]
   set scidName {Scid vs. Mac}
   if {[file isdirectory /usr/local/bin]} {
     # Wish does not use the Bash path for some reason
