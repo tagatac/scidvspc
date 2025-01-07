@@ -641,7 +641,7 @@ proc ::tree::displayLines {baseNumber moves} {
   $w.f.tl configure -state normal
   $w.f.tl delete 1.0 end
 
-  if {$::macOS && $::macCocoa} {update} ; # mac text widget hack/fix
+  if {$::macOS && $::macCocoa} {update idletasks} ; # mac text widget hack/fix
 
   if {$moves == "interrupted"} {
     $w.f.tl insert end $::tr(ErrSearchInterrupted)
