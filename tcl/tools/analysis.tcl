@@ -3699,7 +3699,7 @@ proc initAnalysisBoard {n} {
     ::board::new $w.frame.bd [expr {$analysis(boardSize) * 5 + 20}] 0 $::board::_flip(.main.board) 0 1 1
 
     # Hmmm - all boards have to have the same font size
-    set fontSize [expr ($analysis(boardSize) * 5 + 20)/2 - 2]
+    set fontSize [expr int((($analysis(boardSize) * 5 + 20)/2)*0.8)]
     set analysis(boardSeqFont) "{courier 10 pitch} $fontSize bold"
 
     set ::board::_coords($w.frame.bd) $::boardCoords
@@ -3797,7 +3797,7 @@ proc boardVisualizeMoves {board n moves} {
 
       # Show an arrow between start and end squares
       set coord [::board::mark::GetArrowCoords $board $sq_start $sq_end [expr $::board::arrowLength*0.33]]
-      $board create line $coord -fill [expr {($im+$ply) % 2 ? "grey40" : "white"}] -arrow last -width 2 -arrowshape {5 7 3} -tag bvm
+      $board create line $coord -fill [expr {($im+$ply) % 2 ? $::blackLineColor : $::whiteLineColor}] -arrow last -width 2 -arrowshape {5 7 3} -tag bvm
 
       # and the move number midway along the line
 
