@@ -521,13 +521,10 @@ proc updateVarMenus {} {
     $m entryconfig 16 -state normal
     $m entryconfig 17 -state normal
     $m entryconfig 18 -state normal
-  }
-  $b.menu  delete 0 end
-  $m.del   delete 0 end
-  $m.first delete 0 end
-  $m.main  delete 0 end
-  # PG: add the move of main line
-  if {$numVars > 0} {
+    $b.menu  delete 0 end
+    $m.del   delete 0 end
+    $m.first delete 0 end
+    $m.main  delete 0 end
     set varList [sc_var list]
     set move [sc_game info nextMove]
     set showLongVars [expr {[sc_pos location] + 1 ==  [sc_game info halfmoves]}]
