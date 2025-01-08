@@ -42,18 +42,19 @@ if {![catch {tk windowingsystem} wsystem] && $wsystem == "aqua"} {
   # Note - we don't currently support installing on Mac in the unix fashion (ie /usr)
   set macOS 1
   set macCocoa [expr {!("AppKit" ni [winfo server .])}]
+  # set macCarbon [string match QD* [winfo server .]]
   set scidName {Scid vs. Mac}
   if {[file isdirectory /usr/local/bin]} {
     # Wish does not use the Bash path for some reason
     set env(PATH) $env(PATH):/usr/local/bin
   }
-  set macCarbon [string match QD* [winfo server .]]
   catch {
     # Thanks to Francois for this hack to add treeview Control-Button-1 bindings to the gamelist
     event add <<ToggleSelection>> <Control-ButtonPress-1>
   }
 } else {
   set macOS 0
+  set macCocoa 0
   set scidName {Scid vs. PC}
 }
 

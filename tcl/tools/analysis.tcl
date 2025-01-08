@@ -4664,7 +4664,7 @@ proc popupButtonBar {n} {
   pack [frame .t.f -relief solid -borderwidth 1]
   set t .t.f
   catch {wm transient .t [winfo toplevel .main]}
-  if {!$::macOS || $::macCarbon} {
+  if {!$::macCocoa} {
     wm overrideredirect .t 1
   }
 

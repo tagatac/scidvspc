@@ -1353,7 +1353,7 @@ proc gameSave {gnum {focus {}}} {
     } else {
       set extraTags [.save.g.extratext get 1.0 end-1c]
       if {[gsave $gsaveNum]} {
-        if {$::macOS} {
+        if {$::macCocoa} {
           # Segfaults on bug infested Cocoa wish.
           after idle {destroy .save}
         } else {

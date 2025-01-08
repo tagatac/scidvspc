@@ -47,7 +47,7 @@
 
 #data retrieval mechanism: text or file paths are copied from drag clipboard to system clipboard and retrieved via [clipboard get]; array of file paths is converted to single tab-separated string, can be split into Tcl list
 
-if {[tk windowingsystem] eq "aqua" && "AppKit" ni [winfo server .]} {
+if {!$::macCocoa} {
   error {TkAqua Cocoa required}
 }
 
