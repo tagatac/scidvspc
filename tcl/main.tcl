@@ -508,27 +508,31 @@ if { $macOS } {
 #   Calls sc_var list and sc_var count to get the list of variations.
 
 proc updateVarMenus {} {
+  set m .menu.edit
+  set b .main.button.intoVar
   set numVars [sc_var count]
   if {$numVars == 0} {
-    .main.button.intoVar configure -state disabled
-    .menu.edit entryconfig [tr EditDelete] -state disabled
-    .menu.edit entryconfig [tr EditFirst] -state disabled
-    .menu.edit entryconfig [tr EditMain] -state disabled
+    $b configure -state disabled
+    $m entryconfig 16 -state disabled ;# EditDelete
+    $m entryconfig 17 -state disabled ;# EditFirst
+    $m entryconfig 18 -state disabled ;# EditMain
   } else {
-    .main.button.intoVar configure -state normal
-    .menu.edit entryconfig [tr EditDelete] -state normal
+    $b configure -state normal
+    $m entryconfig 16 -state normal
+    $m entryconfig 17 -state normal
+    $m entryconfig 18 -state normal
   }
-  .main.button.intoVar.menu delete 0 end
-  .menu.edit.del delete 0 end
-  .menu.edit.first delete 0 end
-  .menu.edit.main delete 0 end
+  $b.menu  delete 0 end
+  $m.del   delete 0 end
+  $m.first delete 0 end
+  $m.main  delete 0 end
   # PG: add the move of main line
   if {$numVars > 0} {
     set varList [sc_var list]
     set move [sc_game info nextMove]
     set showLongVars [expr {[sc_pos location] + 1 ==  [sc_game info halfmoves]}]
     if {$move == ""} { set move "($::tr(empty))" }
-    .main.button.intoVar.menu add command -label "0: $move" -command "sc_move forward; updateBoard" -underline 0
+    $b.menu add command -label "0: $move" -command "sc_move forward; updateBoard" -underline 0
     for {set i 0} {$i < $numVars} {incr i} {
       set move [lindex $varList $i]
       set state normal
@@ -542,16 +546,10 @@ proc updateVarMenus {} {
 	sc_var exit
       }
       set str "[expr {$i + 1}]: $move"
-      set commandStr "sc_var moveInto $i; updateBoard"
-      if {$i < 9} {
-	.main.button.intoVar.menu add command -label $str -command $commandStr \
-	    -underline 0
-      } else {
-	.main.button.intoVar.menu add command -label $str -command $commandStr
-      }
-      .menu.edit.del add command -label $str -command "sc_game undoPoint ; sc_var delete $i; updateBoard -pgn"
-      .menu.edit.first add command -label $str -command "sc_game undoPoint ; sc_var first $i; updateBoard -pgn"
-      .menu.edit.main add command -label $str -command "sc_game undoPoint ; sc_var promote $i; updateBoard -pgn" -state $state
+      $b.menu  add command -label $str -command "sc_var moveInto $i; updateBoard"
+      $m.del   add command -label $str -command "sc_game undoPoint ; sc_var delete $i; updateBoard -pgn"
+      $m.first add command -label $str -command "sc_game undoPoint ; sc_var first $i; updateBoard -pgn"
+      $m.main  add command -label $str -command "sc_game undoPoint ; sc_var promote $i; updateBoard -pgn" -state $state
     }
   }
 }
