@@ -581,7 +581,7 @@ set helpText(MainWindow) {<h1>Scid vs. PC's Main Window</h1>
   <h4>Material Values and Score Bar</h4>
   <p>
   On the right hand side of the board the material balance is displayed by small chess pieces.
-  Beside it (if enabled) is a Score Bar, which shows the first Engine's Evaluation (if one is running), or a Score found in the position's comment.
+  Beside it is a Score Bar (if enabled - toggled via Control-Shift-S), which shows the first engine's evaluation (if one is running), or a Score found in the position's comment.
   </p>
 
   <h4><name Status>The Status Bar</name></h4>
@@ -2852,11 +2852,12 @@ with the format "stat01: time nodes ply mvleft mvtot mvname". The results can be
 
   <p>Clicking <button tb_coords 32> will toggle a small board which can take on three modes, Arrows, Sequential and Position.
 The default mode and size are set in the <a Analysis List>Engine Configuration</a> window, and can also be toggled by pressing the middle mouse button.
-Pressing control-wheelmouse can resize this board.
-</p><p>
+<i>Control-wheelmouse resizes this board.</i>
 <br><b>Position</b> is the original mode. It displays the board's position after the engines line has been played.
 <br><b>Arrows</b> will display clickable arrows for the engine's move, or multiple arrows if PV is enabled.
 <br><b>Sequential</b> will show the line as a numbered sequence of small (unclickable) arrows. The length of moves shown is by default 3 but can be changed in the last spinbox in the engine toolbar. The line colour is selected by Options-<gt>Colours-<gt>EngineArrows.
+</p>
+<p>Beside the board is a black and white Score Bar (toggled via Control-Shift-S), and optionally, a Coloured 'Traffic' Bar (Control-Shift-C) which shows colours for each MultiPV's score - indicating the sharpness of a position. Red means Black is winning, Yellow is even, and Green for White winning."
 </p>
 
   <h1>Other Features</h1>

@@ -543,7 +543,7 @@ proc updateVarMenus {} {
 	sc_var exit
       }
       set str "[expr {$i + 1}]: $move"
-      $b.menu  add command -label $str -command "sc_var moveInto $i; updateBoard"
+      $b.menu  add command -label $str -command "sc_var moveInto $i; updateBoard" -underline 0
       $m.del   add command -label $str -command "sc_game undoPoint ; sc_var delete $i; updateBoard -pgn"
       $m.first add command -label $str -command "sc_game undoPoint ; sc_var first $i; updateBoard -pgn"
       $m.main  add command -label $str -command "sc_game undoPoint ; sc_var promote $i; updateBoard -pgn" -state $state

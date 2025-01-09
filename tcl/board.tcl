@@ -1395,7 +1395,7 @@ proc ::board::new {w {psize 40} {showmat 0} {flip 0} {stm 0} {evalbar 0} {mpvtls
   }
 
   canvas $w.mpvtls -width [expr {int(ceil($::board::_size($w)/5.0))}] -height $bsize
-  if {($::board::_showMPVTls($w) && $::board::enableMPVTls)} {
+  if {($::board::_showMPVTls($w))} {
     grid $w.mpvtls -row 1 -column 13 -rowspan 8
   }
 
@@ -2652,20 +2652,19 @@ proc ::board::togglematerial {{w .main.board}} {
   # ::board::ficslabels $w
 }
 
-proc ::board::toggleeval {} {
-  set w .main.board
+proc ::board::toggleeval {{w .main.board}} {
+  
   if {[set ::board::_showEvalbar($w) [expr !$::board::_showEvalbar($w)]]} {
-     # make sure fucking bar is uptodate in height
-    # $w.evalbar configure -height [expr {$::board::_size($w) * 8 + $::board::_border($w) * 9} ]
-    ::board::updateMainEvalBar
+    if {$w == ".main.board"} {
+      ::board::updateMainEvalBar
+    }
     grid configure $w.evalbar -row 1 -column 12 -rowspan 8 -padx 2
   } else {
     catch {grid remove $w.evalbar}
   }
 }
 
-proc ::board::togglempvtls {{w .main.board}} {
-  if {!$::board::enableMPVTls} { return }
+proc ::board::togglempvtls {w} {
   if {[set ::board::_showMPVTls($w) [expr !$::board::_showMPVTls($w)]]} {
     grid configure $w.mpvtls -row 1 -column 13 -rowspan 8
   } else {

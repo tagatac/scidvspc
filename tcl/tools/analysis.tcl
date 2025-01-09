@@ -3693,35 +3693,39 @@ proc addMoveNumbers { e pv } {
 proc initAnalysisBoard {n} {
   global analysis
   set w .analysisWin$n
+  set bd $w.frame.bd
 
-  if {![winfo exists $w.frame.bd]} {
+  if {![winfo exists $bd]} {
     frame $w.frame
-    ::board::new $w.frame.bd [expr {$analysis(boardSize) * 5 + 20}] 0 $::board::_flip(.main.board) 0 1 1
+    ::board::new $bd [expr {$analysis(boardSize) * 5 + 20}] 0 $::board::_flip(.main.board) 0 1 $::board::enableMPVTls
 
     # Hmmm - all boards have to have the same font size
     set fontSize [expr int((($analysis(boardSize) * 5 + 20)/2)*0.8)]
     set analysis(boardSeqFont) "{courier 10 pitch} $fontSize bold"
 
-    set ::board::_coords($w.frame.bd) $::boardCoords
-    ::board::coords $w.frame.bd
+    set ::board::_coords($bd) $::boardCoords
+    ::board::coords $bd
     button $w.frame.close -image arrow_close -font font_Small -relief flat -command "
       set analysis(showBoard$n) 0
       pack forget $w.frame"
 
-    pack $w.frame.bd $w.frame.close -side left -anchor n
-    bind $w.frame.bd.bd <Button-2> "
-      $w.frame.bd.bd delete var bvm
+    pack $bd $w.frame.close -side left -anchor n
+    bind $w <Control-S> "::board::toggleeval $bd"
+    bind $w <Control-C> "::board::togglempvtls $bd"
+
+    bind $bd.bd <Button-2> "
+      $bd.bd delete var bvm
       nextBoardType $n"
 
-    bindControlMouseWheelResizeBoard $w.frame.bd.bd $w.frame.bd "updateAnalysisBoard $n redraw"
+    bindControlMouseWheelResizeBoard $bd.bd $bd "updateAnalysisBoard $n redraw"
 
-    bindWheelMouseCommand $w.frame.bd.bd \
+    bindWheelMouseCommand $bd.bd \
       "set analysis(boardSeqMode$n) \[expr (\$::analysis(boardSeqMode$n)-1) \%% 3\] ; updateAnalysisBoard $n redraw" \
       "set analysis(boardSeqMode$n) \[expr (\$::analysis(boardSeqMode$n)+1) \%% 3\] ; updateAnalysisBoard $n redraw"
 
   }
   if {$analysis(lockEngine$n)} {
-    ::board::update $w.frame.bd $analysis(lockPos$n)
+    ::board::update $bd $analysis(lockPos$n)
   }
 
   if {! $analysis(showBoard$n) } {
@@ -3731,8 +3735,8 @@ proc initAnalysisBoard {n} {
   } else {
     # bind $w <Configure> {}
     # Check if board size has been changed
-    if {[::board::size $w.frame.bd]  != [expr {$analysis(boardSize) * 5 + 20}]} {
-      ::board::resize $w.frame.bd [expr {$analysis(boardSize) * 5 + 20}]
+    if {[::board::size $bd]  != [expr {$analysis(boardSize) * 5 + 20}]} {
+      ::board::resize $bd [expr {$analysis(boardSize) * 5 + 20}]
     }
     pack $w.frame -side bottom -before $w.hist 
     update
@@ -3826,7 +3830,7 @@ proc updateAnalysisBoard {n {moves {}}} {
   set bd .analysisWin$n.frame.bd
 
   ::board::update_evalbar $bd $analysis(score$n)
-  if {$::board::enableMPVTls} {
+  if {$::board::_showMPVTls($bd) } {
     ::board::update_mpvtls $bd [multipv_scores $n]
   }
 
