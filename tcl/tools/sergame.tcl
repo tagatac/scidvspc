@@ -6,7 +6,6 @@
 
 namespace eval sergame {
 
-
   # if true, follow a specific opening
   set openingMovesList {}
   set openingMovesHash {}
@@ -20,6 +19,7 @@ namespace eval sergame {
   set depth 0
   set nodes 0
   set ponder 0
+  set storeClock 0
 
   # list of fen positions played to detect 3 fold checkRepetition
   set ::lFen {}
@@ -187,6 +187,10 @@ namespace eval sergame {
     # Permanent thinking
     checkbutton $w.fconfig.cbPonder -text $tr(Ponder) -variable ::sergame::ponder
     pack $w.fconfig.cbPonder  -side top -anchor w
+
+    # Store clock
+    checkbutton $w.fconfig.cbClock -text [tr OptionsFicsClk] -variable ::sergame::storeClock
+    pack $w.fconfig.cbClock  -side top -anchor w
 
     # Coach is watching (warn if the user makes weak/bad moves)
     checkbutton $w.fcoach.cbCoach -text $tr(CoachIsWatching) -variable ::sergame::coachIsWatching
@@ -397,12 +401,6 @@ namespace eval sergame {
       lappend extratags "Opening \"$openingName\""
     }
 
-    sc_game tags set -extra $extratags
-
-    updateBoard -pgn
-    ::windows::gamelist::Refresh
-    updateTitle
-    updateMenuStates
     set w .serGameWin
     if {[winfo exists $w]} {
       focus .main
@@ -484,11 +482,24 @@ namespace eval sergame {
     bind $w <Configure> "recordWinSize $w"
     wm minsize $w [winfo reqwidth $w] 0
 
-    # setup clocks
-    if {$::sergame::timeMode == "timebonus"} {
-      ::gameclock::setSec 1 [expr 0 - (60 * $::sergame::wtime)]
-      ::gameclock::setSec 2 [expr 0 - (60 * $::sergame::btime)]
+    # setup clocks/time tag
+    switch $::sergame::timeMode {
+      timebonus {
+	::gameclock::setSec 1 [expr 0 - (60 * $::sergame::wtime)]
+	::gameclock::setSec 2 [expr 0 - (60 * $::sergame::btime)]
+	set timetag "Time+Bonus $::sergame::wtime+$::sergame::winc/$::sergame::btime+$::sergame::binc"
+      }
+      movetime {
+        set timetag "Movetime $::sergame::movetime"
+      }
+      nodes {
+        set timetag "Nodes $::sergame::fixednodes"
+      }
+      depth {
+        set timetag "Depth $::sergame::fixeddepth"
+      }
     }
+    lappend extratags "Timemode \"$timetag\""
 
     set ::sergame::wentOutOfBook 0
     if {$::sergame::useBook} {
@@ -498,6 +509,12 @@ namespace eval sergame {
       destroy .configSerGameWin
       focus .main
     }
+    sc_game tags set -extra $extratags
+    updateBoard -pgn
+    ::windows::gamelist::Refresh
+    updateTitle
+    updateMenuStates
+
     ::sergame::engineGo
   }
 
@@ -605,14 +622,17 @@ namespace eval sergame {
       if {$timeMode == "timebonus" } {
         ::gameclock::add 1 $::sergame::winc
       }
-      ::gameclock::stop 1
+      set movetime [::gameclock::stop 1]
       ::gameclock::start 2
     } else {
       if {$timeMode == "timebonus" && [sc_pos moveNumber] != 1} {
 	::gameclock::add  2 $::sergame::binc
       }
-      ::gameclock::stop 2
+      set movetime [::gameclock::stop 2]
       ::gameclock::start 1
+    }
+    if {$::sergame::storeClock} {
+      sc_pos setComment "\[%emt [expr $movetime / 60]:[format {%02i} [expr $movetime % 60]]\]"
     }
     if {[checkRepetition]} {
       return
@@ -806,15 +826,18 @@ puts OUTOFBOOK!!!!!!!!!!!!!!!!!!
 	# incr ::gameclock::data(counter2) -[expr $::sergame::binc]
         ::gameclock::add 2 $::sergame::binc
       }
-      ::gameclock::stop 2
+      set movetime [::gameclock::stop 2]
       ::gameclock::start 1
     } else {
       if {$timeMode == "timebonus"} {
 	# incr ::gameclock::data(counter1) -[expr $::sergame::winc]
         ::gameclock::add 1 $::sergame::winc
       }
-      ::gameclock::stop 1
+      set movetime [::gameclock::stop 1]
       ::gameclock::start 2
+    }
+    if {$::sergame::storeClock} {
+      sc_pos setComment "\[%emt [expr $movetime / 60]:[format {%02i} [expr $movetime % 60]]\]"
     }
 
     # ponder mode (the engine just played its move)

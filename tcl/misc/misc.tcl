@@ -600,6 +600,7 @@ namespace eval gameclock {
 
   proc setSec { n value } {
     set ::gameclock::data(counter$n) $value
+    set ::gameclock::data(prevcounter$n) $value
     ::gameclock::draw $n
   }
 
@@ -611,19 +612,28 @@ namespace eval gameclock {
   proc reset { n } {
     ::gameclock::stop $n
     set ::gameclock::data(counter$n) 0
+    set ::gameclock::data(prevcounter$n) 0
   }
 
   proc start { n } {
     if {$::gameclock::data(running$n)} { return }
     set ::gameclock::data(running$n) 1
+    set ::gameclock::data(prevcounter$n) $::gameclock::data(counter$n)
 
     set ::gameclock::after$n [after 1000 "::gameclock::every 1000 \"draw $n\" $n"]
   }
 
   proc stop { n } {
-    if {! $::gameclock::data(running$n)} { return }
-    set ::gameclock::data(running$n) 0
+    global ::gameclock::data
+
+    if {! $data(running$n)} {
+      return -1
+    }
+    set data(running$n) 0
     after cancel [set ::gameclock::after$n]
+    set movetime [expr $data(counter$n) - $data(prevcounter$n)]
+    set data(prevcounter$n) $data(counter$n)
+    return $movetime
   }
 
   # Used in tacgame, sergame
