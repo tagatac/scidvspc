@@ -11222,6 +11222,8 @@ sc_pos_addNag (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 //    Returns a two-element list containing the score in centipawns
 //    (from the perspective of the side to move) and the best move.
 //    If there are no legal moves, the second element is the empty string.
+
+//    Analyzing a random position is now possible with "-board Board[66]", which returns absolute score S.A.
 int
 sc_pos_analyze (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
@@ -11234,12 +11236,13 @@ sc_pos_analyze (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     bool pruning = false;
     uint mindepth = 4; // will not check time until this depth is reached
     uint searchdepth = 0;
+    char board[100]="";
 
     static const char * options [] = {
-        "-time", "-hashkb", "-pawnkb", "-post", "-pruning", "-mindepth", "-searchdepth", NULL
+        "-time", "-hashkb", "-pawnkb", "-post", "-pruning", "-mindepth", "-searchdepth", "-board", NULL
     };
     enum {
-        OPT_TIME, OPT_HASH, OPT_PAWN, OPT_POST, OPT_PRUNING, OPT_MINDEPTH, OPT_SEARCHDEPTH
+        OPT_TIME, OPT_HASH, OPT_PAWN, OPT_POST, OPT_PRUNING, OPT_MINDEPTH, OPT_SEARCHDEPTH, OPT_BOARD
     };
     int arg = 2;
     while (arg+1 < argc) {
@@ -11255,18 +11258,30 @@ sc_pos_analyze (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             case OPT_PRUNING:  pruning = strGetBoolean(value);      break;
             case OPT_MINDEPTH: mindepth = strGetUnsigned(value);    break;
             case OPT_SEARCHDEPTH: searchdepth = strGetUnsigned(value);    break;
+            case OPT_BOARD:    strncpy(board,value,66); board[66]=0; break;
             default:
                 return InvalidCommand (ti, "sc_pos analyze", options);
         }
     }
     if (arg != argc) { return errorResult (ti, usage); }
 
-    // Generate all legal moves:
-    Position * pos = db->game->GetCurrentPos();
+    // Init position
+    Position * pos;
+    if (*board) {
+      pos = new Position;
+      pos->Init();
+      if (pos->ReadFromLongStr((const char*)board) != OK) {
+        delete pos;
+        return TCL_ERROR;
+      }
+    } else {
+      pos = db->game->GetCurrentPos();
+    }
+    // Generate all legal moves
     MoveList mlist;
     pos->GenerateMoves(&mlist);
 
-    // Start the engine:
+    // Start the engine
     Engine * engine = new Engine();
     engine->SetSearchTime (searchTime);
     engine->SetHashTableKilobytes (hashTableKB);
@@ -11278,6 +11293,11 @@ sc_pos_analyze (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     engine->SetPostMode (postMode);
     engine->SetPruning (pruning);
     int score = engine->Think (&mlist);
+
+    // -board option returns absolute score
+    if (*board && board[65] == 'b')
+      score = -score;
+
     delete engine;
     appendIntResult (ti, score);
     char moveStr[20];
@@ -11286,6 +11306,8 @@ sc_pos_analyze (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         pos->MakeSANString (mlist.Get(0), moveStr, SAN_MATETEST);
     }
     Tcl_AppendElement (ti, moveStr);
+    if (*board)
+      delete pos;
     return TCL_OK;
 }
 

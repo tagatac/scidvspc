@@ -1073,20 +1073,15 @@ namespace eval fics {
         # When showing positions from bughouse games, a second line showing piece
         # holding is given, with "<b1>" at the beginning, for example:
         # <b1> game 6 white [PNBBB] black [PNB]
-        # .fics.bottom.game$game.w.white configure -text "[lindex $line 17] ([lindex $line 24] secs) X"
+        # .fics.bottom.game$game.w.white configure -text "[lindex $line 17] ([lindex $line 24] secs)"
 	if { [scan $line "<b1> game %d white %s black %s" game piecesw piecesb] == 3} {
           catch {
             if {$piecesw == {[]}} {set piecesw {}}
             if {$piecesb == {[]}} {set piecesb {}}
 	    set tempw [.fics.bottom.game$game.w.white cget -text]
 	    set tempb [.fics.bottom.game$game.b.black cget -text]
-	    if {[string index $tempw end] == "X"} {
-              .fics.bottom.game$game.w.white configure -text "[string range $tempw 0 end-2] $piecesw X"
-              .fics.bottom.game$game.b.black configure -text "$tempb $piecesb"
-            } else {
-              .fics.bottom.game$game.w.white configure -text "$tempw $piecesw"
-              .fics.bottom.game$game.b.black configure -text "[string range $tempb 0 end-2] $piecesb X"
-            }
+	    .fics.bottom.game$game.w.white configure -text "[string range $tempw 0 end-2] $piecesw"
+	    .fics.bottom.game$game.b.black configure -text "$tempb $piecesb"
           }
         }
         return
@@ -1584,7 +1579,7 @@ namespace eval fics {
         bind .fics <Destroy> ::fics::close
       }
       frame $w.bottom.game$game
-      ::board::new $w.bottom.game$game.bd [expr {$::fics::size * 5 + 20}] 1
+      ::board::new $w.bottom.game$game.bd [expr {$::fics::size * 5 + 20}] 1 0 1 1
       # At bottom we have White and game number
       # (note whiteElo, blackElo labels are not packed, only used for data should we load game
       # data for these labels is read next line from fics
@@ -2035,26 +2030,17 @@ namespace eval fics {
     ### Observed games are a row of small boards down the bottom left 
     if {[lsearch -exact $::fics::observedGames $game] > -1} {
       if { [::board::isFlipped .fics.bottom.game$game.bd] } {
-	if {$color == "W"} {
-	  .fics.bottom.game$game.b.black configure -text "$white ($whiteTime secs) X"
-	  .fics.bottom.game$game.w.white configure -text "$black ($blackTime secs)"
-	} else {
-	  .fics.bottom.game$game.b.black configure -text "$white ($whiteTime secs)"
-	  .fics.bottom.game$game.w.white configure -text "$black ($blackTime secs) X"
-	}
+        .fics.bottom.game$game.b.black configure -text "$white ($whiteTime secs)"
+        .fics.bottom.game$game.w.white configure -text "$black ($blackTime secs)"
       } else {
-	if {$color == "W"} {
-	  .fics.bottom.game$game.w.white configure -text "$white ($whiteTime secs) X"
-	  .fics.bottom.game$game.b.black configure -text "$black ($blackTime secs)"
-	} else {
-	  .fics.bottom.game$game.w.white configure -text "$white ($whiteTime secs)"
-	  .fics.bottom.game$game.b.black configure -text "$black ($blackTime secs) X"
-	}
+        .fics.bottom.game$game.w.white configure -text "$white ($whiteTime secs)"
+        .fics.bottom.game$game.b.black configure -text "$black ($blackTime secs)"
       }
 
       set moves [lreverse [lrange $line 1 8]]
-      set boardmoves [string map { "-" "." " " "" } $moves]
+      set boardmoves "[string map { "-" "." " " "" } $moves] [string tolower $color]"
       ::board::update .fics.bottom.game$game.bd $boardmoves 1
+      ::board::update_evalbar .fics.bottom.game$game.bd [expr {[lindex [sc_pos analyze -time 200 -board $boardmoves] 0] / 100.0}]
       return
     }
 
@@ -2165,7 +2151,7 @@ namespace eval fics {
 	updateGameinfo
 	set moves [lreverse [lrange $line 1 8]]
 	set boardmoves [string map { "-" "." " " "" } $moves]
-	::board::update .main.board $boardmoves 1
+	::board::update .main.board "$boardmoves [string tolower $color]" 1
 	.button.back    configure -state normal
 	.button.forward configure -state normal
 	.button.start   configure -state normal
