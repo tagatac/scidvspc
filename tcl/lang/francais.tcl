@@ -267,6 +267,8 @@ menuText F OptionsFontsRegular "Normales" 0 {Changer les polices normales}
 menuText F OptionsFontsMenu "Menu" 0 {Changer la police des menus}
 menuText F OptionsFontsSmall "Petites" 0 {Changer les petites polices}
 menuText F OptionsFontsFixed "Fixe" 0 {Changer les polices de chasse fixe}
+# ====== TODO To be translated ======
+menuText F OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText F OptionsGInfo "Informations de la partie" 7 {Options d'information de la partie}
 menuText F OptionsFics "FICS" 0
 menuText F OptionsFicsAuto "Autopromote Reine" 0
@@ -278,6 +280,14 @@ menuText F OptionsFicsCommands "Script d'initialisation" 0
 menuText F OptionsFicsNoRes "Sans résultats" 0
 menuText F OptionsFicsNoReq "Sans requêtes" 0
 menuText F OptionsFicsPremove "Pré-move accepté" 0
+# ====== TODO To be translated ======
+menuText F OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText F OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText F OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText F OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 menuText F OptionsLanguage "Langue" 0 {Sélectionner le menu de choix des langues}
 menuText F OptionsMovesTranslatePieces "Traduction des pièces" 0 {Convertit la première lettre des pièces}
 menuText F OptionsMovesHighlightLastMove "Surbrillance dernier coup" 0 {Surbrillance du dernier coup}

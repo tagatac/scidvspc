@@ -263,6 +263,7 @@ menuText E OptionsFontsRegular "Regular" 0 {Change the regular font}
 menuText E OptionsFontsMenu "Menu" 0 {Change the menu font}
 menuText E OptionsFontsSmall "Small" 0 {Change the small font}
 menuText E OptionsFontsFixed "Fixed" 0 {Change the fixed-width font}
+menuText E OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText E OptionsGInfo "Game Information" 0 {Game information options}
 menuText E OptionsFics "FICS" 0 {Free Chess Internet Server}
 menuText E OptionsFicsAuto "Autopromote Queen" 0
@@ -274,6 +275,11 @@ menuText E OptionsFicsCommands "Init Commands" 0
 menuText E OptionsFicsNoRes "No Results" 0
 menuText E OptionsFicsNoReq "No Requests" 0
 menuText E OptionsFicsPremove "Allow Premove" 0
+
+menuText E OptionsEvalMain "Main Board" 0
+menuText E OptionsEvalBrowser "Game Browsers" 0
+menuText E OptionsEvalFics "Fics boards" 0
+menuText E OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 
 menuText E OptionsLanguage "Language" 0 {Select menu language}
 menuText E OptionsMovesTranslatePieces "Translate Pieces" 0 {Translate first letter of pieces}

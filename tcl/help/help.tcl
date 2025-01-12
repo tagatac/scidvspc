@@ -450,6 +450,7 @@ append helpText(Index) {
   <ul>
   <li><a Analysis Annotating>Scoring</a> games</li>
   <li><a Graphs Score>Score Graph</a></li>
+  <li><a MainWindow ScoreBar>Score Bars</a></li>
   <li><a Searches>Searches</a></li>
   <li><a Menus Search>Search menu</a></li>
   <li><a ShortCuts>Shortcuts</a></li>
@@ -578,10 +579,10 @@ set helpText(MainWindow) {<h1>Scid vs. PC's Main Window</h1>
   Display options for this window are in <green>Options-<gt>Game Information</green>.
   </p>
 
-  <h4>Material Values and Score Bar</h4>
+  <h4><name ScoreBar>Score Bar and Material Values</name></h4>
   <p>
-  On the right hand side of the board the material balance is displayed by small chess pieces.
-  Beside it is a Score Bar (if enabled - toggled via Control-Shift-S), which shows the first engine's evaluation (if one is running), or a Score found in the position's comment.
+  On the right hand side of the board the Material Balance is displayed by small chess pieces.</p><p>
+  Beside it is a <b>Score Bar</b> (if enabled - toggled via Control-Shift-S), which shows the first engine's evaluation (if one is running), or a Score found in the position's comment. Score Bars are also optional for Fics observed boards and Game Browser boards. They can be configured via Options-<gt>Score Bar menu. Evaluation time is given in milliseconds, and is the short time Scid's inbuilt engine will spend, analyzing the current board to obtain a score.
   </p>
 
   <h4><name Status>The Status Bar</name></h4>
@@ -1664,7 +1665,11 @@ is done from the Maintenance window.</i></p>
   and you can change the last move number to be merged, according to whether
   you are interested in adding the whole game or just its next few moves.
   </p>
+
 <p>The <b>Load</b> button will load the game (switching bases if necessary) onto the main board. (Control-Key + Load does not close the Browser window).</p>
+
+<p>A Score Bar is optionally shown (Options-<gt>ScoreBar), and can be toggled using Control+Shift+S.</p>
+
 <p>Next/Previous games can be loaded by Control+Down/Up keys. The board size <b>can be resized</b> by Control+Wheelmouse or Control+Shift+Left/Right.</p>
 <p>To automatically <b>show the last move</b>, select Search-<gt>FilterToLastMove - though the shown ply is also affected by the Tree Window (if open).</p>
 

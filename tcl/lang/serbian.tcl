@@ -314,6 +314,8 @@ menuText Y OptionsFontsRegular "Obièan" 0 {Promeni obièan font}
 menuText Y OptionsFontsMenu "Menu" 0 {Change the menu font} ;# ***
 menuText Y OptionsFontsSmall "Mali" 0 {Promeni mali font}
 menuText Y OptionsFontsFixed "Neproporcionalni" 0 {Promeni neproporcionalni font}
+# ====== TODO To be translated ======
+menuText Y OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText Y OptionsGInfo "Informacije o Partiji" 0 {Opcije informacija o partiji}
 menuText Y OptionsFics "FICS" 0
 # todo
@@ -334,6 +336,14 @@ menuText Y OptionsFicsNoRes "No Results" 0
 menuText Y OptionsFicsNoReq "No Requests" 0
 # ====== TODO To be translated ======
 menuText Y OptionsFicsPremove "Allow Premove" 0
+# ====== TODO To be translated ======
+menuText Y OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText Y OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText Y OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText Y OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 menuText Y OptionsLanguage "Jezik" 0 {Izaberi jezik}
 # ====== TODO To be translated ======
 menuText Y OptionsMovesTranslatePieces "Translate pieces" 0 {Translate first letter of pieces}

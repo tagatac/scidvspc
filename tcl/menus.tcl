@@ -785,8 +785,8 @@ if {$windowsOS} {
 ### Options menu:
 
 set m .menu.options
-set optMenus {windows theme colour entry fonts ginfo fics startup language numbers export}
-set optLabels {Windows Theme Colour Moves Fonts GInfo Fics Startup Language Numbers Export}
+set optMenus {windows theme colour entry fonts evalbar ginfo fics startup language numbers export}
+set optLabels {Windows Theme Colour Moves Fonts Evalbar GInfo Fics Startup Language Numbers Export}
 set menuindex 0
 
 $m add command -label OptionsBoard -command chooseBoardColors
@@ -987,7 +987,7 @@ $m add command -label OptionsSave -command {
 
     scidBooksDir scidBasesDir 
     ::book::lastBook1 ::book::lastBook2 ::book::lastTuning ::book::sortAlpha 
-    ::book::showTwo ::book::oppMovesVisible ::gbrowser::size 
+    ::book::showTwo ::book::oppMovesVisible ::gbrowser::size ::gbrowser::showEval
     crosstab(type) crosstab(ages) crosstab(countries) crosstab(ratings) crosstab(titles) crosstab(breaks) crosstab(colorrows)
     crosstab(deleted) crosstab(colors) crosstab(cnumbers) crosstab(groups) crosstab(sort) crosstab(tallies) crosstab(tiewin) crosstab(tiehead)
     ::utils::sound::soundFolder ::utils::sound::announceNew ::utils::sound::announceTock
@@ -1012,7 +1012,7 @@ $m add command -label OptionsSave -command {
     maintFlag useGraphFigurine photosMinimized bookmarks(gamehistory) playerInfoHistory defaultDBs tbOnline
     glistSize glexport glistColOrder glistColWidth glistColAnchor addRatings(overwrite) addRatings(filter)
     ::board::arrowWidth ::board::arrowLength ::board::enableMPVTls
-    blistColOrder blistColWidth blistColAnchor macWheelMouse epdAnnotateMode epdDelay} {
+    blistColOrder blistColWidth blistColAnchor macWheelMouse epdAnnotateMode epdDelay evalTime} {
 
       puts $optionF "set $i [list [set $i]]"
 
@@ -1074,7 +1074,7 @@ $m add command -label OptionsSave -command {
     puts $optionF ""
 
     # save FICS config
-    foreach i { use_timeseal timeseal_exec use_zseal zseal_exec port_fics port_timeseal login password consolebg consolefg chanoff shouts server_ip consolebg consolefg autopromote storeclk autoraise size sound no_results no_requests server init_commands show_buttons allow_premove user_buttons user_commands} {
+    foreach i { use_timeseal timeseal_exec use_zseal zseal_exec port_fics port_timeseal login password consolebg consolefg chanoff shouts server_ip consolebg consolefg autopromote storeclk autoraise size sound no_results no_requests server init_commands show_buttons allow_premove user_buttons user_commands showEval} {
       puts $optionF "set ::fics::$i [list [set ::fics::$i]]"
     }
     foreach i [lsort [array names ::fics::findopponent]] {
@@ -1249,6 +1249,7 @@ menu $m -tearoff 1
 $m add checkbutton -label OptionsWindowsRaise -variable ::fics::autoraise
 $m add checkbutton -label OptionsFicsAuto     -variable ::fics::autopromote
 $m add checkbutton -label OptionsFicsClk      -variable ::fics::storeclk
+$m add checkbutton -label GInfoEvalBar        -variable ::fics::showEval
 $m add checkbutton -label OptionsSounds       -variable ::fics::sound
 $m add command     -label OptionsFicsColour   -command ::fics::setForeGround
 $m add command     -label OptionsColour       -command ::fics::setBackGround
@@ -1260,7 +1261,6 @@ $m add command     -label OptionsFicsButtons  -command ::fics::editUserButtons
 $m add command     -label OptionsFicsCommands -command ::fics::editInitCommands
 $m add cascade     -label OptionsFicsSize     -menu $m.size
 $m add separator
-$m add checkbutton -label OptionsFicsNoRes    -variable ::fics::no_results
 $m add checkbutton -label OptionsFicsNoReq    -variable ::fics::no_requests
 $m add checkbutton -label OptionsFicsPremove  -variable ::fics::allow_premove
 
@@ -1518,6 +1518,17 @@ set helpMessage($m,0) OptionsFontsRegular
 set helpMessage($m,1) OptionsFontsMenu
 set helpMessage($m,2) OptionsFontsSmall
 set helpMessage($m,3) OptionsFontsFixed
+
+set m .menu.options.evalbar
+menu $m -tearoff -1
+$m add checkbutton -label OptionsEvalMain -variable ::gameInfo(showEval) -command ::board::toggleeval
+$m add checkbutton -label OptionsEvalBrowser -variable ::gbrowser::showEval
+$m add checkbutton -label OptionsEvalFics  -variable ::fics::showEval
+$m add cascade -label OptionsEvalTime -menu $m.evaltime
+menu $m.evaltime -tearoff 1
+foreach i {50 100 150 200 300 400 500 600 800 1000} {
+  $m.evaltime add radiobutton -label "$i ms" -variable ::evalTime -value $i
+}
 
 set m .menu.options.startup
 menu $m -tearoff -1
@@ -1816,9 +1827,12 @@ proc setLanguageMenus {{lang ""}} {
   }
   .menu.tools.exportfilter entryconfig 4 -label "[tr ToolsExpFilterLaTeX] ([tr OprepViewLaTeX])"
 
-  foreach tag {Board Colour Toolbar Names Recent Fonts GInfo Fics Moves Startup Language
+  foreach tag {Board Colour Toolbar Names Recent Fonts Evalbar GInfo Fics Moves Startup Language
     Numbers Windows Theme Export ECO Spell Table BooksDir TacticsBasesDir Informant Sounds SaveBases Save AutoSave} {
     configMenuText .menu.options [tr Options$tag $oldLang] Options$tag $lang
+  }
+  foreach tag {Main Browser Fics Time} {
+    configMenuText .menu.options.evalbar [tr OptionsEval$tag $oldLang] OptionsEval$tag $lang
   }
 
   foreach tag {BackColour MainLineColour VarLineColour EngineLineColour RowColour HighlightColour SwitcherColour ProgressColour} {
@@ -1856,6 +1870,7 @@ proc setLanguageMenus {{lang ""}} {
   foreach tag {OptionsWindowsRaise OptionsFicsAuto OptionsFicsClk OptionsSounds OptionsFicsColour OptionsColour OptionsFonts OptionsFicsButtons OptionsFicsCommands OptionsFicsSize OptionsFicsNoRes OptionsFicsNoReq OptionsFicsPremove} {
     configMenuText .menu.options.fics [tr $tag $oldLang] $tag $lang
   }
+  configMenuText .menu.options.fics [tr GInfoEvalBar $oldLang] GInfoEvalBar $lang
 
   foreach tag { Color Width Display } {
     configMenuText .menu.options.entry.highlightlastmove [tr OptionsMovesHighlightLastMove$tag $oldLang] OptionsMovesHighlightLastMove$tag $lang

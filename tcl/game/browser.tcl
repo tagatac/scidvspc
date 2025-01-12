@@ -48,7 +48,7 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
 
     pack [frame $w.b] -side bottom -fill x
 
-    ::board::new $w.bd $::gbrowser::size 1 [::board::isFlipped] 1 1
+    ::board::new $w.bd $::gbrowser::size 1 [::board::isFlipped] 1 $::gbrowser::showEval
     # $w.bd configure -relief solid -borderwidth 1
     pack $w.bd -side left -padx 4 -pady 4
 
@@ -73,6 +73,7 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
     bind $w <Down> "::gbrowser::update $n +10"
     bind $w <Control-Shift-Left> "::board::resize $w.bd -1"
     bind $w <Control-Shift-Right> "::board::resize $w.bd +1"
+    bind $w <Control-S> "::board::toggleeval $w.bd"
 
     if {$::windowsOS || $::macOS} {
       bind $w <MouseWheel> "
@@ -340,7 +341,9 @@ proc ::gbrowser::update {n ply} {
   set ::gbrowser::ply($n) $ply
   set board [lindex $::gbrowser::boards($n) $ply]
   ::board::update $w.bd $board 1
-  ::board::update_evalbar $w.bd [expr {[lindex [sc_pos analyze -time 300 -board $board] 0] / 100.0}]
+  if {$::board::_showEvalbar($w.bd)} {
+    ::board::update_evalbar $w.bd [expr {[lindex [sc_pos analyze -time $::evalTime -board $board] 0] / 100.0}]
+  }
 
   set t $w.t.text
   $t configure -state normal

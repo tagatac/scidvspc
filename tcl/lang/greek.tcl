@@ -298,6 +298,8 @@ menuText G OptionsFontsRegular "Κανονική" 0 {Ρύθμιση Κανονι
 menuText G OptionsFontsMenu "Μενού" 0 {Ρύθμιση Γραμματοσειράς Μενού}
 menuText G OptionsFontsSmall "Μικρής" 1 {Ρύθμιση Μικρής Γραμματοσειράς}
 menuText G OptionsFontsFixed "Σταθερής" 0 {Ρύθμιση Σταθερής Γραμματοσειράς}
+# ====== TODO To be translated ======
+menuText G OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText G OptionsGInfo "Πληροφορίες Παρτίδας" 17 {Ρύθμιση Πληροφοριών Παρτίδας}
 menuText G OptionsFics "FICS" 0 {Free Chess Internet Server}
 menuText G OptionsFicsAuto "Αυτομ.Προαγωγή σε Βασίλισσα" 0
@@ -314,6 +316,14 @@ menuText G OptionsFicsNoRes "Χωρίς Αποτελέσματα" 3
 menuText G OptionsFicsNoReq "Χωρίς Αιτήματα" 9
 # ====== TODO To be translated ======
 menuText G OptionsFicsPremove "Allow Premove" 0
+# ====== TODO To be translated ======
+menuText G OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText G OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText G OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText G OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 
 menuText G OptionsLanguage "Γλώσσα" 2 {Επιλογής Γλώσσας Μενού}
 menuText G OptionsMovesTranslatePieces "Μετάφραση Κομματιών" 0 {Μετάφραση Πρώτου Γράμματος Κομματιών}

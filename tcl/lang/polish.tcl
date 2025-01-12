@@ -278,6 +278,8 @@ menuText P OptionsFontsRegular "Podstawowa" 0 {Zmień podstawową czcionkę}
 menuText P OptionsFontsMenu "Menu" 0 {Zmień czcionkę menu} 
 menuText P OptionsFontsSmall "Mała" 0 {Zmień małą czcionkę}
 menuText P OptionsFontsFixed "Stała" 0 {Zmień czcionkę stałej szerokości}
+# ====== TODO To be translated ======
+menuText P OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText P OptionsGInfo "Informacje o partii" 0 {Sposób wyświetlania informacji o partii}
 menuText P OptionsFics "FICS" 0
 menuText P OptionsFicsAuto "Autopromote Królowa" 0
@@ -294,6 +296,14 @@ menuText P OptionsFicsNoRes "Bez rezultatu" 0
 menuText P OptionsFicsNoReq "Bez wyzwania" 0
 # ====== TODO To be translated ======
 menuText P OptionsFicsPremove "Allow Premove" 0
+# ====== TODO To be translated ======
+menuText P OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText P OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText P OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText P OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 menuText P OptionsLanguage "Język" 0 {Wybierz język}
 menuText P OptionsMovesTranslatePieces "Tłumacz oznaczenia figur" 0 {Tłumacz pierwsze litery figur}
 menuText P OptionsMovesHighlightLastMove "Podświetl ostatnie posunięcie" 0 {Podświetl ostatnie posunięcie}

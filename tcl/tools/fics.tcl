@@ -1579,7 +1579,7 @@ namespace eval fics {
         bind .fics <Destroy> ::fics::close
       }
       frame $w.bottom.game$game
-      ::board::new $w.bottom.game$game.bd [expr {$::fics::size * 5 + 20}] 1 0 1 1
+      ::board::new $w.bottom.game$game.bd [expr {$::fics::size * 5 + 20}] 1 0 1 $::fics::showEval
       # At bottom we have White and game number
       # (note whiteElo, blackElo labels are not packed, only used for data should we load game
       # data for these labels is read next line from fics
@@ -2040,7 +2040,7 @@ namespace eval fics {
       set moves [lreverse [lrange $line 1 8]]
       set boardmoves "[string map { "-" "." " " "" } $moves] [string tolower $color]"
       ::board::update .fics.bottom.game$game.bd $boardmoves 1
-      ::board::update_evalbar .fics.bottom.game$game.bd [expr {[lindex [sc_pos analyze -time 200 -board $boardmoves] 0] / 100.0}]
+      ::board::update_evalbar .fics.bottom.game$game.bd [expr {[lindex [sc_pos analyze -time $::evalTime -board $boardmoves] 0] / 100.0}]
       return
     }
 

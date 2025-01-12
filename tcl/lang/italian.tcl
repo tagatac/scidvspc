@@ -285,6 +285,8 @@ menuText I OptionsFontsRegular "Regolare" 0 {Cambia il font in 'regular'}
 menuText I OptionsFontsMenu "Menu" 0 {Cambia il font dei menu}
 menuText I OptionsFontsSmall "Piccolo" 0 {Cambia il font 'small'}
 menuText I OptionsFontsFixed "Fisso" 0 {Cambia il font di larghezza fissa}
+# ====== TODO To be translated ======
+menuText I OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText I OptionsGInfo "Informazioni sulla partita" 0 {Opzioni sulle informazioni della partita}
 menuText I OptionsFics "FICS" 0
 menuText I OptionsFicsAuto "Autopromozione Regina" 0
@@ -304,6 +306,14 @@ menuText I OptionsFicsNoRes "No Results" 0
 menuText I OptionsFicsNoReq "No Requests" 0
 # ====== TODO To be translated ======
 menuText I OptionsFicsPremove "Allow Premove" 0
+# ====== TODO To be translated ======
+menuText I OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText I OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText I OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText I OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 menuText I OptionsLanguage "Lingua" 0 {Sceglie una nuova lingua di menu}
 menuText I OptionsMovesTranslatePieces "Traduci i pezzi" 0 {Traduce la prima lettera dei pezzi}
 # ====== TODO To be translated ======

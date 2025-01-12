@@ -246,6 +246,8 @@ menuText L OptionsFontsRegular "Vakinainen" 0 {Muuta yleiskirjaisintyyppi}
 menuText L OptionsFontsMenu "Valikko" 0 {Vaihda valikon kirjaisintyyppi}
 menuText L OptionsFontsSmall "Pieni" 0 {Muuta pieni kirjaisintyyppi}
 menuText L OptionsFontsFixed "Pysyvä" 0 {Muuta vakiolevyinen kirjaisintyyppi}
+# ====== TODO To be translated ======
+menuText L OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText L OptionsGInfo "Pelin tiedot" 0 {Pelitietojen vaihtoehdot}
 menuText L OptionsFics "FICS" 0 {Free Chess Internet Server}
 menuText L OptionsFicsAuto "Korota automaattisesti kuningattareksi" 0
@@ -258,6 +260,14 @@ menuText L OptionsFicsCommands "Alusta käskyt" 0
 menuText L OptionsFicsNoRes "Ei tuloksia" 0
 menuText L OptionsFicsNoReq "Ei pyyntöjä" 0
 menuText L OptionsFicsPremove "Salli etukäteissiirto" 0
+# ====== TODO To be translated ======
+menuText L OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText L OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText L OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText L OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 
 menuText L OptionsLanguage "Kieli" 0 {Valitse valikon kieli}
 menuText L OptionsMovesTranslatePieces "Käännä nappulat" 0 {Käännä nappuloiden ensimmäinen kirjain}

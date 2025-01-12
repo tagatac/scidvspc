@@ -282,6 +282,8 @@ menuText D OptionsFontsRegular "Normal" 0 {Standardzeichensatz}
 menuText D OptionsFontsMenu "Menü" 0 {Schriftart für Menüs}
 menuText D OptionsFontsSmall "Klein" 0 {Kleine Zeichen}
 menuText D OptionsFontsFixed "Fest" 0 {Schriftart mit fester Breite (nichtproportional)}
+# ====== TODO To be translated ======
+menuText D OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText D OptionsGInfo "Partieinformationen" 0 {Optionen für Informationsbereich}
 menuText D OptionsFics "FICS" 0
 menuText D OptionsFicsAuto "Automatische Umwandlung in Dame" 0
@@ -293,6 +295,14 @@ menuText D OptionsFicsCommands "Startbefehle" 0
 menuText D OptionsFicsNoRes "Keine Ergebnisse" 0
 menuText D OptionsFicsNoReq "Keine Anfragen" 0
 menuText D OptionsFicsPremove "Voreingabe von Zügen erlauben" 0
+# ====== TODO To be translated ======
+menuText D OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText D OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText D OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText D OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 menuText D OptionsLanguage "Sprache" 0 {Sprache wählen}
 menuText D OptionsMovesTranslatePieces "Figurennamen übersetzen" 0 {Übersetze den ersten Buchstaben der Figurenbezeichnung}
 menuText D OptionsMovesHighlightLastMove "Letzten Zug hervorheben" 0 {Rahmt Start- und Zielfeld des letzten Zuges farbig ein}

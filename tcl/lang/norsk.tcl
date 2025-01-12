@@ -279,6 +279,8 @@ menuText O OptionsFontsRegular "Vanlig" 0 {Endre den vanlige skrifttypen}
 menuText O OptionsFontsMenu "Meny" 0 {Velg skrifttype i menyer}
 menuText O OptionsFontsSmall "Liten" 0 {Endre den lille skrifttypen}
 menuText O OptionsFontsFixed "Fastbredde" 0 {Endre fastbreddeskrifttypen}
+# ====== TODO To be translated ======
+menuText O OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText O OptionsGInfo "Partiinformasjon" 0 {Informasjonsinnstillinger}
 menuText O OptionsFics "FICS" 0
 menuText O OptionsFicsAuto "Automatisk dronning" 0
@@ -290,6 +292,14 @@ menuText O OptionsFicsCommands "Oppstartskommandoer" 0
 menuText O OptionsFicsNoRes "Ingen resultater" 0
 menuText O OptionsFicsNoReq "Ingen forespørsler" 0
 menuText O OptionsFicsPremove "Tillat forhåndstrekk" 0
+# ====== TODO To be translated ======
+menuText O OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText O OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText O OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText O OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 
 menuText O OptionsLanguage "Språk" 0 {Velg menyspråk}
 menuText O OptionsMovesTranslatePieces "Oversett brikker" 0 {Oversett brikkenes første bokstav}

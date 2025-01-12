@@ -264,6 +264,8 @@ menuText U OptionsFontsRegular "Normal" 0 {Fonte Normal}
 menuText U OptionsFontsMenu "Menu" 0 {Change the menu font} ;# ***
 menuText U OptionsFontsSmall "Pequeno" 0 {Fonte pequeno}
 menuText U OptionsFontsFixed "Fixo" 0 {Fonte de largura fixa}
+# ====== TODO To be translated ======
+menuText U OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText U OptionsGInfo "Informações do Jogo" 0 {Opções de informacao do jogo}
 menuText U OptionsFics "FICS" 0
 menuText U OptionsFicsAuto "Promover sempre a Dama" 0
@@ -275,6 +277,14 @@ menuText U OptionsFicsCommands "Comandos de Início" 0
 menuText U OptionsFicsNoRes "Ocultar Resultados" 0
 menuText U OptionsFicsNoReq "Ocultar Pedidos" 0
 menuText U OptionsFicsPremove "Permitir Movimento Antecipado" 0
+# ====== TODO To be translated ======
+menuText U OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText U OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText U OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText U OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 menuText U OptionsLanguage "Linguagem" 0 {Menu de selecao de linguagem}
 menuText U OptionsMovesTranslatePieces "Traduzir peças" 0 {Traduzir a primeira letra das peças}
 menuText U OptionsMovesHighlightLastMove "Destacar último movimento" 0 {Destaca o último movimento}

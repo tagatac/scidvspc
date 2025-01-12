@@ -277,6 +277,8 @@ menuText R OptionsFontsRegular "Обычные" 0 {Изменить обычны
 menuText R OptionsFontsMenu "Меню" 0 {Изменить шрифты меню}
 menuText R OptionsFontsSmall "Малые" 1 {Изменить малые шрифты}
 menuText R OptionsFontsFixed "Моноширинные" 0 {Изменить моноширинные шрифты}
+# ====== TODO To be translated ======
+menuText R OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText R OptionsGInfo "Информация о партии" 0 {Настройки информации о партии}
 menuText R OptionsFics "Сервер FICS" 0 {Free Chess Internet Server}
 menuText R OptionsFicsAuto "Автовыдвижение ферзя" 0
@@ -291,6 +293,14 @@ menuText R OptionsFicsNoRes "Без результатов" 0
 menuText R OptionsFicsNoReq "Без запросов" 0
 # ====== TODO To be translated ======
 menuText R OptionsFicsPremove "Allow Premove" 0
+# ====== TODO To be translated ======
+menuText R OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText R OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText R OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText R OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 menuText R OptionsLanguage "Язык" 0 {Меню выбора языка}
 menuText R OptionsMovesTranslatePieces "Перевод фигур" 0 {Перевести первый символ фигуры}
 menuText R OptionsMovesHighlightLastMove "Подсветить последний ход" 0 {Подсветить последний ход}

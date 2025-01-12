@@ -294,6 +294,8 @@ menuText C OptionsFontsRegular "Základní" 0 {Zmìnit základní font}
 menuText C OptionsFontsMenu "Menu" 1 {Zmìnit font pro menu}
 menuText C OptionsFontsSmall "Malé" 0 {Zmìnit malý font}
 menuText C OptionsFontsFixed "Fixní" 0 {Zmìnit font fixní ¹íøky}
+# ====== TODO To be translated ======
+menuText C OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText C OptionsGInfo "Informace o partii" 0 {Volby pro informace o partii}
 menuText C OptionsFics "FICS" 0
 menuText C OptionsFicsAuto "Autopromote královna" 0
@@ -313,6 +315,14 @@ menuText C OptionsFicsNoRes "No Results" 0
 menuText C OptionsFicsNoReq "No Requests" 0
 # ====== TODO To be translated ======
 menuText C OptionsFicsPremove "Allow Premove" 0
+# ====== TODO To be translated ======
+menuText C OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText C OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText C OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText C OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 menuText C OptionsLanguage "Jazyk" 0 {Vybrat jazyk menu}
 # ====== TODO To be translated ======
 menuText C OptionsMovesTranslatePieces "Translate pieces" 0 {Translate first letter of pieces}

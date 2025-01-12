@@ -286,6 +286,8 @@ menuText N OptionsFontsRegular "Standaard" 0 {Wijzig het standaard lettertype}
 menuText N OptionsFontsMenu "Menu" 0 {Wijzig het menu lettertype}
 menuText N OptionsFontsSmall "Klein" 0 {Wijzig het kleine lettertype}
 menuText N OptionsFontsFixed "Vaste grootte" 0 {Wijzig dit lettertype}
+# ====== TODO To be translated ======
+menuText N OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText N OptionsGInfo "Partij informatie" 0 {Partij-informatie opties}
 menuText N OptionsFics "FICS" 0
 menuText N OptionsFicsAuto "Autopromotie koningin" 0
@@ -302,6 +304,14 @@ menuText N OptionsFicsNoRes "Geen uitslagen" 0
 menuText N OptionsFicsNoReq "Geen verzoeken" 0
 # ====== TODO To be translated ======
 menuText N OptionsFicsPremove "Allow Premove" 0
+# ====== TODO To be translated ======
+menuText N OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText N OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText N OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText N OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 menuText N OptionsLanguage "Kies taal" 0 {Kies taal}
 menuText N OptionsMovesTranslatePieces "Stukken vertalen" 0 {Vertalen eerste letters van de stukken}
 menuText N OptionsMovesHighlightLastMove "Markeren laatste zet" 0 {De laatst gespeelde zet markeren}

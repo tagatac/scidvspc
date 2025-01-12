@@ -246,6 +246,8 @@ menuText T OptionsFontsRegular "Normal yazı tipi" 0 {Normal yazı tipini deği�
 menuText T OptionsFontsMenu "Menu" 0 {Change the menu font}
 menuText T OptionsFontsSmall "Küçük" 0 {Küçük yazı tipini değiştir}
 menuText T OptionsFontsFixed "sabit" 0 {Sabit genişlikte yazı tipi değiştirme}
+# ====== TODO To be translated ======
+menuText T OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText T OptionsGInfo "Oyun Bilgisi" 0 {Game information options}
 menuText T OptionsFics "FICS" 0 {Ücretsiz Satranç İnternet Sunucusu}
 menuText T OptionsFicsAuto "Otamatik Vezir çıkart" 0
@@ -258,6 +260,14 @@ menuText T OptionsFicsCommands "Başlangıç Komutları" 0
 menuText T OptionsFicsNoRes "Sonuç Yok" 0
 menuText T OptionsFicsNoReq "İstek Yok" 0
 menuText T OptionsFicsPremove "Önceden Hamle oynamaya izin ver" 0
+# ====== TODO To be translated ======
+menuText T OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText T OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText T OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText T OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 
 menuText T OptionsLanguage "Dil" 0 {Menü dili seçin}
 menuText T OptionsMovesTranslatePieces "Değişilen taşlar" 0 {Değişilen taşları göster-gizle}

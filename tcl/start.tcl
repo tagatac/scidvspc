@@ -189,6 +189,7 @@ set annotate(blunder) 1.0
 set annotate(cutoff) 5.0
 set maintFlag W
 set ::gbrowser::size 35
+set ::gbrowser::showEval 0
 set comp(timecontrol) pergame
 set comp(seconds) 180
 set comp(base) 60
@@ -210,6 +211,7 @@ set bookmarks(gamehistory) {}
 set playerInfoHistory {}
 set epdAnnotateMode 0
 set epdDelay 3
+set evalTime 200 ;# milliseconds for  sc_pos analyze
 
 set defaultDBs {}
 set tbOnline Nalimov
@@ -510,15 +512,15 @@ proc initFICSDefaults {} {
     set login         ""
     set password      ""
     # wtf is this necessary
-    set ::fics::findopponent(initTime) 10
-    set ::fics::findopponent(incTime)  0
-    set ::fics::findopponent(rated)    unrated
-    set ::fics::findopponent(color)    auto
-    set ::fics::findopponent(limitrating) 0
-    set ::fics::findopponent(rating1)  1000
-    set ::fics::findopponent(rating2)  1500
-    set ::fics::findopponent(manual)   auto
-    set ::fics::findopponent(formula)  ""
+    set findopponent(initTime) 10
+    set findopponent(incTime)  0
+    set findopponent(rated)    unrated
+    set findopponent(color)    auto
+    set findopponent(limitrating) 0
+    set findopponent(rating1)  1000
+    set findopponent(rating2)  1500
+    set findopponent(manual)   auto
+    set findopponent(formula)  ""
     set consolebg grey35
     set consolefg LimeGreen
     set chanoff 1
@@ -531,6 +533,7 @@ proc initFICSDefaults {} {
     set sound 0
     set no_results 0
     set no_requests 0
+    set showEval 1
 
     proc initUserButtons {} {
       set ::fics::user_buttons {FICSInfo FICSOpponent Abort}

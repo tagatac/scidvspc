@@ -325,6 +325,8 @@ menuText B OptionsFontsRegular "Normal" 0 {Fonte Normal}
 menuText B OptionsFontsMenu "Menu" 0 {Altera a fonte do menu} 
 menuText B OptionsFontsSmall "Pequeno" 0 {Fonte pequeno}
 menuText B OptionsFontsFixed "Fixo" 0 {Fonte de largura fixa}
+# ====== TODO To be translated ======
+menuText B OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText B OptionsGInfo "Informacoes do Jogo" 0 {Opcoes de informacao do jogo}
 menuText B OptionsFics "FICS" 0
 
@@ -345,6 +347,14 @@ menuText B OptionsFicsNoRes "Nenhum resultado" 0
 menuText B OptionsFicsNoReq "Nenhuma solicitacao" 0
 
 menuText B OptionsFicsPremove "Permite pré movimento" 0
+# ====== TODO To be translated ======
+menuText B OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText B OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText B OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText B OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 menuText B OptionsLanguage "Linguagem" 0 {Menu de selecao de linguagem}
 
 menuText B OptionsMovesTranslatePieces "Traduzir Peças" 0 {Traduz a primeira letra do nome das peças}

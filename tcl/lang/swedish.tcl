@@ -276,6 +276,8 @@ menuText W OptionsFontsRegular "Normal" 0 {Ändra det normala typsnittet}
 menuText W OptionsFontsMenu "Menu" 0 {Ändra menytypsnittet}
 menuText W OptionsFontsSmall "Liten" 0 {Ändra det lilla typsnittet}
 menuText W OptionsFontsFixed "Fixerad" 0 {Ändra det fixerade typsnittet}
+# ====== TODO To be translated ======
+menuText W OptionsEvalbar "Score Bar" 0 {Score bar options}
 menuText W OptionsGInfo "Partiinformation" 0 {Alternativ för partiinformation}
 menuText W OptionsFics "FICS" 0
 menuText W OptionsFicsAuto "Autopronomera Drottningen" 0
@@ -295,6 +297,14 @@ menuText W OptionsFicsNoRes "No Results" 0
 menuText W OptionsFicsNoReq "No Requests" 0
 # ====== TODO To be translated ======
 menuText W OptionsFicsPremove "Allow Premove" 0
+# ====== TODO To be translated ======
+menuText W OptionsEvalMain "Main Board" 0
+# ====== TODO To be translated ======
+menuText W OptionsEvalBrowser "Game Browsers" 0
+# ====== TODO To be translated ======
+menuText W OptionsEvalFics "Fics boards" 0
+# ====== TODO To be translated ======
+menuText W OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 menuText W OptionsLanguage "Språk" 0 {Välj språk}
 menuText W OptionsMovesTranslatePieces "Översätt pjäser" 0 {Översätt första bokstaven för pjäser}
 menuText W OptionsMovesHighlightLastMove "Markera senaste draget" 0 {Markera senaste draget}
