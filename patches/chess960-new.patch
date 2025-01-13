@@ -2346,7 +2346,7 @@ Index: tcl/tools/tactics.tcl
          sc_base open [file rootname $file]
 Index: tcl/tools/uci.tcl
 ===================================================================
---- tcl/tools/uci.tcl	(revision 3528)
+--- tcl/tools/uci.tcl	(revision 3527)
 +++ tcl/tools/uci.tcl	(working copy)
 @@ -21,7 +21,7 @@
  
@@ -2357,16 +2357,14 @@ Index: tcl/tools/uci.tcl
    array set uciInfo {}
    ################################################################################
    #
-@@ -935,6 +935,15 @@
+@@ -935,6 +935,13 @@
          set ::uci::uciInfo(skill) [list UCI_Elo $value]
        }
      }
-+    # Set UCI_Chess960 if it is an engine option, and not already explicitly set
++    # Set UCI_Chess960 if it is an engine option, disreguarding existing setting
 +    if {[string match *UCI_Chess960* $analysis(uciOptions$n)]} {
-+      if {[lsearch $options UCI_Chess960] == -1} {
-+	::splash::add "Enabling UCI_Chess960 for [lindex $engineData 0] (by default)."
-+	::sendToEngine $n "setoption name UCI_Chess960 value 1"
-+      }
++      ::splash::add "Enabling UCI_Chess960 for [lindex $engineData 0] (by default)."
++      ::sendToEngine $n "setoption name UCI_Chess960 value 1"
 +    } else {
 +      ::splash::add "Warning, UCI engine [lindex $engineData 0] does not support option UCI_Chess960" error
 +    }
