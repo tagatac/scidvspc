@@ -3382,7 +3382,11 @@ proc stopAnalyzeMode { {n 0} } {
     sendToEngine $n stop
     set analysis(go$n) 0
   } else  {
-    sendToEngine $n exit
+    if { $analysis(has_analyze$n) } {
+      sendToEngine $n exit
+    } else {
+      sendToEngine $n ?
+    }
   }
   set analysis(startpos$n) ""
 }
@@ -4099,6 +4103,7 @@ proc updateAnalysis {{n 0} {reset 1}} {
   } else {
 
     ### Xboard
+    # http://hgm.nubati.net/CECP.html
 
     if { $::annotate(Engine) == $n && ! $::wentOutOfBook && $::useAnalysisBook} {
       bookAnnotation
@@ -4216,9 +4221,9 @@ proc updateAnalysis {{n 0} {reset 1}} {
 	foreach m $movelist {
 	  sendMoveToEngine $n $m
 	}
+	# No setboard. Set engine to be white or black:
+	sendToEngine $n $analysis(side$n)
       }
-      # Set engine to be white or black:
-      sendToEngine $n $analysis(side$n)
       # Set search time and depth to something very large and start search:
       sendToEngine $n {st 120000}
       sendToEngine $n {sd 50}
