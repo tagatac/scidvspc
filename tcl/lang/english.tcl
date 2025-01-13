@@ -280,6 +280,7 @@ menuText E OptionsEvalMain "Main Board" 0
 menuText E OptionsEvalBrowser "Game Browsers" 0
 menuText E OptionsEvalFics "Fics boards" 0
 menuText E OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
+menuText E OptionsEvalLog  "Logarithmic Eval" 0
 
 menuText E OptionsLanguage "Language" 0 {Select menu language}
 menuText E OptionsMovesTranslatePieces "Translate Pieces" 0 {Translate first letter of pieces}

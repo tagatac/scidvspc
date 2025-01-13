@@ -323,6 +323,8 @@ menuText C OptionsEvalBrowser "Game Browsers" 0
 menuText C OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText C OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
+# ====== TODO To be translated ======
+menuText C OptionsEvalLog  "Logarithmic Eval" 0
 menuText C OptionsLanguage "Jazyk" 0 {Vybrat jazyk menu}
 # ====== TODO To be translated ======
 menuText C OptionsMovesTranslatePieces "Translate pieces" 0 {Translate first letter of pieces}

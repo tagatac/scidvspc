@@ -324,6 +324,8 @@ menuText G OptionsEvalBrowser "Game Browsers" 0
 menuText G OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText G OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
+# ====== TODO To be translated ======
+menuText G OptionsEvalLog  "Logarithmic Eval" 0
 
 menuText G OptionsLanguage "Γλώσσα" 2 {Επιλογής Γλώσσας Μενού}
 menuText G OptionsMovesTranslatePieces "Μετάφραση Κομματιών" 0 {Μετάφραση Πρώτου Γράμματος Κομματιών}

@@ -288,6 +288,8 @@ menuText F OptionsEvalBrowser "Game Browsers" 0
 menuText F OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText F OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
+# ====== TODO To be translated ======
+menuText F OptionsEvalLog  "Logarithmic Eval" 0
 menuText F OptionsLanguage "Langue" 0 {Sélectionner le menu de choix des langues}
 menuText F OptionsMovesTranslatePieces "Traduction des pièces" 0 {Convertit la première lettre des pièces}
 menuText F OptionsMovesHighlightLastMove "Surbrillance dernier coup" 0 {Surbrillance du dernier coup}

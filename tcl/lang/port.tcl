@@ -285,6 +285,8 @@ menuText U OptionsEvalBrowser "Game Browsers" 0
 menuText U OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText U OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
+# ====== TODO To be translated ======
+menuText U OptionsEvalLog  "Logarithmic Eval" 0
 menuText U OptionsLanguage "Linguagem" 0 {Menu de selecao de linguagem}
 menuText U OptionsMovesTranslatePieces "Traduzir peças" 0 {Traduzir a primeira letra das peças}
 menuText U OptionsMovesHighlightLastMove "Destacar último movimento" 0 {Destaca o último movimento}

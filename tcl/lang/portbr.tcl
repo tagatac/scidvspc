@@ -355,6 +355,8 @@ menuText B OptionsEvalBrowser "Game Browsers" 0
 menuText B OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText B OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
+# ====== TODO To be translated ======
+menuText B OptionsEvalLog  "Logarithmic Eval" 0
 menuText B OptionsLanguage "Linguagem" 0 {Menu de selecao de linguagem}
 
 menuText B OptionsMovesTranslatePieces "Traduzir Peças" 0 {Traduz a primeira letra do nome das peças}

@@ -303,6 +303,8 @@ menuText D OptionsEvalBrowser "Game Browsers" 0
 menuText D OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText D OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
+# ====== TODO To be translated ======
+menuText D OptionsEvalLog  "Logarithmic Eval" 0
 menuText D OptionsLanguage "Sprache" 0 {Sprache wählen}
 menuText D OptionsMovesTranslatePieces "Figurennamen übersetzen" 0 {Übersetze den ersten Buchstaben der Figurenbezeichnung}
 menuText D OptionsMovesHighlightLastMove "Letzten Zug hervorheben" 0 {Rahmt Start- und Zielfeld des letzten Zuges farbig ein}

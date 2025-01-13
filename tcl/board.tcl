@@ -3151,9 +3151,6 @@ proc boardToFile { format filepath } {
 #
 
 proc ::board::update_evalbar_linlog {w eval} {
-  if {! [winfo exists $w]} { return }
-
-  set ::board::_eval($w) $eval
   set height [$w.evalbar cget -height]
   set unitLen [expr $height/4]
 
@@ -3181,45 +3178,31 @@ proc ::board::update_evalbar_linlog {w eval} {
 }
 
 #
-# Draw a eval bar => Simple linear -4 to 4, clip things beyond
+# Draw a eval bar => Simple linear -5 to 5 (eg), clip things beyond
 #
 
-proc ::board::update_evalbar_simplin {w eval} {
-  if {! [winfo exists $w]} { return }
-
-  set ::board::_eval($w) $eval
+proc ::board::update_evalbar_linear {w eval} {
+  set y 5
 
   set height [$w.evalbar cget -height]
-  set unitLen [expr $height/8]
+  set width [expr {int(ceil($::board::_size($w)/10.0))}]
+  set width2 [expr {$width * 2}]
 
-  if {($eval < -4)} {
-    set eval -4
-  }
-  if {($eval > 4)} {
-    set eval 4
-  }
+  set unitLen [expr $height/($y*2.0)]
 
-  if {$eval < 0} {set color black} {set color white}
-  if {$::board::_flip($w) == 0} {
-    if {$color == "white"} {
-      set y1 [expr (8.0-($eval+4.0))*$unitLen]
-      set y2 $height
-    } else {
-      set y1 0
-      set y2 [expr (8.0-($eval+4.0))*$unitLen]
-    }
-  } else {
-    if {$color == "white"} {
-      set y1 0
-      set y2 [expr (($eval+4.0))*$unitLen]
-    } else {
-      set y1 [expr (($eval+4.0))*$unitLen]
-      set y2 $height
-    }
-  }
+  if {$eval < -$y} {set eval -$y}
+  if {$eval > $y} {set eval $y}
 
   $w.evalbar delete evalbar
-  $w.evalbar create line 4 $y1 4 $y2 -width 8 -fill $color -tag evalbar
+  if {$::board::_flip($w)} {
+    set X [expr ($y.0 + $eval)*$unitLen]
+    $w.evalbar create line $width  0 $width $X      -width $width2 -fill white -tag evalbar
+    $w.evalbar create line $width $X $width $height -width $width2 -fill black -tag evalbar
+  } else {
+    set X [expr ($y.0 - $eval)*$unitLen]
+    $w.evalbar create line $width  0 $width $X      -width $width2 -fill black -tag evalbar
+    $w.evalbar create line $width $X $width $height -width $width2 -fill white -tag evalbar
+  }
 }
 
 #
@@ -3227,14 +3210,29 @@ proc ::board::update_evalbar_simplin {w eval} {
 # Show evalbar only if enabled when creating the board or changed directly later.
 #
 
-proc ::board::update_evalbar {w {eval {}}} {
+proc ::board::update_evalbar {w {eval {}} {time {}}} {
   if {$eval == {}} {
     set eval $::board::_eval($w)
   }
   if {$eval == "clear"} {
     $w.evalbar delete evalbar
-  } else {
+    return
+  }
+
+  if {$eval == "analyze"} {
+    # analyze board's position with in-built engine
+    if {$time == {}} {
+      set time $::evalTime
+    }
+    set eval [expr {[lindex [sc_pos analyze -time $time -board $::board::_data($w)] 0] / 100.0}]
+  }
+
+  set ::board::_eval($w) $eval
+
+  if {$::evalUseLog} {
     ::board::update_evalbar_linlog $w $eval
+  } else {
+    ::board::update_evalbar_linear $w $eval
   }
 }
 

@@ -304,6 +304,8 @@ menuText P OptionsEvalBrowser "Game Browsers" 0
 menuText P OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText P OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
+# ====== TODO To be translated ======
+menuText P OptionsEvalLog  "Logarithmic Eval" 0
 menuText P OptionsLanguage "Język" 0 {Wybierz język}
 menuText P OptionsMovesTranslatePieces "Tłumacz oznaczenia figur" 0 {Tłumacz pierwsze litery figur}
 menuText P OptionsMovesHighlightLastMove "Podświetl ostatnie posunięcie" 0 {Podświetl ostatnie posunięcie}

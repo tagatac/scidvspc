@@ -212,6 +212,7 @@ set playerInfoHistory {}
 set epdAnnotateMode 0
 set epdDelay 3
 set evalTime 200 ;# milliseconds for  sc_pos analyze
+set evalUseLog 0
 
 set defaultDBs {}
 set tbOnline Nalimov

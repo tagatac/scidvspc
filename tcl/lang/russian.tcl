@@ -301,6 +301,8 @@ menuText R OptionsEvalBrowser "Game Browsers" 0
 menuText R OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText R OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
+# ====== TODO To be translated ======
+menuText R OptionsEvalLog  "Logarithmic Eval" 0
 menuText R OptionsLanguage "Язык" 0 {Меню выбора языка}
 menuText R OptionsMovesTranslatePieces "Перевод фигур" 0 {Перевести первый символ фигуры}
 menuText R OptionsMovesHighlightLastMove "Подсветить последний ход" 0 {Подсветить последний ход}

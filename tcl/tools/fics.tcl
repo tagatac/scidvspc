@@ -2040,7 +2040,7 @@ namespace eval fics {
       set moves [lreverse [lrange $line 1 8]]
       set boardmoves "[string map { "-" "." " " "" } $moves] [string tolower $color]"
       ::board::update .fics.bottom.game$game.bd $boardmoves 1
-      ::board::update_evalbar .fics.bottom.game$game.bd [expr {[lindex [sc_pos analyze -time $::evalTime -board $boardmoves] 0] / 100.0}]
+      ::board::update_evalbar .fics.bottom.game$game.bd analyze
       return
     }
 

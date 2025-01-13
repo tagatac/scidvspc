@@ -342,7 +342,7 @@ proc ::gbrowser::update {n ply} {
   set board [lindex $::gbrowser::boards($n) $ply]
   ::board::update $w.bd $board 1
   if {$::board::_showEvalbar($w.bd)} {
-    ::board::update_evalbar $w.bd [expr {[lindex [sc_pos analyze -time $::evalTime -board $board] 0] / 100.0}]
+    ::board::update_evalbar $w.bd analyze
   }
 
   set t $w.t.text

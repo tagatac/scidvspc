@@ -300,6 +300,8 @@ menuText O OptionsEvalBrowser "Game Browsers" 0
 menuText O OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText O OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
+# ====== TODO To be translated ======
+menuText O OptionsEvalLog  "Logarithmic Eval" 0
 
 menuText O OptionsLanguage "Språk" 0 {Velg menyspråk}
 menuText O OptionsMovesTranslatePieces "Oversett brikker" 0 {Oversett brikkenes første bokstav}

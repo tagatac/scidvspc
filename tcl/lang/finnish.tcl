@@ -268,6 +268,8 @@ menuText L OptionsEvalBrowser "Game Browsers" 0
 menuText L OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText L OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
+# ====== TODO To be translated ======
+menuText L OptionsEvalLog  "Logarithmic Eval" 0
 
 menuText L OptionsLanguage "Kieli" 0 {Valitse valikon kieli}
 menuText L OptionsMovesTranslatePieces "K‰‰nn‰ nappulat" 0 {K‰‰nn‰ nappuloiden ensimm‰inen kirjain}
