@@ -74,6 +74,7 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
     bind $w <Control-Shift-Left> "::board::resize $w.bd -1"
     bind $w <Control-Shift-Right> "::board::resize $w.bd +1"
     bind $w <Control-S> "::board::toggleeval $w.bd"
+    bind $w <Control-f> "::board::flip .gb$n.bd"
 
     if {$::windowsOS || $::macOS} {
       bind $w <MouseWheel> "
@@ -340,10 +341,7 @@ proc ::gbrowser::update {n ply} {
   if {$ply > $max} { set ply $max }
   set ::gbrowser::ply($n) $ply
   set board [lindex $::gbrowser::boards($n) $ply]
-  ::board::update $w.bd $board 1
-  if {$::board::_showEvalbar($w.bd)} {
-    ::board::update_evalbar $w.bd analyze
-  }
+  ::board::update $w.bd $board 1 analyze
 
   set t $w.t.text
   $t configure -state normal

@@ -1528,9 +1528,8 @@ proc ::board::resize2 {w psize} {
 
   $w.evalbar configure -height $bsize
 
-  ::board::update $w {} 0 1
+  ::board::update $w
 
-  # ::update
   # $w.bd configure -state normal
 }
 
@@ -2461,7 +2460,7 @@ proc  ::board::lastMoveHighlight {w} {
 #   move is animated.
 #   N.B. resize (and update) is also called when changing background tiles
 
-proc ::board::update {w {board ""} {animate 0} {resize 0}} {
+proc ::board::update {w {board ""} {animate 0} {eval {}}} {
 
   set oldboard $::board::_data($w)
   if {$board == {}} {
@@ -2546,7 +2545,7 @@ proc ::board::update {w {board ""} {animate 0} {resize 0}} {
     if { $w == ".main.board"} {
       ::board::updateMainEvalBar
     } else {
-      ::board::update_evalbar $w
+      ::board::update_evalbar $w $eval
     }
   }
 
