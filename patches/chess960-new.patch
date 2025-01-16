@@ -1940,7 +1940,45 @@ Index: tcl/help/help.tcl
 ===================================================================
 --- tcl/help/help.tcl	(revision 3532)
 +++ tcl/help/help.tcl	(working copy)
-@@ -4446,6 +4446,7 @@
+@@ -5,6 +5,7 @@
+ 
+   <ht><img icon></ht>
+   <ht><a Intro>Introduction</a></ht>
++  <ht><a 960>Scid vs PC 960</a></ht>
+   <ht><a GUI>Using the GUI</a></ht>
+   <ht><a BrowsingPGN>PGN Files and Scid</a></ht>
+   <ht><a Analysis>Running Chess Engines</a></ht>
+@@ -18,6 +19,21 @@
+   <br>
+   <p><footer>$::scidName  version $::scidVersion</footer></p>
+ "
++set helpTitle(960) "$::scidName"
++set helpText(960) {<h1>Scid vs PC 960</h1>
++<p>
++This is a patched version of Scid vs PC supporting Fischer Chess / Chess 960, from the source patch "chess960-new.patch", including some backend modifications by Britton Farrar.
++Because of these mods, any si4 database opened will be converted/renamed to .si960. But the format does not change, and renaming them back to si4 should be ok <b>as long as any Chess960 games are removed, as they are otherwise essentially broken games with regards to castling, and bad things may happen.</b>
++</p>
++<p>Most chess engines will not support Chess960. The relevant UCI option is <b>UCI_Chess960</b>.
++Scid vs PC will enable this option at engine init <b>if no user options have already been saved</b>, but it can thence be overridden by the user in Engine Configuration, so check there if experiencing engine difficulties. Stockfish does support UCI_Chess960, but I do not know how it works with Stockfish NNUE.</p>
++<p>The new Score Bar feature is disabled for Fics and the Game Browser windows.</p>
++<p>Parralel installation with normal ScidvsPC on Linux is only possible in different directory trees (ie /usr and /usr/local), because the backend executables have the same name still (tkscid).  So please read the output of "./configure --help" carefully. the new Linux GUI is named <b>scid-vs-960</b>.</p>
++<p>Interface changes are minimal. There does exist a new entrybox in the Setup Board window, to allow entry of a specific 960 code.</p>
++<p>Chess 960 Essay <url http://www.dwheeler.com/essays/Fischer_Random_Chess.html>http://www.dwheeler.com/essays/Fischer_Random_Chess.html</url></p>
++</ul>
++<p><footer>Updated: Scid vs. PC 4.26 Feb 2025</footer></p>
++}
+ set helpTitle(Intro) "$::scidName"
+ set helpText(Intro) {<h1>Introduction</h1>
+ 
+@@ -255,6 +271,7 @@
+   <h3><name C>C</name></h3>
+   <ul>
+   <li><a Changelog>Changelog</a></li>
++  <li><a 960>Chess 960</a>/Fischer Random Chess</li>
+   <li><a Analysis>Chess Engines</a></li>
+   <li><a Analysis List>Chess Engine</a> configuration</li>
+   <li><a Analysis Debugging>Chess Engine</a>  debugging</li>
+@@ -4446,6 +4463,7 @@
    <li>Project page  <url http://sourceforge.net/projects/scidvspc>http://sourceforge.net/projects/scidvspc</url></li>
    <li>Online documentation <url http://scidvspc.sourceforge.net/doc/Contents.htm>http://scidvspc.sourceforge.net/doc/Contents.htm</url></li>
    <br>
@@ -2029,6 +2067,24 @@ Index: tcl/main.tcl
    }
    if {$nullmove && [sc_pos isCheck]} {
        # dont add null move in check or mate
+Index: tcl/menus.tcl
+===================================================================
+--- tcl/menus.tcl	(revision 3532)
++++ tcl/menus.tcl	(working copy)
+@@ -1522,10 +1522,10 @@
+ set m .menu.options.evalbar
+ menu $m -tearoff -1
+ $m add checkbutton -label OptionsEvalMain -variable ::gameInfo(showEval) -command ::board::toggleeval
+-$m add checkbutton -label OptionsEvalBrowser -variable ::gbrowser::showEval
+-$m add checkbutton -label OptionsEvalFics  -variable ::fics::showEval
++$m add checkbutton -label OptionsEvalBrowser -variable ::gbrowser::showEval -state disabled
++$m add checkbutton -label OptionsEvalFics  -variable ::fics::showEval -state disabled
+ $m add checkbutton -label OptionsEvalLog  -variable ::evalUseLog
+-$m add cascade -label OptionsEvalTime -menu $m.evaltime
++$m add cascade -label OptionsEvalTime -menu $m.evaltime -state disabled
+ menu $m.evaltime -tearoff 1
+ foreach i {50 100 150 200 300 400 500 600 800 1000} {
+   $m.evaltime add radiobutton -label "$i ms" -variable ::evalTime -value $i
 Index: tcl/misc/misc.tcl
 ===================================================================
 --- tcl/misc/misc.tcl	(revision 3532)
@@ -2263,7 +2319,16 @@ Index: tcl/start.tcl
        }
  
        # Check if base is already opened
-@@ -2022,6 +2022,7 @@
+@@ -1602,6 +1602,8 @@
+ } else {
+   ::splash::add "Loaded options from \"$optionsFile\"."
+ }
++set ::gbrowser::showEval 0
++set ::fics::showEval 0
+ 
+ # Hack to unset previous exportStartFile(Latex)
+ if {[string match *pstricks-add* $exportStartFile(Latex)]} {
+@@ -2022,6 +2024,7 @@
  ::splash::add "http://scidvspc.sourceforge.net"
  ::splash::add ""
  ::splash::add "(C) Steven Atkinson (stevenaaus@yahoo.com) 2008-2024"
@@ -2279,7 +2344,7 @@ Index: tcl/tools/analysis.tcl
      # proc is called for any change in board position (including new games, and simple moves)
      set nonStdStart [sc_game startBoard]
      if {$nonStdStart} {
-+      sendToEngine $n "setoption name UCI_Chess960 value true"
++      # sendToEngine $n "setoption name UCI_Chess960 value true"
        set analysis(startpos$n) "fen [sc_game startPos]"
      } else {
        set analysis(startpos$n) startpos
@@ -2360,14 +2425,16 @@ Index: tcl/tools/uci.tcl
    array set uciInfo {}
    ################################################################################
    #
-@@ -935,6 +935,13 @@
+@@ -935,6 +935,15 @@
          set ::uci::uciInfo(skill) [list UCI_Elo $value]
        }
      }
-+    # Set UCI_Chess960 if it is an engine option, disreguarding existing setting
++    # Set UCI_Chess960 if it is an engine option, and not already explicitly set
 +    if {[string match *UCI_Chess960* $analysis(uciOptions$n)]} {
-+      ::splash::add "Enabling UCI_Chess960 for [lindex $engineData 0] (by default)."
-+      ::sendToEngine $n "setoption name UCI_Chess960 value 1"
++      if {[lsearch $options UCI_Chess960] == -1} {
++        ::splash::add "Enabling UCI_Chess960 for [lindex $engineData 0] (by default)."
++        ::sendToEngine $n "setoption name UCI_Chess960 value 1"
++      }
 +    } else {
 +      ::splash::add "Warning, UCI engine [lindex $engineData 0] does not support option UCI_Chess960" error
 +    }
