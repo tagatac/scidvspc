@@ -357,10 +357,6 @@ namespace eval fics {
 
     scrollbar $w.console.scroll -command "$w.console.text yview"
 
-    ### Ok, this seems to be keeping it's shape now 
-    # Use of "-height $::fics::consoleheight -width $::fics::consolewidth"
-    # just didn't work, and also conflicted with the universal setWinSize procedure
-
     ### need a config option here... Somewhere! &&&
     text $w.console.text -bg $::fics::consolebg -fg $::fics::consolefg -wrap word -yscrollcommand "$w.console.scroll set" -width 40 -height 10 -font font_Fixed
     ### is font_Regular working here ? &&&
@@ -558,7 +554,7 @@ namespace eval fics {
 
     bind $w <Control-q> ::fics::close
     bind $w <Destroy>   ::fics::close
-    bind $w.console <Configure> "::fics::recordFicsSize $w"
+    bind $w <Configure> "if {\"%W\" == \"$w\"} {::fics::recordFicsSize}"
     bind $w <F1> {helpWindow FICS}
     bind $w <Button-3> {
       tk_popup .menu.options.fics %X %Y
@@ -640,7 +636,8 @@ namespace eval fics {
       }
   }
 
-  proc recordFicsSize {w} {
+  proc recordFicsSize {} {
+    set w .fics
     variable logged
     global ::fics::consoleheight ::fics::consolewidth
     recordWinSize $w
@@ -649,7 +646,7 @@ namespace eval fics {
       [$t cget -font] 0]]
     set height [expr ([winfo height $t] - 2 * [$t cget -borderwidth] - 4)/[font metrics \
       [$t cget -font] -linespace]]
-    incr height 2 ; # for some reason, two bigger is best for fics output
+    # incr height 2 ; # for some reason, two bigger is best for fics output
 
     if {$width != $::fics::consolewidth || $height != $::fics::consoleheight } {
       set ::fics::consolewidth $width
@@ -1038,6 +1035,7 @@ namespace eval fics {
 	writechan $::fics::reallogin
 	if { [string match -nocase guest $::fics::reallogin ] } {
 	  set logged 1
+          after idle {::fics::recordFicsSize}
 	}
 	return
       }
