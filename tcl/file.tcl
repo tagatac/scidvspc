@@ -56,7 +56,7 @@ proc ::file::Exit {}  {
     if {[winfo exists .analysisWin$i]} {
         # Try to be nice and close all engines, especially Graham's driver. It's a bit of a mess, but
         # Destroy/WM_DELETE_WINDOW is now unbound (on windows only?) so call proc exclusively
-        destroyAnalysisWin $i .analysisWin$i
+        destroyAnalysisWin $i
 
         # This vwait is essential for eboards, but may need removing if it misbehaves elsewhere. S.A.
         # ... Hmm - it does stop app exitting in undocked mode. Nasty S.A.

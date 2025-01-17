@@ -2009,16 +2009,11 @@ if {$someMove != {}} {
 
 ### Close an engine, because its analysis window is being destroyed.
 
-proc destroyAnalysisWin {n W} {
+proc destroyAnalysisWin {n} {
 
   # Is this working properly. We seem to have a process left S.A.
 
   global windowsOS analysis annotate
-
-  if {[string trim $W] != ".analysisWin$n"} {
-    # ignore individual widget destroys
-    return
-  }
 
   if {[winfo exists .configAnnotation]} {
     # Is annotation being configured ?
@@ -2060,7 +2055,11 @@ proc destroyAnalysisWin {n W} {
     sendToEngine $n stop
     sendToEngine $n quit
   } else  {
-    sendToEngine $n exit
+    if {$analysis(has_analyze$n)} {
+      sendToEngine $n exit
+    } else {
+      sendToEngine $n ?
+    }
     sendToEngine $n quit
   }
   catch { flush $analysis(pipe$n) }
@@ -2532,7 +2531,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
       changes. So if you see this message, try changing the board \
       by moving backward or forward or making a new move.)"
   $w.text configure -state disabled
-  bind $w <Destroy> "destroyAnalysisWin $n %W"
+  bind $w <Destroy> "if {\"%W\" == \"$w\"} {destroyAnalysisWin $n}"
   bind $w <Escape> "focus .main ; destroy $w"
 
   bind $w <Return>   "addAnalysisMove $n"
