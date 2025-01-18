@@ -1,6 +1,6 @@
 ## deutsch.tcl
 #  German language support for Scid.
-#  Contributors: Bernhard Bialas, Jürgen Clos, Christian Opitz 
+#  Contributors: Bernhard Bialas, Jürgen Clos, Christian Opitz
 #
 #  Hinweis (aus tcl/lang/english.tcl):
 #
@@ -218,7 +218,7 @@ menuText D ToolsExpCurrentPGN "Partie in PGN-Datei exportieren..." 10 \
   {Aktuelle Partie in eine PGN-Datei schreiben}
 menuText D ToolsExpCurrentHTML "Partie in HTML-Datei exportieren..." 10 \
   {Aktuelle Partie in eine HTML-Datei schreiben}
-menuText D ToolsExpCurrentHTMLJS "Partie in HTML/JavaScript-Datei exportieren..." 15 {Aktuelle Partie wird in eine HTML und JavaScript Datei exportiert.}  
+menuText D ToolsExpCurrentHTMLJS "Partie in HTML/JavaScript-Datei exportieren..." 15 {Aktuelle Partie wird in eine HTML und JavaScript Datei exportiert.}
 menuText D ToolsExpCurrentLaTeX "Partie in LaTeX-Datei exportieren..." 10 \
   {Aktuelle Partie in eine LaTeX-Datei schreiben}
 menuText D ToolsExpFilter "Alles im Filter exportieren" 16 \
@@ -228,7 +228,7 @@ menuText D ToolsExpFilterPGN "Filter in PGN-Datei exportieren..." 10 \
 menuText D ToolsExpFilterHTML "Filter in HTML-Datei exportieren..." 10 \
   {Alle Partien im Filter in eine HTML-Datei schreiben}
 menuText D ToolsExpFilterHTMLJS "Filter in HTML/JavaScript exportieren..." 17 \
-  {Alle Partien im Filter werden in eine HTML und JavaScript Datei exportiert.}  
+  {Alle Partien im Filter werden in eine HTML und JavaScript Datei exportiert.}
 menuText D ToolsExpFilterLaTeX "Filter in LaTeX-Datei exportieren..." 10 \
   {Alle Partien im Filter in eine LaTeX-Datei schreiben}
 menuText D ToolsExpFilterEPD "Filter in EPD/FEN-Datei exportieren" 17 {Alle Filterpartien in eine EPD-Datei speichern}
@@ -282,8 +282,7 @@ menuText D OptionsFontsRegular "Normal" 0 {Standardzeichensatz}
 menuText D OptionsFontsMenu "Menü" 0 {Schriftart für Menüs}
 menuText D OptionsFontsSmall "Klein" 0 {Kleine Zeichen}
 menuText D OptionsFontsFixed "Fest" 0 {Schriftart mit fester Breite (nichtproportional)}
-# ====== TODO To be translated ======
-menuText D OptionsEvalbar "Score Bar" 0 {Score bar options}
+menuText D OptionsEvalbar "Bewertungsbalken" 0 {Optionen für Bewertungsbalken}
 menuText D OptionsGInfo "Partieinformationen" 0 {Optionen für Informationsbereich}
 menuText D OptionsFics "FICS" 0
 menuText D OptionsFicsAuto "Automatische Umwandlung in Dame" 0
@@ -295,16 +294,11 @@ menuText D OptionsFicsCommands "Startbefehle" 0
 menuText D OptionsFicsNoRes "Keine Ergebnisse" 0
 menuText D OptionsFicsNoReq "Keine Anfragen" 0
 menuText D OptionsFicsPremove "Voreingabe von Zügen erlauben" 0
-# ====== TODO To be translated ======
-menuText D OptionsEvalMain "Main Board" 0
-# ====== TODO To be translated ======
-menuText D OptionsEvalBrowser "Game Browsers" 0
-# ====== TODO To be translated ======
-menuText D OptionsEvalFics "Fics boards" 0
-# ====== TODO To be translated ======
-menuText D OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
-# ====== TODO To be translated ======
-menuText D OptionsEvalLog  "Logarithmic Eval" 0
+menuText D OptionsEvalMain "Hauptbrett" 0
+menuText D OptionsEvalBrowser "Partie-Browser" 0
+menuText D OptionsEvalFics "FICS-Bretter" 0
+menuText D OptionsEvalTime "Bewertungszeit" 0 {Zeit für schnelle Analyseprobe}
+menuText D OptionsEvalLog  "Logarithmische Bewertung" 0
 menuText D OptionsLanguage "Sprache" 0 {Sprache wählen}
 menuText D OptionsMovesTranslatePieces "Figurennamen übersetzen" 0 {Übersetze den ersten Buchstaben der Figurenbezeichnung}
 menuText D OptionsMovesHighlightLastMove "Letzten Zug hervorheben" 0 {Rahmt Start- und Zielfeld des letzten Zuges farbig ein}
@@ -322,8 +316,8 @@ menuText D OptionsMovesDelay "Automatisch vorspielen..." 7 \
 menuText D OptionsMovesCoord "Tastatureingabe" 0 \
   {Zugeingabe über Koordinaten ("g1f3") akzeptieren}
 menuText D OptionsMovesSuggest "Zugvorschläge anzeigen" 0 {Zugvorschlag ein-/ausschalten}
-menuText D OptionsShowVarPopup "Variantenfenster zeigen" 0 { Anzeige des Variantenauswahlfensters ein/ausschalten}  
-menuText D OptionsMovesSpace "Leerzeichen nach Zugnummer einfügen" 0 {Leerzeichen nach Zugnummer einfügen}  
+menuText D OptionsShowVarPopup "Variantenfenster zeigen" 0 { Anzeige des Variantenauswahlfensters ein/ausschalten}
+menuText D OptionsMovesSpace "Leerzeichen nach Zugnummer einfügen" 0 {Leerzeichen nach Zugnummer einfügen}
 menuText D OptionsMovesKey "Automatische Zugergänzung" 10 \
   {Automatische Zugergänzung ein-/ausschalten}
 menuText D OptionsMovesShowVarArrows "Pfeile für Varianten anzeigen" 0 {Zeige Pfeile in Varianten an: ja/nein}
@@ -356,7 +350,7 @@ menuText D OptionsTacticsBasesDir "Datenbankenverzeichnis..." 0 {Verzeichnis fü
 menuText D OptionsInformant "Informatorwerte konfigurieren" 0
 menuText D OptionsSave "Optionen speichern" 0 \
   "Alle einstellbaren Optionen in der Datei $::optionsFile sichern"
-menuText D OptionsSaveBases "Datenbanken als Standard speichern" 0 
+menuText D OptionsSaveBases "Datenbanken als Standard speichern" 0
 menuText D OptionsAutoSave "Automatisch speichern bei Beenden" 0 \
   {Alle Optionen beim Beenden von Scid automatisch speichern}
 
@@ -390,8 +384,7 @@ menuText D GInfoMenuBar "Menüleiste"  0
 menuText D GInfoToolBar "Werkzeugleiste"  0
 menuText D GInfoButtonBar "Schalterleiste"  0
 menuText D GInfoStatusBar "Statusleiste"  0
-# ====== TODO To be translated ======
-menuText D GInfoEvalBar "Score Bar" 0
+menuText D GInfoEvalBar "Bewertungsbalken" 0
 translate D FlipBoard {Brett drehen}
 translate D RaiseWindows {Fenster vergrößern}
 translate D AutoPlay {Abspielen}
@@ -955,8 +948,8 @@ translate D GlistRemoveThisGameFromFilter  {Partie aus Filter entfernen}
 translate D GlistRemoveGameAndAboveFromFilter  {Partie (und alle oberhalb)}
 translate D GlistRemoveGameAndBelowFromFilter  {Partie (und alle darunter)}
 translate D GlistDeleteGame {(Ent)Lösche Partie}
-translate D GlistDeleteAllGames {Lösche alle Partien im Filter} 
-translate D GlistUndeleteAllGames {Entlösche alle Partien im Filter} 
+translate D GlistDeleteAllGames {Lösche alle Partien im Filter}
+translate D GlistUndeleteAllGames {Entlösche alle Partien im Filter}
 translate D GlistAlignL {Ausrichtung links}
 translate D GlistAlignR {Ausrichtung rechts}
 translate D GlistAlignC {Ausrichtung zentriert}
@@ -1556,9 +1549,9 @@ translate D Opening {Eröffnung}
 translate D RandomLevel {Zufallsniveau}
 translate D StartFromCurrentPosition {Von aktueller Position starten}
 translate D FixedDepth {Feste Tiefe}
-translate D Nodes {Knoten} 
+translate D Nodes {Knoten}
 translate D Depth {Tiefe}
-translate D Time {Zeit} 
+translate D Time {Zeit}
 translate D Auto {Automatisch}
 translate D Score {Bewertung}
 translate D {Score Combo} {Bewertung und Zeit}
@@ -2279,6 +2272,7 @@ append helpText(D,Index) {
   <li><a Reports>Berichte</a></li>
   <li><a Tree Best>Beste Partien anzeigen</a></li>
   <li><a FindBestMove>Besten Zug finden: Training</a></li>
+  <li><a MainWindow ScoreBar>Bewertungsbalken</a></li>
   <li><a Board>Brett- und Figureneinstellungen</a></li>
   <li><a Book Polyglot>Bücher für PolyGlot erstellen</a></li>
   </ul>
@@ -2625,9 +2619,19 @@ set helpText(D,MainWindow) {<h1>Hauptfenster von Scid vs. PC</h1>
   Menü <green>Optionen--<gt>Partieinformationen</green>.
   </p>
 
-  <h4>Anzeige von Materialwerten</h4>
-  <p>Rechts neben dem Schachbrett wird das <b>Materialungleichgewicht</b>
-  durch kleine Figuren bzw. Bauern angezeigt.
+  <h4>Bewertungsbalken und Materialwerte</h4>
+<p>Rechts neben dem Schachbrett wird das <b>Materialungleichgewicht</b> durch
+  kleine Figuren bzw. Bauern angezeigt.</p>
+<p>Desweiteren gibt es dort einen
+  <b>Bewertungsbalken</b> (falls aktiviert - umschaltbar über Strg-S), der die
+  Bewertung des ersten Schachprogramms (falls eines läuft) oder eine
+  Bewertungszahl anzeigt, die im Kommentar zur Stellung enthalten
+  ist. Bewertungsbalken gibt es auch optional für in FICS beobachtete Bretter
+  und für Bretter im Partie-Browser. Sie können über das Menü
+  Optionen-<gt>Bewertungsbalken konfiguriert werden. Die Bewertungszeit wird in
+  Millisekunden angegeben. Dies ist die kurze Zeit, die das in Scid integrierte
+  Schachprogramm aufwendet, um das aktuelle Brett zu analysieren und um eine
+  Bewertung zu erhalten.
   </p>
 
   <h4><name Status>Die Statusleiste</name></h4>
@@ -2753,7 +2757,7 @@ append helpText(D,Menus) {
   Trial>Versuchsmodus</a>, um eine temporäre Variante auszuprobieren,
   ohne die aktuelle Partie zu ändern.</li>
   </ul>
-  
+
   <h3><name Game>Partie</name></h3>
   <ul>
   <li><b>Neue Partie</b>  Setzt die aktive Partie in einen
@@ -2889,7 +2893,7 @@ append helpText(D,Menus) {
   <ul>
   <li>Verschiedene <a Options>Optionen und Einstellungen</a>.</li>
   </ul>
-  
+
   <p><footer>Aktualisiert: Scid vs. PC 4.22, Februar 2021</footer></p>
 }
 
@@ -3469,10 +3473,12 @@ set helpText(D,Comment) {<h1>Der Kommentareditor</h1>
   ::commenteditor::Open><green>Kommentareditor</green></run> können
   Sie Kommentare und <a NAGs>Anmerkungen</a> hinzufügen. Er enthält
   auch ein kleines Schachbrett für das Zeichnen von Pfeilen
-  (usw.). <i>Diese drei Bereiche können durch das Drücken der
-  Schaltfläche <img bookmark_down> angezeigt bzw. ausgeblendet
-  werden. Falls jedoch Abschnitte fehlen, versuchen Sie, die
-  Fenstergröße zu ändern.</i> </p>
+  (usw.).
+  <i>Diese drei Bereiche können durch das Drücken der
+  Schaltfläche <img bookmark_down> angezeigt bzw. ausgeblendet werden. Wenn
+  jedoch Abschnitte fehlen, versuchen Sie, die Fenstergröße zu ändern. Falls das
+  Kommentarfenster nicht den Fokus erhält, klicken Sie in die obere linke
+  Ecke.</i></p>
 
   <h3>Kommentare</h3>
   <p>Kommentare sind Texte, die zu einem bestimmten Zug gehören. Sie
@@ -3752,7 +3758,9 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
 
   <p><i>Man kann in der Partienliste die Schriftart konfigurieren. Sie wird über
   ein Kontextmenü im Datenbankwechsler aktiviert und der Schrifttyp ist
-  "Klein".</i></p>
+  "Klein". Die aktuelle Partiefarbe ist ebenfalls über das Kontextmenü des
+  Datenbankwechslers konfigurierbar. Horizontales verschieben funktioniert mit
+  Umschalttaste+Mausrad.</i></p>
 
   <p>Unterhalb der Partienliste sind verschiedene Schaltflächen und
   Eingabefelder und darunter finden Sie
@@ -3842,7 +3850,7 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
 
   <h3>Anmerkungen</h3>
   <ul>
-  
+
   <li>Die Spalte <b>Land</b> enthält aktuell die letzten drei
   Buchstaben des Turnierortes (wenn der drittletzte ein Großbuchstabe
   ist und ein Leerzeichen vorausgeht). Die Seite <a Maintenance
@@ -3888,11 +3896,15 @@ set helpText(D,GameList) {<h1>Das Partienlistenfenster</h1>
   letzte Zugnummer, die hinzugefügt werden soll, ändern, je nachdem, ob Sie die
   ganze Partie oder nur ihre nächsten paar Züge hinzufügen wollen.
   </p>
-  
+
   <p>Die Schaltfläche <b>Laden</b> lädt die Partie (mit Wechsel der Datenbanken,
   falls notwendig) in das Hauptbrett (Taste Strg + Laden schließt nicht das
   Browserfenster).</p>
-  
+
+<p>Optional wird ein Bewertungsbalken angezeigt
+  (Optionen-<gt>Bewertungsbalken). Dieser kann mit Strg+S umgeschaltet werden.
+</p>
+
   <p>Nächste/vorherige Partien können mittels der Tasten
   Strg+runter/hoch geladen werden. Die Brettgröße kann mit
   Strg+Mausrad oder mit Strg+Umschalt+Links/Rechts <b>angepaßt<b>
@@ -4160,7 +4172,7 @@ set helpText(D,LaTeX) {<h1>LaTeX mit Scid benutzen</h1>
   <li>texlive-latex-extra (xifthen.sty)</li>
   <li>pgf (pgfcore.sty)</li>
   <li>lmodern (lmodern.sty)</li>
-  <li>texlive-pstricks (pstricks-add.sty)</li>
+  <li>texlive-pictures (pgfplots.sty)</li>
   <li>texlive-science (siunitx.sty)</li>
   <li>texlive-xetex (xelatex)</li>
   </ul>
@@ -4230,7 +4242,7 @@ set helpText(D,PGN) {<h1>PGN-Fenster</h1>
   Scid</a>, <a Export>Partien exportieren</a> und <a Import>Partien
   importieren</a></i>.
   </p>
-  
+
   <h3>Allgemeine Benutzung</h3>
   <p>Das <run ::pgn::Open><green>PGN-Fenster</green></run> erlaubt das
   Navigieren durch die Partie. Ein Klick auf einen Zug springt zur
@@ -4769,13 +4781,13 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   werden Unterschiede in den Markierungen hervorgehoben und Scid
   vs. PC zeigt einen Vergleich von Partievarianten und Kommentaren.
   </p>
-  <p>Benutzen Sie die Pfeiltasten, um sich durch die Partien
-  weiterzubewegen sowie die Tasten "1", "2" und "t" für das Umschalten
-  des Löschfeldes und "u", um bei beiden Partien das Löschkennzeichen
-  zu entfernen.
-  </p>
-  <p><i>Um die Partien tatsächlich zu löschen, müssen Sie die
-  Datenbank <a Compact>komprimieren</a>.</i>
+
+  <p>Benutzen Sie die Pfeiltasten, um sich durch die Partien weiterzubewegen
+  sowie die Tasten "1", "2" und "t" für das Umschalten des Löschfeldes und "u",
+  um bei beiden Partien das Löschkennzeichen zu entfernen, "U", um bei allen
+  Partien das Löschkennzeichen zu entfernen und "s", um Markierungen
+  freizugeben. <i>Beachte: um Partien wirklich zu löschen, müssen Sie die
+  Datenbank <a Compact>komprimieren.</a></i>
   </p>
 
   <h3><name Editing>Namen bearbeiten</name></h3>
@@ -4924,7 +4936,7 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   verwaltet. Das Fenster <run extraTags><green>Zusätzliche
   Markierungen</green></run> erleichtert das Ändern optionaler Markierungen wie
   Annotator, PlyCount, Depth, TimeControl.</p>
-  
+
   <p>Zu den Funktionen gehören: Suchen, Filtern, Entfernen und
   Hinzufügen/Erstellen neuer Markierungen (nur Filter).</p>
 
@@ -4975,7 +4987,7 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   zurückzubringen.
   </p>
 
-  <p><footer>Aktualisiert: Scid vs. PC 4.25, November 2023</footer></p>
+  <p><footer>Aktualisiert: Scid vs. PC 4.26, August 2025</footer></p>
 }
 
 set helpTitle(D,Sorting) "Sortieren einer Datenbank"
@@ -5105,14 +5117,14 @@ set helpText(D,Flags) {<h1>Partiekennzeichen</h1>
 set helpTitle(D,Analysis) "Analysefenster"
 set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
 
-<p>Scid vs. PC hat leistungsstarke Schachanalysefunktionen. Mehrere
-  Schachprogramme können gleichzeitig laufen. Sie können in
-  einem <a Tourney>Computerturnier</a> gegenseitig antreten und
-  Protokolldateien können innerhalb des Programms für eine
-  leichtere <a Analysis Debugging>Fehlersuche</a> durchgesehen werden.
+<p> SCID vs. PC verfügt über leistungsstarke Schachanalysefunktionen. Mehrere
+Schachprogramme können gleichzeitig laufen. Sie können in
+einem <a Tourney>Computerturnier</a> gegeneinander antreten und Protokolldateien
+können innerhalb des Programms für eine leichtere <a Analysis
+Debugging>Fehlersuche</a> durchgesehen werden.
 </p>
 
-  <h3>Erste Schritte</h3>
+<h3>Erste Schritte</h3>
 
 <p>Ein paar Schachprogramme sind vorinstalliert, während weitere über
   das Fenster <a Analysis List>Analyse-Engine</a> hinzugefügt werden
@@ -5120,9 +5132,13 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
 
 <p>Diese Programme können auf verschiedene Arten gestartet werden:
   durch <run ::startAnalysisWin F2><green>Drücken von F2</green></run>, F3 oder
-  F4 oder aus dem Menü <green>Werkzeuge--<gt>Starte Engine</green>. Zusätzlich
-  kann das erste Schachprogramm durch <b>Doppelklick in der Statusleiste</b>
-  gestartet oder angehalten werden.</p>
+  F4 oder aus dem Menü <green>Werkzeuge--<gt>Starte Engine</green>.</p>
+
+Zusätzlich kann das zweite aufgeführte Schachprogramm gestartet/gestoppt werden,
+ indem Sie <b>auf die Statusleiste doppelklicken</b>. Klicken Sie mit der
+ rechten Maustaste auf die Statusleiste, wird das Schachprogramm
+ an-/abgehängt. Das laufende Schachprogramm, das angehängt ist, wird mit
+ niedriger CPU-Priorität ausgeführt. <p>
 
 <p>Die <b>Leertaste</b> startet bzw. beendet das
   Schachprogramm. Drücken der <b>Eingabetaste</b> fügt den besten Zug des
@@ -5166,11 +5182,11 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   einer Weile (während der Sie sich in der Partie weiterbewegt haben)
   der Partie hinzuzufügen, kehren Sie zu der gesperrten Stellung
   zurück, drücken Pause, entsperren die Analyse und fügen die Variante hinzu.
-</li>
-  <li> <button tb_coords 32> <b>Analysebrett anzeigen</b> zeigt ein kleines
-  Hilfsschachbrett mit anklickbaren Pfeilen an. Wenn das Schachprogramm
-  angehalten ist, zeigt dieses Brett die gesperrte Stellung. Ein Klick mit der
-  mittleren Maustaste schaltet zwischen den Anzeigemodi um.</li>
+  </li>
+ <li> <button tb_coords 32> <b>Analysebrett anzeigen</b> zeigt ein kleines
+  Analysebrett. Wenn das Schachprogramm angehalten ist, zeigt dieses Brett die
+  gesperrte Stellung. Ein Klick mit der mittleren Maustaste schaltet zwischen
+  den Anzeigemodi um.</li>
   <li> <button tb_exclude 32> <b>Zug ausschließen</b> hilft, die
   Suchliste des Schachprogramms zu verfeinern (hauptsächlich nur
   UCI-Programme). Ein Bewegen des Mauszeigers über diese Schaltfläche
@@ -5226,7 +5242,7 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   Schaltfläche <button tb_info 32> angezeigt oder verborgen
   werden. Diese sind
   <br>
-  <br><b>Tiefe</b>  Die Suchtiefe, die bei den
+  <br><b>Tiefe</b> (/selektive Tiefe) Die Suchtiefe (/seldepth), die bei den
   Schachprogrammberechnungen bereits erreicht wurde (in Halbzügen).
   <br><b>Knoten</b>  Die Anzahl der für das aktuelle Ergebnis
   analysierten Stellungen (und die Anzahl der Stellungen pro Sekunde).
@@ -5239,7 +5255,34 @@ set helpText(D,Analysis) {<h1>Das Analysefenster</h1>
   laufende CPU-Auslastung.
   </p>
 
-  <h1>Funktionen</h1>
+<h3><name Board>Analysebrett</h3>
+
+<p>Klicken auf <button tb_coords 32> schaltet auf ein kleines Brett um, das drei
+Modi einnehmen kann: Pfeile, Sequentiell und Position. Der Standardmodus und
+die Standardgröße werden im <a Analysis List>Analyse-Engine</a>-Fenster
+eingestellt und können auch durch Drücken der mittleren Maustaste umgeschaltet
+werden. <i>Durch Drücken von Strg-mittlere Maustaste kann die Größe dieses
+Brettes geändert werden.</i>
+</p>
+<p><br><b>Position</b> ist der ursprüngliche Modus. Es zeigt die Stellung des
+  Bretts, nachdem der Engine-Züg gespielt wurde.
+<br><b>Arrows</b> zeigt anklickbare Pfeile für den Engine-Zug oder mehrere
+Pfeile an, wenn PV aktiviert ist.
+<br><b>Sequentiell</b> zeigt die Zeile als nummerierte Folge kleiner (nicht
+anklickkbarer) Pfeile an. Die Länge der angezeigten Züge beträgt standardmäßig
+3, kann jedoch in der letzten Spinbox in der Engine-Symbolleiste geändert
+werden. Die Linienfarbe wird ausgewählt mittels
+Optionen-<gt>Farben-<gt>Engine-Pfeile.
+</p>
+<p>
+  Neben dem Brett befindet sich ein schwarz-weißer Bewertungsbalken (über
+  Strg-S umschaltbar) und optional eine farbige „Ampelleiste“
+  (Strg-C). Diese zeigt die Farben für die einzelnen Multipv-Bewertungszahlen
+  an, welche die Gewichtung einer Position darstellen. Rot bedeutet, dass Schwarz
+  gewinnt, gelb bedeutet ausgeglichen und grün ist Gewinn für Weiß.
+  </p>
+
+  <h1>Weitere Funktionen</h1>
 
   <h3><name Annotating>Partien kommentieren</name></h3>
   <p>Mit der Schaltfläche <button tb_annotate> (in der Werkzeugleiste
@@ -5610,7 +5653,7 @@ set helpText(D,EPD) {<h1>EPD-Dateien</h1>
   Partie und setzen die Anfangsstellung der Testpartie.</p>
 
   <h3>EPD-Dateien analysieren</h3>
-	
+
   <p>EPD-Dateien können im EPD-Fenster über das
   Menü <green><b>Werkzeuge--<gt>Stellungen analysieren</b></green>
   analysiert werden. Ein Dialog fragt nach der Engine, der Analysezeit
@@ -5696,7 +5739,7 @@ set helpText(D,EPD) {<h1>EPD-Dateien</h1>
 
   <p>Scid vs. PC stellt eine einfache Funktion <a Export EPD>Export
   nach EPD</a> zur Verfügung.</p>
-	
+
   <p>Semikolons als Text werden als "\s" gespeichert, um sie von
   Semikolonzeichen für das Feldende zu unterscheiden.</p>
 
@@ -5991,7 +6034,7 @@ set helpText(D,Graphs) {<h1>Grafikfenster</h1>
 
   <p><i>Die Funktion <green>Grafik--<gt>Speichern als</green> ist von schlechter Qualität. Eine bessere Möglichkeit ist die Benutzung der Funktion "Bildschirmfoto" Ihres Systems.
   </i></p>
-  
+
   <h3><name Filter>Filter Grafikfenster</name></h3>
   <p><b>Relative Filtergrafik</b></p>
 
@@ -7156,9 +7199,9 @@ set helpText(D,ComputerGame) {
   und <b>Eröffnungsbuch</b> aktiviert werden.
   </p>
 
-  <p><i>Man kann jetzt mittels der Schaltfläche "Importieren ECO"
-  jede Eröffnung spielen (oder trainieren), die man im ECO-Fenster
-  findet.</i></p>
+  <p><i>Man kann jetzt jede Eröffnung spielen (oder trainieren), die man im <a
+  ECO Browser>ECO-Browser</a> findet. In diesem an der gewünschten Zeile
+  geöffneten Fenster die Schaltfläche "Importieren ECO" wählen.</i></p>
 
   <p>Andere Konfigurationsabschnitte sind einfach, ausgenommen:
   </p>
@@ -7556,7 +7599,7 @@ set helpText(D,CCXfcc) {<h1>Fernschachserver/Xfcc</h1>
   einfügen dürfen! Um Fortsetzungen hinzuzufügen, benutzen Sie bitte
   Varianten!
   </p>
-  
+
   <p>Xfcc-Datenbankpartien bieten innerhalb der Partienliste
   umfangreiche Statusanzeigen. Diese Information ist jedoch nur
   verfügbar, wenn Scids interne Xfcc-Unterstützung genutzt wird. Die
@@ -7797,7 +7840,7 @@ set helpText(D,CCSetupDialog) {<h1>Fernschach konfigurieren</h1>
   bearbeitet. Dies bietet die Möglichkeit, einige externe
   Hilfsprogramme zu nutzen, um Partien hierher zu holen. Außerdem
   sollte man bei E-Mail-Schach die vom Gegner erhaltenen Partien
-  einfach in diesem Verzeichnis speichern. 
+  einfach in diesem Verzeichnis speichern.
   </p>
   <p>Scid liest kein wie auch immer geartetes Postfach. Es behandelt
   einfach alle PGN-Dateien, die in diesem Verzeichnis platziert
@@ -8061,7 +8104,7 @@ set helpText(D,TacticsTrainer) {<h1>"Matt in ..N.."-Puzzle</h1>
   ist, um dort Ihre eigenen Datenbanken aufzubewahren. Dies führt
   beim Start zu einem langsamen Ablauf oder das Programm bleibt
   hängen.</i></p>
-  
+
   <h3>Konfiguration</h3>
   <p>Der Schieberegler für die <term>Analysezeit der Engine</term>
   begrenzt die Zeit für Toga, um das Puzzle (das spontan erstellt
@@ -8166,7 +8209,7 @@ set helpText(D,FICSlogin) {<h1>FICS-Anmeldung</h1>
   <p>Die nachfolgende Beschreibung bezieht sich auf das Konfigurationsfenster
   in <run ::fics::config><green>Spielen--<gt>Internet (FICS)</green></run>.
   </p>
-  
+
   <ul>
   <li><term>Anmeldename</term> Das ist Ihr Benutzername auf dem
   FICS-Server. Um sich anonym anzumelden, verwenden Sie die
@@ -8224,7 +8267,7 @@ set helpText(D,FICSlogin) {<h1>FICS-Anmeldung</h1>
   # FICS Find Opponent
 set helpTitle(D,FICSfindopp) "FICS: einen Spielpartner finden"
 set helpText(D,FICSfindopp) {<h1>Einen Spielpartner finden</h1>
-  
+
   <p>Es gibt mehrere Wege, um eine Partie zu beginnen. Die einfachsten
   sind die Schaltflächen <b>Gegner suchen</b> und <b>Angebot
   Grafik</b>.
@@ -8350,7 +8393,7 @@ set helpText(D,FICSobserve) {<h1>FICS: weitere Funktionen</h1>
 
   <p>Das Diskutieren von Partien mit anderen wird durch die
   Befehle <b>whisper</b> und <b>kibitz</b> unterstützt.</p>
-  
+
   <p>FICS hat auch das Konzept einer <b>vorrangigen</b> Partie. Wenn
   man mehrere Partien beobachtet, dann macht ein Doppelklick auf ein
   Brett dieses zu Ihrer vorrangigen Partie und die Partienummer wird
@@ -8375,17 +8418,17 @@ set helpText(D,FICSobserve) {<h1>FICS: weitere Funktionen</h1>
   <green>Optionen--<gt>FICS--<gt>Bedenkzeiten speichern</green> aktiv
   ist. Scid vs. PC wird Ihren Spielernamen hinzufügen, falls keiner
   vorhanden ist (z.B. "smoves+ -1").</p>
-  
+
   <p>Das Kommando <b>examine</b> wird jetzt gut unterstützt und ist
   ein bequemer Weg für Gruppen oder Freunde, um Partien zu
   analysieren. Nach dem Absenden von "examine GMShort -1" (z.B.)
   werden die großen Zugschaltflächen von Scid an die
   FICS-Befehle <b>forward</b> und <b>back</b> gebunden.</p>
-  
+
   <p>Man kann mit <b>upload</b> eine Partie zu FICS hochladen. Dieser
   Befehl sendet die laufende Partie als Untersuchungsobjekt zu
   FICS. Andere können dann Ihre Partie begutachten.</p>
-  
+
   <p><i>Partien als Crazyhouse und Bughouse können nur beobachtet oder
   untersucht werden. Sie können aufgrund von Beschränkungen nicht mit
   "smoves" in das Hauptbrett geladen werden. Außerdem haben einige
@@ -8423,16 +8466,16 @@ set helpText(D,FICSwidget) {<h1>FICS benutzen</h1>
     <p>Wenn Sie sich <a FICSlogin>angemeldet</a> haben, zeigt das
   Hauptfenster von FICS ein Konsolenfenster, Befehl- und Suchfelder
   und einige Schaltflächen.</p>
-  
+
   <h3>FICS-Konsole</h3>
 
   <p>Dies ist die Hauptschnittstelle mit dem FICS-Server.</p>
-  
+
   <p>Das Zusammenspiel erfolgt über Befehle, die in das Befehlsfeld
   eingegeben werden oder über die Befehlsschaltflächen. Für einen
   Überblick über beliebte Befehle siehe den Abschnitt
   über <a FICScommands>Befehle</a>.</p>
-  
+
   <h4>Konsolenfarben</h4>
 
   <p>Normale Nachrichten werden in Grün geschrieben; Nachrichten von
@@ -8455,7 +8498,7 @@ set helpText(D,FICSwidget) {<h1>FICS benutzen</h1>
   macht. "Bedenkzeiten speichern" speichert die Zugzeiten als
   Kommentare (in der <a Graphs Score>Bewertungsgrafik</a> sichtbar).
   </p>
-  
+
   <p>Es gibt auch Optionen, um Initialisierungsbefehle zu
   konfigurieren und um die obersten drei Schaltflächen
   anzupassen. Diese letztere Möglichkeit erfordert ein kleines bißchen
@@ -8488,29 +8531,29 @@ set helpText(D,FICSwidget) {<h1>FICS benutzen</h1>
   <p>Die Zugeingabe vorab ermöglicht es, schon Ihren nächsten Zug
   festzulegen, bevor Ihr Gegner gezogen hat. Dies ergibt ein sehr
   schnelles Spielen - wesentlich für Blitzpartien.</p>
-  
+
   <p>Die Zugeingabe vorab wird wie jeder andere Zug ausgeführt durch
   Drücken der Start- und Zielfelder. Eine farbige Linie wird
   gezeichnet und, falls legal, wird dieser Zug sofort ausgeführt,
   nachdem Ihr Gegner gezogen hat. Um die Zugeingabe vorab abzubrechen,
   drücken Sie die <b>Esc</b>-Taste.</p>
-  
+
   <br>
   <p><footer>Aktualisiert: Scid vs. PC 4.20 April 2019</footer></p>
 }
 
 set helpTitle(D,FICScommands) {FICS-Befehle und -Variablen}
 set helpText(D,FICScommands) {<h1>FICS-Befehle und -Variablen</h1>
-  
+
   <p>Die Befehlszeilenschnittstelle von Scid ist ziemlich verwirrend,
   aber nachstehend finden Sie einen Überblick über beliebte Kommandos
   und Variablen.</p>
-  
+
   <p><i>Hilfe kann man sowohl online als auch von der Befehlszeile
   bekommen. Benutzen Sie <term>help BEFEHL</term> oder <term>help
   v_VARIABLE</term> für Informationen über bestimmte Befehle und
   Variablen.</i></p>
-  
+
   <h3>Befehle</h3>
   <ul>
   <li><term>finger</term> SPIELER - Holt Informationen über einen
@@ -8551,13 +8594,13 @@ set helpText(D,FICScommands) {<h1>FICS-Befehle und -Variablen</h1>
   <li><term>moretime</term> NUMMER - Gibt Ihrem Gegner NUMMER mehr Sekunden</li>
   <li><term>help</term> THEMA - Holt Hilfe zu einigen Themen</li>
   </ul>
-  
-  
+
+
   <h3>Variablen</h3>
-  
+
   <p><i>Um Einstellungen zu ändern, benutzen Sie <term>set</term>
   VARIABLE WERT. Oft ist WERT ein boolscher Wert 1 oder 0.</i></p>
-  
+
   <ul>
   <li><term>silence</term> Schaltet shouts, cshouts und channel tells
   ab während Sie eine Partie spielen, untersuchen oder
@@ -8568,12 +8611,12 @@ set helpText(D,FICScommands) {<h1>FICS-Befehle und -Variablen</h1>
   <li><term>noescape</term>	Wenn noescape gesetzt ist und der Gegner
   verliert die Verbindung, dann verliert er die Partie sofort.</li>
   <li><term>availinfo</term> Zeigt alle verfügbaren Informationen</li>
-  
+
   <li><term>1</term> Fußnote 1 zu persönlicher Information des Spielers</li>
   <li><term>2</term> Fußnote 2 zu persönlicher Information des
   Spielers ...</li>
   </ul>
-  
+
   <h3>Bots</h3>
 
   <p>Bots sind spezielle FICS-Konten, die Statistiken sammeln,
@@ -8588,7 +8631,7 @@ set helpText(D,FICScommands) {<h1>FICS-Befehle und -Variablen</h1>
     <li>tell Sibylle how do I add time to my opponent (Stellt dem Bot Sibylle eine Frage)</li>
   </ul>
   </p>
-  
+
   <h3>Kanäle</h3>
   <p>Beliebte Kanäle sind:</p>
   <ul>
@@ -8599,7 +8642,7 @@ set helpText(D,FICScommands) {<h1>FICS-Befehle und -Variablen</h1>
   <li><term>50</term>	Der Kommunikationskanal</li>
   </ul>
   </p>
-  
+
   <h3>Aliase</h3>
   <ul>
   <li><term>f</term>	finger</li>
@@ -8607,11 +8650,11 @@ set helpText(D,FICScommands) {<h1>FICS-Befehle und -Variablen</h1>
   <li><term>t</term>	tell</li>
   <li><term>o</term>	observe</li>
   </ul>
-  
-  
+
+
   <h3>Weitere Informationen</h3>
-  
-  <p>Besuchen Sie Freechess.org für Informationen über 
+
+  <p>Besuchen Sie Freechess.org für Informationen über
   <url http://www.freechess.org/Help/HelpFiles/variables.html>Variablen</url>
   oder
   <url http://www.freechess.org/Help/HelpFiles/commands.html>Befehle</url>.
@@ -8751,7 +8794,7 @@ set helpText(D,Novag) {<h1>Schachbrett von Novag Citrine</h1>
   Sie <green><run ::novag::connect>Werkzeuge--<gt>Hardware
   verbinden--<gt>Novag Citrine verbinden</run></green>, um das
   Schachbrett anzuschließen.</p>
-  
+
   <p><footer>Aktualisiert: Scid vs. PC 4.18</footer></p>
 }
 
@@ -8919,15 +8962,15 @@ set helpText(D,InputEngine) {<h1>Konsole DGT/Input Engine</h1>
   vom Treiberprogramm erhaltenen Antworten durch einen
   Linkspfeil. Unterhalb der Konsole wird informatorisch der durch Scid
   erfolgte Aufruf des Treibers angezeigt.</p>
-  
+
   <p><term>Sende Züge für</term> ermöglicht es, die von der externen
   Hardware gesandten Züge zu begrenzen. Für eine Partieerfassung
   sollte das Brett natürlich Züge für beide Seiten senden. Für ein
   aktuelles Spiel jedoch sollten die vom Gegner gemachten Züge
   ignoriert werden, da Scid sie sonst als "illegal moves" meldet.</p>
-  
+
   <p>Das kleine Brett rechts zeigt die aktuelle Stellung.</p>
-  
+
   <p>Wenn ein Zug ausgeführt wurde, wird im Bereich zwischen den
   Schaltflächen und dem kleinen Brett der auf dem externen Brett
   ausgeführte Zug in figuriner langer algebraischer Notation
@@ -8945,17 +8988,17 @@ set helpText(D,InputEngine) {<h1>Konsole DGT/Input Engine</h1>
   als <term>FEN</term>, was dann mit Scids interner Darstellung
   verglichen wird. Abweichuungen werden in der Konsole angezeigt und
   lösen einen Warnton aus.</p>
-  
+
   <p>Im Falle daß Scid und externes Brett nicht synchronisieren, kann
   die Schaltfläche <term>Synchronisieren</term> verwendet werden. Eine
   neue Partie wird erstellt und die Ausgangsstellung wird gemäß der
   Stellung auf dem externen Brett gesetzt.</p>
-  
+
   <p>Die Schaltfläche <term>Schließen</term> unterbricht schließlich
   die Verbindung zur externen Hardware und schließt die Konsole.</p>
 
   <h2>Besondere Funktionen</h2>
-  
+
   <p>Die nachstehenden Funktionen hängen vom Treiberprogramm und der
   verwendeten Hardware ab. Ihre Beschreibung basiert auf den
   Funktionen, die mit <url http://www.dgt-projects.com>DGT Electronic
@@ -8970,11 +9013,11 @@ set helpText(D,InputEngine) {<h1>Konsole DGT/Input Engine</h1>
   <p>Der Stellungsaufbaumodus wird durch das Entfernen beider Könige
   vom Brett aufgerufen. In diesem Modus ist der <b>Zugbereich</b> gelb
   gefärbt und zeigt den weißen König und den Text <b>Setup</b>.</p>
-  
+
   <p>Im Einrichtungsmodus kann jede gültige Stellung auf dem externen
   Brett aufgebaut werden. Scids interne Darstellung wird jedoch nicht
   aktualisiert, bis sie beendet ist.</p>
-  
+
   <p>Um den Einrichtungsmodus zu beenden, müssen beide Könige auf das
   Brett zurückgestellt werden. Beachten Sie, daß der König der am Zug
   befindlichen Seite <b>zuletzt</b> zurückgestellt werden muß, das
@@ -9039,12 +9082,12 @@ set helpText(D,Sound) {<h1>Ton</h1>
   Tonoptionen werden im
   Menü <run ::utils::sound::OptionsDialog><green>Optionen--<gt>Töne...</green></run>
   konfiguriert.</p>
-  
+
   <p>Der Ton kann durch Auswahl eines ungültigen Verzeichnisses
   deaktiviert werden.</p>
-  
+
   <h2>Linux Snack-Probleme</h2>
-  
+
   <p>Wenn Scid nur jeden zweiten Zug spielt, dann haben Sie ein
    fehlerhaftes libsnack und sollten snack-2.2.10 von
    <url https://sourceforge.net/projects/scidvspc/files/support
@@ -9057,7 +9100,7 @@ set helpText(D,Sound) {<h1>Ton</h1>
    generic/jkFormatMP3.c erhalten, verschieben Sie in dieser Datei die
    Zeile "#include <lt>math.h<gt>" oberhalb von "#define roundf(x)".</li>
    </ul>
-   
+
    <p><footer>Aktualisiert: Scid vs. PC 4.12 Dezember 2013</footer></p>
 }
 
@@ -9094,7 +9137,7 @@ set helpText(D,Changelog) {<h1>Änderungshistorie</h1>
 <li>For a few widgets - dont scroll text windows when using control-scroll to alter font size</li>
 <li>Update stats/etc on Game quickSave</li>
 </ul>
-  
+
 <h4>4.24 (May 1, 2023)</h4>
 <ul>
 <li>Gamelist (and Best games) 'Copy to filter' context-menu/feature</li>
@@ -9330,7 +9373,7 @@ set helpText(D,Board) {<h1>Brett- und Figureneinstellungen</h1>
 
   <p><i>Die Merida1-Figuren haben jetzt höherwertigere größere
   Größen.</i></p>
-  
+
   <p>Plazieren Sie die Figurensätze im
   Verzeichnis <b>$HOME/.scidvspc/pieces</b> und sie werden zum Fenster
   mit den Brettoptionen hinzugefügt. Man kann sie unter
@@ -9860,4 +9903,3 @@ set tips(E) {
 }
 
 ### End of file: deutsch.tcl
-

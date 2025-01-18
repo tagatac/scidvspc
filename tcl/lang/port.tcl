@@ -38,8 +38,7 @@ menuText U Edit "Editar" 0
 menuText U EditAdd "Adicionar variante" 0 {Adiciona variante da partida}
 menuText U EditPasteVar "Colar variante" 0
 menuText U EditDelete "Apagar variante" 0 {Exclui variante da partida}
-# ====== TODO To be translated ======
-menuText U EditDeleteComment "Delete Comment" 0
+menuText U EditDeleteComment "Apagar comentário" 0
 menuText U EditFirst "Converte para Primeira Variante" 14 \
   {Faz com que uma variante seja a primeira da lista}
 menuText U EditMain "Converte variante para Linha Principal" 24 \
@@ -158,9 +157,8 @@ menuText U ToolsTrainFics "Jogar na Internet"  0 {Jogar no freechess.org}
 menuText U ToolsBookTuning "Editar o Livro" 0 {Editar o livro de aberturas}
 menuText U ToolsMaint "Manutenção" 0 {Ferramentas de manutencao de bases de dados Scid}
 menuText U ToolsMaintWin "Janela de Manutenção" 0 \
-  {Abre/Fecha a janela de manutencao de bases de dados Scid}
-# ====== TODO To be translated ======
-menuText U ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
+  {Abre/Fecha a janela de manutenção de bases de dados Scid}
+menuText U ToolsMaintExtra "Etiquetas Extra" 0 {Etiquetas Extra}
 menuText U ToolsMaintCompact "Compactar Base..." 0 \
   {Compacta arquivos de bases de dados, removendo jogos deletados e nomes nao utilizados}
 menuText U ToolsMaintClass "Classificar jogos por ECO..." 2 \
@@ -181,8 +179,7 @@ menuText U ToolsMaintNameSite "Verificação Ortográfica de Lugares..." 11 \
   {Verifica a correcao dos nomes de lugares usando o arquivo de correcao ortografica}
 menuText U ToolsMaintNameRound "Verificação Ortográfica de Rodadas..." 11 \
   {Verificação dos nomes de rodadas usando o arquivo de correcao ortografica}
-# ====== TODO To be translated ======
-menuText U ToolsMaintFixBase "Reparar a base" 0 {Tenta reparar uma base corrupto}
+menuText U ToolsMaintFixBase "Reparar a base" 0 {Tenta reparar uma base corrompida}
 menuText U ToolsConnectHardware "Ligar Hardware" 0 {Connect external hardware}
 menuText U ToolsConnectHardwareConfigure "Configurar..." 0 {Configure external hardware and connection}
 menuText U ToolsConnectHardwareNovagCitrineConnect "Ligar Novag Citrine" 9 {Connect Novag Citrine with Scid}
@@ -245,27 +242,24 @@ menuText U Options "Opções" 0
 menuText U OptionsBoard "Tabuleiro" 0 {Opções de aparência do tabuleiro} ;# ***
 menuText U OptionsColour "Cor do Fundo" 0 {Default text widget color}
 menuText U OptionsBackColour "Fundo" 0 {Default text widget color}
-# ====== TODO To be translated ======
-menuText U OptionsBackColourGlobal "Global" 0 {Global background color}
+menuText U OptionsBackColourGlobal "Global" 0 {Cor global para fundo}
 menuText U OptionsMainLineColour "Setas da Linha Principal" 0 {Mainline arrows}
 menuText U OptionsVarLineColour "Setas da Variante" 0 {Variation arrows}
 menuText U OptionsEngineLineColour "Setas do Programa" 0 {Engine arrows}
 menuText U OptionsRowColour "Linhas" 0 {Default tree/book row color}
-# ====== TODO To be translated ======
-menuText U OptionsHighlightColour "Highlight" 0 {Default text highlight color}
+menuText U OptionsHighlightColour "Destaque" 0 {Default text highlight color}
 menuText U OptionsSwitcherColour "Alternador" 0 {Default db switcher color}
 menuText U OptionsProgressColour "Barra de Progresso" 0 {Default progressbar color}
 menuText U OptionsScoreColour "Gráfico dos Pontos" 0 {}
 menuText U OptionsScoreBarColour "Gráfico de pontos atual" 0 {}
 menuText U OptionsNames "Meus Nomes de Jogador..." 0 {Editar os meus nomes de jogador} ;# ***
 menuText U OptionsExport "Exportação" 0 {Muda as Opções de exportacao de texto}
-menuText U OptionsFonts "Fontes" 0 {Muda os fontes}
+menuText U OptionsFonts "Fontes" 0 {Muda as fontes}
 menuText U OptionsFontsRegular "Normal" 0 {Fonte Normal}
 menuText U OptionsFontsMenu "Menu" 0 {Change the menu font} ;# ***
-menuText U OptionsFontsSmall "Pequeno" 0 {Fonte pequeno}
+menuText U OptionsFontsSmall "Pequeno" 0 {Fonte pequena}
 menuText U OptionsFontsFixed "Fixo" 0 {Fonte de largura fixa}
-# ====== TODO To be translated ======
-menuText U OptionsEvalbar "Score Bar" 0 {Score bar options}
+menuText U OptionsEvalbar "Barra de avaliação" 0 {Score bar options}
 menuText U OptionsGInfo "Informações do Jogo" 0 {Opções de informacao do jogo}
 menuText U OptionsFics "FICS" 0
 menuText U OptionsFicsAuto "Promover sempre a Dama" 0
@@ -277,16 +271,11 @@ menuText U OptionsFicsCommands "Comandos de Início" 0
 menuText U OptionsFicsNoRes "Ocultar Resultados" 0
 menuText U OptionsFicsNoReq "Ocultar Pedidos" 0
 menuText U OptionsFicsPremove "Permitir Movimento Antecipado" 0
-# ====== TODO To be translated ======
-menuText U OptionsEvalMain "Main Board" 0
-# ====== TODO To be translated ======
-menuText U OptionsEvalBrowser "Game Browsers" 0
-# ====== TODO To be translated ======
-menuText U OptionsEvalFics "Fics boards" 0
-# ====== TODO To be translated ======
-menuText U OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
-# ====== TODO To be translated ======
-menuText U OptionsEvalLog  "Logarithmic Eval" 0
+menuText U OptionsEvalMain "Tabuleiro principal" 0
+menuText U OptionsEvalBrowser "Pesquisadores de jogos" 0
+menuText U OptionsEvalFics "Tabuleiros FICS" 0
+menuText U OptionsEvalTime "Tempo de avaliação" 0 {Time for quick analysis probe}
+menuText U OptionsEvalLog  "Avaliação logaritmica" 0
 menuText U OptionsLanguage "Linguagem" 0 {Menu de selecao de linguagem}
 menuText U OptionsMovesTranslatePieces "Traduzir peças" 0 {Traduzir a primeira letra das peças}
 menuText U OptionsMovesHighlightLastMove "Destacar último movimento" 0 {Destaca o último movimento}
@@ -303,8 +292,7 @@ menuText U OptionsMovesDelay "Tempo de atraso p/ Jogo automático..." 1 \
   {Define o tempo de espera antes de entrar no modo de jogo automatico}
 menuText U OptionsMovesCoord "Entrada de movimentos por coordenadas" 0 \
   {Aceita o estilo de entrada de movimentos por coordenadas ("g1f3")}
-# ====== TODO To be translated ======
-menuText U OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
+menuText U OptionsMovesSuggest "Mostrar lances sugeridos" 0 {Turn on/off move suggestion}
 menuText U OptionsShowVarPopup "Mostrar janela de variantes" 0 {Turn on/off the display of a variations window}  
 menuText U OptionsMovesSpace "Adicionar um espaço depois do número do lance" 0 {Add spaces after move number}  
 menuText U OptionsMovesKey "Auto completar" 0 \
@@ -375,8 +363,7 @@ menuText U GInfoMenuBar "Barra do Menú"  0
 menuText U GInfoToolBar "Barra de Funções"  0
 menuText U GInfoButtonBar "Barra Inferior"  0
 menuText U GInfoStatusBar "Barra de Estado"  0
-# ====== TODO To be translated ======
-menuText U GInfoEvalBar "Score Bar" 0
+menuText U GInfoEvalBar "Barra de avaliação" 0
 translate U FlipBoard {Rodar Tabuleiro}
 translate U RaiseWindows {Ativar janelas}
 translate U AutoPlay {Jogo automático}
@@ -479,8 +466,7 @@ translate U readonly {apenas leitura}
 translate U altered {alterado}
 translate U tagsDescript {Etiqueta Extra (eg: Anotador "Anand")}
 translate U prevTags {Usar o anterior}
-# ====== TODO To be translated ======
-translate U value {Value}
+translate U value {Valor}
 
 # Standard error messages:
 translate U ErrNotOpen {Esta base não está aberta.} ;# ***
@@ -581,13 +567,12 @@ menuText U TreeOptAutomask "Abrir máscara automaticamente" 0 "Auto-Load most rec
 menuText U TreeOptCacheSize "Tamanho da Cache" 0 {Define o tamanho do cache}
 menuText U TreeOptShowBar "Mostrar Barra de Progresso" 0 "Mostrar barra de progresso da árvore."
 menuText U TreeOptShowFrame "Mostrar Menu Inferior" 0 "Mostra a barra de menu inferior."
-# ====== TODO To be translated ======
-menuText U TreeOptSmallFont "Use Custom Font" 0 "Use font_Small for Gamelist."
+menuText U TreeOptSmallFont "Use fonte pessoal" 0 "Use fonte pequena para lista de jogos."
 menuText U TreeOptSortBest "Ordenar melhores jogos" 0 "Ordena melhores jogos por ELO."
 menuText U TreeHelp "Ajuda" 0
 menuText U TreeHelpTree "Ajuda para árvore" 0
 menuText U TreeHelpIndex "Índice da Ajuda" 0
-translate U SaveCache {Salvar Cache}
+translate U SaveCache {Guardar Cache}
 translate U Training {Treinamento}
 translate U LockTree {Travamento}
 translate U TreeLocked {Travada} ;# ***
@@ -605,10 +590,8 @@ translate U RemoveFromMask {Remover da máscara}
 translate U AddThisMoveToMask {Adicionar este movimento à máscara}
 translate U SearchMask {Pesquisar na máscara}
 translate U DisplayMask {Mostrar máscara}
-# ====== TODO To be translated ======
-translate U MaskShowMarkers "Show Markers"
-# ====== TODO To be translated ======
-translate U MaskShowToolTips {Show Tooltips}
+translate U MaskShowMarkers "Mostrar marcadores"
+translate U MaskShowToolTips {Mostrar sugestões}
 translate U Nag {Código Nag}
 translate U Marker {Marcador}
 translate U Include {Incluir}
@@ -662,8 +645,7 @@ translate U FinderCtxBackup {Guardar}
 translate U FinderCtxCopy {Copiar}
 translate U FinderCtxMove {Mover}
 translate U FinderCtxDelete {Apagar}
-# ====== TODO To be translated ======
-translate U FinderCtxRename {Rename}
+translate U FinderCtxRename {Renomear}
 translate U FinderDirOpen {Abrir Pasta}
 
 # Player finder:
@@ -676,8 +658,7 @@ menuText U PListSortElo "Elo" 0
 menuText U PListSortGames "Jogos" 0
 menuText U PListSortOldest "Antigo" 0 ;# ***
 menuText U PListSortNewest "Recente" 0 ;# ***
-# ====== TODO To be translated ======
-menuText U PListSortCountry "Country" 0
+menuText U PListSortCountry "País" 0
 
 # Tournament finder:
 menuText U TmtFile "Arquivo" 0
@@ -704,8 +685,7 @@ menuText U GraphOptions "Opções" 0
 menuText U GraphOptionsWhite "Branco" 0
 menuText U GraphOptionsBlack "Preto" 0
 menuText U GraphOptionsDots "Mostrar Pontos" 0
-# ====== TODO To be translated ======
-menuText U GraphOptionsSpelling "Elo from Spelling File" 0
+menuText U GraphOptionsSpelling "Elo do ficheiro de nomes" 0
 menuText U GraphOptionsBar "Destacar Lance atual" 0
 menuText U GraphOptionsBoth "Ambos" 0
 menuText U GraphOptionsPInfo "Informação do Jogador" 0
