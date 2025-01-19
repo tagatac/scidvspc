@@ -514,6 +514,35 @@
 
   7.  changes
 
+  Scid vs. PC 4.26
+
+    Scorebar for the Main board, and also Browser windows and Fics observed games
+    Analysis board improvements from Hanish
+    - Scorebar, Colour PV Bar, Move-Sequence arrows, and board coordinates
+
+    Clicking Crosstable 'Player' column title to sort
+    New 'Store Movetimes' option in Play UCI Game
+    Show longer variations in the EnterVar button at game end
+    Twin Game Checker has a few new clickables
+    Font Selection dialog has a working preview 
+    Game saves don't interrupt engine analysis, and tweak engine help icon
+    Gamelist current game colour option (via switcher context menu)
+    Player Ratings context/history menu
+    Cut down our excess Resize event handling
+    Properly handle 'Stop Analysis' for Xboard engine with no 'analyze' (eg Scidlet)
+    Minor Fics improvements
+    More Latex export improvements
+
+    Hack to avoid MacOS Tree/Bestgames window crash
+    Fix Multi Browse BestGames didn't work for 'other' bases.
+    Fix Pgn column mode with big fonts
+    Enable proper horizontal gamelist scrolling for MacOS
+    Truncate long DB filenames in the Gamelist Tab and DB switcher
+    Disable Tree adjust after a General Search
+    Fix Undocked App fails to quit with an open engine
+    Update "Enter Var" button when we create a variation
+    Try to remove unicode related fluff when pasting text as fen
+
   Scid vs. PC 4.25
 
     Extra Tags - bulk add Extra Tag feature 
