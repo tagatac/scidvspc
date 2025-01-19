@@ -3327,7 +3327,7 @@ proc toggleEngineAnalysis {{n -1}} {
     set analysis(exclude$n) ""
   } else  {
     startAnalyzeMode $n
-    after idle {::board::update_evalbar .main.board}
+    after idle "set ::mainEngine $n ; ::board::update_evalbar .main.board"
     $b configure -image tb_pause
     if {$analysis(uci$n) && $::uci::goCommand != "go infinite"} {
       ::utils::tooltip::Set $b $::uci::goCommand

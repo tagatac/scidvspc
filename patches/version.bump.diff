@@ -1,0 +1,101 @@
+Index: Info.plist
+===================================================================
+--- Info.plist	(revision 3535)
++++ Info.plist	(working copy)
+@@ -157,7 +157,7 @@
+ 	<key>CFBundleExecutable</key>
+ 	<string>scid</string>
+ 	<key>CFBundleGetInfoString</key>
+-	<string>Scid vs. Mac 4.25</string>
++	<string>Scid vs. Mac 4.26</string>
+ 	<key>CFBundleIconFile</key>
+ 	<string>scid.icns</string>
+ 	<key>CFBundleIdentifier</key>
+@@ -169,11 +169,11 @@
+ 	<key>CFBundlePackageType</key>
+ 	<string>APPL</string>
+ 	<key>CFBundleShortVersionString</key>
+-	<string>4.25</string>
++	<string>4.26</string>
+ 	<key>CFBundleSignature</key>
+ 	<string>Scid</string>
+ 	<key>CFBundleVersion</key>
+-	<string>4.25</string>
++	<string>4.26</string>
+ 	<key>LSMinimumSystemVersion</key>
+ 	<string>10.4</string>
+ 	<key>NSHumanReadableCopyright</key>
+Index: Scid vs PC.iss
+===================================================================
+--- Scid vs PC.iss	(revision 3535)
++++ Scid vs PC.iss	(working copy)
+@@ -1,5 +1,5 @@
+ 
+-#define AppVersion '4.25'
++#define AppVersion '4.26'
+ #define AppName    'Scid vs PC'
+ #define ActiveTclUrl 'http://www.activestate.com/activetcl/downloads'
+ 
+@@ -11,7 +11,7 @@
+ AppVersion={# AppVersion}
+ AppPublisher=Steven Atkinson
+ AppPublisherURL=http://scidvspc.sourceforge.net
+-AppCopyright=Steven Atkinson (C) 2009 - 2024  Steven Atkinson (and others)
++AppCopyright=Steven Atkinson (C) 2009 - 2025  Steven Atkinson (and others)
+ DefaultDirName={sd}\{# AppName}-{# AppVersion}
+ UsePreviousAppDir=no
+ DefaultGroupName={# AppName}
+Index: src/common.h
+===================================================================
+--- src/common.h	(revision 3535)
++++ src/common.h	(working copy)
+@@ -53,8 +53,8 @@
+ const versionT SCID_VERSION = 400;        // Current file format version = 4.0
+ const versionT SCID_OLDEST_VERSION = 400; // Oldest compatible format: 4.0
+ 
+-const char SCID_VERSION_STRING[] = "4.25";     // Current version
+-const char SCID_VERSION_DATE[] = "May 20, 2024";
++const char SCID_VERSION_STRING[] = "4.26";     // Current version
++const char SCID_VERSION_DATE[] = "Feb 10, 2025";
+ const char SCID_WEBSITE[] = "http://scidvspc.sourceforge.net/";
+ 
+ const char TREEFILE_SUFFIX[] = ".stc";
+Index: tcl/help/parse.tcl
+===================================================================
+--- tcl/help/parse.tcl	(revision 3535)
++++ tcl/help/parse.tcl	(working copy)
+@@ -10,8 +10,8 @@
+ exec tclsh "$0" "$@"
+ 
+ set ::scidName {Scid vs. PC}
+-set ::scidVersion 4.25
+-set ::scidVersionDate {May 20, 2024}
++set ::scidVersion 4.26
++set ::scidVersionDate {Feb 10, 2025}
+ source help.tcl
+ 
+ file mkdir doc
+Index: tcl/start.tcl
+===================================================================
+--- tcl/start.tcl	(revision 3535)
++++ tcl/start.tcl	(working copy)
+@@ -12,8 +12,8 @@
+ # The next line restarts using tkscid: \
+ exec "`dirname "$0"`"/tkscid "$0" "$@"
+ 
+-set scidVersion 4.25
+-set scidVersionDate {May 20, 2024}
++set scidVersion 4.26
++set scidVersionDate {Feb 10, 2025}
+ 
+ package require Tcl 8.5
+ package require Tk  8.5
+@@ -2021,7 +2021,7 @@
+ ::splash::add "$::scidName $::scidVersion ($::scidVersionDate)"
+ ::splash::add "http://scidvspc.sourceforge.net"
+ ::splash::add ""
+-::splash::add "(C) Steven Atkinson (stevenaaus@yahoo.com) 2008-2024"
++::splash::add "(C) Steven Atkinson (stevenaaus@yahoo.com) 2008-2025"
+ ::splash::add "(C) Pascal Georges 2006-2008"
+ ::splash::add "(C) Shane Hudson 1999-2004"
+ ::splash::add "(C) Gregor Cramer, Fulvio Benini and others."
