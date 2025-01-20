@@ -41,8 +41,7 @@ menuText F Edit "Éditer" 0
 menuText F EditAdd "Ajouter variante" 0 {Ajouter une variante}
 menuText F EditPasteVar "Coller variante" 0
 menuText F EditDelete "Effacer variante" 0 {Effacer cette variante}
-# ====== TODO To be translated ======
-menuText F EditDeleteComment "Delete Comment" 0
+menuText F EditDeleteComment "Effacer les commentaires" 0
 menuText F EditFirst "Déplacer en tête" 0 \
   {Déplacer cette variante en tête de liste}
 menuText F EditMain "Variante vers ligne principale" 13 \
@@ -166,8 +165,7 @@ menuText F ToolsBookTuning "Config. bibliothèque" 0 {Configuration fine d'une bi
 menuText F ToolsMaint "Maintenance" 0 {Maintenance de la base}
 menuText F ToolsMaintWin "Fenêtre de maintenance" 0 \
   {Ouvrir/Fermer la fenêtre de maintenance}
-# ====== TODO To be translated ======
-menuText F ToolsMaintExtra "Extra Tags" 0 {Extra Tags}
+menuText F ToolsMaintExtra "Marqueur supplémentaire" 0 {Extra Tags}
 menuText F ToolsMaintCompact "Compacter la base..." 0 \
   {Compacter la base: supprimer les parties effacées et les noms non utilisés}
 menuText F ToolsMaintClass "Classer les parties suivant ECO" 2 \
@@ -186,7 +184,6 @@ menuText F ToolsMaintNameSite "Corriger les noms de lieux.." 21 \
   {Vérifier l'orthographe des noms de lieux}
 menuText F ToolsMaintNameRound "Corriger les noms des rondes..." 22 \
   {Vérifier l'orthographe des noms de rondes}
-# ====== TODO To be translated ======
 menuText F ToolsMaintFixBase "Réparer base" 0 {Essaie de réparer une base corrompue}
 menuText F ToolsConnectHardware "Brancher hardware" 0 {Brancher hardware extérieur}
 menuText F ToolsConnectHardwareConfigure "Configurer..." 0 {Configurer la connexion au hardware extérieur}
@@ -249,8 +246,7 @@ menuText F Options "Options" 0
 menuText F OptionsBoard "Echiquier" 0 {Options d'aspect de l'échiquier}
 menuText F OptionsColour "Couleurs" 0 {Default text widget color}
 menuText F OptionsBackColour "Arrière-plan" 0 {Default text widget color}
-# ====== TODO To be translated ======
-menuText F OptionsBackColourGlobal "Global" 0 {Global background color}
+menuText F OptionsBackColourGlobal "Couleur de fond" 0 {Global background color}
 menuText F OptionsMainLineColour "Flèche coup principal" 0 {Mainline arrows}
 menuText F OptionsVarLineColour "Flèche coup variante" 0 {Variation arrows}
 menuText F OptionsEngineLineColour "Flèche moteur" 0 {Flèche moteur}
@@ -267,8 +263,7 @@ menuText F OptionsFontsRegular "Normales" 0 {Changer les polices normales}
 menuText F OptionsFontsMenu "Menu" 0 {Changer la police des menus}
 menuText F OptionsFontsSmall "Petites" 0 {Changer les petites polices}
 menuText F OptionsFontsFixed "Fixe" 0 {Changer les polices de chasse fixe}
-# ====== TODO To be translated ======
-menuText F OptionsEvalbar "Score Bar" 0 {Score bar options}
+menuText F OptionsEvalbar "Options de la barre de score" 0 {Score bar options}
 menuText F OptionsGInfo "Informations de la partie" 7 {Options d'information de la partie}
 menuText F OptionsFics "FICS" 0
 menuText F OptionsFicsAuto "Autopromote Reine" 0
@@ -280,17 +275,12 @@ menuText F OptionsFicsCommands "Script d'initialisation" 0
 menuText F OptionsFicsNoRes "Sans résultats" 0
 menuText F OptionsFicsNoReq "Sans requêtes" 0
 menuText F OptionsFicsPremove "Pré-move accepté" 0
-# ====== TODO To be translated ======
-menuText F OptionsEvalMain "Main Board" 0
-# ====== TODO To be translated ======
-menuText F OptionsEvalBrowser "Game Browsers" 0
-# ====== TODO To be translated ======
-menuText F OptionsEvalFics "Fics boards" 0
-# ====== TODO To be translated ======
-menuText F OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
-# ====== TODO To be translated ======
-menuText F OptionsEvalLog  "Logarithmic Eval" 0
-menuText F OptionsLanguage "Langue" 0 {Sélectionner le menu de choix des langues}
+menuText F OptionsEvalMain "Echiquier principale" 0
+menuText F OptionsEvalBrowser "Explorateur de parties" 0
+menuText F OptionsEvalFics "Echiquier FICS" 0
+menuText F OptionsEvalTime "Temps d'évaluation" 0 {Time for quick analysis probe}
+menuText F OptionsEvalLog  "Evaluation logarithmique" 0
+menuText F OptionsLanguage "Langues" 0 {Sélectionner le menu de choix des langues}
 menuText F OptionsMovesTranslatePieces "Traduction des pièces" 0 {Convertit la première lettre des pièces}
 menuText F OptionsMovesHighlightLastMove "Surbrillance dernier coup" 0 {Surbrillance du dernier coup}
 menuText F OptionsMovesHighlightLastMoveDisplay "Afficher" 0 {Afficher la surbrillance du dernier coup}
@@ -306,8 +296,7 @@ menuText F OptionsMovesDelay "Délai entre les coups" 3 \
   {Positionner le délai entre deux coups en mode automatique}
 menuText F OptionsMovesCoord "Coordonnées entre les coups" 0 \
   {Accepter l'entrée des coups par coordonnées ("g1f3")}
-# ====== TODO To be translated ======
-menuText F OptionsMovesSuggest "Show Suggested Moves" 0 {Turn on/off move suggestion}
+menuText F OptionsMovesSuggest "Montrer les coup suggérés" 0 {Turn on/off move suggestion}
 menuText F OptionsShowVarPopup "Montrer fenêtre des variantes" 0 {Affichage automatique des variantes}  
 menuText F OptionsMovesSpace "Ajouter un espace après le numéro du coup" 0 {Espace après numéro du coup}  
 menuText F OptionsMovesKey "Complétion clavier" 0 \
@@ -377,8 +366,7 @@ menuText F GInfoMenuBar "Barre de Menu"  0
 menuText F GInfoToolBar "Barre d'outils"  0
 menuText F GInfoButtonBar "Barre à boutons"  0
 menuText F GInfoStatusBar "Barre d'état"  0
-# ====== TODO To be translated ======
-menuText F GInfoEvalBar "Score Bar" 0
+menuText F GInfoEvalBar "Barre d'évaluation" 0
 translate F FlipBoard {Retourner l'échiquier}
 translate F RaiseWindows {Fenêtre d'arbitrage}
 translate F AutoPlay {Lecture automatique}
@@ -575,8 +563,7 @@ menuText F TreeOptAutomask "Auto-chargement Mask" 0 "Auto-Load most recent mask 
 menuText F TreeOptCacheSize "Taille du cache" 0 {Taille du cache}
 menuText F TreeOptShowBar "Affichage barre de progression" 0 "Show tree progress bar."
 menuText F TreeOptShowFrame "Affichage fenêtre boutons" 0 "Afficher la fenêtre de boutons."
-# ====== TODO To be translated ======
-menuText F TreeOptSmallFont "Use Custom Font" 0 "Use font_Small for Gamelist."
+menuText F TreeOptSmallFont "Utiliser polices personalisées" 0 "Utiliser petite police pour liste des parties"
 menuText F TreeOptSortBest "Tri des meilleurs jeux" 0 "Tri des meilleurs jeux selon ELO."
 menuText F TreeHelp "Aide" 0
 menuText F TreeHelpTree "Aide Arbre" 0
@@ -601,10 +588,8 @@ translate F RemoveFromMask {Enlever du masque}
 translate F AddThisMoveToMask {Ajouter ce coup au masque}
 translate F SearchMask {Recherche dans masque}
 translate F DisplayMask {Affichage du masque}
-# ====== TODO To be translated ======
-translate F MaskShowMarkers "Show Markers"
-# ====== TODO To be translated ======
-translate F MaskShowToolTips {Show Tooltips}
+translate F MaskShowMarkers "Montrer les marqueurs"
+translate F MaskShowToolTips {Montrer les info-bulles}
 translate F Nag {Code Nag}
 translate F Marker {Marqueur}
 translate F Include {Inclure}
@@ -658,8 +643,7 @@ translate F FinderCtxBackup {Sauvegarder}
 translate F FinderCtxCopy {Copier}
 translate F FinderCtxMove {Déplacer}
 translate F FinderCtxDelete {Supprimer}
-# ====== TODO To be translated ======
-translate F FinderCtxRename {Rename}
+translate F FinderCtxRename {Renommer}
 translate F FinderDirOpen {Ouvrir Répertoire}
 
 # Player finder:
@@ -672,8 +656,7 @@ menuText F PListSortElo "Elo" 0
 menuText F PListSortGames "Parties" 0
 menuText F PListSortOldest "Les plus vieux" 0
 menuText F PListSortNewest "Les plus récents" 0
-# ====== TODO To be translated ======
-menuText F PListSortCountry "Country" 0
+menuText F PListSortCountry "Pays" 0
 
 # Tournament finder:
 menuText F TmtFile "Fichier" 0
@@ -700,7 +683,6 @@ menuText F GraphOptions "Options" 0
 menuText F GraphOptionsWhite "Blancs" 0
 menuText F GraphOptionsBlack "Noirs" 0
 menuText F GraphOptionsDots "Montrer les points connus" 0
-# ====== TODO To be translated ======
 menuText F GraphOptionsSpelling "Elo from Spelling File" 0
 menuText F GraphOptionsBar "Surbrillance de la position actuelle" 0
 menuText F GraphOptionsBoth "Les deux" 4
@@ -946,16 +928,11 @@ translate F GlistUndeleteAllGames {Dés-effacer toutes les parties du filtre}
 translate F GlistAlignL {Aligner à gauche}
 translate F GlistAlignR {Aligner à droite}
 translate F GlistAlignC {Centrer}
-# ====== TODO To be translated ======
-translate F GlistMoveFieldUp {Move up}
-# ====== TODO To be translated ======
-translate F GlistMoveFieldDown {Move down}
-# ====== TODO To be translated ======
-translate F GlistMoveFieldFirst {Move to first}
-# ====== TODO To be translated ======
-translate F GlistMoveFieldLast {Move to last}
-# ====== TODO To be translated ======
-translate F GlistMoveFieldN {Move to N}
+translate F GlistMoveFieldUp {Monter}
+translate F GlistMoveFieldDown {Descendre}
+translate F GlistMoveFieldFirst {Passer au premier}
+translate F GlistMoveFieldLast {Passer au dernier}
+translate F GlistMoveFieldN {Passer au N}
 
 # Maintenance window:
 translate F DatabaseName {Nom de base:}
@@ -995,11 +972,9 @@ translate F CompactDatabase {Compacter la base}
 translate F SortDatabase {Trier la base}
 translate F AddEloRatings {Ajouter les classements Elo}
 translate F AutoloadGame {Chargement automatique du numéro de partie}
-# ====== TODO To be translated ======
-translate F StripTags {Extra Tags}
+translate F StripTags {Marqueurs supplémentaires}
 translate F StripTag {Enlever les marqueurs}
-# ====== TODO To be translated ======
-translate F AddTag {Add Tag}
+translate F AddTag {Ajouter un marqueurs}
 translate F CheckGames {Vérifier les parties}
 translate F Cleaner {Nettoyer}
 translate F CleanerHelp {
@@ -1320,8 +1295,7 @@ translate F NameEditSelect {Parties à éditer}
 translate F NameEditReplace {Remplacer}
 translate F NameEditWith {avec}
 translate F NameEditMatches {Correspondances: Presser Alt+1 à Alt+9 pour sélectionner}
-# ====== TODO To be translated ======
-translate F MatchPattern {Match Pattern}
+translate F MatchPattern {Positions corespondantes}
 
 # Classify window:
 translate F Classify {Classer}
@@ -1390,10 +1364,8 @@ translate F CopyErrNotOpen {n'est pas ouverte}
 translate F LightSquares {Cases blanches}
 translate F DarkSquares {Cases noires}
 translate F SelectedSquares {Cases sélectionnées}
-# ====== TODO To be translated ======
-translate F SelectedOutline {Selected Box}
-# ====== TODO To be translated ======
-translate F SuggestedSquares {Suggested}
+translate F SelectedOutline {Bordure case sélectionnée}
+translate F SuggestedSquares {Suggérées}
 translate F Grid {Grille}
 translate F Previous {Précédents}
 translate F WhitePieces {Pièces blanches}
@@ -1472,8 +1444,7 @@ translate F moveblunderthreshold {le coup est une erreur si les pertes sont supé
 translate F limitanalysis {limiter le temps d'analyse}
 translate F seconds {secondes}
 translate F Abort {Arrêter}
-# ====== TODO To be translated ======
-translate F Quit {Quit}
+translate F Quit {Quitter}
 translate F Resume {Reprendre}
 translate F Restart {Recommencer}
 translate F OutOfOpening {Hors de l'ouverture}

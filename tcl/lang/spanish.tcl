@@ -41,7 +41,6 @@ menuText S EditAdd "Añadir variación" 0 \
   {Añade una variación a este movimiento en la partida}
 menuText S EditPasteVar "Pegar Variación" 0
 menuText S EditDelete "Borrar variación" 0 {Borra variación para este movimiento}
-# ====== translated ======
 menuText S EditDeleteComment "Borrar comentario" 0
 menuText S EditFirst "Convertir en primera variación" 0 \
   {Hace que una variación sea la primera en la lista}
@@ -182,7 +181,6 @@ menuText S ToolsMaint "Mantenimiento" 0 \
   {Herramientas de mantenimiento de la base de datos Scid}
 menuText S ToolsMaintWin "Mantenimiento" 0 \
   {Abre/cierra la ventana de mantenimiento de la base de datos Scid}
-# ====== translated ======
 menuText S ToolsMaintExtra "Etiquetas extra" 0 {Etiquetas extra}
 menuText S ToolsMaintCompact "Compactar base de datos..." 0 \
   {Compacta los archivos de la base de datos, quitando partidas borradas y nombres no usados}
@@ -204,7 +202,6 @@ menuText S ToolsMaintNameSite "Corrección de nombres de lugares" 11 \
   {Comprobación ortográfica de lugares usando el archivo de comprobación ortográfica}
 menuText S ToolsMaintNameRound "Corrección de nombre de rondas" 11 \
   {Comprobación ortográfica de rondas usando el archivo de comprobación ortográfica}
-# ====== translated ======
 menuText S ToolsMaintFixBase "Reparar base corrupta" 0 {Intenta reparar una base corrupta}
 menuText S ToolsConnectHardware "Conectar hardware" 0 {Conectar  hardware externo}
 menuText S ToolsConnectHardwareConfigure "Configurar..." 0 {Configurar conexión a hardware externo}
@@ -236,7 +233,6 @@ menuText S ToolsExpFilterHTML "Exportar filtro a HTML" 17 \
 menuText S ToolsExpFilterHTMLJS "Exportar filtro a HTML y JavaScript" 17 {Escribir todas las partidas filtradas a fichero HTML y JavaScript}
 menuText S ToolsExpFilterLaTeX "Exportar filtro a LaTeX" 17 \
   {Escribe todas las partidas filtradas en un archivo LaTeX}
-# ====== translated ======
 menuText S ToolsExpFilterEPD "Exportar filtro a EPD/FEN" 17 {Guarda todos los juegos filtrados en un archivo EPD}
 menuText S ToolsExpFilterGames "Exportar Listado a Texto" 19 {Imprime un listado del juego formateado.}
 menuText S ToolsImportOne "Importar partida PGN" 0 \
@@ -281,14 +277,11 @@ menuText S Options "Opciones" 0
 menuText S OptionsBoard "Tablero" 0 {Opciones sobre el aspecto del tablero}
 menuText S OptionsColour "Color de fondo" 0 {Color de fondo por defecto}
 menuText S OptionsBackColour "Fondo" 0 {Color del widget de texto predeterminado}
-# ====== translated ======
 menuText S OptionsBackColourGlobal "Global" 0 {Color de fondo global}
 menuText S OptionsMainLineColour "Flechas principales" 0 {Flechas principales}
 menuText S OptionsVarLineColour "Flechas de variación" 0 {Flechas de variación}
-# ====== translated ======
 menuText S OptionsEngineLineColour "Flechas del motor" 0 {Flechas del motor}
 menuText S OptionsRowColour "Filas" 0 {Color predeterminado de la columna de árbol/libro}
-# ====== translated ======
 menuText S OptionsHighlightColour "Resaltado" 0 {Color por defecto del texto resaltado}
 menuText S OptionsSwitcherColour "Conmutador" 0 {Color del conmutador db predeterminado}
 menuText S OptionsProgressColour "Barra de progreso" 0 {Color predeterminado de la barra de progreso}
@@ -301,12 +294,10 @@ menuText S OptionsFontsRegular "Habitual" 0 {Cambia la fuente habitual}
 menuText S OptionsFontsMenu "Menú" 0 {Cambia la fuente del menú}
 menuText S OptionsFontsSmall "Pequeña" 0 {Cambia la fuente pequeña}
 menuText S OptionsFontsFixed "Fijada" 0 {Cambia la anchura fijada de la fuente}
-# ====== translated ======
 menuText S OptionsEvalbar "Barra de evaluación" 0 {Opciones de la barra de evaluación}
 menuText S OptionsGInfo "Información de la partida" 0 {Información de la partida}
 menuText S OptionsFics "FICS" 0
 menuText S OptionsFicsAuto "Autopromoción Reina" 0
-# ====== translated ======
 menuText S OptionsFicsClk "Guarda los tiempos del reloj" 0
 menuText S OptionsFicsColour "Color del texto" 0
 menuText S OptionsFicsSize "Tamaño del Tablero" 0
@@ -315,15 +306,10 @@ menuText S OptionsFicsCommands "Comandos iniciales" 0
 menuText S OptionsFicsNoRes "Sin resultados" 0
 menuText S OptionsFicsNoReq "Sin respuesta" 0
 menuText S OptionsFicsPremove "Permitir Pre-movimiento" 0
-# ====== translated ======
 menuText S OptionsEvalMain "Tablero principal" 0
-# ====== translated ======
 menuText S OptionsEvalBrowser "Navegadores de juego" 0
-# ====== translated ======
 menuText S OptionsEvalFics "Tableros Fics" 0
-# ====== translated ======
 menuText S OptionsEvalTime "Tiempo de evaluación" 0 {Tiempo para el análisis rápido}
-# ====== translated ======
 menuText S OptionsEvalLog  "Evaluación logarítmica" 0
 menuText S OptionsLanguage "Lenguaje" 0 {Selecciona el lenguaje del menú}
 menuText S OptionsMovesTranslatePieces "Traducir piezas" 0 {Traducir la primera letra de las piezas}
@@ -331,7 +317,6 @@ menuText S OptionsMovesHighlightLastMove "Resalta última jugada" 0 {Resalta la ú
 menuText S OptionsMovesHighlightLastMoveDisplay "Mostrar" 0 {Muestra la última jugada iluminada}
 menuText S OptionsMovesHighlightLastMoveWidth "Ancho" 0 {Espesor de la línea}
 menuText S OptionsMovesHighlightLastMoveColor "Select Color" 0 {Color de línea}
-# ====== translated ======
 menuText S OptionsMovesColorSelected "Color de la casilla seleccionada" 0 {Color del movimiento}
 menuText S OptionsMoves "Movimientos" 0 {Opciones de la entrada de movimientos}
 menuText S OptionsMovesAsk "Preguntar antes de reemplazar movimientos" 0 \
@@ -342,7 +327,6 @@ menuText S OptionsMovesDelay "Retardo del Automovimiento" 1 \
   {Pone el tiempo de demora para el modo de automovimiento}
 menuText S OptionsMovesCoord "Entrada de movimientos coordinada" 0 \
   {Acepta entrada de movimientos en sistema "coordinado" ("g1f3")}
-# ====== translated ======
 menuText S OptionsMovesSuggest "Mostrar movimientos sugeridos" 0 {Activa o desactiva la sugerencia de movimientos}
 menuText S OptionsShowVarPopup "Mostrar ventana de variaciones" 0 {Activa/desactivar la ventana de variaciones}
 menuText S OptionsMovesSpace "Añadir espacios detrás de número de jugada" 0 {Añadir espacios detrás del número de jugada}
@@ -421,7 +405,6 @@ menuText S GInfoMenuBar "Barra de Menús"  0
 menuText S GInfoToolBar "Barra de Herramientas"  0
 menuText S GInfoButtonBar "Botón de Barra"  0
 menuText S GInfoStatusBar "Barra de Estado"  0
-# ====== translated ======
 menuText S GInfoEvalBar "Barra de evaluación" 0
 
 translate S FlipBoard {Girar el tablero}
@@ -527,7 +510,6 @@ translate S readonly {sólo lectura}
 translate S altered {alterado}
 translate S tagsDescript {Etiquetas adicionales (p.e.: Annotator "Anand")}
 translate S prevTags {Usar el anterior}
-# ====== translated ======
 translate S value {Valor}
 
 # Standard error messages:
@@ -640,9 +622,7 @@ menuText S TreeOptAutosave "Autoguardar archivo caché" 0 \
 menuText S TreeOptAutomask "Carga automática de máscara" 0 "Carga automática de máscara con un arbol abierto."
 menuText S TreeOptCacheSize "Tamaño de caché" 0 {Fija el tamaño del caché}
 menuText S TreeOptShowBar "Mostrar barra de progreso" 0 "Mostrar barra de progreso del árbol"
-# ====== translated ======
 menuText S TreeOptShowFrame "Mostrar barra de botones" 0 "Muestra la barra de botones."
-# ====== translated ======
 menuText S TreeOptSmallFont "Usar fuente personalizada" 0 "Usa font_Small para el listado del juego."
 menuText S TreeOptSortBest "Ordenar mejores partidas" 0 "Ordenar mejores partidas por ELO."
 menuText S TreeHelp "Ayuda" 1
@@ -667,9 +647,7 @@ translate S RemoveFromMask {Elimina desde la máscara}
 translate S AddThisMoveToMask {Añadir este movimiento a la máscara}
 translate S SearchMask {Buscar en máscara}
 translate S DisplayMask {Mostrar máscara}
-# ====== translated ======
 translate S MaskShowMarkers "Mostrar marcadores"
-# ====== translated ======
 translate S MaskShowToolTips {Mostrar ayudas}
 translate S Nag {Código de regaño}
 translate S Marker {Marcador}
@@ -693,7 +671,6 @@ translate S CommentMove {Comentar movimiento}
 translate S CommentPosition {Comentar posición}
 translate S AddMoveToMaskFirst {Añadir primero el movimiento a la máscara}
 translate S OpenAMaskFileFirst {Abrir primero un fichero de máscara}
-# ====== translated ======
 translate S positions {posiciones}
 translate S Moves {Jugadas}
 
@@ -725,9 +702,7 @@ translate S FinderCtxBackup {Copia de seguridad (Backup)}
 translate S FinderCtxCopy {Copia}
 translate S FinderCtxMove {Jugada}
 translate S FinderCtxDelete {Borrar}
-# ====== translated ======
 translate S FinderCtxRename {Renombra}
-# ====== translated ======
 translate S FinderDirOpen {Abrir directorio}
 
 # Player finder:
@@ -740,7 +715,6 @@ menuText S PListSortElo "Elo" 0
 menuText S PListSortGames "Partidas" 0
 menuText S PListSortOldest "Más antiguo" 10
 menuText S PListSortNewest "Más nuevo" 4
-# ====== translated ======
 menuText S PListSortCountry "País" 0
 
 # Tournament finder:
@@ -804,7 +778,6 @@ translate S AnnotateBlundersOnly {Cuando el movimiento es un disparate}
 translate S BlundersNotBest {Fallo/No Mejor}
 translate S AnnotateTitle {Configurar anotación}
 translate S AnnotateMissedMates {Mates omitidos/más cortos}
-# ====== translated ======
 translate S AnnotateEnd {Al final del juego}
 translate S BlundersThreshold {(Umbral)}
 translate S ScoreFormat {Formato de puntuación}
@@ -824,11 +797,8 @@ translate S Informant+/- {Blancas tienen ventaja}
 translate S Informant+- {Blancas tienen una ventaja decisiva}
 translate S Informant++- {La partida es considerada ganada}
 translate S Book {Libro}
-# ====== translated ======
 translate S OtherBook {Otros movimientos}
-# ====== translated ======
 translate S Alphabetical {Alfabético}
-# ====== translated ======
 translate S TwoBooks {Dos libros}
 
 # Analysis Engine open dialog:
@@ -1013,15 +983,10 @@ translate S GlistUndeleteAllGames {Recupera todas las partidas borradas de la ba
 translate S GlistAlignL {Alinear a la izquierda}
 translate S GlistAlignR {Alinear a la derecha}
 translate S GlistAlignC {Alinear al centro}
-# ====== translated ======
 translate S GlistMoveFieldUp {Mover arriba}
-# ====== translated ======
 translate S GlistMoveFieldDown {Mover abajo}
-# ====== translated ======
 translate S GlistMoveFieldFirst {Mover al principio}
-# ====== translated ======
 translate S GlistMoveFieldLast {Mover al final}
-# ====== translated ======
 translate S GlistMoveFieldN {Mover a N}
 
 # Maintenance window:
@@ -1062,10 +1027,8 @@ translate S CompactDatabase {Compactar base de datos}
 translate S SortDatabase {Ordenar base de datos}
 translate S AddEloRatings {Añadir clasificación Elo}
 translate S AutoloadGame {Autocargar partida}
-# ====== translated ======
 translate S StripTags {Etiquetas extra}
 translate S StripTag {Quitar etiquetas}
-# ====== translated ======
 translate S AddTag {Añadir etiqueta}
 translate S CheckGames {Revisar partidas}
 translate S Cleaner {MultiHerramienta}
@@ -1235,13 +1198,9 @@ Puedes hacer fácilmente escribible la base de datos otra vez cerrándola y abrién
 translate S ExitDialog {¿Realmente quieres salir de Scid?}
 translate S ClearGameDialog {Esta partida ha sido alterada.\n¿Desea guardarla?}
 translate S ExitUnsaved {La siguiente base de datos tiene cambios en partidas no guardadas. Si sales ahora se perderán estos cambios.}
-# ====== translated ======
 translate S ChangeTextDialog {Activar el color del texto globalmente requiere reiniciar.}
-# ====== translated ======
 translate S ChangeDockDialog {Cambiar el acoplado requiere reiniciar.}
-# ====== translated ======
 translate S FontSelectDialog "Ejemplo de texto\nHaz doble clic arriva para cambiar la fuente, y selecciona 'ok'\nAaBbCcDdEeFfGgHhIiJjKkLlMm 0123456789. +=-"
-# ====== translated ======
 translate S ExitNow {¿Salir ahora?}
 
 # Import window:
@@ -1327,7 +1286,6 @@ translate S OprepTheoryTable {Tabla Teórica}
 translate S OprepTableComment {Generado a partir de las %u partidas con mejor Elo.}
 translate S OprepExtraMoves {Anotación extra de movimientos en la tabla teórica}
 translate S OprepMaxTableGames {Máximas partidas en la tabla teórica}
-# ====== translated ======
 translate S OprepMaxGames {Número máximo de juegos para estadísticas}
 translate S OprepViewHTML {Ver HTML}
 translate S OprepViewLaTeX {Ver LaTeX}
@@ -1393,7 +1351,6 @@ translate S NameEditSelect {Partidas a editar}
 translate S NameEditReplace {Reemplazar}
 translate S NameEditWith {Con}
 translate S NameEditMatches {Partidas: Presionar Ctrl+1 a Ctrl+9 para seleccionarla}
-# ====== translated ======
 translate S MatchPattern {Patrón de coincidencia}
 
 # Classify window:
@@ -1434,7 +1391,6 @@ translate S ExportComments {¿Exportar comentarios?}
 translate S ExportVariations {¿Exportar variaciones?}
 translate S IndentComments {¿Sangrar comentarios?}
 translate S IndentVariations {¿Sangrar variaciones?}
-# ====== translated ======
 translate S InsertNewlines {¿Insertar saltos de línea cada 80 caracteres?}
 translate S ExportColumnStyle {¿Estilo de columna (un movimiento por línea)?}
 translate S ExportSymbolStyle {Estilo de anotación simbólico:}
@@ -1464,9 +1420,7 @@ translate S CopyErrNotOpen {no está abierta}
 translate S LightSquares {Casillas claras}
 translate S DarkSquares {Casillas oscuras}
 translate S SelectedSquares {Casillas seleccionadas}
-# ====== translated ======
 translate S SelectedOutline {Caja seleccionada}
-# ====== translated ======
 translate S SuggestedSquares {Sugeridas}
 translate S Grid {Cuadrícula}
 translate S Previous {Elección}
@@ -1476,7 +1430,6 @@ translate S WhiteBorder {Borde blancas}
 translate S BlackBorder {Borde negras}
 translate S ArrowMain   {Flecha línea principal}
 translate S ArrowVar    {Flechas de variaciones}
-# ====== translated ======
 translate S ShowArrows  {Mostrar flechas}
 
 # Novelty window:
@@ -1548,7 +1501,6 @@ translate S moveblunderthreshold {El movimiento es una metedura de pata si la pé
 translate S limitanalysis {Tiempo límite para análisis del motor}
 translate S seconds {segundos}
 translate S Abort {Abortar}
-# ====== translated ======
 translate S Quit {Salir}
 translate S Resume {Reanudar}
 translate S Restart {Reiniciar}
@@ -1602,7 +1554,6 @@ translate S WinWonGame {Gana la partida ganada}
 translate S Lines {Líneas}
 translate S ConfigureUCIengine {Configurar motor}
 translate S SpecificOpening {Apertura específica}
-# ====== translated ======
 translate S ImportECO {Importar ECO}
 translate S StartNewGame {Empezar partida nueva}
 translate S FixedLevel {Nivel fijado}
@@ -1848,21 +1799,13 @@ translate S UriRejected	{Los siguientes archivos fueron rechazados:}
 translate S UriRejectedDetail {Sólo pueden manejarse los tipos de archivo listados:}
 translate S EmptyUriList {Descartar. Contenido está vacío.}
 translate S SelectionOwnerDidntRespond {Tiempo excedido durante la operación: el propietario de la selección no respondió.}
-# ====== translated ======
 translate S PasteAnal {Pegar análisis}
-# ====== translated ======
 translate S SortOpcodes {Ordenar códigos de operación}
-# ====== translated ======
 translate S AddPosition {Añadir posición}
-# ====== translated ======
 translate S FindPos {Encuentra la posición de juego más profunda}
-# ====== translated ======
 translate S AnalPosition {Analizar posiciones}
-# ====== translated ======
 translate S StripOpcodes {Separa códigos de operación}
-# ====== translated ======
 translate S NoMoves {No hay movimientos desde esta posición}
-# ====== translated ======
 translate S CountBestMoves {Contar los mejores movimientos}
 
 }
