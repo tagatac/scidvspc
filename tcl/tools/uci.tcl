@@ -113,6 +113,7 @@ namespace eval uci {
       }
       set data [split $line]
       set uciInfo(bestmove$n) [lindex $data 1]
+      updateAnalysisBoard $n $uciInfo(bestmove$n)
 
       # Sometimes Umko issues a bad bestmove, and then good ones, but not always a "pv" line
       # We rely on "pv" lines (and uciInfo(pv$n)) for getting the best UCI move, so this hack addresses this
