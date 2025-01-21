@@ -9107,6 +9107,36 @@ set helpText(D,Sound) {<h1>Ton</h1>
 set helpTitle(D,Changelog) "Scid vs PC Änderungshistorie"
 set helpText(D,Changelog) {<h1>Änderungshistorie</h1>
 
+<h4>4.26 (Feb 10, 2025)</h4>
+<ul>
+<li>Scorebar for the Main board, and also Browser windows and Fics observed games</li>
+<li>Analysis board improvements from Hanish</li>
+<li>- Scorebar, Colour PV Bar, Move-Sequence arrows, and board coordinates</li>
+<br>
+<li>Clicking Crosstable 'Player' column title to sort</li>
+<li>New 'Store Movetimes' option in Play UCI Game</li>
+<li>Show longer variations in the EnterVar button at game end</li>
+<li>Twin Game Checker has a few new clickables</li>
+<li>Font Selection dialog has a working preview </li>
+<li>Game saves don't interrupt engine analysis, and tweak engine help icon</li>
+<li>Gamelist current game colour option (via switcher context menu)</li>
+<li>Player Ratings context/history menu</li>
+<li>Cut down our excess Resize event handling</li>
+<li>Properly handle 'Stop Analysis' for Xboard engine with no 'analyze' (eg Scidlet)</li>
+<li>Minor Fics improvements</li>
+<li>More Latex export improvements</li>
+<br>
+<li>Hack to avoid MacOS Tree/Bestgames window crash</li>
+<li>Fix Multi Browse BestGames didn't work for 'other' bases.</li>
+<li>Fix Pgn column mode with big fonts</li>
+<li>Enable proper horizontal gamelist scrolling for MacOS</li>
+<li>Truncate long DB filenames in the Gamelist Tab and DB switcher</li>
+<li>Disable Tree adjust after a General Search</li>
+<li>Fix Undocked App fails to quit with an open engine</li>
+<li>Update "Enter Var" button when we create a variation</li>
+<li>Try to remove unicode related fluff when pasting text as fen</li>
+</ul>
+
 <h4>4.25 (May 20, 2024)</h4>
 <ul>
 <li>Extra Tags - bulk add Extra Tag feature</li>

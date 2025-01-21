@@ -1,7 +1,32 @@
+Index: patches/german-changes-from-christian.diff
+===================================================================
+--- patches/german-changes-from-christian.diff	(Revision 1501)
++++ patches/german-changes-from-christian.diff	(Revision 1502)
+@@ -3672,20 +3672,6 @@
+    }
+  
+  }
+-@@ -38,11 +38,11 @@
+-   }
+-   catch {set fenStr [validateFEN [string trim $fenStr]]}
+- 
+--  set fenExplanation {FEN is the standard representation of a chess position, for example:
+-+  set fenExplanation {FEN ist die Standarddarstellung einer Schachposition, z.B.:
+- "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"}
+- 
+-   if {$fenStr == ""} {
+--    set msg "The clipboard is empty.\n\n$fenExplanation"
+-+    set msg "Die Ablagedatenbank ist leer.\n\n$fenExplanation"
+-     fenErrorDialog $msg
+-     return
+-   }
+ @@ -465,7 +465,7 @@
+    updateBoard -pgn
+  
 Index: src/game.cpp
 ===================================================================
---- src/game.cpp	(revision 3457)
-+++ src/game.cpp	(working copy)
+--- src/game.cpp	(Revision 1501)
++++ src/game.cpp	(Revision 1502)
 @@ -2872,7 +2872,7 @@
      date_DecodeToString(Date, dateStr);
      tb->PrintString("\\twocolumn[\n\\begin{@twocolumnfalse}\n");
@@ -49,8 +74,8 @@ Index: src/game.cpp
                  tb->PrintString("\\begin{axis}[\n");
 Index: src/namebase.h
 ===================================================================
---- src/namebase.h	(revision 3457)
-+++ src/namebase.h	(working copy)
+--- src/namebase.h	(Revision 1501)
++++ src/namebase.h	(Revision 1502)
 @@ -33,10 +33,10 @@
  const uint NUM_NAME_TYPES = 4;
  
@@ -68,8 +93,8 @@ Index: src/namebase.h
  
 Index: src/pgnparse.cpp
 ===================================================================
---- src/pgnparse.cpp	(revision 3457)
-+++ src/pgnparse.cpp	(working copy)
+--- src/pgnparse.cpp	(Revision 1501)
++++ src/pgnparse.cpp	(Revision 1502)
 @@ -376,7 +376,7 @@
              value[length-7] = 0;
              elo = strGetUnsigned (&(value[length-5]));
@@ -240,8 +265,8 @@ Index: src/pgnparse.cpp
              err = OK;
 Index: src/tkscid.cpp
 ===================================================================
---- src/tkscid.cpp	(revision 3457)
-+++ src/tkscid.cpp	(working copy)
+--- src/tkscid.cpp	(Revision 1501)
++++ src/tkscid.cpp	(Revision 1502)
 @@ -50,7 +50,7 @@
  static const uint REPORT_OPENING = 0;
  static const uint REPORT_PLAYER = 1;
@@ -2380,7 +2405,7 @@ Index: src/tkscid.cpp
      }
      db->tbuf->Empty();
      db->tbuf->SetWrapColumn (99999);
-@@ -11182,7 +11182,7 @@
+@@ -11204,7 +11204,7 @@
  sc_pos_addNag (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -2389,7 +2414,7 @@ Index: src/tkscid.cpp
      }
      const char * nagStr = argv[2];
      byte nag = game_parseNag (nagStr);
-@@ -11203,7 +11203,7 @@
+@@ -11227,7 +11227,7 @@
  int
  sc_pos_analyze (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2398,7 +2423,7 @@ Index: src/tkscid.cpp
  
      uint searchTime = 1000;   // Default = 1000 milliseconds
      uint hashTableKB = 1024;  // Default: one-megabyte hash table.
-@@ -11277,7 +11277,7 @@
+@@ -11321,7 +11321,7 @@
  sc_pos_bestSquare (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -2407,7 +2432,7 @@ Index: src/tkscid.cpp
      }
  
      Position * pos = db->game->GetCurrentPos();
-@@ -11289,7 +11289,7 @@
+@@ -11333,7 +11333,7 @@
        if (sqInt >= 0  &&  sqInt <= 63) { sq = sqInt; }
      }
      if (sq == NULL_SQUARE) {
@@ -2416,7 +2441,7 @@ Index: src/tkscid.cpp
      }
  
      // Generate all legal moves:
-@@ -11389,7 +11389,7 @@
+@@ -11433,7 +11433,7 @@
  int
  sc_pos_hash (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2425,7 +2450,7 @@ Index: src/tkscid.cpp
      bool pawnHashOnly = false;
      if (argc > 3) { return errorResult (ti, usage); }
      if (argc == 3) {
-@@ -11418,7 +11418,7 @@
+@@ -11462,7 +11462,7 @@
  int
  sc_pos_html (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2434,7 +2459,7 @@ Index: src/tkscid.cpp
      uint style = htmlDiagStyle;
      bool flip = false;
      int arg = 2;
-@@ -11476,7 +11476,7 @@
+@@ -11520,7 +11520,7 @@
          return setBoolResult (ti, db->game->AtVarEnd());
  
      default:
@@ -2443,7 +2468,7 @@ Index: src/tkscid.cpp
      }
      return TCL_OK;
  }
-@@ -11489,7 +11489,7 @@
+@@ -11533,7 +11533,7 @@
  sc_pos_isPromo (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 4) {
@@ -2452,7 +2477,7 @@ Index: src/tkscid.cpp
      }
  
      Position * pos = db->game->GetCurrentPos();
-@@ -11497,7 +11497,7 @@
+@@ -11541,7 +11541,7 @@
      int toSq = strGetInteger (argv[3]);
  
      if (fromSq < A1  ||  fromSq > H8  ||  toSq < A1  ||  toSq > H8) {
@@ -2461,7 +2486,7 @@ Index: src/tkscid.cpp
      }
  
      setBoolResult (ti, pos->IsPromoMove ((squareT) fromSq, (squareT) toSq));
-@@ -11509,7 +11509,7 @@
+@@ -11553,7 +11553,7 @@
  sc_pos_isInsufficient (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 2)
@@ -2470,7 +2495,7 @@ Index: src/tkscid.cpp
  
      Position * pos = db->game->GetCurrentPos();
      uint numPieces = pos->TotalMaterial();
-@@ -11531,7 +11531,7 @@
+@@ -11575,7 +11575,7 @@
  sc_pos_isLegal (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 4) {
@@ -2479,7 +2504,7 @@ Index: src/tkscid.cpp
      }
  
      Position * pos = db->game->GetCurrentPos();
-@@ -11562,7 +11562,7 @@
+@@ -11606,7 +11606,7 @@
  sc_pos_matchMoves (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3  &&  argc != 4) {
@@ -2488,7 +2513,7 @@ Index: src/tkscid.cpp
      }
      bool coordMoves = false;
      const char * prefix = argv[2];
-@@ -11653,7 +11653,7 @@
+@@ -11697,7 +11697,7 @@
  sc_pos_moves (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 2) {
@@ -2497,7 +2522,7 @@ Index: src/tkscid.cpp
      }
      Position * p = db->game->GetCurrentPos();
      sanListT sanList;
-@@ -11669,7 +11669,7 @@
+@@ -11713,7 +11713,7 @@
  sc_pos_moves_uci (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 2) {
@@ -2506,7 +2531,7 @@ Index: src/tkscid.cpp
      }
      Position * p = db->game->GetCurrentPos();
      sanListT sanList;
-@@ -11691,7 +11691,7 @@
+@@ -11735,7 +11735,7 @@
  sc_pos_pgnBoard (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -2515,7 +2540,7 @@ Index: src/tkscid.cpp
      }
  
      Game * g = scratchGame;
-@@ -11726,7 +11726,7 @@
+@@ -11770,7 +11770,7 @@
  int
  sc_pos_probe (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2524,7 +2549,7 @@ Index: src/tkscid.cpp
      static const char * options[] = {
          "score", "report", "optimal", "board", NULL
      };
-@@ -11775,7 +11775,7 @@
+@@ -11819,7 +11819,7 @@
  int
  sc_pos_probe_board (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2533,7 +2558,7 @@ Index: src/tkscid.cpp
  
      Position * pos = scratchPos;
      pos->CopyFrom (db->game->GetCurrentPos());
-@@ -11827,7 +11827,7 @@
+@@ -11871,7 +11871,7 @@
  sc_pos_setComment (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -2542,7 +2567,7 @@ Index: src/tkscid.cpp
      }
      const char * str = argv[2];
      const char * oldComment = db->game->GetMoveComment();
-@@ -11886,7 +11886,7 @@
+@@ -11930,7 +11930,7 @@
  
      default:
          return errorResult (ti,
@@ -2551,7 +2576,7 @@ Index: src/tkscid.cpp
      }
      return TCL_OK;
  }
-@@ -11956,7 +11956,7 @@
+@@ -12000,7 +12000,7 @@
  
      if (! NameBase::IsValidNameType(nt)) {
          return errorResult (ti,
@@ -2560,7 +2585,7 @@ Index: src/tkscid.cpp
      }
      if (!db->inUse) {
          return errorResult (ti, errMsgNotOpen(ti));
-@@ -12027,7 +12027,7 @@
+@@ -12071,7 +12071,7 @@
          delete[] startDate;
          delete[] endDate;
  
@@ -2569,7 +2594,7 @@ Index: src/tkscid.cpp
      }
  
      // Write the name file first, for safety:
-@@ -12035,7 +12035,7 @@
+@@ -12079,7 +12079,7 @@
          delete[] newIDs;
          delete[] startDate;
          delete[] endDate;
@@ -2578,7 +2603,7 @@ Index: src/tkscid.cpp
      }
  
      // Now go through the index making each necessary change:
-@@ -12125,7 +12125,7 @@
+@@ -12169,7 +12169,7 @@
  		delete[] newIDs;
  		delete[] startDate;
  		delete[] endDate;
@@ -2587,7 +2612,7 @@ Index: src/tkscid.cpp
              }
          }
      }
-@@ -12135,19 +12135,43 @@
+@@ -12179,19 +12179,43 @@
      delete[] endDate;
  
      if (db->idx->WriteHeader() != OK) {
@@ -2638,7 +2663,7 @@ Index: src/tkscid.cpp
        Tcl_AppendResult (ti, temp, NULL);
      }
  
-@@ -12167,7 +12191,7 @@
+@@ -12211,7 +12235,7 @@
  int
  sc_name_edit (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2647,7 +2672,7 @@ Index: src/tkscid.cpp
  
      if (!db->inUse) {
          return errorResult (ti, errMsgNotOpen(ti));
-@@ -12256,7 +12280,7 @@
+@@ -12300,7 +12324,7 @@
      // skip this check is we useStringMatch or option == OPT_DATE ||  option == OPT_EVENTDATE
      if (! useStringMatch && option != OPT_DATE && option != OPT_EVENTDATE) {
          if (db->nb->FindExactName (nt, oldName, &oldID) != OK) {
@@ -2656,7 +2681,7 @@ Index: src/tkscid.cpp
              return TCL_ERROR;
          }
      }
-@@ -12267,10 +12291,10 @@
+@@ -12311,10 +12335,10 @@
      if (editSelection == EDIT_CTABLE) {
          Game * g = db->game;
          if (db->nb->FindExactName (NAME_EVENT, g->GetEventStr(), &eventId) != OK) {
@@ -2669,7 +2694,7 @@ Index: src/tkscid.cpp
          }
  
          if (date_GetMonthDay (g->GetDate()) == 0) {
-@@ -12288,12 +12312,12 @@
+@@ -12332,12 +12356,12 @@
      idNumberT newID = 0;
      if (option != OPT_RATING  &&  option != OPT_DATE  &&  option != OPT_EVENTDATE) {
          if (db->nb->AddName (nt, newName, &newID) == ERROR_NameBaseFull) {
@@ -2684,7 +2709,7 @@ Index: src/tkscid.cpp
          }
      }
  
-@@ -12442,7 +12466,7 @@
+@@ -12486,7 +12510,7 @@
          // Write this entry if any edits were made:
          if (edits != 0) {
              if (db->idx->WriteEntries (&newIE, i, 1) != OK) {
@@ -2693,7 +2718,7 @@ Index: src/tkscid.cpp
              }
              if (option != OPT_RATING  &&  option != OPT_DATE && option != OPT_EVENTDATE) {
                  db->nb->IncFrequency (nt, newID, edits);
-@@ -12453,15 +12477,15 @@
+@@ -12497,15 +12521,15 @@
      }
  
      if (db->idx->WriteHeader() != OK) {
@@ -2712,7 +2737,7 @@ Index: src/tkscid.cpp
                   numChanges, oldName, newName);
      }
      Tcl_AppendResult (ti, temp, NULL);
-@@ -12474,7 +12498,7 @@
+@@ -12518,7 +12542,7 @@
  int
  sc_name_retrievename (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2721,7 +2746,7 @@ Index: src/tkscid.cpp
      SpellChecker * spChecker = spellChecker[NAME_PLAYER];
  
      if (argc != 3 ) { return errorResult (ti, usageStr); }
-@@ -12512,7 +12536,7 @@
+@@ -12556,7 +12580,7 @@
  {
      static char * lastPlayerName = NULL;
      // this needs overhauling S.A
@@ -2730,7 +2755,7 @@ Index: src/tkscid.cpp
      uint startYear = 1900;
      uint startElo = 0;
      extern spellingT countryTable[];
-@@ -12691,10 +12715,10 @@
+@@ -12735,10 +12759,10 @@
  	      if (titleTable[i].id[0] != 0) {
  		// this is a little confusing, just to get the multiple "titles" on one line
  		if (count==0 && mark)
@@ -2743,7 +2768,7 @@ Index: src/tkscid.cpp
  		  else {
  		    if (mark)
  		      Tcl_AppendResult (ti, ",  ", titleTable[i].data, NULL);
-@@ -12713,7 +12737,7 @@
+@@ -12757,7 +12781,7 @@
  		    mark2++;
  		  Tcl_AppendResult (ti, startHeading, translate (ti,"Elo"), ":	", endHeading, mark2, newline, NULL);
  		} else {
@@ -2752,7 +2777,7 @@ Index: src/tkscid.cpp
  		}
  	      }
  
-@@ -12753,10 +12777,10 @@
+@@ -12797,10 +12821,10 @@
  
  	      if (t_country[0] != '-') {
  		if (count==0 && !mark)
@@ -2765,7 +2790,7 @@ Index: src/tkscid.cpp
  		  else {
  		    if (mark)
  		      Tcl_AppendResult (ti, ",  ", temp , NULL);
-@@ -12775,7 +12799,7 @@
+@@ -12819,7 +12843,7 @@
  
  	    // Birthyear
  	    if (*t_year) {
@@ -2774,7 +2799,7 @@ Index: src/tkscid.cpp
  	    }
  
  	}
-@@ -12783,7 +12807,7 @@
+@@ -12827,7 +12851,7 @@
  	// biography
  	const bioNoteT * note = spChecker->GetBioData (playerName);
  	if (note != NULL) {
@@ -2783,7 +2808,7 @@ Index: src/tkscid.cpp
  	    while (note != NULL) {
  		Tcl_AppendResult (ti, "	", note->text, newline, NULL);
  		note = note->next;
-@@ -12966,9 +12990,9 @@
+@@ -13010,9 +13034,9 @@
      char trWhite[128];
      char trBlack[128];
      char trTotal[128];
@@ -2796,7 +2821,7 @@ Index: src/tkscid.cpp
  
      uint wWidth = strLength (trWhite);
      uint bWidth = strLength (trBlack);
-@@ -12998,7 +13022,7 @@
+@@ -13042,7 +13066,7 @@
      if (ratingsOnly) { goto doRatings; }
  
      if (totalcount[STATS_ALL] == 0) {
@@ -2805,7 +2830,7 @@ Index: src/tkscid.cpp
        return TCL_OK;
      }
  
-@@ -13006,7 +13030,7 @@
+@@ -13050,7 +13074,7 @@
               htextOutput ? "<green><run sc_name info -faA {}; ::playerInfoRefresh>" : "",
               totalcount[STATS_ALL],
               (totalcount[STATS_ALL] == 1 ?
@@ -2814,7 +2839,7 @@ Index: src/tkscid.cpp
               htextOutput ? "</run></green>" : "");
      Tcl_AppendResult (ti, temp, NULL);
  
-@@ -13018,7 +13042,7 @@
+@@ -13062,7 +13086,7 @@
      if (lastGameDate > firstGameDate) {
          date_DecodeToString (lastGameDate, temp);
          strTrimDate (temp);
@@ -2823,7 +2848,7 @@ Index: src/tkscid.cpp
      }
  
      Tcl_AppendResult (ti, newline, NULL);
-@@ -13029,7 +13053,7 @@
+@@ -13073,7 +13097,7 @@
  	       htextOutput ? "<green><run sc_name info -F {}; ::playerInfoRefresh>" : "",
  	       totalcount[STATS_FILTER],
  	       (totalcount[STATS_FILTER] == 1 ?
@@ -2832,7 +2857,7 @@ Index: src/tkscid.cpp
  	       htextOutput ? "</run></green>" : "");
        Tcl_AppendResult (ti, temp, NULL);
      }
-@@ -13040,9 +13064,9 @@
+@@ -13084,9 +13108,9 @@
              startHeading,
  	    htextOutput ? "<tt>" : "",
  	    wbtWidth+18,
@@ -2845,7 +2870,7 @@ Index: src/tkscid.cpp
  	    htextOutput ? "</tt>" : "",
              endHeading);
  
-@@ -13410,7 +13434,7 @@
+@@ -13454,7 +13478,7 @@
  sc_name_match (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      const char * usage = \
@@ -2854,7 +2879,7 @@ Index: src/tkscid.cpp
  
      int arg = 2;
      int argsleft = argc - 2;
-@@ -13539,7 +13563,7 @@
+@@ -13583,7 +13607,7 @@
  int
  sc_name_plist (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
@@ -2863,7 +2888,7 @@ Index: src/tkscid.cpp
  
      const char * namePrefix = "";
      const char * country = "";
-@@ -13770,14 +13794,14 @@
+@@ -13814,14 +13838,14 @@
          return errorResult (ti, errMsgReadOnly(ti));
      }
      if (sp == NULL) {
@@ -2883,7 +2908,7 @@ Index: src/tkscid.cpp
  
          return TCL_ERROR;
      }
-@@ -13849,7 +13873,7 @@
+@@ -13893,7 +13917,7 @@
                      newIE.SetBlackRatingType (RATING_Elo);
                  }
                  if (db->idx->WriteEntries (&newIE, gnum, 1) != OK) {
@@ -2892,7 +2917,7 @@ Index: src/tkscid.cpp
                  }
              }
          }
-@@ -13881,7 +13905,7 @@
+@@ -13925,7 +13949,7 @@
      }
  
      if (argc > 5) {
@@ -2901,7 +2926,7 @@ Index: src/tkscid.cpp
      }
      const char * filename = argv[2];
      bool checkPlayerOrder = false;
-@@ -13902,7 +13926,7 @@
+@@ -13946,7 +13970,7 @@
          if (temp_spellChecker->ReadSpellCheckFile (filename, checkPlayerOrder) != OK) {
              delete temp_spellChecker;
              Tcl_ResetResult (ti);
@@ -2910,7 +2935,7 @@ Index: src/tkscid.cpp
          }
          if (spellChecker[nt] != NULL) { delete spellChecker[nt]; }
          spellChecker[nt] = temp_spellChecker;
-@@ -13948,7 +13972,7 @@
+@@ -13992,7 +14016,7 @@
      nameT nt = NAME_INVALID;
      bool doSurnames = false;
      bool ambiguous = true;
@@ -2919,7 +2944,7 @@ Index: src/tkscid.cpp
  
      const char * options[] = {
          "-surnames", "-ambiguous", NULL
-@@ -13990,8 +14014,8 @@
+@@ -14034,8 +14058,8 @@
          return errorResult (ti, errMsgReadOnly(ti));
      }
      if (spellChecker[nt] == NULL) {
@@ -2930,7 +2955,7 @@ Index: src/tkscid.cpp
          return TCL_ERROR;
      }
  
-@@ -14161,7 +14185,7 @@
+@@ -14205,7 +14229,7 @@
  
      // Generate message
  
@@ -2939,7 +2964,7 @@ Index: src/tkscid.cpp
               correctionCount, NAME_TYPE_STRING[nt],
               strPlural (correctionCount));
      Tcl_AppendResult (ti, tempStr, NULL);
-@@ -14207,7 +14231,7 @@
+@@ -14251,7 +14275,7 @@
      };
  
      static const char * usage =
@@ -2948,7 +2973,7 @@ Index: src/tkscid.cpp
      OpTable * report = NULL;
      if (argc < 2) {
          return errorResult (ti, usage);
-@@ -14238,7 +14262,7 @@
+@@ -14282,7 +14306,7 @@
      switch (index) {
      case OPT_AVGLENGTH:
          if (argc != 4) {
@@ -2957,7 +2982,7 @@ Index: src/tkscid.cpp
          } else {
              resultT result = strGetResult (argv[3]);
              appendUintElement (ti, report->AvgLength (result));
-@@ -14248,7 +14272,7 @@
+@@ -14292,7 +14316,7 @@
  
      case OPT_BEST:
          if (argc != 5) {
@@ -2966,7 +2991,7 @@ Index: src/tkscid.cpp
          }
          dstr = new DString;
          report->BestGames (dstr, strGetUnsigned(argv[4]), argv[3]);
-@@ -14275,7 +14299,7 @@
+@@ -14319,7 +14343,7 @@
  
      case OPT_ELO:
          if (argc != 4) {
@@ -2975,7 +3000,7 @@ Index: src/tkscid.cpp
          } else {
              colorT color = WHITE;
              uint count = 0;
-@@ -14293,14 +14317,14 @@
+@@ -14337,14 +14361,14 @@
      case OPT_ENDMAT:
          dstr = new DString;
          report->EndMaterialReport (dstr,
@@ -2993,7 +3018,7 @@ Index: src/tkscid.cpp
          }
          report->SetFormat (argv[3]);
          break;
-@@ -14307,7 +14331,7 @@
+@@ -14351,7 +14375,7 @@
  
      case OPT_FREQ:
          if (argc != 4) {
@@ -3002,7 +3027,7 @@ Index: src/tkscid.cpp
          } else {
              resultT result = strGetResult (argv[3]);
              appendUintElement (ti, report->PercentFreq (result));
-@@ -14329,11 +14353,11 @@
+@@ -14373,11 +14397,11 @@
          } else if (argc == 4  &&  argv[3][0] == 'r') {
              return setUintResult (ti, OPTABLE_MAX_ROWS);
          }
@@ -3016,7 +3041,7 @@ Index: src/tkscid.cpp
          }
          dstr = new DString;
          report->PopularMoveOrders (dstr, strGetUnsigned(argv[3]));
-@@ -14342,7 +14366,7 @@
+@@ -14386,7 +14410,7 @@
  
      case OPT_NOTES:
          if (argc < 4  ||  argc > 5) {
@@ -3025,7 +3050,7 @@ Index: src/tkscid.cpp
          }
          report->ClearNotes ();
          if (strGetBoolean (argv[3])  &&  report->GetNumLines() > 0) {
-@@ -14360,7 +14384,7 @@
+@@ -14404,7 +14428,7 @@
  
      case OPT_PLAYERS:
          if (argc != 5) {
@@ -3034,7 +3059,7 @@ Index: src/tkscid.cpp
          } else {
              colorT color = WHITE;
              if (argv[3][0] == 'B'  ||  argv[3][0] == 'b') { color = BLACK; }
-@@ -14372,7 +14396,7 @@
+@@ -14416,7 +14440,7 @@
  
      case OPT_PRINT:
          if (argc < 3  ||  argc > 6) {
@@ -3043,7 +3068,7 @@ Index: src/tkscid.cpp
          }
          report->GuessNumRows ();
          if (argc > 3) {
-@@ -14435,7 +14459,7 @@
+@@ -14479,7 +14503,7 @@
      uint maxTableLines = OPTABLE_MAX_TABLE_LINES;
      uint maxLines = OPTABLE_MAX_LINES;
      static const char * usage =
@@ -3052,7 +3077,7 @@ Index: src/tkscid.cpp
  
      uint reportType = 0;
      if (argc < 2) {
-@@ -14501,10 +14525,10 @@
+@@ -14545,10 +14569,10 @@
          IndexEntry * ie = db->idx->FetchEntry (gnum);
          if (ply != 0) {
              if (db->gfile->ReadGame (db->bbuf, ie->GetOffset(), ie->GetLength()) != OK) {
@@ -3065,7 +3090,7 @@ Index: src/tkscid.cpp
              }
              scratchGame->LoadStandardTags (ie, db->nb);
              scratchGame->MoveToPly (ply - 1);
-@@ -14535,7 +14559,7 @@
+@@ -14579,7 +14603,7 @@
  sc_report_select (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      static const char * usage =
@@ -3074,7 +3099,7 @@ Index: src/tkscid.cpp
      if (argc != 5) {
          return errorResult (ti, usage);
      }
-@@ -14635,7 +14659,7 @@
+@@ -14679,7 +14703,7 @@
  sc_tree_best (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 7) {
@@ -3083,7 +3108,7 @@ Index: src/tkscid.cpp
      }
  
      scidBaseT * base = db;
-@@ -14659,7 +14683,7 @@
+@@ -14703,7 +14727,7 @@
      if (strContains (rstr, "1/2")) { results[RESULT_Draw] = true; }
      if (strContains (rstr, "="))   { results[RESULT_Draw] = true; }
      if (strContains (rstr, "*"))   { results[RESULT_None] = true; }
@@ -3092,7 +3117,7 @@ Index: src/tkscid.cpp
          results[RESULT_White] = results[RESULT_Black] = true;
          results[RESULT_Draw] = results[RESULT_None] = true;
      }
-@@ -14811,7 +14835,7 @@
+@@ -14855,7 +14879,7 @@
  sc_tree_clean (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc < 3 || argc > 4) {
@@ -3101,7 +3126,7 @@ Index: src/tkscid.cpp
      }
  
      scidBaseT * base = db;
-@@ -14863,7 +14887,7 @@
+@@ -14907,7 +14931,7 @@
  sc_tree_move (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 4) {
@@ -3110,7 +3135,7 @@ Index: src/tkscid.cpp
      }
  
      scidBaseT * base = db;
-@@ -14950,7 +14974,7 @@
+@@ -14994,7 +15018,7 @@
      }
  
      if (base->treeCache->WriteFile (base->fileName) != OK) {
@@ -3119,7 +3144,7 @@ Index: src/tkscid.cpp
      }
      return setUintResult (ti, fileSize (base->fileName, TREEFILE_SUFFIX));
  }
-@@ -15013,7 +15037,7 @@
+@@ -15057,7 +15081,7 @@
  sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      static const char * usageStr =
@@ -3128,7 +3153,7 @@ Index: src/tkscid.cpp
  
        // Sort options: these should match the moveSortE enumerated type.
        static const char * sortOptions[] = {
-@@ -15634,7 +15658,7 @@
+@@ -15678,7 +15702,7 @@
  sc_tree_cachesize (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
    if (argc != 4) {
@@ -3137,7 +3162,7 @@ Index: src/tkscid.cpp
    }
    scidBaseT * base = NULL;
    int baseNum = strGetInteger (argv[2]);
-@@ -15653,7 +15677,7 @@
+@@ -15697,7 +15721,7 @@
  sc_tree_cacheinfo (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
    if (argc != 3) {
@@ -3146,7 +3171,7 @@ Index: src/tkscid.cpp
    }
    scidBaseT * base = NULL;
    int baseNum = strGetInteger (argv[2]);
-@@ -15745,7 +15769,7 @@
+@@ -15789,7 +15813,7 @@
  sc_search_board (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      const char * usageStr =
@@ -3155,7 +3180,7 @@ Index: src/tkscid.cpp
      bool showProgress = startProgressBar();
      if (!db->inUse) {
          return errorResult (ti, errMsgNotOpen(ti));
-@@ -15917,7 +15941,7 @@
+@@ -15961,7 +15985,7 @@
          // At this point, the game needs to be loaded:
          if (db->gfile->ReadGame (db->bbuf, ie->GetOffset(),
                                   ie->GetLength()) != OK) {
@@ -3164,7 +3189,7 @@ Index: src/tkscid.cpp
          }
          uint ply = 0;
          if (useVars) {
-@@ -15978,7 +16002,7 @@
+@@ -16022,7 +16046,7 @@
               centisecs / 100, decimalPointChar, centisecs % 100);
      Tcl_AppendResult (ti, temp, NULL);
  #ifdef SHOW_SKIPPED_STATS
@@ -3173,7 +3198,7 @@ Index: src/tkscid.cpp
      Tcl_AppendResult (ti, temp, NULL);
  #endif
  
-@@ -15998,7 +16022,7 @@
+@@ -16042,7 +16066,7 @@
  sc_search_moves (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      const char * usageStr =
@@ -3182,7 +3207,7 @@ Index: src/tkscid.cpp
      bool showProgress = startProgressBar();
      char **m_argv;
      int m_argc;
-@@ -16091,7 +16115,7 @@
+@@ -16135,7 +16159,7 @@
          // At this point, the game needs to be loaded:
          if (db->gfile->ReadGame (db->bbuf, ie->GetOffset(),
                                   ie->GetLength()) != OK) {
@@ -3191,7 +3216,7 @@ Index: src/tkscid.cpp
          }
  
  	g->Decode (db->bbuf, GAME_DECODE_NONE);
-@@ -16120,7 +16144,7 @@
+@@ -16164,7 +16188,7 @@
               centisecs / 100, decimalPointChar, centisecs % 100);
      Tcl_AppendResult (ti, temp, NULL);
  #ifdef SHOW_SKIPPED_STATS
@@ -3200,7 +3225,7 @@ Index: src/tkscid.cpp
      Tcl_AppendResult (ti, temp, NULL);
  #endif
      Tcl_Free((char *) m_argv);
-@@ -16136,7 +16160,7 @@
+@@ -16180,7 +16204,7 @@
  {
      uint gameNum;
      const char * usageStr =
@@ -3209,7 +3234,7 @@ Index: src/tkscid.cpp
      bool showProgress = startProgressBar();
  
      if (argc != 6)
-@@ -16182,7 +16206,7 @@
+@@ -16226,7 +16250,7 @@
      if (setjmp(jump_buffer) != 0 ) {
        CqlReset();
        if (cqlErrMsg) Tcl_AppendResult (ti, cqlErrMsg, NULL);
@@ -3218,7 +3243,7 @@ Index: src/tkscid.cpp
        return TCL_OK;
      }
  
-@@ -16258,7 +16282,7 @@
+@@ -16302,7 +16326,7 @@
  
          // Load the game.
          if (db->gfile->ReadGame (db->bbuf, ie->GetOffset(), ie->GetLength()) != OK) {
@@ -3227,7 +3252,7 @@ Index: src/tkscid.cpp
          }
  
          g->Decode (db->bbuf, GAME_DECODE_ALL); // variations, comments and non-standards
-@@ -16319,13 +16343,13 @@
+@@ -16363,13 +16387,13 @@
      if (dirtyFlag) {
          db->gfile->FlushAll();
          if (db->idx->WriteHeader() != OK) {
@@ -3243,7 +3268,7 @@ Index: src/tkscid.cpp
          }
      }
  
-@@ -16335,7 +16359,7 @@
+@@ -16379,7 +16403,7 @@
      // If the jump flag is set, we're falling out with an exception.
      if (jumpFlag) {
        if (cqlErrMsg) Tcl_AppendResult (ti, cqlErrMsg, NULL);
@@ -3252,7 +3277,7 @@ Index: src/tkscid.cpp
      } else {
        char temp[200];
        int centisecs = timer.CentiSecs();
-@@ -16347,7 +16371,7 @@
+@@ -16391,7 +16415,7 @@
               centisecs / 100, decimalPointChar, centisecs % 100);
        Tcl_AppendResult (ti, temp, NULL);
  #ifdef SHOW_SKIPPED_STATS
@@ -3261,7 +3286,7 @@ Index: src/tkscid.cpp
        Tcl_AppendResult (ti, temp, NULL);
  #endif
      }
-@@ -16480,7 +16504,7 @@
+@@ -16524,7 +16548,7 @@
  {
      bool showProgress = startProgressBar();
      if (! db->inUse) {
@@ -3270,7 +3295,7 @@ Index: src/tkscid.cpp
      }
  
      uint minMoves = 0;
-@@ -16578,7 +16602,7 @@
+@@ -16622,7 +16646,7 @@
  
          case OPT_PATTERN:
              if (parsePattern (value, &tempPatt) != OK) {
@@ -3279,7 +3304,7 @@ Index: src/tkscid.cpp
                  return TCL_ERROR;
              }
              // Only add to lists if a pattern was specified:
-@@ -16608,7 +16632,7 @@
+@@ -16652,7 +16676,7 @@
              return InvalidCommand (ti, "sc_search material", options);
          }
      }
@@ -3288,7 +3313,7 @@ Index: src/tkscid.cpp
  
      // Sanity check of values:
      if (max[WQ] < min[WQ]) { max[WQ] = min[WQ]; }
-@@ -16856,7 +16880,7 @@
+@@ -16900,7 +16924,7 @@
               centisecs / 100, decimalPointChar, centisecs % 100);
      Tcl_AppendResult (ti, temp, NULL);
  #ifdef SHOW_SKIPPED_STATS
@@ -3297,7 +3322,7 @@ Index: src/tkscid.cpp
      Tcl_AppendResult (ti, temp, NULL);
  #endif
  
-@@ -17227,7 +17251,7 @@
+@@ -17271,7 +17295,7 @@
      int pgnTextCount = 0;
      char ** sPgnText = NULL;
      bool ignoreCase = 0;
@@ -3306,7 +3331,7 @@ Index: src/tkscid.cpp
  
      const char * options[] = {
          "white", "black", "event", "site", "round",
-@@ -17423,7 +17447,7 @@
+@@ -17467,7 +17491,7 @@
              return InvalidCommand (ti, "sc_search header", options);
          }
      }
@@ -3315,7 +3340,7 @@ Index: src/tkscid.cpp
  
      // Set up White name matches array:
      if (sWhite != NULL  &&  sWhite[0] != 0) {
-@@ -17650,7 +17674,7 @@
+@@ -17694,7 +17718,7 @@
          filterOp = FILTEROP_AND;
      }
  
@@ -3324,7 +3349,7 @@ Index: src/tkscid.cpp
  
      // Here is the loop that searches on each game:
      for (uint i=0; i < db->numGames; i++) {
-@@ -17784,11 +17808,11 @@
+@@ -17828,11 +17852,11 @@
  
              if (match) {
  
@@ -3338,7 +3363,7 @@ Index: src/tkscid.cpp
  		     match = (p->IsStaleMate());
  		} else {
  		     match = (p->IsKingInMate());
-@@ -17869,7 +17893,7 @@
+@@ -17913,7 +17937,7 @@
               centisecs / 100, decimalPointChar, centisecs % 100);
      Tcl_AppendResult (ti, temp, NULL);
  #ifdef SHOW_SKIPPED_STATS
@@ -3347,7 +3372,7 @@ Index: src/tkscid.cpp
      Tcl_AppendResult (ti, temp, NULL);
  #endif
  
-@@ -17963,12 +17987,12 @@
+@@ -18007,12 +18031,12 @@
  {
  
      if (argc != 3) {
@@ -3362,7 +3387,7 @@ Index: src/tkscid.cpp
      }
      db->game->DeleteVariationAndFree (varNumber);
      db->gameAltered = true;
-@@ -17983,12 +18007,12 @@
+@@ -18027,12 +18051,12 @@
  {
  
      if (argc != 3) {
@@ -3377,7 +3402,7 @@ Index: src/tkscid.cpp
      }
      db->game->DeleteVariation (varNumber);
      db->gameAltered = true;
-@@ -18002,12 +18026,12 @@
+@@ -18046,12 +18070,12 @@
  sc_var_first (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -3392,7 +3417,7 @@ Index: src/tkscid.cpp
      }
      db->game->FirstVariation (varNumber);
      db->gameAltered = true;
-@@ -18041,12 +18065,12 @@
+@@ -18085,12 +18109,12 @@
  sc_var_enter (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -3407,7 +3432,7 @@ Index: src/tkscid.cpp
      }
  
      db->game->MoveIntoVariation (varNumber);
-@@ -18067,12 +18091,12 @@
+@@ -18111,12 +18135,12 @@
  sc_var_promote (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -3422,7 +3447,7 @@ Index: src/tkscid.cpp
      }
      db->game->MainVariation (varNumber);
      db->gameAltered = true;
-@@ -18127,7 +18151,7 @@
+@@ -18171,7 +18195,7 @@
  sc_book_load (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 4) {
@@ -3431,7 +3456,7 @@ Index: src/tkscid.cpp
      }
  
      uint slot = strGetUnsigned (argv[3]);
-@@ -18135,7 +18159,7 @@
+@@ -18179,7 +18203,7 @@
      int bookstate = polyglot_open(argv[2], slot);
  
      if (bookstate == -1 ) {
@@ -3440,7 +3465,7 @@ Index: src/tkscid.cpp
      }
      if (bookstate  >  0 ) {
         // state == 1: book is read only
-@@ -18144,7 +18168,7 @@
+@@ -18188,7 +18212,7 @@
      return TCL_OK;
  
  //--//    if (polyglot_open(argv[2], slot) == -1 ) {
@@ -3449,7 +3474,7 @@ Index: src/tkscid.cpp
  //--//		}
  //--//    return TCL_OK;
  }
-@@ -18156,11 +18180,11 @@
+@@ -18200,11 +18224,11 @@
  sc_book_close (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 3) {
@@ -3463,7 +3488,7 @@ Index: src/tkscid.cpp
      }
      return TCL_OK;
  }
-@@ -18175,7 +18199,7 @@
+@@ -18219,7 +18243,7 @@
      char boardStr[100];
  
      if (argc != 3) {
@@ -3472,7 +3497,7 @@ Index: src/tkscid.cpp
      }
      uint slot = strGetUnsigned (argv[2]);
      db->game->GetCurrentPos()->PrintFEN (boardStr, FEN_ALL_FIELDS);
-@@ -18194,7 +18218,7 @@
+@@ -18238,7 +18262,7 @@
      char boardStr[100];
  
      if (argc != 3) {
@@ -3481,7 +3506,7 @@ Index: src/tkscid.cpp
      }
      uint slot = strGetUnsigned (argv[2]);
      db->game->GetCurrentPos()->PrintFEN (boardStr, FEN_ALL_FIELDS);
-@@ -18211,7 +18235,7 @@
+@@ -18255,7 +18279,7 @@
  sc_book_update (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 4) {
@@ -3490,7 +3515,7 @@ Index: src/tkscid.cpp
      }
      uint slot = strGetUnsigned (argv[3]);
      scid_book_update( (char*) argv[2], slot );
-@@ -18225,7 +18249,7 @@
+@@ -18269,7 +18293,7 @@
  sc_book_movesupdate (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
  {
      if (argc != 6) {
@@ -3501,8 +3526,8 @@ Index: src/tkscid.cpp
      scid_book_movesupdate( (char*) argv[2], (char*) argv[3], slot, (char*) argv[5] );
 Index: tcl/bitmaps.tcl
 ===================================================================
---- tcl/bitmaps.tcl	(revision 3457)
-+++ tcl/bitmaps.tcl	(working copy)
+--- tcl/bitmaps.tcl	(Revision 1501)
++++ tcl/bitmaps.tcl	(Revision 1502)
 @@ -71,19 +71,19 @@
  ### Process custom chess pieces
  
@@ -3587,9 +3612,9 @@ Index: tcl/bitmaps.tcl
  ### end of bitmaps.tcl
 Index: tcl/board.tcl
 ===================================================================
---- tcl/board.tcl	(revision 3457)
-+++ tcl/board.tcl	(working copy)
-@@ -3012,7 +3012,7 @@
+--- tcl/board.tcl	(Revision 1501)
++++ tcl/board.tcl	(Revision 1502)
+@@ -3079,7 +3079,7 @@
    if {[catch {
    package require img::window
    } result ]} {
@@ -3598,7 +3623,7 @@ Index: tcl/board.tcl
      tk_messageBox -type ok -icon error -title Scid -message $result
      return
    }
-@@ -3060,7 +3060,7 @@
+@@ -3127,7 +3127,7 @@
          -initialfile $filename.$format \
          -initialdir $::env(HOME) \
          -defaultextension .$format \
@@ -3609,8 +3634,8 @@ Index: tcl/board.tcl
    if {[llength $filename]} {
 Index: tcl/config.tcl
 ===================================================================
---- tcl/config.tcl	(revision 3457)
-+++ tcl/config.tcl	(working copy)
+--- tcl/config.tcl	(Revision 1501)
++++ tcl/config.tcl	(Revision 1502)
 @@ -44,18 +44,18 @@
  
  ### Display directories
@@ -3658,8 +3683,8 @@ Index: tcl/config.tcl
        ::SelectColor::setcolor $i $c
 Index: tcl/edit.tcl
 ===================================================================
---- tcl/edit.tcl	(revision 3457)
-+++ tcl/edit.tcl	(working copy)
+--- tcl/edit.tcl	(Revision 1501)
++++ tcl/edit.tcl	(Revision 1502)
 @@ -5,9 +5,9 @@
  proc fenErrorDialog {{msg {}}} {
  
@@ -3672,21 +3697,25 @@ Index: tcl/edit.tcl
    }
  
  }
-@@ -38,11 +38,11 @@
-   }
-   catch {set fenStr [validateFEN [string trim $fenStr]]}
+@@ -60,7 +60,7 @@
+   catch {set fen [sanityCheckFENCastling [string trim $fen]]}
  
--  set fenExplanation {FEN is the standard representation of a chess position, for example:
-+  set fenExplanation {FEN ist die Standarddarstellung einer Schachposition, z.B.:
- "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"}
- 
-   if {$fenStr == ""} {
--    set msg "The clipboard is empty.\n\n$fenExplanation"
-+    set msg "Die Ablagedatenbank ist leer.\n\n$fenExplanation"
-     fenErrorDialog $msg
+   if {$fen == ""} {
+-    fenErrorDialog "The clipboard is empty.\n"
++    fenErrorDialog "Die Ablagedatenbank ist leer.\n"
      return
    }
-@@ -465,7 +465,7 @@
+ 
+@@ -88,7 +88,7 @@
+ 
+     fenErrorDialog "\"$fen\" is not a valid FEN.
+ 
+-FEN is the standard representation of a chess position, for example:
++FEN ist die Standarddarstellung einer Schachposition, z.B.:
+ rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+ 
+   }
+@@ -471,7 +471,7 @@
    updateBoard -pgn
  
    toplevel $w
@@ -3695,7 +3724,7 @@ Index: tcl/edit.tcl
    setWinLocation $w
  
    set selectedSq -1
-@@ -511,9 +511,9 @@
+@@ -517,9 +517,9 @@
  
    if {!$::macOS} {
    frame $sl.hints
@@ -3708,7 +3737,7 @@ Index: tcl/edit.tcl
    pack $sl.hints -side top -fill x
    pack $sl.hints.label2 $sl.hints.label3 $sl.hints.label4 -side left -expand yes -fill x
    }
-@@ -669,7 +669,7 @@
+@@ -675,7 +675,7 @@
    # Are these bullet-proof and correct ? 
    # but make them a little smaller, as they are hardly used
  
@@ -3717,7 +3746,7 @@ Index: tcl/edit.tcl
      set tmp {}
      foreach char [split $setupBd {}] {
        append tmp [::utils::string::invertcase $char]
-@@ -693,7 +693,7 @@
+@@ -699,7 +699,7 @@
      makeSetupFen
    } -width 10 -font font_Small
  
@@ -3726,7 +3755,7 @@ Index: tcl/edit.tcl
      # reverse line order
      set tmp [lindex $setupBd 0] ; # sometimes setupBd has trailing side-to-move. Correct ???
      set setupBd {}
-@@ -707,7 +707,7 @@
+@@ -713,7 +713,7 @@
      makeSetupFen
    } -width 10 -font font_Small
  
@@ -3737,8 +3766,8 @@ Index: tcl/edit.tcl
      set setupBd {}
 Index: tcl/end.tcl
 ===================================================================
---- tcl/end.tcl	(revision 3457)
-+++ tcl/end.tcl	(working copy)
+--- tcl/end.tcl	(Revision 1501)
++++ tcl/end.tcl	(Revision 1502)
 @@ -123,7 +123,7 @@
    sc_game pop
    if {$err} {
@@ -3885,7 +3914,7 @@ Index: tcl/end.tcl
        set title "a LaTeX file"
 @@ -604,7 +604,7 @@
    if {$exportType == "Latex"} {
-     set exportFlags(scidFlags) [::board::isFlipped .main.board]
+     set exportFlags(scidFlags) [::board::isFlipped]
    }
 -# tk_messageBox -title "Debug" -type ok -icon error -message "Export Type $exportType" 
 +# tk_messageBox -title "Debug" -type ok -icon error -message "Exporttyp $exportType" 
@@ -4128,8 +4157,8 @@ Index: tcl/end.tcl
        # this sets initialDir(file) for all files, not just pgn... 
 Index: tcl/file/epd.tcl
 ===================================================================
---- tcl/file/epd.tcl	(revision 3457)
-+++ tcl/file/epd.tcl	(working copy)
+--- tcl/file/epd.tcl	(Revision 1501)
++++ tcl/file/epd.tcl	(Revision 1502)
 @@ -107,8 +107,8 @@
  
      if {[sc_epd available] < 1} {
@@ -4306,8 +4335,8 @@ Index: tcl/file/epd.tcl
        sc_epd set $id ""
 Index: tcl/file/finder.tcl
 ===================================================================
---- tcl/file/finder.tcl	(revision 3457)
-+++ tcl/file/finder.tcl	(working copy)
+--- tcl/file/finder.tcl	(Revision 1501)
++++ tcl/file/finder.tcl	(Revision 1502)
 @@ -471,11 +471,11 @@
  
  proc ::file::finder::delete { f } {
@@ -4324,8 +4353,8 @@ Index: tcl/file/finder.tcl
        file delete "[file rootname $f].sg4" "[file rootname $f].sn4" "[file rootname $f].stc"
 Index: tcl/file/maint.tcl
 ===================================================================
---- tcl/file/maint.tcl	(revision 3457)
-+++ tcl/file/maint.tcl	(working copy)
+--- tcl/file/maint.tcl	(Revision 1501)
++++ tcl/file/maint.tcl	(Revision 1502)
 @@ -14,12 +14,12 @@
    set ftype {
      { "Scid databases" {".si4"} }
@@ -4353,7 +4382,7 @@ Index: tcl/file/maint.tcl
    }
  
  }
-@@ -828,7 +828,7 @@
+@@ -825,7 +825,7 @@
  
  proc stripCommentsVars {arg {parent .}} {
    if {$arg != "comments" && $arg != "variations"} { 
@@ -4362,7 +4391,7 @@ Index: tcl/file/maint.tcl
      return
    }
    set w .stripCommentsVars
-@@ -844,7 +844,7 @@
+@@ -841,7 +841,7 @@
    
    pack [frame $w.f] -expand 1
    
@@ -4371,7 +4400,7 @@ Index: tcl/file/maint.tcl
    frame $w.f.g
    radiobutton $w.f.g.all -textvar ::tr(SelectAllGames) -variable checkOption(AllGames) -value all
    radiobutton $w.f.g.filter -textvar ::tr(SelectFilterGames) -variable checkOption(AllGames) -value filter
-@@ -1685,7 +1685,7 @@
+@@ -1689,7 +1689,7 @@
    set w .compactWin
    if {$err} {
      tk_messageBox -type ok -icon warning -parent $w \
@@ -4380,7 +4409,7 @@ Index: tcl/file/maint.tcl
    } else {
      sc_game new
      updateBoard -pgn
-@@ -1738,7 +1738,7 @@
+@@ -1742,7 +1742,7 @@
    set numberDeleted [expr {[lindex $stats 0] - [lindex $stats 2]}]
    if {[tk_messageBox -title "$::tr(CompactDatabase): [file tail [sc_base filename]]" -parent $parent \
        -icon question -type yesno -message \
@@ -4389,7 +4418,7 @@ Index: tcl/file/maint.tcl
      return
    }
    
-@@ -1749,7 +1749,7 @@
+@@ -1753,7 +1753,7 @@
    closeProgressWindow
    if {$err} {
      tk_messageBox -type ok -icon warning -parent $parent \
@@ -4398,7 +4427,7 @@ Index: tcl/file/maint.tcl
    } else {
      sc_game new
      updateBoard -pgn
-@@ -1899,15 +1899,15 @@
+@@ -1903,15 +1903,15 @@
    global sortCriteria
    set w .sortWin
    if {! [sc_base inUse]} {
@@ -4418,7 +4447,7 @@ Index: tcl/file/maint.tcl
    unbusyCursor .
    closeProgressWindow
  
-@@ -1917,11 +1917,11 @@
+@@ -1921,11 +1921,11 @@
    ::maint::Refresh
    if {$err} {
      tk_messageBox -type ok -icon warning -parent $w \
@@ -4433,7 +4462,7 @@ Index: tcl/file/maint.tcl
    }
  }
  
-@@ -1965,7 +1965,7 @@
+@@ -1969,7 +1969,7 @@
      return
    }
    toplevel $w
@@ -4442,7 +4471,7 @@ Index: tcl/file/maint.tcl
    wm withdraw $w
  
    label $w.lab -wraplength 3i -justify left -text $::tr(AllocRatingDescription)
-@@ -2008,7 +2008,7 @@
+@@ -2012,7 +2012,7 @@
      tk_messageBox -type ok -icon info -parent $parent -title Scid -message $result
      return
    }
@@ -4451,7 +4480,7 @@ Index: tcl/file/maint.tcl
    busyCursor .
    if {[catch {sc_name ratings -change $addRatings(overwrite) -filter $addRatings(filter)} result]} {
      closeProgressWindow
-@@ -2049,13 +2049,13 @@
+@@ -2053,13 +2053,13 @@
    }
  
    set ::interrupt 0
@@ -4467,7 +4496,7 @@ Index: tcl/file/maint.tcl
    }
    if {$err} {
      tk_messageBox -title Scid -icon warning -type ok -message $result -parent $parent
-@@ -2149,7 +2149,7 @@
+@@ -2161,7 +2161,7 @@
    toplevel $w
    wm title $w "Scid: $::tr(StripTags)"
  
@@ -4476,7 +4505,7 @@ Index: tcl/file/maint.tcl
    pack $w.label -side top -pady 5 -padx 5
  
    frame $w.entries
-@@ -2179,7 +2179,7 @@
+@@ -2191,7 +2191,7 @@
        tk_messageBox -title Oops -icon warning -type ok -message $errorMsg -parent .exTagDialog
      } else {
        destroy .exTagDialog
@@ -4485,7 +4514,7 @@ Index: tcl/file/maint.tcl
        busyCursor .
  
        set err [catch {
-@@ -2190,7 +2190,7 @@
+@@ -2202,7 +2202,7 @@
        closeProgressWindow
  
        if {!$err} {
@@ -4494,7 +4523,7 @@ Index: tcl/file/maint.tcl
        }
        tk_messageBox -title Scid -parent .extratags -type ok -icon info -message $result
  
-@@ -2221,11 +2221,16 @@
+@@ -2233,11 +2233,16 @@
  proc doStripTags {tag} {
    global checkOption
  
@@ -4513,7 +4542,7 @@ Index: tcl/file/maint.tcl
    busyCursor .
    set err [catch {
      sc_base tag strip $tag $checkOption(AllGames)
-@@ -2396,7 +2401,7 @@
+@@ -2408,7 +2413,7 @@
      } else {
        set r [::utils::thousands [lindex $result 0]]
        set g [::utils::thousands [lindex $result 1]]
@@ -4522,7 +4551,7 @@ Index: tcl/file/maint.tcl
      }
    }
  
-@@ -2420,8 +2425,8 @@
+@@ -2432,8 +2437,8 @@
              -delete $twinSettings(delete)} result]} {
        set message $result
      } else {
@@ -4533,7 +4562,7 @@ Index: tcl/file/maint.tcl
      }
      $t insert end "   $message.\n"
    }
-@@ -2432,13 +2437,13 @@
+@@ -2444,13 +2449,13 @@
      set stats [sc_compact stats names]
      if {[lindex $stats 1] == 0  &&  [lindex $stats 3] == 0  && \
            [lindex $stats 5] == 0  &&  [lindex $stats 7] == 0} {
@@ -4549,7 +4578,7 @@ Index: tcl/file/maint.tcl
        }
      }
      $t see end
-@@ -2448,13 +2453,13 @@
+@@ -2460,13 +2465,13 @@
      mtoolAdd $t "$count: $::tr(CompactGames)..."
      incr count
      if {[compactGamesEmpty]} {
@@ -4565,7 +4594,7 @@ Index: tcl/file/maint.tcl
        }
      }
      $t see end
-@@ -2476,10 +2481,10 @@
+@@ -2488,10 +2493,10 @@
        ::tree::mutex_refresh
      }
      ::tree::treeFileSave $base
@@ -4580,8 +4609,8 @@ Index: tcl/file/maint.tcl
    ::windows::stats::Refresh
 Index: tcl/file/spellchk.tcl
 ===================================================================
---- tcl/file/spellchk.tcl	(revision 3457)
-+++ tcl/file/spellchk.tcl	(working copy)
+--- tcl/file/spellchk.tcl	(Revision 1501)
++++ tcl/file/spellchk.tcl	(Revision 1502)
 @@ -120,7 +120,7 @@
    button $f.ok -textvar ::tr(MakeCorrections) -underline 0 -command {
      if {[sc_base current] != 9} {
@@ -4593,9 +4622,23 @@ Index: tcl/file/spellchk.tcl
  
 Index: tcl/file.tcl
 ===================================================================
---- tcl/file.tcl	(revision 3457)
-+++ tcl/file.tcl	(working copy)
-@@ -93,7 +93,7 @@
+--- tcl/file.tcl	(Revision 1501)
++++ tcl/file.tcl	(Revision 1502)
+@@ -36,11 +36,11 @@
+ 
+   if {$unsavedCount > 0 || [winfo exists .comp]} {
+     if {$unsavedCount == 0} {
+-      set msg {A Computer Tournament is running.}
++      set msg {Ein Computerturnier läuft.}
+     }
+     append msg "\n$::tr(ExitDialog)"
+ 
+-    set answer [tk_dialog .unsaved "Scid: Confirm Quit" $msg question {} "   [tr FileExit]   " [tr Cancel]]
++    set answer [tk_dialog .unsaved "Scid: Verlassen bestätigen" $msg question {} "   [tr FileExit]   " [tr Cancel]]
+ 
+     if {$answer != 0} {
+       wm protocol . WM_DELETE_WINDOW {::file::Exit}
+@@ -97,7 +97,7 @@
  proc ::file::New {} {
    if {[sc_base count free] == 0} {
      tk_messageBox -title Scid -type ok -icon info \
@@ -4604,7 +4647,7 @@ Index: tcl/file.tcl
      return
    }
    set ftype {
-@@ -104,7 +104,7 @@
+@@ -108,7 +108,7 @@
    if {! [file isdirectory $::initialDir(base)] } {
      set ::initialDir(base) $::env(HOME)
    }
@@ -4613,7 +4656,7 @@ Index: tcl/file.tcl
    if {$fName == {}} {
      return
    } elseif {[file extension $fName] == ".epd"} {
-@@ -117,7 +117,7 @@
+@@ -121,7 +121,7 @@
      } 
      if {[catch {sc_base create $fName} result]} {
        tk_messageBox -icon warning -type ok -parent . \
@@ -4622,7 +4665,7 @@ Index: tcl/file.tcl
        return
      }
      # set default icon
-@@ -140,7 +140,7 @@
+@@ -144,7 +144,7 @@
  
    if {[sc_base count free] == 0} {
      tk_messageBox -type ok -icon info -title Scid \
@@ -4631,7 +4674,7 @@ Index: tcl/file.tcl
      return
    }
  
-@@ -164,7 +164,7 @@
+@@ -168,7 +168,7 @@
        set ::file::finder::data(dir) $::env(HOME)
      }
      set fName [tk_getOpenFile -initialdir $::file::finder::data(dir) -filetypes $ftype \
@@ -4640,7 +4683,7 @@ Index: tcl/file.tcl
      if {$fName == ""} { return }
    }
  
-@@ -211,7 +211,7 @@
+@@ -215,7 +215,7 @@
        }
        unbusyCursor .
        tk_messageBox -icon warning -type ok -parent $parent \
@@ -4649,7 +4692,7 @@ Index: tcl/file.tcl
        ::recentFiles::remove "$fName.si4"
        return -1
      } else {
-@@ -235,7 +235,7 @@
+@@ -239,7 +239,7 @@
        ::recentFiles::remove $fName
        unbusyCursor .
        tk_messageBox -icon warning -type ok -parent $parent \
@@ -4658,7 +4701,7 @@ Index: tcl/file.tcl
      } else {
        if {$ext != ".pgn" && $ext != ".PGN"} {
  	puts {Unknown file type, assuming PGN.}
-@@ -242,15 +242,15 @@
+@@ -246,15 +246,15 @@
        }
        ## note : .zip isn't supported by zlib. Only .pgn.gz is supported.
  
@@ -4677,7 +4720,7 @@ Index: tcl/file.tcl
  	sc_base type [sc_base current] 3
  	::recentFiles::add $fName
  	set ::initialDir(pgn) [file dirname $fName]
-@@ -419,7 +419,7 @@
+@@ -423,7 +423,7 @@
    closeProgressWindow
    if {$err} {
      tk_messageBox -title Scid -type ok -icon warning \
@@ -4686,7 +4729,7 @@ Index: tcl/file.tcl
      return
    } else  {
      # rename game and name files, delete old .si3
-@@ -572,7 +572,7 @@
+@@ -576,7 +576,7 @@
  
    if {[sc_base count free] == 0} {
      tk_messageBox -type ok -icon info -title Scid \
@@ -4695,7 +4738,7 @@ Index: tcl/file.tcl
      return
    }
  
-@@ -593,7 +593,7 @@
+@@ -597,7 +597,7 @@
      if {! [file isdirectory $::initialDir(base)] } {
        set ::initialDir(base) $::env(HOME)
      }
@@ -4704,7 +4747,7 @@ Index: tcl/file.tcl
      if {$fName == ""} { return }
  
      set fName [fullname $fName]
-@@ -632,7 +632,7 @@
+@@ -636,7 +636,7 @@
      if {[catch {openBase $fName} result]} {
        unbusyCursor .
        set err 1
@@ -4713,7 +4756,7 @@ Index: tcl/file.tcl
        return
      } else {
        set ::initialDir(base) [file dirname $fName]
-@@ -646,10 +646,10 @@
+@@ -650,10 +650,10 @@
            [catch {sc_base create $fName true} result]} {
        unbusyCursor .
        set err 1
@@ -4728,9 +4771,9 @@ Index: tcl/file.tcl
        set ::initialDir(file) [file tail $fName]
 Index: tcl/game/browser.tcl
 ===================================================================
---- tcl/game/browser.tcl	(revision 3457)
-+++ tcl/game/browser.tcl	(working copy)
-@@ -182,7 +182,7 @@
+--- tcl/game/browser.tcl	(Revision 1501)
++++ tcl/game/browser.tcl	(Revision 1502)
+@@ -184,7 +184,7 @@
  }
  
    # The gnum is stored in title, and also used later 
@@ -4741,8 +4784,8 @@ Index: tcl/game/browser.tcl
  
 Index: tcl/game.tcl
 ===================================================================
---- tcl/game.tcl	(revision 3457)
-+++ tcl/game.tcl	(working copy)
+--- tcl/game.tcl	(Revision 1501)
++++ tcl/game.tcl	(Revision 1502)
 @@ -125,16 +125,16 @@
  proc ::game::LoadNextPrev {action {raise 1}} {
    global pgnWin statusBar
@@ -4765,8 +4808,8 @@ Index: tcl/game.tcl
    ::game::Load $number 1 $raise
 Index: tcl/language.tcl
 ===================================================================
---- tcl/language.tcl	(revision 3457)
-+++ tcl/language.tcl	(working copy)
+--- tcl/language.tcl	(Revision 1501)
++++ tcl/language.tcl	(Revision 1502)
 @@ -124,8 +124,8 @@
  
    lassign $args lang tag label underline helpMsg
@@ -4780,9 +4823,9 @@ Index: tcl/language.tcl
  
 Index: tcl/main.tcl
 ===================================================================
---- tcl/main.tcl	(revision 3457)
-+++ tcl/main.tcl	(working copy)
-@@ -1039,7 +1039,7 @@
+--- tcl/main.tcl	(Revision 1501)
++++ tcl/main.tcl	(Revision 1502)
+@@ -1037,7 +1037,7 @@
    catch {source $fname}
    set newcount [expr {[array size ::photo] - $oldcount}]
    if {$newcount > 0} {
@@ -4791,7 +4834,7 @@ Index: tcl/main.tcl
    }
  }
  
-@@ -1059,7 +1059,7 @@
+@@ -1057,7 +1057,7 @@
  
  ### Read all Scid photo files (*.spf) in the data/user/config directories
  
@@ -4800,7 +4843,7 @@ Index: tcl/main.tcl
  
  foreach photofile [glob -nocomplain -directory $scidDataDir "*.spf"] {
    readPhotoFile $photofile
-@@ -1077,7 +1077,7 @@
+@@ -1075,7 +1075,7 @@
  ### Custom photos
  
  if {[file isdirectory $scidPhotosDir]} {
@@ -4809,7 +4852,7 @@ Index: tcl/main.tcl
    set pwd [pwd]
    cd $scidPhotosDir
    set count 0
-@@ -1096,13 +1096,13 @@
+@@ -1094,13 +1094,13 @@
        set ::photo($p) $i
      }] || [catch {image create photo tmpimage -file $i} result]} {
        unset ::photo($p)
@@ -4825,7 +4868,7 @@ Index: tcl/main.tcl
    cd $pwd
  } else {
    # ::splash::add "User Photos: no such directory $scidPhotosDir"
-@@ -1249,7 +1249,7 @@
+@@ -1247,7 +1247,7 @@
    if {$::macOS} {
      wm transient $w .
    }
@@ -4834,7 +4877,7 @@ Index: tcl/main.tcl
    wm resizable $w 0 0
  
    set col "w"
-@@ -1359,7 +1359,7 @@
+@@ -1357,7 +1357,7 @@
    }
    if {$nullmove && [sc_pos isCheck]} {
        # dont add null move in check or mate
@@ -4843,7 +4886,7 @@ Index: tcl/main.tcl
        return
    }
  
-@@ -1655,7 +1655,7 @@
+@@ -1653,7 +1653,7 @@
  
    toplevel $w
    wm state $w withdrawn
@@ -4854,8 +4897,8 @@ Index: tcl/main.tcl
    pack $w.label -side top -pady 5 -padx 5
 Index: tcl/menus.tcl
 ===================================================================
---- tcl/menus.tcl	(revision 3457)
-+++ tcl/menus.tcl	(working copy)
+--- tcl/menus.tcl	(Revision 1501)
++++ tcl/menus.tcl	(Revision 1502)
 @@ -84,7 +84,7 @@
  $m add command -label FileNew -command ::file::New
  set helpMessage($m,[incr menuindex]) FileNew
@@ -5289,7 +5332,7 @@ Index: tcl/menus.tcl
    if {$::macWheelMouse} {
      bind .main <MouseWheel> {
        if {[expr -%D] < 0} { ::move::Back }
-@@ -1371,7 +1371,7 @@
+@@ -1370,7 +1370,7 @@
  
  $m.back add radiobutton -label Global -variable enableBackground -value 2 -command {
      initBackgroundColour $defaultBackground
@@ -5298,7 +5341,7 @@ Index: tcl/menus.tcl
  }
  set helpMessage($m.back,3) Global
  
-@@ -1587,7 +1587,7 @@
+@@ -1607,7 +1607,7 @@
      # Only show menu items for open database slots
      if {$fname != {[empty]} } {
        $m.file.switch add command -command "set ::currentSlot $i" \
@@ -5307,7 +5350,7 @@ Index: tcl/menus.tcl
            -command "::file::SwitchToBase $i"
        bind .main <Control-Key-$i> "::file::SwitchToBase $i"
  
-@@ -1618,7 +1618,7 @@
+@@ -1638,7 +1638,7 @@
    }
    set idx [$m.file index end]
    incr idx
@@ -5318,8 +5361,8 @@ Index: tcl/menus.tcl
  
 Index: tcl/misc/misc.tcl
 ===================================================================
---- tcl/misc/misc.tcl	(revision 3457)
-+++ tcl/misc/misc.tcl	(working copy)
+--- tcl/misc/misc.tcl	(Revision 1501)
++++ tcl/misc/misc.tcl	(Revision 1502)
 @@ -12,7 +12,7 @@
  
    proc trigger {var warn} {
@@ -5329,7 +5372,7 @@ Index: tcl/misc/misc.tcl
      }
      set $var 1
    }
-@@ -701,13 +701,13 @@
+@@ -736,13 +736,13 @@
    proc exportCurrentFilter {} {
      # Check that we have some games to export:
      if {![sc_base inUse]} {
@@ -5347,7 +5390,7 @@ Index: tcl/misc/misc.tcl
        return
      }
      set ftype {
-@@ -715,7 +715,7 @@
+@@ -750,7 +750,7 @@
        { "All files" {"*"} }
      }
      set idir $::initialDir(html)
@@ -5356,7 +5399,7 @@ Index: tcl/misc/misc.tcl
      if {$fName == ""} { return }
      set prefix [file rootname [file tail $fName] ]
      set dirtarget [file dirname $fName]
-@@ -725,7 +725,7 @@
+@@ -760,7 +760,7 @@
      catch { file copy -force [file join $sourcedir scid.js] $dirtarget }
      catch { file copy -force [file join $sourcedir scid.css] $dirtarget }
      writeIndex "[file join $dirtarget $prefix].html" $prefix
@@ -5365,7 +5408,7 @@ Index: tcl/misc/misc.tcl
      busyCursor .
      set savedGameNum [sc_game number]
      set gn [sc_filter first]
-@@ -769,7 +769,7 @@
+@@ -804,7 +804,7 @@
        { "All files" {"*"} }
      }
      set idir $::initialDir(html)
@@ -5374,7 +5417,7 @@ Index: tcl/misc/misc.tcl
      if {$fName == ""} { return }
      set prefix [file rootname [file tail $fName] ]
      set dirtarget [file dirname $fName]
-@@ -1145,8 +1145,8 @@
+@@ -1180,8 +1180,8 @@
      file delete $fname.tex
      
      if {[catch {set filedes [open $fname.tex w]}]} {
@@ -5385,7 +5428,7 @@ Index: tcl/misc/misc.tcl
        unbusyCursor .
        return
      }
-@@ -1169,21 +1169,21 @@
+@@ -1204,21 +1204,21 @@
      set latexViewer $::latexRendering(viewer)
    }
  
@@ -5415,7 +5458,7 @@ Index: tcl/misc/misc.tcl
          }
        }      
    } else {
-@@ -1190,11 +1190,11 @@
+@@ -1225,11 +1225,11 @@
      # Linux / OS X
      if {[catch {exec /bin/sh -c "cd '$tmpdir' ; $latexEngine '$texfile'" >& $latexLog }]} {             
        unbusyCursor .  
@@ -5431,8 +5474,8 @@ Index: tcl/misc/misc.tcl
    }     
 Index: tcl/search/board.tcl
 ===================================================================
---- tcl/search/board.tcl	(revision 3457)
-+++ tcl/search/board.tcl	(working copy)
+--- tcl/search/board.tcl	(Revision 1501)
++++ tcl/search/board.tcl	(Revision 1502)
 @@ -211,7 +211,7 @@
  
    ### Check test
@@ -5455,8 +5498,8 @@ Index: tcl/search/board.tcl
    addHorizontalRule $w
 Index: tcl/search/header.tcl
 ===================================================================
---- tcl/search/header.tcl	(revision 3457)
-+++ tcl/search/header.tcl	(working copy)
+--- tcl/search/header.tcl	(Revision 1501)
++++ tcl/search/header.tcl	(Revision 1502)
 @@ -92,7 +92,7 @@
    set sIgnoreCol No
    set sSideToMove wb
@@ -5553,9 +5596,9 @@ Index: tcl/search/header.tcl
    listbox $w.list -yscrollcommand "$w.ybar set" -height 20 -width 60 \
 Index: tcl/start.tcl
 ===================================================================
---- tcl/start.tcl	(revision 3457)
-+++ tcl/start.tcl	(working copy)
-@@ -69,7 +69,7 @@
+--- tcl/start.tcl	(Revision 1501)
++++ tcl/start.tcl	(Revision 1502)
+@@ -71,7 +71,7 @@
      append msg "tkscid program \nit uses is version [sc_info version].\n"
      append msg "Check that the path to tkscid is correct."
    }
@@ -5564,7 +5607,7 @@ Index: tcl/start.tcl
    exit 1
  }
  
-@@ -332,7 +332,7 @@
+@@ -338,7 +338,7 @@
  set boardSize 60
  
  # language for help pages and messages:
@@ -5573,7 +5616,7 @@ Index: tcl/start.tcl
  set oldLang X
  
  # Toolbar configuration/default visibility
-@@ -1391,7 +1391,7 @@
+@@ -1408,7 +1408,7 @@
      if {$isMacBaseReady == 0} {
        if {$mac_args != 0} {
          tk_messageBox -type ok -icon info -title Scid -message \
@@ -5582,7 +5625,7 @@ Index: tcl/start.tcl
          return
        } else {
          # Save file names for later use:
-@@ -1403,7 +1403,7 @@
+@@ -1420,7 +1420,7 @@
      # Are we busy opening files? if so, display message and do nothing
      if {$mac_busy != 0} {
        tk_messageBox -type ok -icon info -title Scid -message \
@@ -5591,7 +5634,7 @@ Index: tcl/start.tcl
        return
      }
  
-@@ -1420,8 +1420,8 @@
+@@ -1437,8 +1437,8 @@
        # Check for available slots:
        if {[sc_base count free] == 0} {
          tk_messageBox -type ok -icon info -title Scid \
@@ -5602,7 +5645,7 @@ Index: tcl/start.tcl
          #::splash::add "No slot available."
          return
        }
-@@ -1435,8 +1435,8 @@
+@@ -1452,8 +1452,8 @@
        if {$ext == ".sso"} {
          set ::fName $file
          if {[catch {uplevel "#0" {source $::fName}} errmsg]} {
@@ -5613,7 +5656,7 @@ Index: tcl/start.tcl
          } else {
            switch -- $::searchType {
              "Material" { ::search::material }
-@@ -1561,19 +1561,19 @@
+@@ -1578,19 +1578,19 @@
  
  set optionsFile [scidConfigFile options]
  
@@ -5638,7 +5681,7 @@ Index: tcl/start.tcl
    set png_image_support 1
    set boardStyle Merida1
  }
-@@ -1581,9 +1581,9 @@
+@@ -1598,9 +1598,9 @@
  set useGraphFigurine 1
  
  if {[catch {source $optionsFile} ]} {
@@ -5650,7 +5693,7 @@ Index: tcl/start.tcl
  }
  
  # Hack to unset previous exportStartFile(Latex)
-@@ -1907,7 +1907,7 @@
+@@ -1924,7 +1924,7 @@
  
    wm withdraw $w
    wm protocol $w WM_DELETE_WINDOW [list wm withdraw $w]
@@ -5659,7 +5702,7 @@ Index: tcl/start.tcl
  
    ### Pack in this order to resize nicely
    # buttons
-@@ -1930,9 +1930,9 @@
+@@ -1947,9 +1947,9 @@
    scrollbar $w.ybar -command [list $w.t yview]
  
    # Translations aren't set up yet, but these are handled in setLanguage
@@ -5671,7 +5714,7 @@ Index: tcl/start.tcl
        -font font_Small
  
    entry $w.find -width 10 -textvariable ::splash::find(find) -highlightthickness 0
-@@ -1945,8 +1945,8 @@
+@@ -1962,8 +1962,8 @@
        ::splash::add {}
        ::splash::add "$scidName $scidVersion Console"
        ::splash::add {------------------------------------}
@@ -5682,8 +5725,8 @@ Index: tcl/start.tcl
      }
      set command [string trim [.splash.command get]]
      ::splash::add "# $command"
-@@ -2007,8 +2007,8 @@
- ::splash::add "(C) Steven Atkinson (stevenaaus@yahoo.com) 2008-2024"
+@@ -2024,8 +2024,8 @@
+ ::splash::add "(C) Steven Atkinson (stevenaaus@yahoo.com) 2008-2025"
  ::splash::add "(C) Pascal Georges 2006-2008"
  ::splash::add "(C) Shane Hudson 1999-2004"
 -::splash::add "(C) Gregor Cramer, Fulvio Benini and others."
@@ -5693,7 +5736,7 @@ Index: tcl/start.tcl
  ::splash::add ""
  
  # add cached splash comments
-@@ -2020,15 +2020,15 @@
+@@ -2037,15 +2037,15 @@
  # lotsa stuff may break if this is not the case.
  
  if {[catch {.splash.t configure -insertforeground blue}]} {
@@ -5714,7 +5757,7 @@ Index: tcl/start.tcl
  }
  if {[string match -nocase Linux $tcl_platform(os)]} {
    catch {
-@@ -2037,7 +2037,7 @@
+@@ -2054,7 +2054,7 @@
  }
  
  catch {
@@ -5725,9 +5768,9 @@ Index: tcl/start.tcl
  ::splash::add ""
 Index: tcl/tools/analysis.tcl
 ===================================================================
---- tcl/tools/analysis.tcl	(revision 3457)
-+++ tcl/tools/analysis.tcl	(working copy)
-@@ -232,7 +232,7 @@
+--- tcl/tools/analysis.tcl	(Revision 1501)
++++ tcl/tools/analysis.tcl	(Revision 1502)
+@@ -237,7 +237,7 @@
    if {$::windowsOS} {
      ### Windows comes with it's own custom engines.dat, so shoul dnever reach here.
      tk_messageBox -type ok -icon info -title Scid \
@@ -5736,7 +5779,7 @@ Index: tcl/tools/analysis.tcl
      return
    }
  
-@@ -494,8 +494,8 @@
+@@ -507,8 +507,8 @@
    if {$index == ""  ||  $index < 0} { return }
    set e [lindex $engines(list) $index]
    set msg "Name: [lindex $e 0]
@@ -5747,7 +5790,7 @@ Index: tcl/tools/analysis.tcl
    set answer [tk_messageBox -title Scid -icon question -type okcancel \
        -message $msg -parent .enginelist]
    if {$answer == "ok"} {
-@@ -546,7 +546,7 @@
+@@ -559,7 +559,7 @@
    lassign $e dummy0 engines(newCmd) engines(newArgs) engines(newDir) engines(newElo) dummy5 engines(newURL) engines(newUCI) engines(newUCIoptions)
  
    toplevel $w
@@ -5756,7 +5799,7 @@ Index: tcl/tools/analysis.tcl
    wm state $w withdrawn
  
    set f [frame $w.frame]
-@@ -576,7 +576,7 @@
+@@ -589,7 +589,7 @@
            }
          }
          set scid_temp(cmd) [tk_getOpenFile -initialdir $engines(newDir) -parent .engineEdit \
@@ -5765,7 +5808,7 @@ Index: tcl/tools/analysis.tcl
          if {$scid_temp(cmd) != ""} {
            set engines(newCmd) $scid_temp(cmd)
            # if {[string first " " $scid_temp(cmd)] >= 0} {
-@@ -618,7 +618,7 @@
+@@ -631,7 +631,7 @@
  
    grid columnconfigure $f 1 -weight 1
  
@@ -5774,7 +5817,7 @@ Index: tcl/tools/analysis.tcl
    frame $f.rb
    radiobutton $f.rb.uci -variable engines(newUCI) -value 1 -text UCI \
      -command "checkState ::engines(newUCI) $f.bUCI"
-@@ -651,7 +651,7 @@
+@@ -664,7 +664,7 @@
    incr row
  
    frame $w.radio
@@ -5783,7 +5826,7 @@ Index: tcl/tools/analysis.tcl
    radiobutton $w.radio.f2	-text F2 -variable hotkey -value F2
    radiobutton $w.radio.f3	-text F3 -variable hotkey -value F3
    radiobutton $w.radio.f4	-text F4 -variable hotkey -value F4
-@@ -682,7 +682,7 @@
+@@ -695,7 +695,7 @@
      if { $engines(newElo) == "" } { set engines(newElo) 0 }
      if {$engines(newName) == "" || $engines(newCmd) == "" || $engines(newDir) == ""} {
        tk_messageBox -title Scid -icon info -parent .engineEdit \
@@ -5792,7 +5835,7 @@ Index: tcl/tools/analysis.tcl
      } else {
        # Ok - now set time to file modification (mtime) of executable
        set engines(newTime) 0
-@@ -812,9 +812,9 @@
+@@ -825,9 +825,9 @@
    }
    if {$flag != {}} {
      if {$parent != ".enginelist"} {
@@ -5804,7 +5847,7 @@ Index: tcl/tools/analysis.tcl
      }
      tk_messageBox -title Scid -icon warning -type ok -parent $parent -message $message
      return 0
-@@ -1164,8 +1164,8 @@
+@@ -1171,8 +1171,8 @@
      return
    }
    if {$annotate(isBatch) && [sc_base isReadOnly]} {
@@ -5833,7 +5876,7 @@ Index: tcl/tools/analysis.tcl
  	}
  
  	set moves $analysis(prevmoves$n)
-@@ -2282,9 +2282,9 @@
+@@ -2278,9 +2278,9 @@
      } else {
        set parent .
      }
@@ -5858,9 +5901,9 @@ Index: tcl/tools/analysis.tcl
 +      sich ändert. Wenn Sie also diese Nachricht sehen, versuchen Sie, das Brett zu verändern \
 +      durch rückwärts oder vorwärts ziehen oder mit einem neuen Zug.)"
    $w.text configure -state disabled
-   bind $w <Destroy> "destroyAnalysisWin $n %W"
+   bind $w <Destroy> "if {\"%W\" == \"$w\"} {destroyAnalysisWin $n}"
    bind $w <Escape> "focus .main ; destroy $w"
-@@ -3217,11 +3217,11 @@
+@@ -3237,11 +3237,11 @@
      if { $exit_status != 0 } {
  	logEngineNote $n {Engine terminated with exit code $exit_status: "\"$standard_error\""}
  	tk_messageBox -type ok -icon info -parent $parent -title Scid \
@@ -5874,7 +5917,7 @@ Index: tcl/tools/analysis.tcl
      }
  
    }
-@@ -4092,7 +4092,7 @@
+@@ -4243,7 +4243,7 @@
    toplevel $w
    #wm transient $w .analysisWin
    wm state $w withdrawn
@@ -5885,8 +5928,8 @@ Index: tcl/tools/analysis.tcl
    pack $w.label -side top -pady 5 -padx 5
 Index: tcl/tools/calvar.tcl
 ===================================================================
---- tcl/tools/calvar.tcl	(revision 3457)
-+++ tcl/tools/calvar.tcl	(working copy)
+--- tcl/tools/calvar.tcl	(Revision 1501)
++++ tcl/tools/calvar.tcl	(Revision 1502)
 @@ -102,7 +102,7 @@
  
      # if no engines defined, bail out
@@ -5922,8 +5965,8 @@ Index: tcl/tools/calvar.tcl
        button $f.p$piece -image w${piece}20 -command "::calvar::promo $piece"
 Index: tcl/tools/comp.tcl
 ===================================================================
---- tcl/tools/comp.tcl	(revision 3457)
-+++ tcl/tools/comp.tcl	(working copy)
+--- tcl/tools/comp.tcl	(Revision 1501)
++++ tcl/tools/comp.tcl	(Revision 1502)
 @@ -27,7 +27,7 @@
    }
    toplevel $w
@@ -6169,8 +6212,8 @@ Index: tcl/tools/comp.tcl
  
 Index: tcl/tools/correspondence.tcl
 ===================================================================
---- tcl/tools/correspondence.tcl	(revision 3457)
-+++ tcl/tools/correspondence.tcl	(working copy)
+--- tcl/tools/correspondence.tcl	(Revision 1501)
++++ tcl/tools/correspondence.tcl	(Revision 1502)
 @@ -90,7 +90,7 @@
  		global ::Xfcc::xfccrc ::Xfcc::xfccrcfile
  		# file delete $xfccrcfile
@@ -6291,8 +6334,8 @@ Index: tcl/tools/correspondence.tcl
  
 Index: tcl/tools/email.tcl
 ===================================================================
---- tcl/tools/email.tcl	(revision 3457)
-+++ tcl/tools/email.tcl	(working copy)
+--- tcl/tools/email.tcl	(Revision 1501)
++++ tcl/tools/email.tcl	(Revision 1502)
 @@ -14,12 +14,12 @@
    }
    if {! [sc_base inUse] || [sc_base current] == 9} {
@@ -6517,8 +6560,8 @@ Index: tcl/tools/email.tcl
      ::tools::email::refresh
 Index: tcl/tools/fics.tcl
 ===================================================================
---- tcl/tools/fics.tcl	(revision 3457)
-+++ tcl/tools/fics.tcl	(working copy)
+--- tcl/tools/fics.tcl	(Revision 1501)
++++ tcl/tools/fics.tcl	(Revision 1502)
 @@ -77,7 +77,7 @@
  
      toplevel $w
@@ -6528,6 +6571,20 @@ Index: tcl/tools/fics.tcl
      label $w.lLogin -text "$tr(CCDlgLoginName)"
      entry $w.login -width 20 -textvariable ::fics::login
      label $w.lPwd -text [tr "CCDlgPassword"]
+@@ -122,11 +122,11 @@
+ 
+     # Server URL, IP address, Refresh button
+ 
+-    label $w.lServer -text URL   
++    label $w.lServer -text URL
+     entry $w.eServer -textvariable ::fics::server
+ 
+     label $w.lFICS_ip -textvar tr(FICSServerAddress)
+-    entry $w.ipserver -textvar ::fics::server_ip 
++    entry $w.ipserver -textvar ::fics::server_ip
+     button $w.bRefresh -textvar tr(FICSRefresh) -command ::fics::getIP -pady 0.8
+ 
+     label $w.lFICS_port -textvar tr(FICSServerPort)
 @@ -161,7 +161,7 @@
      button $w.button.help -text $tr(Help) -command {helpWindow FICS}
  
@@ -6537,6 +6594,33 @@ Index: tcl/tools/fics.tcl
  	initFICSDefaults
  	raiseWin .ficsConfig
        }
+@@ -186,7 +186,7 @@
+ 
+     incr row
+     # horizontal line
+-    frame $w.line$row -height 2 -borderwidth 2 -relief sunken 
++    frame $w.line$row -height 2 -borderwidth 2 -relief sunken
+     grid $w.line$row -pady 5 -column 0 -row $row -columnspan 3 -sticky ew
+ 
+     incr row
+@@ -202,7 +202,7 @@
+     grid $w.zseal_browse -column 2 -row $row -sticky ew -padx 2
+ 
+     incr row
+-    grid $w.lServer -column 0 -row $row 
++    grid $w.lServer -column 0 -row $row
+     grid $w.eServer -column 1 -row $row -sticky ew -padx 2
+ 
+     incr row
+@@ -220,7 +220,7 @@
+ 
+     incr row
+     # horizontal line
+-    frame $w.line$row -height 2 -borderwidth 2 -relief sunken 
++    frame $w.line$row -height 2 -borderwidth 2 -relief sunken
+     grid $w.line$row -pady 5 -column 0 -row $row -columnspan 3 -sticky ew
+ 
+     incr row
 @@ -256,7 +256,7 @@
         } err ]} {
  	  ::fics::unbusy_config
@@ -6555,6 +6639,15 @@ Index: tcl/tools/fics.tcl
  	  $b configure -state normal
  	  unbusyCursor .
            return
+@@ -286,7 +286,7 @@
+     $b configure -state normal
+     unbusyCursor .
+   }
+-    
++
+   proc unbusy_config {} {
+     set w .ficsConfig
+     # $w.button.connect configure -state normal
 @@ -301,8 +301,8 @@
      global ::fics::sockchan ::fics::seeklist ::fics::graph fontOptions tr
  
@@ -6582,7 +6675,57 @@ Index: tcl/tools/fics.tcl
          return
        }
      }
-@@ -537,7 +537,7 @@
+@@ -330,7 +330,7 @@
+ 
+     frame $w.console
+     frame $w.command
+-    frame $w.bottom 
++    frame $w.bottom
+     if {$::fics::show_buttons} {
+       pack $w.bottom  -side bottom
+     }
+@@ -340,7 +340,7 @@
+ 
+     frame $w.bottom.buttons
+     frame $w.bottom.clocks
+-    frame $w.bottom.graph 
++    frame $w.bottom.graph
+ 
+     pack $w.bottom.buttons -side right -padx 2 -pady 5 -anchor center
+     # Pack graph when "Offers graph" clicked
+@@ -360,11 +360,11 @@
+     ### need a config option here... Somewhere! &&&
+     text $w.console.text -bg $::fics::consolebg -fg $::fics::consolefg -wrap word -yscrollcommand "$w.console.scroll set" -width 40 -height 10 -font font_Fixed
+     ### is font_Regular working here ? &&&
+-    bindMouseWheel $w $w.console.text 
++    bindMouseWheel $w $w.console.text
+     bindWheeltoFixed $w.console.text
+     bind $w <F11>  toggleFullScreen
+ 
+-    pack $w.console.scroll -side right -fill y 
++    pack $w.console.scroll -side right -fill y
+     pack $w.console.text -side left -fill both -expand 1
+ 
+     ### Console colours
+@@ -406,7 +406,7 @@
+     # bind $w <Home>  "$w.console.text yview moveto 0"
+     bind $w <End>   "$w.console.text yview moveto 1"
+     bind $w <F9> {
+-      ### F9 recalls a "tell" history 
++      ### F9 recalls a "tell" history
+       .fics.command.entry delete 0 end
+       if {$::fics::tellindex >= [llength $::fics::tells]} {
+ 	# .fics.command.entry insert 0 "tell "
+@@ -468,7 +468,7 @@
+     incr row
+ 
+     button $w.bottom.buttons.user0
+-    button $w.bottom.buttons.user1 
++    button $w.bottom.buttons.user1
+     button $w.bottom.buttons.user2
+ 
+     foreach i {0 1 2} {
+@@ -533,7 +533,7 @@
      incr row
      button $w.bottom.buttons.offers  -text "$tr(FICSOffers) $tr(Graph)" -command {
        if {$::fics::playing == 1 || $::fics::playing == -1} {
@@ -6591,16 +6734,16 @@ Index: tcl/tools/fics.tcl
  	return
        }
        set ::fics::graph(on) [expr {! $::fics::graph(on)}]
-@@ -611,7 +611,7 @@
+@@ -607,7 +607,7 @@
      }
      if {[catch $command result]} {
        unbusyCursor .
 -      tk_messageBox -title "Error" -icon error -type ok -message "Network error\nError executing $command" -parent .fics
-+      tk_messageBox -title "Fehler" -icon error -type ok -message "Network error\nError executing $command" -parent .fics
++      tk_messageBox -title "Fehler" -icon error -type ok -message "Netzwerkfehler\nFehler beim Ausführen von $command" -parent .fics
        return
      }
  
-@@ -690,7 +690,7 @@
+@@ -687,11 +687,11 @@
        smoves {
  	  # smoves recreates a game without any further announcment
  	  if {$::fics::playing == 1 || $::fics::playing == -1} {
@@ -6609,7 +6752,12 @@ Index: tcl/tools/fics.tcl
  	    return
  	  }
  
-@@ -724,13 +724,13 @@
+-	  ::fics::demote_mainGame 
++	  ::fics::demote_mainGame
+           if {$::fics::playing != 2} {
+ 	    set confirm [::game::ConfirmDiscard]
+ 	    if {$confirm == 2} {return}
+@@ -721,13 +721,13 @@
            set plus [expr {[string index [lindex $c 0] end] == "+"}]
  
  	  if {$plus && $::fics::playing == 1 || $::fics::playing == -1} {
@@ -6625,21 +6773,48 @@ Index: tcl/tools/fics.tcl
  	    return
            }
  
-@@ -751,11 +751,11 @@
+@@ -748,13 +748,13 @@
        upload {
            # upload current game to examine mode
            if {$::fics::playing == 2} {
 -	    tk_messageBox -title "Oops" -icon info -type ok -message "You are already examining a game" -parent .fics
 +	    tk_messageBox -title "Hoppla" -icon info -type ok -message "Sie untersuchen bereits eine Partie" -parent .fics
              return
-           } 
+-          } 
++          }
            if {[string first "\n1." [sc_game pgn]] == -1} {
 -	    tk_messageBox -title "Oops" -icon info -type ok -message "This game has no moves" -parent .fics
 +	    tk_messageBox -title "Hoppla" -icon info -type ok -message "Diese Partie enthält keine Züge" -parent .fics
              return
-           } 
+-          } 
++          }
  	  set white [string trim [lindex [sc_game tags get White] 0] {,}]
-@@ -833,7 +833,7 @@
+ 	  set black [string trim [lindex [sc_game tags get Black] 0] {,}]
+ 	  set ::fics::examresult [sc_game tags get Result]
+@@ -781,7 +781,7 @@
+ 	  ::fics::writechan commit
+ 	  updateBoard -pgn
+           return
+-      } 
++      }
+       ex* {
+ 	  ::game::Clear
+ 	  set ::fics::examNotify 1
+@@ -804,11 +804,11 @@
+ 	      updateTitle
+ 	    }
+ 	  }
+-          # Problems with doing this 
++          # Problems with doing this
+           # if exam game, ob (load) another game, exam newgame - gets confused :(
+           # if {[string match {tell gamebot exam*} $l] ||
+           #    [string match {exam*} $c]} {
+-	  #  ::fics::demote_mainGame 
++	  #  ::fics::demote_mainGame
+           #}
+       }
+     } ; # switch
+@@ -830,7 +830,7 @@
      }
      toplevel $w
      wm state $w withdrawn
@@ -6648,7 +6823,16 @@ Index: tcl/tools/fics.tcl
  
      set row 0
  
-@@ -917,8 +917,8 @@
+@@ -881,7 +881,7 @@
+     spinbox $w.sbrating1 -width 7 -textvariable ::fics::findopponent(rating1) \
+ 	-from 800 -to 2800 -increment 50
+     spinbox $w.sbrating2 -width 7 -textvariable ::fics::findopponent(rating2) \
+-	-from 800 -to 2800 -increment 50 
++	-from 800 -to 2800 -increment 50
+ 
+     grid $w.cblimitrating -column 0 -row $row -sticky w
+     grid $w.sbrating1     -column 1 -row $row
+@@ -914,8 +914,8 @@
        ::fics::writechan $cmd
        catch {destroy .ficsfindopp}
        ::fics::initOffers
@@ -6659,7 +6843,7 @@ Index: tcl/tools/fics.tcl
      button $w.cancel -text $tr(Cancel) -command "catch \{destroy $w\}" -width 10
  
      bind $w <F1> {helpWindow FICSfindopp}
-@@ -938,7 +938,7 @@
+@@ -935,7 +935,7 @@
      variable logged
      if {[eof $::fics::sockchan]} {
        fileevent $::fics::sockchan readable {}
@@ -6668,25 +6852,75 @@ Index: tcl/tools/fics.tcl
        ::fics::close error
        return
      }
-@@ -1073,7 +1073,7 @@
-         # When showing positions from bughouse games, a second line showing piece
-         # holding is given, with "<b1>" at the beginning, for example:
-         # <b1> game 6 white [PNBBB] black [PNB]
--        # .fics.bottom.game$game.w.white configure -text "[lindex $line 17] ([lindex $line 24] secs) X"
-+        # .fics.bottom.game$game.w.white configure -text "[lindex $line 17] ([lindex $line 24] sek) X"
- 	if { [scan $line "<b1> game %d white %s black %s" game piecesw piecesb] == 3} {
-           catch {
-             if {$piecesw == {[]}} {set piecesw {}}
-@@ -1242,7 +1242,7 @@
+@@ -948,7 +948,7 @@
+     } else  {
+         set line [gets $::fics::sockchan]
+         set line [string map {"\a" ""} $line]
+-        readparse $line   
++        readparse $line
+     }
+ 
+   }
+@@ -962,7 +962,7 @@
+     if { [ catch { if {[llength $l] < 8} { return 0} } ] } { return 0}
+ 
+     # 72 ++++ GuestIEEE           1  10 unrated blitz      [white]     0-9999 m
+-    # auto/manual     indicates whether a game will start automatically when 
++    # auto/manual     indicates whether a game will start automatically when
+     #                 abbreviated by "a" and "m" [default: auto start]
+     # formula         indicates whether your formula will used to screen , abbreviated by "f"
+ 
+@@ -983,7 +983,7 @@
+ 
+     set ga(rated) [lindex $l 5]
+     if {$ga(rated) != "rated" && $ga(rated) != "unrated"} { return 0 }
+-        
++
+     set ga(type) [lindex $l 6]
+     if { $ga(type) != "untimed" && $ga(type) != "blitz" && $ga(type) != "standard" && $ga(type) != "lightning" } {
+       # this line can now be ignored
+@@ -1120,8 +1120,8 @@
+       after cancel ::fics::updateAds
+ 
+       # Move a previously observed game back to the fics widget
+-      ::fics::demote_mainGame 
+-      set ::fics::mainGame -1 ; # reset to this new game with first style12 
++      ::fics::demote_mainGame
++      set ::fics::mainGame -1 ; # reset to this new game with first style12
+       set ::fics::autoload {}
+ 
+       ::fics::disableEngines
+@@ -1162,14 +1162,14 @@
+       sc_game tags set -date [::utils::date::today]
+ 
+       if {[string match -nocase $::fics::reallogin $white]} {
+-        set ::fics::opponent $black 
++        set ::fics::opponent $black
+       } elseif {[string match -nocase $::fics::reallogin $black]} {
+         set ::fics::opponent $white
+       } else {
+         set ::fics::opponent {}
+       }
+-        
+-      
++
++
+       # line: "Creating: hruvulum (1079) stevenaaus (1148) rated blitz 2 18"
+       # resumed game line is different though
+       if {[regexp {.*\) ([^\)]*$)} $line t1 t2]} {
+@@ -1236,9 +1236,9 @@
          set t2 [::gameclock::getSec 2]
  	if {$t1 < 0} {set t1 0}
  	if {$t2 < 0} {set t2 0}
 -	::commenteditor::appendComment "$resultcomment\nWhiteclock [expr $t1 / 60]:[format {%02i} [expr $t1 % 60]] Blackclock [expr $t2 / 60]:[format {%02i} [expr $t2 % 60]]"
 +	::commenteditor::appendComment "$resultcomment\nUhr Weiß [expr $t1 / 60]:[format {%02i} [expr $t1 % 60]] Uhr Schwarz [expr $t2 / 60]:[format {%02i} [expr $t2 % 60]]"
          sc_game tags set -result $res
-         # if {![string match  {*Game aborted*} $line]} 
+-        # if {![string match  {*Game aborted*} $line]} 
++        # if {![string match  {*Game aborted*} $line]}
          if {[sc_pos moveNumber] > 2} {
-@@ -1262,11 +1262,11 @@
+ 	  catch {::game::Save}
+ 	  updateBoard -pgn
+@@ -1256,11 +1256,11 @@
  	    ::utils::sound::PlayMove sound_end
  	  }
  	  if {! $::fics::no_results && ($res != "*" || [sc_pos moveNumber] > 1)} {
@@ -6700,7 +6934,25 @@ Index: tcl/tools/fics.tcl
              "
  	    # Game can end while dragging a piece, this can carry over, so try to handle
  	    clearAllMoves
-@@ -1486,7 +1486,7 @@
+@@ -1277,7 +1277,7 @@
+           pack forget .fics.bottom.game$num.b.load
+         }
+         ::fics::remove_observedGame $num
+-      } 
++      }
+       return
+     }
+ 
+@@ -1357,7 +1357,7 @@
+       }
+ 
+       # Moves over an hour necessitate reading %d:%d or %d:%d:%d as string (%s
+-      # 19.  Qe3     (1:02:38)   Be6     (8:06)  
++      # 19.  Qe3     (1:02:38)   Be6     (8:06)
+ 
+       switch $length {
+ 
+@@ -1487,7 +1487,7 @@
          writechan decline
        } else {
  	::fics::killDialogs
@@ -6709,7 +6961,7 @@ Index: tcl/tools/fics.tcl
  	switch -- $ans {
  	  0 {writechan accept}
  	  1 {writechan decline}
-@@ -1498,7 +1498,7 @@
+@@ -1499,7 +1499,7 @@
      # takeback
      if {[string match "* would like to take back *" $line] && ! $::fics::no_requests && ! $::fics::ignore_takeback} {
        ::fics::killDialogs
@@ -6718,7 +6970,7 @@ Index: tcl/tools/fics.tcl
        switch -- $ans {
          0 {
              writechan accept
-@@ -1517,13 +1517,13 @@
+@@ -1518,13 +1518,13 @@
      # draw
      if {[string match "*offers you a draw*" $line] && ! $::fics::ignore_draw} {
        if {[regexp {(.*) offers you a draw} $line t1 t2]} {
@@ -6734,7 +6986,7 @@ Index: tcl/tools/fics.tcl
  	switch -- $ans {
  	  0 {writechan accept}
  	  1 {writechan decline}
-@@ -1538,7 +1538,7 @@
+@@ -1539,7 +1539,7 @@
          writechan decline
        } else {
          ::fics::killDialogs
@@ -6743,16 +6995,89 @@ Index: tcl/tools/fics.tcl
  	switch -- $ans {
  	  0 {writechan accept}
  	  1 {writechan decline}
-@@ -1715,7 +1715,7 @@
+@@ -1596,7 +1596,7 @@
+         $w.bottom.game$game.w.result configure -font font_SmallBold
+       }
+       # At top we have Black and Buttons
+-      frame $w.bottom.game$game.b 
++      frame $w.bottom.game$game.b
+       label $w.bottom.game$game.b.black -font font_Small
+ 
+       button $w.bottom.game$game.b.close -image arrow_close -font font_Small -relief flat -command "
+@@ -1622,7 +1622,7 @@
+             return
+           }
+ 	  ### If we're already observing a game, move it back to a small board
+-	  ::fics::demote_mainGame 
++	  ::fics::demote_mainGame
+           # unflip when loading new game ??
+ 	  if {\[::board::isFlipped\] ^ \[::board::isFlipped $w.bottom.game$game.bd\]} {::board::flip .main.board}
+ 
+@@ -1651,12 +1651,12 @@
+       }
+ 
+       pack $w.bottom.game$game.b  -side top -anchor w -expand 1 -fill x
+-      pack $w.bottom.game$game.b.black -side left 
++      pack $w.bottom.game$game.b.black -side left
+       pack [frame $w.bottom.game$game.b.space -width 24] \
+            $w.bottom.game$game.b.close $w.bottom.game$game.b.load $w.bottom.game$game.b.flip -side right
+       pack $w.bottom.game$game.bd -side top
+       pack $w.bottom.game$game.w -side top -expand 1 -fill x
+-      pack $w.bottom.game$game.w.white -side left 
++      pack $w.bottom.game$game.w.white -side left
+       pack [frame $w.bottom.game$game.w.space -width 20] \
+            $w.bottom.game$game.w.result -side right
+       if {!$::fics::show_buttons} {
+@@ -1708,17 +1708,17 @@
+     switch -glob $line {
+ 	{\{Game *\}}	{ $t insert end "$line\n" game }
+ 	{\{Game *\} *}	{ $t insert end "$line\n" gameresult }
+-	{* tells you:*}	{ $t insert end "$line\n" tells 
++	{* tells you:*}	{ $t insert end "$line\n" tells
+ 			  if {[regexp {(.*) tells you:(.*$)} $line t1 t2 t3]} {
+                             if {[set temp [string first {(} $t2]] > -1} {
+                               set t2 [string range $t2 0 $temp-1]
+                             }
                              switch -glob $t2 {
-                               mamer* { 
+-                              mamer* { 
++                              mamer* {
  				      if {! $::fics::no_results} {
 -					tk_messageBox -title Mamer -icon info -type ok -parent .fics -message "$t2 tells you" -detail $t3
 +					tk_messageBox -title Mamer -icon info -type ok -parent .fics -message "$t2 sagt Ihnen" -detail $t3
  				      }
- 				    } 
+-				    } 
++				    }
                                ROBO* {
-@@ -1820,8 +1820,8 @@
+ 				    }
+                               adminBOT* {
+@@ -1743,7 +1743,7 @@
+ 			}
+ 	{* seeking *}	{ $t insert end "$line\n" seeking }
+ 	{->>say *} - {->>. *}	{
+-                          $t insert end "$line\n" tells 
++                          $t insert end "$line\n" tells
+                           if {$::fics::playing == 1 || $::fics::playing == -1}  {
+ 			    if {[regexp -- {->>say (.*$)} $line t1 t2]} {
+ 			      ::commenteditor::appendComment "\[$::fics::reallogin\] $t2"
+@@ -1793,7 +1793,7 @@
+ 			  ::move::Back $::fics::takebackMoves
+ 			  ::game::Truncate
+ 			}
+-			set ::fics::takebackMoves 0  
++			set ::fics::takebackMoves 0
+         }
+ 	{* would like to take back * half move*} {
+       			if {[scan $line {%s would like to take back %d half %s} dummy1 tmp dummy2] == 3} {
+@@ -1811,7 +1811,7 @@
+ 
+   ### New Fics Offer widgets S.A.
+ 
+-  ### Init 
++  ### Init
+ 
+   proc initOffers {{flag 0}} {
+     set w .ficsOffers
+@@ -1821,8 +1821,8 @@
  
      toplevel $w
      wm state $w withdrawn
@@ -6763,7 +7088,43 @@ Index: tcl/tools/fics.tcl
  
      pack [button $w.cancel -text $::tr(Cancel) \
  	-command "::fics::writechan unseek ; catch \{destroy $w\}"] -side bottom -pady 5
-@@ -1921,11 +1921,11 @@
+@@ -1857,7 +1857,7 @@
+          [regexp {\(----\).*\(----\)} $line ] } {
+ 	set elo {unrated}
+     } else {
+-        regexp {([0-9]+)} $line elo 
++        regexp {([0-9]+)} $line elo
+     }
+     if {"$player" == ""} {
+        puts "Fics:Empty player offer!"
+@@ -1866,7 +1866,7 @@
+ 
+     set f .ficsOffers.$player
+ 
+-    if {[winfo exists $f]} { 
++    if {[winfo exists $f]} {
+ 	return
+     }
+ 
+@@ -1884,7 +1884,7 @@
+     catch {raiseWin .ficsOffers}
+   }
+ 
+-  ### Delete Offer 
++  ### Delete Offer
+ 
+   proc delOffer {player} {
+   # Challenge from PLAYER removed.
+@@ -1898,7 +1898,7 @@
+        return
+     }
+ 
+-    if {[winfo exists .ficsOffers.$player]} { 
++    if {[winfo exists .ficsOffers.$player]} {
+ 	::fics::checkZeroOffers -1 .ficsOffers.$player
+     }
+   }
+@@ -1922,11 +1922,11 @@
        }
        if {$::fics::findopponent(manual) == {auto}} {
  	  pack [frame $f] -side top -padx 5 -pady 5
@@ -6773,11 +7134,77 @@ Index: tcl/tools/fics.tcl
  	if {![winfo exists $f]} {
  	  pack [frame $f] -side top -padx 5 -pady 5
 -	  pack [label $f.name -text "No [tr FICSOffers]" -state disabled -width 40] -side left 
-+	  pack [label $f.name -text "Kein [tr FICSOffers]" -state disabled -width 40] -side left 
++	  pack [label $f.name -text "Kein [tr FICSOffers]" -state disabled -width 40] -side left
  	  pack [button $f.decline -text [tr FICSDecline] -state disabled ] -side right -padx 5
  	  pack [button $f.accept -text [tr FICSAccept] -state disabled ] -side right -padx 5
  	}
-@@ -2167,8 +2167,8 @@
+@@ -1939,9 +1939,9 @@
+   proc removeSeek {line} {
+     global ::fics::seeklist
+     foreach l $line {
+-      
++
+       if { $l == "<sr>" } {continue}
+-      
++
+       # remove seek from seeklist
+       for {set i 0} {$i < [llength $seeklist]} {incr i} {
+         array set a [lindex $seeklist $i]
+@@ -1950,7 +1950,7 @@
+           break
+         }
+       }
+-      
++
+       # remove seek from graph
+       if { $::fics::graph(on) } {
+         for {set idx 0} { $idx < [llength $::fics::soughtlist]} { incr idx } {
+@@ -1964,7 +1964,7 @@
+           }
+         }
+       }
+-      
++
+     }
+   }
+ 
+@@ -1978,7 +1978,7 @@
+     #   8th rank (also Black's 1st rank), then White's 7th rank (also Black's 2nd),
+     #   etc, regardless of who's move it is.
+     # * color whose turn it is to move ("B" or "W")
+-    # * -1 if the previous move was NOT a double pawn push, otherwise the chess 
++    # * -1 if the previous move was NOT a double pawn push, otherwise the chess
+     #   board file  (numbered 0--7 for a--h) in which the double push was made
+     # * can White still castle short? (0=no, 1=yes)
+     # * can White still castle long?
+@@ -2025,7 +2025,7 @@
+       catch {.fics.bottom.game$game.b.load invoke}
+     }
+ 
+-    ### Observed games are a row of small boards down the bottom left 
++    ### Observed games are a row of small boards down the bottom left
+     if {[lsearch -exact $::fics::observedGames $game] > -1} {
+       if { [::board::isFlipped .fics.bottom.game$game.bd] } {
+         .fics.bottom.game$game.b.black configure -text "$white ($whiteTime secs)"
+@@ -2082,7 +2082,7 @@
+     for {set i 1} {$i <=8} { incr i} {
+       set l [lindex $line $i]
+       set count 0
+-      
++
+       for { set col 0 } { $col < 8 } { incr col } {
+         set c [string index $l $col]
+         if { $c == "-"} {
+@@ -2095,7 +2095,7 @@
+           append fen $c
+         }
+       }
+-      
++
+       if {$count != 0} { append fen $count }
+       if {$i != 8} { append fen {/} }
+     }
+@@ -2158,8 +2158,8 @@
  	updateBoard -pgn
        }
        if {$::fics::examNotify} {
@@ -6788,7 +7215,25 @@ Index: tcl/tools/fics.tcl
  	set ::fics::examNotify 0
        }
        return
-@@ -2259,7 +2259,7 @@
+@@ -2195,7 +2195,7 @@
+           }
+ 
+ 	  if {$::fics::premove != {}} {
+-	    ### Send premove 
++	    ### Send premove
+ 	    if {$fen == [sc_pos fen]} {
+ 	      updateBoard -pgn -animate
+ 	      lassign $::fics::premove move sq1 sq2
+@@ -2232,7 +2232,7 @@
+ 	    }
+ 	    set ::fics::premove {}
+ 	    return
+-	  } 
++	  }
+ 	  if {$::fics::sound} {
+ 	    ::utils::sound::PlayMove sound_move
+ 	  }
+@@ -2250,7 +2250,7 @@
      }
  
      if {$fen == [sc_pos fen]} {
@@ -6797,16 +7242,70 @@ Index: tcl/tools/fics.tcl
        updateBoard -pgn -animate
      } elseif {$whiteTime > 0 && $blackTime > 0} {
        ### Game out of sync, probably due to player takeback request (or opponent take back 2).
-@@ -2322,7 +2322,7 @@
+@@ -2317,7 +2317,7 @@
  
        set ::fics::mutex 0
        updateBoard -pgn
 -      wm title $::dot_w "$::scidName: $white - $black (game $game: $::fics::timecontrol)"
 +      wm title $::dot_w "$::scidName: $white - $black (Partie $game: $::fics::timecontrol)"
+       after idle ::tools::graphs::score::Refresh
  
        if {$::fics::playing != 1 && $::fics::playing != -1 && $::fics::observedGames != {}} {
- 	catch {.fics.bottom.game${::fics::primary}.w.result configure -font font_Small}
-@@ -2522,7 +2522,7 @@
+@@ -2357,7 +2357,7 @@
+     set y [winfo reqheight $w]
+     wm geometry $w ${x}x${y}
+   }
+-  
++
+   proc showGraph {} {
+     set w .fics.bottom
+ 
+@@ -2380,7 +2380,7 @@
+       pack $w.buttons -side right -padx 2 -pady 5 -anchor center
+     }
+ 
+-    ### Repacking can make the console suspend, so seek to console end 
++    ### Repacking can make the console suspend, so seek to console end
+     update
+     catch {.fics.console.text yview moveto 1} ; # in case we quit fics already
+   }
+@@ -2390,7 +2390,7 @@
+     # set ::fics::newsoughtlist {}
+ 
+     writechan sought
+-    vwait ::fics::sought 
++    vwait ::fics::sought
+ 
+     # Don't update Ads anymore if playing
+     if {$::fics::playing != 1 && $::fics::playing != -1 && $::fics::graph(on) && [winfo exists .fics]} {
+@@ -2460,7 +2460,7 @@
+       if { [string match "Guest*" $l(name)] } {
+         set fillcolor gray ; set outline darkgray
+       }
+-      
++
+       set x [ expr $graph(xoff) + $tt * ($graph(width) - $graph(xoff)) / ($offers_maxtime - $offers_mintime)]
+       set y [ expr $graph(height) - $graph(yoff) - ( $l(elo) - $offers_minelo ) * ($graph(height) - $graph(yoff)) / ($offers_maxelo - $offers_minelo)]
+       if { $l(rated) == "rated" } {
+@@ -2470,7 +2470,7 @@
+       }
+       $w.c create $object [expr $x - $size ] [expr $y - $size ] [expr $x + $size ] [expr $y + $size ] \
+            -tags "game game_$idx" -fill $fillcolor -outline $outline
+-      
++
+       $w.c bind game_$idx <Enter> "::fics::showGraphText $idx %x %y"
+       $w.c bind game_$idx <Leave> "::fics::delGraphText $idx"
+       $w.c bind game_$idx <ButtonPress> "::fics::acceptGraphGame $idx"
+@@ -2508,7 +2508,7 @@
+     array set l $ga
+     set m "$l(name)($l(elo)) $l(time_init)/$l(time_inc) $l(rated) $l(type) $l(color) $l(start)"
+     set ::fics::thisName $l(name)
+-    
++
+     $w.c delete status
+     $w.c create text 20 0 -tags status -text "$m" -font font_Regular -anchor nw
+     $w.c raise game_$idx
+@@ -2518,7 +2518,7 @@
    proc writechan {line {echo "noecho"}} {
      after cancel ::fics::stayConnected
      if {[eof $::fics::sockchan]} {
@@ -6815,7 +7314,7 @@ Index: tcl/tools/fics.tcl
        ::fics::close error
        return
      }
-@@ -2564,7 +2564,7 @@
+@@ -2560,7 +2560,7 @@
      # Unused
      if {$mode == "safe"} {
        ::fics::killDialogs
@@ -6824,7 +7323,7 @@ Index: tcl/tools/fics.tcl
        if {$ans == 1} {
  	bind .fics <Destroy> ::fics::close
          return
-@@ -2582,7 +2582,7 @@
+@@ -2578,7 +2578,7 @@
          set t2 [::gameclock::getSec 2]
  	if {$t1 < 0} {set t1 0}
  	if {$t2 < 0} {set t2 0}
@@ -6833,7 +7332,36 @@ Index: tcl/tools/fics.tcl
          if {[sc_pos moveNumber] > 2} {
            catch {::game::Save}
            updateBoard -pgn
-@@ -2662,7 +2662,7 @@
+@@ -2610,7 +2610,7 @@
+   proc initPing {} {
+     # get ping to report in every 10 seconds
+     set ::fics::sockping [open "|ping -i 10 $::fics::server" r]
+-    fconfigure $::fics::sockping -blocking 0 -buffering line -translation auto 
++    fconfigure $::fics::sockping -blocking 0 -buffering line -translation auto
+     fileevent $::fics::sockping readable ::fics::readPing
+     updateConsole "Starting Ping"
+   }
+@@ -2619,8 +2619,8 @@
+ 
+     # ping should report every ten seconds (see above), so if it doesn't, zero ping label
+     after cancel ::fics::clearPing
+-    after 18000  ::fics::clearPing 
+-    
++    after 18000  ::fics::clearPing
++
+     if {[eof $::fics::sockping]} {
+       fileevent $::fics::sockping readable {}
+       puts "Ping exitted"
+@@ -2627,7 +2627,7 @@
+       return
+     }
+     set line [gets $::fics::sockping]
+-    
++
+     if {[regexp {.* time=([[:digit:]]*\.?[[:digit:]]*) } $line t1 t2]} {
+       set ::fics::ping "ping: [expr int($t2)] ms"
+     } else {
+@@ -2659,7 +2659,7 @@
    }
  
    proc setForeGround {} {
@@ -6842,7 +7370,7 @@ Index: tcl/tools/fics.tcl
      if {![catch {.fics.console.text configure -fg $fg}]} {
        set ::fics::consolefg $fg
      }
-@@ -2669,7 +2669,7 @@
+@@ -2666,7 +2666,7 @@
    }
  
    proc setBackGround {} {
@@ -6851,10 +7379,46 @@ Index: tcl/tools/fics.tcl
      if {![catch {.fics.console.text configure -bg $bg}]} {
        set ::fics::consolebg $bg
      }
+@@ -2744,7 +2744,7 @@
+     addHorizontalRule $w
+ 
+     frame $w.b
+-    pack $w.b -side bottom 
++    pack $w.b -side bottom
+ 
+     dialogbutton $w.b.ok -text OK -command {
+       set ::fics::user_buttons {}
+@@ -2766,7 +2766,7 @@
+ 
+     dialogbutton $w.b.defaults -text $::tr(Defaults) -command {
+       ::fics::initUserButtons
+-      foreach i {0 1 2} { 
++      foreach i {0 1 2} {
+ 	set w .editUserButtons
+ 	set f $w.f$i
+ 	$f.button delete 0 end
+@@ -2773,7 +2773,7 @@
+ 	$f.command delete 0 end
+ 	$f.button insert 0 [lindex $::fics::user_buttons $i]
+ 	$f.command insert 0 [lindex $::fics::user_commands $i]
+-      } 
++      }
+     }
+ 
+     dialogbutton $w.b.cancel -text $::tr(Cancel) -command "destroy $w"
+@@ -2811,7 +2811,7 @@
+     addHorizontalRule $w
+ 
+     frame $w.b
+-    pack $w.b -side bottom 
++    pack $w.b -side bottom
+ 
+     dialogbutton $w.b.ok -text OK -command {
+       set ::fics::init_commands {}
 Index: tcl/tools/graphs.tcl
 ===================================================================
---- tcl/tools/graphs.tcl	(revision 3457)
-+++ tcl/tools/graphs.tcl	(working copy)
+--- tcl/tools/graphs.tcl	(Revision 1501)
++++ tcl/tools/graphs.tcl	(Revision 1502)
 @@ -14,12 +14,12 @@
    if {! [winfo exists $w]} { return }
    set ftypes {{"PostScript files" {.eps .ps}} {"All files" *}}
@@ -6923,8 +7487,8 @@ Index: tcl/tools/graphs.tcl
      }
 Index: tcl/tools/import.tcl
 ===================================================================
---- tcl/tools/import.tcl	(revision 3457)
-+++ tcl/tools/import.tcl	(working copy)
+--- tcl/tools/import.tcl	(Revision 1501)
++++ tcl/tools/import.tcl	(Revision 1502)
 @@ -21,7 +21,7 @@
  
    toplevel $w
@@ -7017,8 +7581,8 @@ Index: tcl/tools/import.tcl
      }
 Index: tcl/tools/inputengine.tcl
 ===================================================================
---- tcl/tools/inputengine.tcl	(revision 3457)
-+++ tcl/tools/inputengine.tcl	(working copy)
+--- tcl/tools/inputengine.tcl	(Revision 1501)
++++ tcl/tools/inputengine.tcl	(Revision 1502)
 @@ -170,8 +170,8 @@
  
    proc saveHardwareOptions {} {
@@ -7074,8 +7638,8 @@ Index: tcl/tools/inputengine.tcl
            } \
 Index: tcl/tools/novag.tcl
 ===================================================================
---- tcl/tools/novag.tcl	(revision 3457)
-+++ tcl/tools/novag.tcl	(working copy)
+--- tcl/tools/novag.tcl	(Revision 1501)
++++ tcl/tools/novag.tcl	(Revision 1502)
 @@ -36,7 +36,7 @@
      
      if {[catch { set fd [open $serial r+ ] } err]} {
@@ -7087,8 +7651,8 @@ Index: tcl/tools/novag.tcl
      }
 Index: tcl/tools/optable.tcl
 ===================================================================
---- tcl/tools/optable.tcl	(revision 3457)
-+++ tcl/tools/optable.tcl	(working copy)
+--- tcl/tools/optable.tcl	(Revision 1501)
++++ tcl/tools/optable.tcl	(Revision 1502)
 @@ -68,7 +68,7 @@
      set w .progress
      toplevel $w
@@ -7286,8 +7850,8 @@ Index: tcl/tools/optable.tcl
        return
 Index: tcl/tools/pinfo.tcl
 ===================================================================
---- tcl/tools/pinfo.tcl	(revision 3457)
-+++ tcl/tools/pinfo.tcl	(working copy)
+--- tcl/tools/pinfo.tcl	(Revision 1501)
++++ tcl/tools/pinfo.tcl	(Revision 1502)
 @@ -56,7 +56,7 @@
        } else {
  	::plist::Open
@@ -7320,8 +7884,8 @@ Index: tcl/tools/pinfo.tcl
      ### If English, we can set the other four buttons likewise (and allign nicely)
 Index: tcl/tools/preport.tcl
 ===================================================================
---- tcl/tools/preport.tcl	(revision 3457)
-+++ tcl/tools/preport.tcl	(working copy)
+--- tcl/tools/preport.tcl	(Revision 1501)
++++ tcl/tools/preport.tcl	(Revision 1502)
 @@ -19,7 +19,7 @@
  proc ::preport::preportDlg {{player {}}} {
  
@@ -7436,8 +8000,8 @@ Index: tcl/tools/preport.tcl
      # if {$::hasEncoding  &&  $::langEncoding($::language) != ""} { catch {set report [encoding convertto $::langEncoding($::language) $report]} }
 Index: tcl/tools/sergame.tcl
 ===================================================================
---- tcl/tools/sergame.tcl	(revision 3457)
-+++ tcl/tools/sergame.tcl	(working copy)
+--- tcl/tools/sergame.tcl	(Revision 1501)
++++ tcl/tools/sergame.tcl	(Revision 1502)
 @@ -91,7 +91,7 @@
  
      # if no engines defined, bail out
@@ -7447,7 +8011,7 @@ Index: tcl/tools/sergame.tcl
        destroy $w
        return
      }
-@@ -529,12 +529,12 @@
+@@ -550,12 +550,12 @@
      ::gameclock::stop 2
      if {![sc_pos isCheck]} {
        sc_game tags set -result =
@@ -7462,7 +8026,7 @@ Index: tcl/tools/sergame.tcl
          } else {
            set side $::sergame::engineName
          }
-@@ -543,7 +543,7 @@
+@@ -564,7 +564,7 @@
          } else {
            sc_game tags set -result 0
          }
@@ -7473,8 +8037,8 @@ Index: tcl/tools/sergame.tcl
      updateBoard -pgn
 Index: tcl/tools/tablebase.tcl
 ===================================================================
---- tcl/tools/tablebase.tcl	(revision 3457)
-+++ tcl/tools/tablebase.tcl	(working copy)
+--- tcl/tools/tablebase.tcl	(Revision 1501)
++++ tcl/tools/tablebase.tcl	(Revision 1502)
 @@ -8,13 +8,13 @@
  set ::tb::online_available 0
  
@@ -7511,7 +8075,7 @@ Index: tcl/tools/tablebase.tcl
  
    if { $::tb::online_available } {
      menubutton $f.results.online -text $tbOnline -menu $f.results.online.menu -relief raised -indicatoron 1
-@@ -237,7 +237,7 @@
+@@ -240,7 +240,7 @@
    ### Buttons
  
    checkbutton $w.b.training -text $::tr(Training) -variable tbTraining -command ::tb::training -relief raised -padx 4 -pady 5
@@ -7520,7 +8084,7 @@ Index: tcl/tools/tablebase.tcl
    button $w.b.showboard -image tb_coords -command ::tb::showBoard
    button $w.b.help -text $::tr(Help) -command { helpWindow TB }
    button $w.b.close -text $::tr(Close) -command "destroy $w"
-@@ -402,22 +402,22 @@
+@@ -405,22 +405,22 @@
    $t configure -state normal
    $t insert end [format "%-6s" [::tb::name $material]] fen
    if {! [info exists tbs($material)]} {
@@ -7548,7 +8112,7 @@ Index: tcl/tools/tablebase.tcl
    set len [lindex $data 1]
    set fen [lindex $data 2]
    if {$len == "0"} { set len "-" }
-@@ -439,7 +439,7 @@
+@@ -442,7 +442,7 @@
    $t insert end "\n"
  
    # Stats for Black:
@@ -7557,7 +8121,7 @@ Index: tcl/tools/tablebase.tcl
    set len [lindex $data 3]
    set fen [lindex $data 4]
    if {$len == "0"} { set len "-" }
-@@ -461,7 +461,7 @@
+@@ -464,7 +464,7 @@
    $t insert end "\n\n"
  
    set mzugs [lindex $data 11]
@@ -7566,7 +8130,7 @@ Index: tcl/tools/tablebase.tcl
    if {$mzugs >= 0} { $t insert end "$mzugs\n" } else { $t insert end "?\n" }
    if {$mzugs <= 0} {
      $t configure -state disabled
-@@ -472,20 +472,20 @@
+@@ -475,20 +475,20 @@
    set nBtmLoses [lindex $data 12]
    set nWtmLoses [lindex $data 14]
    set nBothLose [lindex $data 16]
@@ -7593,7 +8157,7 @@ Index: tcl/tools/tablebase.tcl
    }
  
    # Selected zugzwang positions:
-@@ -545,7 +545,7 @@
+@@ -548,7 +548,7 @@
    # Update results panel:
    if {$tbTraining} {
      ::tb::clearText $t
@@ -7602,7 +8166,7 @@ Index: tcl/tools/tablebase.tcl
    } else {
      if { $tbOnline == "Lichess" || $tbOnline == "Shredder"} {
        if {!$::tb::noresult} {
-@@ -769,7 +769,7 @@
+@@ -772,7 +772,7 @@
        foreach l [split $result "\n"] {
          if {![string match {*\?\?\?*} $l]} {
            if {$empty} {
@@ -7611,7 +8175,7 @@ Index: tcl/tools/tablebase.tcl
              set empty 0
            }
          }
-@@ -778,9 +778,9 @@
+@@ -781,9 +781,9 @@
        if {$empty} {
          variable hash
          if {[info exists hash($fen)]} {
@@ -7625,8 +8189,8 @@ Index: tcl/tools/tablebase.tcl
  ####################################################################
 Index: tcl/tools/tacgame.tcl
 ===================================================================
---- tcl/tools/tacgame.tcl	(revision 3457)
-+++ tcl/tools/tacgame.tcl	(working copy)
+--- tcl/tools/tacgame.tcl	(Revision 1501)
++++ tcl/tools/tacgame.tcl	(Revision 1502)
 @@ -127,7 +127,7 @@
      }
  
@@ -7735,8 +8299,8 @@ Index: tcl/tools/tacgame.tcl
      updateBoard -pgn
 Index: tcl/tools/tactics.tcl
 ===================================================================
---- tcl/tools/tactics.tcl	(revision 3457)
-+++ tcl/tools/tactics.tcl	(working copy)
+--- tcl/tools/tactics.tcl	(Revision 1501)
++++ tcl/tools/tactics.tcl	(Revision 1502)
 @@ -50,7 +50,7 @@
      set found 0
  
@@ -7832,9 +8396,87 @@ Index: tcl/tools/tactics.tcl
    }
 Index: tcl/tools/uci.tcl
 ===================================================================
---- tcl/tools/uci.tcl	(revision 3457)
-+++ tcl/tools/uci.tcl	(working copy)
-@@ -484,7 +484,7 @@
+--- tcl/tools/uci.tcl	(Revision 1501)
++++ tcl/tools/uci.tcl	(Revision 1502)
+@@ -66,7 +66,7 @@
+   # todo: sort out the analyze var with computer tournament feature &&&
+ 
+   proc processAnalysisInput { {n 1} {gui 1} } {
+-    global analysis annotate comp ::uci::uciInfo ::uci::optionToken 
++    global analysis annotate comp ::uci::uciInfo ::uci::optionToken
+ 
+     if {$gui} {
+       set pipe $analysis(pipe$n)
+@@ -225,7 +225,7 @@
+             }
+           }
+           set uciInfo(tmp_score$n) [expr {double($uciInfo(tmp_score$n)) / 100.0} ]
+-          
++
+           # don't consider lowerbound & upperbound score info
+           continue
+         }
+@@ -273,7 +273,7 @@
+            set uciInfo(draw_pc$n)  [expr {[lindex $data $i] / 10}]
+            incr i
+            set uciInfo(lose_pc$n)  [expr {[lindex $data $i] / 10}]
+-           continue}   
++           continue}
+         if { $t == "string" } {
+           # uciInfo(string) seems unused
+           incr i
+@@ -287,7 +287,7 @@
+ 
+       ### Malformed time args break. Should we include this check ?
+       # if {![string is double $uciInfo(time$n)]} {set uciInfo(time$n) 0}
+-      
++
+       # return if no interesting info
+       if { $uciInfo(tmp_score$n) == "" || $uciInfo(pv$n) == "" } {
+         if {$gui} {
+@@ -297,14 +297,14 @@
+         }
+         return
+       }
+-      
++
+       # handle the case an UCI engine does not send multiPV
+       if { $uciInfo(multipv$n) == "" } { set uciInfo(multipv$n) 1 }
+-      
++
+       if { $uciInfo(multipv$n) == 1 } {
+         set uciInfo(score$n) $uciInfo(tmp_score$n)
+       }
+-      
++
+       if { $uciInfo(multipv$n) == 1 && $gui} {
+         # this is the best line
+         set analysis(prevdepth$n) $analysis(depth$n)
+@@ -320,7 +320,7 @@
+         set analysis(nodesraw$n) $uciInfo(nodes$n)
+         set analysis(nodes$n) [calculateNodes $uciInfo(nodes$n)]
+       }
+-      
++
+       set pvRaw $uciInfo(pv$n)
+ 
+       # convert to something more readable
+@@ -354,11 +354,11 @@
+ 	    set draw_pc [expr {100 - $win_pc - $lose_pc}]
+ 	}
+ 	if { $lose_pc == [lindex $temp_list_WDL 2]} {
+-	    set lose_pc [expr {100 - $win_pc - $draw_pc}]    
+-	}		
++	    set lose_pc [expr {100 - $win_pc - $draw_pc}]
++	}
+ 	set analysis(WDL$n,$idx) "W: $win_pc% D: $draw_pc% B: $lose_pc%"
+       }
+- 
++
+       ### Process MultiPV data array
+       #   Note - $uciInfo(scoremate$n) is an integer or ""
+       #   in which case it does not get added to the list and in analysis.tcl, [lindex $pv 3] is {} - S.A
+@@ -484,15 +484,15 @@
      }
      set engineData [lindex $engines(list) $n]
      if {![lindex $engineData 7]} {
@@ -7843,6 +8485,16 @@ Index: tcl/tools/uci.tcl
        return
      }
      set name [lindex $engineData 0]
+     set cmd  [lindex $engineData 1]
+     set args [lindex $engineData 2]
+-    set dir  [lindex $engineData 3] 
++    set dir  [lindex $engineData 3]
+     set options [lindex $engineData 8]
+-    ::uci::uciConfig $n $name [ toAbsPath $cmd ] $args [ toAbsPath $dir ] $options 
++    ::uci::uciConfig $n $name [ toAbsPath $cmd ] $args [ toAbsPath $dir ] $options
+   }
+ 
+   ### Open the pipe and issue 'uci'
 @@ -505,7 +505,7 @@
  
      if {[info exists ::uci::uciInfo(pipe$n)]} {
@@ -7863,7 +8515,25 @@ Index: tcl/tools/uci.tcl
        return
      }
  
-@@ -596,7 +596,7 @@
+@@ -568,7 +568,7 @@
+       # but keep engine open to process button events.
+       # We'll stop engine when we close .uciConfigWin
+       after cancel "::uci::closeUCIengine $n 0"
+-      uciConfigWin $n 
++      uciConfigWin $n
+     }
+     # get options
+     if {[string match {option name *} $line]} {
+@@ -578,7 +578,7 @@
+     # if {[string match {id name *}     $line]} { set name [string range $line 8 end] }
+   }
+ 
+-  ### Builds the dialog for UCI engine configuration 
++  ### Builds the dialog for UCI engine configuration
+ 
+   proc uciConfigWin {n} {
+     global ::uci::uciOptions ::uci::optList ::uci::optionToken ::uci::oldOptions ::uci::optionImportant
+@@ -596,14 +596,14 @@
      setWinLocation $w
      setWinSize $w
  
@@ -7872,6 +8542,60 @@ Index: tcl/tools/uci.tcl
  
      pack [label $w.title -text $::uci::name] -side top -pady 5
      addHorizontalRule $w
+-    pack [frame $w.buttons] -side bottom 
++    pack [frame $w.buttons] -side bottom
+     pack [frame $w.wtf] -side top -expand 1 -fill both
+ 
+-    ### Whoever wrote this gridded widget hierarchy 
++    ### Whoever wrote this gridded widget hierarchy
+     #   scrolledframe scrolledframe $w.sf (scrolledframe) .scrolledframe (later)
+     # is an f-ing eediot. (But it's nicely functional otherwise :)
+ 
+@@ -660,7 +660,7 @@
+       if { [lsearch $::uci::optionToKeep $t] == -1  && [string match UCI_* $t] } {
+         continue
+       }
+-      
++
+       set length [llength $data]
+ 
+       # parse one option
+@@ -708,7 +708,7 @@
+             incr i
+           }
+           lappend elt(var) [list $tmp]
+-          
++
+           incr i -1
+           continue
+         }
+@@ -752,7 +752,7 @@
+       if {$elt(name) == "OwnBook"} { set name $::tr(OwnBook) }
+       if {$elt(name) == "BookFile"} { set name $::tr(BookFile) }
+       if {$elt(name) == "UCI_LimitStrength"} { set name $::tr(LimitELO) }
+-      
++
+       if { $col > 3 } { set col 0 ; incr row}
+       if {$elt(default) != ""} {
+         set default " ($elt(default))"
+@@ -842,7 +842,7 @@
+     dialogbutton $w.buttons.save -text $::tr(Save) -command "
+       if {\[::uci::saveConfig $n\]} {
+         destroy $w
+-      } 
++      }
+     "
+ 
+     dialogbutton $w.buttons.help -text $::tr(Help) -command {helpWindow Analysis UCI}
+@@ -892,7 +892,7 @@
+         set value [$w.fopt.opt$optnbr get]
+       }
+       # Buttons are now handled properly in uciConfigWin
+-      if { $elt(type) != "button" } { 
++      if { $elt(type) != "button" } {
+ 	lappend newOptions [ list $elt(name)  $value ]
+       }
+       incr optnbr
 @@ -973,8 +973,8 @@
      # Try to execute the analysis program:
      if {[catch {set uciInfo(pipe$n) [open "| [list $analysisCommand] $analysisArgs" "r+"]} result]} {
@@ -7880,10 +8604,19 @@ Index: tcl/tools/uci.tcl
 -          -message "Unable to start the program:\n$analysisCommand:\n$result"
 +      tk_messageBox -title "Fehler beim Start der Engine" -icon warning -type ok \
 +          -message "Kann das Programm nicht starten:\n$analysisCommand:\n$result"
-       return
+       return 0
      }
  
-@@ -1031,11 +1031,11 @@
+@@ -993,7 +993,7 @@
+       update
+       after 100
+     }
+-    return 1
++	return 1
+   }
+ 
+   ### ::uci::sendToEngine
+@@ -1032,11 +1032,11 @@
      if { $exit_status != 0 } {
  	# logEngineNote $n {Engine terminated with exit code $exit_status: "\"$standard_error\""}
  	tk_messageBox -type ok -icon info -parent . -title Scid \
@@ -7897,7 +8630,7 @@ Index: tcl/tools/uci.tcl
      }
      return 0
    }
-@@ -1059,8 +1059,8 @@
+@@ -1060,8 +1060,8 @@
  	  set parent $pparent
  	}
        }
@@ -7908,10 +8641,36 @@ Index: tcl/tools/uci.tcl
      }
  
      # Some engines in analyze(gui?) mode may not react as expected to "quit"
+@@ -1076,7 +1076,7 @@
+     # - Rybka MP uses processes instead of threads : killing the main process will leave the children processes running
+     # - engines should normally exit
+     # if { ! $windowsOS } { catch { exec -- kill -s INT [ pid $pipe ] }  }
+-        
++
+     catch { flush $pipe }
+     catch { close $pipe }
+     set uciInfo(pipe$n) ""
+@@ -1133,13 +1133,13 @@
+   proc formatPvAfterMoves { played_moves moves } {
+       sc_game push copyfast
+       sc_move addSan $played_moves
+-      
++
+       catch {sc_move addUCI $moves} tmp
+       set tmp [string trim $tmp]
+-      
++
+       # Pop the temporary game:
+       sc_game pop
+-      
++
+       return $tmp
+   }
+ 
 Index: tcl/utils/sound.tcl
 ===================================================================
---- tcl/utils/sound.tcl	(revision 3457)
-+++ tcl/utils/sound.tcl	(working copy)
+--- tcl/utils/sound.tcl	(Revision 1501)
++++ tcl/utils/sound.tcl	(Revision 1502)
 @@ -26,11 +26,11 @@
    variable soundFiles
    variable soundFolder
@@ -7990,8 +8749,8 @@ Index: tcl/utils/sound.tcl
  
 Index: tcl/utils/win.tcl
 ===================================================================
---- tcl/utils/win.tcl	(revision 3457)
-+++ tcl/utils/win.tcl	(working copy)
+--- tcl/utils/win.tcl	(Revision 1501)
++++ tcl/utils/win.tcl	(Revision 1502)
 @@ -928,7 +928,7 @@
  
  
@@ -8012,8 +8771,8 @@ Index: tcl/utils/win.tcl
  
 Index: tcl/windows/book.tcl
 ===================================================================
---- tcl/windows/book.tcl	(revision 3457)
-+++ tcl/windows/book.tcl	(working copy)
+--- tcl/windows/book.tcl	(Revision 1501)
++++ tcl/windows/book.tcl	(Revision 1502)
 @@ -439,7 +439,7 @@
      }
  
@@ -8043,8 +8802,8 @@ Index: tcl/windows/book.tcl
      busyCursor .
 Index: tcl/windows/eco.tcl
 ===================================================================
---- tcl/windows/eco.tcl	(revision 3457)
-+++ tcl/windows/eco.tcl	(working copy)
+--- tcl/windows/eco.tcl	(Revision 1501)
++++ tcl/windows/eco.tcl	(Revision 1502)
 @@ -203,7 +203,7 @@
    set fname [file tail $fname]
    # if {$fname == ""} { set fname "<none>" }
@@ -8056,9 +8815,9 @@ Index: tcl/windows/eco.tcl
  }
 Index: tcl/windows/gamelist.tcl
 ===================================================================
---- tcl/windows/gamelist.tcl	(revision 3457)
-+++ tcl/windows/gamelist.tcl	(working copy)
-@@ -1073,7 +1073,7 @@
+--- tcl/windows/gamelist.tcl	(Revision 1501)
++++ tcl/windows/gamelist.tcl	(Revision 1502)
+@@ -1076,7 +1076,7 @@
          set name $col
        }
        set answer [tk_messageBox -parent $w -title Scid -type yesno -default yes -icon question \
@@ -8069,21 +8828,23 @@ Index: tcl/windows/gamelist.tcl
  
 Index: tcl/windows/switcher.tcl
 ===================================================================
---- tcl/windows/switcher.tcl	(revision 3457)
-+++ tcl/windows/switcher.tcl	(working copy)
-@@ -966,7 +966,7 @@
+--- tcl/windows/switcher.tcl	(Revision 1501)
++++ tcl/windows/switcher.tcl	(Revision 1502)
+@@ -966,8 +966,8 @@
        $f.menu.show add checkbutton -label [tr ShowIcons] -variable ::windows::switcher::icons -command ::windows::switcher::Refresh
        $f.menu.show add checkbutton -label [tr ConfirmCopy] -variable ::windows::switcher::confirmCopy 
        $f.menu.show add separator
 -      $f.menu.show add command -label "Switcher Colour" -command SetSwitcherColour
-+	  $f.menu.show add command -label "Datenbankwechselfarbe" -command SetSwitcherColour
+-      $f.menu.show add command -label "Current Game Colour" -command SetGamelistColour
++      $f.menu.show add command -label "Datenbankwechselfarbe" -command SetSwitcherColour
++      $f.menu.show add command -label "Aktuelle Partiefarbe" -command SetGamelistColour
        $f.menu.show add checkbutton -label [tr TreeOptSmallFont] -variable ::windows::gamelist::customFont -command {
          ::windows::gamelist::configFont
          ::windows::gamelist::Configure .glistWin.tree
 Index: tcl/windows/tree.tcl
 ===================================================================
---- tcl/windows/tree.tcl	(revision 3457)
-+++ tcl/windows/tree.tcl	(working copy)
+--- tcl/windows/tree.tcl	(Revision 1501)
++++ tcl/windows/tree.tcl	(Revision 1502)
 @@ -47,7 +47,7 @@
  
  proc ::tree::treeFileSave {base} {
@@ -8111,7 +8872,7 @@ Index: tcl/windows/tree.tcl
  
    foreach {label value} {
      Alpha alpha
-@@ -1291,7 +1291,7 @@
+@@ -1293,7 +1293,7 @@
      grid columnconfig $w.blist 0 -weight 1 -minsize 0
  
      label $w.b.result -text " $::tr(Result)" -font font_Small
@@ -8120,7 +8881,7 @@ Index: tcl/windows/tree.tcl
      $w.b.res configure -font font_Small -direction right
  
      if {$::tree::sortBest} {
-@@ -1300,7 +1300,7 @@
+@@ -1302,7 +1302,7 @@
        set tree(sortBest$baseNumber) Order
      }
      label $w.b.sort -text " $::tr(Sort)" -font font_Small
@@ -8129,7 +8890,7 @@ Index: tcl/windows/tree.tcl
      $w.b.sortMenu configure -font font_Small -direction right
  
      button $w.b.close -text $::tr(Close) -command "destroy $w" -width 9 -font font_Small
-@@ -1499,8 +1499,8 @@
+@@ -1501,8 +1501,8 @@
          $menu.addcol add command -label $tr(Glist$h) -command "::tree::bestInsertCol $w $i $col"
        incr i
      }
@@ -8140,7 +8901,7 @@ Index: tcl/windows/tree.tcl
  
      $menu add separator
  
-@@ -1624,9 +1624,9 @@
+@@ -1626,9 +1626,9 @@
  
  proc ::tree::getCacheInfo { base } {
    set ci [sc_tree cacheinfo $base]
@@ -8153,7 +8914,7 @@ Index: tcl/windows/tree.tcl
  
  }
  
-@@ -1833,9 +1833,9 @@
+@@ -1835,9 +1835,9 @@
    if {$filename != ""} {
      if {![file readable $filename]} {
        if {$parent == "autoLoad"} {
@@ -8165,7 +8926,7 @@ Index: tcl/windows/tree.tcl
        }
      } else {
        set ::initialDir(stm) [file dirname $filename]
-@@ -2411,9 +2411,9 @@
+@@ -2413,9 +2413,9 @@
  
    if {$op == ""} {
      set reply [tk_dialog .booktune $::tr(AddLine) \
@@ -8177,7 +8938,7 @@ Index: tcl/windows/tree.tcl
  
      if {$reply == 3} {return}
      if {$reply == 1} {set reply white}
-@@ -2564,9 +2564,9 @@
+@@ -2566,9 +2566,9 @@
    frame $w.fcb
    pack $w.fcb -fill x -side bottom
  
@@ -8189,7 +8950,7 @@ Index: tcl/windows/tree.tcl
      -command ::tree::mask::updateDisplayMask
    checkbutton $w.fcb.comment -font font_Small -text [::tr Comments] -variable ::tree::mask::displayMask_showComment \
      -command ::tree::mask::updateDisplayMask
-@@ -2843,13 +2843,13 @@
+@@ -2845,13 +2845,13 @@
    grid $w.f1.color  -column 4 -row 1 -padx 2
    
    # Move comment
