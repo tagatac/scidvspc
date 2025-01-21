@@ -1,28 +1,3 @@
-Index: patches/german-changes-from-christian.diff
-===================================================================
---- patches/german-changes-from-christian.diff	(Revision 1501)
-+++ patches/german-changes-from-christian.diff	(Revision 1502)
-@@ -3672,20 +3672,6 @@
-    }
-  
-  }
--@@ -38,11 +38,11 @@
--   }
--   catch {set fenStr [validateFEN [string trim $fenStr]]}
-- 
---  set fenExplanation {FEN is the standard representation of a chess position, for example:
--+  set fenExplanation {FEN ist die Standarddarstellung einer Schachposition, z.B.:
-- "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"}
-- 
--   if {$fenStr == ""} {
---    set msg "The clipboard is empty.\n\n$fenExplanation"
--+    set msg "Die Ablagedatenbank ist leer.\n\n$fenExplanation"
--     fenErrorDialog $msg
--     return
--   }
- @@ -465,7 +465,7 @@
-    updateBoard -pgn
-  
 Index: src/game.cpp
 ===================================================================
 --- src/game.cpp	(Revision 1501)
