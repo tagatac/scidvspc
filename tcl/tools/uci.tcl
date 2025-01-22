@@ -112,22 +112,23 @@ namespace eval uci {
         return
       }
       set data [split $line]
-      set uciInfo(bestmove$n) [lindex $data 1]
-      # Nasty hack to handle engine using internal book and not sending pv, only bestmove (when depth should be 0)
-      if {$analysis(depth$n) == 0} {
-        updateAnalysisBoard $n $uciInfo(bestmove$n)
-        set h .analysisWin$n.hist.text
-        set analysis(moves$n) $uciInfo(bestmove$n)
-        $h configure -state normal
-        $h delete 1.0 end
-        $h insert 1.0 "(bestmove $uciInfo(bestmove$n))"
-        $h configure -state disabled
-      } 
+      set bestmove [set uciInfo(bestmove$n) [lindex $data 1]]
 
       # Sometimes Umko issues a bad bestmove, and then good ones, but not always a "pv" line
       # We rely on "pv" lines (and uciInfo(pv$n)) for getting the best UCI move, so this hack addresses this
       if {$comp(playing)} {
-        set analysis(moves$n) $uciInfo(bestmove$n)
+        set analysis(moves$n) $bestmove
+      } else {
+	# Nasty hack to handle engine using internal book and not sending pv, only bestmove (when depth should be 0)
+	if {$analysis(depth$n) == 0} {
+	  updateAnalysisBoard $n $bestmove
+	  set h .analysisWin$n.hist.text
+	  set analysis(moves$n) $bestmove
+	  $h configure -state normal
+	  $h delete 1.0 end
+	  $h insert 1.0 "(bestmove [::trans $bestmove])"
+	  $h configure -state disabled
+	} 
       }
 
       # get ponder move
@@ -140,7 +141,7 @@ namespace eval uci {
 
       # Autoplay any move from Graham's hardware driver
       if {$analysis(eboard$n)} {
-	makeAnalysisMove $n $uciInfo(bestmove$n) mainline
+	makeAnalysisMove $n $bestmove mainline
       }
 
       return
