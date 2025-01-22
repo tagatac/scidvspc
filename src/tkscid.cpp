@@ -7896,9 +7896,6 @@ sc_game_list (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     uint gamePly = db->game->GetCurrentPly();
     bool gameNonStd = db->game->HasNonStandardStart();
 
-    // Seems unused ? S.A.
-    bool returnLineNum = strEqual (formatStr, "-current");
-
     while (index < db->numGames  &&  count > 0) {
         if (db->filter->Get(index)) {
             if (showProgress) {  // Update the percentage done bar:
@@ -7911,10 +7908,6 @@ sc_game_list (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
                 update--;
             }
             linenum++;
-            if (returnLineNum  &&  (int)index == db->gameNumber) {
-                if (fp != NULL) { fclose (fp); }
-                return setUintResult (ti, linenum);
-            }
             ie = db->idx->FetchEntry (index);
 
             if (nextMoves) {
@@ -7924,6 +7917,7 @@ sc_game_list (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
               if (gamePly > 0 || ! ie->GetStoredLineCode() || gameNonStd || ie->GetStartFlag() ) {
                 db->bbuf->Empty();
                 if (ie->GetLength() == 0) {
+                    printf ("Oops ie->GetLength() == 0\n");
                     // todo
                 } else {
                     if (db->gfile->ReadGame (db->bbuf, ie->GetOffset(), ie->GetLength()) != OK) {
@@ -7991,7 +7985,6 @@ sc_game_list (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     delete moveStr;
     if (showProgress) { updateProgressBar (ti, 1, 1); }
     if (fp != NULL) { fclose (fp); }
-    if (returnLineNum) { return setUintResult (ti, 0); }
     return TCL_OK;
 }
 

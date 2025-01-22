@@ -643,7 +643,7 @@ proc openExportGList {} {
 
   if {[sc_filter count] < 1} {
     tk_messageBox -type ok -icon info -title Scid \
-      -message "There are no games in the filter." -parent .glistWin
+      -message "There are no games in the filter."
     return
   }
 
@@ -695,7 +695,6 @@ D Deleted flag o ECO     O Opening / Moves  V Variations flag  \n"
   updateExportGList
 
   update
-  placeWinOverParent $w .glistWin
   wm state $w normal
 }
 
@@ -705,8 +704,14 @@ proc updateExportGList {args} {
   global glexport
   set w .glexport
   if {! [winfo exists $w]} { return }
+
   ### '!' prefix indicates to calculate each game next moves if at ply.
-  set text [sc_game list 1 5 "\!$glexport "]
+  set b [sc_base current]
+  if {[winfo exists .treeWin$b] && $::tree(adjustfilter$b)} {
+    set text [sc_game list 1 5 "!$glexport "]
+  } else {
+    set text [sc_game list 1 5 "$glexport "]
+  }
   # remove trailing "\n"
   set text [string range $text 0 end-1]
 
@@ -728,7 +733,14 @@ proc saveExportGList {} {
     progressWindow Scid "Saving game list" $::tr(Cancel) sc_progressBar
   }
   busyCursor .
-  set res [catch {sc_game list 1 $::MAX_GAMES "\!$glexport\n" $fname} err]
+
+  set b [sc_base current]
+  if {[winfo exists .treeWin$b] && $::tree(adjustfilter$b)} {
+    set res [catch {sc_game list 1 $::MAX_GAMES "!$glexport\n" $fname} err]
+  } else {
+    set res [catch {sc_game list 1 $::MAX_GAMES "$glexport\n" $fname} err]
+  }
+
   unbusyCursor .
   if {$showProgress} { closeProgressWindow }
   if {$res} {
