@@ -7840,20 +7840,13 @@ sc_game_info (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 //    Takes start and count, where start is in the range (1..FilterCount).
 //    The next argument is the format string -- see index.cpp for details
 //    of format strings.
-//
-//    If the format string is "-current" (seems unused), then a single integer value
-//    is returned indicating the line number where the current game
-//    occured in the output (where 1 is the first line), or 0 if it
-//    did not occur in the output at all.
-//
-//    '!' prefixing the formatStr indicates next 'Moves' are to be calculated.
 
 int
 sc_game_list (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
     bool showProgress = startProgressBar();
-    if (argc != 5  &&  argc != 6) {
-        return errorResult (ti, "Usage: sc_game list <start> <count> [!]<format> [<file>]");
+    if (argc < 5  &&  argc > 7) {
+        return errorResult (ti, "Usage: sc_game list <start> <count> <format> [<bool> [<file>]]");
     }
     if (! db->inUse) { return TCL_OK; }
 
@@ -7866,10 +7859,10 @@ sc_game_list (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     FILE * fp = NULL;
 
-    if (argc == 6) {
-	fp = fopen (argv[5], "w");
+    if (argc == 7) {
+	fp = fopen (argv[6], "w");
 	if (fp == NULL) {
-	    Tcl_AppendResult (ti, "Error opening file: ", argv[5], NULL);
+	    Tcl_AppendResult (ti, "Error opening file: ", argv[6], NULL);
 	    return TCL_ERROR;
 	}
     }
@@ -7877,14 +7870,11 @@ sc_game_list (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     uint index = db->filter->FilteredCountToIndex(start);
     IndexEntry * ie;
     const char * formatStr = argv[4];
+
+    // Load each game and lookup next 6 moves 
     bool nextMoves = 0;
-
-    // '!' prefix in formatStr indicates nextMoves should be processed.
-    if (formatStr[0] == '!') {
-	nextMoves = 1;
-        formatStr++;
-    }
-
+    if (argc >= 6) 
+       nextMoves = strGetBoolean(argv[5]);
 
     char temp[2048];
     int update, updateStart;
@@ -7910,7 +7900,7 @@ sc_game_list (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             linenum++;
             ie = db->idx->FetchEntry (index);
 
-            if (nextMoves) {
+            if (nextMoves && db->treeFilter) {
               // Hack the gamelist 'Opening moves' to 'Next moves', and do a quick load of each game
               // based on "sc_game firstMoves <gameNum> <numMoves>"
 

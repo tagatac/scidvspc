@@ -705,13 +705,9 @@ proc updateExportGList {args} {
   set w .glexport
   if {! [winfo exists $w]} { return }
 
-  ### '!' prefix indicates to calculate each game next moves if at ply.
   set b [sc_base current]
-  if {[winfo exists .treeWin$b] && $::tree(adjustfilter$b)} {
-    set text [sc_game list 1 5 "!$glexport "]
-  } else {
-    set text [sc_game list 1 5 "$glexport "]
-  }
+  set text [sc_game list 1 5 "$glexport " [expr {[winfo exists .treeWin$b] && $::tree(adjustfilter$b)}]]
+
   # remove trailing "\n"
   set text [string range $text 0 end-1]
 
@@ -735,11 +731,9 @@ proc saveExportGList {} {
   busyCursor .
 
   set b [sc_base current]
-  if {[winfo exists .treeWin$b] && $::tree(adjustfilter$b)} {
-    set res [catch {sc_game list 1 $::MAX_GAMES "!$glexport\n" $fname} err]
-  } else {
-    set res [catch {sc_game list 1 $::MAX_GAMES "$glexport\n" $fname} err]
-  }
+  set res [catch {
+    sc_game list 1 $::MAX_GAMES "$glexport\n" [expr {[winfo exists .treeWin$b] && $::tree(adjustfilter$b)}] $fname
+  } err]
 
   unbusyCursor .
   if {$showProgress} { closeProgressWindow }
