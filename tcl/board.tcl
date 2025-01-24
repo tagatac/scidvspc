@@ -1389,7 +1389,7 @@ proc ::board::new {w {psize 40} {showmat 0} {flip 0} {stm 0} {evalbar 0} {mpvtls
   canvas $w.evalbar -width [expr {int(ceil($::board::_size($w)/10.0))}] -height $bsize
 
   if {$::board::_showEvalbar($w)} {
-    grid $w.evalbar -row 1 -column 12 -rowspan 8 -padx 2
+    grid $w.evalbar -row 1 -column 12 -rowspan 8 -padx 4
   }
 
   canvas $w.mpvtls -width [expr {int(ceil($::board::_size($w)/5.0))}] -height $bsize
@@ -2655,7 +2655,7 @@ proc ::board::toggleeval {{w .main.board}} {
     if {$w == ".main.board"} {
       ::board::updateMainEvalBar
     }
-    grid configure $w.evalbar -row 1 -column 12 -rowspan 8 -padx 2
+    grid configure $w.evalbar -row 1 -column 12 -rowspan 8 -padx 4
   } else {
     catch {grid remove $w.evalbar}
   }
@@ -3194,7 +3194,7 @@ proc ::board::update_evalbar_linear {w eval} {
     $w.evalbar create line $width  0 $width $X      -width $width2 -fill white -tag evalbar
     $w.evalbar create line $width $X $width $height -width $width2 -fill black -tag evalbar
     if {$::evalTicks} {
-      for {set i -$::evalScale} {$i < $::evalScale} {incr i} {
+      for {set i [expr -$::evalScale + 1]} {$i < $::evalScale} {incr i} {
          set T [expr ($i + $::evalScale) * $unitLen + $::borderwidth]
          $w.evalbar create line 0 $T $width2 $T -width 2 -fill [expr {($i > $eval) ? "white" : "grey70"}] -tag evalbar
       }
@@ -3204,7 +3204,7 @@ proc ::board::update_evalbar_linear {w eval} {
     $w.evalbar create line $width  0 $width $X      -width $width2 -fill black -tag evalbar
     $w.evalbar create line $width $X $width $height -width $width2 -fill white -tag evalbar
     if {$::evalTicks} {
-      for {set i -$::evalScale} {$i < $::evalScale} {incr i} {
+      for {set i [expr -$::evalScale + 1]} {$i < $::evalScale} {incr i} {
          set T [expr ($i + $::evalScale) * $unitLen + $::borderwidth]
          $w.evalbar create line 0 $T $width2 $T -width 2 -fill [expr {(-$i > $eval) ? "white" : "grey70"}] -tag evalbar
       }
@@ -3223,6 +3223,11 @@ proc ::board::update_evalbar {{w .main.board} {eval {}} {time {}}} {
   }
   if {$eval == "clear"} {
     $w.evalbar delete evalbar
+
+    set height [$w.evalbar cget -height]
+    set width [expr {int(ceil($::board::_size($w)/10.0))}]
+    set width2 [expr {$width * 2}]
+    $w.evalbar create rectangle 1 1 $width $height -outline $::bgcolor -tag evalbar
     return
   }
 
