@@ -212,6 +212,8 @@ set playerInfoHistory {}
 set epdAnnotateMode 0
 set epdDelay 3
 set evalTime 200 ;# milliseconds for  sc_pos analyze
+set evalScale 5
+set evalTicks 0
 set evalUseLog 0
 
 set defaultDBs {}

@@ -298,6 +298,10 @@ menuText D OptionsEvalMain "Hauptbrett" 0
 menuText D OptionsEvalBrowser "Partie-Browser" 0
 menuText D OptionsEvalFics "FICS-Bretter" 0
 menuText D OptionsEvalTime "Bewertungszeit" 0 {Zeit für schnelle Analyseprobe}
+# ====== TODO To be translated ======
+menuText D OptionsEvalScale "Scale" 0 {Scorebar scale}
+# ====== TODO To be translated ======
+menuText D OptionsEvalTicks "Show ticks" 0
 menuText D OptionsEvalLog  "Logarithmische Bewertung" 0
 menuText D OptionsLanguage "Sprache" 0 {Sprache wählen}
 menuText D OptionsMovesTranslatePieces "Figurennamen übersetzen" 0 {Übersetze den ersten Buchstaben der Figurenbezeichnung}

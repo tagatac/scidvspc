@@ -310,6 +310,10 @@ menuText S OptionsEvalMain "Tablero principal" 0
 menuText S OptionsEvalBrowser "Navegadores de juego" 0
 menuText S OptionsEvalFics "Tableros Fics" 0
 menuText S OptionsEvalTime "Tiempo de evaluación" 0 {Tiempo para el análisis rápido}
+# ====== TODO To be translated ======
+menuText S OptionsEvalScale "Scale" 0 {Scorebar scale}
+# ====== TODO To be translated ======
+menuText S OptionsEvalTicks "Show ticks" 0
 menuText S OptionsEvalLog  "Evaluación logarítmica" 0
 menuText S OptionsLanguage "Lenguaje" 0 {Selecciona el lenguaje del menú}
 menuText S OptionsMovesTranslatePieces "Traducir piezas" 0 {Traducir la primera letra de las piezas}

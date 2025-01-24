@@ -279,6 +279,10 @@ menuText F OptionsEvalMain "Echiquier principale" 0
 menuText F OptionsEvalBrowser "Explorateur de parties" 0
 menuText F OptionsEvalFics "Echiquier FICS" 0
 menuText F OptionsEvalTime "Temps d'évaluation" 0 {Time for quick analysis probe}
+# ====== TODO To be translated ======
+menuText F OptionsEvalScale "Scale" 0 {Scorebar scale}
+# ====== TODO To be translated ======
+menuText F OptionsEvalTicks "Show ticks" 0
 menuText F OptionsEvalLog  "Evaluation logarithmique" 0
 menuText F OptionsLanguage "Langues" 0 {Sélectionner le menu de choix des langues}
 menuText F OptionsMovesTranslatePieces "Traduction des pièces" 0 {Convertit la première lettre des pièces}

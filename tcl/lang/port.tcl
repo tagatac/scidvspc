@@ -275,6 +275,10 @@ menuText U OptionsEvalMain "Tabuleiro principal" 0
 menuText U OptionsEvalBrowser "Pesquisadores de jogos" 0
 menuText U OptionsEvalFics "Tabuleiros FICS" 0
 menuText U OptionsEvalTime "Tempo de avaliação" 0 {Time for quick analysis probe}
+# ====== TODO To be translated ======
+menuText U OptionsEvalScale "Scale" 0 {Scorebar scale}
+# ====== TODO To be translated ======
+menuText U OptionsEvalTicks "Show ticks" 0
 menuText U OptionsEvalLog  "Avaliação logaritmica" 0
 menuText U OptionsLanguage "Linguagem" 0 {Menu de selecao de linguagem}
 menuText U OptionsMovesTranslatePieces "Traduzir peças" 0 {Traduzir a primeira letra das peças}

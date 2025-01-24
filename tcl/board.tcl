@@ -3174,12 +3174,10 @@ proc ::board::update_evalbar_linlog {w eval} {
   }
 }
 
-#
 # Draw a eval bar => Simple linear -5 to 5 (eg), clip things beyond
-#
 
 proc ::board::update_evalbar_linear {w eval} {
-  set y 5
+  set y $::evalScale
 
   set height [$w.evalbar cget -height]
   set width [expr {int(ceil($::board::_size($w)/10.0))}]
@@ -3195,10 +3193,22 @@ proc ::board::update_evalbar_linear {w eval} {
     set X [expr ($y.0 + $eval)*$unitLen]
     $w.evalbar create line $width  0 $width $X      -width $width2 -fill white -tag evalbar
     $w.evalbar create line $width $X $width $height -width $width2 -fill black -tag evalbar
+    if {$::evalTicks} {
+      for {set i -$::evalScale} {$i < $::evalScale} {incr i} {
+         set T [expr ($i + $::evalScale) * $unitLen + $::borderwidth]
+         $w.evalbar create line 0 $T $width2 $T -width 2 -fill [expr {($i > $eval) ? "white" : "grey70"}] -tag evalbar
+      }
+    }
   } else {
     set X [expr ($y.0 - $eval)*$unitLen]
     $w.evalbar create line $width  0 $width $X      -width $width2 -fill black -tag evalbar
     $w.evalbar create line $width $X $width $height -width $width2 -fill white -tag evalbar
+    if {$::evalTicks} {
+      for {set i -$::evalScale} {$i < $::evalScale} {incr i} {
+         set T [expr ($i + $::evalScale) * $unitLen + $::borderwidth]
+         $w.evalbar create line 0 $T $width2 $T -width 2 -fill [expr {(-$i > $eval) ? "white" : "grey70"}] -tag evalbar
+      }
+    }
   }
 }
 
@@ -3207,7 +3217,7 @@ proc ::board::update_evalbar_linear {w eval} {
 # Show evalbar only if enabled when creating the board or changed directly later.
 #
 
-proc ::board::update_evalbar {w {eval {}} {time {}}} {
+proc ::board::update_evalbar {{w .main.board} {eval {}} {time {}}} {
   if {$eval == {}} {
     set eval $::board::_eval($w)
   }

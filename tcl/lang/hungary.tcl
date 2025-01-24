@@ -329,6 +329,10 @@ menuText H OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText H OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 # ====== TODO To be translated ======
+menuText H OptionsEvalScale "Scale" 0 {Scorebar scale}
+# ====== TODO To be translated ======
+menuText H OptionsEvalTicks "Show ticks" 0
+# ====== TODO To be translated ======
 menuText H OptionsEvalLog  "Logarithmic Eval" 0
 menuText H OptionsLanguage "Nyelv" 0 {A menü nyelvének kiválasztása}
 # ====== TODO To be translated ======

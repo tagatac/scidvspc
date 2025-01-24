@@ -306,6 +306,10 @@ menuText W OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText W OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 # ====== TODO To be translated ======
+menuText W OptionsEvalScale "Scale" 0 {Scorebar scale}
+# ====== TODO To be translated ======
+menuText W OptionsEvalTicks "Show ticks" 0
+# ====== TODO To be translated ======
 menuText W OptionsEvalLog  "Logarithmic Eval" 0
 menuText W OptionsLanguage "Språk" 0 {Välj språk}
 menuText W OptionsMovesTranslatePieces "Översätt pjäser" 0 {Översätt första bokstaven för pjäser}

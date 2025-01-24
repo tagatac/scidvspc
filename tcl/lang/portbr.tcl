@@ -356,6 +356,10 @@ menuText B OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText B OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 # ====== TODO To be translated ======
+menuText B OptionsEvalScale "Scale" 0 {Scorebar scale}
+# ====== TODO To be translated ======
+menuText B OptionsEvalTicks "Show ticks" 0
+# ====== TODO To be translated ======
 menuText B OptionsEvalLog  "Logarithmic Eval" 0
 menuText B OptionsLanguage "Linguagem" 0 {Menu de selecao de linguagem}
 

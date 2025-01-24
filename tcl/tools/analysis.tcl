@@ -2611,7 +2611,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   bind $w <Configure> "if {\"%W\" == \"$w.b\"} {recordWinSize $w ; placePopupButton $n}"
   placePopupButton $n
   if {$::mainEngine == -1 && $analysis(autostart$n)} {
-     after idle "set ::mainEngine $n ; ::board::update_evalbar .main.board"
+     after idle "set ::mainEngine $n ; ::board::update_evalbar"
    }
 }
 
@@ -3327,7 +3327,7 @@ proc toggleEngineAnalysis {{n -1}} {
     set analysis(exclude$n) ""
   } else  {
     startAnalyzeMode $n
-    after idle "set ::mainEngine $n ; ::board::update_evalbar .main.board"
+    after idle "set ::mainEngine $n ; ::board::update_evalbar"
     $b configure -image tb_pause
     if {$analysis(uci$n) && $::uci::goCommand != "go infinite"} {
       ::utils::tooltip::Set $b $::uci::goCommand

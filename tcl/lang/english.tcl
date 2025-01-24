@@ -280,6 +280,8 @@ menuText E OptionsEvalMain "Main Board" 0
 menuText E OptionsEvalBrowser "Game Browsers" 0
 menuText E OptionsEvalFics "Fics boards" 0
 menuText E OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
+menuText E OptionsEvalScale "Scale" 0 {Scorebar scale}
+menuText E OptionsEvalTicks "Show ticks" 0
 menuText E OptionsEvalLog  "Logarithmic eval" 0
 
 menuText E OptionsLanguage "Language" 0 {Select menu language}

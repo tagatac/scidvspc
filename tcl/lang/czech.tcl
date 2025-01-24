@@ -324,6 +324,10 @@ menuText C OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText C OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 # ====== TODO To be translated ======
+menuText C OptionsEvalScale "Scale" 0 {Scorebar scale}
+# ====== TODO To be translated ======
+menuText C OptionsEvalTicks "Show ticks" 0
+# ====== TODO To be translated ======
 menuText C OptionsEvalLog  "Logarithmic Eval" 0
 menuText C OptionsLanguage "Jazyk" 0 {Vybrat jazyk menu}
 # ====== TODO To be translated ======

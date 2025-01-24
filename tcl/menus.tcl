@@ -1012,7 +1012,7 @@ $m add command -label OptionsSave -command {
     maintFlag useGraphFigurine photosMinimized bookmarks(gamehistory) playerInfoHistory defaultDBs tbOnline
     glistSize glexport glistColOrder glistColWidth glistColAnchor addRatings(overwrite) addRatings(filter)
     ::board::arrowWidth ::board::arrowLength ::board::enableMPVTls
-    blistColOrder blistColWidth blistColAnchor macWheelMouse epdAnnotateMode epdDelay evalTime evalUseLog} {
+    blistColOrder blistColWidth blistColAnchor macWheelMouse epdAnnotateMode epdDelay evalTime evalScale evalUseLog evalTicks} {
 
       puts $optionF "set $i [list [set $i]]"
 
@@ -1524,9 +1524,15 @@ menu $m -tearoff -1
 $m add checkbutton -label OptionsEvalMain -variable ::gameInfo(showEval) -command ::board::toggleeval
 $m add checkbutton -label OptionsEvalBrowser -variable ::gbrowser::showEval
 $m add checkbutton -label OptionsEvalFics  -variable ::fics::showEval
-$m add checkbutton -label OptionsEvalLog  -variable ::evalUseLog
+$m add checkbutton -label OptionsEvalTicks -variable ::evalTicks -command ::board::update_evalbar
+$m add checkbutton -label OptionsEvalLog  -variable ::evalUseLog -command ::board::update_evalbar
+$m add cascade -label OptionsEvalScale -menu $m.evalscale
+menu $m.evalscale
+for {set i 1} { $i <= 10 } { incr i } {
+  $m.evalscale add radiobutton -label "$i" -variable ::evalScale -value $i -command ::board::update_evalbar
+}
 $m add cascade -label OptionsEvalTime -menu $m.evaltime
-menu $m.evaltime -tearoff 1
+menu $m.evaltime
 foreach i {50 100 150 200 300 400 500 600 800 1000} {
   $m.evaltime add radiobutton -label "$i ms" -variable ::evalTime -value $i
 }
@@ -1832,7 +1838,7 @@ proc setLanguageMenus {{lang ""}} {
     Numbers Windows Theme Export ECO Spell Table BooksDir TacticsBasesDir Informant Sounds SaveBases Save AutoSave} {
     configMenuText .menu.options [tr Options$tag $oldLang] Options$tag $lang
   }
-  foreach tag {Main Browser Fics Log Time} {
+  foreach tag {Main Browser Fics Log Time Scale Ticks} {
     configMenuText .menu.options.evalbar [tr OptionsEval$tag $oldLang] OptionsEval$tag $lang
   }
 

@@ -313,6 +313,10 @@ menuText N OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText N OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 # ====== TODO To be translated ======
+menuText N OptionsEvalScale "Scale" 0 {Scorebar scale}
+# ====== TODO To be translated ======
+menuText N OptionsEvalTicks "Show ticks" 0
+# ====== TODO To be translated ======
 menuText N OptionsEvalLog  "Logarithmic Eval" 0
 menuText N OptionsLanguage "Kies taal" 0 {Kies taal}
 menuText N OptionsMovesTranslatePieces "Stukken vertalen" 0 {Vertalen eerste letters van de stukken}

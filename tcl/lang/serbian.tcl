@@ -345,6 +345,10 @@ menuText Y OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText Y OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 # ====== TODO To be translated ======
+menuText Y OptionsEvalScale "Scale" 0 {Scorebar scale}
+# ====== TODO To be translated ======
+menuText Y OptionsEvalTicks "Show ticks" 0
+# ====== TODO To be translated ======
 menuText Y OptionsEvalLog  "Logarithmic Eval" 0
 menuText Y OptionsLanguage "Jezik" 0 {Izaberi jezik}
 # ====== TODO To be translated ======

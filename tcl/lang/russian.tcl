@@ -302,6 +302,10 @@ menuText R OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText R OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 # ====== TODO To be translated ======
+menuText R OptionsEvalScale "Scale" 0 {Scorebar scale}
+# ====== TODO To be translated ======
+menuText R OptionsEvalTicks "Show ticks" 0
+# ====== TODO To be translated ======
 menuText R OptionsEvalLog  "Logarithmic Eval" 0
 menuText R OptionsLanguage "Язык" 0 {Меню выбора языка}
 menuText R OptionsMovesTranslatePieces "Перевод фигур" 0 {Перевести первый символ фигуры}

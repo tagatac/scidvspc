@@ -325,6 +325,10 @@ menuText G OptionsEvalFics "Fics boards" 0
 # ====== TODO To be translated ======
 menuText G OptionsEvalTime "Evaluation time" 0 {Time for quick analysis probe}
 # ====== TODO To be translated ======
+menuText G OptionsEvalScale "Scale" 0 {Scorebar scale}
+# ====== TODO To be translated ======
+menuText G OptionsEvalTicks "Show ticks" 0
+# ====== TODO To be translated ======
 menuText G OptionsEvalLog  "Logarithmic Eval" 0
 
 menuText G OptionsLanguage "Γλώσσα" 2 {Επιλογής Γλώσσας Μενού}
