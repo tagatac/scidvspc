@@ -3147,30 +3147,59 @@ proc boardToFile { format filepath } {
 # -12.6 to +12.6 eval maps to -4sq to +4sq around mid point (anything beyond clips to these)
 #
 
-proc ::board::update_evalbar_linlog {w eval} {
-  set height [$w.evalbar cget -height]
-  set unitLen [expr $height/4]
-
+proc ::board::evalbar_linlog_eval2pos {eval} {
   if {($eval >= -2) && ($eval <= 2)} {
-    set wlen [expr $eval/2]
+    set wlen [expr $eval/2.0]
   } else {
     set wlen [expr (log10(abs($eval*1000*3.16))-3.0)*1.2489]
     if {$wlen > 2.0} { set wlen 2.0 }
     if {$eval < 0.0} { set wlen [expr $wlen*-1] }
   }
+  return $wlen
+}
 
+proc ::board::update_evalbar_linlog {w eval} {
+  set height [$w.evalbar cget -height]
+  set unitLen [expr $height/4]
+
+  set wlen [::board::evalbar_linlog_eval2pos $eval]
   set width [expr {int(ceil($::board::_size($w)/10.0))}]
   set width2 [expr {$width * 2}]
+  if {$w == ".main.board"} {
+    set tickW 2
+  } else {
+    set tickW 1
+  }
+
+
+  # ticks wrt piece values
+  set ticks {-9 -5 -3 -1 0 1 3 5 9}
   # 2 1 0 -1 -2 ie 4 3 2 1 0
   $w.evalbar delete evalbar
   if {$::board::_flip($w)} {
     set X [expr (($wlen+2.0))*$unitLen]
     $w.evalbar create line $width  0 $width $X      -width $width2 -fill white -tag evalbar
     $w.evalbar create line $width $X $width $height -width $width2 -fill black -tag evalbar
+    if {$::evalTicks} {
+      for {set i 0} {$i < [llength $ticks]} {incr i} {
+        set evalTick [lindex $ticks $i]
+        set wlenTick [::board::evalbar_linlog_eval2pos $evalTick]
+        set T [expr (($wlenTick+2.0))*$unitLen]
+        $w.evalbar create line 0 $T $width2 $T -width $tickW -fill [expr {($T > $X) ? "white" : "grey70"}] -tag evalbar
+      }
+    }
   } else {
     set X [expr (4.0-($wlen+2.0))*$unitLen]
     $w.evalbar create line $width  0 $width $X      -width $width2 -fill black -tag evalbar
     $w.evalbar create line $width $X $width $height -width $width2 -fill white -tag evalbar
+    if {$::evalTicks} {
+      for {set i 0} {$i < [llength $ticks]} {incr i} {
+        set evalTick [lindex $ticks $i]
+        set wlenTick [::board::evalbar_linlog_eval2pos $evalTick]
+        set T [expr (4.0-($wlenTick+2.0))*$unitLen]
+        $w.evalbar create line 0 $T $width2 $T -width $tickW -fill [expr {($X > $T) ? "white" : "grey70"}] -tag evalbar
+      }
+    }
   }
 }
 
@@ -3182,6 +3211,11 @@ proc ::board::update_evalbar_linear {w eval} {
   set height [$w.evalbar cget -height]
   set width [expr {int(ceil($::board::_size($w)/10.0))}]
   set width2 [expr {$width * 2}]
+  if {$w == ".main.board"} {
+    set tickW 2
+  } else {
+    set tickW 1
+  }
 
   set unitLen [expr $height/($y*2.0)]
 
@@ -3196,7 +3230,7 @@ proc ::board::update_evalbar_linear {w eval} {
     if {$::evalTicks} {
       for {set i [expr -$::evalScale + 1]} {$i < $::evalScale} {incr i} {
          set T [expr ($i + $::evalScale) * $unitLen + $::borderwidth]
-         $w.evalbar create line 0 $T $width2 $T -width 2 -fill [expr {($i > $eval) ? "white" : "grey70"}] -tag evalbar
+         $w.evalbar create line 0 $T $width2 $T -width $tickW -fill [expr {($i > $eval) ? "white" : "grey70"}] -tag evalbar
       }
     }
   } else {
@@ -3206,7 +3240,7 @@ proc ::board::update_evalbar_linear {w eval} {
     if {$::evalTicks} {
       for {set i [expr -$::evalScale + 1]} {$i < $::evalScale} {incr i} {
          set T [expr ($i + $::evalScale) * $unitLen + $::borderwidth]
-         $w.evalbar create line 0 $T $width2 $T -width 2 -fill [expr {(-$i > $eval) ? "white" : "grey70"}] -tag evalbar
+         $w.evalbar create line 0 $T $width2 $T -width $tickW -fill [expr {(-$i > $eval) ? "white" : "grey70"}] -tag evalbar
       }
     }
   }
