@@ -1220,6 +1220,9 @@ proc okAnnotation {n} {
       appendTag Depth "$annotate(WantedDepth)"
     }
   }
+  # Engine own book breaks annotation, so disable
+  sendToEngine $n "setoption name OwnBook value false"
+
   if {$autoplayMode == 0} { toggleAutoplay }
   set disableButtons {startStop move line alllines exclude lockengine alllines training finishGame}
   foreach b $disableButtons {
