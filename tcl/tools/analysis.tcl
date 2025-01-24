@@ -111,12 +111,12 @@ proc resetEngine {n} {
   set analysis(boardSeqLengthSeen$n) 0  ;# used to decide when to update the visualisation
   set analysis(boardSeqDepthSeen$n) 0   ;# used to decide when to update the visualisation
   set analysis(boardSeqMode$n) 2
+  set annotate(Button$n)  0 ; # annotate checkbutton value
 }
 
 resetEngines
 
 set annotate(Engine) -1	; # $n of engine annotating
-set annotate(Button)  0 ; # annotate checkbutton value
 
 ### Divides string-represented node count by 1000
 
@@ -885,13 +885,20 @@ proc initAnnotation {n} {
   set analysis(prevscore$n) 0
 
   set w .configAnnotation
-  if { [winfo exists $w] } {
-    set annotate(Button) 1
+
+  if {[winfo exists $w]} {
+    # set annotate(Button$n) 1
     raiseWin $w
     return
   }
-  if { ! $annotate(Button) } { ; # end annotation
+  if {!$annotate(Button$n)} { ; # end annotation
     toggleAutoplay
+    return
+  }
+
+  if {$annotate(Engine) > -1} {
+    puts "initAnnotation: engine $annotate(Engine) already annotating"
+    set annotate(Button$n) 0
     return
   }
 
@@ -1132,12 +1139,12 @@ proc initAnnotation {n} {
   set w .configAnnotation
 
   addHorizontalRule $w
-  dialogbutton $w.buttons.cancel -textvar tr(Cancel) -command {
-    bind .configAnnotation <Destroy> {}
+  dialogbutton $w.buttons.cancel -textvar tr(Cancel) -command "
+    bind .configAnnotation <Destroy> \{\}
     destroy .configAnnotation
-    set annotate(Engine) -1
-    set annotate(Button) 0
-  }
+    set ::annotate(Engine) -1
+    set ::annotate(Button$n) 0
+  "
   dialogbutton $w.buttons.help -textvar tr(Help) -command {helpWindow Analysis Annotating}
   dialogbutton $w.buttons.ok -text "OK" -command "okAnnotation $n"
 
@@ -2018,13 +2025,12 @@ proc destroyAnalysisWin {n} {
 
   global windowsOS analysis annotate
 
+  set annotate(Button$n) 0
   if {[winfo exists .configAnnotation]} {
     # Is annotation being configured ?
-    set annotate(Button) 0
     destroy .configAnnotation
   } elseif {$annotate(Engine) == $n} {
     # Is annotation going ?
-    set annotate(Button) 0
     cancelAutoplay
   }
 
@@ -2396,20 +2402,9 @@ proc makeAnalysisWin {{n 0} {options {}}} {
     -width 2 -font font_Small -command "changePVSize $n" 
   ::utils::tooltip::Set $w.b.multipv $tr(Lines)
 
-  set showAnnoButton 1
-  for {set i 0} {$i < [llength $::engines(list)]} {incr i} {
-    if {[winfo exists .analysisWin$i.b.annotatebut]  && [winfo class .analysisWin$i.b.annotatebut] == "Checkbutton"} {
-      set showAnnoButton 0
-    }
-  }
-
-  if {$showAnnoButton} {
-    checkbutton $w.b.annotatebut -image tb_annotate -indicatoron false -width 32 -height 32 \
-      -variable annotate(Button) -command "initAnnotation $n" -relief $relief
-    ::utils::tooltip::Set $w.b.annotatebut $tr(Annotate)
-  } else {
-    button $w.b.annotatebut 
-  }
+  checkbutton $w.b.annotatebut -image tb_annotate -indicatoron false -width 32 -height 32 \
+    -variable annotate(Button$n) -command "initAnnotation $n" -relief $relief
+  ::utils::tooltip::Set $w.b.annotatebut $tr(Annotate)
 
   checkbutton $w.b.lockengine -image tb_lockengine -indicatoron false -width 32 -height 32 \
     -variable analysis(lockEngine$n) -command "toggleLockEngine $n" -relief $relief
@@ -2467,9 +2462,6 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   pack $w.b.startStop $w.b.move $w.b.line $w.b.alllines \
        $w.b.multipv $w.b.annotatebut $w.b.lockengine $w.b.showboard $w.b.exclude $w.b.priority $w.b.showinfo \
        $w.b.update $w.b.finishGame -side left
-  if {!$showAnnoButton} {
-    pack forget $w.b.annotatebut
-  }
   pack $w.b.multipv -fill y -pady 2
   $w.b.multipv configure -state readonly
 
@@ -3256,7 +3248,7 @@ proc checkEngineIsAlive {n} {
 proc toggleFinishGame {n} {
   global analysis annotate
 
-  if { $annotate(Button) || $::autoplayMode } {
+  if { $annotate(Button$n) || $::autoplayMode } {
     return
   }
   if {! [sc_pos isAt vend]} {
