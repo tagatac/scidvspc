@@ -1878,19 +1878,19 @@ proc cancelAutoplay {} {
   global autoplayMode annotate
 
   set autoplayMode 0
-  if {$annotate(Engine) > -1} {
-    if {[winfo exists .analysisWin$annotate(Engine).b.startStop]} {
-      set n $annotate(Engine)
+  set n $annotate(Engine)
+  if {$n > -1} {
+    if {[winfo exists .analysisWin$n.b.startStop]} {
       set disableButtons {startStop move line alllines exclude lockengine alllines training finishGame}
       foreach b $disableButtons {
         .analysisWin$n.b.$b configure -state normal
       }
+      set annotate(Button$n) 0
      # Little hack to stop <Configure> from making the analysis widget big (and making the main board tiny) while the App is iconifed
      update idletasks
     }
   }
   set annotate(Engine) -1
-  set annotate(Button) 0
   after cancel autoplay
   .main.button.autoplay configure -image autoplay_off
 }
