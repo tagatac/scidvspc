@@ -487,13 +487,14 @@ namespace eval pgn {
       toplevel $w -relief solid -borderwidth 0
       wm withdraw $w
       wm transient $w .pgnWin
-      wm overrideredirect $w 1
+      if {!$::macCocoa} {wm overrideredirect $w 1}
       ::board::new $w.bd $psize
       pack $w.bd -side top -padx 2 -pady 2
     }
     ::board::update $w.bd $bd
 
     # Make sure the popup window can fit on the screen:
+    if {$::macCocoa} {incr yc -20}
     incr xc -5
     incr yc -5
     update idletasks
@@ -508,12 +509,14 @@ namespace eval pgn {
     wm geometry $w "+$xc+$yc"
     wm deiconify $w
     if {$::windowsOS || $::macOS} {
-      bind $w.bd.bd <MouseWheel> {event generate .pgnWin <MouseWheel>}
+      # some internal macOS bug here.. won't scroll up
+      bind $w.bd.bd <MouseWheel> {event generate .pgnWin <MouseWheel> -delta "%D"}
     } else {
       bind $w.bd.bd <Button-4> {event generate .pgnWin <Button-4>}
       bind $w.bd.bd <Button-5> {event generate .pgnWin <Button-5>}
     }
     bind $w <Leave> ::pgn::HideBoard
+    bind $w <Escape> ::pgn::HideBoard
     raiseWin $w
   }
 

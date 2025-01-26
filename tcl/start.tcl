@@ -1182,7 +1182,8 @@ proc resizeMainBoard {} {
     incr width_used 30
   }
   if {$::board::_showEvalbar($bd)} {
-    incr width  [lindex [ grid bbox $bd 12 1] 2]
+    incr width [lindex [ grid bbox $bd 12 1] 2]
+    incr width 2
   }
 
   # Not quite perfect for some reason (-16)

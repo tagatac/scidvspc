@@ -1386,7 +1386,7 @@ proc ::board::new {w {psize 40} {showmat 0} {flip 0} {stm 0} {evalbar 0} {mpvtls
   ### Hmm... is this correct ? &&&
   set ::board::_showmat($w) [expr $::gameInfo(showMaterial) && $::board::_showmat($w)]
 
-  canvas $w.evalbar -width [expr {int(ceil($::board::_size($w)/10.0))}] -height $bsize
+  canvas $w.evalbar -width [expr {int(ceil($::board::_size($w)/10.0))+2}] -height $bsize
 
   if {$::board::_showEvalbar($w)} {
     grid $w.evalbar -row 1 -column 12 -rowspan 8 -padx 4
@@ -3163,7 +3163,7 @@ proc ::board::update_evalbar_linlog {w eval} {
   set unitLen [expr $height/4]
 
   set wlen [::board::evalbar_linlog_eval2pos $eval]
-  set width [expr {int(ceil($::board::_size($w)/10.0))}]
+  set width [expr {int(ceil($::board::_size($w)/10.0))+2}]
   set width2 [expr {$width * 2}]
   if {$w == ".main.board"} {
     set tickW 2
@@ -3209,7 +3209,7 @@ proc ::board::update_evalbar_linear {w eval} {
   set y $::evalScale
 
   set height [$w.evalbar cget -height]
-  set width [expr {int(ceil($::board::_size($w)/10.0))}]
+  set width [expr {int(ceil($::board::_size($w)/10.0))+2}]
   set width2 [expr {$width * 2}]
   if {$w == ".main.board"} {
     set tickW 2
@@ -3259,9 +3259,13 @@ proc ::board::update_evalbar {{w .main.board} {eval {}} {time {}}} {
     $w.evalbar delete evalbar
 
     set height [$w.evalbar cget -height]
-    set width [expr {int(ceil($::board::_size($w)/10.0))}]
+    set width [expr {int(ceil($::board::_size($w)/10.0))+2}]
     set width2 [expr {$width * 2}]
-    $w.evalbar create rectangle 1 1 $width $height -outline $::bgcolor -tag evalbar
+    if {$::macOS} {
+      $w.evalbar create rectangle 3 3 [expr 2+$width] [expr 2+$height] -outline $::bgcolor -tag evalbar
+    } else {
+      $w.evalbar create rectangle 1 1 $width $height -outline $::bgcolor -tag evalbar
+    }
     return
   }
 
