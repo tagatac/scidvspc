@@ -220,7 +220,7 @@ namespace eval pgn {
 
     # # Middle button popups a PGN board
     bind $w.text <ButtonPress-2> "::pgn::ShowBoard $w.text %x %y %X %Y"
-    bind $w <ButtonRelease-2> ::pgn::HideBoard
+    # bind $w <ButtonRelease-2> ::pgn::HideBoard
 
     # Right button draws context menu
     bind $w <ButtonPress-3> "::pgn::contextMenu $w.text"
@@ -484,8 +484,9 @@ namespace eval pgn {
     if {$psize > $::boardSize} { set psize $::boardSize }
 
     if {! [winfo exists $w]} {
-      toplevel $w -relief solid -borderwidth 2
+      toplevel $w -relief solid -borderwidth 0
       wm withdraw $w
+      wm transient $w .pgnWin
       wm overrideredirect $w 1
       ::board::new $w.bd $psize
       pack $w.bd -side top -padx 2 -pady 2
@@ -493,8 +494,8 @@ namespace eval pgn {
     ::board::update $w.bd $bd
 
     # Make sure the popup window can fit on the screen:
-    incr xc 5
-    incr yc 5
+    incr xc -5
+    incr yc -5
     update idletasks
     set dx [winfo reqwidth $w]
     set dy [winfo reqheight $w]
@@ -506,6 +507,13 @@ namespace eval pgn {
     }
     wm geometry $w "+$xc+$yc"
     wm deiconify $w
+    if {$::windowsOS || $::macOS} {
+      bind $w.bd.bd <MouseWheel> {event generate .pgnWin <MouseWheel>}
+    } else {
+      bind $w.bd.bd <Button-4> {event generate .pgnWin <Button-4>}
+      bind $w.bd.bd <Button-5> {event generate .pgnWin <Button-5>}
+    }
+    bind $w <Leave> ::pgn::HideBoard
     raiseWin $w
   }
 
