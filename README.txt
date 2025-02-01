@@ -29,8 +29,6 @@
      6.7 scid's history
 
   7. changes
-        7..1 Scid vs. PC 4.25
-
   8. contact
   9. links
 
@@ -120,21 +118,21 @@
 
   3.  download
 
-  Source scid_vs_pc-4.25.tgz
-  <http://sourceforge.net/projects/scidvspc/files/source/scid_vs_pc-4.25.tgz/download>
+  Source scid_vs_pc-4.26.tgz
+  <http://sourceforge.net/projects/scidvspc/files/source/scid_vs_pc-4.26.tgz/download>
 
-  Windows Scid vs PC-4.25.exe
-  <http://sourceforge.net/projects/scidvspc/files/windows/Scid%20vs%20PC-4.25.exe/download>
+  Windows Scid vs PC-4.26.exe
+  <http://sourceforge.net/projects/scidvspc/files/windows/Scid%20vs%20PC-4.26.exe/download>
 
-  Windows 64 bit Scid vs PC-4.25.x64.exe
-  <http://sourceforge.net/projects/scidvspc/files/windows-64bit/Scid%20vs%20PC-4.25.x64.exe/download>
+  Windows 64 bit Scid vs PC-4.26.x64.exe
+  <http://sourceforge.net/projects/scidvspc/files/windows-64bit/Scid%20vs%20PC-4.26.x64.exe/download>
 
-  Mac ScidvsMac-4.25.dmg
-  <http://sourceforge.net/projects/scidvspc/files/mac/ScidvsMac-4.25.dmg/download>
+  Mac ScidvsMac-4.26.dmg
+  <http://sourceforge.net/projects/scidvspc/files/mac/ScidvsMac-4.26.dmg/download>
 
-  Mac 64bit (beta) ScidvsMac-4.25.x64.dmg
+  Mac 64bit (beta) ScidvsMac-4.26.x64.dmg
   <https://sourceforge.net/projects/scidvspc/files/mac-64bit-
-  unsupported/ScidvsMac-4.25.x64.dmg/download>
+  unsupported/ScidvsMac-4.26.x64.dmg/download>
 
   3.0.1.  Other resources
 
@@ -164,8 +162,8 @@
   Installing from source:
 
   ______________________________________________________________________
-  tar -xzf scid_vs_pc-4.25.tgz
-  cd scid_vs_pc-4.25
+  tar -xzf scid_vs_pc-4.26.tgz
+  cd scid_vs_pc-4.26
   ./configure
   make
   sudo make install
@@ -207,7 +205,7 @@
 
   4.0.3.  Mac OS X
 
-  The ``ScidvsMac-4.25 app'' should include everything you need. Simply
+  The ``ScidvsMac-4.26 app'' should include everything you need. Simply
   drag and drop the App into /Applications (or similar). It cannot be
   run from the dmg disk image.
 
