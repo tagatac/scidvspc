@@ -607,9 +607,6 @@
      <https://www.chesstech.info/2019/02/scid-vs-pc-players-pictures-
      part-1.html>
 
-  o  Scid vs. 960/variants (Chess960 support)
-     <https://github.com/brittonf/scid-vs-variants>
-
   o  Debian/Mint/Ubuntu installation how-to
      <http://www.linuxx.eu/2012/11/scid-vs-pc-installation-guide-
      ubuntu.html>
