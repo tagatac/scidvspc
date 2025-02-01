@@ -120,7 +120,7 @@ namespace eval uci {
         set analysis(moves$n) $bestmove
       } else {
 	# Nasty hack to handle engine using internal book and not sending pv, only bestmove (when depth should be 0)
-	if {$analysis(depth$n) == 0} {
+	if {$analysis(go$n) && $analysis(depth$n) == 0} {
 	  updateAnalysisBoard $n $bestmove
 	  set h .analysisWin$n.hist.text
 	  set analysis(moves$n) $bestmove
