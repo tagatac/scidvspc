@@ -1519,12 +1519,12 @@ proc ::board::resize2 {w psize} {
   # resize the material canvas &
   if {$::board::_showmat($w)} {
     set ::board::_matwidth($w) [boardSize_plus_n -7 $w]
-    $w.mat configure -height [expr $::board::_size($w) * 8]
+    $w.mat configure -height [expr $psize * 8]
     $w.mat configure -width $::board::_matwidth($w)
     ::board::material $w
   }
 
-  $w.evalbar configure -height $bsize
+  $w.evalbar configure -width [expr {int(ceil($psize/10.0))+2}] -height $bsize
 
   ::board::update $w
 
