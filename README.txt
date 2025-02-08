@@ -147,10 +147,10 @@
 
   4.0.1.  Linux , Unix
 
-  Installing from source is reccommended, though there exists deb packages of some versions (from third parties) in the linux packages
-  <https://sourceforge.net/projects/scidvspc/files/linux%20packages/>
+  Installing from source is reccommended, though there exists deb packages of some versions (from third parties) in linux packages
+  <https://sourceforge.net/projects/scidvspc/files/linux%20packages/>, and Hanish maintains a snap package at https://snapcraft.io/scidvspc-hkvc.
 
-  Scid vs. PC requires Wish (Tcl/Tk) 8.5 or later and a C++ compiler.
+  Scid vs. PC requires Wish (Tcl/Tk) 8.6 and a C++ compiler.
   Example packages required include "tcl, tk, tcl-dev, tk-dev" and
   "gcc, g++ , libstdc++"; but will vary with your distribution.
 
