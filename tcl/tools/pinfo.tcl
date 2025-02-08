@@ -161,19 +161,30 @@ proc playerInfo {{player ""} {raise 0}} {
         image create photo photoPInfo -data $::photo($player)
     }
     $w.text configure -state normal
-    if {0} {
-      label $w.photo 
-      $w.photo configure -image photoPInfo -anchor ne
-      place $w.photo -in $w.text -relx 1.0 -x -1 -rely 0.0 -y 1 -anchor ne
-    } else {
-      if {![string match {The name*} $pinfo]} {
-	# image now scrolls with the widget
-	$w.text insert 2.0 "\n"
-	$w.text image create 2.0 -image photoPInfo -align top -padx 3 -pady 5
-      } ; # i cant get figging image to be below the text *&^%&!
-    }
+    if {![string match {The name*} $pinfo]} {
+      # image now scrolls with the widget
+      $w.text insert 2.0 "\n"
+      $w.text image create 2.0 -image photoPInfo -align top -padx 3 -pady 5
+    } ; # i cant get figging image to be below the text *&^%&!
     $w.text configure -state disabled
   } else {
+    # check in-case an alias has a custom photo
+    set player [trimEngineName $playerInfoName 0]
+    if {[info exists ::photo($player)]} {
+      if {[string match *.gif $::photo($player)]} {
+	  image create photo photoPInfo -file [file join $::scidPhotosDir $::photo($player)]
+      } else {
+	  image create photo photoPInfo -data $::photo($player)
+      }
+      $w.text configure -state normal
+      if {![string match {The name*} $pinfo]} { 
+	# image now scrolls with the widget
+	$w.text insert 2.0 "\n"
+	$w.text image create 2.0 -image photoPInfo -align top -padx 3 -pady 5 
+      }
+      $w.text configure -state disabled
+    }
+
     # place forget $w.photo
   }
 

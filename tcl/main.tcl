@@ -1106,26 +1106,28 @@ if {[file isdirectory $scidPhotosDir]} {
   # ::splash::add "User Photos: no such directory $scidPhotosDir"
 }
 
+### This is a freaking mess and generally has nothing to do with engines
+### It is called by every player photo query - S.A.
 
 # Try to change the engine name: ignore version number, try to ignore blanks
-proc trimEngineName { engine } {
-  set engine [sc_name retrievename $engine]
+proc trimEngineName { engine {retrieve 1}} {
+  if {$retrieve} {
+    set engine [sc_name retrievename $engine]
+  }
 
   set engine [string tolower $engine]
   if { [string first "deep " $engine] == 0 } {
     # strip "deep "
     set engine [string range $engine 5 end]
   }
-  # delete two first blank to make "The King" same as "TheKing"
-  # or "Green Light Chess" as "Greenlightchess"
-  set strindex [string first "\ " $engine]
-  set engine [string replace $engine $strindex $strindex]
-  set strindex [string first "\ " $engine]
-  set engine [string replace $engine $strindex $strindex]
+  ### Previously only removed first two " ", but now remove all as some players have multipart names
+  ### Might break some engine names though ??? - S.A.
+  # eg "Green Light Chess" as "Greenlightchess"
+  set engine [string map {{ } {}} $engine]
   set strindex [string first "," $engine]
   set slen [string len $engine]
   if { $strindex == -1 && $slen > 2 } {
-    #seems to be a engine name:
+    # seems to be a engine name
     # search until longest name matches an engine name
     set slen [string len $engine]
     for { set strindex $slen} {![info exists ::photo([string range $engine 0 $strindex])]\
