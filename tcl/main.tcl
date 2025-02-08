@@ -1072,49 +1072,12 @@ foreach photofile [glob -nocomplain -directory [file join $scidShareDir "photos"
   readPhotoFile $photofile
 }
 
-### Custom photos
-
-if {[file isdirectory $scidPhotosDir]} {
-  ::splash::add "Searching for custom photos (gifs) in $scidPhotosDir"
-  set pwd [pwd]
-  cd $scidPhotosDir
-  set count 0
-  foreach i [glob -nocomplain *.gif] {
-    # Filename must be the playername (eg "Abarca Aguirre, Manuel.gif")
-    # Instead of base64 data, we give FILENAME ($i)
-    set p [file rootname $i]
-    # and test image data now by creating tmpimage
-    if {[catch {
-      #convert names tolower case and strip the first two blanks.
-      set p [string tolower $p]
-      set strindex [string first " " $p]
-      set p [string replace $p $strindex $strindex]
-      set strindex [string first " " $p]
-      set p [string replace $p $strindex $strindex]
-      set ::photo($p) $i
-    }] || [catch {image create photo tmpimage -file $i} result]} {
-      unset ::photo($p)
-      ::splash::add "   Error processing photo $i: $result" error
-    } else {
-      incr count
-      # ::splash::add "   Ok processing photo $i" 
-    }
-  }
-  ::splash::add "    $count custom photos successfully loaded."
-  cd $pwd
-} else {
-  # ::splash::add "User Photos: no such directory $scidPhotosDir"
-}
-
 ### This is a freaking mess and generally has nothing to do with engines
 ### It is called by every player photo query - S.A.
 
 # Try to change the engine name: ignore version number, try to ignore blanks
-proc trimEngineName { engine {retrieve 1}} {
-  if {$retrieve} {
-    set engine [sc_name retrievename $engine]
-  }
-
+proc trimEngineName {engine} {
+  set engine [sc_name retrievename $engine]
   set engine [string tolower $engine]
   if { [string first "deep " $engine] == 0 } {
     # strip "deep "

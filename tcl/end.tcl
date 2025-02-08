@@ -2035,6 +2035,34 @@ if {$loadAtStart(spell)} {
     ::splash::add "    [lindex $result 0] players, [lindex $result 1] events, [lindex $result 2] sites, [lindex $result 3] rounds."
     set spellCheckFileExists 1
   }
+
+  ### Custom photos (must be processed after spellcheck init)
+  if {[file isdirectory $scidPhotosDir]} {
+    ::splash::add "Searching for custom photos (gifs) in $scidPhotosDir"
+    set pwd [pwd]
+    cd $scidPhotosDir
+    set count 0
+    foreach i [glob -nocomplain *.gif] {
+      # Filename must be the playername (eg "Abarca Aguirre, Manuel.gif")
+      # Instead of base64 data, we give FILENAME ($i)
+      set p [file rootname $i]
+      # and test image data now by creating tmpimage
+      if {[catch {
+	set p [trimEngineName $p]
+	set ::photo($p) $i
+      }] || [catch {image create photo tmpimage -file $i} result]} {
+	catch {unset ::photo($p)}
+	::splash::add "   Error processing photo $i: $result" error
+      } else {
+	incr count
+	# ::splash::add "   Ok processing photo $i" 
+      }
+    }
+    ::splash::add "    $count custom photos successfully loaded."
+    cd $pwd
+  } else {
+    # ::splash::add "User Photos: no such directory $scidPhotosDir"
+  }
 }
 
 #   Returns a file's canonical name.
