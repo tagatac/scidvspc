@@ -2524,6 +2524,7 @@ proc ::board::update {w {board ""} {animate 0} {eval {}}} {
 
   # Redraw last move highlight if mainboard
   if { $w == ".main.board"} {
+    set ::board::_eval($w) 0 ; # unset for now, will be set later
     ::board::lastMoveHighlight $w
 
     # ::board::update is called twice mostly :<

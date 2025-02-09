@@ -124,6 +124,7 @@ namespace eval uci {
 	  updateAnalysisBoard $n $bestmove
 	  set h .analysisWin$n.hist.text
 	  set analysis(moves$n) $bestmove
+	  set analysis(score$n) 0
 	  $h configure -state normal
 	  $h delete 1.0 end
 	  $h insert 1.0 "(bestmove [::trans $bestmove])"

@@ -3320,6 +3320,7 @@ proc toggleEngineAnalysis {{n -1}} {
     }
     .analysisWin$n.b.exclude configure -state disabled
     set analysis(exclude$n) ""
+    set ::mainEngine -1
   } else  {
     startAnalyzeMode $n
     after idle "set ::mainEngine $n ; ::board::update_evalbar"
@@ -4011,6 +4012,8 @@ proc updateAnalysisWindows {} {
 	if {$::mainEngine < 0} {
 	  set ::mainEngine $i
 	}
+      } else {
+        set ::analysis(score$i) 0
       }
     }
   }
