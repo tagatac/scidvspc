@@ -887,11 +887,13 @@ proc initAnnotation {n} {
   set w .configAnnotation
 
   if {[winfo exists $w]} {
-    # set annotate(Button$n) 1
-    raiseWin $w
+    # in case of different engine anno button hit, cancel previous and reinit with current. Ugly
+    $w.buttons.cancel invoke
+    set annotate(Button$n) 1
+    initAnnotation $n
     return
   }
-  if {!$annotate(Button$n)} { ; # end annotation
+  if {!$annotate(Button$n) && $annotate(Engine) == $n} { ; # end annotation
     toggleAutoplay
     return
   }
