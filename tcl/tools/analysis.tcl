@@ -1230,7 +1230,9 @@ proc okAnnotation {n} {
     }
   }
   # Engine own book breaks annotation, so disable
-  sendToEngine $n "setoption name OwnBook value false"
+  if {[string match *OwnBook*  $analysis(uciOptions$n)]} {
+    sendToEngine $n "setoption name OwnBook value false"
+  }
 
   if {$autoplayMode == 0} { toggleAutoplay }
   set disableButtons {startStop move line alllines exclude lockengine alllines training finishGame}
