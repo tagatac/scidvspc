@@ -1695,7 +1695,7 @@ namespace eval ::board::mark {
   # eg [%csl Ye5][%cal Rd5e4,Yb1c3,Yb1d2,Ye4e5]
   variable CBSquare    {csl}
   variable CBarrow     {cal}
-  variable CBColor     {[GRYB]}
+  variable CBColor     {[GRYBOC]}
   variable sqintern    {[a-h][1-8]}
 
   variable CBSquareRegex \
@@ -1766,8 +1766,10 @@ proc ::board::mark::getEmbeddedCmds {comment} {
            set c2  [string range $i 3 4]
            if {$col == "R"}  {set color firebrick}
            if {$col == "G"}  {set color green}
-           if {$col == "Y"}  {set color darkOrange1}
+           if {$col == "Y"}  {set color yellow2}
            if {$col == "B"}  {set color blue}
+           if {$col == "O"}  {set color darkOrange1}
+           if {$col == "C"}  {set color turquoise}
            lappend result [list $type $c1 $c2 $color]
            lappend result $indices
            lappend result $duplicate
