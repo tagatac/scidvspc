@@ -253,8 +253,7 @@ $m add command -label GameReplace -command gameReplace -accelerator "control-s"
 bind .main <Control-s> { .menu.game invoke [tr GameReplace] }
 set helpMessage($m,[incr menuindex]) GameReplace
 
-$m  add command -label GameAdd -command gameAdd  -accelerator "control-S"
-bind .main <Control-S> gameAdd
+$m  add command -label GameAdd -command gameAdd
 set helpMessage($m,[incr menuindex]) GameAdd
 
 $m add separator

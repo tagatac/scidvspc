@@ -393,7 +393,7 @@ namespace eval tacgame {
         lappend openingMovesList [string trim [regsub {^[1-9]+\.} $m ""] ]
       }
       
-      sc_game new
+      ::game::Clear noconfirm
       lappend openingMovesHash [sc_pos hash]
       foreach m  $openingMovesList {
         if {[catch {sc_move addSan $m}]} {
@@ -563,7 +563,7 @@ namespace eval tacgame {
   }
 
   proc initTacgame {} {
-    sc_game new
+    ::game::Clear noconfirm
     sc_game tags set -event "Tactical Game"
 
     set player_name [getMyPlayerName]

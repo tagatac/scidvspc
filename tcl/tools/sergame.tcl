@@ -370,7 +370,7 @@ namespace eval sergame {
         lappend openingMovesList [string trim [regsub {^[1-9]+\.} $p ""] ]
       }
       
-      sc_game new
+      ::game::Clear noconfirm
       lappend openingMovesHash [sc_pos hash]
       foreach m  $openingMovesList {
         if {[catch {sc_move addSan $m}]} { }
@@ -378,7 +378,7 @@ namespace eval sergame {
       }
     }
     if {!$::sergame::startFromCurrent} {
-      sc_game new
+      ::game::Clear noconfirm
       sc_game tags set -event "UCI Game"
       set player_name [getMyPlayerName]
       if {$player_name == ""} {set player_name {?}}
