@@ -487,6 +487,9 @@ proc compNM {n m k name1 name2} {
     set total [expr int($comp(base))]
     set mins [expr $total/60]
     set secs [expr $total%60]
+    if {![string is integer -strict $comp(base)]} {
+      set timecontrol $comp(base)
+    } else {
     if {$secs == 0} {
       set timecontrol $mins
     } else {
@@ -494,6 +497,7 @@ proc compNM {n m k name1 name2} {
 	set secs "0$secs"
       }
       set timecontrol $mins:$secs
+    }
     }
 
     if {$comp(showclock) && $comp(timecontrol) == "pergame"} {
