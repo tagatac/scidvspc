@@ -1770,17 +1770,31 @@ proc autoplay {} {
     ::move::Forward
   }
 
-  if {[sc_pos matchMoves {}] == ""} {
+  if {[sc_pos moves] == ""} {
     addScore $n single 1
-    if {$annotate(isBatch) && [sc_game number] != 0} {
-      nextgameAutoplay $n
+    if {[sc_var level] == 0 || !$annotate(isVar)} {
+      if {$annotate(isBatch) && [sc_game number] != 0} {
+        nextgameAutoplay $n
+      } else {
+        toggleEngineAnalysis $n
+        updateBoard -pgn
+        ::tools::graphs::score::Refresh
+        cancelAutoplay
+      }
+      return
     } else {
-      toggleEngineAnalysis $n
-      updateBoard -pgn
-      ::tools::graphs::score::Refresh
-      cancelAutoplay
+      # recursive annotation
+      sc_var exit
+      set lastVar [::popAnalysisData $n]
+      if { $lastVar > 0 } {
+        incr lastVar -1
+        sc_var enter $lastVar
+        updateBoard -pgn
+        ::pushAnalysisData $lastVar $n
+      } else {
+        ::move::Forward
+      }
     }
-    return
   }
 
   if {!$annotate(Depth)} {

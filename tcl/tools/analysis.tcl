@@ -1413,7 +1413,7 @@ proc addScore {n type {novar 0}} {
       return
     }
 
-    if { [sc_pos moves] == {} && [sc_pos isAt end]} {
+    if { [sc_pos moves] == {} && [sc_pos isAt vend]} {
       # Where is there getting called from ?. Hack to not display errant last mated score
       ### Last move , don't attempt to score as it comes out wrong/negative and breaks the score graph
       # But should we use scoreToMate and not score mating moves at all... but it's nice to see the graph maxed out
@@ -1711,24 +1711,26 @@ proc scoreToNag {score} {
 
 proc pushAnalysisData {lastVar n} {
   global analysis stack
-  lappend stack [list $analysis(prevscore$n) $analysis(score$n) \
-      $analysis(prevmoves$n) $analysis(moves$n) $lastVar ]
+  lappend stack \
+    [list $analysis(prevscore$n) $analysis(score$n) $analysis(prevmoves$n) $analysis(moves$n) $analysis(prevdepth$n) $analysis(prevmate$n) $lastVar]
 }
 
 proc popAnalysisData {n} {
   global analysis stack
-  # the start of analysis is in the middle of a variation
   if {[llength $stack] == 0} {
+    # the start of analysis is in the middle of a variation
     set analysis(prevscore$n) 0
     set analysis(score$n)     0
     set analysis(prevmoves$n) {}
     set analysis(moves$n)     {}
+    set analysis(prevdepth$n) 0
+    set analysis(prevmate$n) 0
     set lastVar 0
-    return
+  } else {
+    lassign [lindex $stack end] \
+      analysis(prevscore$n) analysis(score$n) analysis(prevmoves$n) analysis(moves$n) analysis(prevdepth$n) analysis(prevmate$n) lastVar
+    set stack [lreplace $stack end end]
   }
-  set tmp [lindex $stack end]
-  lassign $tmp analysis(prevscore$n) analysis(score$n) analysis(prevmoves$n) analysis(moves$n) lastVar
-  set stack [lreplace $stack end end]
   return $lastVar
 }
 
@@ -3281,7 +3283,7 @@ proc toggleFinishGame {n} {
 proc autoplayFinishGame {n} {
   if {!$::finishGameMode || ![winfo exists .analysisWin$n]} {return}
   makeAnalysisMove $n
-  if { [string index [sc_game info previousMove] end] == {#}} {
+  if {[string index [sc_game info previousMove] end] == "#"} {
     toggleFinishGame $n
     return
   }
