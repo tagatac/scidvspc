@@ -486,7 +486,7 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
     bind $w.c <ButtonPress-3> ::tools::graphs::score::Refresh
     bind $w.c <ButtonPress-1> "if {!\[winfo viewable $w.menu.options\]} {::tools::graphs::score::Move %x %y}"
     bind $w.c <ButtonPress-2> {::tools::graphs::score::ShowBoard %x %y %X %Y}
-    bind $w.c <ButtonRelease-2> ::pgn::HideBoard
+    # bind $w.c <ButtonRelease-2> ::pgn::HideBoard
     $w.c bind title <ButtonPress-3> "tk_popup $w.menu.options %X %Y"
     $w.c bind title <ButtonPress-1> "tk_popup $w.menu.options %X %Y"
     bind $w <Escape> "destroy $w"
@@ -821,14 +821,15 @@ proc ::tools::graphs::score::ShowBoard {x y xc yc} {
       toplevel $w -relief solid -borderwidth 2
       wm withdraw $w
       wm overrideredirect $w 1
+      wm transient $w $win
       ::board::new $w.bd $psize
       pack $w.bd -side top -padx 2 -pady 2
     }
     ::board::update $w.bd $bd
 
     # Make sure the popup window can fit on the screen:
-    incr xc 5
-    incr yc 5
+    incr xc -5
+    incr yc -5
     update idletasks
     set dx [winfo reqwidth $w]
     set dy [winfo reqheight $w]
@@ -840,6 +841,7 @@ proc ::tools::graphs::score::ShowBoard {x y xc yc} {
     }
     wm geometry $w "+$xc+$yc"
     wm deiconify $w
+    bind $w <Leave> ::pgn::HideBoard
     raiseWin $w
   }
 
