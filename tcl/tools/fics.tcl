@@ -619,7 +619,7 @@ namespace eval fics {
     unbusyCursor .
 
     # todo: fix this for windows &&&
-    if { ! $::windowsOS } {
+    if { ! ($::windowsOS||$::macOS) } {
       initPing
     }
   }
