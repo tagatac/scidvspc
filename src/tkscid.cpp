@@ -6703,11 +6703,11 @@ sc_game_crosstable (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv
     }
 
     if (option == OPT_LATEX) {
-        Tcl_AppendResult (ti, "\\documentclass[10pt,a4paper]{article}\n\n",
-                          "\\usepackage{a4wide}\n\n",
+        Tcl_AppendResult (ti, "\\documentclass{scrartcl}\n\n",
+                          "\\usepackage{booktabs}% provides toprule, midrule, bottomrule\n",
+                          "\\usepackage{longtable}\n\n",
                           "\\begin{document}\n\n",
                           "\\setlength{\\parindent}{0cm}\n",
-                          "\\setlength{\\parskip}{0.5ex}\n",
                           "\\small\n", NULL);
     }
 
@@ -6744,7 +6744,10 @@ sc_game_crosstable (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv
                      translate (ti, "Category", "Category"), category);
             Tcl_AppendResult (ti, stemp, NULL);
         }
-        Tcl_AppendResult (ti, newlineStr, NULL);
+		if (option == OPT_LATEX)
+		  Tcl_AppendResult (ti, "\n\n", NULL);
+		else
+		  Tcl_AppendResult (ti, newlineStr, NULL);
     }
 
     DString * dstr = new DString;

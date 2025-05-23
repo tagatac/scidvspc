@@ -142,6 +142,7 @@ class Crosstable
     void   PrintPerformance (DString * dstr, playerDataT * pdata);
     void   PrintAllPlayAll (DString * dstr, uint playerLimit);
     void   PrintKnockout (DString * dstr, uint playerLimit);
+    void   PrintKnockoutLaTeX (DString * dstr, uint playerLimit);
     void   PrintSwiss (DString * dstr, uint playerLimit);
 
     void   Init();

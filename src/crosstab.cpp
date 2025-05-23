@@ -555,7 +555,7 @@ Crosstable::PrintTable (DString * dstr, crosstableModeT mode, uint playerLimit, 
     }
     if (OutputFormat == CROSSTABLE_LaTeX) {
         StartTable = "";
-        EndTable = "\\end{tabular}\n\n";
+        EndTable = "\\end{longtable}\n";
         StartRow = "";
         EndRow = " \\\\";
         NewLine = "\n";
@@ -564,7 +564,7 @@ Crosstable::PrintTable (DString * dstr, crosstableModeT mode, uint playerLimit, 
         EndCol = " &";
         StartRightCol = "";
         EndRightCol = " &";
-        StartBoldCol = "\\bf ";
+        StartBoldCol = "\\bfseries ";
         EndBoldCol = " &";
     }
 
@@ -610,33 +610,26 @@ Crosstable::PrintTable (DString * dstr, crosstableModeT mode, uint playerLimit, 
 
     char stemp [100];
     if (GameCount > 1) {
-        if (OutputFormat == CROSSTABLE_Hypertext) {
-	  sprintf (stemp, "<blue><run ::crosstab::setFilter 0>%u game%s</run></blue>: %s%u %s%u %s%u",
-		   GameCount, strPlural (GameCount),
-		   OutputFormat == CROSSTABLE_LaTeX ? "{\\tt +}" : "+",
-		   ResultCount[RESULT_White],
-		   OutputFormat == CROSSTABLE_LaTeX ? "{\\tt -}" : "-",
-		   ResultCount[RESULT_Black],
-		   OutputFormat == CROSSTABLE_LaTeX ? "{\\tt =}" : "=",
-		   ResultCount[RESULT_Draw]);
-        } else {
-	  sprintf (stemp, "%u game%s: %s%u %s%u %s%u",
-		   GameCount, strPlural (GameCount),
-		   OutputFormat == CROSSTABLE_LaTeX ? "{\\tt +}" : "+",
-		   ResultCount[RESULT_White],
-		   OutputFormat == CROSSTABLE_LaTeX ? "{\\tt -}" : "-",
-		   ResultCount[RESULT_Black],
-		   OutputFormat == CROSSTABLE_LaTeX ? "{\\tt =}" : "=",
-		   ResultCount[RESULT_Draw]);
-        }
-        dstr->Append (stemp);
-        if (ResultCount[RESULT_None] > 0) {
-            sprintf (stemp, " %s%u", 
-                     OutputFormat == CROSSTABLE_LaTeX ? "{\\tt *}" : "*",
-                     ResultCount[RESULT_None]);
-            dstr->Append (stemp);
-        }
-        dstr->Append (NewLine);
+	  if (OutputFormat == CROSSTABLE_Hypertext) {
+		sprintf (stemp, "<blue><run ::crosstab::setFilter 0>%u games</run></blue>: %s%u %s%u %s%u",
+				 GameCount,
+				 "+", ResultCount[RESULT_White],
+				 "-", ResultCount[RESULT_Black],
+				 "=", ResultCount[RESULT_Draw]);
+	  } else {
+		sprintf (stemp, "%u games: %s%u %s%u %s%u",
+				 GameCount,
+				 "+", ResultCount[RESULT_White],
+				 "-", ResultCount[RESULT_Black],
+				 "=", ResultCount[RESULT_Draw]);
+	  }
+	  dstr->Append (stemp);
+	  if (ResultCount[RESULT_None] > 0) {
+		sprintf (stemp, " %s%u", 
+				 "*", ResultCount[RESULT_None]);
+		dstr->Append (stemp);
+	  }
+	  dstr->Append (NewLine);
     }
     return;
 }
@@ -645,16 +638,13 @@ void
 Crosstable::PrintDashesLine (DString * dstr)
 {
     // Print line of dashes, if not in HTML or LaTeX:
-    if (OutputFormat == CROSSTABLE_LaTeX) {
-        dstr->Append ("\\hline\n");
+    if (OutputFormat == CROSSTABLE_LaTeX)
         return;
-    }
-    if (OutputFormat == CROSSTABLE_Html) {
+    if (OutputFormat == CROSSTABLE_Html)
         return;
-    }
-    for (uint i=0; i < LineWidth; i++) {
+    for (uint i=0; i < LineWidth; i++)
         dstr->AddChar ('-');
-    }
+
     dstr->Append (NewLine);
 }
 
@@ -669,7 +659,10 @@ Crosstable::PrintPlayer (DString * dstr, playerDataT * pdata)
         dstr->Append (stemp);
     }
     sprintf (stemp, "%-*s ", LongestNameLen, pdata->name);
-    dstr->Append (StartCol, stemp, EndCol);
+	if (OutputFormat == CROSSTABLE_LaTeX)
+	  dstr->Append (StartCol, stemp, EndCol, " ");
+	else
+	  dstr->Append (StartCol, stemp, EndCol);
 
     if (PrintRatings) {
         if (pdata->elo) {
@@ -742,11 +735,17 @@ Crosstable::PrintPerformance (DString * dstr, playerDataT * pdata)
         if (pdata->elo) {
             int change = RatingChange (pdata->elo, oppAvgRating, 
                                        percentage, pdata->oppEloCount);
-            sprintf (stemp, "%4d %+3d", performance, change);
+			if (OutputFormat == CROSSTABLE_LaTeX)
+			  sprintf (stemp, "%4d & %+3d", performance, change);
+			else
+			  sprintf (stemp, "%4d %+3d", performance, change);
         } else {
             sprintf (stemp, "%4d    ", performance);
         }
-        dstr->Append ("   ", StartRightCol, stemp, EndRightCol);
+		if (OutputFormat == CROSSTABLE_LaTeX)
+		  dstr->Append ("   ", StartRightCol, stemp);
+		else
+		  dstr->Append ("   ", StartRightCol, stemp, EndRightCol);
     }
 }
 
@@ -755,24 +754,27 @@ Crosstable::PrintAllPlayAll (DString * dstr, uint playerLimit)
 {
     char stemp [1000];
     uint player;
+	bool bullet_printed = false;
 
     dstr->Append (StartTable);
     if (OutputFormat == CROSSTABLE_LaTeX) {
-        dstr->Append ("\\begin{tabular}{rl");
-        if (PrintRatings) { dstr->Append ("r"); }
-        if (PrintTitles) { dstr->Append ("r"); }
-        if (PrintAges) { dstr->Append ("r"); }
-        if (PrintCountries) { dstr->Append ("l"); }
-        dstr->Append ("r@{ / }r");
-        if (PrintTiebreaks) { dstr->Append ("r"); }
-        for (uint i=0; i < playerLimit; i++) {
-            dstr->Append ("c");
-            if (i < playerLimit-1) { dstr->Append ("@{ }"); }
-        }
-        if (PrintRatings) { dstr->Append ("r"); }
-        dstr->Append ("r}\n");
+	  dstr->Append ("\\begin{longtable}{rl");
+	  if (PrintRatings) { dstr->Append ("c"); }
+	  if (PrintTitles) { dstr->Append ("r"); }
+	  if (PrintAges) { dstr->Append ("r"); }
+	  if (PrintCountries) { dstr->Append ("l"); }
+	  dstr->Append ("r@{/}r");
+	  if (PrintTiebreaks) { dstr->Append ("r"); }
+	  for (uint i=0; i < playerLimit; i++) {
+		dstr->Append ("c");
+		if (i < playerLimit-1) { dstr->Append ("@{ }"); }
+	  }
+	  if (PrintRatings) { dstr->Append ("r"); }
+	  dstr->Append ("r}\n");
     }
     dstr->Append (StartRow);
+	if (OutputFormat == CROSSTABLE_LaTeX)
+	  dstr->Append ("\\toprule\n");
     if (OutputFormat == CROSSTABLE_Hypertext) {
         strPad (stemp, "", PlayerNumWidth + 2, ' ');
         dstr->Append (stemp);
@@ -782,7 +784,7 @@ Crosstable::PrintAllPlayAll (DString * dstr, uint playerLimit)
     } else if (OutputFormat == CROSSTABLE_Html) {
         dstr->Append ("<th></th> <th>Player</th> ");
     } else if (OutputFormat == CROSSTABLE_LaTeX) {
-        dstr->Append ("  & \\bf Player & ");
+        dstr->Append ("  & \\bfseries Player & ");
     } else {
         strPad (stemp, "", LongestNameLen + 2 + PlayerNumWidth, ' ');
         dstr->Append (stemp);
@@ -811,7 +813,7 @@ Crosstable::PrintAllPlayAll (DString * dstr, uint playerLimit)
     }
     if (OutputFormat == CROSSTABLE_LaTeX) {
         // Todo : fix LateX Score column allignment with 3 points for win.
-        dstr->Append (" \\multicolumn{2}{c}{\\bf Score} & ");
+        dstr->Append (" \\multicolumn{2}{c}{\\bfseries Score} & ");
     } else {
         if (OutputFormat == CROSSTABLE_Hypertext) {
             sprintf (stemp, "<blue><run set ::crosstab(sort) score ; ::crosstab::Refresh>Score</run></blue>");
@@ -852,20 +854,30 @@ Crosstable::PrintAllPlayAll (DString * dstr, uint playerLimit)
                     MaxClashes, ' ');
         }
         if (OutputFormat == CROSSTABLE_LaTeX) {
-            dstr->Append (" \\tt ", stemp, " &");
+            dstr->Append (" \\ttfamily ", stemp, " &");
         } else {
             dstr->Append (" ", StartBoldCol, stemp, EndBoldCol);
         }
     }
     if (PrintRatings) {
+	  if (OutputFormat == CROSSTABLE_LaTeX) {
+        dstr->Append ("   ", "\\bfseries Perf & \\bfseries Chg");
+	  }
+	  else {
         dstr->Append ("   ", StartBoldCol, "Perf Chg", EndBoldCol);
-    }
+	  }
+	}
     if (PrintTallies && OutputFormat == CROSSTABLE_Html) {
         dstr->Append ("   ", StartBoldCol, "+/-/=", EndBoldCol);
     }
     dstr->Append (EndRow, NewLine);
 
-    PrintDashesLine (dstr);
+	if (OutputFormat == CROSSTABLE_LaTeX){
+	  dstr->Append("\\midrule\n");
+	  dstr->Append("\\endhead\n");
+	}
+	else
+	  PrintDashesLine (dstr);
 
     // Print the rows of players and results:
     uint previousScore = 0;
@@ -882,7 +894,10 @@ Crosstable::PrintAllPlayAll (DString * dstr, uint playerLimit)
         previousScore = pdata->score;
 
         sprintf (stemp, "%*u: ", PlayerNumWidth, player+1);
-        dstr->Append (StartRow, StartRightCol, stemp, EndRightCol);
+        if (OutputFormat == CROSSTABLE_LaTeX)
+		  dstr->Append (StartRow, StartRightCol, stemp, EndRightCol, " ");
+		else
+		  dstr->Append (StartRow, StartRightCol, stemp, EndRightCol);
 
         PrintPlayer (dstr, pdata);
 
@@ -926,28 +941,42 @@ Crosstable::PrintAllPlayAll (DString * dstr, uint playerLimit)
                         sprintf (stemp, "<blue><g_%u>%c</g></blue>", clash->gameNum, RESULT_CHAR[clash->result]);
                       dstr->Append (stemp);
                     } else {
-                      dstr->AddChar (RESULT_CHAR[clash->result]);
+					  if (RESULT_CHAR[clash->result] == '=')
+						dstr->Append("½");
+					  else
+						dstr->AddChar (RESULT_CHAR[clash->result]);
                     }
                     clash = clash->next;
                 } else {
-                    dstr->AddChar (index == opp ? 'X' : '.');
-                }
-            }
+                    if (OutputFormat == CROSSTABLE_LaTeX) {
+					  if(index == opp && !bullet_printed) {
+						dstr->Append("$\\bullet$");
+						bullet_printed = true;
+					  }
+					}
+					else
+					  dstr->AddChar ('.');
+				}
+			}
             dstr->Append (EndCol);
         }
 
+		bullet_printed = false;
         PrintPerformance (dstr, pdata);
 
         if (PrintTallies) {
-	  dstr->Append (StartCol);
-	  sprintf (stemp, "  (+%u -%u =%u)", pdata->won, pdata->loss, pdata->draw);
-	  dstr->Append (stemp);
-	  dstr->Append (EndCol);
+		  dstr->Append (StartCol);
+		  sprintf (stemp, "  (+%u -%u =%u)", pdata->won, pdata->loss, pdata->draw);
+		  dstr->Append (stemp);
         }
-
         dstr->Append (EndRow, NewLine);
     }
-    PrintDashesLine (dstr);
+	
+	if (OutputFormat == CROSSTABLE_LaTeX)
+	  dstr->Append("\\bottomrule\n");
+	else
+	  PrintDashesLine (dstr);
+
     dstr->Append (EndTable);
 }
 
@@ -959,10 +988,10 @@ Crosstable::PrintSwiss (DString * dstr, uint playerLimit)
 
     const char * resultStr [NUM_RESULT_TYPES];
     if (OutputFormat == CROSSTABLE_LaTeX) {
-        resultStr[RESULT_White] = "{\\tt +}";
-        resultStr[RESULT_Draw]  = "{\\tt =}";
-        resultStr[RESULT_Black] = "{\\tt -}";
-        resultStr[RESULT_None] = "{\\tt *}";
+        resultStr[RESULT_White] = "+";
+        resultStr[RESULT_Draw]  = "=";
+        resultStr[RESULT_Black] = "-";
+        resultStr[RESULT_None] = "*";
     } else {
         resultStr[RESULT_White] = "+";
         resultStr[RESULT_Draw]  = "=";
@@ -972,7 +1001,7 @@ Crosstable::PrintSwiss (DString * dstr, uint playerLimit)
 
     dstr->Append (StartTable);
     if (OutputFormat == CROSSTABLE_LaTeX) {
-        dstr->Append ("\\begin{tabular}{rl");
+        dstr->Append ("\\begin{longtable}{rl");
         if (PrintRatings) { dstr->Append ("r"); }
         if (PrintTitles) { dstr->Append ("r"); }
         if (PrintAges) { dstr->Append ("r"); }
@@ -987,6 +1016,9 @@ Crosstable::PrintSwiss (DString * dstr, uint playerLimit)
         dstr->Append ("r}\n");
     }
     dstr->Append (StartRow);
+	if (OutputFormat == CROSSTABLE_LaTeX){
+        dstr->Append ("\\toprule\n");
+	}
     if (OutputFormat == CROSSTABLE_Hypertext) {
         strPad (stemp, "", PlayerNumWidth + 2, ' ');
         dstr->Append (stemp);
@@ -996,7 +1028,7 @@ Crosstable::PrintSwiss (DString * dstr, uint playerLimit)
     } else if (OutputFormat == CROSSTABLE_Html) {
         dstr->Append ("<th></th> <th>Player</th> ");
     } else if (OutputFormat == CROSSTABLE_LaTeX) {
-        dstr->Append ("  & \\bf Player & ");
+        dstr->Append ("  & \\bfseries Player & ");
     } else {
         strPad (stemp, "", LongestNameLen + 2 + PlayerNumWidth, ' ');
         dstr->Append (stemp);
@@ -1013,59 +1045,67 @@ Crosstable::PrintSwiss (DString * dstr, uint playerLimit)
         dstr->Append (StartBoldCol, "  Ti", EndBoldCol);
     }
     if (PrintAges) {
-        dstr->Append (StartBoldCol, " Age", EndBoldCol);
+	  dstr->Append (StartBoldCol, " Age", EndBoldCol);
     }
     if (PrintCountries) {
       if (OutputFormat == CROSSTABLE_Hypertext) {
-          sprintf (stemp, " <blue><run set ::crosstab(sort) country ; ::crosstab::Refresh>Nat</run></blue>");
-          dstr->Append (stemp);
+		sprintf (stemp, " <blue><run set ::crosstab(sort) country ; ::crosstab::Refresh>Nat</run></blue>");
+		dstr->Append (stemp);
       } else {
-          dstr->Append (StartBoldCol, " Nat", EndBoldCol);
+		dstr->Append (StartBoldCol, " Nat", EndBoldCol);
       }
     }
     if (OutputFormat == CROSSTABLE_LaTeX) {
-        dstr->Append (" \\multicolumn{2}{c}{\\bf Score} & ");
+	  dstr->Append (" \\multicolumn{2}{c}{\\bfseries Score} & ");
     } else {
-        if (OutputFormat == CROSSTABLE_Hypertext) {
-            sprintf (stemp, "<blue><run set ::crosstab(sort) score ; ::crosstab::Refresh>Score</run></blue>");
-        } else {
-            sprintf (stemp, "Score");
-        }
+	  if (OutputFormat == CROSSTABLE_Hypertext) {
+		sprintf (stemp, "<blue><run set ::crosstab(sort) score ; ::crosstab::Refresh>Score</run></blue>");
+	  } else {
+		sprintf (stemp, "Score");
+	  }
 
-        if (ThreeWin) 
-	  dstr->Append ("  ", StartBoldCol, stemp, EndBoldCol, " ");
-        else {
-	  dstr->Append ("   ", StartBoldCol, " ");
-	  dstr->Append (stemp," ", EndBoldCol, "   ");
-        }
+	  if (ThreeWin) 
+		dstr->Append ("  ", StartBoldCol, stemp, EndBoldCol, " ");
+	  else {
+		dstr->Append ("   ", StartBoldCol, " ");
+		dstr->Append (stemp," ", EndBoldCol, "   ");
+	  }
     }
     if (PrintTiebreaks) {
-        dstr->Append (StartBoldCol, "(Tie)", EndBoldCol);
+	  dstr->Append (StartBoldCol, "(Tie)", EndBoldCol);
     }
 
     for (uint round = 1; round <= MaxRound; round++) {
-        if (OutputFormat == CROSSTABLE_LaTeX) {
-            dstr->Append (" \\multicolumn{1}{c}{\\bf ", round, "} & ");
-        } else if (OutputFormat == CROSSTABLE_Hypertext) {
-            sprintf (stemp, " %s%*d ", SwissColors ? " " : "",
-                     PlayerNumWidth, round);
-            dstr->Append (StartBoldCol, "<blue><run ::crosstab::setFilter ",stemp);
-            dstr->Append (">",stemp,"</run></blue>", EndBoldCol);
-        } else {
-            sprintf (stemp, " %s%*d ", SwissColors ? " " : "",
-                     PlayerNumWidth, round);
-            dstr->Append (StartBoldCol, stemp, EndBoldCol);
-        }
+	  if (OutputFormat == CROSSTABLE_LaTeX) {
+		dstr->Append (" \\multicolumn{1}{c}{\\bfseries ", round, "} & ");
+	  } else if (OutputFormat == CROSSTABLE_Hypertext) {
+		sprintf (stemp, " %s%*d ", SwissColors ? " " : "",
+				 PlayerNumWidth, round);
+		dstr->Append (StartBoldCol, "<blue><run ::crosstab::setFilter ",stemp);
+		dstr->Append (">",stemp,"</run></blue>", EndBoldCol);
+	  } else {
+		sprintf (stemp, " %s%*d ", SwissColors ? " " : "",
+				 PlayerNumWidth, round);
+		dstr->Append (StartBoldCol, stemp, EndBoldCol);
+	  }
     }
     if (PrintRatings) {
-        dstr->Append ("   ", StartBoldCol, "Perf Chg", EndBoldCol);
+	  if (OutputFormat == CROSSTABLE_LaTeX)
+		dstr->Append ("   ", "\\bfseries Perf & \\bfseries Chg");
+	  else
+		dstr->Append ("   ", StartBoldCol, "Perf Chg", EndBoldCol);
     }
     if (PrintTallies && OutputFormat == CROSSTABLE_Html) {
-        dstr->Append ("   ", StartBoldCol, "+/-/=", EndBoldCol);
+	  dstr->Append ("   ", StartBoldCol, "+/-/=", EndBoldCol);
     }
     dstr->Append (EndRow, NewLine);
 
-    PrintDashesLine (dstr);
+	if (OutputFormat == CROSSTABLE_LaTeX){
+	  dstr->Append("\\midrule\n");
+	  dstr->Append("\\endhead\n");
+	}
+	else
+	  PrintDashesLine (dstr);
 
     // Print the rows of players and results:
     uint previousScore = 0;
@@ -1158,118 +1198,196 @@ Crosstable::PrintSwiss (DString * dstr, uint playerLimit)
         dstr->Append (EndRow, NewLine);
     }
 
-    PrintDashesLine (dstr);
-    dstr->Append (EndTable);
-}
+	if (OutputFormat == CROSSTABLE_LaTeX)
+	  dstr->Append("\\bottomrule\n");
+	else
+	  PrintDashesLine (dstr);
 
+	dstr->Append (EndTable);
+}
 
 void
 Crosstable::PrintKnockout (DString * dstr, uint playerLimit)
 {
+  if (OutputFormat == CROSSTABLE_LaTeX)
+	PrintKnockoutLaTeX(dstr, playerLimit);
+  else
+	{
+	  char stemp [1000];
+	  uint player;
+	  
+	  for (uint round = 1; round <= MaxRound; round++) {
+		if (OutputFormat == CROSSTABLE_Hypertext) {
+		  dstr->Append ("<blue><run ::crosstab::setFilter ",round);
+		  dstr->Append (">",round,"</run></blue>:", NewLine);
+		} else 
+		  dstr->Append (round, ":", NewLine);
+		
+		dstr->Append (StartTable);
+		PrintDashesLine (dstr);
+		
+		for (player = 0; player < playerLimit; player++)
+		  PlayerData[player]->printed = false;
+		
+		for (player = 0; player < playerLimit; player++) {
+		  uint index = SortedIndex[player];
+		  playerDataT * pdata = PlayerData[index];
+		  clashT * clash = pdata->roundClash[round];
+		  if (clash == NULL) { continue; }
+		  if (pdata->printed) { continue; }
+		  uint opponent = clash->opponent;
+		  // if black first, skip this game till white is first
+		  if (pdata->firstClash[opponent]->color == 1) { continue; }
+		  uint score = 0;
+		  uint nGames = 0;
+		  clash = pdata->firstClash[opponent];
+		  while (clash != 0) {
+			if (clash->round == round) {
+			  score += RESULT_SCORE[clash->result];
+			  nGames++;
+			}
+			clash = clash->next;
+		  }
+		  // Skip this to allow white to be shown first
+		  // if (score < nGames) { continue; }
+		  dstr->Append (StartRow);
+		  PrintPlayer (dstr, pdata);
+		  
+		  dstr->Append (StartCol, "  ");
+		  clash = pdata->firstClash[opponent];
+		  for (uint count = 0; count < MaxClashes; count++) {
+			while (clash != NULL  &&  clash->round != round) {
+			  clash = clash->next;
+			}
+			if (clash != NULL) {
+			  if (OutputFormat == CROSSTABLE_Hypertext) {
+				if (CurrentGame == clash->gameNum)
+				  sprintf (stemp, "<green><g_%u>%c</g></green>",
+						   clash->gameNum,
+						   RESULT_CHAR[clash->result]);
+				else
+				  sprintf (stemp, "<blue><g_%u>%c</g></blue>",
+						   clash->gameNum,
+						   RESULT_CHAR[clash->result]);
+				dstr->Append (stemp);
+			  } else
+				dstr->AddChar (RESULT_CHAR[clash->result]);
+			  clash = clash->next;
+			} else
+			  dstr->AddChar (' ');
+		  }
+		  
+		  dstr->Append (" ", EndCol);
+		  
+		  sprintf (stemp, "%2u%c%c / %2u   ",
+				   score / 2, DecimalPointChar,
+				   (score & 1 ? '5' : '0'), nGames);
+		  dstr->Append (StartRightCol, stemp, EndRightCol);
+		  PrintPlayer (dstr, PlayerData[opponent]);
+		  dstr->Append (EndRow, NewLine);
+		  pdata->printed = true;
+		  PlayerData[opponent]->printed = true;
+		} // for (player = 0; player < playerLimit; player++) {
+        PrintDashesLine (dstr);
+        dstr->Append (EndTable, NewLine);
+	  } // for (uint round = 1; round <= MaxRound; round++) {
+	} // else 
+} // Crosstable::PrintKnockout (DString * dstr, uint playerLimit)
+
+void
+Crosstable::PrintKnockoutLaTeX (DString * dstr, uint playerLimit)
+{
     char stemp [1000];
     uint player;
 
-    for (uint round = 1; round <= MaxRound; round++) {
-        if (OutputFormat == CROSSTABLE_LaTeX) {
-            dstr->Append ("\n\n", round, ":\n\n");
-        } else if (OutputFormat == CROSSTABLE_Hypertext) {
-            dstr->Append ("<blue><run ::crosstab::setFilter ",round);
-            dstr->Append (">",round,"</run></blue>:", NewLine);
-        } else {
-            dstr->Append (round, ":", NewLine);
-        }
-        dstr->Append (StartTable);
-        if (OutputFormat == CROSSTABLE_LaTeX) {
-            dstr->Append ("\\begin{tabular}{l");
-            if (PrintRatings) { dstr->Append ("r"); }
-            if (PrintTitles) { dstr->Append ("r"); }
-            if (PrintAges) { dstr->Append ("r"); }
-            if (PrintCountries) { dstr->Append ("l"); }
-            dstr->Append ("@{\\hspace{4ex}}lr@{ / }r@{\\hspace{4ex}}l");
-            if (PrintRatings) { dstr->Append ("r"); }
-            if (PrintTitles) { dstr->Append ("r"); }
-            if (PrintAges) { dstr->Append ("r"); }
-            if (PrintCountries) { dstr->Append ("l"); }
-            dstr->Append ("r}\n");
-        }
-        PrintDashesLine (dstr);
-        for (player = 0; player < playerLimit; player++) {
-            PlayerData[player]->printed = false;
-        }
-        for (player = 0; player < playerLimit; player++) {
-            uint index = SortedIndex[player];
-            playerDataT * pdata = PlayerData[index];
-            clashT * clash = pdata->roundClash[round];
-            if (clash == NULL) { continue; }
-            if (pdata->printed) { continue; }
-            uint opponent = clash->opponent;
-            // if black first, skip this game till white is first
-            if (pdata->firstClash[opponent]->color == 1) { continue; }
-            uint score = 0;
-            uint nGames = 0;
-            clash = pdata->firstClash[opponent];
-            while (clash != 0) {
-                if (clash->round == round) {
-                    score += RESULT_SCORE[clash->result];
-                    nGames++;
-                }
-                clash = clash->next;
-            }
-            // Skip this to allow white to be shown first
-            // if (score < nGames) { continue; }
-            dstr->Append (StartRow);
-            PrintPlayer (dstr, pdata);
+	dstr->Append ("\\begin{longtable}[l]{@{}l"); // [l] = table is left aligned, not horizontally centered
+	if (PrintRatings) { dstr->Append ("r"); }
+	if (PrintTitles) { dstr->Append ("r"); }
+	if (PrintAges) { dstr->Append ("r"); }
+	if (PrintCountries) { dstr->Append ("l"); }
+	dstr->Append ("lr@{/}rl");
+	if (PrintRatings) { dstr->Append ("r"); }
+	if (PrintTitles) { dstr->Append ("r"); }
+	if (PrintAges) { dstr->Append ("r"); }
+	if (PrintCountries) { dstr->Append ("l"); }
+	
+	dstr->Append ("r}\n");
+	
+	for (uint round = 1; round <= MaxRound; round++) {
+	  if (round == 1)
+		dstr->Append (round, ":\\\\\n"); // no empty line before round number
+	  else
+		dstr->Append ("\\\\\n", round, ":\\\\\n"); // empty line before round number
+	  PrintDashesLine (dstr);
 
-            dstr->Append (StartCol, "  ");
-            if (OutputFormat == CROSSTABLE_LaTeX) { dstr->Append ("{\\tt "); }
-            clash = pdata->firstClash[opponent];
-            for (uint count = 0; count < MaxClashes; count++) {
-                while (clash != NULL  &&  clash->round != round) {
-                    clash = clash->next;
-                }
-                if (clash != NULL) {
-                    if (OutputFormat == CROSSTABLE_Hypertext) {
-                        if (CurrentGame == clash->gameNum)
-                            sprintf (stemp, "<green><g_%u>%c</g></green>",
-                                     clash->gameNum,
-                                     RESULT_CHAR[clash->result]);
-                        else
-                            sprintf (stemp, "<blue><g_%u>%c</g></blue>",
-                                     clash->gameNum,
-                                     RESULT_CHAR[clash->result]);
-                        dstr->Append (stemp);
-                    } else {
-                        dstr->AddChar (RESULT_CHAR[clash->result]);
-                    }
-                    clash = clash->next;
-                } else {
-                    dstr->AddChar (' ');
-                }
-            }
-            if (OutputFormat == CROSSTABLE_LaTeX) { dstr->Append ("}"); }
-            dstr->Append (" ", EndCol);
+	  for (player = 0; player < playerLimit; player++)
+		PlayerData[player]->printed = false;
+	  
+	  for (player = 0; player < playerLimit; player++) {
+		uint index = SortedIndex[player];
+		playerDataT * pdata = PlayerData[index];
+		clashT * clash = pdata->roundClash[round];
+		
+		if (clash == NULL) { continue; }
+		if (pdata->printed) { continue; }
+		
+		uint opponent = clash->opponent;
 
-            if (OutputFormat == CROSSTABLE_LaTeX) {
-                sprintf (stemp, " %2u%c%c ", score / 2, DecimalPointChar,
-                         (score & 1 ? '5' : '0'));
-                dstr->Append (StartRightCol, stemp, EndRightCol);
-                sprintf (stemp, " %2u  ", nGames);
-                dstr->Append (StartRightCol, stemp, EndRightCol);
-            } else {
-                sprintf (stemp, "%2u%c%c / %2u   ",
-                         score / 2, DecimalPointChar,
-                         (score & 1 ? '5' : '0'), nGames);
-                dstr->Append (StartRightCol, stemp, EndRightCol);
-            }
-            PrintPlayer (dstr, PlayerData[opponent]);
-            dstr->Append (EndRow, NewLine);
-            pdata->printed = true;
-            PlayerData[opponent]->printed = true;
-        }
-        PrintDashesLine (dstr);
-        dstr->Append (EndTable, NewLine);
-    }
-}
+		// if black first, skip this game till white is first
+		if (pdata->firstClash[opponent]->color == 1) { continue; }
+		
+		uint score = 0;
+		uint nGames = 0;
+
+		clash = pdata->firstClash[opponent];
+
+		while (clash != 0) {
+		  if (clash->round == round) {
+			score += RESULT_SCORE[clash->result];
+			nGames++;
+		  }
+		  clash = clash->next;
+		}
+		
+		// Skip this to allow white to be shown first
+		// if (score < nGames) { continue; }
+		dstr->Append (StartRow);
+		PrintPlayer (dstr, pdata);
+		
+		dstr->Append (StartCol, " ");
+		clash = pdata->firstClash[opponent];
+
+		for (uint count = 0; count < MaxClashes; count++) {
+		  while (clash != NULL  &&  clash->round != round)
+			clash = clash->next;
+		  
+		  if (clash != NULL) {
+			dstr->AddChar (RESULT_CHAR[clash->result]);
+			clash = clash->next;
+		  } else
+			dstr->AddChar (' ');
+		}
+
+		dstr->Append (" ", EndCol);
+		sprintf (stemp, " %2u%c%c ", score / 2, DecimalPointChar,
+				 (score & 1 ? '5' : '0'));
+		dstr->Append (StartRightCol, stemp, EndRightCol);
+		sprintf (stemp, " %2u  ", nGames);
+		dstr->Append (StartRightCol, stemp, EndRightCol);
+		
+		PrintPlayer (dstr, PlayerData[opponent]);
+		dstr->Append (EndRow, NewLine);
+		pdata->printed = true;
+		PlayerData[opponent]->printed = true;
+	  } // for (player = 0; player < playerLimit; player++) {
+
+	  PrintDashesLine (dstr);
+	  //	  dstr->Append (EndTable, NewLine);
+	} // for (uint round = 1; round <= MaxRound; round++) {
+	  dstr->Append (EndTable, NewLine);
+} // Crosstable::PrintKnockoutLaTeX (DString * dstr, uint playerLimit)
+
+
 
 //////////////////////////////////////////////////////////////////////
 //  EOF: crosstab.cpp
