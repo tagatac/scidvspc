@@ -21,25 +21,25 @@ const char * evalNagsLatex [] =
 	"!?",  // $5
 	"?!",  // $6
 	"forced",  // $7
-	"{\\onlymove}",  	// $8
+	" \\xskakcomment{\\onlymove}",  	// $8
 	"worst",  // $9
-	"{\\protect\\equal}",  		// $10
+	" \\xskakcomment{\\equal}",  		// $10
 	"",  // $11
 	"{$\\leftrightarrows$}",  // $12 
-	"{\\unclear}",  	// $13
-	"{\\wbetter}",  	// $14
-	"{\\bbetter}",  	// $15
-	"{\\wupperhand}",  	// $16
-	"{\\bupperhand}",  	// $17
-	"{\\wdecisive}",  	// $18
-	"{\\bdecisive}",  	// $19
+	" \\xskakcomment{\\unclear}",  	// $13
+	" \\xskakcomment{\\wbetter}",  	// $14
+	" \\xskakcomment{\\bbetter}",  	// $15
+	" \\xskakcomment{\\wupperhand}",  	// $16
+	" \\xskakcomment{\\bupperhand}",  	// $17
+	" \\xskakcomment{\\wdecisive}",  	// $18
+	" \\xskakcomment{\\bdecisive}",  	// $19
 	"",  // $20
 	"",  // $21
-	"{\\zugzwang}",  	// $22 
-	"{\\zugzwang}",  // $23
+	" \\xskakcomment{\\zugzwang}",  	// $22 
+	" \\xskakcomment{\\zugzwang}",  // $23
 	"",  // $24
 	"",  // $25
-	"{\\moreroom}",  	// $26
+	" \\xskakcomment{\\moreroom}",  	// $26
 	"",  // $27
 	"",  // $28
 	"",  // $29
@@ -48,34 +48,34 @@ const char * evalNagsLatex [] =
 	"",  // $32 
 	"",  // $33
 	"",  // $34
-	"{\\devadvantage}",	// $35
-	"{\\withinit}",  	// $36
+	" \\xskakcomment{\\devadvantage}",	// $35
+	" \\xskakcomment{\\withinit}",  	// $36
 	"",  // $37
 	"",  // $38
 	"",  // $39
-	"{\\withattack}",  	// $40
+	" \\xskakcomment{\\withattack}",  	// $40
 	"",  // $41
 	"",  // $42 
 	"",  // $43
-	"{\\compensation}",  // $44
+	" \\xskakcomment{\\compensation}",  // $44
 	"",  // $45
 	"",  // $46
 	"",  // $47
 	"{$$\\boxplus$$}",  // $48
 	"{$$\\boxplus$$}",  // $49
-	"{\\centre}",  		// $50
-	"{\\centre}",  // $51
+	" \\xskakcomment{\\centre}",  		// $50
+	" \\xskakcomment{\\centre}",  // $51
 	"",  // $52 
 	"",  // $53
 	"",  // $54
 	"",  // $55
 	"",  // $56
 	"",  // $57
-	"{\\kside}",  		// $58
+	" \\xskakcomment{\\kside}",  		// $58
 	"",  // $59
 	"",  // $60
 	"",  // $61
-	"{\\qside}",  		// $62 
+	" \\xskakcomment{\\qside}",  		// $62 
 	"",  // $63
 	"",  // $64
 	"",  // $65
@@ -145,29 +145,29 @@ const char * evalNagsLatex [] =
 	"",  // $129
 	"",  // $130
 	"",  // $131
-	"{\\counterplay}",	// $132
+	" \\xskakcomment{\\counterplay}",	// $132
 	"",  // $133
 	"",  // $134
 	"",  // $135
-	"{\\timelimt}",  	// $136
+	" \\xskakcomment{\\timelimt}",  	// $136
 	"",  // $137
 	"",  // $138
 	"",  // $139
-	"{\\withidea}",  	// $140
+	" \\xskakcomment{\\withidea}",  	// $140
 	"",  // $141
-	"{\\betteris}",  	// $142 
+	" \\xskakcomment{\\betteris}",  	// $142 
 	"",  // $143
-	"{\\various}",  	// $144
-	"{\\comment}",  	// $145
-	"{\\novelty}",  	// $146
-	"{\\weakpt}",  		// $147
-	"{\\ending}",  		// $148
-	"{\\file}",  		// $149
-	"{\\diagonal}",  	// $150
-	"{\\bishoppair}",  	// $151
+	" \\xskakcomment{\\various}",  	// $144
+	" \\xskakcomment{\\comment}",  	// $145
+	" \\xskakcomment{\\novelty}",  	// $146
+	" \\xskakcomment{\\weakpt}",  		// $147
+	" \\xskakcomment{\\ending}",  		// $148
+	" \\xskakcomment{\\file}",  		// $149
+	" \\xskakcomment{\\diagonal}",  	// $150
+	" \\xskakcomment{\\bishoppair}",  	// $151
 	"",	  // $152
-	"{\\opposbishops}",  	// $153 
-	"{\\samebishops}",  	// $154
+	" \\xskakcomment{\\opposbishops}",  	// $153 
+	" \\xskakcomment{\\samebishops}",  	// $154
 	"",  // $155
 	"",  // $156
 	"",  // $157
@@ -203,10 +203,10 @@ const char * evalNagsLatex [] =
 	"",  // $187
 	"",  // $188
 	"",  // $189
-	"{\\etc}",  		// $190
-	"{\\doublepawns}", 	// $191
-	"{\\seppawns}",  	// $192
-	"{\\unitedpawns}",  	// $193
+	" \\xskakcomment{\\etc}",  		// $190
+	" \\xskakcomment{\\doublepawns}", 	// $191
+	" \\xskakcomment{\\seppawns}",  	// $192
+	" \\xskakcomment{\\unitedpawns}",  	// $193
 	"",  // $194
 	"",  // $195
 	"",  // $196
@@ -223,10 +223,10 @@ const char * evalNagsLatex [] =
 	"",  // $207
 	"",  // $208
 	"",  // $209
-	"{\\see}",  		// $210
-	"{\\mate}",  		// $211
-	"{\\passedpawn}",  	// $212
-	"{\\morepawns}",  	// $213
-	"{\\with}",  		// $214
-	"{\\without}",  	// $215
+	" \\xskakcomment{\\see}",  		// $210
+	" \\xskakcomment{\\mate}",  		// $211
+	" \\xskakcomment{\\passedpawn}",  	// $212
+	" \\xskakcomment{\\morepawns}",  	// $213
+	" \\xskakcomment{\\with}",  		// $214
+	" \\xskakcomment{\\without}",  	// $215
 };
