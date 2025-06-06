@@ -38,7 +38,7 @@ Position MainLinePosObj;
 Position *MainLinePos;
 
 // latex : color conversion for latex chessboard (old, new)
-char * colors[]= {
+const char * colors[]= {
     "cornsilk2", "pink",
     "wheat2", "magenta",
     "burlyWood3", "olive",
@@ -2201,7 +2201,7 @@ Game::CommentEmpty ( const char * comment)
 //
 char *convertColor(const char *original)
 {
-    char **ptr = colors;
+    char **ptr = (char**)colors;
     while (*ptr != NULL)
     {
         if (strEqual(original, *ptr))
@@ -2230,7 +2230,7 @@ bool hasDrawMarkCodes(char *str)
         return false;
     while (*in != 0)
     {
-        char ch = *in;
+        ch = *in;
         // start of mark
         if (ch == '[' && in[1] == '%')
         {
@@ -2420,7 +2420,7 @@ void Game::LaTexDrawMarkCodes(TextBuffer * tb, const char *originalStr)
 // LaTexWriteChessboard:
 void Game::LaTexWriteChessboard(TextBuffer * tb, const char *san, const char *comment)
 {
-    const char *diagramStr = "\\begin{center}\n\\vspace{1ex}\n\\chessboard\n\\vspace{1ex}\n\\end{center}\n";
+    // const char *diagramStr = "\\begin{center}\n\\vspace{1ex}\n\\chessboard\n\\vspace{1ex}\n\\end{center}\n";
     const char *diagramStrStart = "\\begin{center}\n\\vspace{1ex}\n\\chessboard[showmover=true";
     const char *diagramStrStop = "]\\vspace{1ex}\n\\end{center}\n";
     char temp[1000];
@@ -2523,12 +2523,12 @@ errorT Game::LaTexWriteMoveList(TextBuffer * tb, uint plyCount, moveT * oldCurre
     const char *postCommentStr = "";
     const char *preVariationBlockStr = "\n\\begin{longfbox}[margin-left=2em, breakable=true, border-right-style=none, border-top-style=none,]\n";
     const char *postVariationBlockStr = "\\end{longfbox}\n";
-    const char *preVariationStr = "\\textcolor{VariationColor}{ ( \\variation{";
-    const char *postVariationStr = "} }\n";
+    // const char *preVariationStr = "\\textcolor{VariationColor}{ ( \\variation{";
+    // const char *postVariationStr = "} }\n";
     const char *restartVariationStr = "\\textcolor{VariationColor}{ \\variation{";
     const char *stopVariationStr = "} }\n\n";
-    const char *preSubVariationStr = "\\textcolor{VariationColor}{ ( \\variation[invar]{";
-    const char *postSubVariationStr = "} }\n";
+    // const char *preSubVariationStr = "\\textcolor{VariationColor}{ ( \\variation[invar]{";
+    // const char *postSubVariationStr = "} }\n";
     const char *restartSubVariationStr = "\\textcolor{VariationColor}{ \\variation[invar]{";
     const char *stopSubVariationStr = "} }\n\n";
 
@@ -2665,8 +2665,6 @@ errorT Game::LaTexWriteMoveList(TextBuffer * tb, uint plyCount, moveT * oldCurre
             //tb->PrintWord (m->san);
             tb->PrintWord(tempTrans);
         }
-
-        bool endedColumn = false;
 
         // Print NAGs and comments if the style indicates:
 
@@ -3926,8 +3924,8 @@ Game::WritePGNGraphToLatex(TextBuffer * tb)
         int xTick = 5;
         int lastX = (scoreHalfMoves / 2) + 1; // Number of Moves to Cover
         int maxX = ((lastX + xTick - 1) / xTick) * xTick;
-        bool finalTick = false;
         /*
+        bool finalTick = false;
         if (maxX - lastX > 2) {
            finalTick = true;
         }
@@ -3935,7 +3933,7 @@ Game::WritePGNGraphToLatex(TextBuffer * tb)
 
         int maxY = 5;
         int minY = -5;
-        int minX = 1;
+        // int minX = 1;
 
         double yscale=0.014;
 
