@@ -1,0 +1,14 @@
+Index: tcl/windows/gamelist.tcl
+===================================================================
+--- tcl/windows/gamelist.tcl	(revision 3579)
++++ tcl/windows/gamelist.tcl	(working copy)
+@@ -1245,6 +1245,9 @@
+       set thisindex [string range $values 1 [string first " " $values]]
+       $w.tree insert {} 0 -values [list $thisindex {Unmatched brace} {in game}] -tag [list click2 error]
+     } else {
++      # remove all '?'
++      # set values [string map {? {}} $values]
++      regsub -all "\\{\\?+ \\}" $values "{ }" values 
+       if {$thisindex == "$current "} {
+ 	if {[lindex $values 11] == {D }} {
+ 	  set current_item [$w.tree insert {} 0 -values $values -tag [list click2 current_deleted]]
