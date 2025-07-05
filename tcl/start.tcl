@@ -2098,6 +2098,8 @@ proc ttk::combobox::SelectEntry {cb index} {
     $cb icursor end
     event generate $cb <<ComboboxSelected>> -when mark
 }
+# and disable stray wheelmouse from changing the mf laugh
+ttk::bindMouseWheel TCombobox {#}
 
 
 # Check for old (single-directory) tablebase option:
