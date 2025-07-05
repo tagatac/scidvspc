@@ -810,12 +810,13 @@ proc updateMatchList { tw nametype maxMatches name el op } {
     }
 
     # Control-N key binding (and make sure we are binding to the entry widgets only)
-    if {[winfo class $entrywidget] == "Entry"} {
+    if {$entrywidget != {} && [winfo class $entrywidget] == "Entry"} {
       bind $entrywidget <Control-Key-$i> "
 	set $name \"$string\"
-	$entrywidget icursor end"
-      incr i
+	$entrywidget icursor end
+      "
     }
+    incr i
   }
   $tw configure -state disabled
 
