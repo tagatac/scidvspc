@@ -4414,6 +4414,10 @@ sc_compact_games (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     db->treeCache->Clear();
     db->backupCache->Clear();
     removeFile (db->fileName, TREEFILE_SUFFIX);
+    if (db->duplicates != NULL) {
+        delete[] db->duplicates;
+        db->duplicates = NULL;
+    }
 
     return TCL_OK;
 }
