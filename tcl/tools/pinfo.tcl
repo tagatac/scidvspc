@@ -146,7 +146,7 @@ proc playerInfo {{player ""} {raise 0}} {
   }
 
   ### Make FIDEID open relevant url
-  regsub {FIDEID ([0-9]+)} $pinfo {<run openURL http://ratings.fide.com/profile/%\1 ; ::windows::stats::Refresh>FIDEID \1</run>} pinfo
+  regsub {FIDEID ([0-9]+)} $pinfo {<run openURL https://ratings.fide.com/profile/%\1 ; ::windows::stats::Refresh>FIDEID \1</run>} pinfo
 
   ### update main window
   $w.text configure -state normal

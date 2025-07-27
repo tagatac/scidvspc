@@ -163,7 +163,7 @@ set helpText(Scid) {<h1>Databases and General Use</h1>
   </i></p>
 
   <p><i>
-  Caïssabase free database <url http://caissabase.co.uk/>http://caissabase.co.uk/</url>
+ Lumbra’s Gigabase <url https://lumbrasgigabase.com/en/>https://lumbrasgigabase.com/en/</url>
   </i></p>
 
   <h4>Using Databases</h4>
@@ -4446,7 +4446,7 @@ set helpText(Related) {<h1>Links</h1>
   <li>Project page  <url http://sourceforge.net/projects/scidvspc>http://sourceforge.net/projects/scidvspc</url></li>
   <li>Online documentation <url http://scidvspc.sourceforge.net/doc/Contents.htm>http://scidvspc.sourceforge.net/doc/Contents.htm</url></li>
   <br>
-  <li>Caïssabase database <url http://caissabase.co.uk/>http://caissabase.co.uk/</url></li>
+ <li>Lumbra’s Gigabase <url https://lumbrasgigabase.com/en/>https://lumbrasgigabase.com/en/</url></li>
   <li>Player Information resources  <url http://sourceforge.net/projects/scid/files/Player Data/>http://sourceforge.net/projects/scid/files/Player Data/</url></li>
   <li>FICS <url http://www.freechess.org>www.freechess.org</url></li>
   <li>FICS game archives <url http://ficsgames.org>http://ficsgames.org</url></li>
@@ -4462,12 +4462,11 @@ set helpText(Related) {<h1>Links</h1>
   <li>Pgn of events <url http://www.pgnmentor.com/files.html#events>www.pgnmentor.com/files.html#events</url></li>
   <li><url http://www.jrsoftware.org/isinfo.php>Inno setup</url> (used to make windows installer)</li>
   <li>Professional quality chess icons  <url http://www.virtualpieces.net>www.virtualpieces.net</url></li>
-  <li>Tango icons <url http://tango.freedesktop.org/Tango_Desktop_Project>http://tango.freedesktop.org/Tango_Desktop_Project</url></li>
 <br>
   <li>Mailing list subscribe (must be a member to post to list) <url https://lists.sourceforge.net/lists/listinfo/scidvspc-users>https://lists.sourceforge.net/lists/listinfo/scidvspc-users</url></li>
   <li>Mailing list archive <url http://www.mail-archive.com/scidvspc-users@lists.sourceforge.net/>http://www.mail-archive.com/scidvspc-users@lists.sourceforge.net/</url></li>
   <li>Programmer's reference <url http://scidvspc.sourceforge.net/doc/progref.html>http://scidvspc.sourceforge.net/doc/progref.html</url></li>
-  <li>Tcl History <url www.tcl.tk/about/history.html>www.tcl.tk/about/history.html</url></li>
+  <li>Tcl History <url https://tcl.tk/about/history.html>https://tcl.tk/about/history.html</url></li>
   <li>UCI engine protocol <url http://wbec-ridderkerk.nl/html/UCIProtocol.html>http://wbec-ridderkerk.nl/html/UCIProtocol.html</url></li>
   <li>Xboard engine protocol <url http://www.open-aurec.com/wbforum/WinBoard/engine-intf.html>http://www.open-aurec.com/wbforum/WinBoard/engine-intf.html</url></li>
 
