@@ -588,7 +588,7 @@
   o  Online documentation
      <http://scidvspc.sourceforge.net/doc/Contents.htm>
 
-  o  Cassabase database  <http://caissabase.co.uk/>
+  o  Lumbra's Gigabase https://lumbrasgigabase.com/en/
 
   o  Player Information resources
      <http://sourceforge.net/projects/scid/files/Player Data/>
@@ -612,9 +612,6 @@
   o  Ed Collins' Scid vs. PC page
      <http://edcollins.com/chess/scidvspc/index.html>
 
-  o  Gorgonian's custom pieces  <http://gorgonian.weebly.com/scid-vs-
-     pc.html>
-
   o  The PGN and EPD standards
      <http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm>
 
@@ -625,9 +622,7 @@
   o  Inno setup  <http://www.jrsoftware.org/isinfo.php> (used to make
      windows installer)
 
-  o  Professional quality chess icons  <www.virtualpieces.net>
-
-  o  Tango icons  <http://tango.freedesktop.org/Tango_Desktop_Project>
+  o  Professional quality chess icons  <http://www.virtualpieces.net>
 
   o  Mailing list subscribe (must be a member to post to list)
      <https://lists.sourceforge.net/lists/listinfo/scidvspc-users>

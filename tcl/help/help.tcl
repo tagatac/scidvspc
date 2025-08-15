@@ -163,7 +163,7 @@ set helpText(Scid) {<h1>Databases and General Use</h1>
   </i></p>
 
   <p><i>
- Lumbra’s Gigabase <url https://lumbrasgigabase.com/en/>https://lumbrasgigabase.com/en/</url>
+ Lumbra's Gigabase <url https://lumbrasgigabase.com/en/>https://lumbrasgigabase.com/en/</url>
   </i></p>
 
   <h4>Using Databases</h4>
@@ -4446,7 +4446,7 @@ set helpText(Related) {<h1>Links</h1>
   <li>Project page  <url http://sourceforge.net/projects/scidvspc>http://sourceforge.net/projects/scidvspc</url></li>
   <li>Online documentation <url http://scidvspc.sourceforge.net/doc/Contents.htm>http://scidvspc.sourceforge.net/doc/Contents.htm</url></li>
   <br>
- <li>Lumbra’s Gigabase <url https://lumbrasgigabase.com/en/>https://lumbrasgigabase.com/en/</url></li>
+ <li>Lumbra's Gigabase <url https://lumbrasgigabase.com/en/>https://lumbrasgigabase.com/en/</url></li>
   <li>Player Information resources  <url http://sourceforge.net/projects/scid/files/Player Data/>http://sourceforge.net/projects/scid/files/Player Data/</url></li>
   <li>FICS <url http://www.freechess.org>www.freechess.org</url></li>
   <li>FICS game archives <url http://ficsgames.org>http://ficsgames.org</url></li>
