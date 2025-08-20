@@ -2464,16 +2464,15 @@ namespace eval fics {
       set x [ expr $graph(xoff) + $tt * ($graph(width) - $graph(xoff)) / ($offers_maxtime - $offers_mintime)]
       set y [ expr $graph(height) - $graph(yoff) - ( $l(elo) - $offers_minelo ) * ($graph(height) - $graph(yoff)) / ($offers_maxelo - $offers_minelo)]
       if { $l(rated) == "rated" } {
-        set object "oval"
+        set object oval
       } else {
-        set object "rectangle"
+        set object rectangle
       }
-      $w.c create $object [expr $x - $size ] [expr $y - $size ] [expr $x + $size ] [expr $y + $size ] \
-           -tags "game game_$idx" -fill $fillcolor -outline $outline
+      $w.c create $object [expr $x - $size ] [expr $y - $size ] [expr $x + $size ] [expr $y + $size ] -tags "game game_$idx" -fill $fillcolor -outline $outline
       
       $w.c bind game_$idx <Enter> "::fics::showGraphText $idx %x %y"
       $w.c bind game_$idx <Leave> "::fics::delGraphText $idx"
-      $w.c bind game_$idx <ButtonPress> "::fics::acceptGraphGame $idx"
+      $w.c bind game_$idx <1> "::fics::acceptGraphGame $idx"
       incr idx
     }
 
