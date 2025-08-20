@@ -443,7 +443,11 @@ PgnParser::ExtractPgnTag (const char * buffer, Game * game)
 
     } else if (strEqual (tag, "FEN")) {
         if (game->SetStartFen (value) != OK) {
-            LogError ("Error: Invalid FEN: ", value);
+            // Not too sure about storing game comment prior to parsing moves, but seems to be ok S.A.
+            char tempStr [500];
+            snprintf (tempStr, sizeof(tempStr), "Error Invalid FEN: %s", value);
+            game->AppendMoveComment (tempStr);
+            LogError ("Error Invalid FEN: ", value);
             return ERROR_InvalidFEN;
         }
 
@@ -1038,7 +1042,7 @@ PgnParser::ParseMoves (Game * game)
     delete[] buffer;
     return err;
 }
-   
+
 
 errorT
 PgnParser::ParseMoves (Game * game, char * buffer, uint bufSize)
@@ -1055,7 +1059,7 @@ PgnParser::ParseMoves (Game * game, char * buffer, uint bufSize)
     // game->GetCurrentPos()->SetStrictCastling (false);
     ParseMode = PARSE_Game;
     tokenT token = GetNextToken (buffer, bufSize);
-    while (! TOKEN_isResult(token)) {   
+    while (! TOKEN_isResult(token)) {
         switch (token) {
         case TOKEN_Move_Pawn:
         case TOKEN_Move_Promote:
@@ -1248,7 +1252,7 @@ PgnParser::ParseGame (Game * game)
             }
             errorT pgnRes = ExtractPgnTag (buffer, game);
             // Don't throw errors for null pgn tags - too verbose
-            if (pgnRes != OK && pgnRes != ERROR_PGNTagNull) {
+            if (pgnRes != OK && pgnRes != ERROR_PGNTagNull && pgnRes != ERROR_InvalidFEN ) {
                 LogError ("Error reading tag: ", buffer);
             }
 
