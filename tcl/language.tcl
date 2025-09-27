@@ -76,6 +76,7 @@ proc addLanguage {letter name underline {encodingSystem ""}} {
 
 # lang filename menuname underline encoding sc_info_lang
 array set langTable {
+  Z {chinese  Chinese    0 utf-8     ch}
   C {czech    Czech      0 iso8859-2 cz}
   D {deutsch  Deutsch    0 utf-8     de}
   L {finnish  Finnish    0 iso8859-1 {}}

@@ -1,6 +1,7 @@
 # Common array settings for 
 
 array set codes {
+  chinese Z
   czech C
   deutsch D
   finnish L
@@ -23,6 +24,7 @@ array set codes {
 # Also change tcl/language.tcl
 
 array set encodings {
+  chinese utf-8
   czech iso8859-2
   deutsch utf-8
   finnish iso8859-1
