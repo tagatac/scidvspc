@@ -200,7 +200,7 @@ proc ::tb::Open {} {
   if { $::tb::online_available } {
     menubutton $f.results.online -text $tbOnline -menu $f.results.online.menu -relief raised -indicatoron 1
     menu $f.results.online.menu -tearoff 0
-    foreach i {Nalimov Shredder Lichess} {
+    foreach i {Nalimov Shredder K4it-Nalimov Lichess} {
       $f.results.online.menu add command -label $i -command "
         $f.results.online configure -text $i
         set tbOnline $i 
@@ -550,7 +550,7 @@ proc ::tb::results {} {
     ::tb::clearText $t
     ::tb::insertText "\n (Training mode; results are hidden)"
   } else {
-    if { $tbOnline == "Lichess" || $tbOnline == "Shredder"} {
+    if { $tbOnline == "Lichess" || $tbOnline == "Shredder" || $tbOnline == "K4it-Nalimov"} {
       if {!$::tb::noresult} {
         ::tb::clearText $t
       }
@@ -600,8 +600,8 @@ if { $::tb::online_available } {
 			if {$::tbOnline == "Lichess"}  {   
 			::tb::insertText "Online: No result\nMaximum piece count for Lichess is 7"
 			}
-			if {$::tbOnline == "Shredder"}  {   
-			::tb::insertText "Online: No result\nMaximum piece count for Shredder is 6"
+			if {$::tbOnline == "Shredder" || $::tbOnline == "K4it-Nalimov"}  {   
+			::tb::insertText "Online: No result\nMaximum piece count for Shredder/K4it-Nalimov is 6"
 			}	
 		}
       set noresult 1
@@ -630,10 +630,10 @@ if { $::tb::online_available } {
 	  return
 		}
 	} 
-	if {$::tbOnline == "Shredder"}  {   
-		if {$pieceCount <= 2 || $pieceCount > 6} {
-      ::tb::insertNoResult $pieceCount
-      return
+	if {$::tbOnline == "Shredder" || $::tbOnline == "K4it-Nalimov" }  {
+        	if {$pieceCount <= 2 || $pieceCount > 6} {
+			::tb::insertNoResult $pieceCount
+			return
 		}
 	}
 	
@@ -663,6 +663,9 @@ if { $::tb::online_available } {
 
 	if {$::tbOnline == "Shredder"}  {   
 	set ::tb::url "https://www.shredderchess.com/online/playshredder/fetch.php?action=egtb&fen=$fen"
+	}
+	if {$::tbOnline == "K4it-Nalimov"}  {   
+        set ::tb::url "https://www.k4it.de/egtb/fetch.php?action=egtb&fen=$fen"
 	}
 	if {$::tbOnline == "Lichess"}  {   
 	set ::tb::url "https://tablebase.lichess.ovh/standard?fen=$fen"
@@ -731,7 +734,7 @@ if { $::tb::online_available } {
 			set k [string first "dtz" $data]
 			set m [string first "dtm" $data]
 		}	
-		if {$::tbOnline == "Shredder"}  {   
+		if {$::tbOnline == "Shredder" || $::tbOnline == "K4it-Nalimov"}  {   
 			set i [string first "value" $data]
 			set k [string first "NEXTCOLOR" $data]
 			set m 1 ;# There are no other special characteristics in the Shredder data
@@ -792,7 +795,7 @@ if { $::tb::online_available } {
 ###############################################################
 # Process the data in the Shredder answer:
 
-if {$::tbOnline == "Shredder"}  {   
+if {$::tbOnline == "Shredder" || $::tbOnline == "K4it-Nalimov"}  {   
 
 # NB Don't change the following because it splits the result on an invisible CRLF  
 set result [split $result "\n"]
@@ -1149,11 +1152,19 @@ set san_2 ""
 
 # Deal with pawn promotion moves, which are in the unhelpful format with two dashes: NN-NN-P,
 # where P is the piece promotion: 8 = Q, 9 = R, 10 = B, 11 = N. 	
-if {$turn == "w"} {
-	set promos [list 8:Q 9:R 10:B 11:N]
-	} else {
-	set promos [list 8:q 9:r 10:b 11:n]
-	}
+if {$::tbOnline == "K4it-Nalimov"} {
+  if {$turn == "w"} {
+	  set promos [list 2:Q 3:R 4:B 5:N]
+  } else {
+	  set promos [list 2:q 3:r 4:b 5:n]
+  }
+} else {
+  if {$turn == "w"} {
+	  set promos [list 8:Q 9:R 10:B 11:N]
+  } else {
+	  set promos [list 8:q 9:r 10:b 11:n]
+  }
+}
 if {[string first "-" [string range $move 0 2]] != -1 && 
 	[string first "-" [string range $move  3 99]] != -1 } { 
 	set promotion_flag 1
@@ -1641,7 +1652,7 @@ set move_header ""
 
 } ;# end of move loop for result
 
-} ;# end of Shredder Result
+} ;# end of Shredder/K4it-Nalimov Result
 
 ##############################################################################
 # Process the data in the Lichess answer:

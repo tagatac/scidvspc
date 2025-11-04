@@ -3593,7 +3593,7 @@ set helpText(TB) {<h1>Tablebases</h1>
   such as King and Rook versus King and Pawn. 
   </p>
   <p>
-  Scid vs. PC can use <b>Nalimov</b> and <a TB Online>Online Lichess and Shredder</a> tablebases.
+  Scid vs. PC can use local <b>Nalimov</b> and online <a TB Online>Lichess, Shredder and K4it</a> tablebases.
   </p>
   <p>
   Nalimov bases are used by many chess engines. The filenames often end with the suffix <b>.nbw.emd</b>
@@ -3661,7 +3661,7 @@ set helpText(TB) {<h1>Tablebases</h1>
   <h4>The Results Frame</h4>
   <p>
   Results may be shown from local Nalimov bases (if installed) , or generated from an online lookup to
-  Lichess or Shredder.
+  Lichess , Shredder or K4it.
   The results frame is updated whenever the main chessboard changes.
   </p>
   <p>
@@ -3714,9 +3714,9 @@ set helpText(TB) {<h1>Tablebases</h1>
   <p><i>Online tablebase support requires Tcl packages http and tls, and are not available in the Game Info window.
   </i></p>
   <p>
-  Scid vs. PC can use the online tablebases from Lichess and Shredder.
+  Scid vs. PC can use the online tablebases from Lichess, Shredder or K4it.
 </p><p>
-The <b>Shredder</b> tablebase gives the true value of a position for up to 6 men, showing the depth to mate where relevant.
+The <b>Shredder</b> and <b>K4it Nalimov</b> tablebases gives the true value of a position for up to 6 men, showing the depth to mate where relevant.
 </p><p>
   The <b>Lichess Syzygy</b> tablebase shows the depth to mate for up to 5 men and
   the DTZ for 6 to 7 men. DTZ means 'distance to zeroing' of the counter for the
