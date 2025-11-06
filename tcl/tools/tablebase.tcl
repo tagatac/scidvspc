@@ -1154,9 +1154,9 @@ set san_2 ""
 # where P is the piece promotion: 8 = Q, 9 = R, 10 = B, 11 = N. 	
 if {$::tbOnline == "K4it-Nalimov"} {
   if {$turn == "w"} {
-	  set promos [list 2:Q 3:R 4:B 5:N]
+	set promos [list 2:Q 3:R 4:B 5:N]
   } else {
-	  set promos [list 2:q 3:r 4:b 5:n]
+	set promos [list 8:q 9:r 10:b 11:n]
   }
 } else {
   if {$turn == "w"} {
