@@ -507,6 +507,7 @@ scid_InitTclTk (Tcl_Interp * ti)
     scratchPos = new Position;
     scratchGame = new Game;
     db = &(dbList[currentBase]);
+    srandom32 (time(NULL)); // Seed rand num gen. Only used by tree training ? - S.A.
 
 #ifndef TCL_ONLY
 #ifndef __APPLE__
