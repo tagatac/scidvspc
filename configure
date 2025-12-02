@@ -21,6 +21,7 @@ set var(BASH_ENV) {}
 
 set var(LANGUAGES) [list \
   tcl/lang/czech.tcl \
+  tcl/lang/chinese.tcl \
   tcl/lang/deutsch.tcl \
   tcl/lang/finnish.tcl \
   tcl/lang/francais.tcl \
