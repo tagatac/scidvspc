@@ -6044,7 +6044,7 @@ clearFilter( scidBaseT * dbase, uint size)
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // sc_flags
-// Usage: sc_flags <gameNum>
+// Usage: sc_flags <gameNum> [verbose]
 // returns a string with all set flags for this game
 //
 // Could be incorporated into sc_game
@@ -6076,6 +6076,21 @@ sc_flags (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     ie->GetFlagStr (userFlags, NULL);
 
     if (argc == 2) {
+      // We now translate User flags 1-6 to the first letter of the flag description (if set) by default
+      char CustomFlagChars[CUSTOM_FLAG_MAX+1];
+      db->idx->GetCustomFlagChars (CustomFlagChars);
+
+      uint flag;
+      char *s = userFlags; 
+      while (*s) {
+        flag = (uint)(*s - '1');
+        if (flag >= 0 && flag < CUSTOM_FLAG_MAX) {
+          if (CustomFlagChars[flag])
+            *s = CustomFlagChars[flag];
+        }
+        s++;
+      }
+
       Tcl_AppendResult (ti, userFlags, NULL);
     } else {
       // verbose mode
@@ -7908,6 +7923,7 @@ sc_game_list (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             linenum++;
             ie = db->idx->FetchEntry (index);
 
+            char CustomFlagChars[16];
             if (nextMoves && db->treeFilter) {
               // Hack the gamelist 'Opening moves' to 'Next moves', and do a quick load of each game
               // based on "sc_game firstMoves <gameNum> <numMoves>"
@@ -7963,9 +7979,11 @@ sc_game_list (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
                 moveStr->Append(" ");
                 moveStr->Append(StoredLine::GetText(ie->GetStoredLineCode()));
               }
-              ie->PrintGameInfo (temp, start, index+1, db->nb, formatStr, moveStr->Data());
+              db->idx->GetCustomFlagChars (CustomFlagChars);
+              ie->PrintGameInfo (temp, start, index+1, db->nb, formatStr, moveStr->Data(), CustomFlagChars);
             } else {
-              ie->PrintGameInfo (temp, start, index+1, db->nb, formatStr, "");
+              db->idx->GetCustomFlagChars (CustomFlagChars);
+              ie->PrintGameInfo (temp, start, index+1, db->nb, formatStr, "", CustomFlagChars);
             }
 
             if (fp == NULL) {

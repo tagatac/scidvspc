@@ -441,9 +441,8 @@ class IndexEntry
     errorT Read (MFile * fp, versionT version);
     errorT Write (MFile * fp, versionT version);
 
-    void PrintGameInfo (char * outStr,
-                        gameNumberT gnFiltered, gameNumberT gnReal,
-                        NameBase * nb, const char * format, const char * moveStr);
+    void PrintGameInfo (char * outStr, gameNumberT gnFiltered, gameNumberT gnReal, NameBase * nb, const char * format, const char * moveStr);
+    void PrintGameInfo (char * outStr, gameNumberT gnFiltered, gameNumberT gnReal, NameBase * nb, const char * format, const char * moveStr, char * CustomFlagChars);
 
     int Compare (IndexEntry * ie, int * fields, NameBase * nb);
 };
@@ -663,17 +662,27 @@ class Index
 
     // fill param str with custom flag description. Number is 1..6
     void        GetCustomFlagDesc (char * str, byte c) {
-      strcpy(str, Header.customFlagDesc[c-1] );
+                  strcpy(str, Header.customFlagDesc[c-1] );
     }
-    
+
+    // Return a 6 byte string (CUSTOM_FLAG_MAX) with the first byte of flags descr.
+    // Note - this is not a proper null terminated string, but *may* contains nulls.
+    // It's pretty ugly, but the only way I could find to implement this [1-6] translation S.A.
+
+    void        GetCustomFlagChars (char * str) {
+                  for (uint i=0; i < CUSTOM_FLAG_MAX; i++) {
+                    *str++ = Header.customFlagDesc[i][0];
+                  }
+    }
+
     void        SetCustomFlagDesc (const char * str, byte c) {
-      strncpy( Header.customFlagDesc[c-1], str, CUSTOM_FLAG_DESC_LENGTH );
-      Header.customFlagDesc[c-1][CUSTOM_FLAG_DESC_LENGTH] = 0;
-      WriteHeader ();
+                  strncpy( Header.customFlagDesc[c-1], str, CUSTOM_FLAG_DESC_LENGTH );
+                  Header.customFlagDesc[c-1][CUSTOM_FLAG_DESC_LENGTH] = 0;
+                  WriteHeader ();
     }
     void        SetAutoLoad (gameNumberT gnum) { Header.autoLoad = gnum + 1; }
     gameNumberT GetAutoLoad () {
-        return ((Header.autoLoad == 0) ? 1 : (Header.autoLoad - 1));
+                  return ((Header.autoLoad == 0) ? 1 : (Header.autoLoad - 1));
     }
     
     errorT      Open (fileModeT, bool old);

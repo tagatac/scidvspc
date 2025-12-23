@@ -371,10 +371,12 @@ IndexEntry::GetFlagStr (char * str, const char * flags)
 //      The format string is better documented in gamelist.tcl
 //      'O' Opening is replaced by "const char * moveStr" if supplied 
 void
-IndexEntry::PrintGameInfo (char * outStr,
-                           gameNumberT gnFiltered, gameNumberT gnReal,
-                           NameBase * nb, const char * format, const char * moveStr)
-{
+IndexEntry::PrintGameInfo (char * outStr, gameNumberT gnFiltered, gameNumberT gnReal, NameBase * nb, const char * format, const char * moveStr) {
+    PrintGameInfo (outStr, gnFiltered, gnReal, nb, format, moveStr, NULL);
+}
+
+void
+IndexEntry::PrintGameInfo (char * outStr, gameNumberT gnFiltered, gameNumberT gnReal, NameBase * nb, const char * format, const char * moveStr, char * CustomFlagChars) {
     ASSERT (outStr != NULL  &&  nb != NULL  &&  format != NULL);
 
     const char * s = format;
@@ -604,9 +606,22 @@ IndexEntry::PrintGameInfo (char * outStr,
             case 'M':   // Marked user-settable flags
                 {
                     char flags [16];
+                    uint f;
                     char * s = flags;
                     GetFlagStr (s, NULL);
                     if (*s == 'D') { s++; }   // Skip Delete flag.
+
+                    // Translate User flags 1-6 to the first letter of the flag description (if set)
+                    if (CustomFlagChars) {
+                      for (char *t=s; *t!=0; t++) {
+                        f = (uint)(*t - '1');
+                        if (f >= 0 && f < CUSTOM_FLAG_MAX) {
+                          if (CustomFlagChars[f]) 
+                            *t = CustomFlagChars[f];
+                        }
+                      }
+                    }
+
                     out += strPad (out, s, width, ' ');
                 }
                 break;
