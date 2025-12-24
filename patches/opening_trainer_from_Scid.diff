@@ -1,8 +1,8 @@
 Index: tcl/help/help.tcl
 ===================================================================
---- tcl/help/help.tcl	(revision 3152)
+--- tcl/help/help.tcl	(revision 3594)
 +++ tcl/help/help.tcl	(working copy)
-@@ -405,6 +405,7 @@
+@@ -406,6 +406,7 @@
    <li><a Repertoire>Opening Repertoires</a></li>
    <li><a Reports Opening>Opening Reports</a></li>
    <li>Tree <a Tree Training>Opening Trainer</a></li>
@@ -10,7 +10,7 @@ Index: tcl/help/help.tcl
    <li><a Options>Options</a></li>
    <li>Command line <a Cmdline>options</a></li>
    </ul>
-@@ -4492,6 +4493,139 @@
+@@ -4596,6 +4597,139 @@
    <p><footer>Updated: Scid vs. PC 4.21 December 2019</footer></p>
  }
  
@@ -152,9 +152,9 @@ Index: tcl/help/help.tcl
  
 Index: tcl/lang/english.tcl
 ===================================================================
---- tcl/lang/english.tcl	(revision 3151)
+--- tcl/lang/english.tcl	(revision 3594)
 +++ tcl/lang/english.tcl	(working copy)
-@@ -1434,21 +1434,32 @@
+@@ -1464,21 +1464,32 @@
  translate E ShowReport {Show report}
  translate E NumberOfGoodMovesPlayed {good moves played}
  translate E NumberOfDubiousMovesPlayed {dubious moves played}
@@ -189,7 +189,7 @@ Index: tcl/lang/english.tcl
  translate E LoadingGame {Loading game}
 Index: tcl/menus.tcl
 ===================================================================
---- tcl/menus.tcl	(revision 3151)
+--- tcl/menus.tcl	(revision 3594)
 +++ tcl/menus.tcl	(working copy)
 @@ -411,6 +411,7 @@
  set helpMessage($m,[incr menuindex]) ToolsTraining
@@ -201,9 +201,9 @@ Index: tcl/menus.tcl
  
 Index: tcl/start.tcl
 ===================================================================
---- tcl/start.tcl	(revision 3151)
+--- tcl/start.tcl	(revision 3594)
 +++ tcl/start.tcl	(working copy)
-@@ -102,7 +102,7 @@
+@@ -105,7 +105,7 @@
    ::tools::graphs::filter ::tools::graphs::absfilter ::tools::graphs::rating ::tools::graphs::score
    ::tb ::optable
    ::board ::move
@@ -214,7 +214,7 @@ Index: tcl/start.tcl
  } {
 Index: tcl/tools/tactics.tcl
 ===================================================================
---- tcl/tools/tactics.tcl	(revision 3148)
+--- tcl/tools/tactics.tcl	(revision 3594)
 +++ tcl/tools/tactics.tcl	(working copy)
 @@ -810,3 +810,765 @@
  ###
