@@ -507,8 +507,8 @@ scid_InitTclTk (Tcl_Interp * ti)
     scratchPos = new Position;
     scratchGame = new Game;
     db = &(dbList[currentBase]);
-    srandom32 (time(NULL)); // Seed rand num gen. Only used by tree training ? - S.A.
 
+    srandom32 (time(NULL)); // Seed rand num gen. Only used by tree training ? - S.A.
 #ifndef TCL_ONLY
 #ifndef __APPLE__
     // Drag and Drop init
@@ -6076,7 +6076,7 @@ sc_flags (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     ie->GetFlagStr (userFlags, NULL);
 
     if (argc == 2) {
-      // We now translate User flags 1-6 to the first letter of the flag description (if set) by default
+      // We now translate User flags 1-6 to lowercase of the first letter of the description (if set) by default
       char CustomFlagChars[CUSTOM_FLAG_MAX+1];
       db->idx->GetCustomFlagChars (CustomFlagChars);
 

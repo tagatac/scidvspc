@@ -665,13 +665,13 @@ class Index
                   strcpy(str, Header.customFlagDesc[c-1] );
     }
 
-    // Return a 6 byte string (CUSTOM_FLAG_MAX) with the first byte of flags descr.
+    // Return a 6 byte string (CUSTOM_FLAG_MAX) with the lowercased first byte of flags descr.
     // Note - this is not a proper null terminated string, but *may* contains nulls.
     // It's pretty ugly, but the only way I could find to implement this [1-6] translation S.A.
 
     void        GetCustomFlagChars (char * str) {
                   for (uint i=0; i < CUSTOM_FLAG_MAX; i++) {
-                    *str++ = Header.customFlagDesc[i][0];
+                    *str++ = tolower(Header.customFlagDesc[i][0]);
                   }
     }
 

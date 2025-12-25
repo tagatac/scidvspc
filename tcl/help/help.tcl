@@ -2694,15 +2694,15 @@ set helpText(Flags) {<h1>Game Flags</h1>
   <p>
   Game Flags are indicators of some characteristic, such as "Brilliant Play" or "White Opening",
   and are used for classifying games and enabling fast database searches.
-  There are <b>12 user flags</b> and <b>6 custom flags</b>
+  There are <b>12 user flags</b> and <b>6 custom flags</b>.
   </p>
-
   <p> Flags are set in the <a Maintenance>Maintenance Window</a>. Select the desired
   flag from the menu-button, and then use the appropriate "Mark" button.
   The <a GameList Del>Delete</a> flag has its own buttons,
   but it is just a special-case flag which indicates games will be removed when the
   database it is next <a Compact>compacted</a>.
-  Scid vs. PC also allows quick flag tagging via the <a GameList>Game List</a> context menu.
+  </p>
+  <p>Scid vs. PC also allows quick flag tagging via the <a GameList>Game List</a> context menu. If a custom flag has a description, the gamelist Flag field now shows a lowercase (to distinguish from normal flags) letter instead of a number 1-6 as before.
   </p>
   <p>
   The User Flags are
@@ -2746,7 +2746,7 @@ set helpText(Flags) {<h1>Game Flags</h1>
      <li><a FindBestMove>Training-<gt>Find best move</a> (evaluates the T flag)
   </ul>
 
-  <p><footer>Updated: Scid vs. PC 4.19, Jan 2018</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.27, dec 2025</footer></p>
 }
 
 set helpTitle(Analysis) "Analysis Window"
