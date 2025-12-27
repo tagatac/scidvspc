@@ -1019,7 +1019,7 @@ set helpText(Searches) {<h1>Searches in Scid</h1>
   The "Value" field is optional. If the value starts with a digit, only exact matches are made, but
   otherwise the match searches for prefixes - eg "Rogers" will match "Rogers, Ian".
   </p><p>
-  <i>Extra Tags does *not* match normal tags such as White, Event and EventDate</i>.
+  <i>Extra Tags *do not* match normal tags such as White, Event and EventDate</i>.
   </p><p>
   Finally, the Header search can be used to find any text
   (case-sensitive and without wildcards) in the PGN of

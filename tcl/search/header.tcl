@@ -67,16 +67,19 @@ proc checkDates {} {
   if {[string length $sDateMin] == 7} { append sDateMin ".??" }
   if {[string length $sDateMax] == 7} { append sDateMax ".31" }
   if {[string match {*.01.01} $sDateMin]} { set sDateMin "[string range $sDateMin 0 end-6].??.??"}
+} 
+
+set ::search::header::options { \
+  sWhite sBlack sEvent sSite sRound sDateMin sDateMax sIgnoreCol \
+  sWhiteEloMin sWhiteEloMax sBlackEloMin sBlackEloMax \
+  sEloDiffMin sEloDiffMax sGlMin sGlMax sGlMin sGlMax sGnumMin sGnumMax \
+  sEco sEcoMin sEcoMax sSideToMove preComment postComment sTag sTagValue \
+  sResWin sResLoss sResDraw sResOther sPgncase sGameEnd \
 }
 
 proc ::search::header::defaults {} {
-  global sWhite sBlack sEvent sSite sRound sDateMin sDateMax sIgnoreCol sSideToMove
-  global sWhiteEloMin sWhiteEloMax sBlackEloMin sBlackEloMax
-  global sEloDiffMin sEloDiffMax sTag sTagValue
-  global sEco sEcoMin sEcoMax sHeaderFlags sGlMin sGlMax
-  global sGnumMin sGnumMax
-  global sResWin sResLoss sResDraw sResOther glstart
-  global sPgntext sTitles sPgncase sGameEnd
+  eval global $::search::header::options
+       global sHeaderFlags sPgntext sTitles
 
   set sWhite "";  set sBlack ""
   set sEvent ""; set sSite "";  set sRound ""
@@ -113,11 +116,8 @@ set sHeaderFlagFrame 0
 #   (General Search)
 
 proc search::header {} {
-  global tr sWhite sBlack sEvent sSite sRound sDateMin sDateMax sIgnoreCol
-  global sWhiteEloMin sWhiteEloMax sBlackEloMin sBlackEloMax
-  global sEloDiffMin sEloDiffMax sSideToMove
-  global sEco sEcoMin sEcoMax sHeaderFlags sGlMin sGlMax sTitleList sTitles
-  global sResWin sResLoss sResDraw sResOther glstart sPgncase sPgntext sGameEnd preComment postComment
+  eval global $::search::header::options
+       global sHeaderFlags sPgntext sTitles sTitleList tr 
 
   set w .sh
   if {[winfo exists $w]} {
@@ -256,7 +256,6 @@ proc search::header {} {
   label $f.lRound -textvar tr(Round) -font $bold
   spinbox $f.eRound -from 1 -to 20 -increment 1 -textvariable sRound -width 10 -font $regular
   # entry $f.eRound -textvariable sRound -width 10 -font $regular
-  set sRound {}
   bindFocusColors $f.eRound
   pack $f.eRound $f.lRound -side right -padx 3
 
@@ -593,11 +592,8 @@ proc search::header {} {
 }
 
 proc ::search::header::save {} {
-  global sWhite sBlack sEvent sSite sRound sDateMin sDateMax sIgnoreCol
-  global sWhiteEloMin sWhiteEloMax sBlackEloMin sBlackEloMax
-  global sEloDiffMin sEloDiffMax sGlMin sGlMax
-  global sEco sEcoMin sEcoMax sHeaderFlags sSideToMove
-  global sResWin sResLoss sResDraw sResOther glstart sPgntext sPgncase sGameEnd
+  eval global $::search::header::options
+       global sHeaderFlags sPgntext sTitles glstart ; # arrays, etc
 
   set ftype { { "Scid SearchOptions files" {".sso"} } }
   set fName [tk_getSaveFile -initialdir $::initialDir(sso) -filetypes $ftype -title "Create a SearchOptions file" -parent .sh]
@@ -617,10 +613,7 @@ proc ::search::header::save {} {
   puts $searchF "set searchType Header"
 
   # First write the regular variables:
-  foreach i {sWhite sBlack sEvent sSite sRound sDateMin sDateMax sResWin
-    sResLoss sResDraw sResOther sWhiteEloMin sWhiteEloMax sBlackEloMin
-    sBlackEloMax sEcoMin sEcoMax sEloDiffMin sEloDiffMax sPgncase sGameEnd
-    sIgnoreCol sSideToMove sGlMin sGlMax ::search::filter::operation} {
+  foreach i $::search::header::options\ ::search::filter::operation {
     puts $searchF "set $i [list [set $i]]"
   }
 
@@ -630,6 +623,9 @@ proc ::search::header::save {} {
   }
   foreach i [array names sPgntext] {
     puts $searchF "set sPgntext($i) [list $sPgntext($i)]"
+  }
+  foreach i [array names sTitles] {
+    puts $searchF "set sTitles($i) [list $sTitles($i)]"
   }
 
   tk_messageBox -type ok -icon info -title "Search Options saved" \
