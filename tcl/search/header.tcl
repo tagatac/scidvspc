@@ -20,12 +20,10 @@ set sResWin 1; set sResLoss 1; set sResDraw 1; set sResOther 1
 set sGnumMin 1; set sGnumMax -1
 set sIgnoreCol No
 set sSideToMove wb
-set sHeaderFlagList {StdStart Promotions UnderPromo Comments Variations Annotations \
-      DeleteFlag WhiteOpFlag BlackOpFlag MiddlegameFlag EndgameFlag \
-      NoveltyFlag PawnFlag TacticsFlag KsideFlag QsideFlag \
-      BrilliancyFlag BlunderFlag UserFlag }
-set sHeaderCustomFlagList {  CustomFlag1 CustomFlag2 CustomFlag3 CustomFlag4 CustomFlag5 CustomFlag6 }
-foreach i [ concat $sHeaderFlagList $sHeaderCustomFlagList ] {
+set sHeaderFlagList {StdStart Promotions UnderPromo Comments Variations Annotations} ; # handle separately 'DeleteFlag'
+set sHeaderGameFlagList {WhiteOpFlag BlackOpFlag MiddlegameFlag EndgameFlag NoveltyFlag PawnFlag TacticsFlag KsideFlag QsideFlag BrilliancyFlag BlunderFlag UserFlag}
+set sHeaderCustomFlagList {CustomFlag1 CustomFlag2 CustomFlag3 CustomFlag4 CustomFlag5 CustomFlag6}
+foreach i [concat $sHeaderFlagList DeleteFlag $sHeaderGameFlagList $sHeaderCustomFlagList] {
   set sHeaderFlags($i) both
 }
 set sPgntext(1) ""
@@ -100,7 +98,7 @@ proc ::search::header::defaults {} {
   set postComment 0
   set sTag ""
   set sTagValue ""
-  foreach flag  [ concat $::sHeaderFlagList $::sHeaderCustomFlagList ] { set sHeaderFlags($flag) both }
+  foreach flag  [concat $::sHeaderFlagList DeleteFlag $::sHeaderGameFlagList $::sHeaderCustomFlagList] {set sHeaderFlags($flag) both}
   foreach i [array names sPgntext] { set sPgntext($i) "" }
   foreach i $::sTitleList {
     set sTitles(w:$i) 1
@@ -254,7 +252,11 @@ proc search::header {} {
     -side left -padx 3 -pady 3
 
   label $f.lRound -textvar tr(Round) -font $bold
+
+  set tmp $sRound ; # spinbox evilly changes it's value
   spinbox $f.eRound -from 1 -to 20 -increment 1 -textvariable sRound -width 10 -font $regular
+  set sRound $tmp
+
   # entry $f.eRound -textvariable sRound -width 10 -font $regular
   bindFocusColors $f.eRound
   pack $f.eRound $f.lRound -side right -padx 3
@@ -386,27 +388,43 @@ proc search::header {} {
   pack $f.l1 $f.e1 $f.l2 $f.e2 $f.l3 $f.e3 $f.case -side left
 
   addHorizontalRule $w
+ 
+  pack [frame $w.flagstitle] -side top
 
-  button $w.flagslabel -textvar tr(FindGamesWith) -font $bold -command {
+  button $w.flagstitle.label -textvar tr(FindGamesWith) -font $bold -command {
     if {$sHeaderFlagFrame} {
       set sHeaderFlagFrame 0
       pack forget .sh.flags
+      pack forget .sh.flagstitle.allyes .sh.flagstitle.allno .sh.flagstitle.allboth
     } else {
       set sHeaderFlagFrame 1
-      pack .sh.flags -side top -after .sh.flagslabel
+      pack .sh.flags -side top -after .sh.flagstitle
+      pack .sh.flagstitle.allyes .sh.flagstitle.allno .sh.flagstitle.allboth -after .sh.flagstitle.label -side left -padx 10
     }
   }
-  pack $w.flagslabel -side top
+  button $w.flagstitle.allyes -textvar tr(Yes) -font $regular -relief flat -command {
+    foreach flag  [concat $::sHeaderGameFlagList $::sHeaderCustomFlagList] {set ::sHeaderFlags($flag) yes}
+  }
+  button $w.flagstitle.allno -textvar tr(No) -font $regular -relief flat -command {
+    foreach flag  [concat $::sHeaderGameFlagList $::sHeaderCustomFlagList] {set ::sHeaderFlags($flag) no}
+  }
+  button $w.flagstitle.allboth -textvar tr(Both) -font $regular -relief flat -command {
+    foreach flag  [concat $::sHeaderGameFlagList $::sHeaderCustomFlagList] {set ::sHeaderFlags($flag) both}
+  }
+
+  pack $w.flagstitle.label -side left -padx 10
 
   frame $w.flags
   if {$::sHeaderFlagFrame} {
+    pack $w.flagstitle.allyes $w.flagstitle.allno $w.flagstitle.allboth -side left -padx 10
     pack $w.flags -side top
   }
 
   set count 0
   set row 0
   set col 0
-  foreach var $::sHeaderFlagList {
+  # Draw a grid for the flags, moving DOWN each flag (for 6 rows, then across)
+  foreach var [concat $::sHeaderFlagList $::sHeaderGameFlagList DeleteFlag] {
     set lab [label $w.flags.l$var -textvar tr($var) -font font_Small]
     grid $lab -row $row -column $col -sticky e
     incr col
@@ -434,12 +452,13 @@ proc search::header {} {
     incr row
     if {$count == 6} { set col 5; set row 0 }
     if {$count == 12} { set col 10; set row 0 }
+    if {$count == 18} { set col 0 } ; # DeleteFlag
   }
   set count 1
   set col 0
   set row 7
-  foreach var $::sHeaderCustomFlagList {
     
+  foreach var $::sHeaderCustomFlagList {
     set lb [sc_game flag $count description]
     if { $lb == ""  } {
       set lb "Custom $count"
@@ -613,7 +632,7 @@ proc ::search::header::save {} {
   puts $searchF "set searchType Header"
 
   # First write the regular variables:
-  foreach i $::search::header::options\ ::search::filter::operation {
+  foreach i [concat $::search::header::options ::search::filter::operation] {
     puts $searchF "set $i [list [set $i]]"
   }
 

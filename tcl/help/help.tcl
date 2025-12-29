@@ -1021,6 +1021,10 @@ set helpText(Searches) {<h1>Searches in Scid</h1>
   </p><p>
   <i>Extra Tags *do not* match normal tags such as White, Event and EventDate</i>.
   </p><p>
+  The <b>Flag Options</b> is a hideable section with a combination of Game Properties, User <a Flags>Flags</a>, and Custom Flags.
+  At top there are three buttons (Yes, No, Both) which are for convenience and mass-set the User and Custom Flag values.
+  One example is given - <i>To find all games with a Custom Flag set, first select "No" to the six custom flag vars, then after executing the search, negating the filter will give you your result.</i>
+  </p><p>
   Finally, the Header search can be used to find any text
   (case-sensitive and without wildcards) in the PGN of
   a game.  You may enter up to three phrases which must all appear
@@ -2436,7 +2440,7 @@ set helpText(Maintenance) {<h1>Database Maintenance</h1>
 <green><run ::maint::Open>Maintenance Window</b></run></green> (Control+m).
   </p>
   <p>
-  Operations include - using <a Flags>Delete (and other Game Flags)</a>, <a Maintenance Spellcheck>Spellcheck Names</a>,
+  Operations include - using <a Flags>Delete (and other User Flags)</a>, <a Maintenance Spellcheck>Spellcheck Names</a>,
   <a Compact>Compact</a> and <a Sorting>Sort</a> databases, and delete PGN Tags, Comments and Variations.
   </p>
   <p><i>
@@ -2694,7 +2698,7 @@ set helpText(Flags) {<h1>Game Flags</h1>
   <p>
   Game Flags are indicators of some characteristic, such as "Brilliant Play" or "White Opening",
   and are used for classifying games and enabling fast database searches.
-  There are <b>12 user flags</b> and <b>6 custom flags</b>.
+  There are <b>12 User flags</b> and <b>6 Custom flags</b>.
   </p>
   <p> Flags are set in the <a Maintenance>Maintenance Window</a>. Select the desired
   flag from the menu-button, and then use the appropriate "Mark" button.
@@ -7348,10 +7352,15 @@ The <green><run raiseSplashWindow>Splash / Startup Window</run></green> shows va
 technical information about the system and program startup. In the bottom right corner is an
 entry-box for text searches; just type your text and press return.</p>
 <p>
-Just above the bottom is another, larger, entry-box. This is Scid vs PC's <b>Console</b> which enables input of Tcl/Tk commands for debugging and advanced use.
-For more information about Tcl, try 
+Just above the bottom is another, larger, entry-box. This is Scid vs PC's <b>Console</b> which enables input of Tcl/Tk commands for debugging and advanced use. For example, type 
+</p><p><i>
+sc_filter reset ; set count [sc_filter count] ; for {set i 1} {$i <lt> $count} {incr i} {if {[sc_flags $i] == {}} {sc_filter remove $i}} ; ::windows::gamelist::Refresh</i></p>
+<p>to find all flagged games, or 
+</p><p><i>
+time {foreach i [array names helpText] {helpWindow $i}}</i></p>
+<p>to run a little benchmark. For more information about Tcl, try 
 <url https://www.tutorialspoint.com/tcl-tk/>Tutorials Point's Tcl</url> and 
 <url https://www.tutorialspoint.com/tcl-tk/tk_overview.htm>Tk</url> tutorials.
 </p>
-<p><footer>Updated: Scid vs. PC 4.21 July 2019</footer></p>
+<p><footer>Updated: Scid vs. PC 4.27 December 2025</footer></p>
 }
