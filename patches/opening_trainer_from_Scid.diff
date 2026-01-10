@@ -1,6 +1,18 @@
+Index: tcl/game.tcl
+===================================================================
+--- tcl/game.tcl	(revision 3596)
++++ tcl/game.tcl	(working copy)
+@@ -269,6 +269,7 @@
+       # add new game to history
+       ::bookmarks::AddCurrentGame
+       updateMenuStates
++      ::windows::gamelist::Refresh
+     }
+ }
+ 
 Index: tcl/help/help.tcl
 ===================================================================
---- tcl/help/help.tcl	(revision 3594)
+--- tcl/help/help.tcl	(revision 3600)
 +++ tcl/help/help.tcl	(working copy)
 @@ -406,6 +406,7 @@
    <li><a Repertoire>Opening Repertoires</a></li>
@@ -10,7 +22,7 @@ Index: tcl/help/help.tcl
    <li><a Options>Options</a></li>
    <li>Command line <a Cmdline>options</a></li>
    </ul>
-@@ -4596,6 +4597,139 @@
+@@ -4600,6 +4601,120 @@
    <p><footer>Updated: Scid vs. PC 4.21 December 2019</footer></p>
  }
  
@@ -18,141 +30,131 @@ Index: tcl/help/help.tcl
 +set helpTitle(OpeningTrainer) "Opening Trainer"
 +set helpText(OpeningTrainer) {<h1>Opening Trainer</h1>
 +  <p>
-+  A Scid database can be used as a repertoire, each game representing
++  A Scid database can be used as a Repertoire, each game representing
 +  an opening line. The games can contain variations and may also
-+  contain NAG values to specify values for each line, and thus
-+  allowing to mark preferred or dubious lines. To be a valid database
-+  for the opening trainer it is also required to be of proper type.
-+  That is, if openings for white are to be trained, the database has
-+  to be of type <term>Openings for White</term> (similar for Black and
-+  both colors). The type can be set via the <a Maintenance>Maintenance
++  contain NAG values to specify values for each line, thus
++  allowing to mark preferred or dubious lines.
++</p><p>
++  Databases for the Opening Trainer must have an appropiate type.
++  If openings for white are to be trained, this has
++  to be <b>Openings for White</b> (and likewise black and
++  both colors). <i>The type can be set via the <a Maintenance>Maintenance
 +  window</a> by selecting the icon or via the database switchers
-+  context menu.
++  context menu.</i>
++  </p>
++  <h2>Creating a Repertoire</h2>
++  <p>
++  <i>The Repertoire Database will be fully loaded at initialisation. For this
++  reason, it is important to use a smaller database.</i>
++  </p><p>
++  Starting with a large database of quality games, filter the
++  database for a specific opening (e.g. the Ruy Lopez), copy these games to a new database for that specific
++  opening, and set this base type as mentioned above.
++  (You may need to restart Scid to use the opening trainer with this new repertoire database).
 +  </p>
 +  <p>
-+  <h2>Creating a repertoire base</h2>
-+  Before running the opening trainer, please be aware that the entire
-+  repertoire database will be loaded into the trainer. For this
-+  reason, it is good to use a smaller database. It is a good idea to
-+  first assemble a large database of quality games, then filter the
-+  database for a specific opening (e.g. the Ruy Lopez). These filtered
-+  games could then be copied to a new database for that specific
-+  opening you had in mind (please name it intelligently, so you can
-+  easily understand which opening it is for). Then instead of an
-+  entire 2 million or so game database, you have a much smaller
-+  repertoire database that will be loaded quickly into the opening
-+  trainer.
-+  </p>
-+  <p>
-+  You could also buy or download special databases that cover
-+  particular openings, although we cannot point you in the direction
-+  of any possible sources in this help file.
-+  </p>
-+  <p>
-+  Once you have a smaller database aimed at just the opening you
-+  require, set the type as mentioned using the <a
-+  Maintenance>Maintenance window</a>.  You will need to restart Scid
-+  to use the opening trainer with this new repertoire database.
-+  </p>
-+  <p>
-+  If you choose, for the opening trainer to work better, you may flag
++  For the opening trainer to work better, you may flag
 +  certain games as "White opening" or "Black opening". An exhaustive
-+  way of doing this would be to go through the entire database 'by
-+  hand' and assign the flags individually. A quicker way, may be to
++  way of doing this would be to go through the entire database by
++  hand and assign the flags individually. A quicker way, may be to
 +  filter your database for white openings, then set the flag for all
 +  those filtered games, and similarly for black openings. Remember you
 +  can have a repertoire for both white and black in the same database.
-+  You can set the flags in this way via the <a Maintenance>Maintenance
-+  window</a>. How you choose to filter the games for flagging is
-+  entirely up to the user. One possible way is to filter 1-0 games for
++  One possible way is to filter 1-0 games for
 +  white openings, and 0-1 for black openings. This way is not the best
-+  however, and it is left to the user to find the system they feel
-+  most comfortable with.
++  however.
 +  </p>
 +  <p>
-+  Finally, to work best, the Opening Trainer can use NAG values to understand 
-+  how a move in the opening is to be rated. Please refer to the <a NAGs>NAG 
-+  annotation help</a> for more information.
++  Finally, to work best, the Opening Trainer can use <a NAGs>NAG</a> values to understand 
++  how a move in the opening is to be rated.
 +  </p>
 +  <p>
-+  <h2>Using the opening trainer</h2>
-+  To use the opening trainer first of all open the repertoire database you
-+  created, or one of the proper type. Then choose Play / Training / Opening Trainer.
-+  The upcoming dialogue offers some choices about the next training
-+  session
++  <h2>General Use</h2>
++
++  Open the trainer via Play / Training / Opening Trainer.
++  The setup dialogue offers some choices about the next training session.
 +  <ul>
-+      <li><term>white</term>/<term>black</term>/<term>both</term> is
-+      used to select the side of the opening to train
-+      </li>
-+      <li><term>Allow only best moves</term> will treat lower rated moves
++      <li><b>White / Black / Both</b> is used to select the side of the opening to train</li>
++      <li><b>Allow only best moves</b> will treat lower rated moves
 +      as error. The rating of a line is given by NAG values.</li>
-+      <li><term>Opponent plays best moves</term> Scid will always play
++      <li><b>Opponent plays best moves</b> Scid will always play
 +      the best continuation according to the repertoire database. If
 +      unchecked Scid is allowed to choose also lower rated
 +      continuations. This is helpful to learn the refutations as well.
 +      </li>
-+      <li><term>Only flagged lines</term> Scid will only play lines
-+      from games flagged as <term>Opening for White</term> or
-+      <term>Opening for Black</term>.
++      <li><b>Only flagged lines</b> Scid will only play lines
++      from games flagged as <b>Opening for White</b> or
++      <b>Opening for Black</b>.
 +      </li>
-+      <li><term>Reset statistics</term> will reset the statistics
-+      before the training session.</li>
++      <li><b>Reset statistics</b> will reset the statistics before the training session.</li>
 +  </ul>
-+  Press the <term>Continue</term> button to proceed with the training.
 +  </p>
 +  <p>
-+  The actual opening trainer will show up. Here one can display
++  After pressing OK, the Opening Trainer will start. Here one can display
 +  possible candidate moves (hidden by default) and also display their
-+  values by just enabling these functions. If <term>Show
-+  statistics</term> is enabled, the current statistics is shown in the
++  values by just enabling these functions. If <b>Show Statistics</b>
++  is enabled, the current statistics is shown in the
 +  color coded fields below the checkbox. Otherwise the overall
-+  statistics can be accessed by the button <term>Show report</term>
++  statistics can be accessed by the button <b>Show report</b>
++
++  </p><p>
++  At any stage, <b>start a new game to progress</b> to the next exercise.
++  </p>
 +  
-+  <h3>Opening trainer statistics</h3>
++  <h3>Opening Trainer Statistics</h3>
 +  <p>
 +  Four numbers are displayed showing statistics for current position:
 +  <ul>
-+  <li><term>Green</term> the number of moves played by the user that
++  <li><b>Green</b> the number of moves played by the user that
 +  are good moves</li>
-+  <li><term>Yellow</term> the number of dubious moves played that are
++  <li><b>Yellow</b> the number of dubious moves played that are
 +  in the repertoire</li>
-+  <li><term>Red</term> the number of moves played that are not in the
++  <li><b>Red</b> the number of moves played that are not in the
 +  repertoire</li>
-+  <li><term>White</term> the number of times the position was
++  <li><b>White</b> the number of times the position was
 +  encountered</li>
 +  </ul>
 +  </p>
 +  
-+  <h3>The report</h3>
++  <h3>The Report</h3>
 +  <p>
 +  The report shows statistics for the whole repertoire and gives
 +  information about user's knowledge :
 +  <ul>
-+  <li><term>Positions in repertoire</term> the total number of
++  <li><b>Positions in repertoire</b> the total number of
 +  positions in the repertoire (all lines in database)</li>
-+  <li><term>Positions not played</term> the positions that were never
++  <li><b>Positions not played</b> the positions that were never
 +  encountered</li>
-+  <li><term>Positions played</term> the positions that were played and
++  <li><b>Positions played</b> the positions that were played and
 +  the sum of the number of times they were encountered. Note that this
 +  figure represents the sum of occurrences of a position in all
 +  opening lines: this number can quickly become big for positions
 +  that are close to the start position</li>
-+  <li><term>Success</term> the number of good moves made by the player</li>
-+  <li><term>Dubious moves</term> the number of weak moves made by the
++  <li><b>Success</b> the number of good moves made by the player</li>
++  <li><b>Dubious moves</b> the number of weak moves made by the
 +  player</li>
-+  <li><term>Out of repertoire</term> the number of moves made by the
++  <li><b>Out of repertoire</b> the number of moves made by the
 +  player that were not in repertoire</li>
 +  </ul>
 +  </p> 
-+  <p><footer>(Updated: Scid 3.6.26, October 2008)</footer></p>
++  <p><footer>(Updated: Scid vs. PC 4.27 January 2026)</footer></p>
 +}
 +
  set helpTitle(Correspondence) "Correspondence Chess"
  set helpText(Correspondence) {<h1>Correspondence Chess</h1>
  
+@@ -4720,7 +4835,7 @@
+ 
+ <h3>Stepping through games</h3>
+ <p>
+-After games are retrieved they are loaded to Scids clipboard database
++After games are retrieved they are loaded to Scids clipbase
+ and new moves are added and stored in the correspondence chess
+ database opened. The most convenient way to step through the games is
+ by the two buttons <button tb_CC_Prev> and <button tb_CC_Next> which
 Index: tcl/lang/english.tcl
 ===================================================================
---- tcl/lang/english.tcl	(revision 3594)
+--- tcl/lang/english.tcl	(revision 3596)
 +++ tcl/lang/english.tcl	(working copy)
 @@ -1464,21 +1464,32 @@
  translate E ShowReport {Show report}
@@ -189,7 +191,7 @@ Index: tcl/lang/english.tcl
  translate E LoadingGame {Loading game}
 Index: tcl/menus.tcl
 ===================================================================
---- tcl/menus.tcl	(revision 3594)
+--- tcl/menus.tcl	(revision 3596)
 +++ tcl/menus.tcl	(working copy)
 @@ -411,6 +411,7 @@
  set helpMessage($m,[incr menuindex]) ToolsTraining
@@ -199,9 +201,19 @@ Index: tcl/menus.tcl
  
  incr menuindex
  
+@@ -1011,7 +1012,8 @@
+     maintFlag useGraphFigurine photosMinimized bookmarks(gamehistory) playerInfoHistory defaultDBs tbOnline
+     glistSize glexport glistColOrder glistColWidth glistColAnchor addRatings(overwrite) addRatings(filter)
+     ::board::arrowWidth ::board::arrowLength ::board::enableMPVTls
+-    blistColOrder blistColWidth blistColAnchor macWheelMouse epdAnnotateMode epdDelay evalTime evalScale evalUseLog evalTicks} {
++    blistColOrder blistColWidth blistColAnchor macWheelMouse epdAnnotateMode epdDelay evalTime evalScale evalUseLog evalTicks
++    ::tactics::analysisTime ::opening::DisplayCMValue ::opening::displayCM ::opening::displayOpeningStats} {
+ 
+       puts $optionF "set $i [list [set $i]]"
+ 
 Index: tcl/start.tcl
 ===================================================================
---- tcl/start.tcl	(revision 3594)
+--- tcl/start.tcl	(revision 3596)
 +++ tcl/start.tcl	(working copy)
 @@ -105,7 +105,7 @@
    ::tools::graphs::filter ::tools::graphs::absfilter ::tools::graphs::rating ::tools::graphs::score
@@ -212,18 +224,29 @@ Index: tcl/start.tcl
    ::config ::docking
    ::commenteditor
  } {
+@@ -470,7 +470,11 @@
+ }
+ 
+ set ::tactics::analysisTime 3
++set ::opening::DisplayCMValue 0
++set ::opening::displayCM 0
++set ::opening::displayOpeningStats 1
+ 
++
+ # Defaults for the PGN window:
+ # if ::pgn::showColor is 1, the PGN text will be colorized.
+ set ::pgn::showColor 1
 Index: tcl/tools/tactics.tcl
 ===================================================================
---- tcl/tools/tactics.tcl	(revision 3594)
+--- tcl/tools/tactics.tcl	(revision 3596)
 +++ tcl/tools/tactics.tcl	(working copy)
-@@ -810,3 +810,765 @@
+@@ -810,3 +810,770 @@
  ###
  ### End of file: tactics.tcl
  ###
 +###
-+###
 +### opening.tcl: part of Scid.
-+### Copyright (C) 2007  Pascal Georges
++### Copyright (C) 2007  Pascal Georges, Hacked by stevenaaus 2025
 +###
 +namespace eval opening {
 +  set repBase -1
@@ -243,18 +266,13 @@ Index: tcl/tools/tactics.tcl
 +  set movesLoaded 0
 +  set fenLastUpdate 0
 +  set fenLastStatsUpdate 0
-+  set cancelLoadRepertoire 0
 +  set lastMainLoopFen 0
 +  set lastMainLoopFlipped [sc_pos side]
 +  
 +  # parameters for opening trainer window
-+  set displayCM 0
-+  set DisplayCMValue 0
 +  set tCM ""
 +  set lastCMFen ""
 +  set lastCM "-1"
-+  
-+  set displayOpeningStats 1
 +  set listStats {} ;# list of {fen x y z t} where x:good move played, y:dubious move, z:move out of rep, t:position played
 +  
 +  ################################################################################
@@ -264,17 +282,23 @@ Index: tcl/tools/tactics.tcl
 +    global ::opening::playerBestMove ::opening::opBestMove ::opening::repColor
 +    
 +    set w .openingConfig
-+    if { [winfo exists $w] } { focus $w ; return  }
-+    if { [winfo exists ".openingWin"] } { focus ".openingWin" ; return }
++    if {[winfo exists $w]} {
++      raiseWin $w
++      return
++    }
++    if {[winfo exists .openingWin]} {
++      raiseWin .openingWin
++      return
++    }
 +    
 +    toplevel $w
 +    wm title $w $::tr(Repertoiretrainingconfiguration)
 +    setWinLocation $w
 +    frame $w.f0 -relief groove
 +    
-+    radiobutton $w.f0.rbRepColorW -value "w" -variable ::opening::repColor -text $::tr(white)
-+    radiobutton $w.f0.rbRepColorB -value "b" -variable ::opening::repColor -text $::tr(black)
-+    radiobutton $w.f0.rbRepColorWB -value "wb" -variable ::opening::repColor -text $::tr(both)
++    radiobutton $w.f0.rbRepColorW -value w -variable ::opening::repColor -text $::tr(White)
++    radiobutton $w.f0.rbRepColorB -value b -variable ::opening::repColor -text $::tr(Black)
++    radiobutton $w.f0.rbRepColorWB -value wb -variable ::opening::repColor -text $::tr(Both)
 +    pack $w.f0.rbRepColorW $w.f0.rbRepColorB $w.f0.rbRepColorWB -side left  -expand yes -fill both
 +    
 +    frame $w.f1
@@ -285,8 +309,8 @@ Index: tcl/tools/tactics.tcl
 +    pack $w.f1.cbPlayerBestMove $w.f1.cbOpBestMove $w.f1.cbOnlyFlaggedLines $w.f1.cbResetStats -anchor w -side top
 +    
 +    frame $w.f2
-+    button $w.f2.ok -text $::tr(Continue) -command " destroy $w ; ::opening::openRep"
-+    button $w.f2.cancel -text $::tr(Cancel) -command "focus .; destroy $w"
++    dialogbutton $w.f2.ok -text Ok -command "destroy $w ; ::opening::openRep"
++    dialogbutton $w.f2.cancel -text $::tr(Cancel) -command "focus . ; destroy $w"
 +    pack $w.f2.ok $w.f2.cancel -expand yes -side left -padx 20 -pady 2
 +    
 +    pack $w.f0 $w.f1 $w.f2 -side top -fill both
@@ -313,7 +337,10 @@ Index: tcl/tools/tactics.tcl
 +    set typeB [lsearch $base_types {Openings for Black} ]
 +    set typeWB [lsearch $base_types {Openings for either color} ]
 +    
-+    for {set x 1} {$x <= [ expr [sc_base count]-1 ]} {incr x} {
++    for {set x 1} {$x <= [ expr [sc_base count total]-1 ]} {incr x} {
++      if {![sc_base inUse $x]} {
++        continue
++      }
 +      set type [sc_base type $x]
 +      if {$type == $typeW && $repColor == "w" || $type == $typeB && $repColor == "b" || $type == $typeWB && $repColor == "wb"} {
 +        set repBase  $x
@@ -322,33 +349,26 @@ Index: tcl/tools/tactics.tcl
 +    }
 +    
 +    if {$repBase == -1} {
-+      tk_messageBox -title $::tr(Repertoirenotfound) -type ok -icon warning \
-+          -message $::tr(Openfirstrepertoirewithtype)
++      tk_messageBox -title $::tr(Repertoirenotfound) -type ok -icon warning -message $::tr(Openfirstrepertoirewithtype)
 +      return
 +    }
 +    
-+    set prevBase [sc_base current]
-+    if {$prevBase != $repBase} { sc_base switch $repBase }
++    sc_base switch $repBase
 +    loadRep "$repBase - [sc_base filename $repBase]" "[sc_base description]"
-+    if {$prevBase != $repBase} {
-+      sc_base switch $prevBase
-+    } else  {
-+      sc_base switch clipbase
-+    }
++    sc_base switch clipbase
 +    
-+    if { $::opening::movesLoaded == 0 } {
++    if {$::opening::movesLoaded == 0} {
 +      tk_messageBox -title $::tr(Repertoirenotfound) -type ok -icon error -message $::tr(ZeroMovesLoaded)
 +    }
 +    
-+    if { ! [sc_base inUse $prevBase] } {
-+      # switch to clipboard base if the current base is empty
-+      sc_base switch clipbase
-+    }
-+    
-+    # add a blank game for training in current base, if the current base is opened
++    # add a blank game for training in clipbase
 +    sc_game new
 +    sc_game tags set -event $::tr(Openingtrainer)
 +    sc_game save 0
++    # flip board if Black Repo S.A
++    if {$repColor == "b" && ![::board::isFlipped]} {
++      ::board::flip .main.board
++    }
 +    updateBoard -pgn -animate
 +    ::windows::gamelist::Refresh
 +    updateTitle
@@ -361,42 +381,46 @@ Index: tcl/tools/tactics.tcl
 +  # Go through all games and variations and build a tree of positions encountered
 +  #
 +  ################################################################################
-+  proc loadRep { name desc } {
++  proc loadRep {name desc} {
 +    global ::opening::repBase ::opening::fenMovesEvalList ::opening::allLinesFenList \
 +        ::opening::allLinesHashList ::opening::hashList ::opening::onlyFlaggedLines \
-+        ::opening::movesLoaded ::opening::cancelLoadRepertoire
++        ::opening::movesLoaded
 +    
 +    set movesLoaded 0
-+    set cancelLoadRepertoire 0
 +    set allLinesFenList {}
 +    set allLinesHashList {}
 +    
-+    progressWindow "Scid" "$::tr(Loadingrepertoire)..." $::tr(Cancel) "::opening::sc_progressBar"
-+    for {set g 1} { $g <= [sc_base numGames]} { incr g} {
-+      if {$cancelLoadRepertoire} { break  }
++    # This is broken for big databases S.A
++    # Maybe it's just cpu busy because of "lsort -unique $hashList" below
++
++    set ::interrupt 0
++    progressWindow Scid $::tr(Loadingrepertoire) $::tr(Cancel) "set ::interrupt 1"
++    busyCursor .
++    update idletasks
++
++    set numGames [sc_base numGames]
++    for {set g 1} {$g <= $numGames} {incr g} {
++
++      if {$::interrupt} {puts break ; set ::interupt 0 ; break } ; # broke?
++      changeProgressWindow "$::tr(Movesloaded) $movesLoaded"
++      updateProgressWindow $g $numGames
++
 +      if {$onlyFlaggedLines && ![sc_game flag "WhiteOpFlag" $g] && ![sc_game flag "BlackOpFlag" $g]} {
 +        continue
 +      }
 +      set fenMovesEvalList {}
 +      set hashList  {}
 +      sc_game load $g
-+      changeProgressWindow "$::tr(Loadingrepertoire)...\n$name\n$desc\n$::tr(Movesloaded) $movesLoaded"
-+      updateProgressWindow $g [sc_base numGames]
 +      parseGame
 +      lappend allLinesFenList $fenMovesEvalList
 +      set hashList [lsort -unique $hashList]
 +      lappend allLinesHashList $hashList
 +    }
-+    # puts "$allLinesFenList"
 +    
 +    closeProgressWindow
++    unbusyCursor .
 +  }
-+  ################################################################################
-+  # cancel repertoire loading
-+  ################################################################################
-+  proc sc_progressBar {} {
-+    set ::opening::cancelLoadRepertoire 1
-+  }
++
 +  ################################################################################
 +  # parse one game and fill the list
 +  ################################################################################
@@ -404,7 +428,7 @@ Index: tcl/tools/tactics.tcl
 +    while {![sc_pos isAt vend]} {
 +      fillFen
 +      # Go through all variants
-+      for {set v 0} {$v<[sc_var count]} {incr v} {
++      for {set v 0} {$v < [sc_var count]} {incr v} {
 +        # enter each var (beware the first move is played)
 +        sc_var enter $v
 +        parseVar
@@ -514,16 +538,16 @@ Index: tcl/tools/tactics.tcl
 +    after cancel ::opening::mainLoop
 +    
 +    # Handle case of player's turn (which always plays from bottom of the board)
-+    if { [sc_pos side] == "white" &&  ![::board::isFlipped .main.board] || [sc_pos side] == "black" &&  [::board::isFlipped .main.board] } {
++    if { [sc_pos side] == "white" &&  ![::board::isFlipped] || [sc_pos side] == "black" &&  [::board::isFlipped] } {
 +      # it is player's turn : update UI
 +      ::opening::update_tCM
 +      ::opening::updateStats
-+      after 1000  ::opening::mainLoop
++      after 1000 ::opening::mainLoop
 +      return
 +    }
 +    
 +    # check the position has not been treated already
-+    if {[sc_pos fen] == $::opening::lastMainLoopFen && [::board::isFlipped .main.board] == $::opening::lastMainLoopFlipped} {
++    if {[sc_pos fen] == $::opening::lastMainLoopFen && [::board::isFlipped] == $::opening::lastMainLoopFlipped} {
 +      after 1000 ::opening::mainLoop
 +      return
 +    }
@@ -546,13 +570,14 @@ Index: tcl/tools/tactics.tcl
 +      set l [lsearch -all $cm $move_done]
 +      # move not in repertoire
 +      if {[llength $l] == 0} {
-+        tk_messageBox -type ok -message $::tr(Movenotinrepertoire) -icon info
++        tk_messageBox -type ok -message $::tr(Movenotinrepertoire) -icon info -parent .main.board
 +        sc_move back
++        sc_game truncate
 +        addStats -good 0 -dubious 0 -absent 1 -total 1
 +        ::opening::update_tCM
 +        ::opening::updateStats
 +        updateBoard -pgn -animate
-+        after 1000  ::opening::mainLoop
++        after 1000 ::opening::mainLoop
 +        return
 +      }
 +      
@@ -574,10 +599,10 @@ Index: tcl/tools/tactics.tcl
 +          # addStatsPrev -good 0 -dubious 0 -absent 1 -total 0
 +          set answer [tk_messageBox -icon question -title $::tr(OutOfOpening) -type yesno \
 +              -message "$::tr(yourmoveisnotgood) ($nag) \n $::tr(DoYouWantContinue)" ]
-+          if {$answer == no} {
++          if {$answer == "no"} {
 +            sc_move back
 +            updateBoard -pgn
-+            after 1000  ::opening::mainLoop
++            after 1000 ::opening::mainLoop
 +            return
 +          }
 +        } else  { ;# the move is a good one
@@ -607,11 +632,11 @@ Index: tcl/tools/tactics.tcl
 +      ::opening::play $cm
 +    }
 +    set ::opening::lastMainLoopFen [sc_pos fen]
-+    set ::opening::lastMainLoopFlipped [::board::isFlipped .main.board]
++    set ::opening::lastMainLoopFlipped [::board::isFlipped]
 +    
 +    ::opening::update_tCM
 +    ::opening::updateStats
-+    after 1000  ::opening::mainLoop
++    after 1000 ::opening::mainLoop
 +  }
 +  ################################################################################
 +  # isGoodMove : returns true if the nag list in parameter is empty or contains !? ! !!
@@ -678,14 +703,17 @@ Index: tcl/tools/tactics.tcl
 +  proc openingWin {} {
 +    global ::opening::displayCM ::opening::displayCMValue ::opening::tCM ::opening::fenLastUpdate
 +    
-+    set w ".openingWin"
-+    if {[winfo exists $w]} { focus $w ; return }
-+    
++    set w .openingWin
++    if {[winfo exists $w]} {
++      raiseWin $w
++      return
++    }
 +    toplevel $w
++    
 +    wm title $w $::tr(Openingtrainer)
 +    setWinLocation $w
 +    frame $w.f1
-+    frame $w.f2 -relief raised -bd 2
++    frame $w.f2
 +    frame $w.f3
 +    
 +    checkbutton $w.f1.cbDisplayCM  -text $::tr(DisplayCM) -variable ::opening::displayCM -relief flat \
@@ -724,11 +752,11 @@ Index: tcl/tools/tactics.tcl
 +    button $w.f3.close -textvar ::tr(Abort) -command ::opening::endTraining
 +    
 +    pack $w.f3.report $w.f3.close -side top -anchor center -fill x
-+    pack $w.f1 $w.f2 $w.f3 -fill x
++    pack $w.f1 $w.f2 $w.f3 -fill x -pady 5 -padx 2
 +    
-+    bind $w <F1> { helpWindow OpeningTrainer }
-+    bind $w <Escape> "destroy $w"
-+    bind $w <Destroy> ""
++    bind $w <F1> {helpWindow OpeningTrainer}
++    bind $w <Escape> ::opening::endTraining
++    bind $w <Destroy> ::opening::endTraining
 +    bind $w <Configure> "recordWinSize $w"
 +    wm minsize $w 45 0
 +  }
@@ -736,10 +764,11 @@ Index: tcl/tools/tactics.tcl
 +  #
 +  ################################################################################
 +  proc endTraining {} {
++    bind .openingWin <Destroy> ""
 +    after cancel ::opening::mainLoop
 +    saveStats
 +    focus .
-+    destroy ".openingWin"
++    destroy .openingWin
 +  }
 +  ################################################################################
 +  # display the candidate moves list (with NAG values)
