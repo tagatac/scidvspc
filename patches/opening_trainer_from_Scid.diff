@@ -156,6 +156,30 @@ Index: tcl/lang/english.tcl
 ===================================================================
 --- tcl/lang/english.tcl	(revision 3596)
 +++ tcl/lang/english.tcl	(working copy)
+@@ -1447,17 +1447,17 @@
+ translate E Restart {Restart}
+ translate E OutOfOpening {Out of opening}
+ translate E NotFollowedLine {You did not follow the line}
+-translate E DoYouWantContinue {Do you want to continue ?}
++translate E DoYouWantContinue {Do you want to continue?}
+ translate E CoachIsWatching {Coach is watching}
+ translate E Ponder {Permanent thinking}
+ translate E LimitELO {Limit ELO strength}
+-translate E DubiousMovePlayedTakeBack {Dubious move played, do you want to take back ?}
+-translate E WeakMovePlayedTakeBack {Weak move played, do you want to take back ?}
+-translate E BadMovePlayedTakeBack {Bad move played, do you want to take back ?}
++translate E DubiousMovePlayedTakeBack {Dubious move played, do you want to take back?}
++translate E WeakMovePlayedTakeBack {Weak move played, do you want to take back?}
++translate E BadMovePlayedTakeBack {Bad move played, do you want to take back?}
+ translate E Iresign {I resign}
+-translate E yourmoveisnotgood {your move is not good}
++translate E yourmoveisnotgood {Your move is not good}
+ translate E EndOfVar {End of variation}
+-translate E Openingtrainer {Opening trainer}
++translate E Openingtrainer {Opening Trainer}
+ translate E DisplayCM {Display candidate moves}
+ translate E DisplayCMValue {Display candidate moves value}
+ translate E DisplayOpeningStats {Show statistics}
 @@ -1464,21 +1464,32 @@
  translate E ShowReport {Show report}
  translate E NumberOfGoodMovesPlayed {good moves played}
@@ -166,18 +190,18 @@ Index: tcl/lang/english.tcl
  translate E OpponentBestMove {Opponent plays best moves}
  translate E OnlyFlaggedLines {Only flagged lines}
  translate E resetStats {Reset statistics}
-+translate E Repertoiretrainingconfiguration {Repertoire training configuration}
++translate E Repertoiretrainingconfiguration {Opening Trainer Configuration}
 +translate E Loadingrepertoire {Loading repertoire}
  translate E Movesloaded {Moves loaded}
 +translate E Repertoirenotfound {Repertoire not found}
-+translate E Openfirstrepertoirewithtype {Open first a repertoire database with icon/type set to the right side}
++translate E NoRepertoireFound {No Repertoire Database found}
 +translate E Movenotinrepertoire {Move not in repertoire}
-+translate E PositionsInRepertoire {Positions in repertoire}
++translate E PositionsInRepertoire {Positions in Repertoire}
  translate E PositionsNotPlayed {Positions not played}
  translate E PositionsPlayed {Positions played}
  translate E Success {Success}
  translate E DubiousMoves {Dubious moves}
-+translate E OutOfRepertoire {OutOfRepertoire}
++translate E OutOfRepertoire {Out of Repertoire}
  translate E ConfigureTactics {Select Puzzle}
  translate E ResetScores {Reset scores}
  translate E LoadingBase {Loading base}
@@ -240,14 +264,97 @@ Index: tcl/tools/tactics.tcl
 ===================================================================
 --- tcl/tools/tactics.tcl	(revision 3596)
 +++ tcl/tools/tactics.tcl	(working copy)
-@@ -810,3 +810,770 @@
+@@ -53,10 +53,10 @@
+       tk_messageBox -type ok -icon info -title {Find Best Move} -message "No games in database"     
+       return
+     }
+-   
++
+     busyCursor .
+     update
+-   
++
+     # Try to find in current game, from current pos (exit vars first)
+     catch {
+       # if gamenumber == 0, sc_game flag T returns no boolean
+@@ -90,9 +90,9 @@
+         }
+       }
+     }
+-   
++
+     unbusyCursor .
+-   
++
+     if { ! $found } {
+       tk_messageBox -type ok -icon info -title {Find Best Move} -message "No (more) relevant games found."     
+       sc_game load 1
+@@ -162,7 +162,7 @@
+         sc_base switch [sc_base slot $file]
+         set wasOpened 1
+       }
+-      
++
+       set solvedCount 0
+       for {set g 1 } { $g <= [sc_base numGames]} { incr g} {
+         sc_game load $g
+@@ -219,8 +219,9 @@
+ 
+     frame $w.fconfig.fbutton
+     dialogbutton $w.fconfig.fbutton.ok -text Ok -command "::tactics::start $w"
++    dialogbutton $w.fconfig.fbutton.help -text $tr(Help) -command {helpWindow TacticsTrainer}
+     dialogbutton $w.fconfig.fbutton.cancel -text $tr(Cancel) -command "focus .main ; destroy $w"
+-    pack $w.fconfig.fbutton.ok $w.fconfig.fbutton.cancel -expand yes -side left -padx 20 -pady 2
++    pack $w.fconfig.fbutton.ok $w.fconfig.fbutton..help $w.fconfig.fbutton.cancel -expand yes -side left -padx 10 -pady 2
+     pack $w.fconfig $w.fconfig.flist $w.fconfig.reset -side top
+ 
+     addHorizontalRule $w.fconfig
+@@ -231,7 +232,7 @@
+ 
+     pack $w.fconfig.fbutton -pady 5 -side bottom
+     bind $w <Configure> "recordWinSize $w"
+-    bind $w <F1> { helpWindow TacticsTrainer }
++    bind $w <F1> {helpWindow TacticsTrainer}
+   }
+ 
+ 
+@@ -304,7 +305,7 @@
+       ::tactics::loadNextGame
+     }
+     button $w.buttons.close -textvar tr(Quit) -command ::tactics::endTraining
+-    pack $w.buttons.next $w.buttons.close -expand yes -fill both -padx 20 -pady 2
++    pack $w.buttons.next $w.buttons.close -expand yes -fill both -padx 20 -pady 10
+     bind $w <Destroy> { ::tactics::endTraining }
+     bind $w <Configure> "recordWinSize $w"
+     bind $w <F1> { helpWindow TacticsTrainer }
+@@ -769,7 +770,7 @@
+   # startAnalyzeMode:
+   #   Put the engine in analyze mode
+   # ======================================================================
+-  proc startAnalyze { } {
++  proc startAnalyze {} {
+     global ::tactics::analysisEngine ::tactics::analysisTime
+     setInfoEngine "$::tr(Thinking) ..." PaleVioletRed
+     .tacticsWin.f2.solution configure -state disabled
+@@ -790,7 +791,7 @@
+   # stopAnalyzeMode:
+   #   Stop the engine analyze mode
+   # ======================================================================
+-  proc stopAnalyze { } {
++  proc stopAnalyze {} {
+     global ::tactics::analysisEngine ::tactics::analysisTime
+     # Check that the engine has already had analyze mode started:
+     if {!$analysisEngine(analyzeMode)} { return }
+@@ -810,3 +811,782 @@
  ###
  ### End of file: tactics.tcl
  ###
++
 +###
 +### opening.tcl: part of Scid.
 +### Copyright (C) 2007  Pascal Georges, Hacked by stevenaaus 2025
 +###
++
 +namespace eval opening {
 +  set repBase -1
 +  # list of elements of type fenMovesEvalList (fen move1 nag1 .... movei nagi)
@@ -262,25 +369,25 @@ Index: tcl/tools/tactics.tcl
 +  set onlyFlaggedLines 0
 +  set repColor "w"
 +  set resetStats 0
-+  
++
 +  set movesLoaded 0
 +  set fenLastUpdate 0
 +  set fenLastStatsUpdate 0
 +  set lastMainLoopFen 0
 +  set lastMainLoopFlipped [sc_pos side]
-+  
++
 +  # parameters for opening trainer window
 +  set tCM ""
 +  set lastCMFen ""
-+  set lastCM "-1"
++  set lastCM -1
 +  set listStats {} ;# list of {fen x y z t} where x:good move played, y:dubious move, z:move out of rep, t:position played
-+  
++
 +  ################################################################################
 +  # Configuration
 +  ################################################################################
 +  proc config {} {
-+    global ::opening::playerBestMove ::opening::opBestMove ::opening::repColor
-+    
++    global tr ::opening::playerBestMove ::opening::opBestMove ::opening::repColor
++
 +    set w .openingConfig
 +    if {[winfo exists $w]} {
 +      raiseWin $w
@@ -290,32 +397,33 @@ Index: tcl/tools/tactics.tcl
 +      raiseWin .openingWin
 +      return
 +    }
-+    
++
 +    toplevel $w
-+    wm title $w $::tr(Repertoiretrainingconfiguration)
++    wm title $w $tr(Repertoiretrainingconfiguration)
 +    setWinLocation $w
 +    frame $w.f0 -relief groove
-+    
-+    radiobutton $w.f0.rbRepColorW -value w -variable ::opening::repColor -text $::tr(White)
-+    radiobutton $w.f0.rbRepColorB -value b -variable ::opening::repColor -text $::tr(Black)
-+    radiobutton $w.f0.rbRepColorWB -value wb -variable ::opening::repColor -text $::tr(Both)
++
++    radiobutton $w.f0.rbRepColorW -value w -variable ::opening::repColor -text $tr(White)
++    radiobutton $w.f0.rbRepColorB -value b -variable ::opening::repColor -text $tr(Black)
++    radiobutton $w.f0.rbRepColorWB -value wb -variable ::opening::repColor -text $tr(Both)
 +    pack $w.f0.rbRepColorW $w.f0.rbRepColorB $w.f0.rbRepColorWB -side left  -expand yes -fill both
-+    
++
 +    frame $w.f1
-+    checkbutton $w.f1.cbPlayerBestMove -text $::tr(PlayerBestMove) -variable ::opening::playerBestMove
-+    checkbutton $w.f1.cbOpBestMove -text $::tr(OpponentBestMove) -variable ::opening::opBestMove
-+    checkbutton $w.f1.cbOnlyFlaggedLines -text $::tr(OnlyFlaggedLines) -variable ::opening::onlyFlaggedLines
-+    checkbutton $w.f1.cbResetStats -text $::tr(resetStats) -variable ::opening::resetStats
++    checkbutton $w.f1.cbPlayerBestMove -text $tr(PlayerBestMove) -variable ::opening::playerBestMove
++    checkbutton $w.f1.cbOpBestMove -text $tr(OpponentBestMove) -variable ::opening::opBestMove
++    checkbutton $w.f1.cbOnlyFlaggedLines -text $tr(OnlyFlaggedLines) -variable ::opening::onlyFlaggedLines
++    checkbutton $w.f1.cbResetStats -text $tr(resetStats) -variable ::opening::resetStats
 +    pack $w.f1.cbPlayerBestMove $w.f1.cbOpBestMove $w.f1.cbOnlyFlaggedLines $w.f1.cbResetStats -anchor w -side top
-+    
++
 +    frame $w.f2
 +    dialogbutton $w.f2.ok -text Ok -command "destroy $w ; ::opening::openRep"
-+    dialogbutton $w.f2.cancel -text $::tr(Cancel) -command "focus . ; destroy $w"
-+    pack $w.f2.ok $w.f2.cancel -expand yes -side left -padx 20 -pady 2
-+    
++    dialogbutton $w.f2.help -text $tr(Help) -command {helpWindow OpeningTrainer}
++    dialogbutton $w.f2.cancel -text $tr(Cancel) -command "focus . ; destroy $w"
++    pack $w.f2.ok $w.f2.help $w.f2.cancel -expand yes -side left -padx 20 -pady 10
++
 +    pack $w.f0 $w.f1 $w.f2 -side top -fill both
-+    
-+    bind $w <F1> { helpWindow OpeningTrainer }
++
++    bind $w <F1> {helpWindow OpeningTrainer}
 +    bind $w <Escape> "destroy $w"
 +    bind $w <Destroy> ""
 +    bind $w <Configure> "recordWinSize $w"
@@ -325,18 +433,18 @@ Index: tcl/tools/tactics.tcl
 +  ################################################################################
 +  proc openRep {} {
 +    global ::windows::switcher::base_types ::opening::repColor ::opening::repBase
-+    
++
 +    if {$::opening::resetStats} {
 +      set ::opening::listStats {}
 +    } else  {
 +      loadStats
 +    }
-+    
++
 +    set repBase -1
 +    set typeW [lsearch $base_types {Openings for White} ]
 +    set typeB [lsearch $base_types {Openings for Black} ]
 +    set typeWB [lsearch $base_types {Openings for either color} ]
-+    
++
 +    for {set x 1} {$x <= [ expr [sc_base count total]-1 ]} {incr x} {
 +      if {![sc_base inUse $x]} {
 +        continue
@@ -347,20 +455,20 @@ Index: tcl/tools/tactics.tcl
 +        break
 +      }
 +    }
-+    
++
 +    if {$repBase == -1} {
-+      tk_messageBox -title $::tr(Repertoirenotfound) -type ok -icon warning -message $::tr(Openfirstrepertoirewithtype)
++      tk_messageBox -title $::tr(Repertoirenotfound) -type ok -icon warning -message $::tr(NoRepertoireFound)
 +      return
 +    }
-+    
++
 +    sc_base switch $repBase
 +    loadRep "$repBase - [sc_base filename $repBase]" "[sc_base description]"
 +    sc_base switch clipbase
-+    
++
 +    if {$::opening::movesLoaded == 0} {
-+      tk_messageBox -title $::tr(Repertoirenotfound) -type ok -icon error -message $::tr(ZeroMovesLoaded)
++      tk_messageBox -title $::tr(Repertoirenotfound) -type ok -icon error -message "No moves loaded."
 +    }
-+    
++
 +    # add a blank game for training in clipbase
 +    sc_game new
 +    sc_game tags set -event $::tr(Openingtrainer)
@@ -372,7 +480,7 @@ Index: tcl/tools/tactics.tcl
 +    updateBoard -pgn -animate
 +    ::windows::gamelist::Refresh
 +    updateTitle
-+    
++
 +    ::opening::openingWin
 +    ::opening::mainLoop
 +  }
@@ -385,11 +493,11 @@ Index: tcl/tools/tactics.tcl
 +    global ::opening::repBase ::opening::fenMovesEvalList ::opening::allLinesFenList \
 +        ::opening::allLinesHashList ::opening::hashList ::opening::onlyFlaggedLines \
 +        ::opening::movesLoaded
-+    
++
 +    set movesLoaded 0
 +    set allLinesFenList {}
 +    set allLinesHashList {}
-+    
++
 +    # This is broken for big databases S.A
 +    # Maybe it's just cpu busy because of "lsort -unique $hashList" below
 +
@@ -416,7 +524,7 @@ Index: tcl/tools/tactics.tcl
 +      set hashList [lsort -unique $hashList]
 +      lappend allLinesHashList $hashList
 +    }
-+    
++
 +    closeProgressWindow
 +    unbusyCursor .
 +  }
@@ -463,28 +571,28 @@ Index: tcl/tools/tactics.tcl
 +  ################################################################################
 +  proc fillFen {} {
 +    global ::opening::fenMovesEvalList ::opening::hashList ::opening::movesLoaded
-+    
++
 +    if {[sc_pos isAt vend] && [sc_var count] == 0 } {
 +      return
 +    }
-+    
++
 +    set s [split [sc_pos fen]]
 +    set fen "[lindex $s 0] [lindex $s 1] [lindex $s 2] [lindex $s 3]"
-+    
++
 +    set newFen {}
 +    set moves {}
 +    set newIndex -1
 +    incr movesLoaded
-+    
++
 +    lappend hashList [sc_pos hash]
-+    
++
 +    # check if the fen already exists in the list
 +    for {set i 0} { $i < [llength $fenMovesEvalList]} {incr i} {
 +      set f [lindex $fenMovesEvalList $i]
 +      if {[lindex $f 0] == $fen} { set newFen $fen ; set moves [lindex $f 1] ; set newIndex $i ; break }
 +    }
 +    set newFen $fen
-+    
++
 +    # the main move
 +    if {! [sc_pos isAt vend] } {
 +      set m [sc_game info nextMove]
@@ -521,7 +629,7 @@ Index: tcl/tools/tactics.tcl
 +      }
 +      sc_var exit
 +    }
-+    
++
 +    # put the newFen in the list
 +    if {$newIndex == -1} {
 +      lappend fenMovesEvalList [list $fen $moves ]
@@ -534,9 +642,9 @@ Index: tcl/tools/tactics.tcl
 +  ################################################################################
 +  proc mainLoop {} {
 +    global ::opening::allLinesHashList ::opening::allLinesFenList tCM
-+    
++
 +    after cancel ::opening::mainLoop
-+    
++
 +    # Handle case of player's turn (which always plays from bottom of the board)
 +    if { [sc_pos side] == "white" &&  ![::board::isFlipped] || [sc_pos side] == "black" &&  [::board::isFlipped] } {
 +      # it is player's turn : update UI
@@ -545,18 +653,18 @@ Index: tcl/tools/tactics.tcl
 +      after 1000 ::opening::mainLoop
 +      return
 +    }
-+    
++
 +    # check the position has not been treated already
 +    if {[sc_pos fen] == $::opening::lastMainLoopFen && [::board::isFlipped] == $::opening::lastMainLoopFlipped} {
 +      after 1000 ::opening::mainLoop
 +      return
 +    }
-+    
++
 +    # the player moved : check if his move was in the repertoire and as good as expected
 +    set move_done [sc_game info previousMove]
 +    if { $move_done != "" } {
 +      sc_move back
-+      set cm [ getCm ]
++      set cm [getCm]
 +      sc_move forward
 +      # No move available : reached the end of a line
 +      if { [llength $cm] == 0 } {
@@ -565,7 +673,7 @@ Index: tcl/tools/tactics.tcl
 +        after 1000 ::opening::mainLoop
 +        return
 +      }
-+      
++
 +      # we know there are some CM
 +      set l [lsearch -all $cm $move_done]
 +      # move not in repertoire
@@ -580,10 +688,10 @@ Index: tcl/tools/tactics.tcl
 +        after 1000 ::opening::mainLoop
 +        return
 +      }
-+      
++
 +      # The move played is in repertoire !
 +      set moveOK 1
-+      
++
 +      if {$::opening::playerBestMove} {
 +        foreach i $l {
 +          if {! [ ::opening::isGoodMove [ lindex $cm [expr $i+1] ] ] } {
@@ -593,7 +701,7 @@ Index: tcl/tools/tactics.tcl
 +            break
 +          }
 +        }
-+        
++
 +        # The move is not good : offer to take back
 +        if { ! $moveOK } {
 +          # addStatsPrev -good 0 -dubious 0 -absent 1 -total 0
@@ -622,18 +730,18 @@ Index: tcl/tools/tactics.tcl
 +          addStatsPrev -good 1 -dubious 1 -absent 0 -total 1
 +        }
 +      }
-+      
++
 +    }
 +    # end of player's move check
 +    # now it is computer's turn
-+    set cm [ getCm ]
-+    
++    set cm [getCm]
++
 +    if {[llength $cm] != 0} {
 +      ::opening::play $cm
 +    }
 +    set ::opening::lastMainLoopFen [sc_pos fen]
 +    set ::opening::lastMainLoopFlipped [::board::isFlipped]
-+    
++
 +    ::opening::update_tCM
 +    ::opening::updateStats
 +    after 1000 ::opening::mainLoop
@@ -652,13 +760,15 @@ Index: tcl/tools/tactics.tcl
 +  # the list returned is of the form {move1 nag1 move2 nag2 ....}
 +  # the moves are not unique
 +  ################################################################################
-+  proc getCm {  } {
-+    global ::opening::allLinesHashList ::opening::allLinesFenList ::opening::lastCMFen
-+    
-+    set fen [ sc_pos fen ]
++  proc getCm {} {
++    global ::opening::allLinesHashList ::opening::allLinesFenList ::opening::lastCMFen ::opening::lastCM
++
++    set fen [sc_pos fen]
 +    # avoids calculation
-+    if {$fen == $lastCMFen } { return $lastCM }
-+    
++    if {$fen == $lastCMFen} {
++      return $lastCM
++    }
++
 +    set cm {}
 +    # First find the position in hash lists to spare time
 +    set linesFound {}
@@ -666,7 +776,7 @@ Index: tcl/tools/tactics.tcl
 +      set res [lsearch -sorted [lindex $allLinesHashList $i] [sc_pos hash]]
 +      if {$res != -1} { lappend linesFound $i }
 +    }
-+    
++
 +    set s [split $fen]
 +    set fen "[lindex $s 0] [lindex $s 1] [lindex $s 2] [lindex $s 3]"
 +    foreach i $linesFound {
@@ -675,10 +785,10 @@ Index: tcl/tools/tactics.tcl
 +        if {[lindex $f 0] == $fen} { set cm [concat $cm [lindex $f 1]] }
 +      }
 +    }
-+    
++
 +    set lastCM $cm
 +    set lastCMFen $fen
-+    
++
 +    return $cm
 +  }
 +  ################################################################################
@@ -686,36 +796,37 @@ Index: tcl/tools/tactics.tcl
 +  ################################################################################
 +  proc play { cm } {
 +    # addStatsPrev -good 0 -dubious 0 -absent 0 -total 1
-+    set r [expr int(rand()*[llength $cm]/2) ]
-+    set m [ lindex $cm [ expr $r * 2 ] ]
-+    
++    set r [expr int(rand()*[llength $cm]/2)]
++    set m [lindex $cm [expr $r * 2]]
++
 +    if {[sc_pos moveNumber] == 1 && [sc_pos side] == "white"} {
 +      ::game::Clear
 +    }
-+    
++
 +    if {![catch {sc_move addSan [::untrans $m] }]} {
++      # wtf S.A.
 +    }
 +    updateBoard -pgn -animate
 +  }
 +  ################################################################################
-+  # The window displayed when in opening trainer mode
++  # Main Opening Trainer window
 +  ################################################################################
 +  proc openingWin {} {
 +    global ::opening::displayCM ::opening::displayCMValue ::opening::tCM ::opening::fenLastUpdate
-+    
++
 +    set w .openingWin
 +    if {[winfo exists $w]} {
 +      raiseWin $w
 +      return
 +    }
 +    toplevel $w
-+    
++
 +    wm title $w $::tr(Openingtrainer)
 +    setWinLocation $w
 +    frame $w.f1
 +    frame $w.f2
 +    frame $w.f3
-+    
++
 +    checkbutton $w.f1.cbDisplayCM  -text $::tr(DisplayCM) -variable ::opening::displayCM -relief flat \
 +        -command "set fenLastUpdate 0 ; ::opening::update_tCM 1"
 +    checkbutton $w.f1.cbDisplayCMValue  -text $::tr(DisplayCMValue) -variable ::opening::displayCMValue -relief flat \
@@ -723,37 +834,36 @@ Index: tcl/tools/tactics.tcl
 +    label $w.f1.lCM -textvariable ::opening::tCM
 +    pack $w.f1.cbDisplayCM $w.f1.cbDisplayCMValue -anchor w -side top
 +    pack $w.f1.lCM -side top -anchor center
-+    
++
 +    checkbutton $w.f2.cbDisplayStats  -text $::tr(DisplayOpeningStats) -variable ::opening::displayOpeningStats -relief flat \
 +        -command "::opening::updateStats 1"
 +    label $w.f2.lStats1 -textvariable ::opening::lStats1 -width 4 -anchor center -background green
 +    label $w.f2.lStats2 -textvariable ::opening::lStats2 -width 4 -anchor center -background yellow
 +    label $w.f2.lStats3 -textvariable ::opening::lStats3 -width 4 -anchor center -background red
 +    label $w.f2.lStats4 -textvariable ::opening::lStats4 -width 4 -anchor center -background white
-+    
++
 +    label $w.f2.lStats1exp -text $::tr(NumberOfGoodMovesPlayed)
 +    label $w.f2.lStats2exp -text $::tr(NumberOfDubiousMovesPlayed)
 +    label $w.f2.lStats3exp -text $::tr(NumberOfMovesPlayedNotInRepertoire)
 +    label $w.f2.lStats4exp -text $::tr(NumberOfTimesPositionEncountered)
-+    
++
 +    grid $w.f2.cbDisplayStats -row 0 -column 0 -columnspan 2
 +    grid $w.f2.lStats4 -row 1 -column 0 -sticky w -padx 5
 +    grid $w.f2.lStats1 -row 2 -column 0 -sticky w -padx 5
 +    grid $w.f2.lStats2 -row 3 -column 0 -sticky w -padx 5
 +    grid $w.f2.lStats3 -row 4 -column 0 -sticky w -padx 5
-+    
-+    
++
 +    grid $w.f2.lStats4exp -row 1 -column 1 -sticky w -padx 5
 +    grid $w.f2.lStats1exp -row 2 -column 1 -sticky w -padx 5
 +    grid $w.f2.lStats2exp -row 3 -column 1 -sticky w -padx 5
 +    grid $w.f2.lStats3exp -row 4 -column 1 -sticky w -padx 5
-+    
++
 +    button $w.f3.report -textvar ::tr(ShowReport) -command ::opening::report
-+    button $w.f3.close -textvar ::tr(Abort) -command ::opening::endTraining
-+    
++    button $w.f3.close -textvar ::tr(Quit) -command ::opening::endTraining
++
 +    pack $w.f3.report $w.f3.close -side top -anchor center -fill x
-+    pack $w.f1 $w.f2 $w.f3 -fill x -pady 5 -padx 2
-+    
++    pack $w.f1 $w.f2 $w.f3 -fill x -pady 8 -padx 5
++
 +    bind $w <F1> {helpWindow OpeningTrainer}
 +    bind $w <Escape> ::opening::endTraining
 +    bind $w <Destroy> ::opening::endTraining
@@ -775,25 +885,29 @@ Index: tcl/tools/tactics.tcl
 +  ################################################################################
 +  proc  update_tCM { { forceUpdate 0 } } {
 +    global ::opening::displayCM ::opening::displayCMValue ::opening::tCM ::opening::fenLastUpdate
-+    
++
 +    # If current fen is the same as the one used during latest update call, do nothing
 +    if {$fenLastUpdate == [sc_pos fen] && ! $forceUpdate} { return }
-+    
++
 +    set cm [ getCm ]
-+    
++
 +    if { [llength $cm] == 0 } {
 +      .openingWin.f1.lCM configure -bg LightCoral
 +      set tCM $::tr(EndOfVar)
 +      set fenLastUpdate [sc_pos fen]
 +      return
 +    }
-+    
-+    if { !$displayCM } { set tCM "" ; set fenLastUpdate 0 ; return }
-+    
++
++    if {!$displayCM} {
++      set tCM ""
++      set fenLastUpdate 0
++      return
++    }
++
 +    .openingWin.f1.lCM configure -bg linen
-+    
++
 +    set tmp ""
-+    
++
 +    for {set x 0} {$x<[llength $cm]} { set x [expr $x+2]} {
 +      set m [lindex $cm $x]
 +      # if the move already found, skip it, even if it has other nags : to be corrected ?
@@ -809,7 +923,7 @@ Index: tcl/tools/tactics.tcl
 +      # go to new line every 3 (moves,nags)
 +      if {[expr $x % 3] == 2} { append tmp "\n" }
 +    }
-+    
++
 +    set fenLastUpdate [sc_pos fen]
 +    set tCM $tmp
 +  }
@@ -858,7 +972,7 @@ Index: tcl/tools/tactics.tcl
 +    }
 +    return {}
 +  }
-+  
++
 +  ################################################################################
 +  # addStats
 +  # x = success best moves only, y = success all moves z = failures t = coverage by computer
@@ -868,14 +982,14 @@ Index: tcl/tools/tactics.tcl
 +    set dy 0
 +    set dz 0
 +    set dt 0
-+    
++
 +    for {set i 0 } {$i < [llength $args]} {incr i 2} {
 +      if {[lindex $args $i] == "-good"} { set dx [lindex $args [expr $i + 1] ] ; continue }
 +      if {[lindex $args $i] == "-dubious"} { set dy [lindex $args [expr $i + 1] ] ; continue }
 +      if {[lindex $args $i] == "-absent"} { set dz [lindex $args [expr $i + 1] ] ; continue }
 +      if {[lindex $args $i] == "-total"} { set dt [lindex $args [expr $i + 1] ] ; continue }
 +    }
-+    
++
 +    set s [split [sc_pos fen]]
 +    set fen "[lindex $s 0] [lindex $s 1] [lindex $s 2] [lindex $s 3]"
 +    set found 0
@@ -887,7 +1001,7 @@ Index: tcl/tools/tactics.tcl
 +      }
 +      incr idx
 +    }
-+    
++
 +    if {$found} {
 +      set lval [lindex $l 1]
 +      set ::opening::listStats [ lreplace $::opening::listStats $idx $idx [list $fen [list \
@@ -916,12 +1030,12 @@ Index: tcl/tools/tactics.tcl
 +  ################################################################################
 +  proc updateStats { {force 0} } {
 +    global ::opening::fenLastStatsUpdate
-+    
++
 +    # If current fen is the same as the one used during latest update call, do nothing
 +    if {$fenLastStatsUpdate == [sc_pos fen] && !$force} { return }
-+    
++
 +    set fenLastStatsUpdate [sc_pos fen]
-+    
++
 +    if { $::opening::displayOpeningStats } {
 +      set gs [getStats]
 +      set ::opening::lStats1 [lindex $gs 0]
@@ -941,21 +1055,24 @@ Index: tcl/tools/tactics.tcl
 +  proc report {} {
 +    global ::opening::listStats ::opening::allLinesFenList
 +    set w ".openingWin.optrainerreport"
-+    if {[winfo exists $w]} { focus $w ; return }
-+    
++    if {[winfo exists $w]} {
++      raiseWin $w
++      return
++    }
++
 +    toplevel $w
 +    wm title $w $::tr(Openingtrainer)
 +    setWinLocation $w
-+    
++
 +    frame $w.ft
 +    text $w.ft.text -height 10 -width 40 -wrap word -background white
 +    pack $w.ft.text
 +    pack $w.ft
-+    
++
 +    frame $w.fclose
 +    button $w.fclose.close -textvar ::tr(Close) -command "destroy $w"
 +    pack $w.fclose.close
-+    
++
 +    # builds stats report
 +    set posNotPlayed 0
 +    set posTotalPlayed 0
@@ -995,9 +1112,9 @@ Index: tcl/tools/tactics.tcl
 +    $w.ft.text insert end "$::tr(Success) $success\n"
 +    $w.ft.text insert end "$::tr(DubiousMoves) $dubMoves\n"
 +    $w.ft.text insert end "$::tr(OutOfRepertoire) $outOfRep\n"
-+    
++
 +    $w.ft.text configure -state disabled
-+    
++
 +    bind $w <F1> { helpWindow OpeningTrainer }
 +    bind $w <Escape> "destroy $w"
 +    bind $w <Destroy> ""
