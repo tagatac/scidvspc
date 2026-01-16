@@ -597,6 +597,8 @@
 
   o  FICS game archives  <http://ficsgames.org>
 
+  o Mouselip's Youtube page  <https://www.youtube.com/@ChessWithMouselip>
+
   o  Kayvan's Cross platform 'docker' images
      <https://github.com/ksylvan/scidvspc>
 
