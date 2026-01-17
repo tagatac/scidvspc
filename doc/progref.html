@@ -846,7 +846,9 @@ of the best matching game. The parameters are the original game number,
 White name, Black name, Site, Round, Year, and Result.
 </p>
 
-<h4><a name="game_flag">sc_game flag <i>flag</i> <i>gameNumber</i>|all|filter [0|1|invert]</a></h4>
+<h4><a name="game_flag">sc_game flag <i>flag</i> <i>gameNumber</i>|all|filter [0|1|invert]</a>
+<br>
+<a name="game_flag">sc_game flag <i>1-6</i> <i>[set]description [desc]</i></a></h4>
 <p>
 Sets (or gets) the specified flag (D=delete, W=White opening, etc) for
 the specified game, or all games, or all filtered games. The flag can
@@ -854,6 +856,8 @@ be set on, off or inverted, according to the final parameter. If the
 final parameter is not specified, the previous parameter should be a
 game number and the current value (0 or 1) of the specified flag for
 that game is returned.
+<br>
+Sets (or gets) the custom flag description.
 </p>
 
 <h4><a name="game_getTag">sc_game getTag [-last] <i>tagName</i></a></h4>

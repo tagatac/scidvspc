@@ -6909,14 +6909,17 @@ sc_game_firstMoves (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// sc_game_flag:
-//    If there is two args, this returns the specified flag status for the
-//    specified game. If there are three args, the 2nd arg (0 or 1 or invert)
-//    sets the specified flag for the game.
+// sc_game flag FLAG WHICH [OP]
+// sc_game flag <1-6> description
+//    sc_game flag takes 2 or 3 extra args (argc == 4|5)
+//    2 args - returns the specified flag status for the specified game
+//    3 args - the final arg is 0, 1 or invert, and sets/clears the flag for the game/selection
 //    Flags that can be specified: delete, user, ...
-//    Extra calling methods:
-//      sc_game flag <flag> filter <0|1|invert> operates on all filtered games.
-//      sc_game flag <flag> all <0|1|invert> operates on all games.
+//    eg
+//      sc_game flag <flag> GAMENUM [0|1|invert] ; operates on single game
+//      sc_game flag <flag> filter <0|1|invert> ; operates on all filtered games.
+//      sc_game flag <flag> all <0|1|invert> ; operates on all games.
+//    and for custom flags there are two additional commands
 //      sc_game flag <1-6> description
 //      sc_game flag <1-6> setdescription [set ::customEntry$i]
 
@@ -6924,7 +6927,7 @@ int
 sc_game_flag (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
     const char * usage = "Usage: sc_game flag <flag> <gameNum> [0|1]";
-    if (argc < 3  ||  argc > 5) {
+    if (argc < 4  ||  argc > 5) {
         return errorResult (ti, usage);
     }
     if (!db->inUse) {
