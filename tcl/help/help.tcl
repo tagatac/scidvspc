@@ -405,7 +405,8 @@ append helpText(Index) {
   <li><a ECO>Opening Classification</a> (ECO)</li>
   <li><a Repertoire>Opening Repertoires</a></li>
   <li><a Reports Opening>Opening Reports</a></li>
-  <li>Tree <a Tree Training>Opening Trainer</a></li>
+  <li><a OpeningTrainer>Opening Trainer</a> feature</li>
+  <li>Tree <a Tree Training>Opening Trainer</a> (old)</li>
   <li><a Options>Options</a></li>
   <li>Command line <a Cmdline>options</a></li>
   </ul>
@@ -480,6 +481,7 @@ append helpText(Index) {
   <li><a Tmt>Tournament finder</a></li>
   <li><a FindBestMove>Training: Find best move</a></li>
   <li><a CalVar>Training: Calculation of Variations</a></li>
+  <li><a OpeningTrainer>Opening Trainer</a> feature</li>
   <li><a Tree>Tree window</a></li>
   <li><a Moves Trial>Trial mode</a></li>
   <li><a Maintenance Twins>Twin (duplicate) games</a></li>
@@ -4601,6 +4603,111 @@ where one may also alter the "Game is considered Won", which acts as a cutoff ab
   <p><footer>Updated: Scid vs. PC 4.21 December 2019</footer></p>
 }
 
+# Opening Trainer window help
+set helpTitle(OpeningTrainer) "Opening Trainer"
+set helpText(OpeningTrainer) {<h1>Opening Trainer</h1>
+  <p>
+  A Scid database can be used as a Repertoire, each game representing
+  an opening line. The games can contain variations and may also
+  contain NAG values to specify values for each line, thus
+  allowing to mark preferred or dubious lines.
+</p><p>
+  Databases for the <run ::opening::config><green>Opening Trainer</green></run> must have an appropiate type.
+  If openings for white are to be trained, this has
+  to be <b>Openings for White</b> (and likewise black and
+  both colors). <i>The type can be set via the <a Maintenance>Maintenance
+  window</a> by selecting the icon or via the database switchers
+  context menu.</i>
+  </p>
+  <h2>Creating a Repertoire</h2>
+  <p>
+  <i>The Repertoire Database will be fully loaded at initialisation. For this
+  reason, it is important to use a smaller database.</i>
+  </p><p>
+  Starting with a large database of quality games, filter the
+  database for a specific opening (e.g. the Ruy Lopez), copy these games to a new database for that specific
+  opening, and set this base type as mentioned above.
+  Using <a NAGs>NAGs</a> can be employed to better understand how moves are to be rated.
+  </p>
+  <p>
+  Once you have a database, it is possible to further restrict candidate games by flagging some as
+  "White opening" or "Black opening" and then selecting "Only flagged lines" in the configuration window.
+  Also, filtered games will not be played.
+  </p>
+  <h2>General Use</h2>
+  <p>
+  Open the trainer via Play-<gt>Training-<gt>Opening Trainer.
+  The setup dialogue offers some choices about the next training session.
+  <ul>
+      <li><b>White / Black / Both</b> is used to select the side of the opening to train</li>
+      <li><b>Allow only best moves</b> will treat lower rated moves
+      as error. The rating of a line is given by NAG values.</li>
+      <li><b>Opponent plays best moves</b> Scid will always play
+      the best continuation according to the repertoire database. If
+      unchecked Scid is allowed to choose also lower rated
+      continuations. This is helpful to learn the refutations as well.
+      </li>
+      <li><b>Don't repeat a game</b> Plays each game only once (unfortunately - even if a game has variations).
+      </li>
+      <li><b>Only flagged lines</b> Scid will only play lines
+      from games flagged as <b>Opening for White</b> or
+      <b>Opening for Black</b>.
+      </li>
+      <li><b>Reset statistics</b> will reset the statistics before the training session.</li>
+      <li><b>Max Ply</b> is the maximum depth to which games will be parsed.</li>
+  </ul>
+  </p>
+  <p>
+  After pressing OK, the Trainer will start. Here one can display
+  possible candidate moves (hidden by default) and also display their
+  values by just enabling these functions. If <b>Show Statistics</b>
+  is enabled, the current statistics is shown in the
+  color coded fields below the checkbox. Otherwise the overall
+  statistics can be accessed by the button <b>Show report</b>
+
+  </p><p>
+  At any stage, press "Next Game" to start another exercise.
+  </p>
+  
+  <h3>Opening Trainer Statistics</h3>
+  <p>
+  Four numbers are displayed showing statistics for current position:
+  <ul>
+  <li><b>Green</b> the number of moves played by the user that
+  are good moves</li>
+  <li><b>Yellow</b> the number of dubious moves played that are
+  in the repertoire</li>
+  <li><b>Red</b> the number of moves played that are not in the
+  repertoire</li>
+  <li><b>White</b> the number of times the position was
+  encountered</li>
+  </ul>
+  </p>
+  
+  <h3>The Report</h3>
+  <p>
+  The report shows statistics for the whole repertoire and gives
+  information about user's knowledge :
+  <ul>
+  <li><b>Positions in repertoire</b> the total number of
+  positions in the repertoire (all lines in database)</li>
+  <li><b>Positions not played</b> the positions that were never
+  encountered</li>
+  <li><b>Positions played</b> the positions that were played and
+  the sum of the number of times they were encountered. Note that this
+  figure represents the sum of occurrences of a position in all
+  opening lines: this number can quickly become big for positions
+  that are close to the start position</li>
+  <li><b>Success</b> the number of good moves made by the player</li>
+  <li><b>Dubious moves</b> the number of weak moves made by the
+  player</li>
+  <li><b>Out of repertoire</b> the number of moves made by the
+  player that were not in repertoire</li>
+  </ul>
+  </p> 
+  <p><footer>(Updated: Scid vs. PC 4.27 January 2026)</footer></p>
+}
+
 set helpTitle(Correspondence) "Correspondence Chess"
 set helpText(Correspondence) {<h1>Correspondence Chess</h1>
 
@@ -4721,7 +4828,7 @@ chess servers.
 
 <h3>Stepping through games</h3>
 <p>
-After games are retrieved they are loaded to Scids clipboard database
+After games are retrieved they are loaded to Scids clipbase
 and new moves are added and stored in the correspondence chess
 database opened. The most convenient way to step through the games is
 by the two buttons <button tb_CC_Prev> and <button tb_CC_Next> which

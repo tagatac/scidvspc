@@ -169,6 +169,8 @@ menuText O ToolsComp "Turnering" 0 {Turnering mellom sjakkmotorer}
 menuText O ToolsTacticalGame "Taktisk parti"  0 {Spill et parti med taktikker}
 menuText O ToolsSeriousGame "Seriøst parti"  0 {Spill et seriøst parti mot en UCI-motor}
 menuText O ToolsTrainTactics "Taktiske oppgaver"  0 {Løs taktiske oppgaver}
+# ====== TODO To be translated ======
+menuText O ToolsTrainOpening "Opening Trainer" 0 {Rep training}
 menuText O ToolsTrainCalvar "Regn på varianter"  0 {Trening i å bergegne varianter (Stoyko-øvelser)}
 menuText O ToolsTrainFindBestMove "Finn beste trekk"  0 {Finn beste trekk}
 menuText O ToolsTrainFics "Internet (FICS)"  0 {Spill på freechess.org}
@@ -1513,6 +1515,8 @@ translate O NumberOfDubiousMovesPlayed {unøyaktige trekk spilt}
 translate O NumberOfTimesPositionEncountered {forekomster av stillingen}
 translate O PlayerBestMove  {Tillat kun beste trekk}
 translate O OpponentBestMove {Motstander spiller beste trekk}
+# ====== TODO To be translated ======
+translate O RemoveGames {Don't repeat a game}
 translate O OnlyFlaggedLines {Kun flaggede linjer}
 translate O resetStats {Nullstill statistikk}
 translate O Movesloaded {Trekk lastet inn}
@@ -1520,6 +1524,24 @@ translate O PositionsNotPlayed {Stillinger ikke spilt}
 translate O PositionsPlayed {Stillinger spilt}
 translate O Success {Suksess}
 translate O DubiousMoves {Unøyaktige trekk}
+# ====== TODO To be translated ======
+translate O NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
+# ====== TODO To be translated ======
+translate O Repertoiretrainingconfiguration {Opening Trainer Configuration}
+# ====== TODO To be translated ======
+translate O Loadingrepertoire {Loading repertoire}
+# ====== TODO To be translated ======
+translate O Repertoirenotfound {Repertoire not found}
+# ====== TODO To be translated ======
+translate O NoRepertoireFound {No Repertoire Database found}
+# ====== TODO To be translated ======
+translate O Movenotinrepertoire {Move not in repertoire}
+# ====== TODO To be translated ======
+translate O PositionsInRepertoire {Positions in Repertoire}
+# ====== TODO To be translated ======
+translate O OutOfRepertoire {Out of Repertoire}
+# ====== TODO To be translated ======
+translate O NextGame {Next Game}
 translate O ConfigureTactics {Velg oppgaver}
 translate O ResetScores {Nullstill poeng}
 translate O LoadingBase {Laster base}

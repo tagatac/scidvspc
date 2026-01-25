@@ -137,6 +137,8 @@ menuText L ToolsComp "Turnaus" 0 {Shakkiohjelmaturnaus}
 menuText L ToolsTacticalGame "Shakkiohjelma - Phalanx"  0 {Pelaa taktinen peli}
 menuText L ToolsSeriousGame "Shakkiohjelma - UCI-ohjelma"  11 {Pelaa UCI-ohjelmaa vastaan}
 menuText L ToolsTrainTactics "#N shakkitehtävä"  0 {Ratkaise "#N" tehtäviä}
+# ====== TODO To be translated ======
+menuText L ToolsTrainOpening "Opening Trainer" 0 {Rep training}
 menuText L ToolsTrainCalvar "Muunnelmien laskeminen"  0 {Stoyko-harjoitus}
 menuText L ToolsTrainFindBestMove "Löydä paras siirto"  0 {Löydä paras siirto}
 menuText L ToolsTrainFics "Internet (FICS)"  0 {Pelaa freechess.orgissa}
@@ -1497,6 +1499,8 @@ translate L NumberOfDubiousMovesPlayed {pelatut epäilyttävät siirrot}
 translate L NumberOfTimesPositionEncountered {aseman kohtaamiskerrat}
 translate L PlayerBestMove  {Salli ainoastaan parhaat siirrot}
 translate L OpponentBestMove {Vastustaja pelaa parhaat siirrot}
+# ====== TODO To be translated ======
+translate L RemoveGames {Don't repeat a game}
 translate L OnlyFlaggedLines {Vain liputetut muunnelmat}
 translate L resetStats {Nollaa tilastot}
 translate L Movesloaded {Ladatut siirrot}
@@ -1504,6 +1508,24 @@ translate L PositionsNotPlayed {Pelaamattomat asemat}
 translate L PositionsPlayed {Pelatut asemat}
 translate L Success {Menestys}
 translate L DubiousMoves {Epäilyttävät siirrot}
+# ====== TODO To be translated ======
+translate L NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
+# ====== TODO To be translated ======
+translate L Repertoiretrainingconfiguration {Opening Trainer Configuration}
+# ====== TODO To be translated ======
+translate L Loadingrepertoire {Loading repertoire}
+# ====== TODO To be translated ======
+translate L Repertoirenotfound {Repertoire not found}
+# ====== TODO To be translated ======
+translate L NoRepertoireFound {No Repertoire Database found}
+# ====== TODO To be translated ======
+translate L Movenotinrepertoire {Move not in repertoire}
+# ====== TODO To be translated ======
+translate L PositionsInRepertoire {Positions in Repertoire}
+# ====== TODO To be translated ======
+translate L OutOfRepertoire {Out of Repertoire}
+# ====== TODO To be translated ======
+translate L NextGame {Next Game}
 translate L ConfigureTactics {Valitse pulma}
 translate L ResetScores {Nollaa tulokset}
 translate L LoadingBase {Tietokannan lataus}

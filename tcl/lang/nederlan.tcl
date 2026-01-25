@@ -161,6 +161,8 @@ menuText N ToolsComp "Toernooi" 1 {Schaak-engine toernooi}
 menuText N ToolsTacticalGame "Tactische partij"  0 {Speel en tactische partij}
 menuText N ToolsSeriousGame "Serieuze partij"  0 {Speel een serieuze partij}
 menuText N ToolsTrainTactics "Tactiek " 1 {Los tactische stellingen op }
+# ====== TODO To be translated ======
+menuText N ToolsTrainOpening "Opening Trainer" 0 {Rep training}
 menuText N ToolsTrainCalvar "Bereken varianten"  0 {Training in het berekenen van varianten}
 menuText N ToolsTrainFindBestMove "Vind de beste zet"  0 {Vind de beste zet}
 menuText N ToolsTrainFics "Internet"  0 {Spelen op FICS - freechess.org}
@@ -1618,6 +1620,8 @@ translate N NumberOfDubiousMovesPlayed {dubieuze zetten gespeeld}
 translate N NumberOfTimesPositionEncountered {aantal keer dat deze stelling voorkomt}
 translate N PlayerBestMove  {Laat alleen beste zetten toe}
 translate N OpponentBestMove {Tegenstander speelt beste zetten}
+# ====== TODO To be translated ======
+translate N RemoveGames {Don't repeat a game}
 translate N OnlyFlaggedLines {Enkel gemarkeerde varianten}
 translate N resetStats {Statistieken wissen}
 translate N Movesloaded {Zetten geladen}
@@ -1625,6 +1629,24 @@ translate N PositionsNotPlayed {Positie niet gespeeld}
 translate N PositionsPlayed {Positie gespeeld}
 translate N Success {Succes}
 translate N DubiousMoves {Dubieuze zet}
+# ====== TODO To be translated ======
+translate N NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
+# ====== TODO To be translated ======
+translate N Repertoiretrainingconfiguration {Opening Trainer Configuration}
+# ====== TODO To be translated ======
+translate N Loadingrepertoire {Loading repertoire}
+# ====== TODO To be translated ======
+translate N Repertoirenotfound {Repertoire not found}
+# ====== TODO To be translated ======
+translate N NoRepertoireFound {No Repertoire Database found}
+# ====== TODO To be translated ======
+translate N Movenotinrepertoire {Move not in repertoire}
+# ====== TODO To be translated ======
+translate N PositionsInRepertoire {Positions in Repertoire}
+# ====== TODO To be translated ======
+translate N OutOfRepertoire {Out of Repertoire}
+# ====== TODO To be translated ======
+translate N NextGame {Next Game}
 
 translate N ConfigureTactics {Configureer tactiek}
 

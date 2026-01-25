@@ -186,6 +186,8 @@ menuText B ToolsTacticalGame "Jogo Tático"  0 {Jogar com táticas}
 menuText B ToolsSeriousGame "Jogo Sério"  0 {Jogar um jogo sério}
 
 menuText B ToolsTrainTactics "Táticas"  0 {Exercícios de tática}
+# ====== TODO To be translated ======
+menuText B ToolsTrainOpening "Opening Trainer" 0 {Rep training}
 menuText B ToolsTrainCalvar "Cálculo de Variantes"  0 {Treinamento de cálculo de variantes}
 
 
@@ -1798,6 +1800,8 @@ translate B NumberOfTimesPositionEncountered {vezes a posição foi encontrada}
 translate B PlayerBestMove  {Permitir somente os melhores movimentos}
 
 translate B OpponentBestMove {Oponente joga os melhores movimentos}
+# ====== TODO To be translated ======
+translate B RemoveGames {Don't repeat a game}
 
 translate B OnlyFlaggedLines {Somente linhas marcadas}
 
@@ -1812,6 +1816,24 @@ translate B PositionsPlayed {Posições jogadas}
 translate B Success {Successo}
 
 translate B DubiousMoves {Movimentos duvidosos}
+# ====== TODO To be translated ======
+translate B NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
+# ====== TODO To be translated ======
+translate B Repertoiretrainingconfiguration {Opening Trainer Configuration}
+# ====== TODO To be translated ======
+translate B Loadingrepertoire {Loading repertoire}
+# ====== TODO To be translated ======
+translate B Repertoirenotfound {Repertoire not found}
+# ====== TODO To be translated ======
+translate B NoRepertoireFound {No Repertoire Database found}
+# ====== TODO To be translated ======
+translate B Movenotinrepertoire {Move not in repertoire}
+# ====== TODO To be translated ======
+translate B PositionsInRepertoire {Positions in Repertoire}
+# ====== TODO To be translated ======
+translate B OutOfRepertoire {Out of Repertoire}
+# ====== TODO To be translated ======
+translate B NextGame {Next Game}
 
 translate B ConfigureTactics {Configurar taticas}
 

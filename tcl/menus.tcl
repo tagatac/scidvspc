@@ -409,6 +409,7 @@ incr menuindex
 menu $m.training
 $m add cascade -label ToolsTraining -menu $m.training
 set helpMessage($m,[incr menuindex]) ToolsTraining
+$m.training add command -label ToolsTrainOpening -command ::opening::config
 $m.training add command -label ToolsTrainCalvar -command ::calvar::config
 $m.training add command -label ToolsTrainFindBestMove -command ::tactics::findBestMove
 
@@ -1011,7 +1012,8 @@ $m add command -label OptionsSave -command {
     maintFlag useGraphFigurine photosMinimized bookmarks(gamehistory) playerInfoHistory defaultDBs tbOnline
     glistSize glexport glistColOrder glistColWidth glistColAnchor addRatings(overwrite) addRatings(filter)
     ::board::arrowWidth ::board::arrowLength ::board::enableMPVTls
-    blistColOrder blistColWidth blistColAnchor macWheelMouse epdAnnotateMode epdDelay evalTime evalScale evalUseLog evalTicks} {
+    blistColOrder blistColWidth blistColAnchor macWheelMouse epdAnnotateMode epdDelay evalTime evalScale evalUseLog evalTicks
+    ::tactics::analysisTime ::opening::DisplayCMValue ::opening::displayCM ::opening::displayOpeningStats ::opening::maxDepth ::opening::removeGames} {
 
       puts $optionF "set $i [list [set $i]]"
 
@@ -1767,7 +1769,7 @@ proc setLanguageMenus {{lang ""}} {
     configMenuText .menu.play [tr $tag $oldLang] $tag $lang
   }
 
-  foreach tag {TrainCalvar TrainFindBestMove} {
+  foreach tag {TrainOpening TrainCalvar TrainFindBestMove} {
     configMenuText .menu.play.training [tr Tools$tag $oldLang] Tools$tag $lang
   }
 

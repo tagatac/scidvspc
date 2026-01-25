@@ -166,6 +166,8 @@ menuText G ToolsComp "Τουρνουά Μηχανών" 0 {Τουρνουά Σκ�
 menuText G ToolsTacticalGame "Computer - Phalanx"  11 {Παιχνίδι Τακτικής με το Phalanx}
 menuText G ToolsSeriousGame "Computer - UCI Engine"  11 {Παιχνίδι εναντίον UCI μηχανής}
 menuText G ToolsTrainTactics "Ματ σε ..Χ.. κινήσεις"  0 {Ασκήσεις "Ματ σε"}
+# ====== TODO To be translated ======
+menuText G ToolsTrainOpening "Opening Trainer" 0 {Rep training}
 menuText G ToolsTrainCalvar "Υπολογισμός Βαριάντων"  0 {Άσκηση Stoyko}
 menuText G ToolsTrainFindBestMove "Άσκηση Καλύτερης Κίνησης"  1 {Άσκηση υπολογισμού Καλύτερης Κίνησης}
 menuText G ToolsTrainFics "Διαδίκτυο (FICS)"  0 {Παιχνίδι στο freechess.org}
@@ -1615,6 +1617,8 @@ translate G NumberOfDubiousMovesPlayed {παίχθηκαν αμφίβολες κ
 translate G NumberOfTimesPositionEncountered {φορές εμφανίσης θέσης}
 translate G PlayerBestMove  {Επέτρεψε μόνο τις καλύτερες}
 translate G OpponentBestMove {Ο Αντίπαλος παίζει τις καλύτερες}
+# ====== TODO To be translated ======
+translate G RemoveGames {Don't repeat a game}
 translate G OnlyFlaggedLines {Μόνο επισημανσμένες γραμμές}
 translate G resetStats {Μηδενισμός στατιστικών}
 translate G Movesloaded {Φορτωμένες Κινήσεις}
@@ -1622,6 +1626,24 @@ translate G PositionsNotPlayed {Θέσεις που δεν παίχθηκαν}
 translate G PositionsPlayed {Θέσεις που παίχθηκαν}
 translate G Success {Επιτυχία}
 translate G DubiousMoves {Αμφίβολες κινήσεις}
+# ====== TODO To be translated ======
+translate G NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
+# ====== TODO To be translated ======
+translate G Repertoiretrainingconfiguration {Opening Trainer Configuration}
+# ====== TODO To be translated ======
+translate G Loadingrepertoire {Loading repertoire}
+# ====== TODO To be translated ======
+translate G Repertoirenotfound {Repertoire not found}
+# ====== TODO To be translated ======
+translate G NoRepertoireFound {No Repertoire Database found}
+# ====== TODO To be translated ======
+translate G Movenotinrepertoire {Move not in repertoire}
+# ====== TODO To be translated ======
+translate G PositionsInRepertoire {Positions in Repertoire}
+# ====== TODO To be translated ======
+translate G OutOfRepertoire {Out of Repertoire}
+# ====== TODO To be translated ======
+translate G NextGame {Next Game}
 translate G ConfigureTactics {Επιλογή Παζλ}
 translate G ResetScores {Μηδενισμός Σκορ}
 translate G LoadingBase {Φόρτωση Βάσης}

@@ -161,6 +161,7 @@ menuText E ToolsComp "Computer Tournament" 0 {Chess engine tournament}
 menuText E ToolsTacticalGame "Computer - Phalanx"  0 {Play a game with tactics}
 menuText E ToolsSeriousGame "Computer - UCI Engine"  11 {Play against an UCI engine}
 menuText E ToolsTrainTactics "Mate in ..N.. Puzzle"  0 {Solve "Mate in" puzzles}
+menuText E ToolsTrainOpening "Opening Trainer" 0 {Rep training}
 menuText E ToolsTrainCalvar "Calculation of Variations"  0 {Stoyko Exercise}
 menuText E ToolsTrainFindBestMove "Find Best Move"  0 {Find best move}
 menuText E ToolsTrainFics "Internet (FICS)"  0 {Play on freechess.org}
@@ -1447,17 +1448,17 @@ translate E Resume {Resume}
 translate E Restart {Restart}
 translate E OutOfOpening {Out of opening}
 translate E NotFollowedLine {You did not follow the line}
-translate E DoYouWantContinue {Do you want to continue ?}
+translate E DoYouWantContinue {Do you want to continue?}
 translate E CoachIsWatching {Coach is watching}
 translate E Ponder {Permanent thinking}
 translate E LimitELO {Limit ELO strength}
-translate E DubiousMovePlayedTakeBack {Dubious move played, do you want to take back ?}
-translate E WeakMovePlayedTakeBack {Weak move played, do you want to take back ?}
-translate E BadMovePlayedTakeBack {Bad move played, do you want to take back ?}
+translate E DubiousMovePlayedTakeBack {Dubious move played, do you want to take back?}
+translate E WeakMovePlayedTakeBack {Weak move played, do you want to take back?}
+translate E BadMovePlayedTakeBack {Bad move played, do you want to take back?}
 translate E Iresign {I resign}
-translate E yourmoveisnotgood {your move is not good}
+translate E yourmoveisnotgood {Your move is not good}
 translate E EndOfVar {End of variation}
-translate E Openingtrainer {Opening trainer}
+translate E Openingtrainer {Opening Trainer}
 translate E DisplayCM {Display candidate moves}
 translate E DisplayCMValue {Display candidate moves value}
 translate E DisplayOpeningStats {Show statistics}
@@ -1467,6 +1468,7 @@ translate E NumberOfDubiousMovesPlayed {dubious moves played}
 translate E NumberOfTimesPositionEncountered {times position encountered}
 translate E PlayerBestMove  {Allow only best moves}
 translate E OpponentBestMove {Opponent plays best moves}
+translate E RemoveGames {Don't repeat a game}
 translate E OnlyFlaggedLines {Only flagged lines}
 translate E resetStats {Reset statistics}
 translate E Movesloaded {Moves loaded}
@@ -1474,6 +1476,15 @@ translate E PositionsNotPlayed {Positions not played}
 translate E PositionsPlayed {Positions played}
 translate E Success {Success}
 translate E DubiousMoves {Dubious moves}
+translate E NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
+translate E Repertoiretrainingconfiguration {Opening Trainer Configuration}
+translate E Loadingrepertoire {Loading repertoire}
+translate E Repertoirenotfound {Repertoire not found}
+translate E NoRepertoireFound {No Repertoire Database found}
+translate E Movenotinrepertoire {Move not in repertoire}
+translate E PositionsInRepertoire {Positions in Repertoire}
+translate E OutOfRepertoire {Out of Repertoire}
+translate E NextGame {Next Game}
 translate E ConfigureTactics {Select Puzzle}
 translate E ResetScores {Reset scores}
 translate E LoadingBase {Loading base}

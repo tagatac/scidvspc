@@ -151,6 +151,8 @@ menuText U ToolsComp "Torneio" 2 {Torneio de programas de análise}
 menuText U ToolsTacticalGame "Jogo tático"  0 {Jogar uma partida com táticas}
 menuText U ToolsSeriousGame "Jogo a sério"  0 {Jogar uma partida a sério}
 menuText U ToolsTrainTactics "Táticas"  0 {Resolver problemas táticos}
+# ====== TODO To be translated ======
+menuText U ToolsTrainOpening "Opening Trainer" 0 {Rep training}
 menuText U ToolsTrainCalvar "Calcular variantes"  0 {Calcular variantes para treino}
 menuText U ToolsTrainFindBestMove "Encontrar o melhor movimento"  0 {Encontrar o melhor movimento}
 menuText U ToolsTrainFics "Jogar na Internet"  0 {Jogar no freechess.org}
@@ -1467,6 +1469,8 @@ translate U NumberOfDubiousMovesPlayed {movimentos duvidosos jogados}
 translate U NumberOfTimesPositionEncountered {times position encountered}
 translate U PlayerBestMove  {Permitir apenas os melhores movimentos}
 translate U OpponentBestMove {Adversário joga os melhores movimentos}
+# ====== TODO To be translated ======
+translate U RemoveGames {Don't repeat a game}
 translate U OnlyFlaggedLines {Apenas linhas marcadas}
 translate U resetStats {Recomeçar estatísticas}
 translate U Movesloaded {Movimentos carregados}
@@ -1474,6 +1478,24 @@ translate U PositionsNotPlayed {Posições não jogadas}
 translate U PositionsPlayed {Posições jogadas}
 translate U Success {Sucesso}
 translate U DubiousMoves {Movimentos duvidosos}
+# ====== TODO To be translated ======
+translate U NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
+# ====== TODO To be translated ======
+translate U Repertoiretrainingconfiguration {Opening Trainer Configuration}
+# ====== TODO To be translated ======
+translate U Loadingrepertoire {Loading repertoire}
+# ====== TODO To be translated ======
+translate U Repertoirenotfound {Repertoire not found}
+# ====== TODO To be translated ======
+translate U NoRepertoireFound {No Repertoire Database found}
+# ====== TODO To be translated ======
+translate U Movenotinrepertoire {Move not in repertoire}
+# ====== TODO To be translated ======
+translate U PositionsInRepertoire {Positions in Repertoire}
+# ====== TODO To be translated ======
+translate U OutOfRepertoire {Out of Repertoire}
+# ====== TODO To be translated ======
+translate U NextGame {Next Game}
 translate U ConfigureTactics {Configurar táticas}
 translate U ResetScores {Repor valores}
 translate U LoadingBase {Carregando base}

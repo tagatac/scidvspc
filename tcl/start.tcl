@@ -105,7 +105,7 @@ foreach ns {
   ::tools::graphs::filter ::tools::graphs::absfilter ::tools::graphs::rating ::tools::graphs::score
   ::tb ::optable
   ::board ::move
-  ::tacgame ::sergame ::tactics ::calvar ::uci ::fics
+  ::tacgame ::sergame ::opening ::tactics ::calvar ::uci ::fics
   ::config ::docking
   ::commenteditor
 } {
@@ -470,6 +470,11 @@ if {$unixOS} {
 }
 
 set ::tactics::analysisTime 3
+set ::opening::DisplayCMValue 0
+set ::opening::displayCM 0
+set ::opening::displayOpeningStats 1
+set ::opening::maxDepth 10
+set ::opening::removeGames 0
 
 # Defaults for the PGN window:
 # if ::pgn::showColor is 1, the PGN text will be colorized.

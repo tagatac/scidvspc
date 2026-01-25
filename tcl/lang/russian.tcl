@@ -149,6 +149,8 @@ menuText R ToolsComp "Турнир" 0 {Турнир с шахматным дви
 menuText R ToolsTacticalGame "Тактические партии"  0 {Играть тактические партии}
 menuText R ToolsSeriousGame "Серьёзная игра"  0 {Играть серьёзную партию}
 menuText R ToolsTrainTactics "Тактика"  0 {Решать тактические задачи}
+# ====== TODO To be translated ======
+menuText R ToolsTrainOpening "Opening Trainer" 0 {Rep training}
 menuText R ToolsTrainCalvar "Расчёт вариантов"  0 {Тренировка расчёта вариантов}
 menuText R ToolsTrainFindBestMove "Поиск лучшего хода"  0 {Искать лучший ход}
 menuText R ToolsTrainFics "Играть на FICS"  0 {Игра на сервере freechess.org}
@@ -1576,6 +1578,8 @@ translate R NumberOfDubiousMovesPlayed {сделаны сомнительные 
 translate R NumberOfTimesPositionEncountered {раз позиция встречается}
 translate R PlayerBestMove  {Позволять только лучшие ходы}
 translate R OpponentBestMove {Противник играет только лучшие ходы}
+# ====== TODO To be translated ======
+translate R RemoveGames {Don't repeat a game}
 translate R OnlyFlaggedLines {Только помеченные строки}
 translate R resetStats {Сбросить статистику}
 translate R Movesloaded {Ходы загружены}
@@ -1583,6 +1587,24 @@ translate R PositionsNotPlayed {Позиция не игралась}
 translate R PositionsPlayed {Позиция игралась}
 translate R Success {Успех}
 translate R DubiousMoves {Сомнительные ходы}
+# ====== TODO To be translated ======
+translate R NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
+# ====== TODO To be translated ======
+translate R Repertoiretrainingconfiguration {Opening Trainer Configuration}
+# ====== TODO To be translated ======
+translate R Loadingrepertoire {Loading repertoire}
+# ====== TODO To be translated ======
+translate R Repertoirenotfound {Repertoire not found}
+# ====== TODO To be translated ======
+translate R NoRepertoireFound {No Repertoire Database found}
+# ====== TODO To be translated ======
+translate R Movenotinrepertoire {Move not in repertoire}
+# ====== TODO To be translated ======
+translate R PositionsInRepertoire {Positions in Repertoire}
+# ====== TODO To be translated ======
+translate R OutOfRepertoire {Out of Repertoire}
+# ====== TODO To be translated ======
+translate R NextGame {Next Game}
 translate R ConfigureTactics {Настройка тактики}
 translate R ResetScores {Сброс счёта}
 translate R LoadingBase {Загрузка базы}

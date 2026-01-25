@@ -162,6 +162,8 @@ menuText Y ToolsSeriousGame "Serious game"  0 {Play a serious game}
 # ====== TODO To be translated ======
 menuText Y ToolsTrainTactics "Tactics"  0 {Solve tactics}
 # ====== TODO To be translated ======
+menuText Y ToolsTrainOpening "Opening Trainer" 0 {Rep training}
+# ====== TODO To be translated ======
 menuText Y ToolsTrainCalvar "Calculation of variations"  0 {Calculation of variations training}
 # ====== TODO To be translated ======
 menuText Y ToolsTrainFindBestMove "Find best move"  0 {Find best move}
@@ -1830,6 +1832,8 @@ translate Y PlayerBestMove  {Allow only best moves}
 # ====== TODO To be translated ======
 translate Y OpponentBestMove {Opponent plays best moves}
 # ====== TODO To be translated ======
+translate Y RemoveGames {Don't repeat a game}
+# ====== TODO To be translated ======
 translate Y OnlyFlaggedLines {Only flagged lines}
 # ====== TODO To be translated ======
 translate Y resetStats {Reset statistics}
@@ -1843,6 +1847,24 @@ translate Y PositionsPlayed {Positions played}
 translate Y Success {Success}
 # ====== TODO To be translated ======
 translate Y DubiousMoves {Dubious moves}
+# ====== TODO To be translated ======
+translate Y NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
+# ====== TODO To be translated ======
+translate Y Repertoiretrainingconfiguration {Opening Trainer Configuration}
+# ====== TODO To be translated ======
+translate Y Loadingrepertoire {Loading repertoire}
+# ====== TODO To be translated ======
+translate Y Repertoirenotfound {Repertoire not found}
+# ====== TODO To be translated ======
+translate Y NoRepertoireFound {No Repertoire Database found}
+# ====== TODO To be translated ======
+translate Y Movenotinrepertoire {Move not in repertoire}
+# ====== TODO To be translated ======
+translate Y PositionsInRepertoire {Positions in Repertoire}
+# ====== TODO To be translated ======
+translate Y OutOfRepertoire {Out of Repertoire}
+# ====== TODO To be translated ======
+translate Y NextGame {Next Game}
 # ====== TODO To be translated ======
 translate Y ConfigureTactics {Configure tactics}
 # ====== TODO To be translated ======

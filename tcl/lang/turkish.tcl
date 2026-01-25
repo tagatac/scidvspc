@@ -137,6 +137,8 @@ menuText T ToolsComp "Satranç motoru turnuvası" 0 {Satranç motoru turnuvası}
 menuText T ToolsTacticalGame "Bilgisayar - Phalanx"  0 {Play a game with tactics}
 menuText T ToolsSeriousGame "Bilgisayar - UCI motoru"  11 {UCI motoruna karşı oynayın}
 menuText T ToolsTrainTactics "Mat konumları"  0 {Solve "Mate in" puzzles}
+# ====== TODO To be translated ======
+menuText T ToolsTrainOpening "Opening Trainer" 0 {Rep training}
 menuText T ToolsTrainCalvar "Varyantları hesaplama"  0 {Stoyko Exercise}
 menuText T ToolsTrainFindBestMove "En iyi hamle bul"  0 {En iyi hamle bul}
 menuText T ToolsTrainFics "Internet (FICS)"  0 {Play on freechess.org}
@@ -1500,6 +1502,8 @@ translate T NumberOfDubiousMovesPlayed {şüpheli Hamle oynandı}
 translate T NumberOfTimesPositionEncountered {kez karşılaşılan pozisyon}
 translate T PlayerBestMove  {Sadece en iyi hamleye izin ver}
 translate T OpponentBestMove {Rakip en iyi hamle oynuyor}
+# ====== TODO To be translated ======
+translate T RemoveGames {Don't repeat a game}
 translate T OnlyFlaggedLines {Yalnızca bayraklı satırlar}
 translate T resetStats {İstatistikleri sıfırla}
 translate T Movesloaded {hamle yüklendi}
@@ -1507,6 +1511,24 @@ translate T PositionsNotPlayed {Pozisyonlar oynanmadı}
 translate T PositionsPlayed {Pozisyonlar oynandı}
 translate T Success {başarı}
 translate T DubiousMoves {Şüpheli hamleler}
+# ====== TODO To be translated ======
+translate T NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
+# ====== TODO To be translated ======
+translate T Repertoiretrainingconfiguration {Opening Trainer Configuration}
+# ====== TODO To be translated ======
+translate T Loadingrepertoire {Loading repertoire}
+# ====== TODO To be translated ======
+translate T Repertoirenotfound {Repertoire not found}
+# ====== TODO To be translated ======
+translate T NoRepertoireFound {No Repertoire Database found}
+# ====== TODO To be translated ======
+translate T Movenotinrepertoire {Move not in repertoire}
+# ====== TODO To be translated ======
+translate T PositionsInRepertoire {Positions in Repertoire}
+# ====== TODO To be translated ======
+translate T OutOfRepertoire {Out of Repertoire}
+# ====== TODO To be translated ======
+translate T NextGame {Next Game}
 translate T ConfigureTactics {Bulmaca'yı seçin}
 translate T ResetScores {Puanları sıfırlayın}
 translate T LoadingBase {Veri yükleniyor}

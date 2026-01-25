@@ -151,6 +151,8 @@ menuText I ToolsComp "Tournament" 2 {Chess engine tournament}
 menuText I ToolsTacticalGame "Partita tattica"  0 {Gioca una partita con le tattiche}
 menuText I ToolsSeriousGame "Partita seria"  0 {Gioca una partita seria}
 menuText I ToolsTrainTactics "Tattiche"  0 {Risolvi problemi tattici}
+# ====== TODO To be translated ======
+menuText I ToolsTrainOpening "Opening Trainer" 0 {Rep training}
 menuText I ToolsTrainCalvar "Calcolo delle varianti"  0 {Allenati sul calcolo delle varianti}
 menuText I ToolsTrainFindBestMove "Trova la mossa migliore"  0 {Trova la mossa migliore}
 menuText I ToolsTrainFics "Gioca su internet"  0 {Gioca su freechess.org}
@@ -1678,6 +1680,8 @@ translate I NumberOfDubiousMovesPlayed {dubious moves played}
 translate I NumberOfTimesPositionEncountered {times position encountered}
 translate I PlayerBestMove  {Permetti solo le mosse migliori}
 translate I OpponentBestMove {L'avversario gioca le mosse migliori}
+# ====== TODO To be translated ======
+translate I RemoveGames {Don't repeat a game}
 translate I OnlyFlaggedLines {Solo linee tracciate}
 translate I resetStats {Azzera le statistiche}
 translate I Movesloaded {Mosse lette}
@@ -1685,6 +1689,24 @@ translate I PositionsNotPlayed {Posizioni non giocate}
 translate I PositionsPlayed {Posizioni giocate}
 translate I Success {Successo}
 translate I DubiousMoves {Mossa dubbia}
+# ====== TODO To be translated ======
+translate I NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
+# ====== TODO To be translated ======
+translate I Repertoiretrainingconfiguration {Opening Trainer Configuration}
+# ====== TODO To be translated ======
+translate I Loadingrepertoire {Loading repertoire}
+# ====== TODO To be translated ======
+translate I Repertoirenotfound {Repertoire not found}
+# ====== TODO To be translated ======
+translate I NoRepertoireFound {No Repertoire Database found}
+# ====== TODO To be translated ======
+translate I Movenotinrepertoire {Move not in repertoire}
+# ====== TODO To be translated ======
+translate I PositionsInRepertoire {Positions in Repertoire}
+# ====== TODO To be translated ======
+translate I OutOfRepertoire {Out of Repertoire}
+# ====== TODO To be translated ======
+translate I NextGame {Next Game}
 translate I ConfigureTactics {Configura le tattiche}
 translate I ResetScores {Azzara i punteggi}
 translate I LoadingBase {Leggo il database}

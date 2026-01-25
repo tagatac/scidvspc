@@ -153,6 +153,8 @@ menuText W ToolsComp "Turnering" 2 {Schackmotorturnering}
 menuText W ToolsTacticalGame "Taktiskt parti"  0 {Spela ett parti med taktik}
 menuText W ToolsSeriousGame "Seriöst parti"  0 {Spela ett seriöst parti}
 menuText W ToolsTrainTactics "Taktik"  0 {Lösa taktik}
+# ====== TODO To be translated ======
+menuText W ToolsTrainOpening "Opening Trainer" 0 {Rep training}
 menuText W ToolsTrainCalvar "Variantberäkning"  0 {Variantberäkningsträning}
 menuText W ToolsTrainFindBestMove "Hitta bäst drag"  0 {Hitta bästa draget}
 menuText W ToolsTrainFics "Spela på Internet"  0 {Spela på freechess.org}
@@ -1604,6 +1606,8 @@ translate W NumberOfDubiousMovesPlayed {tveksamma drag spelade}
 translate W NumberOfTimesPositionEncountered {gånger positionen påträffats}
 translate W PlayerBestMove  {Tillåt bara bästa dragen}
 translate W OpponentBestMove {Motståndare spelar bästa dragen}
+# ====== TODO To be translated ======
+translate W RemoveGames {Don't repeat a game}
 translate W OnlyFlaggedLines {Bara markerade variationer}
 translate W resetStats {Nollställ statistik}
 translate W Movesloaded {Öppnat drag}
@@ -1611,6 +1615,24 @@ translate W PositionsNotPlayed {Positioner inte spelade}
 translate W PositionsPlayed {Positioner spelade}
 translate W Success {Framgång}
 translate W DubiousMoves {Tveksamma drag}
+# ====== TODO To be translated ======
+translate W NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
+# ====== TODO To be translated ======
+translate W Repertoiretrainingconfiguration {Opening Trainer Configuration}
+# ====== TODO To be translated ======
+translate W Loadingrepertoire {Loading repertoire}
+# ====== TODO To be translated ======
+translate W Repertoirenotfound {Repertoire not found}
+# ====== TODO To be translated ======
+translate W NoRepertoireFound {No Repertoire Database found}
+# ====== TODO To be translated ======
+translate W Movenotinrepertoire {Move not in repertoire}
+# ====== TODO To be translated ======
+translate W PositionsInRepertoire {Positions in Repertoire}
+# ====== TODO To be translated ======
+translate W OutOfRepertoire {Out of Repertoire}
+# ====== TODO To be translated ======
+translate W NextGame {Next Game}
 translate W ConfigureTactics {Konfigurera taktik}
 translate W ResetScores {Nollställ poäng}
 translate W LoadingBase {Öppnar bas}

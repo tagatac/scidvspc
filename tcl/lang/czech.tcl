@@ -157,6 +157,8 @@ menuText C ToolsSeriousGame "Serious game"  0 {Play a serious game}
 # ====== TODO To be translated ======
 menuText C ToolsTrainTactics "Tactics"  0 {Solve tactics}
 # ====== TODO To be translated ======
+menuText C ToolsTrainOpening "Opening Trainer" 0 {Rep training}
+# ====== TODO To be translated ======
 menuText C ToolsTrainCalvar "Calculation of variations"  0 {Calculation of variations training}
 # ====== TODO To be translated ======
 menuText C ToolsTrainFindBestMove "Find best move"  0 {Find best move}
@@ -1750,6 +1752,8 @@ translate C PlayerBestMove  {Allow only best moves}
 # ====== TODO To be translated ======
 translate C OpponentBestMove {Opponent plays best moves}
 # ====== TODO To be translated ======
+translate C RemoveGames {Don't repeat a game}
+# ====== TODO To be translated ======
 translate C OnlyFlaggedLines {Only flagged lines}
 # ====== TODO To be translated ======
 translate C resetStats {Reset statistics}
@@ -1763,6 +1767,24 @@ translate C PositionsPlayed {Positions played}
 translate C Success {Success}
 # ====== TODO To be translated ======
 translate C DubiousMoves {Dubious moves}
+# ====== TODO To be translated ======
+translate C NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
+# ====== TODO To be translated ======
+translate C Repertoiretrainingconfiguration {Opening Trainer Configuration}
+# ====== TODO To be translated ======
+translate C Loadingrepertoire {Loading repertoire}
+# ====== TODO To be translated ======
+translate C Repertoirenotfound {Repertoire not found}
+# ====== TODO To be translated ======
+translate C NoRepertoireFound {No Repertoire Database found}
+# ====== TODO To be translated ======
+translate C Movenotinrepertoire {Move not in repertoire}
+# ====== TODO To be translated ======
+translate C PositionsInRepertoire {Positions in Repertoire}
+# ====== TODO To be translated ======
+translate C OutOfRepertoire {Out of Repertoire}
+# ====== TODO To be translated ======
+translate C NextGame {Next Game}
 # ====== TODO To be translated ======
 translate C ConfigureTactics {Configure tactics}
 # ====== TODO To be translated ======
