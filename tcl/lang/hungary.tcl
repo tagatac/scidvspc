@@ -2087,6 +2087,36 @@ translate H FICSRematch {Rematch}
 translate H FICSQuit {Quit FICS}
 # ====== TODO To be translated ======
 translate H FICSCensor {Censor}
+# ====== TODO To be translated ======
+translate H Tournament Tournament
+# ====== TODO To be translated ======
+translate H TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate H TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate H TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate H TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate H TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate H TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate H TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate H TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate H TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate H TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate H TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate H TourPause {Pause}
+# ====== TODO To be translated ======
+translate H TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate H TourWinner {Winner(s)}
 
 
 translate H CCDlgConfigureWindowTitle {Levelezési sakk beállításai}

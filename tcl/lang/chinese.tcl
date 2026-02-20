@@ -2,7 +2,7 @@
 # Chinese language support for Scid vs PC.
 # Translated by Zhuge Prajna
 # Released on Sep 25, 2025
-# Updated on Sep 25, 2025
+# Updated on Feb 20, 2026
 #
 
 addLanguage Z Chinese 0 utf8
@@ -41,18 +41,18 @@ menuText Z Edit "编辑(E)" 3
 menuText Z EditAdd "添加变着(A)" 5 {在此着法处为对局添加一个变着}
 menuText Z EditPasteVar "粘贴变着(P)" 5
 menuText Z EditDelete "删除变着(D)" 5 {删除此着法的一个变着}
-menuText Z EditDeleteComment "删除注释(D)" 5
+menuText Z EditDeleteComment "删除点评(D)" 5
 menuText Z EditFirst "设为首个变着(F)" 7 \
   {将某个变着提升为列表中的第一个}
 menuText Z EditMain "提升为主变(M)" 6 \
   {将某个变着提升为主线}
 menuText Z EditTrial "试走变着(T)" 5 \
   {启动/停止试走模式，用于在棋盘上测试招法}
-menuText Z EditStrip "清除(S)" 3 {从此对局中清除注释或变着}
+menuText Z EditStrip "清除(S)" 3 {从此对局中清除点评或变着}
 menuText Z EditUndo "撤销(U)" 3 {撤销上一次对局修改}
 menuText Z EditRedo "重做(R)" 3 {重做上一次对局修改}
-menuText Z EditStripComments "注释(C)" 3 \
-  {从此对局中清除所有注释和评注}
+menuText Z EditStripComments "点评(C)" 3 \
+  {从此对局中清除所有点评和评注}
 menuText Z EditStripVars "变着(V)" 3 {从此对局中清除所有变着}
 menuText Z EditStripBegin "从开局清除着法(S)" 8 \
   {从对局开头清除着法}
@@ -109,7 +109,7 @@ menuText Z SearchUsing "加载搜索文件(L)" 7 {使用 SearchOptions 文件进
 # Windows menu:
 menuText Z Windows "窗口(W)" 3
 menuText Z WindowsGameinfo "对局信息(G)" 5 {显示/隐藏对局信息面板}
-menuText Z WindowsComment "注释编辑器(D)" 6 {打开/关闭注释编辑器}
+menuText Z WindowsComment "点评编辑器(D)" 6 {打开/关闭点评编辑器}
 menuText Z WindowsGList "对局列表(G)" 5 {打开/关闭对局列表窗口}
 menuText Z WindowsPGN "PGN 窗口(P)" 7 {打开/关闭 PGN（对局记谱）窗口}
 menuText Z WindowsCross "交叉积分表(C)" 6 {打开/关闭赛事交叉积分表}
@@ -122,7 +122,7 @@ menuText Z WindowsStats "统计窗口(S)" 5 {打开/关闭筛选结果统计窗�
 menuText Z WindowsTree "树状图窗口(T)" 6 {打开/关闭树状图窗口}
 menuText Z WindowsTB "残局库窗口(A)" 6 {打开/关闭残局库窗口}
 menuText Z WindowsBook "开局库窗口(B)" 6 {打开/关闭开局库窗口}
-menuText Z WindowsCorrChess "通讯赛窗口(O)" 6 {打开/关闭通讯赛窗口}
+menuText Z WindowsCorrChess "通讯棋窗口(O)" 6 {打开/关闭通讯棋窗口}
 
 # Tools menu:
 menuText Z Tools "工具(T)" 3
@@ -137,8 +137,7 @@ menuText Z ToolsComp "电脑锦标赛(C)" 6 {国际象棋引擎锦标赛}
 menuText Z ToolsTacticalGame "电脑对弈 - Phalanx(C)"  15 {进行带战术的对局}
 menuText Z ToolsSeriousGame "电脑对弈 - UCI 引擎(U)"  14 {与 UCI 引擎对弈}
 menuText Z ToolsTrainTactics "杀棋谜题（N 步杀）(M)"  11 {解答“N 步杀”谜题}
-# ====== TODO To be translated ======
-menuText Z ToolsTrainOpening "Opening Trainer" 0 {Rep training}
+menuText Z ToolsTrainOpening "开局训练器(O)" 6 {开局训练}
 menuText Z ToolsTrainCalvar "变着计算训练(C)"  7 {Stoyko 训练}
 menuText Z ToolsTrainFindBestMove "寻找最佳着法(F)"  7 {寻找最佳着法}
 menuText Z ToolsTrainFics "互联网对弈（FICS）(I)"  12 {在 freechess.org 上对弈}
@@ -200,10 +199,10 @@ menuText Z ToolsScreenshot "棋盘截图(B)" 5  {截取棋盘图像}
 menuText Z Play "对弈(P)" 3 {对弈}
 
 # --- Correspondence Chess
-menuText Z CorrespondenceChess "通讯赛(C)" 4 {用于电子邮件和基于 Xfcc 的通讯赛功能}
+menuText Z CorrespondenceChess "通讯棋(C)" 4 {用于电子邮件和基于 Xfcc 的通讯棋功能}
 menuText Z CCConfigure "配置(C)" 3 {配置外部工具和通用设置}
 menuText Z CCConfigRelay "观赛(M)" 3 {配置要观看的对局}
-menuText Z CCOpenDB "打开数据库(O)" 6 {打开默认的通讯赛数据库}
+menuText Z CCOpenDB "打开数据库(O)" 6 {打开默认的通讯棋数据库}
 menuText Z CCRetrieve "获取对局(R)" 5 {通过外部（Xfcc）辅助程序获取对局}
 menuText Z CCInbox "处理收件箱(I)" 6 {处理 Scid 收件箱中的所有文件}
 menuText Z CCSend "发送着法(S)" 5 {通过电子邮件或外部（Xfcc）辅助程序发送你的着法}
@@ -334,7 +333,7 @@ menuText Z GInfoMaterial "切换子力显示(M)" 7
 menuText Z GInfoFEN "FEN(F)" 4
 menuText Z GInfoMarks "显示彩色格子和箭头(C)" 10
 menuText Z GInfoWrap "自动换行长行(W)" 7
-menuText Z GInfoFullComment "显示完整注释(C)" 7
+menuText Z GInfoFullComment "显示完整点评(C)" 7
 menuText Z GInfoPhotos "显示棋手照片(P)" 7
 menuText Z GInfoTBNothing "残局库：无(N)" 6
 menuText Z GInfoTBResult "残局库：仅显示结果(R)" 10
@@ -415,7 +414,7 @@ translate Z RatingDiff {等级分差}
 translate Z AverageRating {平均等级分}
 translate Z Event {赛事}
 translate Z Site {地点}
-translate Z Country {国家}
+translate Z Country {国家/地区}
 translate Z IgnoreColors {忽略颜色}
 translate Z MatchEnd {仅终局局面}
 translate Z Date {日期}
@@ -460,7 +459,7 @@ translate Z ErrSearchInterrupted {搜索已中断}
 # Game information:
 translate Z twin {孪生局}
 translate Z deleted {已删除}
-translate Z comment {注释}
+translate Z comment {点评}
 translate Z hidden {隐藏}
 translate Z LastMove {着法}
 translate Z NextMove {下一步}
@@ -484,7 +483,7 @@ translate Z PinfoLookupName {查询姓名}
 # Tablebase information:
 translate Z Draw {和棋}
 translate Z stalemate {逼和}
-translate Z checkmate {将死}
+translate Z checkmate {将杀}
 translate Z withAllMoves {包含所有着法}
 translate Z withAllButOneMove {除一着外全部包含}
 translate Z with {包含}
@@ -589,8 +588,8 @@ translate Z GreenMark {绿色}
 translate Z YellowMark {黄色}
 translate Z BlueMark {蓝色}
 translate Z RedMark {红色}
-translate Z CommentMove {注释着法}
-translate Z CommentPosition {注释局面}
+translate Z CommentMove {点评着法}
+translate Z CommentPosition {点评局面}
 translate Z AddMoveToMaskFirst {请先将着法加入掩码}
 translate Z OpenAMaskFileFirst {请先打开一个掩码文件}
 translate Z positions {局面}
@@ -637,7 +636,7 @@ menuText Z PListSortElo "等级分(E)" 4
 menuText Z PListSortGames "对局数(G)" 4
 menuText Z PListSortOldest "最早(O)" 3
 menuText Z PListSortNewest "最新(W)" 3
-menuText Z PListSortCountry "国家(C)" 3
+menuText Z PListSortCountry "国家/地区(C)" 6
 
 # Tournament finder:
 menuText Z TmtFile "赛事查找器(T)" 6
@@ -678,7 +677,7 @@ translate Z TitleFilterGraph "Scid：筛选图表"
 translate Z AddVariation {添加变着}
 translate Z AddAllVariations {添加所有变着}
 translate Z AddMove {添加着法}
-translate Z Annotate {注释}
+translate Z Annotate {评注}
 translate Z ShowAnalysisBoard {显示分析棋盘}
 translate Z ShowInfo {显示引擎信息}
 translate Z FinishGame {结束对局}
@@ -689,15 +688,15 @@ translate Z LockEngine {锁定引擎到当前局面}
 translate Z AnalysisCommand {分析命令}
 translate Z PreviousChoices {先前选项}
 translate Z AnnotateTime {每着秒数}
-translate Z AnnotateWhich {注释哪一方}
+translate Z AnnotateWhich {评注哪一方}
 translate Z AnnotateAll {双方着法}
 translate Z AnnotateAllMoves {所有着法}
 translate Z AnnotateWhite {仅白方着法}
 translate Z AnnotateBlack {仅黑方着法}
 translate Z AnnotateNotBest {当着法非最优时}
-translate Z AnnotateBlundersOnly {当着法为严重失误时}
-translate Z BlundersNotBest {严重失误/非最优着}
-translate Z AnnotateTitle {配置注释}
+translate Z AnnotateBlundersOnly {当着法为败着时}
+translate Z BlundersNotBest {败着/非最优着}
+translate Z AnnotateTitle {配置评注}
 translate Z AnnotateMissedMates {错失/更短的杀棋}
 translate Z AnnotateEnd {在对局结束时}
 translate Z BlundersThreshold {阈值}
@@ -711,7 +710,7 @@ translate Z ClickHereToSeeMoves {点击此处查看着法}
 translate Z ConfigureInformant {配置国际象棋符号}
 translate Z Informant!? {有趣着法}
 translate Z Informant? {劣着}
-translate Z Informant?? {严重失误}
+translate Z Informant?? {败着}
 translate Z Informant?! {可疑着法}
 translate Z Informant+= {白方略有优势}
 translate Z Informant+/- {白方有中等优势}
@@ -752,8 +751,8 @@ menuText Z PgnFileClose "关闭(W)" 3
 menuText Z PgnOpt "选项(O)" 3
 menuText Z PgnOptColor "彩色显示(C)" 5
 menuText Z PgnOptShort "简短标题(H)" 5
-menuText Z PgnOptSymbols "符号注释(Y)" 5
-menuText Z PgnOptIndentC "缩进注释(I)" 5
+menuText Z PgnOptSymbols "符号评注(Y)" 5
+menuText Z PgnOptIndentC "缩进点评(I)" 5
 menuText Z PgnOptIndentV "缩进变着(V)" 5
 menuText Z PgnOptColumn "列式布局(O)" 5
 menuText Z PgnOptSpace "着法编号后加空格(U)" 9
@@ -763,7 +762,7 @@ menuText Z PgnOptScrollbar "滚动条(B)" 4
 menuText Z PgnOptBoldMainLine "主变加粗(M)" 5
 menuText Z PgnColor "颜色(C)" 3
 menuText Z PgnColorHeader "标题(H)" 3
-menuText Z PgnColorAnno "注释(A)" 3
+menuText Z PgnColorAnno "评注(A)" 3
 menuText Z PgnColorComments "评论(C)" 3
 menuText Z PgnColorVars "变着(V)" 3
 menuText Z PgnColorBackground "背景(B)" 3
@@ -807,7 +806,7 @@ menuText Z CrosstabSort "排序依据(S)" 5
 menuText Z CrosstabSortName "姓名(N)" 3
 menuText Z CrosstabSortRating "等级分(R)" 4
 menuText Z CrosstabSortScore "得分(S)" 3
-menuText Z CrosstabSortCountry "国家(C)" 3
+menuText Z CrosstabSortCountry "国家/地区(C)" 6
 menuText Z CrosstabType "格式(F)" 3
 menuText Z CrosstabTypeAll "循环赛(A)" 4
 menuText Z CrosstabTypeSwiss "瑞士制(S)" 4
@@ -845,7 +844,7 @@ translate Z FindGamesWith {显示标记选项}
 translate Z StdStart {非标准起始局面}
 translate Z Promotions {升变}
 translate Z UnderPromo {低级升变}
-translate Z Comments {注释}
+translate Z Comments {点评}
 translate Z Variations {变着}
 translate Z Annotations {评注}
 translate Z DeleteFlag {删除标记}
@@ -859,11 +858,11 @@ translate Z TacticsFlag {战术}
 translate Z QsideFlag {后翼作战}
 translate Z KsideFlag {王翼作战}
 translate Z BrilliancyFlag {妙着}
-translate Z BlunderFlag {严重失误}
+translate Z BlunderFlag {败着}
 translate Z UserFlag {用户}
 translate Z PgnContains {PGN 包含文本}
-translate Z PreComment {赛前注释}
-translate Z PostComment {赛后注释}
+translate Z PreComment {赛前点评}
+translate Z PostComment {赛后点评}
 
 # Game list window:
 translate Z GlistNumber {编号}
@@ -879,14 +878,14 @@ translate Z GlistYear {年份}
 translate Z GlistEventDate {赛事日期}
 translate Z GlistResult {结果}
 translate Z GlistLength {着数}
-translate Z GlistCountry {国家}
+translate Z GlistCountry {国家/地区}
 translate Z GlistECO {ECO}
 translate Z GlistOpening {着法}
 translate Z GlistEndMaterial {终局子力}
 translate Z GlistDeleted {已删除}
 translate Z GlistFlags {标记}
 translate Z GlistVariations {变着}
-translate Z GlistComments {注释}
+translate Z GlistComments {点评}
 translate Z GlistAnnos {评注}
 translate Z GlistStart {起始}
 translate Z GlistGameNumber {对局编号}
@@ -1001,7 +1000,7 @@ translate Z NewSubmenu "添加菜单"
 
 # Comment editor:
 translate Z AnnotationSymbols  {评注}
-translate Z Comment {注释}
+translate Z Comment {点评}
 translate Z InsertMark {标记}
 translate Z InsertMarkHelp {
 插入/移除标记：选择颜色、类型和格子。
@@ -1012,9 +1011,9 @@ translate Z InsertMarkHelp {
 translate Z GoodMove {好着}
 translate Z PoorMove {劣着}
 translate Z ExcellentMove {妙着}
-translate Z Blunder {大漏着}
-translate Z InterestingMove {有趣着法}
-translate Z DubiousMove {疑问着}
+translate Z Blunder {败着}
+translate Z InterestingMove {趣味着法}
+translate Z DubiousMove {可疑着法}
 translate Z WhiteDecisiveAdvantage {白方有决定性优势}
 translate Z BlackDecisiveAdvantage {黑方有决定性优势}
 translate Z WhiteClearAdvantage {白方有明显优势}
@@ -1022,7 +1021,7 @@ translate Z BlackClearAdvantage {黑方有明显优势}
 translate Z WhiteSlightAdvantage {白方有轻微优势}
 translate Z BlackSlightAdvantage {黑方有轻微优势}
 translate Z Equality {均势}
-translate Z Unclear {局势不明}
+translate Z Unclear {局面不明}
 translate Z Diagram {图示}
 
 # Board search:
@@ -1040,8 +1039,8 @@ translate Z SearchInRefDatabase { 在数据库中搜索 }
 translate Z LookInVars {在变着中查找}
 
 translate Z CQLLabel {CQL 脚本}
-translate Z CQLComments {允许注释}
-translate Z CQLStrip {清除匹配注释}
+translate Z CQLComments {允许点评}
+translate Z CQLStrip {清除匹配点评}
 
 # Material search:
 translate Z MaterialSearch {子力搜索}
@@ -1156,10 +1155,10 @@ translate Z OprepStatSince {自}
 translate Z OprepOldest {最早对局}
 translate Z OprepNewest {最新对局}
 translate Z OprepPopular {当前流行度}
-translate Z OprepFreqAll {历年频率：   }
+translate Z OprepFreqAll {历年频率：      }
 translate Z OprepFreq1   {最近 1 年至今： }
 translate Z OprepFreq5   {最近 5 年至今： }
-translate Z OprepFreq10  {最近10年至今： }
+translate Z OprepFreq10  {最近 10 年至今：}
 translate Z OprepEvery {每 %u 局出现一次}
 translate Z OprepUp {较历年上升 %u%s}
 translate Z OprepDown {较历年下降 %u%s}
@@ -1177,9 +1176,9 @@ translate Z OprepTrends {结果趋势}
 translate Z OprepResults {对局长度与结果频率}
 translate Z OprepLength {对局长度}
 translate Z OprepFrequency {频率}
-translate Z OprepWWins {白胜： }
-translate Z OprepBWins {黑胜： }
-translate Z OprepDraws {和棋：      }
+translate Z OprepWWins {白胜：}
+translate Z OprepBWins {黑胜：}
+translate Z OprepDraws {和棋：}
 translate Z OprepWholeDB {整个数据库}
 translate Z OprepShortest {最短胜局}
 translate Z OprepMovesThemes {着法与局面主题}
@@ -1211,7 +1210,7 @@ translate Z OprepAllGames    {所有对局}
 translate Z OprepEndClass {每局终局时的子力配置}
 translate Z OprepTheoryTable {理论表}
 translate Z OprepTableComment {基于 %u 局等级分最高的对局生成。}
-translate Z OprepExtraMoves {理论表中的额外注释着法}
+translate Z OprepExtraMoves {理论表中的额外着法}
 translate Z OprepMaxTableGames {理论表最大对局数}
 translate Z OprepMaxGames {统计所用最大对局数}
 translate Z OprepViewHTML {查看 HTML}
@@ -1264,7 +1263,7 @@ translate Z TwinsWhen {删除重复对局时}
 translate Z TwinsSkipShort {忽略少于 5 步的对局}
 translate Z TwinsUndelete {先恢复所有已删除对局}
 translate Z TwinsSetFilter {将筛选器设为待删除的重复对局}
-translate Z TwinsComments {始终保留带注释的对局}
+translate Z TwinsComments {始终保留带点评的对局}
 translate Z TwinsVars {始终保留带变着的对局}
 translate Z TwinsDeleteWhich {删除哪一个对局？}
 translate Z TwinsDeleteShorter {较短的对局}
@@ -1314,14 +1313,14 @@ translate Z Sort {排序}
 
 # Exporting:
 translate Z AddToExistingFile {将对局添加到现有文件？}
-translate Z ExportComments {导出注释？}
+translate Z ExportComments {导出点评？}
 translate Z ExportVariations {导出变着？}
-translate Z IndentComments {注释缩进？}
+translate Z IndentComments {点评缩进？}
 translate Z IndentVariations {变着缩进？}
 translate Z InsertNewlines {每 80 个字符插入换行？}
 translate Z ExportColumnStyle {列式格式（每行一个着法）？}
-translate Z ExportSymbolStyle {符号注释样式：}
-translate Z ExportStripMarks {从注释中移除方格/箭头标记代码？}
+translate Z ExportSymbolStyle {符号评注样式：}
+translate Z ExportStripMarks {从点评中移除方格/箭头标记代码？}
 translate Z ExportFlags {导出 Scid 标记}
 
 # Goto game/move dialogs:
@@ -1397,8 +1396,8 @@ translate Z MyPlayerNamesDescription {
 }
 
 #Coach
-translate Z showblunderexists {显示 Phalanx 漏着}
-translate Z showblundervalue {显示漏着数值}
+translate Z showblunderexists {显示 Phalanx 败着}
+translate Z showblundervalue {显示败着数值}
 translate Z showscore {显示评分}
 translate Z coachgame {教练对局}
 translate Z configurecoachgame {配置战术对局}
@@ -1413,10 +1412,10 @@ translate Z white {白方}
 translate Z black {黑方}
 translate Z both {双方}
 translate Z Play {开始}
-translate Z Noblunder {无漏着}
-translate Z blunder {漏着}
+translate Z Noblunder {无败着}
+translate Z blunder {败着}
 translate Z Noinfo {-- 无信息 --}
-translate Z moveblunderthreshold {若损失大于此值，则视为漏着}
+translate Z moveblunderthreshold {若损失大于此值，则视为败着}
 translate Z limitanalysis {教练分析时间}
 translate Z seconds {秒}
 translate Z Abort {中止}
@@ -1445,8 +1444,7 @@ translate Z NumberOfDubiousMovesPlayed {疑问着法次数}
 translate Z NumberOfTimesPositionEncountered {局面出现次数}
 translate Z PlayerBestMove  {仅允许最佳着法}
 translate Z OpponentBestMove {对手走最佳着法}
-# ====== TODO To be translated ======
-translate Z RemoveGames {Don't repeat a game}
+translate Z RemoveGames {不重复同一对局}
 translate Z OnlyFlaggedLines {仅标记路线}
 translate Z resetStats {重置统计数据}
 translate Z Movesloaded {已加载着法}
@@ -1454,24 +1452,15 @@ translate Z PositionsNotPlayed {未练习局面}
 translate Z PositionsPlayed {已练习局面}
 translate Z Success {成功}
 translate Z DubiousMoves {疑问着法}
-# ====== TODO To be translated ======
-translate Z NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
-# ====== TODO To be translated ======
-translate Z Repertoiretrainingconfiguration {Opening Trainer Configuration}
-# ====== TODO To be translated ======
-translate Z Loadingrepertoire {Loading repertoire}
-# ====== TODO To be translated ======
-translate Z Repertoirenotfound {Repertoire not found}
-# ====== TODO To be translated ======
-translate Z NoRepertoireFound {No Repertoire Database found}
-# ====== TODO To be translated ======
-translate Z Movenotinrepertoire {Move not in repertoire}
-# ====== TODO To be translated ======
-translate Z PositionsInRepertoire {Positions in Repertoire}
-# ====== TODO To be translated ======
-translate Z OutOfRepertoire {Out of Repertoire}
-# ====== TODO To be translated ======
-translate Z NextGame {Next Game}
+translate Z NumberOfMovesPlayedNotInRepertoire {已走着法不在开局库中}
+translate Z Repertoiretrainingconfiguration {开局训练器配置}
+translate Z Loadingrepertoire {正在加载开局库}
+translate Z Repertoirenotfound {未找到开局库}
+translate Z NoRepertoireFound {未找到开局数据库}
+translate Z Movenotinrepertoire {着法不在开局库中}
+translate Z PositionsInRepertoire {开局库中的局面}
+translate Z OutOfRepertoire {开局库外的局面}
+translate Z NextGame {下一对局}
 translate Z ConfigureTactics {选择习题}
 translate Z ResetScores {重置得分}
 translate Z LoadingBase {正在加载数据库}
@@ -1521,7 +1510,7 @@ translate Z TimeSec {秒}
 translate Z AllExercisesDone {所有习题已完成}
 translate Z MoveOutOfBook {走出开局库}
 translate Z LastBookMove {最后一着开局库着法}
-translate Z AnnotateSeveralGames {批量注释}
+translate Z AnnotateSeveralGames {批量评注}
 translate Z FindOpeningErrors {仅找开局错误}
 translate Z MarkTacticalExercises {标记战术习题}
 translate Z UseBook {使用开局库}
@@ -1530,9 +1519,9 @@ translate Z Hash {哈希内存}
 translate Z OwnBook {使用引擎开局库}
 translate Z BookFile {开局库文件}
 translate Z AnnotateVariations {处理变着}
-translate Z ShortAnnotations {简短注释}
-translate Z addAnnotatorTag {添加注释者标签}
-translate Z AddScoreToShortAnnotations {在注释中加入评分}
+translate Z ShortAnnotations {简短评注}
+translate Z addAnnotatorTag {添加评注者标签}
+translate Z AddScoreToShortAnnotations {在评注中加入比分}
 translate Z Export {导出}
 translate Z BookPartiallyLoaded {开局库部分加载}
 translate Z AddLine {添加路线}
@@ -1634,9 +1623,24 @@ translate Z FICSRematch {再战一局}
 translate Z FICSQuit {退出 FICS}
 translate Z FICSCensor {屏蔽}
 
+translate Z Tournament    {錦標賽}
+translate Z TourConfigure {配置錦標賽}
+translate Z TourEngineNum {引擎數量}
+translate Z TourName      {錦標賽名稱}
+translate Z TourRounds    {輪數}
+translate Z TourControl   {時間控制方式 (每步)}
+translate Z TourPer       {每步棋時間}
+translate Z TourPer2      {每局棋時間 (秒)}
+translate Z TourClocks    {顯示計時器}
+translate Z TourAnimate   {動畫顯示走棋}
+translate Z TourComments  {引擎得分以註釋形式顯示}
+translate Z TourShed      {比賽日程安排}
+translate Z TourPause     {暫停}
+translate Z TourEnd       {結束計算}
+translate Z TourWinner    {得獎者}
 
 # Correspondence Chess Dialogs:
-translate Z CCDlgConfigureWindowTitle {配置通信棋}
+translate Z CCDlgConfigureWindowTitle {配置通讯棋}
 translate Z CCDlgCGeneraloptions {常规选项}
 translate Z CCDlgDefaultDB {默认数据库：}
 translate Z CCDlgInbox {收件箱（路径）：}
@@ -1658,9 +1662,9 @@ translate Z CCDlgInternalXfcc {使用内置 Xfcc 支持}
 translate Z CCDlgConfirmXfcc {确认着法}
 translate Z CCDlgSubjectPar {主题参数：}
 translate Z CCDlgDeleteBoxes {清空收件箱/发件箱}
-translate Z CCDlgDeleteBoxesText {您确定要清空通信棋的收件箱和发件箱文件夹吗？\n此操作后需重新同步才能显示对局的最新状态。}
+translate Z CCDlgDeleteBoxesText {您确定要清空通讯棋的收件箱和发件箱文件夹吗？\n此操作后需重新同步才能显示对局的最新状态。}
 translate Z CCDlgConfirmMove {确认着法}
-translate Z CCDlgConfirmMoveText {如果确认，以下着法和注释将被发送至服务器：}
+translate Z CCDlgConfirmMoveText {如果确认，以下着法和点评将被发送至服务器：}
 translate Z CCDlgDBGameToLong {主线不一致}
 translate Z CCDlgDBGameToLongError {您数据库中的主线比收件箱中的对局更长。如果收件箱内容是刚同步后的最新对局，则说明数据库主线被错误地添加了多余着法。
 
@@ -1669,21 +1673,21 @@ translate Z CCDlgDBGameToLongError {您数据库中的主线比收件箱中的�
 
 translate Z CCDlgStartEmail {开始新电子邮件对局}
 translate Z CCDlgYourName {您的姓名：}
-translate Z CCDlgYourMail {您的电子邮件地址：}
+translate Z CCDlgYourMail {您的邮箱地址：}
 translate Z CCDlgOpponentName {对手姓名：}
-translate Z CCDlgOpponentMail {对手电子邮件地址：}
+translate Z CCDlgOpponentMail {对手邮箱地址：}
 translate Z CCDlgGameID {对局 ID（唯一）：}
 
-translate Z CCDlgTitNoOutbox {Scid：通信棋发件箱为空}
-translate Z CCDlgTitNoInbox {Scid：通信棋收件箱为空}
-translate Z CCDlgTitNoGames {Scid：无通信棋对局}
-translate Z CCErrInboxDir {通信棋收件箱目录：}
-translate Z CCErrOutboxDir {通信棋发件箱目录：}
+translate Z CCDlgTitNoOutbox {Scid：通讯棋发件箱为空}
+translate Z CCDlgTitNoInbox {Scid：通讯棋收件箱为空}
+translate Z CCDlgTitNoGames {Scid：无通讯棋对局}
+translate Z CCErrInboxDir {通讯棋收件箱目录：}
+translate Z CCErrOutboxDir {通讯棋发件箱目录：}
 translate Z CCErrDirNotUsable {不存在或无法访问！\n请检查并修正设置。}
 translate Z CCErrNoGames {不包含任何对局！\n请先获取对局。}
 
-translate Z CCDlgTitNoCCDB {Scid：未打开通信棋数据库}
-translate Z CCErrNoCCDB {未打开类型为“通信棋”的数据库。请在使用通信棋功能前先打开一个。}
+translate Z CCDlgTitNoCCDB {Scid：未打开通讯棋数据库}
+translate Z CCErrNoCCDB {未打开类型为“通讯棋”的数据库。请在使用通讯棋功能前先打开一个。}
 
 translate Z CCFetchBtn {从服务器获取对局并处理收件箱}
 translate Z CCPrevBtn {上一对局}

@@ -1896,6 +1896,36 @@ translate I FICSRematch {Rematch}
 translate I FICSQuit {Quit FICS}
 # ====== TODO To be translated ======
 translate I FICSCensor {Censor}
+# ====== TODO To be translated ======
+translate I Tournament Tournament
+# ====== TODO To be translated ======
+translate I TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate I TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate I TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate I TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate I TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate I TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate I TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate I TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate I TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate I TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate I TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate I TourPause {Pause}
+# ====== TODO To be translated ======
+translate I TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate I TourWinner {Winner(s)}
 
 
 translate I CCDlgConfigureWindowTitle {Configura Scacchi per Corrispondenza}

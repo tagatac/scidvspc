@@ -1662,6 +1662,36 @@ translate F FICSDraw {Proposer la nulle}
 translate F FICSRematch {Revanche}
 translate F FICSQuit {Quitter}
 translate F FICSCensor {Censurer}
+# ====== TODO To be translated ======
+translate F Tournament Tournament
+# ====== TODO To be translated ======
+translate F TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate F TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate F TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate F TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate F TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate F TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate F TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate F TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate F TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate F TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate F TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate F TourPause {Pause}
+# ====== TODO To be translated ======
+translate F TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate F TourWinner {Winner(s)}
 
 translate F CCDlgConfigureWindowTitle {Configurer échecs par correspondance}
 translate F CCDlgCGeneraloptions {Options générales}

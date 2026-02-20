@@ -1852,6 +1852,36 @@ translate N FICSRematch {Rematch}
 translate N FICSQuit {Quit FICS}
 # ====== TODO To be translated ======
 translate N FICSCensor {Censor}
+# ====== TODO To be translated ======
+translate N Tournament Tournament
+# ====== TODO To be translated ======
+translate N TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate N TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate N TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate N TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate N TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate N TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate N TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate N TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate N TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate N TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate N TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate N TourPause {Pause}
+# ====== TODO To be translated ======
+translate N TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate N TourWinner {Winner(s)}
 
 
 translate N CCDlgConfigureWindowTitle {Configureer correspondentieschaak}

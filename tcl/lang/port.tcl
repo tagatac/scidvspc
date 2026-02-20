@@ -1656,6 +1656,36 @@ translate U FICSDraw {Oferecer Empate}
 translate U FICSRematch {Desforra}
 translate U FICSQuit {Sair do FICS}
 translate U FICSCensor {Censurar}
+# ====== TODO To be translated ======
+translate U Tournament Tournament
+# ====== TODO To be translated ======
+translate U TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate U TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate U TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate U TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate U TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate U TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate U TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate U TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate U TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate U TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate U TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate U TourPause {Pause}
+# ====== TODO To be translated ======
+translate U TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate U TourWinner {Winner(s)}
 
 translate U CCDlgConfigureWindowTitle {Configurar Xadrez por correspondencia}
 translate U CCDlgCGeneraloptions {Opções Gerais}

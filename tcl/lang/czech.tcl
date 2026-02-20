@@ -2082,6 +2082,36 @@ translate C FICSRematch {Rematch}
 translate C FICSQuit {Quit FICS}
 # ====== TODO To be translated ======
 translate C FICSCensor {Censor}
+# ====== TODO To be translated ======
+translate C Tournament Tournament
+# ====== TODO To be translated ======
+translate C TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate C TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate C TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate C TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate C TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate C TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate C TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate C TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate C TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate C TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate C TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate C TourPause {Pause}
+# ====== TODO To be translated ======
+translate C TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate C TourWinner {Winner(s)}
 
 translate C CCDlgConfigureWindowTitle {Konfigurovat korespondenèní ¹ach}
 translate C CCDlgCGeneraloptions {Obecná nastavení}

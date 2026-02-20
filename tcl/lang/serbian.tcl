@@ -2158,6 +2158,36 @@ translate Y FICSRematch {Rematch}
 translate Y FICSQuit {Quit FICS}
 # ====== TODO To be translated ======
 translate Y FICSCensor {Censor}
+# ====== TODO To be translated ======
+translate Y Tournament Tournament
+# ====== TODO To be translated ======
+translate Y TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate Y TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate Y TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate Y TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate Y TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate Y TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate Y TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate Y TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate Y TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate Y TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate Y TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate Y TourPause {Pause}
+# ====== TODO To be translated ======
+translate Y TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate Y TourWinner {Winner(s)}
 
 translate Y CCDlgConfigureWindowTitle {Configure Correspondence Chess}
 # ====== TODO To be translated ======

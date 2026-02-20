@@ -17,7 +17,7 @@ set comp(permoveleeway) 1.75 ;# 175% is the max allowed
 ### Non-transient options are set in start.tcl
 
 proc compInit {} {
-  global analysis comp engines
+  global analysis comp engines tr
 
   set w .comp
 
@@ -27,7 +27,7 @@ proc compInit {} {
   }
   toplevel $w
   wm state $w withdrawn
-  wm title $w "Configure Tournament"
+  wm title $w $tr(TourConfigure)
   setWinLocation $w
 
   pack [frame $w.engines -borderwidth 2 -relief ridge] -side left -expand yes -fill both
@@ -39,9 +39,9 @@ proc compInit {} {
   ### Engines
 
   grid [frame $w.engines.top] -row 0 -column 0 -pady 5 -sticky n
-  grid [label $w.engines.top.label -text "Number of Engines"] -row 0 -column 0
-  grid [spinbox $w.engines.top.count -textvariable comp(count) -from 2 -to [llength $engines(list)] -width 4 -highlightthickness 0] -row 0 -column 1  -padx 15
-  dialogbutton $w.engines.top.update -text $::tr(Update) -command drawCombos
+  grid [label $w.engines.top.label -textvar tr(TourEngineNum)] -row 0 -column 0
+  grid [spinbox $w.engines.top.count -textvar comp(count) -from 2 -to [llength $engines(list)] -width 4 -highlightthickness 0] -row 0 -column 1  -padx 15
+  dialogbutton $w.engines.top.update -textvar tr(Update) -command drawCombos
   grid $w.engines.top.update -row 0 -column 2 
 
   set comp(countcombos) $comp(count)
@@ -51,7 +51,7 @@ proc compInit {} {
 
   set row 0
 
-  label $w.config.eventlabel -text {Tournament Name}
+  label $w.config.eventlabel -textvar tr(TourName)
   entry $w.config.evententry -width 17 -textvariable comp(name) -borderwidth 1
 
   # 17 is magic number to pad the widget out to match the width
@@ -61,15 +61,15 @@ proc compInit {} {
   grid $w.config.evententry -row $row -column 1 -sticky ew -padx 8 -pady 2
 
   incr row
-  label $w.config.roundslabel -text {Number of Rounds}
-  spinbox $w.config.roundsvalue -textvariable comp(rounds) -from 1 -to 10 -width 7
+  label $w.config.roundslabel -textvar tr(TourRounds)
+  spinbox $w.config.roundsvalue -textvar comp(rounds) -from 1 -to 10 -width 7
 
   grid $w.config.roundslabel -row $row -column 0 -sticky w -padx 5 -pady 2
   grid $w.config.roundsvalue -row $row -column 1 -sticky e -padx 5 -pady 2
 
   incr row
   frame $w.config.control
-  label $w.config.control.0 -text {Time Control is per}
+  label $w.config.control.0 -textvar tr(TourControl)
   radiobutton $w.config.control.1 -variable comp(timecontrol) -value pergame -text Game -command checkTimeControl
   radiobutton $w.config.control.2 -variable comp(timecontrol) -value permove -text Move -command checkTimeControl
 
@@ -78,7 +78,7 @@ proc compInit {} {
 
   incr row
   frame $w.config.timesecs 
-  label $w.config.timesecs.label -text {Time per Move}
+  label $w.config.timesecs.label -textvar tr(TourPer)
   set tmp $comp(seconds)
   spinbox $w.config.timesecs.value -textvariable comp(seconds) -from 1 -to 3600 -width 4
   set comp(seconds) $tmp
@@ -91,7 +91,7 @@ proc compInit {} {
   incr row
   frame $w.config.timegame 
   set temp $comp(base)
-  label $w.config.timegame.label -text {Time per game (seconds)}
+  label $w.config.timegame.label -textvar tr(TourPer2)
   spinbox $w.config.timegame.base -textvariable comp(base) -from 0 -to 7200 -incr 5 -width 4
   set comp(base) $temp
 
@@ -106,7 +106,7 @@ proc compInit {} {
   grid $w.config.timegame -row $row -column 0 -columnspan 2 -sticky ew -pady 2 -padx 5
 
   incr row
-  label $w.config.showclocklabel -text {Show Clocks}
+  label $w.config.showclocklabel -textvar tr(TourClocks)
   checkbutton $w.config.showclockvalue -variable comp(showclock) 
 
   grid $w.config.showclocklabel -row $row -column 0 -sticky w -padx 5 
@@ -115,21 +115,21 @@ proc compInit {} {
   checkTimeControl
 
   incr row
-  label $w.config.ponderlabel -text {Permanent Thinking}
+  label $w.config.ponderlabel -textvar tr(Ponder)
   checkbutton $w.config.pondervalue -variable comp(ponder) 
 
   grid $w.config.ponderlabel -row $row -column 0 -sticky w -padx 5 
   grid $w.config.pondervalue -row $row -column 1 -padx 5 
 
   incr row
-  label $w.config.animatelabel -text {Animate Moves}
+  label $w.config.animatelabel -textvar tr(TourAnimate)
   checkbutton $w.config.animatevalue -variable comp(animate) 
 
   grid $w.config.animatelabel -row $row -column 0 -sticky w -padx 5 
   grid $w.config.animatevalue -row $row -column 1 -padx 5 
 
   incr row
-  label $w.config.scorelabel -text {Engine Scores as Comments}
+  label $w.config.scorelabel -textvar tr(TourComments)
   ttk::combobox $w.config.scorevalue -width 12 -textvariable comp(scoreType) \
     -state readonly -values {No {+1.5} {[% +1.5]} {[%eval +1.5]}}
 
@@ -140,7 +140,7 @@ proc compInit {} {
 
   incr row
   frame $w.config.book
-  label $w.config.book.label -textvar ::tr(UseBook) 
+  label $w.config.book.label -textvar tr(UseBook) 
   checkbutton $w.config.book.value -variable comp(usebook)
   set bookPath $::scidBooksDir
   set bookList [ lsort -dictionary [ glob -nocomplain -directory $bookPath *.bin ] ]
@@ -169,7 +169,7 @@ proc compInit {} {
   ### Scheduling / type
 
   incr row
-  label $w.config.scheduling -text {Game Scheduling}
+  label $w.config.scheduling -textvar tr(TourShed)
   ttk::combobox $w.config.type -width 19 -textvariable comp(type) \
     -state readonly -values {Normal Carousel {First plays others}}
 
@@ -179,7 +179,7 @@ proc compInit {} {
   ### Start Position
 
   incr row
-  label $w.config.startlabel -textvar ::tr(StartPos)
+  label $w.config.startlabel -textvar tr(StartPos)
   ttk::combobox $w.config.start -width 19 -textvariable comp(start) \
     -state readonly -values {Normal {First game from current} {All games from current}}
 
@@ -195,9 +195,9 @@ proc compInit {} {
     set button dialogbutton
   }
 
-  $button $w.buttons.cancel -text $::tr(Cancel) -command compClose
+  $button $w.buttons.cancel -text $tr(Cancel) -command compClose
   $button $w.buttons.ok -text Ok -command compOk
-  $button $w.buttons.help -text $::tr(Help) -command {helpWindow Tourney}
+  $button $w.buttons.help -text $tr(Help) -command {helpWindow Tourney}
 
   focus $w.buttons.ok
   pack $w.buttons.ok $w.buttons.help -side left -padx 5
@@ -306,9 +306,9 @@ proc compOk {} {
       catch {$i configure -state disabled}
     }
   }
-  $w.buttons.ok configure -text Pause -command compPause -state normal
+  $w.buttons.ok configure -text $::tr(TourPause) -command compPause -state normal
   pack forget $w.buttons.help
-  $w.buttons.cancel configure -text {End Comp} -command compAbort -state normal
+  $w.buttons.cancel configure -text $::tr(TourEnd) -command compAbort -state normal
   wm title $w "$::scidName Tournament"
   focus $w.buttons.ok
 
@@ -445,17 +445,19 @@ proc compOk {} {
     set j 0
     foreach i $comp(players) {
       if {$comp(score$i) == $winner_score} {
-        append winner ",[lindex [lindex $engines(list) $i] 0]"
-        set text Winners
+        if {$winner == {}} {
+          set winner "[lindex [lindex $engines(list) $i] 0]"
+        } else {
+          append winner ", [lindex [lindex $engines(list) $i] 0]"
+        }
       }
       if {$comp(score$i) > $winner_score} {
         set winner_score $comp(score$i)
         set winner [lindex [lindex $engines(list) $i] 0]
-        set text Winner
       }
       incr j
     }
-    .comp.statusbar configure -text "$text: $winner ([expr $winner_score/2.0]/[expr ($comp(count)-1)*$comp(rounds)])"
+    .comp.statusbar configure -text "$::tr(TourWinner): $winner ([expr $winner_score/2.0]/[expr ($comp(count)-1)*$comp(rounds)])"
 
     # Hmm - if we leave this window open , and run F2 (say) the engines can sometimes stop working 
     # So better make sure this window gets closed
@@ -1051,7 +1053,7 @@ proc compPause {} {
   set w .comp
 
   after cancel compTimeout
-  $w.buttons.ok configure -text Resume -command compResume
+  $w.buttons.ok configure -text $::tr(Resume) -command compResume
   set comp(paused) 1
 }
 
@@ -1059,7 +1061,7 @@ proc compResume {} {
   global analysis comp engines
   set w .comp
 
-  $w.buttons.ok configure -text Pause -command compPause
+  $w.buttons.ok configure -text $::tr(TourPause) -command compPause
   set comp(paused) 0
 }
 
@@ -1196,7 +1198,7 @@ proc compAbort {} {
 
 proc compClose {} {
     global analysis comp
-    if {[.comp.buttons.cancel cget -text] == {End Comp}} {
+    if {[.comp.buttons.cancel cget -text] == $::tr(TourEnd)} {
       # comp is running. Double check before exitting
       set msg {A Computer Tournament is running.}
 

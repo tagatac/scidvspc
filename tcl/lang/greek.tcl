@@ -1825,6 +1825,36 @@ translate G FICSRematch {Rematch}
 translate G FICSQuit {Quit FICS}
 # ====== TODO To be translated ======
 translate G FICSCensor {Censor}
+# ====== TODO To be translated ======
+translate G Tournament Tournament
+# ====== TODO To be translated ======
+translate G TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate G TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate G TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate G TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate G TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate G TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate G TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate G TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate G TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate G TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate G TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate G TourPause {Pause}
+# ====== TODO To be translated ======
+translate G TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate G TourWinner {Winner(s)}
 
 # Correspondence Chess Dialogs:
 translate G CCDlgConfigureWindowTitle {Ρυθμίσεις Σκάκι Δι Αλληλογραφίας}

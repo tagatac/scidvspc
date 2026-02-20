@@ -1696,6 +1696,36 @@ translate T FICSDraw {BEraberlik teklifi}
 translate T FICSRematch {Rövanş}
 translate T FICSQuit {FICS'den çık}
 translate T FICSCensor {sansürlemek}
+# ====== TODO To be translated ======
+translate T Tournament Tournament
+# ====== TODO To be translated ======
+translate T TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate T TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate T TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate T TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate T TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate T TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate T TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate T TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate T TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate T TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate T TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate T TourPause {Pause}
+# ====== TODO To be translated ======
+translate T TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate T TourWinner {Winner(s)}
 
 
 # Correspondence Chess Dialogs:

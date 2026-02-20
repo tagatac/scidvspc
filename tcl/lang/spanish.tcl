@@ -1720,6 +1720,36 @@ translate S FICSDraw {Ofrecer tablas}
 translate S FICSRematch {Revancha}
 translate S FICSQuit {Salir}
 translate S FICSCensor {Censurar}
+# ====== TODO To be translated ======
+translate S Tournament Tournament
+# ====== TODO To be translated ======
+translate S TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate S TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate S TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate S TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate S TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate S TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate S TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate S TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate S TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate S TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate S TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate S TourPause {Pause}
+# ====== TODO To be translated ======
+translate S TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate S TourWinner {Winner(s)}
 
 # Correspondence Chess Dialogs:
 translate S CCDlgConfigureWindowTitle {Configurar ajedrez por correo}

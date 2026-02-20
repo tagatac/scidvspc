@@ -1814,6 +1814,36 @@ translate W FICSRematch {Rematch}
 translate W FICSQuit {Quit FICS}
 # ====== TODO To be translated ======
 translate W FICSCensor {Censor}
+# ====== TODO To be translated ======
+translate W Tournament Tournament
+# ====== TODO To be translated ======
+translate W TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate W TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate W TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate W TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate W TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate W TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate W TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate W TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate W TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate W TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate W TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate W TourPause {Pause}
+# ====== TODO To be translated ======
+translate W TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate W TourWinner {Winner(s)}
 
 translate W CCDlgConfigureWindowTitle {Konfigurera Korrespondensschack}
 translate W CCDlgCGeneraloptions {Generella inställningar}

@@ -1704,6 +1704,36 @@ translate D FICSDraw {Remis anbieten}
 translate D FICSRematch {Revanche}
 translate D FICSQuit {FICS beenden}
 translate D FICSCensor {Zensor}
+# ====== TODO To be translated ======
+translate D Tournament Tournament
+# ====== TODO To be translated ======
+translate D TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate D TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate D TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate D TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate D TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate D TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate D TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate D TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate D TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate D TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate D TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate D TourPause {Pause}
+# ====== TODO To be translated ======
+translate D TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate D TourWinner {Winner(s)}
 
 # Correspondence Chess Dialogs:
 translate D CCDlgConfigureWindowTitle {Einstellungen für Fernschach}

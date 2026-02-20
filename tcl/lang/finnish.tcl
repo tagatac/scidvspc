@@ -1693,6 +1693,36 @@ translate L FICSDraw {Ehdota tasapeliä}
 translate L FICSRematch {Revanssi}
 translate L FICSQuit {Lopeta FICS}
 translate L FICSCensor {Sensori}
+# ====== TODO To be translated ======
+translate L Tournament Tournament
+# ====== TODO To be translated ======
+translate L TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate L TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate L TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate L TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate L TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate L TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate L TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate L TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate L TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate L TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate L TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate L TourPause {Pause}
+# ====== TODO To be translated ======
+translate L TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate L TourWinner {Winner(s)}
 
 
 # Correspondence Chess Dialogs:

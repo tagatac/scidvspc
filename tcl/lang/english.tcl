@@ -1647,6 +1647,21 @@ translate E FICSRematch {Rematch}
 translate E FICSQuit {Quit FICS}
 translate E FICSCensor {Censor}
 
+translate E Tournament Tournament
+translate E TourConfigure {Configure Tournament}
+translate E TourEngineNum {Number of Engines}
+translate E TourName {Tournament Name}
+translate E TourRounds {Number of Rounds}
+translate E TourControl {Time Control is per}
+translate E TourPer {Time per Move}
+translate E TourPer2 {Time per game (seconds)}
+translate E TourClocks {Show Clocks}
+translate E TourAnimate {Animate Moves}
+translate E TourComments {Engine Scores as Comments}
+translate E TourShed {Game Scheduling}
+translate E TourPause {Pause}
+translate E TourEnd {End Comp}
+translate E TourWinner {Winner(s)}
 
 # Correspondence Chess Dialogs:
 translate E CCDlgConfigureWindowTitle {Configure Correspondence Chess}

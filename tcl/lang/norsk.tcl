@@ -1704,6 +1704,36 @@ translate O FICSDraw {Tilby remis}
 translate O FICSRematch {Omkamp}
 translate O FICSQuit {Lukk FICS}
 translate O FICSCensor {Sensur}
+# ====== TODO To be translated ======
+translate O Tournament Tournament
+# ====== TODO To be translated ======
+translate O TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate O TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate O TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate O TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate O TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate O TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate O TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate O TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate O TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate O TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate O TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate O TourPause {Pause}
+# ====== TODO To be translated ======
+translate O TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate O TourWinner {Winner(s)}
 
 
 # Correspondence Chess Dialogs:

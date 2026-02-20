@@ -2130,6 +2130,36 @@ translate B FICSRematch {Jogar Novamente}
 translate B FICSQuit {Sair do FICS}
 
 translate B FICSCensor {Censor}
+# ====== TODO To be translated ======
+translate B Tournament Tournament
+# ====== TODO To be translated ======
+translate B TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate B TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate B TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate B TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate B TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate B TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate B TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate B TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate B TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate B TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate B TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate B TourPause {Pause}
+# ====== TODO To be translated ======
+translate B TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate B TourWinner {Winner(s)}
 
 translate B CCDlgConfigureWindowTitle {Configurar Xadrez por correspondencia}
 translate B CCDlgCGeneraloptions {Opções Gerais}

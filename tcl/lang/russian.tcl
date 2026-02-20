@@ -1779,6 +1779,36 @@ translate R FICSRematch {Переигровка}
 translate R FICSQuit {Покинуть FICS}
 # ====== TODO To be translated ======
 translate R FICSCensor {Censor}
+# ====== TODO To be translated ======
+translate R Tournament Tournament
+# ====== TODO To be translated ======
+translate R TourConfigure {Configure Tournament}
+# ====== TODO To be translated ======
+translate R TourEngineNum {Number of Engines}
+# ====== TODO To be translated ======
+translate R TourName {Tournament Name}
+# ====== TODO To be translated ======
+translate R TourRounds {Number of Rounds}
+# ====== TODO To be translated ======
+translate R TourControl {Time Control is per}
+# ====== TODO To be translated ======
+translate R TourPer {Time per Move}
+# ====== TODO To be translated ======
+translate R TourPer2 {Time per game (seconds)}
+# ====== TODO To be translated ======
+translate R TourClocks {Show Clocks}
+# ====== TODO To be translated ======
+translate R TourAnimate {Animate Moves}
+# ====== TODO To be translated ======
+translate R TourComments {Engine Scores as Comments}
+# ====== TODO To be translated ======
+translate R TourShed {Game Scheduling}
+# ====== TODO To be translated ======
+translate R TourPause {Pause}
+# ====== TODO To be translated ======
+translate R TourEnd {End Comp}
+# ====== TODO To be translated ======
+translate R TourWinner {Winner(s)}
 
 # Correspondence Chess Dialogs:
 translate R CCDlgConfigureWindowTitle {Настройка шахмат по переписке}
