@@ -52,7 +52,7 @@ proc compInit {} {
   set row 0
 
   label $w.config.eventlabel -textvar tr(TourName)
-  entry $w.config.evententry -width 17 -textvariable comp(name) -borderwidth 1
+  entry $w.config.evententry -width 17 -textvar comp(name) -borderwidth 1
 
   # 17 is magic number to pad the widget out to match the width
   # after the three adjudication buttons have been packed
@@ -70,8 +70,8 @@ proc compInit {} {
   incr row
   frame $w.config.control
   label $w.config.control.0 -textvar tr(TourControl)
-  radiobutton $w.config.control.1 -variable comp(timecontrol) -value pergame -text Game -command checkTimeControl
-  radiobutton $w.config.control.2 -variable comp(timecontrol) -value permove -text Move -command checkTimeControl
+  radiobutton $w.config.control.1 -variable comp(timecontrol) -value pergame -textvar tr(TourGame) -command checkTimeControl
+  radiobutton $w.config.control.2 -variable comp(timecontrol) -value permove -textvar tr(TourMove) -command checkTimeControl
 
   pack $w.config.control.0 $w.config.control.1 $w.config.control.2 -side left -expand 1 -fill x
   grid $w.config.control  -row $row -column 0 -columnspan 2 -sticky ew -pady 2
@@ -80,9 +80,9 @@ proc compInit {} {
   frame $w.config.timesecs 
   label $w.config.timesecs.label -textvar tr(TourPer)
   set tmp $comp(seconds)
-  spinbox $w.config.timesecs.value -textvariable comp(seconds) -from 1 -to 3600 -width 4
+  spinbox $w.config.timesecs.value -textvar comp(seconds) -from 1 -to 3600 -width 4
   set comp(seconds) $tmp
-  label $w.config.timesecs.label2 -text secs
+  label $w.config.timesecs.label2 -textvar tr(TourSecs)
 
   pack $w.config.timesecs.label -side left
   pack $w.config.timesecs.label2 $w.config.timesecs.value -side right
@@ -92,13 +92,13 @@ proc compInit {} {
   frame $w.config.timegame 
   set temp $comp(base)
   label $w.config.timegame.label -textvar tr(TourPer2)
-  spinbox $w.config.timegame.base -textvariable comp(base) -from 0 -to 7200 -incr 5 -width 4
+  spinbox $w.config.timegame.base -textvar comp(base) -from 0 -to 7200 -incr 5 -width 4
   set comp(base) $temp
 
   set temp $comp(incr)
-  label $w.config.timegame.label2 -text base
-  spinbox $w.config.timegame.incr -textvariable comp(incr) -from 0 -to 60 -width 4
-  label $w.config.timegame.label3 -text {incr }
+  label $w.config.timegame.label2 -textvar tr(TourBase)
+  spinbox $w.config.timegame.incr -textvar comp(incr) -from 0 -to 60 -width 4
+  label $w.config.timegame.label3 -text "$tr(TourInc) "
   set comp(incr) $temp
 
   pack $w.config.timegame.label -side left
@@ -130,7 +130,7 @@ proc compInit {} {
 
   incr row
   label $w.config.scorelabel -textvar tr(TourComments)
-  ttk::combobox $w.config.scorevalue -width 12 -textvariable comp(scoreType) \
+  ttk::combobox $w.config.scorevalue -width 12 -textvar comp(scoreType) \
     -state readonly -values {No {+1.5} {[% +1.5]} {[%eval +1.5]}}
 
   grid $w.config.scorelabel -row $row -column 0 -sticky w -padx 5
@@ -170,7 +170,7 @@ proc compInit {} {
 
   incr row
   label $w.config.scheduling -textvar tr(TourShed)
-  ttk::combobox $w.config.type -width 19 -textvariable comp(type) \
+  ttk::combobox $w.config.type -width 19 -textvar comp(type) \
     -state readonly -values {Normal Carousel {First plays others}}
 
   grid $w.config.scheduling -row $row -column 0 -sticky w -padx 5
@@ -180,7 +180,7 @@ proc compInit {} {
 
   incr row
   label $w.config.startlabel -textvar tr(StartPos)
-  ttk::combobox $w.config.start -width 19 -textvariable comp(start) \
+  ttk::combobox $w.config.start -width 19 -textvar comp(start) \
     -state readonly -values {Normal {First game from current} {All games from current}}
 
   grid $w.config.startlabel -row $row -column 0 -sticky w -padx 5

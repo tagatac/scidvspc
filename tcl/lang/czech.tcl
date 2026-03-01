@@ -2112,6 +2112,16 @@ translate C TourPause {Pause}
 translate C TourEnd {End Comp}
 # ====== TODO To be translated ======
 translate C TourWinner {Winner(s)}
+# ====== TODO To be translated ======
+translate C TourGame {Game}
+# ====== TODO To be translated ======
+translate C TourMove {Move}
+# ====== TODO To be translated ======
+translate C TourBase {Base}
+# ====== TODO To be translated ======
+translate C TourInc {Inc}
+# ====== TODO To be translated ======
+translate C TourSecs {secs}
 
 translate C CCDlgConfigureWindowTitle {Konfigurovat korespondenèní ¹ach}
 translate C CCDlgCGeneraloptions {Obecná nastavení}

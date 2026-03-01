@@ -1844,6 +1844,16 @@ translate W TourPause {Pause}
 translate W TourEnd {End Comp}
 # ====== TODO To be translated ======
 translate W TourWinner {Winner(s)}
+# ====== TODO To be translated ======
+translate W TourGame {Game}
+# ====== TODO To be translated ======
+translate W TourMove {Move}
+# ====== TODO To be translated ======
+translate W TourBase {Base}
+# ====== TODO To be translated ======
+translate W TourInc {Inc}
+# ====== TODO To be translated ======
+translate W TourSecs {secs}
 
 translate W CCDlgConfigureWindowTitle {Konfigurera Korrespondensschack}
 translate W CCDlgCGeneraloptions {Generella inställningar}

@@ -1882,6 +1882,16 @@ translate N TourPause {Pause}
 translate N TourEnd {End Comp}
 # ====== TODO To be translated ======
 translate N TourWinner {Winner(s)}
+# ====== TODO To be translated ======
+translate N TourGame {Game}
+# ====== TODO To be translated ======
+translate N TourMove {Move}
+# ====== TODO To be translated ======
+translate N TourBase {Base}
+# ====== TODO To be translated ======
+translate N TourInc {Inc}
+# ====== TODO To be translated ======
+translate N TourSecs {secs}
 
 
 translate N CCDlgConfigureWindowTitle {Configureer correspondentieschaak}

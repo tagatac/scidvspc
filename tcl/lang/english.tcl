@@ -1662,6 +1662,11 @@ translate E TourShed {Game Scheduling}
 translate E TourPause {Pause}
 translate E TourEnd {End Comp}
 translate E TourWinner {Winner(s)}
+translate E TourGame {Game}
+translate E TourMove {Move}
+translate E TourBase {Base}
+translate E TourInc {Inc}
+translate E TourSecs {secs}
 
 # Correspondence Chess Dialogs:
 translate E CCDlgConfigureWindowTitle {Configure Correspondence Chess}

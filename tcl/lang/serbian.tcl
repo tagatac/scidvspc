@@ -2188,6 +2188,16 @@ translate Y TourPause {Pause}
 translate Y TourEnd {End Comp}
 # ====== TODO To be translated ======
 translate Y TourWinner {Winner(s)}
+# ====== TODO To be translated ======
+translate Y TourGame {Game}
+# ====== TODO To be translated ======
+translate Y TourMove {Move}
+# ====== TODO To be translated ======
+translate Y TourBase {Base}
+# ====== TODO To be translated ======
+translate Y TourInc {Inc}
+# ====== TODO To be translated ======
+translate Y TourSecs {secs}
 
 translate Y CCDlgConfigureWindowTitle {Configure Correspondence Chess}
 # ====== TODO To be translated ======

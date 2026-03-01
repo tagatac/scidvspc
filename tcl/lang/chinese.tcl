@@ -1638,6 +1638,16 @@ translate Z TourShed      {比賽日程安排}
 translate Z TourPause     {暫停}
 translate Z TourEnd       {結束計算}
 translate Z TourWinner    {得獎者}
+# ====== TODO To be translated ======
+translate Z TourGame {Game}
+# ====== TODO To be translated ======
+translate Z TourMove {Move}
+# ====== TODO To be translated ======
+translate Z TourBase {Base}
+# ====== TODO To be translated ======
+translate Z TourInc {Inc}
+# ====== TODO To be translated ======
+translate Z TourSecs {secs}
 
 # Correspondence Chess Dialogs:
 translate Z CCDlgConfigureWindowTitle {配置通讯棋}

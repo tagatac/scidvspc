@@ -2117,6 +2117,16 @@ translate H TourPause {Pause}
 translate H TourEnd {End Comp}
 # ====== TODO To be translated ======
 translate H TourWinner {Winner(s)}
+# ====== TODO To be translated ======
+translate H TourGame {Game}
+# ====== TODO To be translated ======
+translate H TourMove {Move}
+# ====== TODO To be translated ======
+translate H TourBase {Base}
+# ====== TODO To be translated ======
+translate H TourInc {Inc}
+# ====== TODO To be translated ======
+translate H TourSecs {secs}
 
 
 translate H CCDlgConfigureWindowTitle {Levelezési sakk beállításai}

@@ -2160,6 +2160,16 @@ translate B TourPause {Pause}
 translate B TourEnd {End Comp}
 # ====== TODO To be translated ======
 translate B TourWinner {Winner(s)}
+# ====== TODO To be translated ======
+translate B TourGame {Game}
+# ====== TODO To be translated ======
+translate B TourMove {Move}
+# ====== TODO To be translated ======
+translate B TourBase {Base}
+# ====== TODO To be translated ======
+translate B TourInc {Inc}
+# ====== TODO To be translated ======
+translate B TourSecs {secs}
 
 translate B CCDlgConfigureWindowTitle {Configurar Xadrez por correspondencia}
 translate B CCDlgCGeneraloptions {Opções Gerais}

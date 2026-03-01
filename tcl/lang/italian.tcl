@@ -1926,6 +1926,16 @@ translate I TourPause {Pause}
 translate I TourEnd {End Comp}
 # ====== TODO To be translated ======
 translate I TourWinner {Winner(s)}
+# ====== TODO To be translated ======
+translate I TourGame {Game}
+# ====== TODO To be translated ======
+translate I TourMove {Move}
+# ====== TODO To be translated ======
+translate I TourBase {Base}
+# ====== TODO To be translated ======
+translate I TourInc {Inc}
+# ====== TODO To be translated ======
+translate I TourSecs {secs}
 
 
 translate I CCDlgConfigureWindowTitle {Configura Scacchi per Corrispondenza}

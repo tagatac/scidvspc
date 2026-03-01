@@ -1855,6 +1855,16 @@ translate G TourPause {Pause}
 translate G TourEnd {End Comp}
 # ====== TODO To be translated ======
 translate G TourWinner {Winner(s)}
+# ====== TODO To be translated ======
+translate G TourGame {Game}
+# ====== TODO To be translated ======
+translate G TourMove {Move}
+# ====== TODO To be translated ======
+translate G TourBase {Base}
+# ====== TODO To be translated ======
+translate G TourInc {Inc}
+# ====== TODO To be translated ======
+translate G TourSecs {secs}
 
 # Correspondence Chess Dialogs:
 translate G CCDlgConfigureWindowTitle {Ρυθμίσεις Σκάκι Δι Αλληλογραφίας}

@@ -1692,6 +1692,16 @@ translate F TourPause {Pause}
 translate F TourEnd {End Comp}
 # ====== TODO To be translated ======
 translate F TourWinner {Winner(s)}
+# ====== TODO To be translated ======
+translate F TourGame {Game}
+# ====== TODO To be translated ======
+translate F TourMove {Move}
+# ====== TODO To be translated ======
+translate F TourBase {Base}
+# ====== TODO To be translated ======
+translate F TourInc {Inc}
+# ====== TODO To be translated ======
+translate F TourSecs {secs}
 
 translate F CCDlgConfigureWindowTitle {Configurer échecs par correspondance}
 translate F CCDlgCGeneraloptions {Options générales}

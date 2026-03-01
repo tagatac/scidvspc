@@ -1818,6 +1818,16 @@ translate P TourPause {Pause}
 translate P TourEnd {End Comp}
 # ====== TODO To be translated ======
 translate P TourWinner {Winner(s)}
+# ====== TODO To be translated ======
+translate P TourGame {Game}
+# ====== TODO To be translated ======
+translate P TourMove {Move}
+# ====== TODO To be translated ======
+translate P TourBase {Base}
+# ====== TODO To be translated ======
+translate P TourInc {Inc}
+# ====== TODO To be translated ======
+translate P TourSecs {secs}
 
 translate P CCDlgConfigureWindowTitle {Konfiguruj grę korespondencyjną}
 translate P CCDlgCGeneraloptions {Ustawienia ogólne}

@@ -1726,6 +1726,16 @@ translate T TourPause {Pause}
 translate T TourEnd {End Comp}
 # ====== TODO To be translated ======
 translate T TourWinner {Winner(s)}
+# ====== TODO To be translated ======
+translate T TourGame {Game}
+# ====== TODO To be translated ======
+translate T TourMove {Move}
+# ====== TODO To be translated ======
+translate T TourBase {Base}
+# ====== TODO To be translated ======
+translate T TourInc {Inc}
+# ====== TODO To be translated ======
+translate T TourSecs {secs}
 
 
 # Correspondence Chess Dialogs:

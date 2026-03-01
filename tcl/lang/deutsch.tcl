@@ -1734,6 +1734,16 @@ translate D TourPause {Pause}
 translate D TourEnd {End Comp}
 # ====== TODO To be translated ======
 translate D TourWinner {Winner(s)}
+# ====== TODO To be translated ======
+translate D TourGame {Game}
+# ====== TODO To be translated ======
+translate D TourMove {Move}
+# ====== TODO To be translated ======
+translate D TourBase {Base}
+# ====== TODO To be translated ======
+translate D TourInc {Inc}
+# ====== TODO To be translated ======
+translate D TourSecs {secs}
 
 # Correspondence Chess Dialogs:
 translate D CCDlgConfigureWindowTitle {Einstellungen für Fernschach}

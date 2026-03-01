@@ -1750,6 +1750,16 @@ translate S TourPause {Pause}
 translate S TourEnd {End Comp}
 # ====== TODO To be translated ======
 translate S TourWinner {Winner(s)}
+# ====== TODO To be translated ======
+translate S TourGame {Game}
+# ====== TODO To be translated ======
+translate S TourMove {Move}
+# ====== TODO To be translated ======
+translate S TourBase {Base}
+# ====== TODO To be translated ======
+translate S TourInc {Inc}
+# ====== TODO To be translated ======
+translate S TourSecs {secs}
 
 # Correspondence Chess Dialogs:
 translate S CCDlgConfigureWindowTitle {Configurar ajedrez por correo}

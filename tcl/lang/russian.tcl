@@ -1809,6 +1809,16 @@ translate R TourPause {Pause}
 translate R TourEnd {End Comp}
 # ====== TODO To be translated ======
 translate R TourWinner {Winner(s)}
+# ====== TODO To be translated ======
+translate R TourGame {Game}
+# ====== TODO To be translated ======
+translate R TourMove {Move}
+# ====== TODO To be translated ======
+translate R TourBase {Base}
+# ====== TODO To be translated ======
+translate R TourInc {Inc}
+# ====== TODO To be translated ======
+translate R TourSecs {secs}
 
 # Correspondence Chess Dialogs:
 translate R CCDlgConfigureWindowTitle {Настройка шахмат по переписке}
