@@ -351,7 +351,7 @@ proc ::enginelist::choose {} {
   global engines analysis tr
   set w .enginelist
 
-  if { [winfo exists $w] } { destroy $w }
+  if {[winfo exists $w]} {destroy $w}
 
   toplevel $w
   setWinLocation $w
@@ -479,8 +479,8 @@ proc ::enginelist::choose {} {
   # Focus is now set to listbox (in ::enginelist::listEngines) for keyboard shortcuts
 
   ::enginelist::listEngines
-  update
   bind $w <Configure> "recordWinSize $w"
+  update
 }
 
 # ::enginelist::setTime
@@ -3717,6 +3717,9 @@ proc initAnalysisBoard {n} {
     pack $bd $w.frame.close -side left -anchor n
     bind $w <Control-S> "::board::toggleeval $bd"
     bind $w <Control-C> "::board::togglempvtls $bd"
+    bind $w <Control-N> {
+      set analysis(numberPVArrows) [expr !$analysis(numberPVArrows)]
+    }
 
     bind $bd.bd <Button-2> "
       $bd.bd delete var bvm
@@ -3884,17 +3887,18 @@ proc updateAnalysisBoard {n {moves {}}} {
     if {$analysis(boardType$n) == "Arrows"} {
       set m [lindex $move 0]
       if {$m != ""} {
-	set sq_start [::board::sq [string range $m 0 1]]
-	set sq_end   [::board::sq [string range $m 2 3]]
-	::board::mark::add $bd varComment$m $sq_start $sq_end $::engineLineColor
-
+        set sq_start [::board::sq [string range $m 0 1]]
+        set sq_end   [::board::sq [string range $m 2 3]]
+        ::board::mark::add $bd varComment0-$m $sq_start $sq_end $::engineLineColor
       }
+      set varnum 1
       foreach m [lrange $move 1 end] {
-	if {$m != ""} {
-	  set sq_start [::board::sq [string range $m 0 1]]
-	  set sq_end   [::board::sq [string range $m 2 3]]
-	  ::board::mark::add $bd varComment$m $sq_start $sq_end $::varcolor
-	}
+        if {$m != ""} {
+          set sq_start [::board::sq [string range $m 0 1]]
+          set sq_end   [::board::sq [string range $m 2 3]]
+          ::board::mark::add $bd varComment$varnum-$m $sq_start $sq_end $::varcolor
+        }
+        incr varnum
       }
     } else {
       # Hanish's feature

@@ -1919,13 +1919,15 @@ proc ::board::mark::add {win args} {
               set new 1
             }
     varComment* {
-              # pretty nasty - "varComment" has an uci move appended. Extract move, and pass it on to DrawVar
-              if {[catch {DrawVar $board $square $dest $color m[string range $type 10 end]}]} {
+              # pretty nasty - "varComment" has a varnum and uci move appended.
+              # Extract move, and pass it on to DrawVar
+              scan $type varComment%i-%s varnum move
+              if {[catch {DrawVar $board $square $dest $color $varnum $move}]} {
                 return
               }
             }
     var*    {
-              scan $type var%s varnum
+              scan $type var%i varnum
               if {[catch {DrawVar $board $square $dest $color $varnum}]} {
                 return
               }
@@ -2032,11 +2034,11 @@ proc ::board::mark::DrawArrow {pathName from to color} {
   $pathName raise p$from all
 }
 
-proc ::board::mark::DrawVar {pathName from to color varnum} {
+proc ::board::mark::DrawVar {pathName from to color varnum {move {}}} {
   # main     board arrows come with varnum integer
-  # analysis board arrows come with varnum  m$MOVE, to allow for clickable moves
+  # analysis board arrows come with varnum and move, to allow for clickable moves
 
-  if {[scan $varnum m%s uciMove] == 1} {set small 1} else {set small 0}
+  set small [expr {$move != {}}]
 
   if {$from < 0  ||  $from > 63 || $to < 0 || $to   > 63} { return }
 
@@ -2044,17 +2046,28 @@ proc ::board::mark::DrawVar {pathName from to color varnum} {
   if {!$small} {
     set arrow [
     $pathName create line $coord -fill $color -arrow last -width $::board::arrowWidth \
-      -width $::board::arrowWidth -arrowshape "[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * sqrt (6.25 + 2.25)] [expr int($::board::arrowWidth * 1.5)]" \
+      -arrowshape "[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * sqrt (6.25 + 2.25)] [expr int($::board::arrowWidth * 1.5)]" \
       -activewidth 8 -tag [list mark var "mark${from}:${to}" var$varnum]
     ]
   } else {
     set arrow [
     $pathName create line $coord -fill $color -arrow last -width 3 -arrowshape {9 12 3} \
-      -activewidth 5 -tag [list mark var "mark${from}:${to}" var$uciMove]
+      -activewidth 5 -tag [list mark var "mark${from}:${to}" var$move]
     ]
+      # and a midpoint number if desied
+      if {$varnum > 0 && $::analysis(numberPVArrows)} {
+        incr varnum
+	set xmid [expr ([lindex $coord 0] + [lindex $coord 2]) / 2]
+	set ymid [expr ([lindex $coord 1] + [lindex $coord 3]) / 2]
+        set mark [
+          $pathName create text $xmid $ymid -fill $::analysis(boardSeqNumColor) -font $::analysis(boardSeqFont) -text $varnum -anchor c -tag [list mark var "mark${from}:${to}" var$move]
+        ]
+      }
   }
+
   $pathName raise $arrow all
   $pathName raise p$from all
+  catch {$pathName raise $mark all}
 
   # Create arrow binding
   if {!$small} {
@@ -2063,9 +2076,9 @@ proc ::board::mark::DrawVar {pathName from to color varnum} {
     # derive engine number from pathname ".analysisWin$n.frame.bd"
     set n [string range $pathName 12 [string first . $pathName 10]-1]
     if {!$::analysis(lockEngine$n)} {
-      $pathName bind var$uciMove <Button-1> "makeAnalysisMove $n $uciMove"
+      $pathName bind var$move <Button-1> "makeAnalysisMove $n $move"
     } else {
-      $pathName bind var$uciMove <Button-1> ""
+      $pathName bind var$move <Button-1> ""
     }
   }
 }
