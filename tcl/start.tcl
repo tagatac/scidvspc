@@ -432,7 +432,7 @@ set analysis(boardSize) 2
 set analysis(boardType) Arrows
 set analysis(boardSeqNumColor) black
 set analysis(boardSeqCount) 3
-set analysis(numberPVArrows) 0
+set analysis(numberPVArrows) 1
 
 # Colors
 
