@@ -115,8 +115,8 @@ proc ::commenteditor::Open {} {
     D Diagram
   } {
     button $nagbuttons.b$i -takefocus 0 -text "$nag" -width $width -height 1 -font font_Small -pady 1 -command "
-        $w.nf.tf.text insert end \"$nag  \" 
-        focus $w.nf.tf.text" 
+        $w.nf.tf.text insert end \"$nag  \"
+        focus $w.nf.tf.text"
     # set helpMessage(E,$nagbuttons.b$i) $description
     ::utils::tooltip::Set $nagbuttons.b$i $description
     grid $nagbuttons.b$i -row [expr {$i % 2}] -column [expr {int($i / 2)}] -padx 1 -pady 1
@@ -127,7 +127,7 @@ proc ::commenteditor::Open {} {
   # --+ BlackCrushing
 
   # label $w.nf.label -font font_Regular -textvar ::tr(AnnotationSymbols)
-  pack $w.nf -side top -pady 2 -padx 5 -fill x 
+  pack $w.nf -side top -pady 2 -padx 5 -fill x
   #addHorizontalRule $w
 
   button $w.nf.tf.help -textvar ::tr(Help) -font font_Small -pady 1 -command {helpWindow Comment Annotation}
@@ -559,7 +559,7 @@ proc ::commenteditor::Refresh {} {
     set state "normal"
   }
   foreach c [winfo children .commentWin.nf.tf] {
-    $c configure -state $state 
+    $c configure -state $state
   }
   foreach c [winfo children .commentWin.nf.b] {
     $c configure -state $state

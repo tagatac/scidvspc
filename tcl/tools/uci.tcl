@@ -66,7 +66,7 @@ namespace eval uci {
   # todo: sort out the analyze var with computer tournament feature &&&
 
   proc processAnalysisInput { {n 1} {gui 1} } {
-    global analysis annotate comp ::uci::uciInfo ::uci::optionToken 
+    global analysis annotate comp ::uci::uciInfo ::uci::optionToken
 
     if {$gui} {
       set pipe $analysis(pipe$n)
@@ -129,7 +129,7 @@ namespace eval uci {
 	  $h delete 1.0 end
 	  $h insert 1.0 "(bestmove [::trans $bestmove])"
 	  $h configure -state disabled
-	} 
+	}
       }
 
       # get ponder move
@@ -236,7 +236,7 @@ namespace eval uci {
             }
           }
           set uciInfo(tmp_score$n) [expr {double($uciInfo(tmp_score$n)) / 100.0} ]
-          
+
           # don't consider lowerbound & upperbound score info
           continue
         }
@@ -284,7 +284,7 @@ namespace eval uci {
            set uciInfo(draw_pc$n)  [expr {[lindex $data $i] / 10}]
            incr i
            set uciInfo(lose_pc$n)  [expr {[lindex $data $i] / 10}]
-           continue}   
+           continue}
         if { $t == "string" } {
           # uciInfo(string) seems unused
           incr i
@@ -298,7 +298,7 @@ namespace eval uci {
 
       ### Malformed time args break. Should we include this check ?
       # if {![string is double $uciInfo(time$n)]} {set uciInfo(time$n) 0}
-      
+
       # return if no interesting info
       if { $uciInfo(tmp_score$n) == "" || $uciInfo(pv$n) == "" } {
         if {$gui} {
@@ -308,14 +308,14 @@ namespace eval uci {
         }
         return
       }
-      
+
       # handle the case an UCI engine does not send multiPV
       if { $uciInfo(multipv$n) == "" } { set uciInfo(multipv$n) 1 }
-      
+
       if { $uciInfo(multipv$n) == 1 } {
         set uciInfo(score$n) $uciInfo(tmp_score$n)
       }
-      
+
       if { $uciInfo(multipv$n) == 1 && $gui} {
         # this is the best line
         set analysis(prevdepth$n) $analysis(depth$n)
@@ -331,7 +331,7 @@ namespace eval uci {
         set analysis(nodesraw$n) $uciInfo(nodes$n)
         set analysis(nodes$n) [calculateNodes $uciInfo(nodes$n)]
       }
-      
+
       set pvRaw $uciInfo(pv$n)
 
       # convert to something more readable
@@ -365,11 +365,11 @@ namespace eval uci {
 	    set draw_pc [expr {100 - $win_pc - $lose_pc}]
 	}
 	if { $lose_pc == [lindex $temp_list_WDL 2]} {
-	    set lose_pc [expr {100 - $win_pc - $draw_pc}]    
+	    set lose_pc [expr {100 - $win_pc - $draw_pc}]
 	}		
 	set analysis(WDL$n,$idx) "W: $win_pc% D: $draw_pc% B: $lose_pc%"
       }
- 
+
       ### Process MultiPV data array
       #   Note - $uciInfo(scoremate$n) is an integer or ""
       #   in which case it does not get added to the list and in analysis.tcl, [lindex $pv 3] is {} - S.A
@@ -501,9 +501,9 @@ namespace eval uci {
     set name [lindex $engineData 0]
     set cmd  [lindex $engineData 1]
     set args [lindex $engineData 2]
-    set dir  [lindex $engineData 3] 
+    set dir  [lindex $engineData 3]
     set options [lindex $engineData 8]
-    ::uci::uciConfig $n $name [ toAbsPath $cmd ] $args [ toAbsPath $dir ] $options 
+    ::uci::uciConfig $n $name [ toAbsPath $cmd ] $args [ toAbsPath $dir ] $options
   }
 
   ### Open the pipe and issue 'uci'
@@ -579,7 +579,7 @@ namespace eval uci {
       # but keep engine open to process button events.
       # We'll stop engine when we close .uciConfigWin
       after cancel "::uci::closeUCIengine $n 0"
-      uciConfigWin $n 
+      uciConfigWin $n
     }
     # get options
     if {[string match {option name *} $line]} {
@@ -589,7 +589,7 @@ namespace eval uci {
     # if {[string match {id name *}     $line]} { set name [string range $line 8 end] }
   }
 
-  ### Builds the dialog for UCI engine configuration 
+  ### Builds the dialog for UCI engine configuration
 
   proc uciConfigWin {n} {
     global ::uci::uciOptions ::uci::optList ::uci::optionToken ::uci::oldOptions ::uci::optionImportant
@@ -611,10 +611,10 @@ namespace eval uci {
 
     pack [label $w.title -text $::uci::name] -side top -pady 5
     addHorizontalRule $w
-    pack [frame $w.buttons] -side bottom 
+    pack [frame $w.buttons] -side bottom
     pack [frame $w.wtf] -side top -expand 1 -fill both
 
-    ### Whoever wrote this gridded widget hierarchy 
+    ### Whoever wrote this gridded widget hierarchy
     #   scrolledframe scrolledframe $w.sf (scrolledframe) .scrolledframe (later)
     # is an f-ing eediot. (But it's nicely functional otherwise :)
 
@@ -671,7 +671,7 @@ namespace eval uci {
       if { [lsearch $::uci::optionToKeep $t] == -1  && [string match UCI_* $t] } {
         continue
       }
-      
+
       set length [llength $data]
 
       # parse one option
@@ -719,7 +719,7 @@ namespace eval uci {
             incr i
           }
           lappend elt(var) [list $tmp]
-          
+
           incr i -1
           continue
         }
@@ -763,7 +763,7 @@ namespace eval uci {
       if {$elt(name) == "OwnBook"} { set name $::tr(OwnBook) }
       if {$elt(name) == "BookFile"} { set name $::tr(BookFile) }
       if {$elt(name) == "UCI_LimitStrength"} { set name $::tr(LimitELO) }
-      
+
       if { $col > 3 } { set col 0 ; incr row}
       if {$elt(default) != ""} {
         set default " ($elt(default))"
@@ -853,7 +853,7 @@ namespace eval uci {
     dialogbutton $w.buttons.save -text $::tr(Save) -command "
       if {\[::uci::saveConfig $n\]} {
         destroy $w
-      } 
+      }
     "
 
     dialogbutton $w.buttons.help -text $::tr(Help) -command {helpWindow Analysis UCI}
@@ -903,7 +903,7 @@ namespace eval uci {
         set value [$w.fopt.opt$optnbr get]
       }
       # Buttons are now handled properly in uciConfigWin
-      if { $elt(type) != "button" } { 
+      if { $elt(type) != "button" } {
 	lappend newOptions [ list $elt(name)  $value ]
       }
       incr optnbr
@@ -1087,7 +1087,7 @@ namespace eval uci {
     # - Rybka MP uses processes instead of threads : killing the main process will leave the children processes running
     # - engines should normally exit
     # if { ! $windowsOS } { catch { exec -- kill -s INT [ pid $pipe ] }  }
-        
+
     catch { flush $pipe }
     catch { close $pipe }
     set uciInfo(pipe$n) ""
@@ -1144,13 +1144,13 @@ namespace eval uci {
   proc formatPvAfterMoves { played_moves moves } {
       sc_game push copyfast
       sc_move addSan $played_moves
-      
+
       catch {sc_move addUCI $moves} tmp
       set tmp [string trim $tmp]
-      
+
       # Pop the temporary game:
       sc_game pop
-      
+
       return $tmp
   }
 

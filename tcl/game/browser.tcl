@@ -27,7 +27,7 @@ proc ::gbrowser::new {base gnum {ply -1} {w {}}} {
   if {$gnum > [sc_base numGames $base]} {
     set gnum [sc_base numGames $base]
   }
-  
+
   set filename [file tail [sc_base filename $base]]
   if {[catch {set header [sc_game summary -base $base -game $gnum header]}]} {
     return
@@ -183,7 +183,7 @@ if {0} {
   }
 }
 
-  # The gnum is stored in title, and also used later 
+  # The gnum is stored in title, and also used later
   wm title $w "game $gnum ($filename)"
   set ::gbrowser::boards($n) [sc_game summary -base $base -game $gnum boards]
   set moves [sc_game summary -base $base -game $gnum moves]

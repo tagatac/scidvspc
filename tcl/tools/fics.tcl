@@ -122,11 +122,11 @@ namespace eval fics {
 
     # Server URL, IP address, Refresh button
 
-    label $w.lServer -text URL   
+    label $w.lServer -text URL
     entry $w.eServer -textvariable ::fics::server
 
     label $w.lFICS_ip -textvar tr(FICSServerAddress)
-    entry $w.ipserver -textvar ::fics::server_ip 
+    entry $w.ipserver -textvar ::fics::server_ip
     button $w.bRefresh -textvar tr(FICSRefresh) -command ::fics::getIP -pady 0.8
 
     label $w.lFICS_port -textvar tr(FICSServerPort)
@@ -186,7 +186,7 @@ namespace eval fics {
 
     incr row
     # horizontal line
-    frame $w.line$row -height 2 -borderwidth 2 -relief sunken 
+    frame $w.line$row -height 2 -borderwidth 2 -relief sunken
     grid $w.line$row -pady 5 -column 0 -row $row -columnspan 3 -sticky ew
 
     incr row
@@ -202,7 +202,7 @@ namespace eval fics {
     grid $w.zseal_browse -column 2 -row $row -sticky ew -padx 2
 
     incr row
-    grid $w.lServer -column 0 -row $row 
+    grid $w.lServer -column 0 -row $row
     grid $w.eServer -column 1 -row $row -sticky ew -padx 2
 
     incr row
@@ -220,7 +220,7 @@ namespace eval fics {
 
     incr row
     # horizontal line
-    frame $w.line$row -height 2 -borderwidth 2 -relief sunken 
+    frame $w.line$row -height 2 -borderwidth 2 -relief sunken
     grid $w.line$row -pady 5 -column 0 -row $row -columnspan 3 -sticky ew
 
     incr row
@@ -286,7 +286,7 @@ namespace eval fics {
     $b configure -state normal
     unbusyCursor .
   }
-    
+
   proc unbusy_config {} {
     set w .ficsConfig
     # $w.button.connect configure -state normal
@@ -330,7 +330,7 @@ namespace eval fics {
 
     frame $w.console
     frame $w.command
-    frame $w.bottom 
+    frame $w.bottom
     if {$::fics::show_buttons} {
       pack $w.bottom  -side bottom
     }
@@ -340,7 +340,7 @@ namespace eval fics {
 
     frame $w.bottom.buttons
     frame $w.bottom.clocks
-    frame $w.bottom.graph 
+    frame $w.bottom.graph
 
     pack $w.bottom.buttons -side right -padx 2 -pady 5 -anchor center
     # Pack graph when "Offers graph" clicked
@@ -360,11 +360,11 @@ namespace eval fics {
     ### need a config option here... Somewhere! &&&
     text $w.console.text -bg $::fics::consolebg -fg $::fics::consolefg -wrap word -yscrollcommand "$w.console.scroll set" -width 40 -height 10 -font font_Fixed
     ### is font_Regular working here ? &&&
-    bindMouseWheel $w $w.console.text 
+    bindMouseWheel $w $w.console.text
     bindWheeltoFixed $w.console.text
     bind $w <F11>  toggleFullScreen
 
-    pack $w.console.scroll -side right -fill y 
+    pack $w.console.scroll -side right -fill y
     pack $w.console.text -side left -fill both -expand 1
 
     ### Console colours
@@ -406,7 +406,7 @@ namespace eval fics {
     # bind $w <Home>  "$w.console.text yview moveto 0"
     bind $w <End>   "$w.console.text yview moveto 1"
     bind $w <F9> {
-      ### F9 recalls a "tell" history 
+      ### F9 recalls a "tell" history
       .fics.command.entry delete 0 end
       if {$::fics::tellindex >= [llength $::fics::tells]} {
 	# .fics.command.entry insert 0 "tell "
@@ -468,7 +468,7 @@ namespace eval fics {
     incr row
 
     button $w.bottom.buttons.user0
-    button $w.bottom.buttons.user1 
+    button $w.bottom.buttons.user1
     button $w.bottom.buttons.user2
 
     foreach i {0 1 2} {
@@ -691,7 +691,7 @@ namespace eval fics {
 	    return
 	  }
 
-	  ::fics::demote_mainGame 
+	  ::fics::demote_mainGame
           if {$::fics::playing != 2} {
 	    set confirm [::game::ConfirmDiscard]
 	    if {$confirm == 2} {return}
@@ -750,11 +750,11 @@ namespace eval fics {
           if {$::fics::playing == 2} {
 	    tk_messageBox -title "Oops" -icon info -type ok -message "You are already examining a game" -parent .fics
             return
-          } 
+          }
           if {[string first "\n1." [sc_game pgn]] == -1} {
 	    tk_messageBox -title "Oops" -icon info -type ok -message "This game has no moves" -parent .fics
             return
-          } 
+          }
 	  set white [string trim [lindex [sc_game tags get White] 0] {,}]
 	  set black [string trim [lindex [sc_game tags get Black] 0] {,}]
 	  set ::fics::examresult [sc_game tags get Result]
@@ -781,7 +781,7 @@ namespace eval fics {
 	  ::fics::writechan commit
 	  updateBoard -pgn
           return
-      } 
+      }
       ex* {
 	  ::game::Clear
 	  set ::fics::examNotify 1
@@ -804,11 +804,11 @@ namespace eval fics {
 	      updateTitle
 	    }
 	  }
-          # Problems with doing this 
+          # Problems with doing this
           # if exam game, ob (load) another game, exam newgame - gets confused :(
           # if {[string match {tell gamebot exam*} $l] ||
           #    [string match {exam*} $c]} {
-	  #  ::fics::demote_mainGame 
+	  #  ::fics::demote_mainGame
           #}
       }
     } ; # switch
@@ -881,7 +881,7 @@ namespace eval fics {
     spinbox $w.sbrating1 -width 7 -textvariable ::fics::findopponent(rating1) \
 	-from 800 -to 2800 -increment 50
     spinbox $w.sbrating2 -width 7 -textvariable ::fics::findopponent(rating2) \
-	-from 800 -to 2800 -increment 50 
+	-from 800 -to 2800 -increment 50
 
     grid $w.cblimitrating -column 0 -row $row -sticky w
     grid $w.sbrating1     -column 1 -row $row
@@ -948,7 +948,7 @@ namespace eval fics {
     } else  {
         set line [gets $::fics::sockchan]
         set line [string map {"\a" ""} $line]
-        readparse $line   
+        readparse $line
     }
 
   }
@@ -962,7 +962,7 @@ namespace eval fics {
     if { [ catch { if {[llength $l] < 8} { return 0} } ] } { return 0}
 
     # 72 ++++ GuestIEEE           1  10 unrated blitz      [white]     0-9999 m
-    # auto/manual     indicates whether a game will start automatically when 
+    # auto/manual     indicates whether a game will start automatically when
     #                 abbreviated by "a" and "m" [default: auto start]
     # formula         indicates whether your formula will used to screen , abbreviated by "f"
 
@@ -983,7 +983,7 @@ namespace eval fics {
 
     set ga(rated) [lindex $l 5]
     if {$ga(rated) != "rated" && $ga(rated) != "unrated"} { return 0 }
-        
+
     set ga(type) [lindex $l 6]
     if { $ga(type) != "untimed" && $ga(type) != "blitz" && $ga(type) != "standard" && $ga(type) != "lightning" } {
       # this line can now be ignored
@@ -1120,8 +1120,8 @@ namespace eval fics {
       after cancel ::fics::updateAds
 
       # Move a previously observed game back to the fics widget
-      ::fics::demote_mainGame 
-      set ::fics::mainGame -1 ; # reset to this new game with first style12 
+      ::fics::demote_mainGame
+      set ::fics::mainGame -1 ; # reset to this new game with first style12
       set ::fics::autoload {}
 
       ::fics::disableEngines
@@ -1162,14 +1162,14 @@ namespace eval fics {
       sc_game tags set -date [::utils::date::today]
 
       if {[string match -nocase $::fics::reallogin $white]} {
-        set ::fics::opponent $black 
+        set ::fics::opponent $black
       } elseif {[string match -nocase $::fics::reallogin $black]} {
         set ::fics::opponent $white
       } else {
         set ::fics::opponent {}
       }
-        
-      
+
+
       # line: "Creating: hruvulum (1079) stevenaaus (1148) rated blitz 2 18"
       # resumed game line is different though
       if {[regexp {.*\) ([^\)]*$)} $line t1 t2]} {
@@ -1238,7 +1238,7 @@ namespace eval fics {
 	if {$t2 < 0} {set t2 0}
 	::commenteditor::appendComment "$resultcomment\nWhiteclock [expr $t1 / 60]:[format {%02i} [expr $t1 % 60]] Blackclock [expr $t2 / 60]:[format {%02i} [expr $t2 % 60]]"
         sc_game tags set -result $res
-        # if {![string match  {*Game aborted*} $line]} 
+        # if {![string match  {*Game aborted*} $line]}
         if {[sc_pos moveNumber] > 2} {
 	  catch {::game::Save}
 	  updateBoard -pgn
@@ -1277,7 +1277,7 @@ namespace eval fics {
           pack forget .fics.bottom.game$num.b.load
         }
         ::fics::remove_observedGame $num
-      } 
+      }
       return
     }
 
@@ -1357,7 +1357,7 @@ namespace eval fics {
       }
 
       # Moves over an hour necessitate reading %d:%d or %d:%d:%d as string (%s
-      # 19.  Qe3     (1:02:38)   Be6     (8:06)  
+      # 19.  Qe3     (1:02:38)   Be6     (8:06)
 
       switch $length {
 
@@ -1596,7 +1596,7 @@ namespace eval fics {
         $w.bottom.game$game.w.result configure -font font_SmallBold
       }
       # At top we have Black and Buttons
-      frame $w.bottom.game$game.b 
+      frame $w.bottom.game$game.b
       label $w.bottom.game$game.b.black -font font_Small
 
       button $w.bottom.game$game.b.close -image arrow_close -font font_Small -relief flat -command "
@@ -1622,7 +1622,7 @@ namespace eval fics {
             return
           }
 	  ### If we're already observing a game, move it back to a small board
-	  ::fics::demote_mainGame 
+	  ::fics::demote_mainGame
           # unflip when loading new game ??
 	  if {\[::board::isFlipped\] ^ \[::board::isFlipped $w.bottom.game$game.bd\]} {::board::flip .main.board}
 
@@ -1651,12 +1651,12 @@ namespace eval fics {
       }
 
       pack $w.bottom.game$game.b  -side top -anchor w -expand 1 -fill x
-      pack $w.bottom.game$game.b.black -side left 
+      pack $w.bottom.game$game.b.black -side left
       pack [frame $w.bottom.game$game.b.space -width 24] \
            $w.bottom.game$game.b.close $w.bottom.game$game.b.load $w.bottom.game$game.b.flip -side right
       pack $w.bottom.game$game.bd -side top
       pack $w.bottom.game$game.w -side top -expand 1 -fill x
-      pack $w.bottom.game$game.w.white -side left 
+      pack $w.bottom.game$game.w.white -side left
       pack [frame $w.bottom.game$game.w.space -width 20] \
            $w.bottom.game$game.w.result -side right
       if {!$::fics::show_buttons} {
@@ -1708,17 +1708,17 @@ namespace eval fics {
     switch -glob $line {
 	{\{Game *\}}	{ $t insert end "$line\n" game }
 	{\{Game *\} *}	{ $t insert end "$line\n" gameresult }
-	{* tells you:*}	{ $t insert end "$line\n" tells 
+	{* tells you:*}	{ $t insert end "$line\n" tells
 			  if {[regexp {(.*) tells you:(.*$)} $line t1 t2 t3]} {
                             if {[set temp [string first {(} $t2]] > -1} {
                               set t2 [string range $t2 0 $temp-1]
                             }
                             switch -glob $t2 {
-                              mamer* { 
+                              mamer* {
 				      if {! $::fics::no_results} {
 					tk_messageBox -title Mamer -icon info -type ok -parent .fics -message "$t2 tells you" -detail $t3
 				      }
-				    } 
+				    }
                               ROBO* {
 				    }
                               adminBOT* {
@@ -1743,7 +1743,7 @@ namespace eval fics {
 			}
 	{* seeking *}	{ $t insert end "$line\n" seeking }
 	{->>say *} - {->>. *}	{
-                          $t insert end "$line\n" tells 
+                          $t insert end "$line\n" tells
                           if {$::fics::playing == 1 || $::fics::playing == -1}  {
 			    if {[regexp -- {->>say (.*$)} $line t1 t2]} {
 			      ::commenteditor::appendComment "\[$::fics::reallogin\] $t2"
@@ -1793,7 +1793,7 @@ namespace eval fics {
 			  ::move::Back $::fics::takebackMoves
 			  ::game::Truncate
 			}
-			set ::fics::takebackMoves 0  
+			set ::fics::takebackMoves 0
         }
 	{* would like to take back * half move*} {
       			if {[scan $line {%s would like to take back %d half %s} dummy1 tmp dummy2] == 3} {
@@ -1811,7 +1811,7 @@ namespace eval fics {
 
   ### New Fics Offer widgets S.A.
 
-  ### Init 
+  ### Init
 
   proc initOffers {{flag 0}} {
     set w .ficsOffers
@@ -1857,7 +1857,7 @@ namespace eval fics {
          [regexp {\(----\).*\(----\)} $line ] } {
 	set elo {unrated}
     } else {
-        regexp {([0-9]+)} $line elo 
+        regexp {([0-9]+)} $line elo
     }
     if {"$player" == ""} {
        puts "Fics:Empty player offer!"
@@ -1866,7 +1866,7 @@ namespace eval fics {
 
     set f .ficsOffers.$player
 
-    if {[winfo exists $f]} { 
+    if {[winfo exists $f]} {
 	return
     }
 
@@ -1884,7 +1884,7 @@ namespace eval fics {
     catch {raiseWin .ficsOffers}
   }
 
-  ### Delete Offer 
+  ### Delete Offer
 
   proc delOffer {player} {
   # Challenge from PLAYER removed.
@@ -1898,7 +1898,7 @@ namespace eval fics {
        return
     }
 
-    if {[winfo exists .ficsOffers.$player]} { 
+    if {[winfo exists .ficsOffers.$player]} {
 	::fics::checkZeroOffers -1 .ficsOffers.$player
     }
   }
@@ -1926,7 +1926,7 @@ namespace eval fics {
       } else {
 	if {![winfo exists $f]} {
 	  pack [frame $f] -side top -padx 5 -pady 5
-	  pack [label $f.name -text "No [tr FICSOffers]" -state disabled -width 40] -side left 
+	  pack [label $f.name -text "No [tr FICSOffers]" -state disabled -width 40] -side left
 	  pack [button $f.decline -text [tr FICSDecline] -state disabled ] -side right -padx 5
 	  pack [button $f.accept -text [tr FICSAccept] -state disabled ] -side right -padx 5
 	}
@@ -1939,9 +1939,9 @@ namespace eval fics {
   proc removeSeek {line} {
     global ::fics::seeklist
     foreach l $line {
-      
+
       if { $l == "<sr>" } {continue}
-      
+
       # remove seek from seeklist
       for {set i 0} {$i < [llength $seeklist]} {incr i} {
         array set a [lindex $seeklist $i]
@@ -1950,7 +1950,7 @@ namespace eval fics {
           break
         }
       }
-      
+
       # remove seek from graph
       if { $::fics::graph(on) } {
         for {set idx 0} { $idx < [llength $::fics::soughtlist]} { incr idx } {
@@ -1964,7 +1964,7 @@ namespace eval fics {
           }
         }
       }
-      
+
     }
   }
 
@@ -1978,7 +1978,7 @@ namespace eval fics {
     #   8th rank (also Black's 1st rank), then White's 7th rank (also Black's 2nd),
     #   etc, regardless of who's move it is.
     # * color whose turn it is to move ("B" or "W")
-    # * -1 if the previous move was NOT a double pawn push, otherwise the chess 
+    # * -1 if the previous move was NOT a double pawn push, otherwise the chess
     #   board file  (numbered 0--7 for a--h) in which the double push was made
     # * can White still castle short? (0=no, 1=yes)
     # * can White still castle long?
@@ -2025,7 +2025,7 @@ namespace eval fics {
       catch {.fics.bottom.game$game.b.load invoke}
     }
 
-    ### Observed games are a row of small boards down the bottom left 
+    ### Observed games are a row of small boards down the bottom left
     if {[lsearch -exact $::fics::observedGames $game] > -1} {
       if { [::board::isFlipped .fics.bottom.game$game.bd] } {
         .fics.bottom.game$game.b.black configure -text "$white ($whiteTime secs)"
@@ -2082,7 +2082,7 @@ namespace eval fics {
     for {set i 1} {$i <=8} { incr i} {
       set l [lindex $line $i]
       set count 0
-      
+
       for { set col 0 } { $col < 8 } { incr col } {
         set c [string index $l $col]
         if { $c == "-"} {
@@ -2095,7 +2095,7 @@ namespace eval fics {
           append fen $c
         }
       }
-      
+
       if {$count != 0} { append fen $count }
       if {$i != 8} { append fen {/} }
     }
@@ -2195,7 +2195,7 @@ namespace eval fics {
           }
 
 	  if {$::fics::premove != {}} {
-	    ### Send premove 
+	    ### Send premove
 	    if {$fen == [sc_pos fen]} {
 	      updateBoard -pgn -animate
 	      lassign $::fics::premove move sq1 sq2
@@ -2232,7 +2232,7 @@ namespace eval fics {
 	    }
 	    set ::fics::premove {}
 	    return
-	  } 
+	  }
 	  if {$::fics::sound} {
 	    ::utils::sound::PlayMove sound_move
 	  }
@@ -2357,7 +2357,7 @@ namespace eval fics {
     set y [winfo reqheight $w]
     wm geometry $w ${x}x${y}
   }
-  
+
   proc showGraph {} {
     set w .fics.bottom
 
@@ -2380,7 +2380,7 @@ namespace eval fics {
       pack $w.buttons -side right -padx 2 -pady 5 -anchor center
     }
 
-    ### Repacking can make the console suspend, so seek to console end 
+    ### Repacking can make the console suspend, so seek to console end
     update
     catch {.fics.console.text yview moveto 1} ; # in case we quit fics already
   }
@@ -2390,7 +2390,7 @@ namespace eval fics {
     # set ::fics::newsoughtlist {}
 
     writechan sought
-    vwait ::fics::sought 
+    vwait ::fics::sought
 
     # Don't update Ads anymore if playing
     if {$::fics::playing != 1 && $::fics::playing != -1 && $::fics::graph(on) && [winfo exists .fics]} {
@@ -2460,7 +2460,7 @@ namespace eval fics {
       if { [string match "Guest*" $l(name)] } {
         set fillcolor gray ; set outline darkgray
       }
-      
+
       set x [ expr $graph(xoff) + $tt * ($graph(width) - $graph(xoff)) / ($offers_maxtime - $offers_mintime)]
       set y [ expr $graph(height) - $graph(yoff) - ( $l(elo) - $offers_minelo ) * ($graph(height) - $graph(yoff)) / ($offers_maxelo - $offers_minelo)]
       if { $l(rated) == "rated" } {
@@ -2469,7 +2469,7 @@ namespace eval fics {
         set object rectangle
       }
       $w.c create $object [expr $x - $size ] [expr $y - $size ] [expr $x + $size ] [expr $y + $size ] -tags "game game_$idx" -fill $fillcolor -outline $outline
-      
+
       $w.c bind game_$idx <Enter> "::fics::showGraphText $idx %x %y"
       $w.c bind game_$idx <Leave> "::fics::delGraphText $idx"
       $w.c bind game_$idx <1> "::fics::acceptGraphGame $idx"
@@ -2507,7 +2507,7 @@ namespace eval fics {
     array set l $ga
     set m "$l(name)($l(elo)) $l(time_init)/$l(time_inc) $l(rated) $l(type) $l(color) $l(start)"
     set ::fics::thisName $l(name)
-    
+
     $w.c delete status
     $w.c create text 20 0 -tags status -text "$m" -font font_Regular -anchor nw
     $w.c raise game_$idx
@@ -2609,7 +2609,7 @@ namespace eval fics {
   proc initPing {} {
     # get ping to report in every 10 seconds
     set ::fics::sockping [open "|ping -i 10 $::fics::server" r]
-    fconfigure $::fics::sockping -blocking 0 -buffering line -translation auto 
+    fconfigure $::fics::sockping -blocking 0 -buffering line -translation auto
     fileevent $::fics::sockping readable ::fics::readPing
     updateConsole "Starting Ping"
   }
@@ -2618,15 +2618,15 @@ namespace eval fics {
 
     # ping should report every ten seconds (see above), so if it doesn't, zero ping label
     after cancel ::fics::clearPing
-    after 18000  ::fics::clearPing 
-    
+    after 18000  ::fics::clearPing
+
     if {[eof $::fics::sockping]} {
       fileevent $::fics::sockping readable {}
       puts "Ping exitted"
       return
     }
     set line [gets $::fics::sockping]
-    
+
     if {[regexp {.* time=([[:digit:]]*\.?[[:digit:]]*) } $line t1 t2]} {
       set ::fics::ping "ping: [expr int($t2)] ms"
     } else {
@@ -2743,7 +2743,7 @@ namespace eval fics {
     addHorizontalRule $w
 
     frame $w.b
-    pack $w.b -side bottom 
+    pack $w.b -side bottom
 
     dialogbutton $w.b.ok -text OK -command {
       set ::fics::user_buttons {}
@@ -2765,14 +2765,14 @@ namespace eval fics {
 
     dialogbutton $w.b.defaults -text $::tr(Defaults) -command {
       ::fics::initUserButtons
-      foreach i {0 1 2} { 
+      foreach i {0 1 2} {
 	set w .editUserButtons
 	set f $w.f$i
 	$f.button delete 0 end
 	$f.command delete 0 end
 	$f.button insert 0 [lindex $::fics::user_buttons $i]
 	$f.command insert 0 [lindex $::fics::user_commands $i]
-      } 
+      }
     }
 
     dialogbutton $w.b.cancel -text $::tr(Cancel) -command "destroy $w"
@@ -2810,7 +2810,7 @@ namespace eval fics {
     addHorizontalRule $w
 
     frame $w.b
-    pack $w.b -side bottom 
+    pack $w.b -side bottom
 
     dialogbutton $w.b.ok -text OK -command {
       set ::fics::init_commands {}

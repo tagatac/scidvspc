@@ -146,7 +146,7 @@ proc ::utils::tooltip::trimWidth { msg } {
     } else  {
       # must split the line
       set words [split $line " "]
-      
+
       while {[llength $words] > 0} {
         set tmp [lindex $words 0]
         set words [lreplace $words 0 0]
@@ -156,7 +156,7 @@ proc ::utils::tooltip::trimWidth { msg } {
         }
         append ret $tmp "\n"
       }
-      
+
     }
   }
   return [string trim $ret]

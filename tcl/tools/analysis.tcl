@@ -99,7 +99,7 @@ proc resetEngine {n} {
   set analysis(maxmovenumber$n) 0     ;# the number of moves in this position
   set analysis(lockEngine$n) 0        ;# the engine is locked to current position
   set analysis(side$n) {}
-  set analysis(lockPos$n) {} 
+  set analysis(lockPos$n) {}
   set analysis(lockFen$n) {}
   set analysis(startpos$n) ""         ;# the startpos/fen for game. Uninit-ed
   set analysis(go$n) 0
@@ -166,8 +166,8 @@ proc engine {arglist} {
     set newEngine($attr) $value
   }
   # Check that required attributes exist:
-  if {! [info exists newEngine(Name)] || 
-      ! [info exists newEngine(Cmd)]  || 
+  if {! [info exists newEngine(Name)] ||
+      ! [info exists newEngine(Cmd)]  ||
       ! [info exists newEngine(Dir)]} { return  0 }
   # Fill in optional attributes:
   if {! [info exists newEngine(Args)]} { set newEngine(Args) {} }
@@ -420,8 +420,8 @@ proc ::enginelist::choose {} {
   }
 
   # arrow images defined in bookmark.tcl
-  button $w.buttons.up   -image bookmark_up   -command {::enginelist::move -1} 
-  button $w.buttons.down -image bookmark_down -command {::enginelist::move 1} 
+  button $w.buttons.up   -image bookmark_up   -command {::enginelist::move -1}
+  button $w.buttons.down -image bookmark_down -command {::enginelist::move 1}
   button $w.buttons.uci  -image uci           -command {
     ::uci::uciConfigN [lindex [.enginelist.list.list curselection] 0] .enginelist
   }
@@ -442,7 +442,7 @@ proc ::enginelist::choose {} {
   dialogbutton $w.buttons2.start -textvar tr(Start) -command {
     makeAnalysisWin [lindex [.enginelist.list.list curselection] 0] settime
   }
-  
+
   checkbutton $w.buttons3.info      -textvar tr(FICSInfo) -variable analysis(showEngineInfo)
   checkbutton $w.buttons3.showBoard -textvar tr(Board) -variable analysis(showBoard)
   label       $w.buttons3.sizeLabel     -text [tr OptionsFicsSize]
@@ -472,7 +472,7 @@ proc ::enginelist::choose {} {
   pack $w.buttons3.info $w.buttons3.showBoard $w.buttons3.space $w.buttons3.sizeLabel $w.buttons3.size $w.buttons3.showVar \
        $w.buttons3.seqLabel $w.buttons3.seqCount $w.buttons3.trafficlights $w.buttons3.lowpriority -side left -padx 5
 
-  pack $w.buttons2.close $w.buttons2.start -side right -padx 5 
+  pack $w.buttons2.close $w.buttons2.start -side right -padx 5
   pack $w.buttons2.logengines $w.buttons2.logmax $w.buttons2.ply $w.buttons2.maxply $w.buttons2.wrap $w.buttons2.logname -side left -padx 5
 
   focus $w.buttons2.start
@@ -675,7 +675,7 @@ proc ::enginelist::edit {index {copy {}}} {
   bind $w <F4> {set hotkey F4}
 
   $w.radio.none select
-  if {$engines(F2) == $engines(newIndex)} {$w.radio.f2 select} 
+  if {$engines(F2) == $engines(newIndex)} {$w.radio.f2 select}
   if {$engines(F3) == $engines(newIndex)} {$w.radio.f3 select}
   if {$engines(F4) == $engines(newIndex)} {$w.radio.f4 select}
 
@@ -813,7 +813,7 @@ proc checkAllEnginesClosed {parent} {
     }
   }
   foreach {win title} {
-    .comp         "Computer Tournament" 
+    .comp         "Computer Tournament"
     .uciConfigWin "UCI Config window"
     .engineEdit   "Configure Engine window"
     .serGameWin   "UCI Game"
@@ -844,7 +844,7 @@ proc ::enginelist::findEngine {key} {
   }
 
   set curselection [$w curselection]
-  if {$curselection == {}} { 
+  if {$curselection == {}} {
     set i -1
   } else {
     set i [lindex $curselection 0]
@@ -949,14 +949,14 @@ proc initAnnotation {n} {
     radiobutton $w.choice.1 -variable annotate(Depth) -value 1 -textvar tr(Depth) -command "checkAnnotateControl $w"
     radiobutton $w.choice.2 -variable annotate(Depth) -value 0 -textvar tr(Time)  -command "checkAnnotateControl $w"
 
-    pack $w.choice -side top -pady 3 
+    pack $w.choice -side top -pady 3
     pack $w.choice.0 $w.choice.1 $w.choice.2 -side left -expand 1 -fill x
 
-    frame $w.depth 
+    frame $w.depth
     label $w.depth.label -textvar tr(DepthPerMove) -width 22
     spinbox $w.depth.spDepth -width 4 -textvar annotate(WantedDepth) -from 10 -to 100 -increment 1
 
-    pack $w.depth -side top -pady 3 
+    pack $w.depth -side top -pady 3
     pack $w.depth.label -side left
     pack $w.depth.spDepth -side right -padx 5
   } else {
@@ -971,7 +971,7 @@ proc initAnnotation {n} {
 
   pack $w.delay -side top
   pack $w.delay.label -side left
-  pack $w.delay.spDelay -side right -padx 5 
+  pack $w.delay.spDelay -side right -padx 5
 
   if  {$analysis(uci$n)} {
     checkAnnotateControl $w
@@ -986,8 +986,8 @@ proc initAnnotation {n} {
   spinbox $w.blunderbox.spBlunder -width 4 -textvar annotate(blunder) \
       -from 0.1 -to 3.0 -increment 0.1
 
-  pack $w.blunderbox -side top -padx 5 
-  pack $w.blunderbox.label -side left 
+  pack $w.blunderbox -side top -padx 5
+  pack $w.blunderbox.label -side left
   pack $w.blunderbox.spBlunder -side right -padx 5
 
   frame $w.cutoff
@@ -995,7 +995,7 @@ proc initAnnotation {n} {
   spinbox $w.cutoff.spBlunder -width 4 -textvar annotate(cutoff) \
       -from 3.0 -to 10.0 -increment .5
 
-  pack $w.cutoff -side top -padx 5 
+  pack $w.cutoff -side top -padx 5
   pack $w.cutoff.label -side left
   pack $w.cutoff.spBlunder -side right -padx 5
 
@@ -1101,10 +1101,10 @@ proc initAnnotation {n} {
   ttk::combobox $w.usebook.comboBooks -width 12 -values $tmp -state readonly
   catch { $w.usebook.comboBooks current $idx }
 
-  pack $w.usebook.cbBook -side left 
+  pack $w.usebook.cbBook -side left
   pack $w.usebook.comboBooks -side right
 
-  # Batch annotation 
+  # Batch annotation
 
   frame $w.batch
   pack $w.batch -side top -fill x
@@ -1217,7 +1217,7 @@ proc okAnnotation {n} {
   }
   if {[sc_pos isAt start]} {
     set ::wentOutOfBook 0
-  } else { 
+  } else {
     set ::wentOutOfBook 1
   }
 
@@ -1638,7 +1638,7 @@ if {0} {
         sc_pos addNag "??"
         markExercise $prevscore $score
       }
-      
+
       addScore $n both
     }
 
@@ -1862,7 +1862,7 @@ proc addAllVariations {{n 1} {rightclick 0}} {
       # Not enough PV
       return
     }
-    # two single item lists with the second variation 
+    # two single item lists with the second variation
     set v1 [list "[lindex $analysis(multiPVraw$n) 1]"]
   } else {
     # Process all variations
@@ -1919,7 +1919,7 @@ proc addAllVariations {{n 1} {rightclick 0}} {
     incr idx
   }
 
-  ::pgn::Refresh 1 
+  ::pgn::Refresh 1
   updateVarMenus
   updateStatusBar
   ::tools::graphs::score::Refresh
@@ -2007,7 +2007,7 @@ if {$someMove != {}} {
       sc_move forward 1
     }
   }
-    
+
   update idletasks ; # fixes tournament issues ?
 
   if {$comp(playing)} {
@@ -2015,7 +2015,7 @@ if {$someMove != {}} {
       updateBoard -pgn -animate
     } else {
       updateBoard -pgn
-    }  
+    }
   } else {
     updateBoard -pgn -animate
     ::utils::sound::AnnounceNewMove [sc_game info previousMove]
@@ -2203,7 +2203,7 @@ proc startAnalysisWin {FunctionKey} {
   set n $engines($FunctionKey)
   if {$n != {}} {
     makeAnalysisWin $n
-  } 
+  }
 }
 
 ### toggle analysis engine n
@@ -2239,7 +2239,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   # What an f-ing mess.
   # Previously the engines were sorted , and only engine 1 or 2 (in the sort order)
   # could be used. Engines often got resorted, and the key bindings would change.
-  # This was stupid, and very confusing. This rewrite will allow 
+  # This was stupid, and very confusing. This rewrite will allow
   # any engine to be configured to run as engine 1 or 2 (or 3 ...)
 
   resetEngine $n
@@ -2397,7 +2397,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
 
   button $w.b.line -image tb_addvar -command "addAnalysisVariation $n" -relief $relief
   ::utils::tooltip::Set $w.b.line $tr(AddVariation)
-  # right click adds second line 
+  # right click adds second line
   bind $w.b.line <Button-3> "addAllVariations $n 1"
 
   button $w.b.alllines -image tb_addallvars -command "addAllVariations $n" -relief $relief
@@ -2405,7 +2405,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   bind $w.b.alllines <Button-3> "addAllVariations $n 2"
 
   spinbox $w.b.multipv -from 1 -to 8 -increment 1 -textvar analysis(multiPVCount$n) -justify center \
-    -width 2 -font font_Small -command "changePVSize $n" 
+    -width 2 -font font_Small -command "changePVSize $n"
   ::utils::tooltip::Set $w.b.multipv $tr(Lines)
 
   checkbutton $w.b.annotatebut -image tb_annotate -indicatoron false -width 32 -height 32 \
@@ -2458,7 +2458,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   ::utils::tooltip::Set $w.b.help $tr(Help)
 
   bind $w.b.help <ButtonPress-3> "engineShowLog $n"
- 
+
   if {$::macOS} {
     $w.b.startStop configure -width 30 -height 30
     $w.b.move      configure -width 30 -height 30
@@ -2480,9 +2480,9 @@ proc makeAnalysisWin {{n 0} {options {}}} {
 
   button $w.popup -image tb_popup -height 32 -width 16 -command "popupButtonBar $n" -relief flat
   placePopupButton $n
-  
 
-  # pack  $w.b.showinfo 
+
+  # pack  $w.b.showinfo
   if {$analysis(uci$n)} {
     pack forget $w.b.update
     $w.b.update  configure -state disabled
@@ -2506,7 +2506,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   scrollbar $w.hist.ybar -command "$w.hist.text yview" -takefocus 0
   scrollbar $w.hist.xbar -command "$w.hist.text xview" -orient horizontal
   if { $analysis(showEngineInfo$n) } {
-    pack $w.text -side bottom -fill both 
+    pack $w.text -side bottom -fill both
   }
   if {$analysis(movesDisplay$n) == 2} {
     $w.hist.text configure -wrap word
@@ -2560,7 +2560,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
     # find UCI engine MultiPV capability
 
     # Wait for uciok
-    while { !($analysis(uciok$n)) } { 
+    while { !($analysis(uciok$n)) } {
       # && [winfo exists .analysisWin$n]
       update
       after 200
@@ -2874,7 +2874,7 @@ proc excludeToolTip {n args} {
     ::utils::tooltip::Set .analysisWin$n.b.exclude $::analysis(exclude$n)
   }
 }
-    
+
 
 ################################################################################
 # setAnalysisPriority
@@ -3038,7 +3038,7 @@ proc processAnalysisInput {n} {
         detectWBEngine $n $line
       }
       # No need to further process detectWBEngine
-      set analysis(wbEngineDetected$n) 1 
+      set analysis(wbEngineDetected$n) 1
 
       if { [regexp "myname=\"(\[^\"\]*)\"" $line dummy name]} {
         catch {::setTitle .analysisWin$n "$name"}
@@ -3318,7 +3318,7 @@ proc toggleEngineAnalysis {{n -1}} {
       $h configure -state normal
       $h delete 1.0 end
       $h configure -state disabled
-    } 
+    }
     if {$analysis(uci$n) && $::uci::goCommand != "go infinite"} {
       ::utils::tooltip::Set $b $::uci::goCommand
     } else {
@@ -3407,7 +3407,7 @@ proc toggleLockEngine {n} {
       ::board::update .analysisWin$n.frame.bd $analysis(lockPos$n)
     }
     set tooltip "[file tail [sc_base filename]], [tr game] [sc_game number]"
-    
+
     # Append current move
 
     set prevMove [::trans [sc_game info previousMove]]
@@ -3609,7 +3609,7 @@ proc updateAnalysisText {n} {
       }
     } else  {
       # Original Scid xboard analysis display
-      append line [format "%2d \[%+5.2f\]  %s (%.2f)\n" $analysis(depth$n) $score [::trans $moves] $analysis(time$n)] 
+      append line [format "%2d \[%+5.2f\]  %s (%.2f)\n" $analysis(depth$n) $score [::trans $moves] $analysis(time$n)]
     }
 
     if { $n == 1 && $analysis(mini) } {
@@ -3620,7 +3620,7 @@ proc updateAnalysisText {n} {
 	  set ::statusBar "   [lindex $analysis(name1) 0]: [string map {\n {}} $s]"
 	}
       }
-    } 
+    }
 
     $h insert end $line indent
     # $h see end-1c
@@ -3675,7 +3675,7 @@ proc addMoveNumbers { e pv } {
   set start 0
   if {$turn == {black}} {
     set ret "$n.$spc... [lindex $pv 0] "
-    incr start 
+    incr start
     incr n
   } else {
     set ret {}
@@ -3693,7 +3693,7 @@ proc addMoveNumbers { e pv } {
   return $ret
 }
 
-###  Init / Toggle small analysis board 
+###  Init / Toggle small analysis board
 
 proc initAnalysisBoard {n} {
   global analysis
@@ -3746,7 +3746,7 @@ proc initAnalysisBoard {n} {
     if {[::board::size $bd]  != [expr {$analysis(boardSize) * 5 + 20}]} {
       ::board::resize $bd [expr {$analysis(boardSize) * 5 + 20}]
     }
-    pack $w.frame -side bottom -before $w.hist 
+    pack $w.frame -side bottom -before $w.hist
     update
     $w.hist.text configure -setgrid 1
     $w.hist.text see end
@@ -3871,7 +3871,7 @@ proc updateAnalysisBoard {n {moves {}}} {
         sc_game pop
       }
     } elseif {$analysis(multiPVCount$n) != 1} {
-      # MultiPV 
+      # MultiPV
       # ($move != {} is a check for movecount == 0, as multiPVraw is not getting reset properly somewhere)
       if {$move != {}} {
         set move {}
@@ -3904,11 +3904,11 @@ proc updateAnalysisBoard {n {moves {}}} {
       # Hanish's feature
       if {[sc_pos moves] == {}} {
         set analysis(boardSeqLengthSeen$n) 0
-        set analysis(boardSeqDepthSeen$n) 0 
+        set analysis(boardSeqDepthSeen$n) 0
       } else {
         # Show some amount of the initial part of the Main PV using thin arrows
-        if {$analysis(uci$n) && 
-            ([llength $moves] > $analysis(boardSeqLengthSeen$n)/2 || 
+        if {$analysis(uci$n) &&
+            ([llength $moves] > $analysis(boardSeqLengthSeen$n)/2 ||
             $analysis(depth$n) > ($analysis(boardSeqDepthSeen$n)+1) ||
             $analysis(scoremate$n) != 0)} {
           set analysis(boardSeqLengthSeen$n) [llength $moves]
@@ -4054,7 +4054,7 @@ proc updateAnalysis {{n 0} {reset 1}} {
   set old_movelist $analysis(movelist$n)
   set movelist [sc_game moves coord]
 
-  set analysis(depth$n) 0 
+  set analysis(depth$n) 0
   # to ensure clearing text widget if using goComand {go depth 12} (eg) but probably a good idea anyway. TEST
 
   ### seems erroneous... what about vars/backtracking ??
@@ -4143,13 +4143,13 @@ proc updateAnalysis {{n 0} {reset 1}} {
 
       # Get out of analyze mode, to send moves.
       sendToEngine $n "exit"
-      
+
       # Stop engine replying to moves.
       sendToEngine $n "force"
 
       # Check if the setboard command must be used -- that is, if the
       # previous or current position arose from a non-standard start.
-      
+
       ### Use "setboard" if supported, and return (this is provides less error prone behavior)
 
       if {$analysis(has_setboard$n)} {
@@ -4157,7 +4157,7 @@ proc updateAnalysis {{n 0} {reset 1}} {
 	sendToEngine $n analyze
 	return
       }
-      
+
       ### Ok- no "setboard"
 
       if {$nonStdStart} {
@@ -4165,15 +4165,15 @@ proc updateAnalysis {{n 0} {reset 1}} {
         updateAnalysisText $n
         return
       }
-      
+
       set oldlen [llength $old_movelist]
       set newlen [llength $movelist]
-      
+
       # Check for optimization to minimize the commands to be sent:
       # Scid sends "undo" to backup wherever possible, and avoid "new" as
       # on many engines this would clear hash tables, causing poor
       # hash table performance.
-      
+
       # Send just the new move if possible (if the new move list is exactly
       # the same as the previous move list, with one extra move):
       if {($newlen == $oldlen + 1) && ($old_movelist == [lrange $movelist 0 [expr {$oldlen - 1} ]])} {
@@ -4199,18 +4199,18 @@ proc updateAnalysis {{n 0} {reset 1}} {
 	}
 	
       }
-      
+
       sendToEngine $n analyze
-      
+
     } else {
 
       ### Xboard engine doesn't support "analyze"
-      
+
       # In this case, Scid just sends "new", "force" and a bunch
       # of moves, then sets a very long search time/depth and
       # sends "go". This is not ideal but it works OK for engines
       # without "analyze" that I have tried.
-      
+
       # If Unix OS and engine wants it, send an INT signal:
       if {(!$windowsOS)  &&  $analysis(send_sigint$n)} {
 	catch {exec -- kill -s INT [pid $analysis(pipe$n)]}
@@ -4604,7 +4604,7 @@ proc engineShowLog {n} {
     setWinSize $w
 
     frame $w.buttons
-    pack $w.buttons -side bottom 
+    pack $w.buttons -side bottom
 
     # autoscroll can bug out with this big text file, so don't use it.
     frame $w.frame
@@ -4621,7 +4621,7 @@ proc engineShowLog {n} {
     grid columnconfigure $w.frame 0 -weight 1
     grid rowconfigure    $w.frame 1 -weight 0
     grid columnconfigure $w.frame 1 -weight 0
-    
+
     checkbutton $w.buttons.auto -text Auto -variable analysis(logAuto$n) -command "engineUpdateLog $n 1"
     dialogbutton $w.buttons.update -textvar tr(Update) -command "engineUpdateLog $n"
 
@@ -4649,12 +4649,12 @@ proc engineShowLog {n} {
 
 proc engineUpdateLog {n {sync 0}} {
   set w .enginelog$n
-  
+
   if {$sync} {set ::analysis(logWait$n) 1}
 
   $w.log delete 1.0 end
   if {! [catch {open [file join $::scidLogDir engine$n.log] r} fd]} {
-    # while {![eof $fd]} 
+    # while {![eof $fd]}
     while {[gets $fd line] >= 0 && ![eof $fd]} {
       $w.log insert end "$line\n"
     }

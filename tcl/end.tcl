@@ -168,7 +168,7 @@ proc mergeGame {{base 0} {gnum 0}} {
       -command "destroy $w"
   packbuttons right $w.b.cancel $w.b.ok
   updateMergeGame
-  placeWinCenter $w 
+  placeWinCenter $w
   wm deiconify $w
 }
 
@@ -252,7 +252,7 @@ proc setExportText {exportType} {
 
   $pane.start.text insert end $exportStartFile($exportType)
   $pane.end.text insert end $exportEndFile($exportType)
-  
+
   # Additional Latex options
   if {$exportType == "Latex"} {
     label $w.descr -font font_Bold -text "LaTeX System Options"
@@ -283,7 +283,7 @@ proc setExportText {exportType} {
       set latexRendering(viewer) \[string trim \[$w.viewer.entry get\]\]
       focus .main
       destroy $w
-    "        
+    "
     addHorizontalRule $w
   } else {
     button $w.buttons.default -text "Reset to Default" -command "
@@ -304,7 +304,7 @@ proc setExportText {exportType} {
   pack $w.buttons.default -side left -padx 5 -pady 2
   pack $w.buttons.cancel $w.buttons.ok -side right -padx 5 -pady 2
 
-  placeWinCenter $w 
+  placeWinCenter $w
   wm deiconify $w
 }
 
@@ -604,7 +604,7 @@ proc exportGames {selection exportType {fName {}}} {
   if {$exportType == "Latex"} {
     set exportFlags(scidFlags) [::board::isFlipped]
   }
-# tk_messageBox -title "Debug" -type ok -icon error -message "Export Type $exportType" 
+# tk_messageBox -title "Debug" -type ok -icon error -message "Export Type $exportType"
   busyCursor .
   set error [catch {
   sc_base export $selection $exportType $fName -append $exportFlags(append) \
@@ -985,7 +985,7 @@ proc nameEditor {{parent {}}} {
   set useStringMatch 0
   checkbutton $w.g.stringmatch -textvar ::tr(MatchPattern) -variable useStringMatch -font font_Tiny
   grid $w.g.stringmatch -row 2 -column 1 -columnspan 2 -padx 10
-  
+
   text $w.g.list -height 9 -width 40 -relief sunken -tabs {2c left} -wrap none
 
   grid $w.g.list -row 3 -column 1 -rowspan 9 -columnspan 2 -sticky n -pady 5
@@ -1111,7 +1111,7 @@ proc gameSave {gnum {focus {}}} {
     grab $w
   }
 
-  # frame $f holds everything except save/cancel buttons 
+  # frame $f holds everything except save/cancel buttons
   set f [frame $w.g]
   pack $f -side top -expand 1 -fill both
 
@@ -1213,7 +1213,7 @@ proc gameSave {gnum {focus {}}} {
   ttk::combobox $f.wrtype -values [sc_info ratings] -width 7 \
     -textvariable whiteRType -state readonly
   ttk::entry $f.weloentry -width 6 -textvariable whiteElo -justify right
-  
+
   label $f.belolabel -text "$::tr(Black) "
   ttk::combobox $f.brtype -values [sc_info ratings] -width 7 \
     -textvariable blackRType -state readonly
@@ -1291,7 +1291,7 @@ proc gameSave {gnum {focus {}}} {
 
   }
 
-  # if {$gnum == 0} 
+  # if {$gnum == 0}
   grid $f.extrabutton -row 6 -column 9 -sticky ew -pady 3
 
   # Extra tags text widget+scrollbar (in frame)
@@ -1311,7 +1311,7 @@ proc gameSave {gnum {focus {}}} {
   pack $f.extratext   -in $f.extra -side left -fill both -expand 1
   pack $f.extrascroll -in $f.extra -side right -fill y
 
-  ### Custom extratags combobox 
+  ### Custom extratags combobox
 
   frame $f.custom
 
@@ -1372,7 +1372,7 @@ proc gameSave {gnum {focus {}}} {
   }
 
   if {$gsaveNum < 0} {
-    $w.buttons.save configure -textvar {} -text Ok 
+    $w.buttons.save configure -textvar {} -text Ok
   }
 
   dialogbutton $w.buttons.cancel -textvar ::tr(Cancel) -command "destroy $w"
@@ -1409,7 +1409,7 @@ proc gameSave {gnum {focus {}}} {
          focus .save.g.entry$focus
        }
    }
-    
+
   if {$gnum > 0} { focus .save.buttons.save }
 }
 
@@ -1503,7 +1503,7 @@ proc gameQuickSave {} {
   } else {
     sc_game save [sc_game number]
     ::windows::stats::Refresh
-  } 
+  }
 }
 
 
@@ -1830,7 +1830,7 @@ grid columnconfigure .main 0 -weight 1
 if { $::docking::USE_DOCKING } {
   # Needs weight 2 ?
   grid rowconfigure .main 3 -weight 1
-} 
+}
 
 grid .main.button -row 1 -column 0 -pady 3 -padx 5
 
@@ -1894,16 +1894,16 @@ proc getCommandLineOptions {} {
       # Seen option argument:
       incr argc -1
       set argv [lrange $argv 1 end]
-      
+
       # Special argument "--" means no more options:
       if {$arg == "--"} { return }
-      
+
       # Check for known option names:
       #   -f (/f), -fast (/fast): Fast start with no tablebases, etc.
       #   -xeco, -xe: Do not load ECO file.
       #   -xspell, -xs: Do not load spellcheck file.
       #   -xtb, -xt: Do not check tablebase directory.
-      
+
       set argName [string range $arg 1 end]
 
       switch -glob -- $argName {
@@ -2056,7 +2056,7 @@ if {$loadAtStart(spell)} {
 	::splash::add "   Error processing photo $i: $result" error
       } else {
 	incr count
-	# ::splash::add "   Ok processing photo $i" 
+	# ::splash::add "   Ok processing photo $i"
       }
     }
     ::splash::add "    $count custom photos successfully loaded."
@@ -2139,9 +2139,9 @@ while {$argc > 0} {
       ::splash::add "   Database \"$startbase\" opened: [sc_base numGames] games."
       set initialDir(base) [file dirname $startbase]
       set initialDir(file) [file tail $startbase]
-      # this sets initialDir(file) for all files, not just pgn... 
+      # this sets initialDir(file) for all files, not just pgn...
       # but initialDir(file) is only (currently) used when saving pgn S.A.
-      
+
       # Done in file::Open
       # catch {sc_game load auto}
       flipBoardForPlayerNames
@@ -2164,7 +2164,7 @@ updateMenuStates
 update
 
 ### Bindings to map/unmap all windows when main window is mapped
-# Dammit - how do we 
+# Dammit - how do we
 
 if { $::docking::USE_DOCKING } {
   bind $dot_w <Configure> {
@@ -2214,7 +2214,7 @@ proc raiseAllWindows {{force 0}} {
   if {[winfo ismapped .splash]} {
     raise .splash
   }
-  
+
 }
 
 ### Scid main windows are below, but we use [winfo children .] to gather info
@@ -2320,7 +2320,7 @@ if {$::macOS} {
   set isMacBaseReady 1
   if {$mac_args != 0} {
     set isMacBaseReady 2
-    ::splash::add "::tk::mac::OpenDocument $mac_args"    
+    ::splash::add "::tk::mac::OpenDocument $mac_args"
     catch {::tk::mac::OpenDocument $mac_args} errmsg
   }
 }

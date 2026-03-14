@@ -87,7 +87,7 @@ if {[file isdirectory $scidPiecesDir]} {
 }
 
 # To test images use -
-#    toplevel .l1 
+#    toplevel .l1
 #    pack [label .l1.label -image [image create photo -data $pieceImageData(Alpha,80) ] -background red]
 
 if {$png_image_support} {
@@ -104951,7 +104951,7 @@ R/u0V/u1Z/u2d/u3h/u4l/u5p/u6t/u7x/u81/u95/u+9/u/3/qAAAA7
 
 set boardStyles [lsort -nocase $boardStyles]
 
-###  Reset the images for pieces of a certain size 
+###  Reset the images for pieces of a certain size
 
 proc setPieceData {font size} {
   # Stops memory leaking (?)
@@ -105011,7 +105011,7 @@ r9isdsvter/gsHhMLpvP6LR6zW673/C4fE6v2+/4vH7P7/v/gFgRADs=
 }
 
 ### to test images &&&
-# toplevel .l1 
+# toplevel .l1
 # pack [label .l1.label -image BrownMarble-l]
 # pack [label .l1.label2 -image BrownMarble-d]
 
@@ -105437,7 +105437,7 @@ YTRRURnego332xVL8DP2IQ/k8RCOwhqgWiGeQ3QE67A4adAfjehueEAaHmJ3
 EygCfFKtBJl8ECQEHceRGdCElSAbugFehWEUQ3BCVaJ0WyF3G2ASdFCleeC3
 YcwBQQAAOw==}
 
-image create photo Salmon-d -data { 
+image create photo Salmon-d -data {
 R0lGODlhUgBSAKUjAJ2Ghp2Hh56Hh56IiJ+IiJ6JiZ+JiaCJiZ+KiqCKiqGK
 iqCLi6GLi6GMjKKMjKKNjaONjaOOjqSOjqSPj6WPj6WQkKaQkKaRkaeRkaaS
 kqeSkqiSkqeTk6iTk6mTk6iUlKmUlKmVlaqVlf//////////////////////

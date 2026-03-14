@@ -492,17 +492,17 @@ proc ::search::material {} {
 
   set f $w.bishops
   pack [frame $f] -side top
-  label $f.t1 -text "1" 
+  label $f.t1 -text "1"
   label $f.t2 -image wb20
-  label $f.t3 -text "- 1" 
+  label $f.t3 -text "- 1"
   label $f.t4 -image bb20
-  label $f.t5 -textvar ::tr(squares) 
+  label $f.t5 -textvar ::tr(squares)
   radiobutton $f.same -textvar ::tr(SameColor) -variable oppBishops \
-      -value "Same" -padx 5 -pady 4 
+      -value "Same" -padx 5 -pady 4
   radiobutton $f.opp -textvar ::tr(OppColor) -variable oppBishops \
-      -value "Opposite" -padx 5 -pady 4 
+      -value "Opposite" -padx 5 -pady 4
   radiobutton $f.either -textvar ::tr(Either) -variable oppBishops \
-      -value "Either" -padx 5 -pady 4 
+      -value "Either" -padx 5 -pady 4
 
   foreach i {t1 t2 t3 t4 t5 same opp either} {
     $f.$i configure -font font_Small

@@ -34,7 +34,7 @@ proc ::crosstab::ConfigMenus {{lang ""}} {
   foreach idx   {1 2 3 4 5 6 7 8 9 11 12 13 14 16 17 19 20} tag {Ages Nats Tallies Ratings Titles Breaks Deleted Colors ColumnNumbers TieHead TieWin ThreeWin Group ColorPlain ColorHyper ColorRows RowsColor} {
     configMenuText $m.opt $idx CrosstabOpt$tag $lang
   }
-  
+
 
   # Disable the Ages, Nats, Titles items if spellcheck not enabled. S.A
   if {!$::spellCheckFileExists} {
@@ -56,7 +56,7 @@ proc ::crosstab::ConfigMenus {{lang ""}} {
 
 
 proc ::crosstab::Open {{game {}}} {
-  global crosstab 
+  global crosstab
 
   set w .crosstabWin
   if {[winfo exists $w]} {
@@ -367,7 +367,7 @@ proc ::crosstab::setFilter {{round {}}} {
   if {$round == {}} {
     sc_game crosstable filter -gameNumber $crosstabGame $crosstab(deleted)
   } else {
-    sc_game crosstable filter -round $round -gameNumber $crosstabGame $crosstab(deleted) 
+    sc_game crosstable filter -round $round -gameNumber $crosstabGame $crosstab(deleted)
   }
 
   if {$currentBase != $crosstabBase} {
@@ -387,7 +387,7 @@ proc ::crosstab::Refresh {{game {}}} {
   $w.f.text delete 1.0 end
   busyCursor .
   $w.f.text configure -state disabled
-  ### Stop button is broken currently 
+  ### Stop button is broken currently
   ### We need to implement it via sc_progressBar
   update idle
   # $w.b.stop configure -state normal

@@ -202,7 +202,7 @@ proc ::game::LoadNumber {} {
     flipBoardForPlayerNames
     updateBoard -pgn
     refreshWindows
-    ::bookmarks::AddCurrentGame 
+    ::bookmarks::AddCurrentGame
   }
   dialogbutton $b.cancel -text $::tr(Cancel) -command {
     destroy .glnumDialog
@@ -227,7 +227,7 @@ proc ::game::Load { selection {update 1} {raise 1}} {
     ### Handle cases where fics playing and observing
     if {($::fics::playing==1 || $::fics::playing==-1)} {
       ::fics::updateConsole "Scid: game loads disabled while playing a game"
-      return 
+      return
     }
     ::fics::demote_mainGame
     set ::fics::mainGame -1

@@ -15,7 +15,7 @@ namespace eval sergame {
   set coachIsWatching 0
   set engineName ""
   # todo - this clashes with ::book::bookTuningSlot
-  set bookSlot 2 
+  set bookSlot 2
   set depth 0
   set nodes 0
   set ponder 0
@@ -52,7 +52,7 @@ namespace eval sergame {
     frame $w.fengines -relief groove -borderwidth 1
     frame $w.ftime -relief groove -borderwidth 1
     frame $w.fconfig
-    frame $w.fcoach 
+    frame $w.fcoach
     frame $w.fbook -relief groove -borderwidth 1
     frame $w.fopening -relief groove -borderwidth 1
     frame $w.fbuttons
@@ -219,7 +219,7 @@ namespace eval sergame {
 	incr i
       }
       $w.fbook.combo configure -values $tmp
-      $w.fbook.combo current $idx 
+      $w.fbook.combo current $idx
     }
 
     pack $w.fbook.cbUseBook -side left -pady 3
@@ -303,7 +303,7 @@ namespace eval sergame {
       set ::sergame::fixeddepth [.configSerGameWin.ftime.depthvalue get]
       set ::sergame::fixednodes [.configSerGameWin.ftime.nodesvalue get]
       set ::sergame::movetime [.configSerGameWin.ftime.movetimevalue get]
-      
+
       ::sergame::play $n
     }
     bind $w.fengines.fEnginesList.lbEngines <Double-Button-1> "$w.fbuttons.play invoke"
@@ -369,7 +369,7 @@ namespace eval sergame {
         set p [string trim $m]
         lappend openingMovesList [string trim [regsub {^[1-9]+\.} $p ""] ]
       }
-      
+
       ::game::Clear noconfirm
       lappend openingMovesHash [sc_pos hash]
       foreach m  $openingMovesList {
@@ -396,7 +396,7 @@ namespace eval sergame {
 
     if {$::uci::uciInfo(skill) != ""} {
       lappend extratags "[lindex $::uci::uciInfo(skill) 0] \"[lindex $::uci::uciInfo(skill) 1]\""
-    } 
+    }
     if {$isOpening} {
       lappend extratags "Opening \"$openingName\""
     }
@@ -453,7 +453,7 @@ namespace eval sergame {
     }
     pack $w.fbuttons.resume -expand yes -fill both -padx 10 -pady 2
 
-    pack [label $w.fbuttons.space -text {}] 
+    pack [label $w.fbuttons.space -text {}]
 
     button $w.fbuttons.resign -text [tr CCResign] -command {
       if {[::board::opponentColor] == {white}} {
@@ -604,12 +604,12 @@ namespace eval sergame {
 
         if {$answer == no} {
           sc_move back 1
-          sc_game truncate 
+          sc_game truncate
           updateBoard -pgn
 	  ::gameclock::resumeGameClock
           after 1000 ::sergame::engineGo
           return
-        } 
+        }
         sc_pos setComment "[tr MoveOutOfBook] [file rootname $::sergame::bookToUse]"
       } else {
         sc_pos setComment "[tr LastBookMove] [file rootname $::sergame::bookToUse]"
@@ -644,7 +644,7 @@ namespace eval sergame {
       # Warn if the user went out of the opening line chosen
       if { !$outOfOpening } {
         set ply [sc_pos location]
-        
+
         if { [lsearch $openingMovesHash [sc_pos hash]] == -1 && [llength $openingMovesList] >= $ply} {
 	  ::gameclock::pauseGameClock
           set answer [tk_messageBox -icon question -parent .main.board -title $::tr(OutOfOpening) -type yesno \
@@ -661,7 +661,7 @@ namespace eval sergame {
           }
         }
       }
-      
+
       set hpos [sc_pos hash]
       # Find a corresponding position in the opening line
       set length [llength $openingMovesHash]
@@ -688,7 +688,7 @@ namespace eval sergame {
 	      sc_move forward 1
             }
           }
-          
+
           updateBoard -pgn -animate
           # Computer moved
 	  if { [::board::opponentColor] == "black" } {
@@ -760,7 +760,7 @@ puts OUTOFBOOK!!!!!!!!!!!!!!!!!!
     if { $::sergame::ponder && $::uci::uciInfo(ponder$n) == $::sergame::lastPlayerMoveUci} {
       ::sergame::sendToEngine $n "ponderhit"
     } else {
-      
+
       if { $::sergame::ponder } {
         ::sergame::sendToEngine $n "stop"
       }
@@ -786,7 +786,7 @@ puts OUTOFBOOK!!!!!!!!!!!!!!!!!!
 
     # If weak move detected, propose the user to takeback (if game not considered won "++-")
 
-    if { $::sergame::coachIsWatching && $::uci::uciInfo(prevscore$n) != "" && ![sc_pos isAt start] && 
+    if { $::sergame::coachIsWatching && $::uci::uciInfo(prevscore$n) != "" && ![sc_pos isAt start] &&
         (([::board::opponentColor] == "black" && $uciInfo(score$n) <  $::informant("++-")) ||
          ([::board::opponentColor] == "white" && $uciInfo(score$n) > -$::informant("++-"))) } {
       set delta [expr $uciInfo(score$n) - $uciInfo(prevscore$n)]
@@ -798,7 +798,7 @@ puts OUTOFBOOK!!!!!!!!!!!!!!!!!!
                       -message "$::tr(WeakMovePlayedTakeBack) Material +/- [format %.2f [expr abs($delta)]]" ]
         if {$answer == yes} {
           sc_move back 1
-          sc_game truncate 
+          sc_game truncate
           updateBoard -pgn
 	  ::gameclock::resumeGameClock
           after 1000 ::sergame::engineGo

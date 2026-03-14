@@ -13,7 +13,7 @@ if {[catch {encoding names}]} {
 
 ###  Translation of pieces
 #  Note - also change tkscid.cpp and game.cpp
-#  Note - not all languages have piece translation 
+#  Note - not all languages have piece translation
 
 array set transPieces {}
 
@@ -99,7 +99,7 @@ array set langTable {
 proc initLanguageMenus {} {
   global langEncoding languages langTable
 
-  # English 
+  # English
   .menu.options.language add radiobutton -label English \
     -underline 0 -variable language -value E -command setLanguage
   set langEncoding(E) utf-8

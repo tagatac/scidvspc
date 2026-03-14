@@ -34,7 +34,7 @@ proc ::search::filter::reset {{base {}}} {
 
   sc_filter reset $base
 
-  if {$base == [sc_base current]} { 
+  if {$base == [sc_base current]} {
     set ::glstart 1
   } else {
     set ::glistStart($base) 1
@@ -131,7 +131,7 @@ proc ::search::usefile {{file {}}} {
     set ftype { { "Scid SearchOption files" {".sso"} } }
     if {! [file isdirectory $initialDir(sso)] } {
       set initialDir(sso) $env(HOME)
-    } 
+    }
     set fName [tk_getOpenFile -initialdir $initialDir(sso) \
 		   -filetypes $ftype -title "Select a SearchOptions file"]
   }

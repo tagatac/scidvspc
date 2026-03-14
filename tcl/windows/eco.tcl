@@ -40,7 +40,7 @@ proc ::windows::eco::Refresh {{code "x"}} {
     frame $w.b
     pack $w.b -side bottom -fill x
 
-    entry $w.b.find 
+    entry $w.b.find
     bind $w.b.find <Return> {
       set w .ecograph
       set text $w.pane.text

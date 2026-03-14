@@ -1,6 +1,6 @@
 ###
 ### search/board.tcl: Board (and Moves) Search routines for Scid.
-### 
+###
 
 set searchInVars 0
 set sBoardIgnoreCols 0
@@ -84,7 +84,7 @@ proc ::search::board {} {
   }
 
   checkState ::searchRefBase $w.refdb.lb
-  
+
   pack $w.refdb.cb -side left
   pack $w.refdb.lb -side left -padx 20
   addHorizontalRule $w
@@ -201,7 +201,7 @@ proc ::search::moves {} {
   pack [frame $w.ends] -side top -fill x -expand 1
   label $w.ends.label -textvar ::tr(SideToMove) -font font_Bold
   pack $w.ends.label -side top
-  pack [frame $w.ends.radio ] -side top 
+  pack [frame $w.ends.radio ] -side top
   radiobutton $w.ends.radio.white -textvar ::tr(White) -variable sSideToMove -value w
   radiobutton $w.ends.radio.black -textvar ::tr(Black) -variable sSideToMove -value b
   radiobutton $w.ends.radio.both -textvar ::tr(Both) -variable sSideToMove -value wb
@@ -213,7 +213,7 @@ proc ::search::moves {} {
   pack [frame $w.mate] -side top -fill x -expand 1
   label $w.mate.label -text {Check Test} -font font_Bold
   pack $w.mate.label -side top
-  pack [frame $w.mate.radio ] -side top 
+  pack [frame $w.mate.radio ] -side top
 
   ### position.h: (These checks take time)
   # (should we do it automaticslly if '+' or '#' are in entry field ?
@@ -255,7 +255,7 @@ proc ::search::moves {} {
 
       ### hmmm - sc_search returns meaningful error results, that get ignored
       ### if we catch them, but grab/cursor dont get released *&^!*
-      # catch 
+      # catch
 
       set str [sc_search moves $::search::filter::operation $moves $checkTest $sSideToMove ]
 
@@ -522,6 +522,6 @@ proc parseCommentForCQL {} {
     if {$squares != {}} {
       .scql.g.syntax delete 0.0 end
       .scql.g.syntax insert end "cql () $squares"
-    } 
+    }
   }
 }

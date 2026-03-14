@@ -489,7 +489,7 @@ namespace eval gameclock {
 
   proc new { parent n { size 100 } {showfall 0} {aspect horizontal} {type both}} {
   # n is either 1 or 2, but extra clocks could be numbered 3,4 (for eg)
-  # type can be analog, digital or both 
+  # type can be analog, digital or both
     global ::gameclock::data
     set data(showfallen$n) $showfall
     set data(id$n) $parent.clock$n
@@ -685,7 +685,7 @@ proc appendTag {tag value} {
   set new {}
 
   ### Note 'tags get Extra' and 'tags set -extra' deal with different data structures - S.A.
- 
+
   foreach {t v} $tags {
     if {$t == $tag} {
       set found 1
@@ -1025,7 +1025,7 @@ namespace eval html {
       set prev -2
       set dots 0
     }
-      
+
       # handle variants
       if {[sc_var count]>0} {
         if { ![sc_pos isAt vend]} {
@@ -1049,7 +1049,7 @@ namespace eval html {
         #update the "previous" token
         set prev $lastIdx
       }
-      
+
       if {[sc_pos isAt vend]} { break }
       sc_move forward
     }
@@ -1139,8 +1139,8 @@ namespace eval html {
     if {$selection == "filter"} {
       closeProgressWindow
     }
-  }  
-} 
+  }
+}
 # end of html namespace
 
 ### Resolve the conflict between the html/javascript and pure html export bitmap directory copies
@@ -1163,14 +1163,14 @@ proc copyBitmapsDir {srcDir destDir} {
 #   TODO : test on windows and OS X
 
 proc previewLatex {filename command parent} {
-  
+
   busyCursor $parent
   update
-  
+
   # config file names
-  set tmpdir $::scidLogDir    
+  set tmpdir $::scidLogDir
   set texfile $filename.tex
-  set dvifile $filename.dvi    
+  set dvifile $filename.dvi
   set fname [file join $tmpdir $filename]
   set pdffile "$fname.pdf"
   set latexLog "$fname.log"
@@ -1178,7 +1178,7 @@ proc previewLatex {filename command parent} {
   # Null command means that $filename.tex is already generated.
   if {$command != ""} {
     file delete $fname.tex
-    
+
     if {[catch {set filedes [open $fname.tex w]}]} {
       tk_messageBox -title "Scid: Error writing report" -type ok -icon warning \
 	  -message "Unable to write the file: $fname.tex" -parent pw
@@ -1214,26 +1214,26 @@ See $fname.log for details."
 
 
   if {$::windowsOS} {
-      if {[catch {exec $::env(ComSpec) /c "cd '$tmpdir'  & $latexEngine '$texfile'" >& $latexLog }]} {             
+      if {[catch {exec $::env(ComSpec) /c "cd '$tmpdir'  & $latexEngine '$texfile'" >& $latexLog }]} {
         tk_messageBox -title "Scid Error" -icon warning -type ok -parent $parent -message $err_engine
       } else {
         if {[catch {exec $::env(ComSpec) /c "$latexViewer $pdffile" >& $latexLog &}]} {
             tk_messageBox -title "Scid Error" -icon warning -type ok -parent $parent -message $err_viewer
         }
-      }      
+      }
   } else {
     # Linux / OS X
-    if {[catch {exec /bin/sh -c "cd '$tmpdir' ; $latexEngine '$texfile'" >& $latexLog }]} {             
-      unbusyCursor .  
+    if {[catch {exec /bin/sh -c "cd '$tmpdir' ; $latexEngine '$texfile'" >& $latexLog }]} {
+      unbusyCursor .
       tk_messageBox -title "Scid Error" -icon warning -type ok -parent $parent -message $err_engine
     } else {
       if {[catch {exec /bin/sh -c "$latexViewer $pdffile" >& $latexLog &}]} {
-	  unbusyCursor .  
+	  unbusyCursor .
 	  tk_messageBox -title "Scid Error" -icon warning -type ok -parent $parent -message $err_viewer
       }
-    }      
-  }     
-  unbusyCursor .  
+    }
+  }
+  unbusyCursor .
 }
 
 # end of misc.tcl

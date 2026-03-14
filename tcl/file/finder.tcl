@@ -59,7 +59,7 @@ proc ::file::finder::Open {} {
 
   pack [frame $w.d -relief flat] -side top -fill x
   label $w.d.label -font font_Bold ;# given a text value below
-  pack $w.d.label 
+  pack $w.d.label
 
   frame $w.t -relief flat
   frame $w.b
@@ -235,7 +235,7 @@ proc ::file::finder::Refresh {{newdir ""}} {
   foreach i $flist {
     set size [lindex $i 0]
     set type [lindex $i 1]
-    set fname [string range [lindex $i 2] 0 23] 
+    set fname [string range [lindex $i 2] 0 23]
     set path [lindex $i 3]
     # If case path has spaces, they break tag bindings, so use this tag
     set pathtag [string map {{ } _} $path]
@@ -347,7 +347,7 @@ proc ::file::finder::copy { f } {
         tk_messageBox -title Scid -icon error -type ok -message "File copy error $err" -parent .finder
         return
       }
-      
+
       catch { file copy "[file rootname $f].stc" $dir }
     }
 
@@ -367,7 +367,7 @@ proc ::file::finder::move { f } {
   set dir [tk_chooseDirectory -initialdir [file dirname $f] -parent .finder ]
   if {$dir != ""} {
     if { [string tolower [file extension $f]] == ".si4" } {
-      
+
       if { [catch { file rename "[file rootname $f].sg4" "[file rootname $f].sn4" $dir } err ] } {
         tk_messageBox -title Scid -icon error -type ok -message "File rename error $err" -parent .finder
         return

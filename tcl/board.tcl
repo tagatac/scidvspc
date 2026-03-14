@@ -121,8 +121,8 @@ proc SetBoardTextures {} {
     image create photo bgd$size -width $size -height $size
 
     ### Need to use "to" to force texture tiling for the new large board
-    # "from" doesn't work with mis-sized source images 
-    bgl$size copy $boardfile_lite -to 0 0 $size $size ;# -from 0 0 $size $size 
+    # "from" doesn't work with mis-sized source images
+    bgl$size copy $boardfile_lite -to 0 0 $size $size ;# -from 0 0 $size $size
     bgd$size copy $boardfile_dark -to 0 0 $size $size ;# -from 0 0 $size $size
   }
 }
@@ -151,7 +151,7 @@ proc setBoardColor {row choice} {
   set newColors(highcolor) [lindex $list 3]
   set newColors(bestcolor) [lindex $list 4]
   set newColors(bgcolor)   [lindex $list 5]
-  # highlightLastMoveColor needs to be added to colorSchemes1 , colorSchemes2 above 
+  # highlightLastMoveColor needs to be added to colorSchemes1 , colorSchemes2 above
   set newColors(highlightLastMoveColor)   $::highlightLastMoveColor
   set newColors(maincolor) $::maincolor
   set newColors(varcolor)  $::varcolor
@@ -222,7 +222,7 @@ proc applyBoardColors {} {
 
 proc applyBorderWidth {new} {
 
-  global borderwidth 
+  global borderwidth
 
   set borderwidth $new
   set ::board::_border(.main.board) $borderwidth
@@ -352,8 +352,8 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
 
   ### Two rows of Color schemes
 
-  pack [frame $w.preset1] -side top 
-  pack [frame $w.preset2] -side top 
+  pack [frame $w.preset1] -side top
+  pack [frame $w.preset2] -side top
 
   addHorizontalRule $w
 
@@ -388,7 +388,7 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
   } n {
     LightSquares DarkSquares SelectedSquares SuggestedSquares Grid Previous SelectedOutline ArrowMain ArrowVar
   } {
-    label $f.b$c -width 2 -background [set $c] 
+    label $f.b$c -width 2 -background [set $c]
     bind  $f.b$c <Button-1> "chooseAColor $w $c"
 
     button $f.l$c -text "$::tr($n)  " -command "chooseAColor $w $c" -relief flat -font font_Small
@@ -396,7 +396,7 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
     grid $f.l$c -row $row -column [expr {$column + 1} ] -sticky w
   }
 
-  ### Two rows of Color schemes 
+  ### Two rows of Color schemes
 
   foreach i {1 2} {
     set scheme ::colorSchemes$i
@@ -739,7 +739,7 @@ EA8wLA4JKjAXHlMUH1iDYWKxsly0tbC4trpVYLxRUEEAOw==
 # Should match above tb_
 set toolbarButtons {new open save close finder bkm newgame copy paste gprev gnext gfirst glast rfilter hsearch bsearch msearch ginfo glist pgn comment maint eco tree book crosst tmt engine}
 
-initToolbarIcons 
+initToolbarIcons
 
 proc createBigToolbarIcons {} {
   # Double size the toolbar buttons.
@@ -853,9 +853,9 @@ foreach {b m} {
   save GameReplace close FileClose bkm FileBookmarks
   gfirst GameFirst gprev GamePrev gnext GameNext glast GameLast
   newgame GameNew copy EditCopy paste EditPaste
-  hsearch SearchHeader bsearch SearchCurrent msearch SearchMaterial rfilter SearchReset 
-  ginfo WindowsGameinfo glist WindowsGList pgn WindowsPGN comment WindowsComment 
-  maint WindowsMaint eco WindowsECO tree WindowsTree book WindowsBook crosst WindowsCross tmt WindowsTmt 
+  hsearch SearchHeader bsearch SearchCurrent msearch SearchMaterial rfilter SearchReset
+  ginfo WindowsGameinfo glist WindowsGList pgn WindowsPGN comment WindowsComment
+  maint WindowsMaint eco WindowsECO tree WindowsTree book WindowsBook crosst WindowsCross tmt WindowsTmt
   engine ToolsAnalysis
 } {
   set helpMessage($tb.$b) $m
@@ -1782,7 +1782,7 @@ proc ::board::mark::getEmbeddedCmds {comment} {
           ""   {set type [expr {[string length $arg2] ? "arrow" : "full"}]}
           mark {set type full	;# new syntax}
           ?    {if {[string length $arg2]} {
-                  break 
+                  break
                 } else {
                   set arg2 $type; set type text
                 }
@@ -2491,7 +2491,7 @@ proc ::board::update {w {board ""} {animate 0} {eval {}}} {
 
   # Draw each square
   set sq -1
-  # for {set sq 0} { $sq < 64 } { incr sq } 
+  # for {set sq 0} { $sq < 64 } { incr sq }
   foreach piece [lrange [split $board {}] 0 63] {
     incr sq
 
@@ -2652,7 +2652,7 @@ proc ::board::flip {w {newstate -1}} {
 
 proc ::board::togglematerial {{w .main.board}} {
   # Called to display material widget (Doesn't actually toggle anything)
-  # gameInfo(showMaterial) is specifically for the .main.board, 
+  # gameInfo(showMaterial) is specifically for the .main.board,
   # while ::board::_showmat($w) is window specific.
 
   if {$::gameInfo(showMaterial)} {
@@ -2666,7 +2666,7 @@ proc ::board::togglematerial {{w .main.board}} {
 }
 
 proc ::board::toggleeval {{w .main.board}} {
-  
+
   if {[set ::board::_showEvalbar($w) [expr !$::board::_showEvalbar($w)]]} {
     if {$w == ".main.board"} {
       ::board::updateMainEvalBar
@@ -2843,7 +2843,7 @@ proc ::board::stm {w} {
 
 }
 
-# Display/update coordinates around the edge of the board 
+# Display/update coordinates around the edge of the board
 # Currently only used by .main.board and setupBoard and .analysisWin
 # Values are 0 (none), 1 (single sided coords), 2 (double sided)
 
@@ -2987,7 +2987,7 @@ proc ::board::animate {w oldboard newboard} {
           set captured $sq($j)
           set capturedPiece $old($j)
         }
-        
+
         # Check for a (white or black) pawn promotion from i to j:
         if {($old($i) == "P"  &&  [string is upper $new($j)]  &&
           $sq($j) >= [sq a8]  &&  $sq($j) <= [sq h8])  ||
@@ -2996,7 +2996,7 @@ proc ::board::animate {w oldboard newboard} {
           set from $sq($i)
           set to $sq($j)
         }
-        
+
         # Check for undoing a pawn promotion from j to i:
         if {($new($j) == "P"  &&  [string is upper $old($i)]  &&
           $sq($i) >= [sq a8]  &&  $sq($i) <= [sq h8])  ||
@@ -3114,7 +3114,7 @@ proc boardToFile { format filepath } {
   set image [image create photo -format window -data $board]
 
   if { $filename == "" } {
- 
+
     set filename "[sc_game tag get White]-[sc_game tag get Black]"
     if {[regexp {\?} $filename] || [regexp {\*} $filename]} {
       set filename [string trim [string map {? {} * {}} [wm title .]]]

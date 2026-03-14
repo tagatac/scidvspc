@@ -61,8 +61,8 @@ proc ::windows::stats::Open {} {
   }
 
 
-#Klimmek: use autoscrollframe to display large infos     
-  autoscrollframe $w.statsasb text $w.stats -width 80 -height 40 -font font_Fixed -wrap none 
+#Klimmek: use autoscrollframe to display large infos
+  autoscrollframe $w.statsasb text $w.stats -width 80 -height 40 -font font_Fixed -wrap none
 
   pack $w.statsasb -side top -fill both -expand yes
   bind $w <Control-q> "destroy $w"
@@ -134,7 +134,7 @@ proc ::windows::stats::Refresh {} {
   append s [string repeat - [string length $heading]]
   append s "\n [::utils::string::Pad $all $len]" [sc_filter stats all]
 
-  # Old statistic: count the games from specific value to maximum value 
+  # Old statistic: count the games from specific value to maximum value
 
   if {$ratings} {
     append s "\n"
@@ -153,9 +153,9 @@ proc ::windows::stats::Refresh {} {
 
   if {$years} {
     append s "\n"
-    set j 0  
+    set j 0
     foreach i $ylist {
-      incr j  
+      incr j
       if {$display($i)} {
         incr height
         set year [string range $i 1 end]
@@ -174,7 +174,7 @@ proc ::windows::stats::Refresh {} {
 	  set stat "$year - $nyear"
         }
         append s "\n [::utils::string::Pad $stat $len]"   [sc_filter stats year $year $nyear]
-      } 
+      }
     }
 
     # Old year stats S.A.
@@ -192,7 +192,7 @@ proc ::windows::stats::Refresh {} {
   append s "\n"
 
   set w .statsWin.stats
-  if { $height > 50  } { set height 50 }  
+  if { $height > 50  } { set height 50 }
   $w configure -state normal
   $w delete 1.0 end
   $w insert end $s

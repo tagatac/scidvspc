@@ -1,4 +1,4 @@
-### Computer Tournament 
+### Computer Tournament
 ###
 ### comp.tcl: part of Scid.
 ### Copyright (C) 2010- Steven Atkinson
@@ -42,7 +42,7 @@ proc compInit {} {
   grid [label $w.engines.top.label -textvar tr(TourEngineNum)] -row 0 -column 0
   grid [spinbox $w.engines.top.count -textvar comp(count) -from 2 -to [llength $engines(list)] -width 4 -highlightthickness 0] -row 0 -column 1  -padx 15
   dialogbutton $w.engines.top.update -textvar tr(Update) -command drawCombos
-  grid $w.engines.top.update -row 0 -column 2 
+  grid $w.engines.top.update -row 0 -column 2
 
   set comp(countcombos) $comp(count)
   drawCombos
@@ -77,7 +77,7 @@ proc compInit {} {
   grid $w.config.control  -row $row -column 0 -columnspan 2 -sticky ew -pady 2
 
   incr row
-  frame $w.config.timesecs 
+  frame $w.config.timesecs
   label $w.config.timesecs.label -textvar tr(TourPer)
   set tmp $comp(seconds)
   spinbox $w.config.timesecs.value -textvar comp(seconds) -from 1 -to 3600 -width 4
@@ -89,7 +89,7 @@ proc compInit {} {
   grid $w.config.timesecs -row $row -column 0 -columnspan 2 -sticky ew -pady 2 -padx 5
 
   incr row
-  frame $w.config.timegame 
+  frame $w.config.timegame
   set temp $comp(base)
   label $w.config.timegame.label -textvar tr(TourPer2)
   spinbox $w.config.timegame.base -textvar comp(base) -from 0 -to 7200 -incr 5 -width 4
@@ -107,26 +107,26 @@ proc compInit {} {
 
   incr row
   label $w.config.showclocklabel -textvar tr(TourClocks)
-  checkbutton $w.config.showclockvalue -variable comp(showclock) 
+  checkbutton $w.config.showclockvalue -variable comp(showclock)
 
-  grid $w.config.showclocklabel -row $row -column 0 -sticky w -padx 5 
-  grid $w.config.showclockvalue -row $row -column 1 -padx 5 
+  grid $w.config.showclocklabel -row $row -column 0 -sticky w -padx 5
+  grid $w.config.showclockvalue -row $row -column 1 -padx 5
 
   checkTimeControl
 
   incr row
   label $w.config.ponderlabel -textvar tr(Ponder)
-  checkbutton $w.config.pondervalue -variable comp(ponder) 
+  checkbutton $w.config.pondervalue -variable comp(ponder)
 
-  grid $w.config.ponderlabel -row $row -column 0 -sticky w -padx 5 
-  grid $w.config.pondervalue -row $row -column 1 -padx 5 
+  grid $w.config.ponderlabel -row $row -column 0 -sticky w -padx 5
+  grid $w.config.pondervalue -row $row -column 1 -padx 5
 
   incr row
   label $w.config.animatelabel -textvar tr(TourAnimate)
-  checkbutton $w.config.animatevalue -variable comp(animate) 
+  checkbutton $w.config.animatevalue -variable comp(animate)
 
-  grid $w.config.animatelabel -row $row -column 0 -sticky w -padx 5 
-  grid $w.config.animatevalue -row $row -column 1 -padx 5 
+  grid $w.config.animatelabel -row $row -column 0 -sticky w -padx 5
+  grid $w.config.animatevalue -row $row -column 1 -padx 5
 
   incr row
   label $w.config.scorelabel -textvar tr(TourComments)
@@ -140,7 +140,7 @@ proc compInit {} {
 
   incr row
   frame $w.config.book
-  label $w.config.book.label -textvar tr(UseBook) 
+  label $w.config.book.label -textvar tr(UseBook)
   checkbutton $w.config.book.value -variable comp(usebook)
   set bookPath $::scidBooksDir
   set bookList [ lsort -dictionary [ glob -nocomplain -directory $bookPath *.bin ] ]
@@ -260,7 +260,7 @@ proc compOk {} {
 	-message {Current game is not at end of game. Continue ?} -parent $w]
     if {$answer != "ok"} {return}
   }
-    
+
   set players {}
   set comp(players) {} ;# to remember which engines are selected between widget restarts
   set names {}
@@ -271,7 +271,7 @@ proc compOk {} {
   if {$comp(timecontrol) == "permove"} {
     set comp(time) [expr {int($comp(seconds) * 1000)}]
     puts "Move delay is $comp(time) milliseconds"
-  } 
+  }
 
   for {set i 0} {$i < $comp(count)} {incr i} {
     set j [$w.engines.$i.combo current]
@@ -299,7 +299,7 @@ proc compOk {} {
 
   for {set i 0} {$i < $comp(count)} {incr i} {
     $w.engines.$i.combo configure -state disabled ; # disable widgets too
-    $w.engines.$i.configure configure -state disabled 
+    $w.engines.$i.configure configure -state disabled
   }
   foreach j {.comp.config .comp.engines .comp.engines.top .comp.config.control .comp.config.timesecs .comp.config.timegame .comp.config.book} {
     foreach i [winfo children $j] {
@@ -343,7 +343,7 @@ proc compOk {} {
 
   pack $w.say.white $w.say.draw -side left -padx 5
   pack $w.say.black -side right -padx 5
-  
+
   ### Place games in cue
 
   if {$comp(type) == "Carousel"} {
@@ -430,7 +430,7 @@ proc compOk {} {
       compNM $n $m $k $name1 $name2
     }
     set thisgame [lindex $comp(games) $comp(current)]
-  } 
+  }
 
   ### Comp over
 
@@ -459,7 +459,7 @@ proc compOk {} {
     }
     .comp.statusbar configure -text "$::tr(TourWinner): $winner ([expr $winner_score/2.0]/[expr ($comp(count)-1)*$comp(rounds)])"
 
-    # Hmm - if we leave this window open , and run F2 (say) the engines can sometimes stop working 
+    # Hmm - if we leave this window open , and run F2 (say) the engines can sometimes stop working
     # So better make sure this window gets closed
 
     .comp.buttons.ok configure -text [tr Restart] -command {
@@ -514,7 +514,7 @@ proc compNM {n m k name1 name2} {
     sc_game startBoard $comp(startfen)
     set comp(startpos) "fen $comp(startfen)"
   } else {
-    set comp(startpos) startpos 
+    set comp(startpos) startpos
   }
 
   set comp(playing) 1
@@ -550,7 +550,7 @@ proc compNM {n m k name1 name2} {
   # (Is this necessary ? We are sending a "stop" straight away. &&&)
   if {$analysis(analyzeMode$n)} { toggleEngineAnalysis $n }
   if {$analysis(analyzeMode$m)} { toggleEngineAnalysis $m }
-  
+
   sc_game tags set -white $analysis(name$n)
   sc_game tags set -black $analysis(name$m)
   sc_game tags set -event $comp(name)
@@ -591,7 +591,7 @@ proc compNM {n m k name1 name2} {
 	  sendToEngine $current_engine "setoption name Ponder value true"
         } else {
 	  sendToEngine $current_engine "setoption name Ponder value false"
-        } 
+        }
 	sendToEngine $current_engine "isready"
 	vwait analysis(waitForReadyOk$current_engine)
 	# if {!$comp(playing)} {break}
@@ -675,7 +675,7 @@ proc compNM {n m k name1 name2} {
     set current_engine $m
     set other_engine $n
   }
-  
+
   # Automatically set a timeout value &&&
   if {$comp(timecontrol) == "permove"} {
     # Automatically time-out comp in $movetime + 2 secs
@@ -852,7 +852,7 @@ proc compNM {n m k name1 name2} {
 	} else {
 	  ::gameclock::stop 2
 	}
-      } 
+      }
       # Note - No time slice enforcement for permove time control
 
       while {$comp(paused)} {
@@ -890,7 +890,7 @@ proc compNM {n m k name1 name2} {
 	    compResult {=} "3 fold repetition"
           }
 	  break
-	} 
+	}
       }
 
       ### Swap players
@@ -1040,7 +1040,7 @@ proc makeCompMove {current_engine} {
     if {$::comp(animate)} {
       updateBoard -pgn -animate
     } else {
-      updateBoard -pgn 
+      updateBoard -pgn
     }
     return 1
   } else {
@@ -1166,7 +1166,7 @@ proc compTimeout {} {
 
 proc compGameEnd {result {comment {Manual adjudication}}} {
     global analysis comp
- 
+
     if {$comp(paused)} {
       compResume
     }

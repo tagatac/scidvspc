@@ -74,7 +74,7 @@ array set ::utils::graph::_data {}
 proc ::utils::graph::create args {
   set graph [lindex $args 0]
   lappend ::utils::graph::_graphs $graph
-  
+
   # Remove any existing data for this graph name
   if {$graph == "score"} {
     catch {unset ::utils::graph::prevMove}

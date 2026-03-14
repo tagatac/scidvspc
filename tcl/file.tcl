@@ -118,7 +118,7 @@ proc ::file::New {} {
   } else {
     if {[file extension $fName] == ".si4"} {
       set fName [file rootname $fName]
-    } 
+    }
     if {[catch {sc_base create $fName} result]} {
       tk_messageBox -icon warning -type ok -parent . \
           -title "Scid: error" -message "$result\nCan't create $fName"
@@ -200,7 +200,7 @@ proc ::file::Open {{fName ""} {parent .} {update 1}} {
     return
   }
 
-  # The ::recentFiles::remove and ::recentFiles::add should probably be 
+  # The ::recentFiles::remove and ::recentFiles::add should probably be
   # handled when "if {err == 0}"
 
   set err 0
@@ -301,7 +301,7 @@ proc refreshWindows {{all no}} {
   # ::tree::refresh
   ::windows::stats::Refresh
   ::tools::graphs::score::Refresh
-  
+
   if {$all != "no"} {
     ### too slow to refresh all the time
     # ::crosstab::Refresh
@@ -457,7 +457,7 @@ proc openBase {name} {
   set bsize 0
 
   ### wrong i think
-  # set gfile "[file rootname $name].sg4" 
+  # set gfile "[file rootname $name].sg4"
   set gfile "$name.sg4"
 
   if {! [catch {file size $gfile} err]} { set bsize $err }
@@ -513,7 +513,7 @@ proc ::file::Close {{base -1}} {
     if {[info exists ::crosstabBase] && $base == $::crosstabBase} {
       ::crosstab::Refresh
     }
-    
+
     if {[winfo exists .emailWin]} { destroy .emailWin }
   } else {
     updateMenuStates
@@ -727,7 +727,7 @@ proc OpenUri {window uriFiles} {
           set file [string range $uri 5 end]
           for {set n 1} {$n < 5} {incr n} { if {[string index $file $n] eq "/"} { break } }
           set file [string range $uri [expr {$n - 1}] end]
-          
+
           if {![file exists $file]} {
             # perhaps a correct implementation with hostname?
             set i [string first "/" $file 1]

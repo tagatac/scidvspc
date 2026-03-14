@@ -808,7 +808,7 @@ proc changeBaseType {baseNum {parent .}} {
     if {$i > 0} { $w.t insert end "\n" }
     $w.t image create end -image dbt$i -pady 3 -padx 3
     $w.t insert end "   [lindex $base_types $i]  "
-  } 
+  }
 
   bind $w.t <Double-ButtonRelease-1> "clickBaseType %x %y; $w.b.set invoke"
   bind $w.t <ButtonRelease-1> "clickBaseType %x %y"
@@ -908,7 +908,7 @@ proc ::windows::switcher::Open {} {
   bind $w <F1> { helpWindow Switcher }
   standardShortcuts $w
 
-  canvas $w.c -borderwidth 0 -highlightthickness 0 
+  canvas $w.c -borderwidth 0 -highlightthickness 0
 
   grid $w.c -row 0 -column 1 -sticky ew
   grid columnconfigure $w 1 -weight 1
@@ -933,7 +933,7 @@ proc ::windows::switcher::Open {} {
     $f.menu add command -label [tr SearchReset] -command "::search::filter::reset $i"
 
     $f.menu add command -label [tr SearchNegate] -command "::search::filter::negate $i"
-    # needs some work in search.tcl and tkscid.cpp 
+    # needs some work in search.tcl and tkscid.cpp
 
     $f.menu add command -label [tr FileReadOnly] -command "
       makeBaseReadOnly .glistWin.baseWin $i
@@ -964,7 +964,7 @@ proc ::windows::switcher::Open {} {
       # $f.menu.show add separator
       $f.menu.show add command -label [tr ChangeIcon] -command "changeBaseType $i .glistWin"
       $f.menu.show add checkbutton -label [tr ShowIcons] -variable ::windows::switcher::icons -command ::windows::switcher::Refresh
-      $f.menu.show add checkbutton -label [tr ConfirmCopy] -variable ::windows::switcher::confirmCopy 
+      $f.menu.show add checkbutton -label [tr ConfirmCopy] -variable ::windows::switcher::confirmCopy
       $f.menu.show add separator
       $f.menu.show add command -label "Switcher Colour" -command SetSwitcherColour
       $f.menu.show add command -label "Current Game Colour" -command SetGamelistColour
@@ -1103,7 +1103,7 @@ proc ::windows::switcher::Refresh {} {
       }
 
       if {$i == $clipbase} {
-        $w.c.f$i.name configure -background $color 
+        $w.c.f$i.name configure -background $color
         set name $::tr(clipbase)
       } else {
         set name "[file tail [sc_base filename $i]]"
@@ -1229,7 +1229,7 @@ proc saveFilter {base} {
   set ftype { { "Scid Filter files" {".sff"} } }
   if {! [file isdirectory $initialDir(sff)] } {
     set initialDir(sff) $env(HOME)
-  } 
+  }
   set fName [tk_getSaveFile -initialdir $initialDir(sff) -initialfile [file tail [sc_base filename $base]].sff \
                 -filetypes $ftype -title "Create a Filter file" -parent .glistWin]
   if {$fName == ""} {
@@ -1248,7 +1248,7 @@ proc loadFilter {base} {
   set ftype { { "Scid Filter files" {".sff"} } }
   if {! [file isdirectory $initialDir(sff)] } {
     set initialDir(sff) $env(HOME)
-  } 
+  }
   set fName [tk_getOpenFile -initialdir $initialDir(sff) -parent .glistWin \
 		 -filetypes $ftype -title "Select a Filter file"]
   if {$fName == ""} {

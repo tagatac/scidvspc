@@ -207,7 +207,7 @@ proc updateStatusBar {} {
 
   set fname [file tail [sc_base filename]]
   if {$fname == ""} { set fname "<none>" }
-  
+
   if {[sc_base numGames] == 0} {
     append statusBar "$fname:  $::tr(noGames)"
     return
@@ -339,7 +339,7 @@ button $bb.forward -image tb_next -command ::move::Forward
 button $bb.end -image tb_end -command ::move::End
 frame $bb.space -width 15
 
-# The go-into-variation button is a menubutton. 
+# The go-into-variation button is a menubutton.
 # It has a bug - Press button so vars are displayed, then use wheelmouse to change board position.
 # -> Button remains in pressed state (and draws all vars) until focus is lost from .main
 menubutton $bb.intoVar -image tb_invar -menu $bb.intoVar.menu
@@ -672,7 +672,7 @@ proc showVars {} {
 
     # Disable grab if drawing arrows, as it pinches the arrows binding
     # ... Hmmm, but we need the grab to back out of variation window by using wheel-up! :<
-    # So we have to compromise here. 
+    # So we have to compromise here.
     # if {! $::showVarArrows} { grab $w }
     grab $w
   }
@@ -885,7 +885,7 @@ if  {$::gameInfo(showMarks)} {
     .main.button.addVar configure -state normal
   }
 
-  # FICS examine mode 
+  # FICS examine mode
   if {$::fics::playing == 2} {
     .main.button.back    configure -state normal
     .main.button.forward configure -state normal
@@ -921,7 +921,7 @@ proc updateBoard3 {pgnNeedsUpdate} {
 
   #TODO
   #Each function should be safe and check the appropriate "winfo exists" at the start
-  #Change the order of refreshs: for example ::pgn::Refresh should be done before UpdatePlayerPhotos 
+  #Change the order of refreshs: for example ::pgn::Refresh should be done before UpdatePlayerPhotos
 
   updatePlayerPhotos
   ::epd::updateEpdWins
@@ -1014,7 +1014,7 @@ proc checkGameInfoHeight {{init 0}} {
   # OSX seems to refresh button bars very slowly, so to limit occasions this
   # happens, leave a little extra room down below
   .main.gameInfo configure -height [expr {5 + $::gameInfo(showFEN) + $::macOS}]
-  # + ($::gameInfo(showTB) ? 1 : 0) 
+  # + ($::gameInfo(showTB) ? 1 : 0)
   if {!$init} { updateBoard }
 }
 
@@ -1124,7 +1124,7 @@ proc updatePlayerPhotos {{force ""}} {
     } else {
         image create photo photoB -data $::photo($black)
     }
-    image create photo photoB2 
+    image create photo photoB2
     photoB2 copy photoB -subsample 2 2
     # force to update white, black size could be changed
   } else {
@@ -1137,7 +1137,7 @@ proc updatePlayerPhotos {{force ""}} {
     } else {
 	image create photo photoW -data $::photo($white)
     }
-    image create photo photoW2 
+    image create photo photoW2
     photoW2 copy photoW -subsample 2 2
   } else {
     image create photo photoW -data {}
@@ -1229,7 +1229,7 @@ proc getPromoPiece {} {
 
   placeWinOverPointer $w
   ### hmmm... this update can cause the window to get dismissed before grab
-  # update 
+  # update
   tkwait visibility $w
   grab $w
   tkwait window $w
@@ -1467,7 +1467,7 @@ proc addSanMove {san {animate ""} {noTraining ""}} {
 
   if {$action == "var" || $action == "mainline"} {
     sc_var create
-  } 
+  }
 
   # if {[winfo exists .commentWin]} { .commentWin.cf.text delete 0.0 end }
   sc_move addSan $san

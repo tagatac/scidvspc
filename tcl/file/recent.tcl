@@ -44,7 +44,7 @@ proc ::recentFiles::remove {fname} {
 
 proc ::recentFiles::add {fname {delete 0}} {
   global recentFiles
-  set list $recentFiles(data) 
+  set list $recentFiles(data)
 
   # Remove file to be added from its current place in the list (if any)
   while {1} {

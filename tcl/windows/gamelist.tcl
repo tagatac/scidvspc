@@ -33,7 +33,7 @@ set glistFields {
   F EndMaterial e  7
 }
 
-# Unused 
+# Unused
 # T:  Opening, with count (Stored line) (spacing ignored)
 # y:  Year. Prints in width of 4, ignoring specified width (spacing ignored)
 # f:  Game number, filtered (e.g. 1 = first game in filter)
@@ -52,7 +52,7 @@ set glistFields {
 # m:  Number of moves. Prints "##" if width < 3 and numMoves > 99
 # n:  Round name
 # o:  ECO code
-# O:  Opening Shows the opening moves if they are in the most common 255 openings. 
+# O:  Opening Shows the opening moves if they are in the most common 255 openings.
 #             If tree open and adjusting gamelist, shows "Next Moves"
 # r:  Result. Prints as 1 byte (1/0/=*) or as 3 bytes (1-0, etc)
 # s:  Site name
@@ -73,7 +73,7 @@ set glistSortShortcuts {}
 set temp_order {}
 set temp_widths {}
 set temp_anchors {}
-set glistCodes {} 
+set glistCodes {}
 ### glistCodes is a printf format style string. A \n is used to split the main "sc_game list"
 # string into a proper list for processing. It is now appended in sc_game_list
 set glPieceMapping { "\u2654" "K" "\u2655" "Q" "\u2656" "R" "\u2657" "B" "\u2658" "N" "\u2659" "P" }
@@ -104,7 +104,7 @@ if {! [info exists glistColAnchor] || [llength $glistColAnchor] != $i} {
 
 # These fields are used by "sc_base sort $col" in proc SortBy
 # (ECO/Eco case seems to differ, but not matter)
-# src/index.cpp: static const char * sortCriteriaNames[] = 
+# src/index.cpp: static const char * sortCriteriaNames[] =
 # Date, Event, Site, Round, White, Black, Eco, Result, Length, Rating, WElo, BElo, Country, Month, Deleted, Eventdate, Variations, Comments
 
 proc ::windows::gamelist::FilterText {} {
@@ -144,7 +144,7 @@ proc ::windows::gamelist::FindText {} {
   ::utils::history::AddEntry ::windows::gamelist::findtext $findtext
   .glistWin.b.find selection range end end
 
-  busyCursor .glistWin 
+  busyCursor .glistWin
   update
   set temp [sc_filter textfind $::windows::gamelist::findcase $glstart $findtext]
   unbusyCursor .glistWin
@@ -245,7 +245,7 @@ proc ::windows::gamelist::Close {window} {
     ::windows::gamelist::recordWidths
     # bind .glistWin <Destroy> {}
     set ::windows::gamelist::isOpen 0
-  } 
+  }
 }
 
 proc ::windows::gamelist::Open {} {
@@ -348,7 +348,7 @@ proc ::windows::gamelist::Open {} {
   ttk::scrollbar $w.hsb -orient horizontal -command "$w.tree xview"
 
   pack $w.f -fill both -expand 1
-  ::windows::gamelist::displayButtons 
+  ::windows::gamelist::displayButtons
 
   grid $w.tree $w.vsb -in $w.f -sticky nsew
   grid $w.hsb         -in $w.f -sticky nsew
@@ -363,7 +363,7 @@ proc ::windows::gamelist::Open {} {
       # No sort implemented for these columns
       if {[lsearch {Number Opening Flags Annos Start EndMaterial} $col] == -1} {
 	$w.tree heading $col -command [list SortBy $w.tree $col]
-      } 
+      }
       $w.tree column $col -width $width -anchor $anchor -stretch 0
   }
 
@@ -1007,7 +1007,7 @@ proc ::windows::gamelist::SetSize {} {
   ### This is probably broke on some platforms
 
   ### "treeview configure -rowheight" might work better, but is only in cvs
-  ### also consider "[$w bbox [lindex [$w children {}] 0]]" 
+  ### also consider "[$w bbox [lindex [$w children {}] 0]]"
 
   set w .glistWin.tree
   if {![winfo exists $w]} {return}
@@ -1068,7 +1068,7 @@ proc SortBy {tree col} {
 
     # hmmm. a few fields are not valid sorting.
 
-    # if {[sc_base numGames] > 200000} 
+    # if {[sc_base numGames] > 200000}
     if {![sc_base isReadOnly] && [sc_base current] != [sc_info clipbase]} {
       if {[info exists ::tr(Glist$col)]} {
         set name $::tr(Glist$col)
@@ -1120,7 +1120,7 @@ proc setGamelistTitle {} {
     set fname "\[$fname\]"
   }
   set fname [string range $fname 0 20]
-  setTitle .glistWin "[tr WindowsGList]: $fname [sc_filter count]/[sc_base numGames] $::tr(games)" 
+  setTitle .glistWin "[tr WindowsGList]: $fname [sc_filter count]/[sc_base numGames] $::tr(games)"
 }
 
 ### Called by refreshWindows (file.tcl) when db is changed
@@ -1267,7 +1267,7 @@ proc ::windows::gamelist::Refresh {{see {}}} {
     if {$see == {last}} {
       $w.tree see [lindex [.glistWin.tree children {}] end]
     } else {
-      # "none" is passed from ::windows::stats::Refresh 
+      # "none" is passed from ::windows::stats::Refresh
       if {$see != {none}} {
 	$w.tree see [lindex [$w.tree children {}] 0]
       }

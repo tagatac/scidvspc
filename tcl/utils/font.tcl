@@ -88,15 +88,15 @@ proc FontDialog {name {parent .}} {
   wm protocol $w WM_DELETE_WINDOW {set fd_close 0}
 
   label $w.family_label -text Font -anchor w
-  entry $w.family_entry -textvariable fd_family 
+  entry $w.family_entry -textvariable fd_family
   bind  $w.family_entry <Key-Return> "FontDialogRegen $font_name"
 
   label $w.style_label  -text {Font Style} -anchor w
-  entry $w.style_entry  -textvariable fd_style -width 11 
+  entry $w.style_entry  -textvariable fd_style -width 11
   bind  $w.style_entry  <Key-Return>  "FontDialogRegen $font_name"
 
   label $w.size_label   -text Size -anchor w
-  entry $w.size_entry   -textvariable fd_size -width 4 
+  entry $w.size_entry   -textvariable fd_size -width 4
   bind  $w.size_entry   <Key-Return> "FontDialogRegen $font_name"
 
   grid config $w.family_label -column 0 -row 0 -sticky w
@@ -196,7 +196,7 @@ proc FontDialog {name {parent .}} {
   "
   pack $w.buttons.ok -side top -fill x
   pack $w.buttons.default -side top -fill x -pady 10
-  pack $w.buttons.space   -side top 
+  pack $w.buttons.space   -side top
   pack $w.buttons.cancel -side top -fill x -pady 2
   grid config $w.buttons -column 4 -row 1 -rowspan 2 -sticky snew -padx 12
 
@@ -223,7 +223,7 @@ proc FontDialog {name {parent .}} {
   ### Tried to change this thing... but gave up.
   ### Spent a whole 12 hours on this file i think S.A
 
-  # Make this a modal dialog. 
+  # Make this a modal dialog.
 
   tkwait variable fd_close
 
@@ -392,7 +392,7 @@ proc FontDialogRegen {font_name {sampleOnly 0}} {
   if {$font_name == "font_Regular" } {
     font configure font_Bold -family $fd_family -size $fd_size -slant $slant
     if {$graphFigurineAvailable} {
-      font configure font_Figurine(normal) -size $fd_size 
+      font configure font_Figurine(normal) -size $fd_size
       font configure font_Figurine(bold) -size $fd_size
     }
     ::pgn::configTabs
@@ -433,7 +433,7 @@ proc FontBiggerSmaller {incr} {
 }
 
 proc FixedBiggerSmaller {incr} {
-  global fontOptions 
+  global fontOptions
 
   set size [font configure font_Fixed -size]
   incr size $incr

@@ -7,7 +7,7 @@ proc fenErrorDialog {{msg {}}} {
   if {[winfo exists .setup]} {
     tk_messageBox -icon info -type ok -title "Scid: Invalid FEN" -message $msg -parent .setup
   } else {
-    tk_messageBox -icon info -type ok -title "Scid: Invalid FEN" -message $msg 
+    tk_messageBox -icon info -type ok -title "Scid: Invalid FEN" -message $msg
   }
 
 }
@@ -30,7 +30,7 @@ proc pasteFEN {} {
 
   set fen1 {}
   set fen2 {}
-  catch {set fen1 [selection get -selection PRIMARY]} 
+  catch {set fen1 [selection get -selection PRIMARY]}
   catch {set fen2 [selection get -selection CLIPBOARD]}
   # Remove unicode chars, and a leading text \uxxxx which firefox can insert somehow S.A.
   catch {
@@ -69,7 +69,7 @@ proc pasteFEN {} {
   # and lowercase the second letter.
   catch {
       set s1 [lindex $fen 0]
-      if {[string index $s1 end] == "/"} { 
+      if {[string index $s1 end] == "/"} {
         set s1 [string range $s1 0 end-1]
       }
       set s2 [lindex $fen 1]
@@ -97,7 +97,7 @@ rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 proc copyGame {} {
   catch {sc_clipbase copy}
-  set ::glistFlipped([sc_info clipbase]) [::board::isFlipped] 
+  set ::glistFlipped([sc_info clipbase]) [::board::isFlipped]
   # is updateBoard needed ?
   updateBoard
   ::windows::switcher::Refresh
@@ -106,9 +106,9 @@ proc copyGame {} {
 
 proc pasteGame {} {
   sc_clipbase paste
-  if {$::glistFlipped([sc_info clipbase]) != [::board::isFlipped]} { 
+  if {$::glistFlipped([sc_info clipbase]) != [::board::isFlipped]} {
     ::board::flip .main.board
-  } 
+  }
   updateBoard -pgn
 
   ## Seems best
@@ -231,7 +231,7 @@ proc validateSetup {} {
 }
 
 proc setupBoardRightClick {square} {
-  global setupBd pastePiece 
+  global setupBd pastePiece
 
   set temp [string index $setupBd $square]
   if {$temp != "."} {
@@ -446,7 +446,7 @@ trace variable castling w check_castling
 proc setupBoard {} {
 
   global boardSizes boardSize setupboardSize setupBd pastePiece \
-         toMove epFile moveNum pawnNum castling setupFen highcolor origFen borderwidth selectedSq 
+         toMove epFile moveNum pawnNum castling setupFen highcolor origFen borderwidth selectedSq
 
   set w .setup
   if {[winfo exists $w]} {
@@ -493,7 +493,7 @@ proc setupBoard {} {
   set setupboardSize [boardSize_plus_n -3]
   set psize $setupboardSize
 
-  # We now use ::board for the Setup board 
+  # We now use ::board for the Setup board
   # We probably change selectedSq (etc) from a global to something board specific
   ::board::new $sbd $setupboardSize 0
 
@@ -548,7 +548,7 @@ proc setupBoard {} {
     foreach color {w b} value "[string toupper $i] $i" {
       if {$::macOS} {
 	ttk::radiobutton $sl.$color.$i -image $color$i$setupboardSize2 \
-	  -variable pastePiece -value $value 
+	  -variable pastePiece -value $value
       } else {
 	radiobutton $sl.$color.$i -image $color$i$setupboardSize2 -indicatoron 0 \
 	  -variable pastePiece -value $value -activebackground $highcolor
@@ -612,7 +612,7 @@ proc setupBoard {} {
   pack $sr.mid.pawnnum.label -side left -anchor w
   pack $sr.mid.pawnnum.e -side right
 
-  ### Castling 
+  ### Castling
 
   frame $sr.mid.castle
   label $sr.mid.castle.label -textvar ::tr(Castling)
@@ -672,7 +672,7 @@ proc setupBoard {} {
     ::board::update .setup.l.bd $setupBd
   } -width 10
 
-  # Are these bullet-proof and correct ? 
+  # Are these bullet-proof and correct ?
   # but make them a little smaller, as they are hardly used
 
   button $sr.b.swap -text {Swap Colours} -command {

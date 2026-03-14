@@ -4,8 +4,8 @@
 
 ### Tidied up by S.A., but still fairly raw.
 
-# I released a new version rc8 with the Stoyko exercise (see in the 
-# training section). It is certainly buggy and unpolished, but the 
+# I released a new version rc8 with the Stoyko exercise (see in the
+# training section). It is certainly buggy and unpolished, but the
 # features are there. There is some help by pressing F1.
 # Feedbacks, suggestions and comments are welcome.
 # Pascal
@@ -326,7 +326,7 @@ namespace eval calvar {
     # formatPv has had changes. Can we change this next line ? S.A.
     set usermoves [::uci::formatPv $moves $fen]
     set firstmove [lindex $usermoves 0]
-    
+
     # format engine's output
     # append first move to the variations
     set ::analysis(multiPV$n) {}
@@ -337,16 +337,16 @@ namespace eval calvar {
       lappend ::analysis(multiPV$n) [list [lindex $elt 0] [lindex $elt 1] $line [lindex $elt 3]]
 
     }
-    
+
     puts "==================================="
     puts "handleResult $::analysis(multiPV$n)"
     puts "==================================="
-    
+
     if { [llength $moves] != [llength $usermoves]} {
       set comment " error in user moves [lrange $moves [llength $usermoves] end ]"
       puts $comment
     }
-    
+
     set pv [ lindex $::analysis(multiPV$n) 0 ]
     if { [ llength $pv ] == 4 } {
       set engmoves [lindex $pv 2]

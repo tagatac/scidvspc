@@ -195,7 +195,7 @@ proc ::tourney::Open {{player {}}} {
   dialogbutton $w.b.help -textvar ::tr(Help) -command {helpWindow Tmt}
   dialogbutton $w.b.close -textvar ::tr(Close) -command "destroy $w"
   pack $w.b -side bottom -fill x -pady 5
-  packbuttons right $w.b.close $w.b.help $w.b.update  $w.b.esize $w.b.size 
+  packbuttons right $w.b.close $w.b.help $w.b.update  $w.b.esize $w.b.size
   packbuttons left $w.b.defaults
   pack $w.o3 -side bottom -fill x -padx 2 -pady 2
   pack $w.o2 -side bottom -fill x -padx 2 -pady 2
@@ -326,7 +326,7 @@ proc ::tourney::refresh {} {
       set one "1. "
       set two "2. "
     }
-    set best "$one $winner\t$two $runnerup" 
+    set best "$one $winner\t$two $runnerup"
 
     $t tag bind g$count <ButtonPress-3> [list ::tourney::select $g $event 1]
     $t tag bind g$count <ButtonPress-1> [list ::tourney::select $g $event]

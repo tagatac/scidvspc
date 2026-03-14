@@ -160,7 +160,7 @@ proc ::tb::Open {} {
   pack [frame $f.sec] -side top -pady 3
 
   label $f.sec.label -text Summary
-  menubutton $f.sec.menu -text {2-1} -menu $f.sec.menu.m -relief raised -indicatoron 1 
+  menubutton $f.sec.menu -text {2-1} -menu $f.sec.menu.m -relief raised -indicatoron 1
   menu $f.sec.menu.m -tearoff 0
   foreach i $tbInfo(sections) {
     set name "[string index $i 0]-[string index $i 1]"
@@ -203,7 +203,7 @@ proc ::tb::Open {} {
     foreach i {Nalimov Shredder K4it-Nalimov Lichess} {
       $f.results.online.menu add command -label $i -command "
         $f.results.online configure -text $i
-        set tbOnline $i 
+        set tbOnline $i
         set ::tb::noresult 0
         update_tbWidgets $w $i
         ::tb::results
@@ -215,7 +215,7 @@ proc ::tb::Open {} {
     # bind $f.results.online <<ComboboxSelected>> ::tb::results
     pack $f.results.online -side right -padx 30 -pady 2
   }
-  
+
   text $f.text -font font_Fixed -relief flat -wrap word
   pack $f.text -side top -fill both -expand yes
 
@@ -246,7 +246,7 @@ proc ::tb::Open {} {
   button $w.b.close -text $::tr(Close) -command "destroy $w"
   label $w.b.status -width 1 -textvar tbStatus -font font_Small \
       -relief flat -anchor w -height 0
-  packbuttons right $w.b.close $w.b.help $w.b.showboard 
+  packbuttons right $w.b.close $w.b.help $w.b.showboard
   pack $w.b.training $w.b.random -side left -padx 8 -pady 2
   pack $w.b.status -side left -fill x -expand yes
   bind $w <Destroy> {set tbTraining 0}
@@ -597,10 +597,10 @@ if { $::tb::online_available } {
       if {$pieceCount == {}} {
 	::tb::insertText "Online: No result"
       } else {
-			if {$::tbOnline == "Lichess"}  {   
+			if {$::tbOnline == "Lichess"}  {
 			::tb::insertText "Online: No result\nMaximum piece count for Lichess is 7"
 			}
-			if {$::tbOnline == "Shredder" || $::tbOnline == "K4it-Nalimov"}  {   
+			if {$::tbOnline == "Shredder" || $::tbOnline == "K4it-Nalimov"}  {
 			::tb::insertText "Online: No result\nMaximum piece count for Shredder/K4it-Nalimov is 6"
 			}	
 		}
@@ -609,7 +609,7 @@ if { $::tb::online_available } {
   }
 
   proc ::tb::updateOnline {} {
-  
+
     set t .tbWin.pos.text
     $t configure -state normal
     global env
@@ -624,12 +624,12 @@ if { $::tb::online_available } {
 
     set pieceCount [sc_pos pieceCount]
 
-	if {$::tbOnline == "Lichess"}  {   
+	if {$::tbOnline == "Lichess"}  {
 		if {$pieceCount <= 2 || $pieceCount > 7} {
       ::tb::insertNoResult $pieceCount
 	  return
 		}
-	} 
+	}
 	if {$::tbOnline == "Shredder" || $::tbOnline == "K4it-Nalimov" }  {
         	if {$pieceCount <= 2 || $pieceCount > 6} {
 			::tb::insertNoResult $pieceCount
@@ -661,13 +661,13 @@ if { $::tb::online_available } {
 
 # $t insert end $::tbOnline
 
-	if {$::tbOnline == "Shredder"}  {   
+	if {$::tbOnline == "Shredder"}  {
 	set ::tb::url "https://www.shredderchess.com/online/playshredder/fetch.php?action=egtb&fen=$fen"
 	}
-	if {$::tbOnline == "K4it-Nalimov"}  {   
+	if {$::tbOnline == "K4it-Nalimov"}  {
         set ::tb::url "https://www.k4it.de/egtb/fetch.php?action=egtb&fen=$fen"
 	}
-	if {$::tbOnline == "Lichess"}  {   
+	if {$::tbOnline == "Lichess"}  {
 	set ::tb::url "https://tablebase.lichess.ovh/standard?fen=$fen"
 	}
 	
@@ -727,14 +727,14 @@ if { $::tb::online_available } {
         default { set err "HTTP code $code received" }
       }
     }
-   
+
     if {[string length $err] == 0} {
-		if {$::tbOnline == "Lichess"}  {   
+		if {$::tbOnline == "Lichess"}  {
 			set i [string first "category" $data]
 			set k [string first "dtz" $data]
 			set m [string first "dtm" $data]
 		}	
-		if {$::tbOnline == "Shredder" || $::tbOnline == "K4it-Nalimov"}  {   
+		if {$::tbOnline == "Shredder" || $::tbOnline == "K4it-Nalimov"}  {
 			set i [string first "value" $data]
 			set k [string first "NEXTCOLOR" $data]
 			set m 1 ;# There are no other special characteristics in the Shredder data
@@ -795,9 +795,9 @@ if { $::tb::online_available } {
 ###############################################################
 # Process the data in the Shredder answer:
 
-if {$::tbOnline == "Shredder" || $::tbOnline == "K4it-Nalimov"}  {   
+if {$::tbOnline == "Shredder" || $::tbOnline == "K4it-Nalimov"}  {
 
-# NB Don't change the following because it splits the result on an invisible CRLF  
+# NB Don't change the following because it splits the result on an invisible CRLF
 set result [split $result "\n"]
 
 if {[string first "_w_" $fen 0] != -1} {
@@ -806,7 +806,7 @@ if {[string first "_w_" $fen 0] != -1} {
 	set turn "b"
 	}
 #
-# Clip out data for colour without the move: 
+# Clip out data for colour without the move:
 if {$turn == "w"} {
 set result_stat [string range $result 0 [expr {[string first "NEXTCOLOR" $result] - 2}] ]
 set result [string range $result 0 [expr {[string first "NEXTCOLOR" $result] - 2}] ]
@@ -814,13 +814,13 @@ set result [string range $result 0 [expr {[string first "NEXTCOLOR" $result] - 2
 set result_stat [string range $result [expr {[string first "NEXTCOLOR" $result] + 10}] [string length $result] ]
 set result [string range $result [expr {[string first "NEXTCOLOR" $result] + 10}] [expr {[string length $result] - 3}] ]
 }			
- 
+
 if {[string first "Not found" $result] != -1} {
   set not_found 1
 } else {
   set not_found 0
 }
- 
+
 # Eliminate info only non-moves:
 set count -1
 set win_move ""
@@ -837,7 +837,7 @@ if {[string first ":" $move] == -1} {
 	set result [lreplace $result $count $count]
 	}
 }
-  
+
 # Produce list of men with their square number
 #
 # Reduce FEN to squares and men only:
@@ -881,7 +881,7 @@ if {$piece != ""} {
 			} else {
 			set square_man [concat $square_count:$piece]
 			}
-	set piece_list [concat $piece_list $square_man ] 
+	set piece_list [concat $piece_list $square_man ]
 	set square_counter [expr {$square_counter + 1}]
 	set square_count [expr {$square_count + 1}]		
 	}
@@ -941,8 +941,8 @@ foreach move $result_stat {
 				set temp_D $move
 				set draw_move $move
 				}
-		[L]		{set loss_no [expr {$loss_no + 1}] 
-				set temp_L $move 
+		[L]		{set loss_no [expr {$loss_no + 1}]
+				set temp_L $move
 				set loss_move $move
 				}		
 } ;# end of switch
@@ -950,7 +950,7 @@ foreach move $result_stat {
 if {[string first "value" $win_move] != -1 || [string first ":" $win_move] == -1 && $win_move != ""} {
 set won_no [expr {$won_no - 1}]
 }
-if {$won_no != 0 && [string first "value" $win_move] == -1} { 
+if {$won_no != 0 && [string first "value" $win_move] == -1} {
 	set win 1
 	set w_won_no $won_no		
 	set win_count [expr {$win_count + 1}]
@@ -985,7 +985,7 @@ if {$won_no != 0 && [string first "value" $win_move] == -1} {
 	}
 } ;# end of Loss info
 
-		# end of Move info 
+		# end of Move info
 
 } ;# end of result_stat loop for statistics compilation
 
@@ -1057,8 +1057,8 @@ set move_sign "+"
 set move_header "Winning moves"
 # Deal with pawn promotion moves in the unhelpful format with two dashes: NN-NN-P,
 # where P is the piece promotion: 9 = Q, 8 = R, 10 = B, 11 = N. 	
-	if {[string first "-" [string range $win_move 0 2]] != -1 && 
-		[string first "-" [string range $win_move  3 99]] != -1 } { 
+	if {[string first "-" [string range $win_move 0 2]] != -1 &&
+		[string first "-" [string range $win_move  3 99]] != -1 } {
 		set promotion_flag 1
 		set move_numbers_W \
 		[string range $win_move 0 [ expr {[string first "-" [string range $win_move 3 99]] + 2} ] ]
@@ -1069,11 +1069,11 @@ set move_header "Winning moves"
 			}			
 set move_from \
 	[string range $move_numbers_W  \
-	0 [expr {[string first "-" $move_numbers_W] - 1}] ] 
+	0 [expr {[string first "-" $move_numbers_W] - 1}] ]
 set move_to \
 	[string range $move_numbers_W  \
 	[expr {[string first "-" $move_numbers_W] + 1}] \
-	[expr {[string first "-" $move_numbers_W] + 2}] ] 
+	[expr {[string first "-" $move_numbers_W] + 2}] ]
 set move_current [concat $move_from $move_to]
 set number_moves	\
 	[string range $win_move  \
@@ -1090,8 +1090,8 @@ if {[string first "value" $draw_move] == -1 && [string first ":" $draw_move] != 
 	set move_header "Drawing moves"
 # Deal with pawn promotion moves in the unhelpful format with two dashes: NN-NN-P,
 # where P is the piece promotion: 9 = Q, 8 = R, 10 = B, 11 = N. 	
-	if {[string first "-" [string range $draw_move 0 2]] != -1 && 
-		[string first "-" [string range $draw_move  3 99]] != -1 } { 
+	if {[string first "-" [string range $draw_move 0 2]] != -1 &&
+		[string first "-" [string range $draw_move  3 99]] != -1 } {
 		set promotion_flag 1
 		set move_numbers_D \
 		[string range $draw_move 0 [ expr {[string first "-" [string range $draw_move 3 99]] + 2} ] ]
@@ -1102,15 +1102,15 @@ if {[string first "value" $draw_move] == -1 && [string first ":" $draw_move] != 
 				}	
 	set move_from \
 		[string range $move_numbers_D  \
-		0 [expr {[string first "-" $move_numbers_D] - 1}] ] 
+		0 [expr {[string first "-" $move_numbers_D] - 1}] ]
 	set move_to \
 		[string range $move_numbers_D  \
 		[expr {[string first "-" $move_numbers_D] + 1}] \
-		[expr {[string first "-" $move_numbers_D] + 2}] ] 
+		[expr {[string first "-" $move_numbers_D] + 2}] ]
 	set move_current [concat $move_from $move_to]
 	set number_moves "?"
 
-} ;# end of Draw info 
+} ;# end of Draw info
 
 # Loss	
 	if { [string first "value" $loss_move] == -1 && [string first ":" $loss_move] != -1} {
@@ -1121,8 +1121,8 @@ if {[string first "value" $draw_move] == -1 && [string first ":" $draw_move] != 
 	set move_header "Losing moves"	
 	# Deal with pawn promotion moves in the unhelpful format with two dashes: NN-NN-P,
 	# where P is the piece promotion: 9 = Q, 8 = R, 10 = B, 11 = N. 	
-	if {[string first "-" [string range $loss_move 0 2]] != -1 && 
-		[string first "-" [string range $loss_move  3 99]] != -1 } { 
+	if {[string first "-" [string range $loss_move 0 2]] != -1 &&
+		[string first "-" [string range $loss_move  3 99]] != -1 } {
 		set promotion_flag 1
 		set move_numbers_L \
 		[string range $loss_move 0 [ expr {[string first "-" [string range $loss_move 3 99]] + 2} ] ]
@@ -1133,11 +1133,11 @@ if {[string first "value" $draw_move] == -1 && [string first ":" $draw_move] != 
 		}
 	set move_from \
 		[string range $move_numbers_L  \
-		0 [expr {[string first "-" $move_numbers_L] - 1}] ] 
+		0 [expr {[string first "-" $move_numbers_L] - 1}] ]
 	set move_to \
 	[string range $move_numbers_L  \
 		[expr {[string first "-" $move_numbers_L] + 1}] \
-		[expr {[string first "-" $move_numbers_L] + 2}] ] 
+		[expr {[string first "-" $move_numbers_L] + 2}] ]
 	set move_current [concat $move_from $move_to]
 	set number_moves	\
 		[string range $loss_move  \
@@ -1165,37 +1165,37 @@ if {$::tbOnline == "K4it-Nalimov"} {
 	  set promos [list 8:q 9:r 10:b 11:n]
   }
 }
-if {[string first "-" [string range $move 0 2]] != -1 && 
-	[string first "-" [string range $move  3 99]] != -1 } { 
+if {[string first "-" [string range $move 0 2]] != -1 &&
+	[string first "-" [string range $move  3 99]] != -1 } {
 	set promotion_flag 1
 	set promo_code [string range $move [expr {[string last "-" $move] +1}] [expr {[string first ":" $move] - 1}] ]
 	if {$promo_code < 10} {
-			set promo_piece [string index $promos [expr {[string first $promo_code $promos] + 2}] ] 
+			set promo_piece [string index $promos [expr {[string first $promo_code $promos] + 2}] ]
 			} else {
-			set promo_piece [string index $promos [expr {[string first $promo_code $promos] + 3}] ] 
+			set promo_piece [string index $promos [expr {[string first $promo_code $promos] + 3}] ]
 			}
 	set move_numbers \
 		"[string range $move 0 [expr {[string first "-" [string range $move 3 99]] + 2}]]=$promo_piece"  \
 	} else {
 		set move_numbers \
 		[string range $move  \
-		0 [expr {[string first ":" $move] - 1}] ] 
+		0 [expr {[string first ":" $move] - 1}] ]
 	}
 
 # Separate square numbers into "from" and "to"
 set move_from \
 	[string range $move_numbers  \
-	0 [expr {[string first "-" $move_numbers] -1}] ] 
+	0 [expr {[string first "-" $move_numbers] -1}] ]
 if {[string first "=" $move_numbers] == -1} {
 	set move_to \
 		[string range $move_numbers \
 		[expr {[string first "-" $move_numbers] + 1}] \
-		[expr {[string first "-" $move_numbers] + 2}] ] 
+		[expr {[string first "-" $move_numbers] + 2}] ]
 	} else {
 		set move_to \
 		[string range $move_numbers \
 		[expr {[string first "-" $move_numbers] + 1}] \
-		[expr {[string first "=" $move_numbers] +1}] ] 
+		[expr {[string first "=" $move_numbers] +1}] ]
 		}
 			
 ### SAN Move Conversion from square numbers to SAN notation:
@@ -1215,7 +1215,7 @@ if {[string first $temp_2 $piece_list] != -1} {
 			[expr {[string first $temp_2 $piece_list] + 3}] \
 			[expr {[string first $temp_2 $piece_list] + 3}]	]	
 	}
-} 
+}
 
 if {$san_1 == "p" | $san_1 == "P"} {
 set san_1 ""
@@ -1244,14 +1244,14 @@ set move_san "$move  ,$san_move,"
 
 set san [string range $move_san [expr {[string first "," $move_san] +1}] [expr {[string last "," $move_san] -1}] ]
 # Get the move from square number:
-set move_from [string range $move_san 0 [expr {[string first "-" $move_san] -1}] ] 
+set move_from [string range $move_san 0 [expr {[string first "-" $move_san] -1}] ]
 set move_from_square [lindex $::board::squareIndex $move_from]
 
 ## Next few lines are connected with making move on board to see if there is check
 # Change normal SAN format for pawn move back to P or p
 set piece [string index $move_san [expr {[string first "," $move_san] +1}] ]
 if {[string length $san] == 2} {
-set temp_move [ concat [string range $move_san [expr {[string first "," $move_san] +1}] [expr {[string last "," $move_san] -1}] ] ] 
+set temp_move [ concat [string range $move_san [expr {[string first "," $move_san] +1}] [expr {[string last "," $move_san] -1}] ] ]
 	if {[string first $piece "a b c d e f g h"] != -1 } {
 		if {$turn == "w"} {
 		set piece "P"
@@ -1321,7 +1321,7 @@ if {[string first "=" $san] == -1 && [string length $san] > 3 && [string first "
 
 # If ambiguity of move, put the move_from_square rank or file into the SAN:
 # If there are more than two identical pieces moving to three different squares, the user should use Lichess!
-# NB exclude pawn and king moves 
+# NB exclude pawn and king moves
 
 set temp ""
 set found ""
@@ -1333,10 +1333,10 @@ set san_square_2 ""
 set temp_san ""
 set temp_rank ""
 set temp_file ""
-set temp_file_1 "" 
+set temp_file_1 ""
 set temp_rank_1 ""
 set temp_san_1 ""
-set temp_file_2 "" 
+set temp_file_2 ""
 set temp_rank_2 ""
 set temp_san_2 ""
 
@@ -1369,36 +1369,36 @@ set piece_2_square_man \
 if {[string length $san] > 2 && $san_man == $piece_2 \
 	&& [string first [string index $san 0] "a b c d e f g h"] == -1  && $square_man != $piece_2_square_man \
 	&& $san_man != "k" && $san_man != "K" && $piece_2 != "k" && $piece_2 != "K"} {
-# 
+#
 # Current move piece - move from square:
 set san_square_1 $move_from_square
 #For loop piece, set move from square:
 set san_square_2 [lindex $::board::squareIndex $piece_2_square]
 #
-set temp_file_1 [string index $san_square_1 0] 
+set temp_file_1 [string index $san_square_1 0]
 set temp_rank_1 [string index $san_square_1 1]
 set temp_san_1 "$san_man$san_square_1"
-set temp_file_2 [string index $san_square_2 0]  
+set temp_file_2 [string index $san_square_2 0]
 set temp_rank_2 [string index $san_square_2 1]
 set temp_san_2 "$piece_2$san_square_2"
 #
-# Compare rank/file of the move from square of the two pieces and 
+# Compare rank/file of the move from square of the two pieces and
 # insert rank or file into SAN of current move, if move to square is identical:
 
 if {$move_to == $piece_2_move_to} {
 
 # 	Pieces on the same file:	
 if {$temp_file_1 == $temp_file_2 } {
-	set san "[string index $san 0]$temp_rank_1[string index $san 1][string index $san 2][string index $san 3]" 
+	set san "[string index $san 0]$temp_rank_1[string index $san 1][string index $san 2][string index $san 3]"
 	} 		
 
 # 	Pieces on the same rank:		
 if {$temp_rank_1 == $temp_rank_2} {
-	set san "[string index $san 0]$temp_file_1[string index $san 1][string index $san 2][string index $san 3]" 
+	set san "[string index $san 0]$temp_file_1[string index $san 1][string index $san 2][string index $san 3]"
 	}
 # 	Pieces on dissimilar file and rank:	
 if {$temp_file_1 != $temp_file_2 && $temp_rank_1 != $temp_rank_2 } {
-	set san "[string index $san 0]$temp_file_1[string index $san 1][string index $san 2][string index $san 3]" 
+	set san "[string index $san 0]$temp_file_1[string index $san 1][string index $san 2][string index $san 3]"
 	}
 	
 } ;# end of set san with file letter or rank number		
@@ -1416,7 +1416,7 @@ set flag 0
 set board ""
 set square_count 0
 set board_nos {56 57 58 59 60 61 62 63 48 49 50 51 52 53 54 55 40 41 42 43 44 45 46 47 32 33 34 35 36 37 38 39 24 25 26 27 28 29 30 31 16 17 18 19 20 21 22 23 08 09 10 11 12 13 14 15 00 01 02 03 04 05 06 07}
-set board_nos [regsub -all { } $board_nos ","] 
+set board_nos [regsub -all { } $board_nos ","]
 set board_nos [split $board_nos {,}]
 
 foreach item $board_nos {
@@ -1453,7 +1453,7 @@ foreach square_on $board {
 	}
 
 if {$square_man == $square_on } {
-		lset board $counter [concat $square_no:x] 
+		lset board $counter [concat $square_no:x]
 	}
  } ;# end of foreach loop
 
@@ -1482,7 +1482,7 @@ foreach square_on $board {
 		}
 
 	if {$temp_1 == $square_no } {
-		lset board $counter [concat $square_no:$piece] 
+		lset board $counter [concat $square_no:$piece]
 		}
 
 set temp_1 ""
@@ -1504,7 +1504,7 @@ foreach square_piece $board {
 		set row_counter [expr { $row_counter + 1}]
 		}
 	if 	{[string index $square_piece 3] != "x"} {
-		if {$gap_counter > 0} { 
+		if {$gap_counter > 0} {
 			set fen_6 [concat $fen_6$gap_counter[string index $square_piece 3] ]
 			} else {
 			set fen_6 [concat $fen_6[string index $square_piece 3] ]
@@ -1542,12 +1542,12 @@ if {$turn == "w"} {
 	}
 	
 if {$fen_6 != ""} {
-set fen_6 [concat [string range $fen_6 0 [expr {[string last  "/" $fen_6] - 1}] ] $turn_next " - -"] 
+set fen_6 [concat [string range $fen_6 0 [expr {[string last  "/" $fen_6] - 1}] ] $turn_next " - -"]
 }
 
 # Verifying the in check status; this code is based on Steve Austin's (!!! - S.A) suggestion:
 set isCheck 0
-if {$fen_6 != ""} { 
+if {$fen_6 != ""} {
 sc_game push
 sc_game startBoard $fen_6
 if {[sc_pos isCheck]} {
@@ -1601,7 +1601,7 @@ if {$draw == 1 && $number_moves == "?"} {
 if {$draw == 1 && $draw_count == $w_draw_no} {
 	$t insert end "$move_summary" indent
 	set move_summary ""
-	set prev_number_moves 0 
+	set prev_number_moves 0
 	set draw 0
 	}
 
@@ -1617,7 +1617,7 @@ if { $prev_number_moves != 0} {
 		set move_summary "$move_summary $san"
 		}
 	if {$number_moves != $prev_number_moves} {
-		$t insert end "$move_summary\n" indent 
+		$t insert end "$move_summary\n" indent
 		set move_summary " $move_sign  $number_moves_display  $san"
 		}
 	}
@@ -1802,7 +1802,7 @@ if {$mate == "true"} {
 	set number_moves 1
 	}
 	
-# The Lichess move count does not match Nalimov and Shredder, 
+# The Lichess move count does not match Nalimov and Shredder,
 # hence this fix - just round odd numbers/2 but add 1 to even numbers/2:
 if {$number_moves != 0 && $number_moves != "null" } {
 	if {[expr {[double [abs $number_moves]]/2}] > [expr {[abs $number_moves]/2}] } {
@@ -1860,7 +1860,7 @@ set number_moves 0
 		
 # Display final move if moves exceed 1 :
 		
-if {$win == 1 && $win_count == $won_no 
+if {$win == 1 && $win_count == $won_no
 		&& $move_summary != "" && $number_moves != "?" } {
 	$t insert end "\n$move_summary" indent
 	set prev_number_moves 0
@@ -1875,7 +1875,7 @@ if {$b_loss == 1 && $b_loss_count  == $blessed_loss_no
 	$t insert end "\n$move_summary" indent
 	set prev_number_moves 0
 	}
-if {$loss == 1 && $loss_count == $loss_no 
+if {$loss == 1 && $loss_count == $loss_no
 	&& $move_summary != "" && $number_moves != "?" } {
 	$t insert end "\n$move_summary" indent
 	set prev_number_moves 0
@@ -1889,7 +1889,7 @@ if {$distance_to_zero < 10} {
 	set DTZ_display  "$distance_to_zero"
 	}
 
-#This variable is necessary because the following process will not work 
+#This variable is necessary because the following process will not work
 #if a move has "zeroing" and so $distance_to_zero is 0.
 set dtz_temp [expr {$distance_to_zero + 1}]
 
@@ -1922,28 +1922,28 @@ set number_moves_z 0
 		
 # Display final move if moves exceed 1 :
 		
-if {$win == 1 && $win_count == $won_no 
+if {$win == 1 && $win_count == $won_no
 	&& $move_summary != "" && $number_moves == "?" } {
 	$t insert end "$move_summary" indent
 	set prev_distance_to_zero 0
 	}
-if {$c_win == 1 && $c_win_count == $cursed_win_no 
+if {$c_win == 1 && $c_win_count == $cursed_win_no
 	&& $move_summary != "" && $number_moves == "?" } {
 	$t insert end "$move_summary" indent
 	set prev_distance_to_zero 0
 	}
-if {$b_loss == 1 && $b_loss_count == $blessed_loss_no 
+if {$b_loss == 1 && $b_loss_count == $blessed_loss_no
 	&& $move_summary != "" && $number_moves == "?" } {
 	$t insert end "$move_summary" indent
 	set prev_distance_to_zero 0
 	}
-if {$loss == 1 && $loss_count == $loss_no 
+if {$loss == 1 && $loss_count == $loss_no
 	&& $move_summary != "" && $number_moves == "?" } {
 	$t insert end "$move_summary" indent
 	set prev_distance_to_zero 0
 	}
 
-## Draw always has DTM = 0 and DTZ = 0, so treat as a special case : 
+## Draw always has DTM = 0 and DTZ = 0, so treat as a special case :
 
 if {$draw == 1 && $draw_count == 1 } {
 	$t insert end "\n$move_header\n"
@@ -1983,7 +1983,7 @@ set move_header ""
     $t configure -state disabled
 	
   } ;# end of proc ::tb::showResult
-  
+
 } ;# end of if ::tb::online_available
 
 ############################################################################

@@ -65,7 +65,7 @@ proc checkDates {} {
   if {[string length $sDateMin] == 7} { append sDateMin ".??" }
   if {[string length $sDateMax] == 7} { append sDateMax ".31" }
   if {[string match {*.01.01} $sDateMin]} { set sDateMin "[string range $sDateMin 0 end-6].??.??"}
-} 
+}
 
 set ::search::header::options { \
   sWhite sBlack sEvent sSite sRound sDateMin sDateMax sIgnoreCol \
@@ -115,7 +115,7 @@ set sHeaderFlagFrame 0
 
 proc search::header {} {
   eval global $::search::header::options
-       global sHeaderFlags sPgntext sTitles sTitleList tr 
+       global sHeaderFlags sPgntext sTitles sTitleList tr
 
   set w .sh
   if {[winfo exists $w]} {
@@ -271,7 +271,7 @@ proc search::header {} {
   foreach i { win     loss     draw     other    } \
           v { sResWin sResLoss sResDraw sResOther} \
        text { {1-0 }  {0-1 }   {Draw }     {No Result }     } {
-    checkbutton $w.res.e$i -text $text -variable $v -font $regular 
+    checkbutton $w.res.e$i -text $text -variable $v -font $regular
     pack $w.res.e$i -side left -padx 3
   }
 
@@ -359,8 +359,8 @@ proc search::header {} {
   pack $f.first $f.last $f.all -side left -padx 5
 
   # Pre game comment
-  checkbutton $f.preComment -textvar tr(PreComment) -variable preComment -font $bold 
-  checkbutton $f.postComment -textvar tr(PostComment) -variable postComment -font $bold 
+  checkbutton $f.preComment -textvar tr(PreComment) -variable preComment -font $bold
+  checkbutton $f.postComment -textvar tr(PostComment) -variable postComment -font $bold
   pack $f.postComment $f.preComment -side right
 
   set f [frame $w.tags]
@@ -381,14 +381,14 @@ proc search::header {} {
   entry $f.e2 -textvariable sPgntext(2) -width 15 -font $regular
   label $f.l3 -text " + " -font $regular
   entry $f.e3 -textvariable sPgntext(3) -width 15 -font $regular
-  checkbutton $f.case -textvar tr(IgnoreCase) -variable sPgncase -font $regular 
+  checkbutton $f.case -textvar tr(IgnoreCase) -variable sPgncase -font $regular
   bindFocusColors $f.e1
   bindFocusColors $f.e2
   bindFocusColors $f.e3
   pack $f.l1 $f.e1 $f.l2 $f.e2 $f.l3 $f.e3 $f.case -side left
 
   addHorizontalRule $w
- 
+
   pack [frame $w.flagstitle] -side top
 
   button $w.flagstitle.label -textvar tr(FindGamesWith) -font $bold -command {
@@ -457,7 +457,7 @@ proc search::header {} {
   set count 1
   set col 0
   set row 7
-    
+
   foreach var $::sHeaderCustomFlagList {
     set lb [sc_game flag $count description]
     if { $lb == ""  } {
@@ -465,7 +465,7 @@ proc search::header {} {
     } else {
       set lb "$lb ($count)"
     }
-    
+
     set lab [label $w.flags.l$var -text $lb -font font_Small]
     grid $lab -row $row -column $col -sticky e
     incr col
@@ -744,7 +744,7 @@ proc chooseEcoRange {} {
        -setgrid 1
   foreach i $ecoCommonRanges { $w.list insert end $i }
   scrollbar $w.ybar -command "$w.list yview" -takefocus 0
-  pack [frame $w.b] -side bottom 
+  pack [frame $w.b] -side bottom
   pack $w.ybar -side right -fill y
   pack $w.list -side left -fill both -expand yes
 

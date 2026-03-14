@@ -135,7 +135,7 @@ proc ::plist::Open {} {
   set ::plist::country $tmp
 
   # WTF - Sort his out please S.A.
-  # bindFocusColors $f.name 
+  # bindFocusColors $f.name
   pack $f.country $f.ncountry -side right -padx 5
 
 

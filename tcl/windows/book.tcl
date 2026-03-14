@@ -25,8 +25,8 @@ namespace eval book {
 
   ### Slots must/should be unique to avoid conflicts. Other book slots used are:
   # I tried changing bookSlot (sergame.tcl) to 4 ... but sergame books opening then dumps core - unsure why
-  # analysisBookSlot 1 (analysis.tcl) 
-  # bookSlot         2 (serame.tcl) 
+  # analysisBookSlot 1 (analysis.tcl)
+  # bookSlot         2 (serame.tcl)
   # engineSlot       5 (tactics.tcl)
 
   ################################################################################
@@ -76,7 +76,7 @@ namespace eval book {
       sc_book close $slot
       return $bookmoves
     }
-    
+
     set r [expr {(int (rand() * 100))} ]
     for {set i 0} {$i<[llength $bookmoves]} {incr i 2} {
       set m [lindex $bookmoves $i]
@@ -130,7 +130,7 @@ namespace eval book {
 
     bind $w <Button-4> ::move::Back
     bind $w <Button-5> ::move::Forward
-    frame $w.main 
+    frame $w.main
     pack $w.main -fill both -side left
 
     set name1 $lastBook1
@@ -171,7 +171,7 @@ namespace eval book {
     if {!$::book::showTwo} {
       $w.main.combo2 configure -state disabled
     }
-    
+
     checkbutton $w.main.alpha -textvar ::tr(Alphabetical) -variable ::book::sortAlpha  -command ::book::refresh
 
     checkbutton $w.main.showtwo -textvar ::tr(TwoBooks) -variable ::book::showTwo  -command {
@@ -200,7 +200,7 @@ namespace eval book {
 
     frame $w.1
     frame $w.2
-    
+
     pack $w.1 -fill both -side left
     pack $w.2 -fill both -side right
 
@@ -211,7 +211,7 @@ namespace eval book {
     # The width of "12" is not enough for larger fonts ?!
 
     label $w.1.label -font font_Fixed
-    label $w.2.label -font font_Fixed 
+    label $w.2.label -font font_Fixed
     text $w.1.booktext -wrap none -state disabled -width 10 -cursor top_left_arrow -font font_Fixed
     text $w.2.booktext -wrap none -state disabled -width 10 -cursor top_left_arrow -font font_Fixed
 
@@ -220,7 +220,7 @@ namespace eval book {
 
     pack $w.1.booktext -expand yes -fill both
     pack $w.2.booktext -expand yes -fill both
-    
+
     text $w.1.opptext -wrap none -state disabled -height 6 -width 10 -cursor top_left_arrow -font font_Fixed
     text $w.2.opptext -wrap none -state disabled -height 6 -width 10 -cursor top_left_arrow -font font_Fixed
 
@@ -228,7 +228,7 @@ namespace eval book {
     bind $w.main.combo2 <<ComboboxSelected>> {::book::bookSelect}
     bind $w <Destroy> "::book::closeMainBook"
     bind $w <Escape> {destroy .bookWin}
-    bind $w <Left> ::move::Back 
+    bind $w <Left> ::move::Back
     bind $w <Right> ::move::Forward
 
 # Why
@@ -485,17 +485,17 @@ if {0} {
 
     button $w.left.addline -text $::tr(AddLine) -relief flat -command ::book::addLine
     button $w.left.remline -text $::tr(RemLine) -relief flat -command ::book::remLine
-    
+
     # frame $w.left.space1 -height 60
     dialogbutton $w.left.export -text $::tr(Import) -command ::book::export
     dialogbutton $w.left.save -text $::tr(Save) -command {
-      ::book::save 
+      ::book::save
       ::book::refreshTuning
     }
     frame $w.left.space2 -height 10
     dialogbutton $w.left.help -text $::tr(Help) -command {helpWindow BookTuning}
     dialogbutton $w.left.close -text $::tr(Close) -command "destroy $w"
-    
+
     pack $w.left.combo $w.left.add $w.left.remove -side top -padx 3 -pady 1
     pack $w.left.save -side top -padx 3 -pady 3
     pack $w.left.addline $w.left.remline -side top -padx 3 -pady 1
@@ -595,7 +595,7 @@ if {0} {
   ### Update book display when board changes
 
   proc refreshTuning {} {
-    
+
     #unfortunately we need this as the moves on the widgets are translated
     #and widgets have no clientdata in tcl/tk
     global ::book::bookTuningMoves
@@ -712,7 +712,7 @@ if {0} {
 
     while {![sc_pos isAt vstart]} {
       set move [sc_game info previousMove]
-      
+
       # Skip black or white moves
       if {$reply == [sc_pos side]} {
         sc_move back
@@ -720,7 +720,7 @@ if {0} {
       }
 
       if {[sc_move back]} {
-      
+
         set moves [string map {% {}} [sc_book moves $::book::bookTuningSlot]]
         set bookMoves {}
         set prob {}
@@ -861,7 +861,7 @@ if {0} {
 	    book2pgn
 	    sc_move back
 	    # move the 'next' move to front of list
-	    set bookMoves "a b [lrange $bookMoves 0 [expr $pos -1]] [lrange $bookMoves [expr $pos + 2] end]" 
+	    set bookMoves "a b [lrange $bookMoves 0 [expr $pos -1]] [lrange $bookMoves [expr $pos + 2] end]"
 	    puts forward
 	    puts bookmoves\ $bookMoves
 	  } else {

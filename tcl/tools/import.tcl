@@ -24,7 +24,7 @@ proc importPgnGame {} {
   wm title $w "Scid: Import PGN game"
 
   frame $w.b
-  pack $w.b -side bottom -pady 6 
+  pack $w.b -side bottom -pady 6
 
   set pane [::utils::pane::Create $w.pane edit err 500 300 0.75]
   pack $pane -side top -expand true -fill both
@@ -100,7 +100,7 @@ proc importPgnGame {} {
   }
   $w.pane.edit.text insert end $texttopaste
 
-  # if {![info exists texttopaste] || $texttopaste == {}} 
+  # if {![info exists texttopaste] || $texttopaste == {}}
     $w.pane.err.text insert end $::tr(ImportHelp1)
     # $w.pane.err.text insert end "\n"
     # $w.pane.err.text insert end $::tr(ImportHelp2)
@@ -165,7 +165,7 @@ proc importVar {} {
   } else {
     set create_var 0
   }
-  
+
   if {$isAt_vend} {
     # Add the last move of the game
     sc_move addSan $lastMove
@@ -274,7 +274,7 @@ proc doPgnFileImport {fname text {multiple 0} } {
   if {! [winfo exists $w]} {
     if {![file exists $fname]} {
       error "File $fname doesn't exist."
-    } 
+    }
 
     toplevel $w
     wm state $w withdrawn

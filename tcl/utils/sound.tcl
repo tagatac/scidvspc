@@ -19,7 +19,7 @@ array set ::utils::sound::soundMap {
   x x U Back # Mate = Promote  + Check
   a a b b c c d d e e f f g g h h
   1 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8
-} 
+}
 
 proc ::utils::sound::Setup {} {
   variable hasSnackPackage
@@ -30,7 +30,7 @@ proc ::utils::sound::Setup {} {
 
   if {[catch {package require snack 2.0}]} {
     set hasSnackPackage 0
-    ::splash::add "   Snack sound package not found." 
+    ::splash::add "   Snack sound package not found."
     ### undefine procs
     proc ::utils::sound::AnnounceMove {move} {}
     proc ::utils::sound::PlayMove {sound} {}
@@ -212,7 +212,7 @@ proc ::utils::sound::OptionsDialog {} {
   set devices [::snack::audio outputDevices]
 
   set tmp $::utils::sound::device
-  ttk::combobox $f.device -width 20 -textvariable ::utils::sound::device 
+  ttk::combobox $f.device -width 20 -textvariable ::utils::sound::device
   bind $f.device <<ComboboxSelected>> ::utils::sound::SetDevice
 
   # set i [lsearch $devices $::utils::sound::device]

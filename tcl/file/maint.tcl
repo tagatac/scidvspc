@@ -126,14 +126,14 @@ proc ::maint::Open {} {
   ::utils::tooltip::Set $w.title.vicon [tr TypeIcon]
 
   # Status
-  
+
   frame $w.title.status
   label $w.title.status.lab -text [tr Status]: -font $font
   label $w.title.status.text -width 1 -font $font
   dialogbutton $w.title.status.edit -text [tr Change] -font $font \
       -command "makeBaseReadOnly $w" -padx 3
   pack $w.title.status.lab -side left -padx 3
-  pack $w.title.status.text -side left -fill x -expand yes 
+  pack $w.title.status.text -side left -fill x -expand yes
   pack $w.title.status.edit -side right -padx 3
 
   # Description
@@ -144,7 +144,7 @@ proc ::maint::Open {} {
   dialogbutton $w.title.desc.edit -text [tr Edit] -font $font \
       -command ::maint::ChangeBaseDescription -padx 3
   pack $w.title.desc.lab -side left -padx 3
-  pack $w.title.desc.text -side left -fill x -expand yes 
+  pack $w.title.desc.text -side left -fill x -expand yes
   pack $w.title.desc.edit -side right -padx 3
 
   foreach name {name games delete mark filter dates ratings} {
@@ -191,7 +191,7 @@ proc ::maint::Open {} {
   incr row
   grid $w.title.status -row $row -column 0 -columnspan 5 -sticky we  -pady 3
   incr row
-  grid $w.title.desc -row $row -column 0 -columnspan 5 -sticky we 
+  grid $w.title.desc -row $row -column 0 -columnspan 5 -sticky we
   incr row
   grid $w.title.cust -row $row -column 0 -columnspan 5 -sticky we -pady 3
 
@@ -323,7 +323,7 @@ proc ::maint::ChangeBaseDescription {} {
   wm withdraw $w
 
   set font font_Small
-  entry $w.entry -width 50 -relief sunken 
+  entry $w.entry -width 50 -relief sunken
   $w.entry insert end [sc_base description]
   pack $w.entry -side top -pady 5 -padx 5
   frame $w.b
@@ -351,7 +351,7 @@ proc ::maint::ChangeCustomDescription {} {
   if {[winfo exists $w]} { return }
   toplevel $w
   wm withdraw $w
-  
+
   wm title $w "$::tr(CustomFlags): [file tail [sc_base filename]]"
   frame $w.a
 
@@ -479,7 +479,7 @@ proc ::maint::SetAutoloadGame {{parent .}} {
   pack [frame $w.f] -side top
   label $w.f.label -text $::tr(AutoloadGame)
   entry $w.f.entry -textvar autoloadGame -justify right -width 10 \
-      -foreground black 
+      -foreground black
   pack $w.f.label $w.f.entry -side left -pady 3
 
   pack [frame $w.set] -side top -fill x
@@ -770,9 +770,9 @@ proc checkAllGames {} {
   toplevel $w
   wm withdraw $w
   wm title $w "[tr CheckGames]"
-  
+
   pack [frame $w.f] -side top -expand 1
-  
+
   label $w.f.label -font font_Bold -textvar ::tr(CheckGames)
   frame $w.f.g
   radiobutton $w.f.g.all -textvar ::tr(SelectAllGames) -variable checkOption(AllGames) -value all
@@ -808,7 +808,7 @@ proc checkAllGames {} {
   $w.f.progress create rectangle 0 0 0 0 -fill $::progcolor -outline $::progcolor -tags bar
   $w.f.progress create text 295 10 -anchor e -font font_Regular -tags time \
       -fill black -text "0:00 / 0:00"
-  
+
   pack $w.f.label $w.f.g -side top -pady 5
   pack $w.f.progress -side top -padx 2 -pady 2
   pack $w.f.b -side top -pady 5 -fill x
@@ -821,10 +821,10 @@ proc checkAllGames {} {
   placeWinOverParent $w .maintWin
   wm state $w normal
   updateClassifyWin
-} 
+}
 
 proc stripCommentsVars {arg {parent .}} {
-  if {$arg != "comments" && $arg != "variations"} { 
+  if {$arg != "comments" && $arg != "variations"} {
     tk_messageBox -type ok -icon info -title Scid -message "stripCommentsVars: must be 'comments' or 'variations'"
     return
   }
@@ -838,16 +838,16 @@ proc stripCommentsVars {arg {parent .}} {
   set ::checkOption(arg) $arg
   set arg [string toupper $arg 0 0]
   wm title $w "[tr EditStrip] $arg"
-  
+
   pack [frame $w.f] -expand 1
-  
+
   label $w.f.label -text "Stripping $arg cannot be undone."
   frame $w.f.g
   radiobutton $w.f.g.all -textvar ::tr(SelectAllGames) -variable checkOption(AllGames) -value all
   radiobutton $w.f.g.filter -textvar ::tr(SelectFilterGames) -variable checkOption(AllGames) -value filter
   set ::checkOption(AllGames) filter
   pack $w.f.g.all $w.f.g.filter -side left  -padx 5
-  
+
   frame $w.f.b
   dialogbutton $w.f.b.go -text "[tr EditStrip] $arg" -command {
     destroy .stripCommentsVars
@@ -868,7 +868,7 @@ proc stripCommentsVars {arg {parent .}} {
   }
 
   dialogbutton $w.f.b.cancel -textvar ::tr(Cancel) -command "focus .main ; destroy $w"
-  
+
   pack $w.f.label $w.f.g -side top -pady 5
   pack $w.f.b -side top -pady 5 -fill x
   pack $w.f.b.go -side left -pady 5 -padx 5
@@ -1148,7 +1148,7 @@ proc updateTwinChecker {} {
     set llen [$w.f.left.t.text index end-1c]
 
     # Hesus!, this needs some comments
-    # Done in two parts, but should be redone as a single diff loop 
+    # Done in two parts, but should be redone as a single diff loop
 
     ### In-game diffing of variations/comments
     # Adapted from Daniel South's (wildcard_25) slightly buggy patch
@@ -1459,7 +1459,7 @@ proc twinRavSkip {line k} {
     set comment_start [string first "\{" $line $k]
 
     ### Impossible to easily parse comments with brackets i think {}
-    # if {$comment_start > -1 && ($comment_start < $rav_start || $rav_start == -1)} {} 
+    # if {$comment_start > -1 && ($comment_start < $rav_start || $rav_start == -1)} {}
 
     if {$rav_start == -1} {
       # no more recursive vars
@@ -1745,7 +1745,7 @@ proc compactGames {parent} {
       "$numberDeleted games will be permanently deleted.\nAre you sure ?"] != {yes}} {
     return
   }
-  
+
   progressWindow Scid $::tr(CompactGames) $::tr(Cancel) sc_progressBar
   busyCursor .
   set err [catch {sc_compact games} result]
@@ -2058,7 +2058,7 @@ proc extraTags {{parent .}} {
   set err [catch {sc_base tag list} result]
   unbusyCursor .
   closeProgressWindow
-  if {$::interrupt} { 
+  if {$::interrupt} {
     tk_messageBox -title Scid -icon warning -type ok -message "Searching cancelled.\n\nTag list and counts are not correct." -parent $parent
   }
   if {$err} {
@@ -2121,14 +2121,14 @@ proc extraTags {{parent .}} {
     }
     set removed [doStripTags $tag]
     if {$removed > 0} {
-      if {$::interrupt} { 
+      if {$::interrupt} {
         # Previous tag values were not accurate
 	::game::Reload ; # Todo - fixme ??
 	update
 	extraTags
       } else {
         # Calculate new tag count
-	::game::Reload 
+	::game::Reload
 	.extratags.tags.list delete 0 end
 	set pgnTags($tag) [expr {$pgnTags($tag) - $removed}]
 	populateExtraTags
@@ -2145,7 +2145,7 @@ proc extraTags {{parent .}} {
   pack $w.buttons2.cancel $w.buttons2.help -side right -padx 5 -pady 5
   bind $w <Escape> "$w.buttons2.cancel invoke"
 
-  # raise $parent 
+  # raise $parent
 
   bind $w <Configure> "recordWinSize $w"
   wm state $w normal

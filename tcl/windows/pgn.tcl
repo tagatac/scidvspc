@@ -183,7 +183,7 @@ namespace eval pgn {
       $m.opt add checkbutton -label PgnOptChess -variable ::useGraphFigurine -command {updateBoard -pgn} -state disabled
     }
 
-    $m.opt add checkbutton -variable ::pgn::showScrollbar -label PgnOptScrollbar -command ::pgn::packScrollbar 
+    $m.opt add checkbutton -variable ::pgn::showScrollbar -label PgnOptScrollbar -command ::pgn::packScrollbar
 
     $m.opt add command -label [tr OptionsFonts] -command "FontDialogRegular $w" -underline 0
 
@@ -279,7 +279,7 @@ namespace eval pgn {
 
     set t1 [expr $fd_size / 10.0]c
     set t2 [expr $fd_size / 8.0]c
-    set t3 [expr ($fd_size - 8) / 3.5 + 3 + 0.5*($fd_size > 13)]c 
+    set t3 [expr ($fd_size - 8) / 3.5 + 3 + 0.5*($fd_size > 13)]c
     .pgnWin.text configure  -tabs "$t1 right $t2 $t3"
   }
 
@@ -351,12 +351,12 @@ namespace eval pgn {
     set pgnStr [sc_game pgn -indentComments $::pgn::indentComments \
 	-indentVariations $::pgn::indentVars -space $::pgn::moveNumberSpaces -stripbraces 1]
     setLanguageTemp $::language
-    
+
     setClipboard $pgnStr
   }
 
   # These two bindings are done in a bad way in htext.tcl.
-  # Each text object has separate bindings, but they should 
+  # Each text object has separate bindings, but they should
   # be handled in a general bind to the pgn text widget ala
   # contextMenu
 
@@ -461,14 +461,14 @@ namespace eval pgn {
     set mctxt $win.ctxtMenu
     if { [winfo exists $mctxt] } { destroy $mctxt }
 
-    # extract movenumber from pgn widget tag 
+    # extract movenumber from pgn widget tag
 
     set moveTag m_[getMoveNumber $win [ $win index @$x,$y]]
     if {$moveTag == "m_0"} {
       return
     }
     set movenum [string trim [lindex [split [$win tag bind $moveTag <1>] _] end]]
-   
+
     # Do these pushes/pops break anything elsewhere ?
     sc_game push copyfast
     sc_move pgn $movenum

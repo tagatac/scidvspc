@@ -7,20 +7,20 @@ proc ::move::drawVarArrows {} {
   if {! $::showVarArrows || $::autoplayMode} { return 0 }
   # if {[winfo exists .coachWin]} { return 0 }
   # if {[winfo exists .serGameWin]} { return 0 }
-  
+
   set bDrawArrow 0
   set varList [sc_var list UCI]
 
-  if {$varList != ""} {    
+  if {$varList != ""} {
     set move [sc_game info nextMoveUCI]
-    if {$move != ""} { set varList [linsert $varList 0 $move] }    
+    if {$move != ""} { set varList [linsert $varList 0 $move] }
     foreach { move } $varList {
-      set bDrawn 0      
+      set bDrawn 0
       set sq_start [ ::board::sq [ string range $move 0 1 ] ]
       set sq_end [ ::board::sq [ string range $move 2 3 ] ]
         foreach mark $::board::_mark(.main.board) {
           if { [lindex $mark 0] == "arrow" ||[string match {var*} [lindex $mark 0]] } {
-            if {[lindex $mark 1] == $sq_start && [lindex $mark 2] == $sq_end} { 
+            if {[lindex $mark 1] == $sq_start && [lindex $mark 2] == $sq_end} {
               set bDrawn 1
               break
             }
@@ -29,13 +29,13 @@ proc ::move::drawVarArrows {} {
       if {! $bDrawn } { set bDrawArrow 1; break }
     }
   }
-  
+
   return $bDrawArrow
 }
 
 proc ::move::showVarArrows {} {
   set move [sc_game info nextMoveUCI]
-  set varList [sc_var list UCI]  
+  set varList [sc_var list UCI]
 
   set var 0
 
@@ -90,8 +90,8 @@ proc ::move::End {{var 0}} {
 }
 
 proc ::move::ExitVar {} {
-  sc_var exit; 
-  updateBoard -animate; 
+  sc_var exit;
+  updateBoard -animate;
   # Do comments work properly ?
   if {[::move::drawVarArrows]} { ::move::showVarArrows }
 }
@@ -101,7 +101,7 @@ set ::fics::playing 0 ; # predefine
 proc ::move::Back {{count 1}} {
   if {[sc_pos isAt start]} {
     if {$::fics::playing == 2} {
-      ::fics::writechan backward noecho 
+      ::fics::writechan backward noecho
     }
     return
   }
@@ -129,7 +129,7 @@ proc ::move::Forward {{count 1}} {
 
   if {[sc_pos isAt end]  ||  [sc_pos isAt vend]} {
     if {$::fics::playing == 2} {
-      ::fics::writechan forward noecho 
+      ::fics::writechan forward noecho
     }
     return
   }

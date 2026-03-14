@@ -323,8 +323,8 @@ proc ::docking::end_motion {w x y} {
         set dest end
       }
       $c_path insert $dest [$c_path select]
-      # wtf is this here 
-      # if {[$c_path identify [expr $x-[winfo rootx $c_path]] [expr $y-[winfo rooty $c_path]]]!=""} 
+      # wtf is this here
+      # if {[$c_path identify [expr $x-[winfo rootx $c_path]] [expr $y-[winfo rooty $c_path]]]!=""}
       # set c_path {}
       # return
     } else {

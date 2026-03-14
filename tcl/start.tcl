@@ -222,7 +222,7 @@ set tbOnline Nalimov
 proc ::docking::init_layout_list {{recover 0}} {
   # Default window docking layouts
   array set ::docking::layout_list {}
-  
+
   # Basic layout : PGN window with main board
   set ::docking::layout_list(1) {{MainWindowGeometry 834x640+80+50} {{.pw vertical {}} {TPanedwindow {{.pw.pw0 horizontal 564} {TNotebook .nb .fdockmain} {TNotebook .tb1 .fdockpgnWin}}}}}
 
@@ -272,7 +272,7 @@ set cleaner(tree) 0
 set scidExecutable [info nameofexecutable]
 
 if {$scidExecutable == {}} {
-  ### Shit. Wish8.6b2 returns {} 
+  ### Shit. Wish8.6b2 returns {}
   if {$macOS} {
     set scidExecutable /Applications/ScidvsMac.app/Contents/MacOS/scid
     puts "scidExecutable is null. Now is \"$scidExecutable\""
@@ -280,9 +280,9 @@ if {$scidExecutable == {}} {
     catch {
       set scidExecutable [exec readlink /proc/[pid]/exe]
     }
-    puts "scidExecutable is null. Now is \"$scidExecutable\"" 
+    puts "scidExecutable is null. Now is \"$scidExecutable\""
   } else {
-    puts "scidExecutable is null" 
+    puts "scidExecutable is null"
   }
 }
 
@@ -911,18 +911,18 @@ set default_exportStartFile(Latex) {\documentclass{scrreprt}
 \definecolor{BlackPiecesGraphColor}{RGB}{101,37,37}
 \definecolor{WhitePiecesGraphColor}{RGB}{189,183,107}
 
-\setlength{\extrarowheight}{3pt}  
-  
+\setlength{\extrarowheight}{3pt}
+
 \newcommand{\win}{1-0}
-\newcommand{\loss}{0-1}  
-\newcommand{\draw}{=-=}  
+\newcommand{\loss}{0-1}
+\newcommand{\draw}{=-=}
 \newcommand{\p}{\figsymbol{p}}
 \newcommand{\N}{\figsymbol{N}}
 \newcommand{\B}{\figsymbol{B}}
 \newcommand{\R}{\figsymbol{R}}
-\newcommand{\Q}{\figsymbol{Q}}  
-\newcommand{\K}{\figsymbol{K}}    
-  
+\newcommand{\Q}{\figsymbol{Q}}
+\newcommand{\K}{\figsymbol{K}}
+
 \renewcommand*\thesection{\arabic{section}}
 \addtokomafont{section}{\color{blue}}
 \addtokomafont{subsection}{\color{red}}
@@ -972,9 +972,9 @@ proc raiseWin {w} {
       if {[catch {::docking::raiseTab $w}]} {
         # dammit, undocked windows aren't raising. fixme
 	catch {wm deiconify $w}
-	raise $w 
+	raise $w
 	focus $w
-      } 
+      }
     } else {
       if {$autoRaise} {
 	catch {wm deiconify $w}
@@ -1018,7 +1018,7 @@ proc setTitle { w title } {
     if { [catch {set nb [ ::docking::find_tbn $f ]} ]} {
       set nb ""
     }
-    
+
     if { $nb == "" } {
       wm title $w $title
     } else  {
@@ -1038,7 +1038,7 @@ proc setTitle { w title } {
     if { [winfo exists $wdock ] } { set w $wdock }
     wm title $w $title
   }
-  
+
 }
 ################################################################################
 # Creates a toplevel window depending of the docking option
@@ -1069,7 +1069,7 @@ proc createToplevel { w } {
     frame $f  -container 1
     toplevel .$name -use [ winfo id $f ]
     ::docking::add_tab $f
-    
+
     # auto focus mode : when the mouse enters a toplevel, it gets a forced focus to handle mouse wheel
     # only the highest stacked window can get the focus forced or on windows any time the mouse enters the main window, it will be raised
     bind .$name <Enter> {
@@ -1091,11 +1091,11 @@ proc createToplevel { w } {
         }
       }
     }
-    
+
   } else  {
     toplevel $w
   }
-  
+
 }
 
 ################################################################################
@@ -1124,13 +1124,13 @@ proc resizeMainBoard {} {
   global gameInfo board
 
   if { ! $::docking::USE_DOCKING } { return }
-  
+
   bind .main <Configure> {}
-  
+
   set w [winfo width .main]
   set h [winfo height .main]
   set bd .main.board
-  
+
   ### calculate available height
 
   set height_used 0
@@ -1163,12 +1163,12 @@ proc resizeMainBoard {} {
     set min_game_info_height [expr int([font configure font_Regular -size] * 1.5 * 2.5)]
   }
   incr height_used $min_game_info_height
-  
+
   # status bar
   incr height_used [ lindex [grid bbox .main 0 4] 3]
-  
+
   set availh [expr $h - $height_used]
-  
+
   ### calculate available width
 
   set width_used 12
@@ -1193,8 +1193,8 @@ proc resizeMainBoard {} {
   }
 
   # Not quite perfect for some reason (-16)
-  set availw [expr $w - $width_used -16] 
-  
+  set availw [expr $w - $width_used -16]
+
   if {$availh < $availw} {
     set min $availh
   } else  {
@@ -1223,7 +1223,7 @@ proc resizeMainBoard {} {
     set new_game_info_lines [expr $new_game_info_lines - 1]
   }
   .main.gameInfo configure -height $new_game_info_lines
-  
+
   update idletasks
   bind .main <Configure> {::docking::handleConfigureEvent %W}
 }
@@ -1590,7 +1590,7 @@ set optionsFile [scidConfigFile options]
 ::splash::add "Command line is \"$::argv0 $::argv\""
 ::splash::add "User directory is \"$scidUserDir\""
 
-if {[info tclversion] >= "8.6"} { 
+if {[info tclversion] >= "8.6"} {
   ::splash::add "png image support is available."
   set png_image_support 1
   set boardStyle Merida1
@@ -1641,7 +1641,7 @@ if {$::docking::USE_DOCKING} {
 
 ::splash::add {}
 
-# gradient 
+# gradient
 # Bryan Oakley
 # https://wiki.tcl-lang.org/page/Making+color+gradients
 #
@@ -1831,7 +1831,7 @@ proc  configHistory {namespace entrybox} {
       variable history_pos
       variable history_current
       variable entrybox
-      
+
       if {[lindex $history end] != $text} {
 	lappend history $text
       }
@@ -1843,7 +1843,7 @@ proc  configHistory {namespace entrybox} {
       variable history_pos
       variable history_current
       variable entrybox
-      
+
       set t $entrybox
 
       if {$action == "up" && $history_pos > 0} {
@@ -1859,7 +1859,7 @@ proc  configHistory {namespace entrybox} {
 	  $t delete 0 end
 	  incr history_pos
 	  if {$history_pos == [llength $history]} {
-	    set  entry $history_current 
+	    set  entry $history_current
 	  } else {
 	    set entry [lindex $history $history_pos]
 	  }
@@ -1908,7 +1908,7 @@ proc  configHistory {namespace entrybox} {
 ### Start up splash window
 
 proc ::splash::make {} {
-  ### windows hack 
+  ### windows hack
   # Dont withdraw toplevel if windows and docked mode, because of rendering bugs in paned windows/tabs
   if {!($::windowsOS && $::docking::USE_DOCKING)} {
      wm withdraw .
@@ -2150,7 +2150,7 @@ switch "_$::ttk::currentTheme" {
 if {[llength $fbg]} {
    ttk::style map TCombobox -fieldbackground $fbg
    ttk::style map TEntry -fieldbackground $fbg
-   if {[info tclversion] >= "8.6"} { 
+   if {[info tclversion] >= "8.6"} {
       ttk::style map TSpinbox -fieldbackground $fbg
    }
 }

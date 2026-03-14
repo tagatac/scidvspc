@@ -5,13 +5,13 @@
 # Copyright (C) 2019  Bonnie A
 # Copyright (C) 2019  stevenaaus
 
-# Note: Text and listbox widgets should include the option "-exportselection false" 
+# Note: Text and listbox widgets should include the option "-exportselection false"
 # else this entire set of code falls apart. (Not to mention interference with other
 # applications during annotation.)
 #
 # Warning:  sc_epd_open() (PBook::ReadFile()) will delete any EPD position that is a
-#   duplicate or that has some problem with the FEN string.  Oddly, it does not 
-#   check for an illegal castling availibility field, which will likely crash the 
+#   duplicate or that has some problem with the FEN string.  Oddly, it does not
+#   check for an illegal castling availibility field, which will likely crash the
 #   analysis engine used for annotation.
 #
 # Caution:  Updating modifications to the text widget requires that the respective
@@ -45,7 +45,7 @@ namespace eval epd {
     puts "Call Stack:"
     for {set i [expr [info level]-1]} {$i > 0} {incr i -1} {
       puts "\t[info level $i]"
-    } 
+    }
   }
 
   proc epdFindText {id entry} {
@@ -64,7 +64,7 @@ namespace eval epd {
 
     if {!$found} {
       set i 0
-      # allows us to find matches in entry 0 
+      # allows us to find matches in entry 0
     } else {
       incr i -1
     }
@@ -347,7 +347,7 @@ namespace eval epd {
 
   ################################################################################
   ### Update the EPD window to agree with the EPD internals for the current
-  ### board position. 
+  ### board position.
   ### This proc is also invoked whenever the main board is updated.
   ################################################################################
   proc updateEpdWin {id} {
@@ -563,7 +563,7 @@ namespace eval epd {
     }
 
     ttk::combobox  $w.engine.combo -width 20 -state readonly -values $values
-    # Todo - restore previous engine 
+    # Todo - restore previous engine
     $w.engine.combo current 0
     label $w.engine.label -textvar tr(Engine)
 
@@ -653,7 +653,7 @@ namespace eval epd {
           incr bestMovesNoted
           if {[string match avoid* $bestMoves]} {
             # Avoid moves
-            set bestMoves [string range $bestMoves 6 end] 
+            set bestMoves [string range $bestMoves 6 end]
             if {[lsearch -exact $bestMoves $bestPV] == -1} {
               incr bestMovesFound
               set status success
@@ -826,7 +826,7 @@ namespace eval epd {
   }
 
   ################################################################################
-  ###  Add the current board position to the list of EPD positions and update 
+  ###  Add the current board position to the list of EPD positions and update
   ###  the listbox.  We cannot add a position that already exists, but will set the
   ###  listbox selection to the existing position.
   ################################################################################
@@ -834,7 +834,7 @@ namespace eval epd {
     set w .epd$id
 
     # does the current position already exist?
-    if {[sc_epd exists $id]} { 
+    if {[sc_epd exists $id]} {
       # get the node list index of the existing position
       set idx [sc_epd index $id]
       #tk_messageBox -type ok -icon info -title "Position Already Exists" \
