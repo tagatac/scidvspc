@@ -1,6 +1,9 @@
+I'm not really into this idea, but a quick and dirty implementation of analysis arrows in the main board instead of mini board.
+Work needs to be done to fix the broken clickable arrows. S.A.
+
 Index: tcl/board.tcl
 ===================================================================
---- tcl/board.tcl	(revision 3610)
+--- tcl/board.tcl	(revision 3613)
 +++ tcl/board.tcl	(working copy)
 @@ -2038,7 +2038,8 @@
    # main     board arrows come with varnum integer
@@ -38,7 +41,7 @@ Index: tcl/board.tcl
    set sq -1
 Index: tcl/move.tcl
 ===================================================================
---- tcl/move.tcl	(revision 3604)
+--- tcl/move.tcl	(revision 3613)
 +++ tcl/move.tcl	(working copy)
 @@ -4,7 +4,8 @@
  namespace eval ::move {}
@@ -49,10 +52,10 @@ Index: tcl/move.tcl
 +
    # if {[winfo exists .coachWin]} { return 0 }
    # if {[winfo exists .serGameWin]} { return 0 }
-   
+ 
 Index: tcl/tools/analysis.tcl
 ===================================================================
---- tcl/tools/analysis.tcl	(revision 3610)
+--- tcl/tools/analysis.tcl	(revision 3613)
 +++ tcl/tools/analysis.tcl	(working copy)
 @@ -3826,7 +3826,7 @@
  proc updateAnalysisBoard {n {moves {}}} {
