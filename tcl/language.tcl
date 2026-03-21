@@ -90,7 +90,7 @@ array set langTable {
   B {portbr   {Brazil Portuguese} 0 iso8859-1 po}
   U {port     Portuguese 0 iso8859-1 po}
   R {russian  Russian    0 utf-8     {}}
-  Y {serbian  Serbian    2 iso8859-2 {}}
+  Y {serbian  Serbian    2 cp1250 {}}
   S {spanish  Spanish    1 iso8859-1 es}
   W {swedish  Swedish    1 iso8859-1 sw}
   T {turkish  Turkish    0 utf-8     tr}
