@@ -223,7 +223,7 @@ namespace eval tactics {
     dialogbutton $w.fconfig.fbutton.ok -text Ok -command "::tactics::start $w"
     dialogbutton $w.fconfig.fbutton.help -text $tr(Help) -command {helpWindow TacticsTrainer}
     dialogbutton $w.fconfig.fbutton.cancel -text $tr(Cancel) -command "focus .main ; destroy $w"
-    pack $w.fconfig.fbutton.ok $w.fconfig.fbutton..help $w.fconfig.fbutton.cancel -expand yes -side left -padx 10 -pady 2
+    pack $w.fconfig.fbutton.ok $w.fconfig.fbutton.help $w.fconfig.fbutton.cancel -expand yes -side left -padx 10 -pady 2
     pack $w.fconfig $w.fconfig.flist $w.fconfig.reset -side top
 
     addHorizontalRule $w.fconfig
