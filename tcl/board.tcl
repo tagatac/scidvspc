@@ -1525,6 +1525,7 @@ proc ::board::resize2 {w psize} {
   }
 
   $w.evalbar configure -width [expr {int(ceil($psize/10.0))+2}] -height $bsize
+  $w.mpvtls configure  -width [expr {int(ceil($psize/10.0))+2}] -height $bsize
 
   ::board::update $w
 
