@@ -1926,6 +1926,7 @@ proc ::board::mark::add {win args} {
               if {[catch {DrawVar $board $square $dest $color $varnum $move}]} {
                 return
               }
+              # DrawVar $board $square $dest $color $varnum $move
             }
     var*    {
               scan $type var%i varnum
@@ -2055,7 +2056,8 @@ proc ::board::mark::DrawVar {pathName from to color varnum {move {}}} {
     $pathName create line $coord -fill $color -arrow last -width 3 -arrowshape {9 12 3} \
       -activewidth 5 -tag [list mark var "mark${from}:${to}" var$move]
     ]
-      # and a midpoint number if desied
+      # and a midpoint number if desired 
+      # -1 is sent if only 2 lines found, when we don't need to number the arrow because it's color is different S.A.
       if {$varnum > 0 && $::analysis(numberPVArrows)} {
         incr varnum
 	set xmid [expr ([lindex $coord 0] + [lindex $coord 2]) / 2]

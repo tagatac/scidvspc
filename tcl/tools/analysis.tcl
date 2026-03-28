@@ -3892,10 +3892,15 @@ proc updateAnalysisBoard {n {moves {}}} {
         ::board::mark::add $bd varComment0-$m $sq_start $sq_end $::engineLineColor
       }
       set varnum 1
+      set movecount [llength $move]
       foreach m [lrange $move 1 end] {
         if {$m != ""} {
           set sq_start [::board::sq [string range $m 0 1]]
           set sq_end   [::board::sq [string range $m 2 3]]
+          # another nasty hack to only number vars if more than 2 moves
+          if {$movecount == 2} {
+            set varnum -1
+          }
           ::board::mark::add $bd varComment$varnum-$m $sq_start $sq_end $::varcolor
         }
         incr varnum
