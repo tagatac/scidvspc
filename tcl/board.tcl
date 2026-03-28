@@ -1391,8 +1391,12 @@ proc ::board::new {w {psize 40} {showmat 0} {flip 0} {stm 0} {evalbar 0} {mpvtls
   if {$::board::_showEvalbar($w)} {
     grid $w.evalbar -row 1 -column 12 -rowspan 8 -padx 4
   }
-
-  canvas $w.mpvtls -width [expr {int(ceil($::board::_size($w)/5.0))}] -height $bsize
+  set width [expr {int(ceil($::board::_size($w)/5.0))}]
+  if {$::macOS} {
+    canvas $w.mpvtls -width [expr $width+2] -height [expr $bsize+2]
+  } else {
+    canvas $w.mpvtls -width $width -height $bsize
+  }
   if {($::board::_showMPVTls($w))} {
     grid $w.mpvtls -row 1 -column 13 -rowspan 8
   }
@@ -3364,7 +3368,11 @@ proc ::board::update_mpvtls {w evals} {
     set color [eval2tlcolor $eval]
     set y1 $y2
     set y2 [expr $icnt*$unitLen]
-    $w.mpvtls create line $x $y1 $x $y2 -width $width -fill $color -tag mpvtls
+    if {$::macOS} {
+      $w.mpvtls create line [expr $x+2] $y1 [expr $x+2] $y2 -width $width -fill $color -tag mpvtls
+    } else {
+      $w.mpvtls create line $x $y1 $x $y2 -width $width -fill $color -tag mpvtls
+    }
   }
 }
 
