@@ -1189,7 +1189,7 @@ proc okAnnotation {n} {
 
   resetAnalysis $n
   set analysis(prevmoves$n) {}
-  catch {.analysisWin$n.frame.bd.bd delete var bvm}
+  catch {.analysisWin$n.frame.bd.bd delete var engine bvm}
   set ::useAnalysisBookName [$w.usebook.comboBooks get]
   set ::book::lastBook1 $::useAnalysisBookName
   set ::prevNag {}
@@ -2040,8 +2040,8 @@ proc destroyAnalysisWin {n} {
     cancelAutoplay
   }
 
-  if { $n == 1 && $analysis(mini)} {
-    toggleMini
+  if {$analysis(boardEngine) == $n} {
+    set analysis(boardEngine) 0
   }
 
   # Cancel scheduled commands
@@ -2337,13 +2337,6 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   }
   ::setTitle $w "$analysisName"
 
-  if {$n == 1 && $analysis(mini)} {
-    # Run engine in status bar. It is "niced" at procedure end.
-    if {!$::docking::USE_DOCKING} {
-      catch {wm state $w withdrawn}
-    }
-  }
-
   bind $w <F1> { helpWindow Analysis }
 
   ### Set initial size of analysis widget
@@ -2421,6 +2414,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
     initAnalysisBoard $n
   "
   ::utils::tooltip::Set $w.b.showboard $tr(ShowAnalysisBoard)
+  bind $w.b.showboard <Button-3> "setBoardEngine $n"
 
   button $w.b.exclude -image tb_exclude -command "excludeMovePopup $n" -relief $relief
   ::utils::tooltip::Set $w.b.exclude $tr(ExcludeMove)
@@ -2604,7 +2598,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   }
   # necessary on windows because the UI sometimes starves, also keep latest priority setting
   # if ($::windowsOS)
-  if {$analysis(priority$n) == {idle} || $analysis(lowPriority) || ($n==1 && $analysis(mini)) } {
+  if {$analysis(priority$n) == {idle} || $analysis(lowPriority)} {
     set analysis(priority$n) idle
     setAnalysisPriority $n
   }
@@ -2616,39 +2610,6 @@ proc makeAnalysisWin {{n 0} {options {}}} {
    }
 }
 
-### Dock/undock Engine1 in statusbar
-
-proc toggleMini {} {
-
-  global analysisWin1 analysis
-
-  if {![winfo exists .analysisWin1]} {
-    updateStatusBar
-    return
-  }
-
-  set analysis(mini) [expr !$analysis(mini)]
-
-  if {$analysis(mini)} {
-    # make window small
-    if {!$::docking::USE_DOCKING} {
-      catch {wm state .analysisWin1 withdrawn}
-    }
-    update
-    set analysis(priority1) idle ; # nice priority
-  } else {
-    # make window big
-    if {!$::docking::USE_DOCKING} {
-      catch {wm state .analysisWin1 normal}
-    }
-    updateStatusBar
-    update
-    .analysisWin1.hist.text yview moveto 1
-    set analysis(priority1) normal ; # normal priority
-  }
-  setAnalysisPriority 1
-}
-
 
 proc findEngine {} {
   for {set i 0} {$i < [llength $::engines(list)]} {incr i} {
@@ -2657,6 +2618,16 @@ proc findEngine {} {
     }
   }
   return -1
+}
+
+proc setBoardEngine {n} {
+  if {$::analysis(boardEngine) != $n} {
+    .main.board.bd delete var
+    set ::analysis(boardEngine) $n
+  } else {
+    .main.board.bd delete engine
+    set ::analysis(boardEngine) 0
+  }
 }
 
 ### Add move from analysis engine n (or first analysis window, if any)
@@ -3612,16 +3583,6 @@ proc updateAnalysisText {n} {
       append line [format "%2d \[%+5.2f\]  %s (%.2f)\n" $analysis(depth$n) $score [::trans $moves] $analysis(time$n)]
     }
 
-    if { $n == 1 && $analysis(mini) } {
-      # show in status bar
-      if {[string is ascii -strict %s]} {
-	set s [string range $line [string first {[} $line] 50]
-	if {$s != {}} {
-	  set ::statusBar "   [lindex $analysis(name1) 0]: [string map {\n {}} $s]"
-	}
-      }
-    }
-
     $h insert end $line indent
     # $h see end-1c
     set pos [lindex [ .analysisWin$n.hist.ybar get ] 1]
@@ -3722,7 +3683,7 @@ proc initAnalysisBoard {n} {
     }
 
     bind $bd.bd <Button-2> "
-      $bd.bd delete var bvm
+      $bd.bd delete var bvm engine
       nextBoardType $n"
 
     bindControlMouseWheelResizeBoard $bd.bd $bd "updateAnalysisBoard $n redraw"
@@ -3787,7 +3748,7 @@ proc toggleEngineInfo {n} {
 proc boardVisualizeMoves {board n moves} {
   global analysis
 
-  $board delete bvm
+  $board delete bvm engine
   set im -1
   set mc 0
   set ply [sc_pos location]
@@ -3826,7 +3787,7 @@ proc boardVisualizeMoves {board n moves} {
 proc updateAnalysisBoard {n {moves {}}} {
   global analysis annotate
 
-  if {!$analysis(showBoard$n) || $annotate(Engine) > -1} {
+  if {(!$analysis(showBoard$n) && ($analysis(boardEngine) != $n || $analysis(boardType$n) == "Position")) || $annotate(Engine) > -1} {
     return
   }
   if {$moves == "redraw"} {
@@ -3883,7 +3844,14 @@ proc updateAnalysisBoard {n {moves {}}} {
     if {!$analysis(lockEngine$n)} {
       ::board::update $bd [sc_pos board]
     }
-    $bd.bd delete var
+
+    if {$analysis(boardEngine) == $n} {
+      # new Draw Arrows on Main Board feature - S.A.
+      set bd .main.board
+    } else {
+      $bd.bd delete var
+    }
+
     if {$analysis(boardType$n) == "Arrows"} {
       set m [lindex $move 0]
       if {$m != ""} {
@@ -4346,7 +4314,10 @@ proc automoveGo {n} {
 
 
 proc moveAdd {moves n} {
-  if { $::analysis(uci$n) } {
+  if {$n == {}} {
+    set n $::analysis(boardEngine)
+  }
+  if {$::analysis(uci$n)} {
     return [ catch { sc_move addUCI $moves } ]
   } else  {
     return [ catch { sc_move addSan $moves } ]

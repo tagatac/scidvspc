@@ -2772,9 +2772,7 @@ making for easier <a Analysis Debugging>Debugging</a>.
   <p>Starting them can be done in various ways
   By <run ::startAnalysisWin F2><green>pressing F2</green></run>
   , F3 or F4 from the Configuration Widget, or via the <b>Tools--<gt>Start Engine</b> menu.
-  Additionally, the second listed engine can be start/stopped by <b>double-clicking the status-bar</b>.
-  Right-clicking the status-bar will dock/undock the engine,
-  which, when running docked, will run at low CPU priority.<p>
+</p>
 
   <p>
   <b>Space Bar</b> makes the engine start/stop. Pressing <b>Enter</b> will
@@ -2808,7 +2806,7 @@ making for easier <a Analysis Debugging>Debugging</a>.
   Hover cursor over this button to see stats for locked game.
   After a while, to add this analysis to game, return to the locked position, 
   press Pause, Unlock, and Add Variation.</li>
-  <li> <button tb_coords 32> <b>Show Board</b> displays a small <a Analysis Board>analysis board</a>.
+  <li> <button tb_coords 32> <b>Show Board</b> displays a small <a Analysis Board>analysis board.</a> (Right-click toggles arrows on the main board).
   If engine is locked the board displays the locked position, otherwise middle-click toggles between display modes.</li>
   <li> <button tb_exclude 32> <b>Exclude Move(s)</b> helps refine the engine's search list (mainly UCI engines only). Hovering mouse shows the current excluded moves.</li>
   <li> <button tb_cpu 32> <b>Low CPU priority</b> 
@@ -2868,6 +2866,9 @@ The default mode and size are set in the <a Analysis List>Engine Configuration</
 <br><b>Arrows</b> will display clickable arrows for the engine's move, or multiple arrows if PV is enabled (Var Numbers toggled by Control-Shift-N).
 <br><b>Sequential</b> will show the line as a numbered sequence of small (unclickable) arrows. The length of moves shown is by default 3 but can be changed in the last spinbox in the engine toolbar. The line colour is selected by Options-<gt>Colours-<gt>EngineArrows.
 </p>
+
+<p>Right clicking <button tb_coords 32> toggles Engine Arrows being displayed on the main board!</p>
+
 <p>Beside the board is a black and white Score Bar (toggled via Control-Shift-S), and optionally, a Coloured 'Traffic' Bar (Control-Shift-C) which shows colours for each MultiPV's score - indicating the sharpness of a position. Red means Black is winning, Yellow is even, and Green for White winning."
 </p>
 

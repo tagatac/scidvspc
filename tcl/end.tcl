@@ -1789,24 +1789,10 @@ label .main.statusbar -textvar statusBar -relief sunken -anchor w -width 1 -font
 # double-click starts/stops engine 1
 bind .main.statusbar <Double-Button-1> {
   makeAnalysisWin 1
-  if {[winfo exists .analysisWin1] && $::analysis(mini)} {
-    set ::statusBar "   [lindex $::analysis(name1) 0]:"
-    update
-  }
 }
 
 # todo mac button patch
 bind .main.statusbar <Button-2> {::file::SwitchToNextBase ; break}
-
-# Right-click toggles if engine1 is shown in status bar
-bind .main.statusbar <Button-3>  {
-  toggleMini
-  if {[winfo exists .analysisWin1] && $::analysis(mini)} {
-    set ::statusBar "   [lindex $::analysis(name1) 0]:"
-    update
-  }
-  break
-}
 
 ############################################################
 ### Grid the main window &&&
@@ -2235,8 +2221,7 @@ proc getTopLevel {{type {}}} {
     # Tk report .__tk_filedialog as toplevel window even if the window has been closed
     if { [ lsearch $topl $c ] == -1 && [ lsearch $exclude $c ] == -1 && ![string match "\.__tk*" $c] } {
       ### Dont deiconify analysis widgets if tournament is running, or engine1 is in docked mode
-      if {!($type == "deiconify" && [winfo exists .comp] && [string match .analysisWin* $c]) &&
-          ($c != ".analysisWin1" || !$::analysis(mini))} {
+      if {!($type == "deiconify" && [winfo exists .comp] && [string match .analysisWin* $c])} {
 	  lappend topl $c
       }
     }

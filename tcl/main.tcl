@@ -170,9 +170,6 @@ proc warnStatusBar {warning} {
      set ::gameInfo(showStatus) 1
      toggleStatus
    }
-   # Stop engine in status bar if neccessary
-   if {[winfo exists .analysisWin1] && $::analysis(mini)} { makeAnalysisWin 1 }
-
    set ::statusBar $warning
    .main.statusbar configure -foreground red3
    # Will be restored by updateStatusBar in main.tcl
@@ -188,9 +185,6 @@ proc updateStatusBar {} {
   global statusBar moveEntry
 
   ::windows::gamelist::checkAltered
-
-  # Exit if engine 1 is running in status bar
-  if {$::analysis(mini) && [winfo exists .analysisWin1]} {return}
 
   set statusBar "  "
 

@@ -4,9 +4,7 @@
 namespace eval ::move {}
 
 proc ::move::drawVarArrows {} {
-  if {! $::showVarArrows || $::autoplayMode} { return 0 }
-  # if {[winfo exists .coachWin]} { return 0 }
-  # if {[winfo exists .serGameWin]} { return 0 }
+  if {$::analysis(boardEngine) || ! $::showVarArrows || $::analysis(boardType) == "Position" || $::autoplayMode} { return 0 }
 
   set bDrawArrow 0
   set varList [sc_var list UCI]
@@ -34,6 +32,9 @@ proc ::move::drawVarArrows {} {
 }
 
 proc ::move::showVarArrows {} {
+  if {$::analysis(boardEngine)} {
+    return
+  }
   set move [sc_game info nextMoveUCI]
   set varList [sc_var list UCI]
 
@@ -46,7 +47,7 @@ proc ::move::showVarArrows {} {
     incr var
   }
 
-  foreach { move } $varList {
+  foreach move $varList {
     set sq_start [ ::board::sq [ string range $move 0 1 ] ]
     set sq_end [ ::board::sq [ string range $move 2 3 ] ]
     ::board::mark::add .main.board var$var $sq_start $sq_end $::varcolor

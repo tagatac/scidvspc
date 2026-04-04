@@ -1575,7 +1575,7 @@ proc ::board::highlightSquare {args} {
     # draw border (more useful for textures)
     if {[llength $args] > 2} {
       set square [lindex $args 1]
-      if {$square < 0  ||  $square > 63} { puts "error square = $square" ; return }
+      if {$square < 0 || $square > 63} { puts "error square = $square" ; return }
       set box [::board::mark::GetBox $board $square 1.0 1]
       $board create rectangle $box -outline $::squarecolor -width $::highlightLastMoveWidth -tag {moveRectangle mark}
     } else  {
@@ -1908,7 +1908,9 @@ proc ::board::mark::add {win args} {
   # Remove existing marks:
   if {$type == "arrow" || [string match {var*} $type]} {
     $board delete "mark${square}:${dest}" "mark${dest}:${square}"
-    if {$color == "nocolor"} { set type DEL }
+    if {$color == "nocolor"} {
+      set type DEL
+    }
   } else {
     $board delete "mark${square}"
     # not needed anymore
@@ -1927,16 +1929,16 @@ proc ::board::mark::add {win args} {
               # pretty nasty - "varComment" has a varnum and uci move appended.
               # Extract move, and pass it on to DrawVar
               scan $type varComment%i-%s varnum move
-              if {[catch {DrawVar $board $square $dest $color $varnum $move}]} {
-                return
+              # if {[catch {DrawVar $board $square $dest $color $varnum $move}]} { return }
+              if {$varnum == 0} {
+                $board delete engine
               }
-              # DrawVar $board $square $dest $color $varnum $move
+              DrawVar $board $square $dest $color $varnum $move
             }
     var*    {
               scan $type var%i varnum
-              if {[catch {DrawVar $board $square $dest $color $varnum}]} {
-                return
-              }
+              # if {[catch {DrawVar $board $square $dest $color $varnum}]} { return }
+              DrawVar $board $square $dest $color $varnum
             }
     default {
               # Find a subroutine to draw the canvas object:
@@ -2024,8 +2026,9 @@ proc ::board::mark::DrawText {pathName square char color {size 0} {shadowColor "
 }
 
 proc ::board::mark::DrawArrow {pathName from to color} {
-  if {$from < 0  ||  $from > 63} { return }
-  if {$to   < 0  ||  $to   > 63} { return }
+  if {$from < 0 || $from > 63 || $to < 0 || $to > 63} {
+    return
+  }
   set coord [GetArrowCoords $pathName $from $to $::board::arrowLength]
   if {$pathName == ".main.board.bd"} {
     set arrowshape "-width $::board::arrowWidth -arrowshape {[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * sqrt (6.25 + 2.25)] [expr int($::board::arrowWidth * 1.5)]}"
@@ -2044,32 +2047,39 @@ proc ::board::mark::DrawVar {pathName from to color varnum {move {}}} {
   # main     board arrows come with varnum integer
   # analysis board arrows come with varnum and move, to allow for clickable moves
 
-  set small [expr {$move != {}}]
+  if {$from < 0 || $from > 63 || $to < 0 || $to > 63} {
+    return
+  }
 
-  if {$from < 0  ||  $from > 63 || $to < 0 || $to   > 63} { return }
+  # set small [expr {$move != {}}]
+  set small [expr {$pathName != ".main.board.bd"}]
 
   set coord [GetArrowCoords $pathName $from $to $::board::arrowLength]
   if {!$small} {
     set arrow [
     $pathName create line $coord -fill $color -arrow last -width $::board::arrowWidth \
-      -arrowshape "[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * sqrt (6.25 + 2.25)] [expr int($::board::arrowWidth * 1.5)]" \
-      -activewidth 8 -tag [list mark var "mark${from}:${to}" var$varnum]
+      -arrowshape "[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * sqrt (6.25 + 2.25)] [expr int($::board::arrowWidth * 1.5)]" -activewidth 8
     ]
   } else {
     set arrow [
-    $pathName create line $coord -fill $color -arrow last -width 3 -arrowshape {9 12 3} \
-      -activewidth 5 -tag [list mark var "mark${from}:${to}" var$move]
+    $pathName create line $coord -fill $color -arrow last -width 3 -arrowshape {9 12 3} -activewidth 5
     ]
-      # and a midpoint number if desired 
-      # -1 is sent if only 2 lines found, when we don't need to number the arrow because it's color is different S.A.
-      if {$varnum > 0 && $::analysis(numberPVArrows)} {
-        incr varnum
-	set xmid [expr ([lindex $coord 0] + [lindex $coord 2]) / 2]
-	set ymid [expr ([lindex $coord 1] + [lindex $coord 3]) / 2]
-        set mark [
-          $pathName create text $xmid $ymid -fill $::analysis(boardSeqNumColor) -font $::analysis(boardSeqFont) -text $varnum -anchor c -tag [list mark var "mark${from}:${to}" var$move]
-        ]
-      }
+  }
+  if {$move == {}} {
+    $pathName itemconfigure $arrow -tag [list mark var "mark${from}:${to}" var$varnum]
+  } else {
+    $pathName itemconfigure $arrow -tag [list mark engine "mark${from}:${to}" var$move]
+  }
+
+  ### And a midpoint number if desired 
+  # -1 is sent if only 2 lines found, when we don't need to number the arrow because it's color is different S.A.
+  if {$move != {} && $varnum > 0 && $::analysis(numberPVArrows)} {
+    incr varnum
+    set xmid [expr ([lindex $coord 0] + [lindex $coord 2]) / 2]
+    set ymid [expr ([lindex $coord 1] + [lindex $coord 3]) / 2]
+    set mark [
+      $pathName create text $xmid $ymid -fill $::analysis(boardSeqNumColor) -font $::analysis(boardSeqFont) -text $varnum -anchor c -tag [list mark engine "mark${from}:${to}" var$move]
+    ]
   }
 
   $pathName raise $arrow all
@@ -2077,13 +2087,16 @@ proc ::board::mark::DrawVar {pathName from to color varnum {move {}}} {
   catch {$pathName raise $mark all}
 
   # Create arrow binding
-  if {!$small} {
+  if {$move == {}} {
     $pathName bind var$varnum <Button-1> "enterVar $varnum"
   } else {
     # derive engine number from pathname ".analysisWin$n.frame.bd"
     set n [string range $pathName 12 [string first . $pathName 10]-1]
-    if {!$::analysis(lockEngine$n)} {
-      $pathName bind var$move <Button-1> "makeAnalysisMove $n $move"
+
+    # n will not resolve if analysis(boardEngine), so ...
+    if {$n == {} || !$::analysis(lockEngine$n)} {
+      $pathName bind var$move <Button-1> [list makeAnalysisMove $n $move]
+      # catch {$pathName.bd bind var$move <Button-1> [list makeAnalysisMove $n $move]}
     } else {
       $pathName bind var$move <Button-1> ""
     }
@@ -2093,7 +2106,7 @@ proc ::board::mark::DrawVar {pathName from to color varnum {move {}}} {
 # ::board::mark::DrawRectangle --
 # Draws a rectangle surrounding the square
 proc ::board::mark::DrawRectangle { pathName square color pattern } {
-  if {$square < 0  ||  $square > 63} { puts "error square = $square" ; return }
+  if {$square < 0 || $square > 63} { puts "error square = $square" ; return }
   set box [::board::mark::GetBox $pathName $square 1.0 1]
   $pathName create rectangle $box \
       -outline $color -width $::highlightLastMoveWidth -dash $pattern -tag highlightLastMove
@@ -2494,7 +2507,7 @@ proc ::board::update {w {board ""} {animate 0} {eval {}}} {
   after cancel "::board::_animate $w"
 
   # Remove all marks (incl. arrows) from the board
-  $w.bd delete mark
+  $w.bd delete mark bvm engine
 
   # Draw each square
   set sq -1
