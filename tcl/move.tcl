@@ -3,8 +3,12 @@
 
 namespace eval ::move {}
 
-proc ::move::drawVarArrows {} {
-  if {$::analysis(boardEngine) || ! $::showVarArrows || $::analysis(boardType) == "Position" || $::autoplayMode} { return 0 }
+proc ::move::checkVarArrows {} {
+  global analysis
+  # also check Engine is not drawing arrows on main board
+  if {($analysis(boardEngine) && $analysis(analyzeMode$analysis(boardEngine))) || !$::showVarArrows || $::autoplayMode} {
+    return 0
+  }
 
   set bDrawArrow 0
   set varList [sc_var list UCI]
@@ -12,10 +16,10 @@ proc ::move::drawVarArrows {} {
   if {$varList != ""} {
     set move [sc_game info nextMoveUCI]
     if {$move != ""} { set varList [linsert $varList 0 $move] }
-    foreach { move } $varList {
+    foreach move $varList {
       set bDrawn 0
-      set sq_start [ ::board::sq [ string range $move 0 1 ] ]
-      set sq_end [ ::board::sq [ string range $move 2 3 ] ]
+      set sq_start [::board::sq [string range $move 0 1]]
+      set sq_end [::board::sq [string range $move 2 3]]
         foreach mark $::board::_mark(.main.board) {
           if { [lindex $mark 0] == "arrow" ||[string match {var*} [lindex $mark 0]] } {
             if {[lindex $mark 1] == $sq_start && [lindex $mark 2] == $sq_end} {
@@ -24,7 +28,10 @@ proc ::move::drawVarArrows {} {
             }
         }
       }
-      if {! $bDrawn } { set bDrawArrow 1; break }
+      if {!$bDrawn} {
+        set bDrawArrow 1
+        break
+      }
     }
   }
 
@@ -32,7 +39,10 @@ proc ::move::drawVarArrows {} {
 }
 
 proc ::move::showVarArrows {} {
-  if {$::analysis(boardEngine)} {
+  global analysis
+  # don't show var arrows if engine running and drawing on main board
+  if {$analysis(boardEngine) && $analysis(analyzeMode$analysis(boardEngine))} {
+
     return
   }
   set move [sc_game info nextMoveUCI]
@@ -70,7 +80,7 @@ proc ::move::Start {{var 0}} {
   if {[winfo exists .pgnWin.text]} {
     .pgnWin.text see 0.0
   }
-  if {[::move::drawVarArrows]} {
+  if {[::move::checkVarArrows]} {
     ::move::showVarArrows
   }
 }
@@ -87,14 +97,14 @@ proc ::move::End {{var 0}} {
     sc_move end
   }
   updateBoard
-  if {[::move::drawVarArrows]} { ::move::showVarArrows }
+  if {[::move::checkVarArrows]} {::move::showVarArrows}
 }
 
 proc ::move::ExitVar {} {
   sc_var exit;
   updateBoard -animate;
   # Do comments work properly ?
-  if {[::move::drawVarArrows]} { ::move::showVarArrows }
+  if {[::move::checkVarArrows]} {::move::showVarArrows}
 }
 
 set ::fics::playing 0 ; # predefine
@@ -106,7 +116,10 @@ proc ::move::Back {{count 1}} {
     }
     return
   }
-  if {[sc_pos isAt vstart]} { ::move::ExitVar; return }
+  if {[sc_pos isAt vstart]} {
+     ::move::ExitVar
+     return
+   }
 
   ### if playing, remove this move from hash array S.A
 
@@ -122,7 +135,7 @@ proc ::move::Back {{count 1}} {
   } else {
     updateBoard
   }
-  if {[::move::drawVarArrows]} { ::move::showVarArrows }
+  if {[::move::checkVarArrows]} {::move::showVarArrows}
 }
 
 proc ::move::Forward {{count 1}} {
@@ -135,7 +148,7 @@ proc ::move::Forward {{count 1}} {
     return
   }
   set ::pause 1
-  set bArrows [::move::drawVarArrows]
+  set bArrows [::move::checkVarArrows]
 
   set move [sc_game info next]
   if {$count == 1} {
@@ -144,7 +157,7 @@ proc ::move::Forward {{count 1}} {
       showVars
       set bArrows $::showVarArrows
     } else  {
-      if {! $bArrows} {
+      if {!$bArrows} {
         sc_move forward
       }
     }
@@ -153,10 +166,10 @@ proc ::move::Forward {{count 1}} {
     updateBoard -animate
     ::utils::sound::AnnounceForward $move
   } else {
-    if {! $bArrows} { sc_move forward $count }
+    if {!$bArrows} {sc_move forward $count}
     updateBoard
   }
-  if {$bArrows} { ::move::showVarArrows }
+  if {$bArrows} {::move::showVarArrows}
 }
 
 

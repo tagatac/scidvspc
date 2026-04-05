@@ -341,8 +341,7 @@ menu $bb.intoVar.menu -tearoff 0 -font font_Regular
 
 button $bb.exitVar -image tb_outvar -command {
    set ::pause 1
-   sc_var exit
-   updateBoard -animate
+   ::move::ExitVar
 }
 
 bind $bb.exitVar <Button-3> {

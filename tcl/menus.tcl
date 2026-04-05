@@ -1420,7 +1420,7 @@ proc SetMainLineColour {} {
   if {$temp != {}} {
     set maincolor $temp
     updateBoard
-    if {[::move::drawVarArrows]} { ::move::showVarArrows }
+    if {[::move::checkVarArrows]} { ::move::showVarArrows }
   }
 }
 
@@ -1430,7 +1430,7 @@ proc SetVarLineColour {} {
   if {$temp != {}} {
     set varcolor $temp
     updateBoard
-    if {[::move::drawVarArrows]} { ::move::showVarArrows }
+    if {[::move::checkVarArrows]} { ::move::showVarArrows }
   }
 }
 

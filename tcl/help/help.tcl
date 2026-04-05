@@ -2867,7 +2867,7 @@ The default mode and size are set in the <a Analysis List>Engine Configuration</
 <br><b>Sequential</b> will show the line as a numbered sequence of small (unclickable) arrows. The length of moves shown is by default 3 but can be changed in the last spinbox in the engine toolbar. The line colour is selected by Options-<gt>Colours-<gt>EngineArrows.
 </p>
 
-<p>Right clicking <button tb_coords 32> toggles Engine Arrows being displayed on the main board!</p>
+<p>Right clicking <button tb_coords 32> toggles Engine Arrows being displayed on the Main Board! (In this mode, Move Variation arrows will not be shown).</p>
 
 <p>Beside the board is a black and white Score Bar (toggled via Control-Shift-S), and optionally, a Coloured 'Traffic' Bar (Control-Shift-C) which shows colours for each MultiPV's score - indicating the sharpness of a position. Red means Black is winning, Yellow is even, and Green for White winning."
 </p>
