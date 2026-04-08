@@ -178,7 +178,12 @@ proc ::game::LoadNumber {} {
 
   if {[sc_base numGames] < 1} { return }
 
-  set w [toplevel .glnumDialog]
+  set w .glnumDialog
+  if {[winfo exists $w]} {
+    raiseWin $w
+    return
+  }
+  toplevel $w
   wm title $w "Scid: [tr GameNumber]"
   wm state $w withdrawn
 
@@ -313,7 +318,12 @@ trace variable ::game::moveEntryNumber w {::utils::validate::Regexp {^[0-9]*$}}
 
 proc ::game::GotoMoveNumber {} {
   set ::game::moveEntryNumber ""
-  set w [toplevel .mnumDialog]
+  set w .mnumDialog
+  if {[winfo exists $w]} {
+    raiseWin $w
+    return
+  }
+  toplevel $w
   wm title $w "Scid: [tr GameGotoMove]"
 
   label $w.label -text $::tr(GotoMoveNumber)

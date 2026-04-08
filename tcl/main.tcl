@@ -346,10 +346,10 @@ button $bb.exitVar -image tb_outvar -command {
 
 bind $bb.exitVar <Button-3> {
    set ::pause 1
-   while {[sc_var level] > 0} {
+   while {[sc_var level] > 1} {
      sc_var exit
    }
-   updateBoard -animate
+   ::move::ExitVar
 }
 
 button $bb.addVar -image tb_addvar -command {
