@@ -917,7 +917,8 @@ sc_base_slot (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // sc_base_open_failure: if the opening of a base fails,
 // clean up db entry
-void base_open_failure( int oldBaseNum ) {
+void base_open_failure (int oldBaseNum)
+{
   db->idx->CloseIndexFile();
   db->idx->Clear();
   db->nb->Clear();
@@ -10275,7 +10276,8 @@ sc_game_tags_share (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //    resets data used for undos (for example after loading another game)
 
-void sc_game_undo_reset(scidBaseT * base) {
+void sc_game_undo_reset(scidBaseT * base)
+{
   base->undoMax = -1;
   base->undoIndex = -1;
   base->undoCurrent = -1;
@@ -12549,7 +12551,8 @@ sc_name_retrievename (ClientData cd, Tcl_Interp * ti, int argc, const char ** ar
 // Returns the difference in length between strlen and Utf length
 // (for printf formatting purposes)
 
-int Utf_offset (const char *str) {
+int Utf_offset (const char *str)
+{
     int i;
     i = strlen(str) - Tcl_NumUtfChars(str,-1);
     if (i<0)

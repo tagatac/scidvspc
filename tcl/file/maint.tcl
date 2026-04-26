@@ -1811,8 +1811,7 @@ proc makeSortWin {{parent .}} {
 
   label $w.torder -textvar ::tr(SortCriteria) -font font_Bold
   pack $w.torder -side top
-  label $w.order -textvar sortCriteria(translated) -width 40  \
-      -relief solid -anchor w
+  label $w.order -textvar sortCriteria(translated) -width 40 -relief solid -anchor w
   pack $w.order -side top -fill x -pady 2 -padx 2
   addHorizontalRule $w
   label $w.tadd -textvar ::tr(AddCriteria) -font font_Bold
@@ -1826,7 +1825,7 @@ proc makeSortWin {{parent .}} {
     set n [string tolower $b]
     button $w.add.$n -textvar ::tr($b) -command "addSortCriteria $b"
   }
-    # Random has no (proper) translation, so handle separately
+  # Random has no (proper) translation, so handle separately
 
   grid $w.add.date -row 0 -column 0 -sticky we
   grid $w.add.year -row 0 -column 1 -sticky we

@@ -371,12 +371,14 @@ IndexEntry::GetFlagStr (char * str, const char * flags)
 //      The format string is better documented in gamelist.tcl
 //      'O' Opening is replaced by "const char * moveStr" if supplied 
 void
-IndexEntry::PrintGameInfo (char * outStr, gameNumberT gnFiltered, gameNumberT gnReal, NameBase * nb, const char * format, const char * moveStr) {
+IndexEntry::PrintGameInfo (char * outStr, gameNumberT gnFiltered, gameNumberT gnReal, NameBase * nb, const char * format, const char * moveStr)
+{
     PrintGameInfo (outStr, gnFiltered, gnReal, nb, format, moveStr, NULL);
 }
 
 void
-IndexEntry::PrintGameInfo (char * outStr, gameNumberT gnFiltered, gameNumberT gnReal, NameBase * nb, const char * format, const char * moveStr, char * CustomFlagChars) {
+IndexEntry::PrintGameInfo (char * outStr, gameNumberT gnFiltered, gameNumberT gnReal, NameBase * nb, const char * format, const char * moveStr, char * CustomFlagChars)
+{
     ASSERT (outStr != NULL  &&  nb != NULL  &&  format != NULL);
 
     const char * s = format;
