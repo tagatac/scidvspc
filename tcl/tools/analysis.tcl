@@ -1049,9 +1049,6 @@ proc initAnnotation {n} {
 
   ### General options frame
 
-  checkbutton $w.cbAddAnnotatorTag     -textvar tr(addAnnotatorTag)    -variable annotate(addTag)     -anchor w
-  checkbutton $w.cbAnnotateVar         -textvar tr(AnnotateVariations) -variable annotate(isVar)      -anchor w
-
   frame $w.scoreType
   label $w.scoreType.label -textvar tr(ScoreFormat)
   ttk::combobox $w.scoreType.values -width 12 -textvar annotate(scoreType) \
@@ -1061,10 +1058,11 @@ proc initAnnotation {n} {
   pack $w.scoreType.label -side left -padx 10
   pack $w.scoreType.values -side right
 
-  pack $w.cbAddAnnotatorTag $w.cbAnnotateVar -anchor w
+  # Batch annotation
+  checkbutton $w.cbBatch -textvar tr(AnnotateSeveralGames) -variable annotate(isBatch)
+  pack $w.cbBatch -anchor w
 
   # Book
-
   frame $w.usebook
   pack  $w.usebook -side top -fill x
 
@@ -1073,9 +1071,10 @@ proc initAnnotation {n} {
       set ::isOpeningOnly 0
     }
     checkState ::useAnalysisBook $w.usebook.comboBooks
-    checkState ::useAnalysisBook $w.batch.cbOpeningOnly
-    checkState ::useAnalysisBook $w.batch.spOpeningOnly
-    checkState ::useAnalysisBook $w.batch.lOpeningOnly"
+    checkState ::useAnalysisBook $w.errors.cbOpeningOnly
+    checkState ::useAnalysisBook $w.errors.spOpeningOnly
+    checkState ::useAnalysisBook $w.errors.lOpeningOnly
+    checkState ::isOpeningOnly $w.errors.spOpeningOnly $w.errors.lOpeningOnly"
 
   # load book names
   set bookPath $::scidBooksDir
@@ -1104,37 +1103,34 @@ proc initAnnotation {n} {
   pack $w.usebook.cbBook -side left
   pack $w.usebook.comboBooks -side right
 
-  # Batch annotation
-
-  frame $w.batch
-  pack $w.batch -side top -fill x
-  checkbutton $w.batch.cbBatch -textvar tr(AnnotateSeveralGames) -variable annotate(isBatch)
-
   # Opening Errors Only
+  pack [frame $w.errors] -padx 0 -expand 1 -fill x
 
-  checkbutton $w.batch.cbOpeningOnly -textvar tr(FindOpeningErrors) -variable ::isOpeningOnly \
-     -command "checkState ::isOpeningOnly $w.batch.spOpeningOnly"
+  checkbutton $w.errors.cbOpeningOnly -textvar tr(FindOpeningErrors) -variable ::isOpeningOnly \
+     -command "checkState ::isOpeningOnly $w.errors.spOpeningOnly $w.errors.lOpeningOnly"
 
-  spinbox $w.batch.spOpeningOnly -width 2 -textvar ::isOpeningOnlyMoves \
+  spinbox $w.errors.spOpeningOnly -width 2 -textvar ::isOpeningOnlyMoves \
       -from 5 -to 20 -increment 1 -validate all -vcmd {string is int %P}
 
-  label $w.batch.lOpeningOnly -textvar tr(moves)
+  label $w.errors.lOpeningOnly -textvar tr(moves)
 
-  checkState ::useAnalysisBook $w.usebook.comboBooks $w.batch.cbOpeningOnly $w.batch.spOpeningOnly $w.batch.lOpeningOnly
-  checkState ::isOpeningOnly $w.batch.spOpeningOnly
+  checkState ::useAnalysisBook $w.usebook.comboBooks $w.errors.cbOpeningOnly $w.errors.spOpeningOnly $w.errors.lOpeningOnly
+  checkState ::isOpeningOnly $w.errors.spOpeningOnly $w.errors.lOpeningOnly
 
-  # Pack
+  pack $w.errors.cbOpeningOnly -side left -anchor w
+  pack $w.errors.lOpeningOnly $w.errors.spOpeningOnly -padx 6 -side right
 
-  grid $w.batch.cbBatch    -column 0 -row 0 -sticky w
-  grid $w.batch.cbOpeningOnly -column 0 -row 1 -sticky w
-  grid $w.batch.spOpeningOnly -column 1 -row 1 -padx 5
-  grid $w.batch.lOpeningOnly  -column 2 -row 1 -sticky e
+  checkbutton $w.cbAddAnnotatorTag -textvar tr(addAnnotatorTag) -variable annotate(addTag) -anchor w
+  pack $w.cbAddAnnotatorTag -anchor w
 
-  checkbutton $w.batch.cbMarkTactics -textvar tr(MarkTacticalExercises) -variable annotate(markExercises)
-  grid $w.batch.cbMarkTactics -column 0 -row 2 -sticky w
+  checkbutton $w.cbAnnotateVar -textvar tr(AnnotateVariations) -variable annotate(isVar) -anchor w
+  pack $w.cbAnnotateVar -anchor w
+
+  checkbutton $w.cbMarkTactics -textvar tr(MarkTacticalExercises) -variable annotate(markExercises)
+  pack $w.cbMarkTactics -anchor w
   if {!$analysis(uci$n)} {
     set annotate(markExercises) 0
-    $w.batch.cbMarkTactics configure -state disabled
+    $w.cbMarkTactics configure -state disabled
     $w.missedmates configure -state disabled
   }
 
