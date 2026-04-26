@@ -111,10 +111,10 @@ but could do so by tweaking the string matches in "fics.tcl". FICS and ICC have
 set helpTitle(BrowsingPGN) "PGN"
 set helpText(BrowsingPGN) {<h1>PGN Files and Scid</h1>
 
-<p>PGN is the <url http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm>standard format</url>
-for chess games, and Scid will happily open and display large game archives.
-<i>But PGN is not the native format of Scid's Databases. It takes a little
-learning, but using <a Scid>Scid Databases</a> instead of PGN is highly recommended.</i></p>
+<p>PGN is the archaic <url http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm>standard format</url>
+of chess notation, and Scid will happily open and display large game archives.
+<i>But it is not the format of Scid's Databases, and altering multigame PGN files is not directly supported.
+It takes a little getting used to, but using <a Scid>Scid's Si4 Databases</a> instead of PGN is highly recommended.</i></p>
 
 <p>To open PGN files, use the <run ::file::Open><green>File-<gt>Open</green></run> dialog,
 <a Switcher draganddrop>Drag and Drop</a>, or the
@@ -2585,7 +2585,7 @@ For example - the first two examples remove four digit ELOs from player names. T
   The <run extraTags><green>Extra Tags</green></run> window facilitates modifying optional tags such as Annotator, PlyCount, Depth, TimeControl.
   </p>
   <p>
-  Features are: Finding, Filtering, Stripping, and Adding/Creating new tags (filter only).</p>
+  Features are: Finding, Filtering, Stripping, and bulk Adding/Creating new tags (filter only).</p>
   <p><i>Adding Extra Tags will quickly increase the size of Scid's Gamefile. Any
   changes will cause the tags to be totally rewritten, with space not reclaimed
   until the game file is <a Compact>compacted</a>.</i>

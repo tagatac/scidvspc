@@ -1023,6 +1023,7 @@ namespace eval tacgame {
     if { $resignCount > 3 && ! $::tacgame::resignShown } {
       tk_messageBox -type ok -message $::tr(Iresign) -parent .main.board -icon info
       set ::tacgame::resignShown 1
+      sc_pos setComment $::tr(Iresign)
       set resignCount 0
     }
   }

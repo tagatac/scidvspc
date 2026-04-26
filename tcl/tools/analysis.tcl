@@ -3799,7 +3799,7 @@ proc updateAnalysisBoard {n {moves {}}} {
   set bd .analysisWin$n.frame.bd
 
   ::board::update_evalbar $bd $analysis(score$n)
-  if {$::board::_showMPVTls($bd) } {
+  if {$::board::_showMPVTls($bd) && $moves != {}} {
     ::board::update_mpvtls $bd [multipv_scores $n]
   }
 
@@ -3945,6 +3945,7 @@ proc sendPosToEngineUCI {n  {delay 0}} {
           # $h insert 1.0 "[tr No] [tr Moves]"
 	  $h configure -state disabled
           set analysis(score$n) [getScoreNoMoves 1]
+          set analysis(moves$n) ""
 	  if {$analysis(boardType$n)!="Position"} {
             # TODO check this ^^^^ if
 	    updateAnalysisBoard $n
