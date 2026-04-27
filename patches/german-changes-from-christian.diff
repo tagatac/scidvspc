@@ -780,42 +780,6 @@ Index: engines/toga/src/trans.cpp
 -
  // end of trans.cpp
  
-Index: patches/german-changes-from-christian.diff
-===================================================================
---- patches/german-changes-from-christian.diff	(revision 3620)
-+++ patches/german-changes-from-christian.diff	(working copy)
-@@ -4815,31 +4815,6 @@
-  
-  foreach photofile [glob -nocomplain -directory $scidDataDir "*.spf"] {
-    readPhotoFile $photofile
--@@ -1075,7 +1075,7 @@
-- ### Custom photos
-- 
-- if {[file isdirectory $scidPhotosDir]} {
---  ::splash::add "Searching for custom photos (gifs) in $scidPhotosDir"
--+  ::splash::add "Suche nach Fotos (gifs) in $scidPhotosDir"
--   set pwd [pwd]
--   cd $scidPhotosDir
--   set count 0
--@@ -1094,13 +1094,13 @@
--       set ::photo($p) $i
--     }] || [catch {image create photo tmpimage -file $i} result]} {
--       unset ::photo($p)
---      ::splash::add "   Error processing photo $i: $result" error
--+      ::splash::add "   Fehler beim Verarbeiten von Foto $i: $result" error
--     } else {
--       incr count
--       # ::splash::add "   Ok processing photo $i" 
--     }
--   }
---  ::splash::add "    $count custom photos successfully loaded."
--+  ::splash::add "    $count Fotos erfolgreich geladen."
--   cd $pwd
-- } else {
--   # ::splash::add "User Photos: no such directory $scidPhotosDir"
- @@ -1247,7 +1247,7 @@
-    if {$::macOS} {
-      wm transient $w .
 Index: src/bytebuf.cpp
 ===================================================================
 --- src/bytebuf.cpp	(revision 3620)
