@@ -172,8 +172,7 @@ menuText D ToolsComp "Turnier Schachprogramm gegen Schachprogramm" 0 {Schachprog
 menuText D ToolsTacticalGame "Gegen Phalanx spielen"  0 {Trainingspartie spielen}
 menuText D ToolsSeriousGame "Gegen UCI-Schachprogramm spielen"  6 {Ernste Partie spielen}
 menuText D ToolsTrainTactics "Taktikaufgaben lösen"  3 {Taktische Aufgaben lösen}
-# ====== TODO To be translated ======
-menuText D ToolsTrainOpening "Opening Trainer" 0 {Rep training}
+menuText D ToolsTrainOpening "Eröffnungen trainieren" 0 {Wiederholungstraining}
 menuText D ToolsTrainCalvar "Varianten berechnen"  0 {Training zum Berechnen von Varianten}
 menuText D ToolsTrainFindBestMove "Besten Zug finden"  0 {Find best move}
 menuText D ToolsTrainFics "Internet (FICS)"  0 {Internetpartie auf freechess.org}
@@ -1518,33 +1517,23 @@ translate D NumberOfDubiousMovesPlayed {zweischneidige Züge gespielt}
 translate D NumberOfTimesPositionEncountered {Wiederholungen der Position}
 translate D PlayerBestMove  {Nur beste Züge erlauben}
 translate D OpponentBestMove {Gegner spielt besten Zug}
-# ====== TODO To be translated ======
-translate D RemoveGames {Don't repeat a game}
+translate D RemoveGames {Eine Partie nicht wiederholen}
 translate D OnlyFlaggedLines {Nur markierte Linien}
 translate D resetStats {Statistik zurücksetzen}
 translate D Movesloaded {Züge geladen}
-translate D PositionsNotPlayed {nicht gespielte Positionen}
-translate D PositionsPlayed {gespielte Positionen}
+translate D PositionsNotPlayed {nicht gespielte Stellungen}
+translate D PositionsPlayed {gespielte Stellungen}
 translate D Success {Erfolgreich}
 translate D DubiousMoves {Zweifelhafte Züge}
-# ====== TODO To be translated ======
-translate D NumberOfMovesPlayedNotInRepertoire {moves played not in repertoire}
-# ====== TODO To be translated ======
-translate D Repertoiretrainingconfiguration {Opening Trainer Configuration}
-# ====== TODO To be translated ======
-translate D Loadingrepertoire {Loading repertoire}
-# ====== TODO To be translated ======
-translate D Repertoirenotfound {Repertoire not found}
-# ====== TODO To be translated ======
-translate D NoRepertoireFound {No Repertoire Database found}
-# ====== TODO To be translated ======
-translate D Movenotinrepertoire {Move not in repertoire}
-# ====== TODO To be translated ======
-translate D PositionsInRepertoire {Positions in Repertoire}
-# ====== TODO To be translated ======
-translate D OutOfRepertoire {Out of Repertoire}
-# ====== TODO To be translated ======
-translate D NextGame {Next Game}
+translate D NumberOfMovesPlayedNotInRepertoire {gespielte Züge nicht im Repertoire}
+translate D Repertoiretrainingconfiguration {Konfiguration Eröffnungstrainer}
+translate D Loadingrepertoire {Lade Repertoire}
+translate D Repertoirenotfound {Repertoire nicht gefunden}
+translate D NoRepertoireFound {Keine Repertoire-Datenbank gefunden}
+translate D Movenotinrepertoire {Zug nicht im Repertoire}
+translate D PositionsInRepertoire {Stellungen im Repertoire}
+translate D OutOfRepertoire {Außerhalb des Repertoires}
+translate D NextGame {Nächste Partie}
 translate D ConfigureTactics {Taktik konfigurieren}
 translate D ResetScores {Punkte zurücksetzen}
 translate D LoadingBase {Lade Datenbank}
@@ -1704,46 +1693,26 @@ translate D FICSDraw {Remis anbieten}
 translate D FICSRematch {Revanche}
 translate D FICSQuit {FICS beenden}
 translate D FICSCensor {Zensor}
-# ====== TODO To be translated ======
-translate D Tournament Tournament
-# ====== TODO To be translated ======
-translate D TourConfigure {Configure Tournament}
-# ====== TODO To be translated ======
-translate D TourEngineNum {Number of Engines}
-# ====== TODO To be translated ======
-translate D TourName {Tournament Name}
-# ====== TODO To be translated ======
-translate D TourRounds {Number of Rounds}
-# ====== TODO To be translated ======
-translate D TourControl {Time Control is per}
-# ====== TODO To be translated ======
-translate D TourPer {Time per Move}
-# ====== TODO To be translated ======
-translate D TourPer2 {Time per game (seconds)}
-# ====== TODO To be translated ======
-translate D TourClocks {Show Clocks}
-# ====== TODO To be translated ======
-translate D TourAnimate {Animate Moves}
-# ====== TODO To be translated ======
-translate D TourComments {Engine Scores as Comments}
-# ====== TODO To be translated ======
-translate D TourShed {Game Scheduling}
-# ====== TODO To be translated ======
+translate D Tournament {Turnier}
+translate D TourConfigure {Turnier konfigurieren}
+translate D TourEngineNum {Anzahl Engines}
+translate D TourName {Turniername}
+translate D TourRounds {Anzahl Runden}
+translate D TourControl {Zeitkontrolle ist pro}
+translate D TourPer {Zeit pro Zug}
+translate D TourPer2 {Zeit pro Partie (Sekunden)}
+translate D TourClocks {Zeige Uhren}
+translate D TourAnimate {Züge animieren}
+translate D TourComments {Engine-Bewertungen als Kommentare}
+translate D TourShed {Partieplanung}
 translate D TourPause {Pause}
-# ====== TODO To be translated ======
-translate D TourEnd {End Comp}
-# ====== TODO To be translated ======
-translate D TourWinner {Winner(s)}
-# ====== TODO To be translated ======
-translate D TourGame {Game}
-# ====== TODO To be translated ======
-translate D TourMove {Move}
-# ====== TODO To be translated ======
-translate D TourBase {Base}
-# ====== TODO To be translated ======
-translate D TourInc {Inc}
-# ====== TODO To be translated ======
-translate D TourSecs {secs}
+translate D TourEnd {Ende Computer}
+translate D TourWinner {Gewinner}
+translate D TourGame {Partie}
+translate D TourMove {Zug}
+translate D TourBase {Basis}
+translate D TourInc {Ink}
+translate D TourSecs {Sek}
 
 # Correspondence Chess Dialogs:
 translate D CCDlgConfigureWindowTitle {Einstellungen für Fernschach}
@@ -2195,13 +2164,13 @@ auf.
 set helpTitle(D,BrowsingPGN) "PGN"
 set helpText(D,BrowsingPGN) {<h1>PGN-Dateien und Scid</h1>
 
-<p>PGN ist das
-  <url http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm>Standardformat</url>
-  für Schachpartien und Scid kann glücklicherweise große Partiearchive öffnen.
-<i>Aber PGN ist nicht das native Format der Datenbanken von Scid. Man
-  muß ein wenig lernen, aber die Benutzung
-  von <a Scid>Scid-Datenbanken</a> anstelle von PGN wird sehr
-  empfohlen.</i></p>
+<p>PGN ist das archaische
+<url http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm>Standardformat</url>
+der Schachnotation, und Scid öffnet und zeigt gerne große Partienarchive an.
+<i>Es handelt sich jedoch nicht um das Format der Scid-Datenbanken und das
+Ändern von PGN-Dateien mit mehreren Spielen wird nicht direkt unterstützt. Es
+ist etwas gewöhnungsbedürftig, aber die Verwendung der Si4-Datenbanken</a>
+von <a Scid>Scid anstelle von PGN wird dringend empfohlen.</i></p>
 
 <p>Um PGN-Dateien zu öffnen, rufen Sie den
   Dialog <run ::file::Open><green>Datei--<gt>Öffnen</green></run> auf oder das
@@ -2257,8 +2226,8 @@ set helpText(D,Scid) {<h1>Datenbanken und allgemeine Nutzung</h1>
   Ablagedatenbank als Mittel zum Ausschneiden und Einfügen.
   </i></p>
 
-  <p><i>Eine frei verfügbare Datenbank ist Caissabase:
-  <url http://caissabase.co.uk/>http://caissabase.co.uk/</url>
+  <p><i>Eine frei verfügbare Datenbank ist Lumbras Gigabase:
+  <url https://lumbrasgigabase.com>https://lumbrasgigabase.com</url>
   </i></p>
 
   <h4>Datenbanken benutzen</h4>
@@ -2389,6 +2358,7 @@ append helpText(D,Index) {
   <li><a Book>Eröffnungsbücher</a></li>
   <li><a ECO>Eröffnungsklassifikation (ECO)</a></li>
   <li><a Repertoire>Eröffnungsrepertoire</a></li>
+  <li><a OpeningTrainer>Eröffnungstrainer</a></li>
   <li><a Maintenance Tags>Extramarkierungen</a></li>
   </ul>
 
@@ -3197,6 +3167,16 @@ set helpText(D,Searches) {<h1>In Scid suchen</h1>
 
   <p><i>Die Extramarkierungen beziehen sich *nicht* auf normale
   Markierungen wie Weiß, Turnier und Datum.</i></p>
+
+  <p><b>Finde Partien mit Markierungen (Flags)</B> sind ein versteckbarer
+  Abschnitt mit einer Kombination aus Partieeigenschaften,
+  Benutzer<a Flags>kennzeichen</a> und "Custom"-Kennzeichen. Oben (neben der
+  Überschrift "Finde Partien..") gibt es drei Schaltflächen (Ja, Nein, Beide),
+  die der Einfachheit dienen und die die Benutzer- und "Custom"-Kennzeichen alle
+  zusammen einstellen. Ein Beispiel: <i>um alle Spiele mit einem gesetzten
+  Custom-Kennzeichen zu finden, wählen Sie zuerst "Nein" für die sechs
+  Custom-Kennzeichen aus. Nach der Durchführung der Suche negieren Sie den
+  Filter und Sie erhalten Ihr Ergebnis.</i></p>
 
   <p>Und schließlich kann die Partiedatensuche auch verwendet werden
   für irgendeinen Text (mit Berücksichtigung von Groß-/Kleinschreibung
@@ -4819,7 +4799,7 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   durchgeführt werden.
   </p>
   <p>Die Arbeiten umfassen unter anderem Löschen (und andere
-  <a Flags>Partiemarkierungen</a>), <a Maintenance Spellcheck>Namenskorrekturen</a>,
+  <a Flags>Benutzermarkierungen</a>), <a Maintenance Spellcheck>Namenskorrekturen</a>,
   <a Compact>Komprimieren</a> und <a Sorting>Sortieren</a>.
   </p>
   <p><i>Die Funktionen
@@ -5001,7 +4981,7 @@ set helpText(D,Maintenance) {<h1>Datenbankwartung</h1>
   Markierungen</green></run> erleichtert das Ändern optionaler Markierungen wie
   Annotator, PlyCount, Depth, TimeControl.</p>
 
-  <p>Zu den Funktionen gehören: Suchen, Filtern, Entfernen und
+  <p>Zu den Funktionen gehören: Suchen, Filtern, Entfernen und massenhaftes
   Hinzufügen/Erstellen neuer Markierungen (nur Filter).</p>
 
   <p><i>Das Hinzufügen zusätzlicher Tags vergrößert die Größe der Partiendatei
@@ -5126,12 +5106,20 @@ set helpText(D,Flags) {<h1>Partiekennzeichen</h1>
   definierbare Kennzeichen</b>.
   </p>
 
-<p>Kennzeichen werden im <a Maintenance>Wartungfenster</a>
-  gesetzt. Wählen Sie die gewünschte Markierung (durch Klicken auf
-  "Eröffnung Weiß") und verwenden dann die Schaltfläche "Markiere
-  aktuelle Partie". Scid vs. PC ermöglicht auch ein schnelles
-  Markieren im Kontextmenü des Partienlistenfensters.
-  </p>
+<p>Kennzeichen werden im <a Maintenance>Wartungfenster</a> gesetzt. Wählen Sie
+  die gewünschte Markierung (durch Klicken auf "Eröffnung Weiß") und verwenden
+  dann die passende Markierungsschaltfläche. Das <a GameList
+  Del>Löschen</a>kennzeichen im Partienlistenfenster hat seine eigenen
+  Schaltflächen, es ist aber nur ein Sonderfallkennzeichen, das anzeigt, welche Partien
+  entfernt werden, wenn die Datenbank als nächstes <a Compact>komprimiert</a>
+  wird.</p>
+
+  <p>Scid vs. PC ermöglicht auch ein schnelles Markieren im Kontextmenü des
+  <a GameList>Partienlistenfensters</a>. Falls ein Benutzerkennzeichen über eine
+  Beschreibung verfügt, dann zeigt das Partienlistenkennzeichen einen
+  Kleinbuchstaben (zur Unterscheidung zu normalen Kennzeichen) an statt eine
+  Zahl 1-6 wie zuvor.</p>
+
   <p>Die möglichen Markierungen sind:
   </p>
 
@@ -5175,7 +5163,7 @@ set helpText(D,Flags) {<h1>Partiekennzeichen</h1>
   finden</a> (wertet das T-Kennzeichen aus)
   </ul>
 
-  <p><footer>Aktualisiert: Scid vs. PC 4.19, Januar 2018</footer></p>
+  <p><footer>Aktualisiert: Scid vs. PC 4.27, Dezember 2025</footer></p>
 }
 
 set helpTitle(D,Analysis) "Analysefenster"
@@ -5197,12 +5185,6 @@ Debugging>Fehlersuche</a> durchgesehen werden.
 <p>Diese Programme können auf verschiedene Arten gestartet werden:
   durch <run ::startAnalysisWin F2><green>Drücken von F2</green></run>, F3 oder
   F4 oder aus dem Menü <green>Werkzeuge--<gt>Starte Engine</green>.</p>
-
-Zusätzlich kann das zweite aufgeführte Schachprogramm gestartet/gestoppt werden,
- indem Sie <b>auf die Statusleiste doppelklicken</b>. Klicken Sie mit der
- rechten Maustaste auf die Statusleiste, wird das Schachprogramm
- an-/abgehängt. Das laufende Schachprogramm, das angehängt ist, wird mit
- niedriger CPU-Priorität ausgeführt. <p>
 
 <p>Die <b>Leertaste</b> startet bzw. beendet das
   Schachprogramm. Drücken der <b>Eingabetaste</b> fügt den besten Zug des
@@ -5247,10 +5229,10 @@ Zusätzlich kann das zweite aufgeführte Schachprogramm gestartet/gestoppt werde
   der Partie hinzuzufügen, kehren Sie zu der gesperrten Stellung
   zurück, drücken Pause, entsperren die Analyse und fügen die Variante hinzu.
   </li>
- <li> <button tb_coords 32> <b>Analysebrett anzeigen</b> zeigt ein kleines
-  Analysebrett. Wenn das Schachprogramm angehalten ist, zeigt dieses Brett die
-  gesperrte Stellung. Ein Klick mit der mittleren Maustaste schaltet zwischen
-  den Anzeigemodi um.</li>
+  <li> <button tb_coords 32> <b>Analysebrett anzeigen</b> zeigt ein kleines
+  Analysebrett (Rechtsklick wechselt die Pfeile auf dem Hauptbrett). Wenn das
+  Schachprogramm angehalten ist, zeigt dieses Brett die gesperrte Stellung. Ein
+  Klick mit der mittleren Maustaste schaltet zwischen den Anzeigemodi um.</li>
   <li> <button tb_exclude 32> <b>Zug ausschließen</b> hilft, die
   Suchliste des Schachprogramms zu verfeinern (hauptsächlich nur
   UCI-Programme). Ein Bewegen des Mauszeigers über diese Schaltfläche
@@ -5327,17 +5309,21 @@ die Standardgröße werden im <a Analysis List>Analyse-Engine</a>-Fenster
 eingestellt und können auch durch Drücken der mittleren Maustaste umgeschaltet
 werden. <i>Durch Drücken von Strg-mittlere Maustaste kann die Größe dieses
 Brettes geändert werden.</i>
-</p>
-<p><br><b>Position</b> ist der ursprüngliche Modus. Es zeigt die Stellung des
+<br><b>Position</b> ist der ursprüngliche Modus. Es zeigt die Stellung des
   Bretts, nachdem der Engine-Züg gespielt wurde.
 <br><b>Arrows</b> zeigt anklickbare Pfeile für den Engine-Zug oder mehrere
-Pfeile an, wenn PV aktiviert ist.
+Pfeile an, wenn PV aktiviert ist (Variantenzahlen werden durch Strg-Umschalt-N
+umgeschaltet).
 <br><b>Sequentiell</b> zeigt die Zeile als nummerierte Folge kleiner (nicht
 anklickkbarer) Pfeile an. Die Länge der angezeigten Züge beträgt standardmäßig
 3, kann jedoch in der letzten Spinbox in der Engine-Symbolleiste geändert
 werden. Die Linienfarbe wird ausgewählt mittels
 Optionen-<gt>Farben-<gt>Engine-Pfeile.
 </p>
+
+<p>Rechtsklick <button tb_coords 32> wechselt die auf dem Hauptbrett angezeigten
+  Engine-Pfeile (in diesem Modus werden Variantenpfeile nicht angezeigt)!</p>
+
 <p>
   Neben dem Brett befindet sich ein schwarz-weißer Bewertungsbalken (über
   Strg-S umschaltbar) und optional eine farbige „Ampelleiste“
@@ -5525,7 +5511,7 @@ Optionen-<gt>Farben-<gt>Engine-Pfeile.
   von <b>::uci::goCommand</b> geändert werden (z.B. "set ::uci::goCommand {go
   movetime 60}" oder {go movetime 10000}).</p>
 
-  <p><footer>Aktualisiert: Scid vs. PC 4.21, Juli 2019</footer></p>
+  <p><footer>Aktualisiert: Scid vs. PC 4.27, März 2026</footer></p>
 }
 
 set helpTitle(D,Tourney) "Computerturniere"
@@ -6222,7 +6208,7 @@ set helpText(D,TB) {<h1>Endspieldatenbanken</h1>
   Bauer.
   </p>
   <p>Scid vs. PC kann die Endspieldatenbanken von <b>Nalimov</b>
-  und online <a TB Online>Lichess und Shredder</a> verwenden.
+  und online <a TB Online>Lichess, Shredder und K4it</a> verwenden.
   <i>Die Online-Unterstützung benötigt die Tcl-Pakete http und
   tls.</i>
   </p>
@@ -6297,7 +6283,7 @@ set helpText(D,TB) {<h1>Endspieldatenbanken</h1>
   <h4>Der Ergebnisbereich</h4>
   <p>Die Resultate können von den lokalen Nalimov-Datenbanken
   angezeigt werden (falls installiert) oder über ein
-  Online-Nachschlagen bei Lichess oder Shredder. Der Ergebnisbereich
+  Online-Nachschlagen bei Lichess, Shredder oder K4it. Der Ergebnisbereich
   wird immer dann aktualisiert, wenn sich das Hauptschachbrett ändert.
   </p>
   <p>Die erste Zeile der lokalen Datenbanken zeigt, wieviele Züge
@@ -6351,12 +6337,12 @@ set helpText(D,TB) {<h1>Endspieldatenbanken</h1>
   tcl-Pakete http und tls und ist nicht im Partieinformationsfenster
   verfügbar.
   </i></p>
-  <p>Scid vs. PC kann die Online-Endspieldatenbanken von Lichess und
-  Shredder benutzen.</p>
+  <p>Scid vs. PC kann die Online-Endspieldatenbanken von Lichess, Shredder und
+  K4it benutzen.</p>
 
-  <p>Die Endspieldatenbank von <b>Shredder</b> liefert den wahren Wert
-  einer Stellung bis zu sechs Steinen und zeigt, falls zutreffend, die
-  Tiefe bis zum Matt.</p>
+  <p>Die Endspieldatenbanken von <b>Shredder, Nalimov</b> und <b>K4it</b> liefern
+  den wahren Wert einer Stellung bis zu sechs Steinen und zeigen, falls
+  zutreffend, die Tiefe bis zum Matt.</p>
 
   <p>Die Endspieldatenbank von <b>Lichess Syzygy</b> zeigt die Tiefe
   bis zum Matt für bis zu fünf Steine und die DTZ für sechs bis sieben
@@ -7136,10 +7122,11 @@ set helpText(D,Related) {<h1>Links</h1>
   <li>Projektseite  <url http://sourceforge.net/projects/scidvspc>http://sourceforge.net/projects/scidvspc</url></li>
   <li>Online-Dokumentation <url http://scidvspc.sourceforge.net/doc/Contents.htm>http://scidvspc.sourceforge.net/doc/Contents.htm</url></li>
   <br>
-  <li>Datenbank Caissabase <url http://caissabase.co.uk/>http://caissabase.co.uk/</url></li>
+  <li>Datenbank Lumbras Gigabase <url https://lumbrasgigabase.com>https://lumbrasgigabase.com</url></li>
   <li>Spielerinformationsdaten  <url http://sourceforge.net/projects/scid/files/Player Data/>http://sourceforge.net/projects/scid/files/Player Data/</url></li>
   <li>FICS <url http://www.freechess.org>www.freechess.org</url></li>
   <li>FICS-Partienarchive <url http://ficsgames.org>http://ficsgames.org</url></li>
+  <li>Youtube-Seite von Mouselip <url https://www.youtube.com/@ChessWithMouselip>https://www.youtube.com/@ChessWithMouselip</url></li>
   <li>Chess Tech Blog, mit einigen ScidvsPC-Anleitungen <url https://www.chesstech.info/>https://www.chesstech.info/</url></li>
   <li>Schach-Blog Chessengeria, auch mit Tutorien <url https://www.chessengeria.com/>https://www.chessengeria.com/</url></li>
   <li>Ed Collins' Seite Scid vs. PC <url http://edcollins.com/chess/scidvspc/index.html>http://edcollins.com/chess/scidvspc/index.html</url></li>
@@ -7150,12 +7137,11 @@ set helpText(D,Related) {<h1>Links</h1>
   <li>PGN von Turnieren <url http://www.pgnmentor.com/files.html#events>www.pgnmentor.com/files.html#events</url></li>
   <li><url http://www.jrsoftware.org/isinfo.php>Inno setup</url> (um Windows-Installer zu erstellen)</li>
   <li>Professionelle Schachsymbole  <url http://www.virtualpieces.net>www.virtualpieces.net</url></li>
-  <li>Tango-Symbole <url http://tango.freedesktop.org/Tango_Desktop_Project>http://tango.freedesktop.org/Tango_Desktop_Project</url></li>
 <br>
   <li>Mailingliste abonnieren (man muß Mitglied sein, um in die Liste zu schreiben) <url https://lists.sourceforge.net/lists/listinfo/scidvspc-users>https://lists.sourceforge.net/lists/listinfo/scidvspc-users</url></li>
   <li>Mailinglistenarchiv <url http://www.mail-archive.com/scidvspc-users@lists.sourceforge.net/>http://www.mail-archive.com/scidvspc-users@lists.sourceforge.net/</url></li>
   <li>Programmeriererreferenz <url http://scidvspc.sourceforge.net/doc/progref.html>http://scidvspc.sourceforge.net/doc/progref.html</url></li>
-  <li>Entwicklung von Tcl <url www.tcl.tk/about/history.html>www.tcl.tk/about/history.html</url></li>
+  <li>Entwicklung von Tcl <url https://tcl.tk/about/history.html>https://tcl.tk/about/history.html</url></li>
   <li>UCI-Protokoll <url http://wbec-ridderkerk.nl/html/UCIProtocol.html>http://wbec-ridderkerk.nl/html/UCIProtocol.html</url></li>
   <li>Xboard.Protokoll <url http://www.open-aurec.com/wbforum/WinBoard/engine-intf.html>http://www.open-aurec.com/wbforum/WinBoard/engine-intf.html</url></li>
   </ul>
@@ -7300,6 +7286,115 @@ set helpText(D,ComputerGame) {
   </ul>
 
   <p><footer>Aktualisiert: Scid vs. PC 4.21 Dezember 2019</footer></p>
+}
+
+# Opening Trainer window help
+set helpTitle(D,OpeningTrainer) "Eröffnungstrainer"
+set helpText(D,OpeningTrainer) {<h1>Eröffnungstrainer</h1>
+
+<p>Eine Scid-Datenbank kann als Repertoire verwendet werden, wobei jede Partie
+ einen Eröffnungspfad darstellt. Die Partien können Varianten und
+ auch NAG-Werte enthalten, um Werte für jeden Pfad anzugeben und so bevorzugte
+ oder zweifelhafte Pfade zu markieren.</p>
+
+<p>Datenbanken für
+ den <run ::opening::config><green>Eröffnungstrainer</green></run> müssen einen
+ geeigneten Typ haben. Sollen Eröffnungen für Weiß trainiert werden, muß dies
+ <b>Eröffnungen für Weiß</b> (und ebenso für Schwarz und für beide Farben)
+ sein. <i>Der Typ kann über das <a Maintenance>Wartungsfenster</a> durch Auswahl
+ des Symbols oder über das Kontextmenü des Datenbankumschalters eingestellt
+ werden.</p>
+
+<h2>Ein Repertoire erstellen</h2>
+
+<p><i>Die Repertoiredatenbank wird bei der Initialisierung vollständig geladen. Aus
+ diesem Grund ist es wichtig, eine kleinere Datenbank zu verwenden.</i></p>
+
+<p>Beginnen Sie mit einer großen Datenbank hochwertiger Partien, filtern Sie die
+ Datenbank nach einer bestimmten Eröffnung (z.B. Spanisch), kopieren Sie diese
+ Spiele in eine neue Datenbank für diese bestimmte Eröffnung und legen Sie
+ diesen Basistyp wie oben erwähnt fest. Mithilfe von <a NAGs>NAGs</a> kann
+ besser verstanden werden, wie Züge zu bewerten sind.</p>
+
+<p>Sobald Sie eine Datenbank haben, können Sie mögliche Partien weiter
+ einschränken, indem Sie einige als „Eröffnung Weiß“ oder „Eröffnung Schwarz“
+ kennzeichnen und dann im Konfigurationsfenster „Nur gekennzeichnete Pfade“
+ auswählen. Außerdem werden gefilterte Partien nicht gespielt.</p>
+
+<h2>Allgemeine Benutzung</h2>
+
+<p>Öffnen Sie den Trainer über Spielen-<gt>Training-<gt>Eröffnungen trainieren.
+  Der Konfigurationsdialog bietet einige Auswahlmöglichkeiten für die nächste
+  Trainingseinheit.
+  <ul>
+    <li><b>Weiß/Schwarz/Beide</b> wird verwendet, um die Seite für die Eröffnung
+    zum Trainieren auszuwählen</li>
+    <li><b>Nur beste Züge erlauben</b> behandelt Züge mit niedrigerer Bewertung
+      als Fehler. Die Bewertung eines Pfades wird durch NAG-Werte
+      angegeben.</li>
+    <li><b>Gegner spielt besten Zug</b> Scid spielt laut Repertoiredatenbank
+      immer die beste Fortsetzung. Wenn diese Option deaktiviert ist, kann
+      Scid auch Fortsetzungen mit niedrigerer Bewertung auswählen. Dies ist
+      auch hilfreich, um die Widerlegungen zu lernen.</li>
+    <li><b>Eine Partie nicht wiederholen</b> Spielt jede Partie nur einmal
+      (leider – auch wenn es Varianten gibt).</li>
+    <li><b>Nur markierte Linien</b> Scid spielt nur Linien aus Spielen, die
+      als <b>Eröffnung für Weiß</b> oder <b>Eröffnung für Schwarz</b>
+      gekennzeichnet sind.</li>
+    <li><b>Statistik zurücksetzen</b> setzt die Statistiken vor der
+      Trainingseinheit zurück.</li>
+    <li><b>Max. Halbzüge</b> ist die maximale Tiefe, bis zu der Partien
+      analysiert werden.
+  </ul>
+</p>
+
+<p>Nach dem Drücken von OK startet der Trainer. Hier kann man mögliche
+  Kandidatenzüge (standardmäßig ausgeblendet) und auch deren Werte anzeigen,
+  indem man einfach diese Funktionen aktiviert. Wenn <b>Statistik anzeigen</b>
+  aktiviert ist, werden die aktuellen Statistiken in den farbcodierten Feldern
+  unter dem Kontrollkästchen angezeigt. Andernfalls können die Gesamtstatistiken
+  über die Schaltfläche <b>Bericht anzeigen</b> abgerufen werden.</p>
+
+<p>Drücken Sie zu jedem Zeitpunkt auf „Nächste Partie“, um eine weitere Übung zu
+starten.</p>
+
+<h3>Statistiken zum Eröffnungstrainer</h3>
+
+<p>Es werden vier Zahlen angezeigt, die Statistiken zur aktuellen Position
+  zeigen:
+  <ul>
+    <li><b>Grün</b> die Anzahl der vom Benutzer gespielten Züge, die gute Züge
+    sind</li>
+    <li><b>Gelb</b> die Anzahl der gespielten zweifelhaften Züge, die im
+    Repertoire sind</li>
+    <li><b>Rot</b> die Anzahl der gespielten Züge, die nicht im Repertoire
+    sind</li>
+    <li><b>Weiß</b> die Häufigkeit, mit der die Stellung angetroffen wurde</li>
+  </ul>
+</p>
+
+<h3>Der Bericht</h3>
+
+<p>Der Bericht zeigt Statistiken für das gesamte Repertoire und gibt Auskunft
+  über das Wissen des Nutzers:
+  <ul>
+    <li><b>Stellungen im Repertoire</b> die Gesamtzahl der Stellungen im
+    Repertoire (alle Pfade in der Datenbank)</li>
+    <li><b>Nicht gespielte Stellungen</b> die Stellungen, die nie angetroffen
+    wurden</li>
+    <li><b>Gespielte Stellungen</b> sind die gespielten Stellungen und die Summe
+    der Häufigkeit, mit der sie angetroffen wurden. Beachten Sie, daß diese Zahl
+    die Summe der Vorkommen einer Position in allen Eröffnungszeilen darstellt:
+    Diese Zahl kann bei Positionen, die nahe an der Startposition liegen,
+    schnell groß werden</li>
+    <li><b>Erfolgreich</b> die Anzahl der guten Züge des Spielers</li>
+    <li><b>Zweifelhafte Züge</b> die Anzahl der schwachen Züge des Spielers</li>
+    <li><b>Außerhalb des Repertoires</b> die Anzahl der Züge des Spielers, die
+      nicht im Repertoire waren</li>
+  </ul>
+  </p>
+
+  <p><footer>(Aktualisiert: Scid vs. PC 4.27 Januar 2026)</footer></p>
 }
 
 set helpTitle(D,Correspondence) "Fernschach"
@@ -8797,8 +8892,8 @@ set helpText(D,BookTuning) {<h1>Eröffnungsbuch anpassen</h1>
   <p><footer>Aktualisiert: Scid vs. PC 4.21, Januar 2020 </footer></p>
 }
 
-set helpTitle(Eboards) "Electronic Chessboards"
-set helpText(Eboards) {<h1>Elektronische Schachbretter</h1>
+set helpTitle(D,Eboards) "Electronic Chessboards"
+set helpText(D,Eboards) {<h1>Elektronische Schachbretter</h1>
 
   <p>Graham O'Neill hat seit einiger Zeit Treiber für zahlreiche elektronische
   Schachbretter herausgegeben. Auf <url https://goneill.co.nz/chess.php>Graham's
@@ -8839,7 +8934,7 @@ set helpText(Eboards) {<h1>Elektronische Schachbretter</h1>
   <p><footer>(Updated: Scid vs PC 4.23)</footer></p>
 }
 
-  set helpTitle(D,Novag) "Novag Citrine"
+set helpTitle(D,Novag) "Novag Citrine"
 set helpText(D,Novag) {<h1>Schachbrett von Novag Citrine</h1>
 
   <p><b>Dieser Abschnitt beschreibt die alte Novag-Unterstützung von
@@ -9506,8 +9601,8 @@ set helpText(D,Board) {<h1>Brett- und Figureneinstellungen</h1>
   <p><footer>Aktualisiert: Scid vs. PC 4.21 Januar 2020</footer></p>
 }
 
-set helpTitle(Console) "Willkommensfenster/Konsole"
-set helpText(Console) {<h1>Willkommensfenster und Konsole</h1>
+set helpTitle(D,Console) "Willkommensfenster/Konsole"
+set helpText(D,Console) {<h1>Willkommensfenster und Konsole</h1>
 <p>Das <green><run raiseSplashWindow>Willkommens-/Startfenster</run></green>
   zeigt verschiedene technische Informationen über das System und den
   Programmstart. In der unteren rechten Ecke ist ein Eingabefeld für
@@ -9516,13 +9611,23 @@ set helpText(Console) {<h1>Willkommensfenster und Konsole</h1>
 
 <p>Direkt darüber ist ein weiteres größeres Eingabefeld. Dies ist die
   Konsole von Scid vs PC, die das Eingeben von Tcl/Tk-Befehlen für die
-  Fehlersuche sowie weitere Nutzungen ermöglicht. Für weitere
-  Informationen über Tcl probieren Sie die Anleitungen in
+  Fehlersuche sowie weitere Nutzungen ermöglicht. Beispielsweise tippen Sie</p>
+
+  <p><i>sc_filter reset ; set count [sc_filter count] ; for {set i 1} {$i <lt>
+  $count} {incr i} {if {[sc_flags $i] == {}} {sc_filter remove $i}} ;
+  ::windows::gamelist::Refresh</i></p>
+
+  <p>um alle markierten Partien zu finden oder</p>
+
+  <p><i>time {foreach i [array names helpText] {helpWindow $i}}</i></p>
+  <p>um einen kleinen Benchmark durchzuführen.
+
+  Für weitere Informationen über Tcl probieren Sie die Anleitungen in
   <url https://www.tutorialspoint.com/tcl-tk/>Tutorials Point's
   Tcl</url> und
   <url https://www.tutorialspoint.com/tcl-tk/tk_overview.htm>Tk</url>.</p>
 
-<p><footer>Aktualisiert: Scid vs. PC 4.21 Juli 2019</footer></p>
+  <p><footer>Aktualisiert: Scid vs. PC 4.27 Dezember 2025</footer></p>
 }
 
 global tips
