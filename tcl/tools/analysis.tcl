@@ -3764,16 +3764,25 @@ proc boardVisualizeMoves {board n moves} {
       set sq_start [::board::sq [string range $cm 0 1]]
       set sq_end   [::board::sq [string range $cm 2 3]]
 
-      # Show an arrow between start and end squares
       set coord [::board::mark::GetArrowCoords $board $sq_start $sq_end [expr $::board::arrowLength*0.33]]
-      $board create line $coord -fill [expr {($im+$ply) % 2 ? $::blackLineColor : $::whiteLineColor}] -arrow last -width 2 -arrowshape {5 7 3} -tag bvm
+      # Show an arrow between start and end squares
+
+      set small [expr {$board != ".main.board.bd"}]
 
       # and the move number midway along the line
-
       set xmid [expr ([lindex $coord 0] + [lindex $coord 2]) / 2]
       set ymid [expr ([lindex $coord 1] + [lindex $coord 3]) / 2]
-      # $board create text [expr $xmid+1] [expr $ymid+1] -fill [gradient $analysis(boardSeqNumColor) -.5] -font $analysis(boardSeqFont) -text $mc -anchor c -tag bvm
-      $board create text $xmid $ymid -fill $analysis(boardSeqNumColor) -font $analysis(boardSeqFont) -text $mc -anchor c -tag bvm
+
+      if {!$small} {
+        # same numbers as in tcl/board.tcl , ::board::mark::DrawVar
+        $board create line $coord -fill [expr {($im+$ply) % 2 ? $::blackLineColor : $::whiteLineColor}] -arrow last -width $::board::arrowWidth \
+           -arrowshape "[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * sqrt (6.25 + 2.25)] [expr int($::board::arrowWidth * 1.5)]" -tag bvm
+        $board create text $xmid $ymid -fill $analysis(boardSeqNumColor) -font $analysis(boardSeqFont) -text $mc -anchor c -tag bvm
+        # -font {{courier 10 pitch} 15 bold}
+      } else {
+        $board create line $coord -fill [expr {($im+$ply) % 2 ? $::blackLineColor : $::whiteLineColor}] -arrow last -width 2 -arrowshape {5 7 3} -tag bvm
+        $board create text $xmid $ymid -fill $analysis(boardSeqNumColor) -font $analysis(boardSeqFont) -text $mc -anchor c -tag bvm
+      }
     }
   }
 }
@@ -3844,6 +3853,7 @@ proc updateAnalysisBoard {n {moves {}}} {
     if {$analysis(boardEngine) == $n} {
       # new Draw Arrows on Main Board feature - S.A.
       set bd .main.board
+      $bd.bd delete bvm engine
     } else {
       $bd.bd delete var
     }

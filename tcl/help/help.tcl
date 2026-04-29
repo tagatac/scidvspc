@@ -2806,7 +2806,7 @@ making for easier <a Analysis Debugging>Debugging</a>.
   Hover cursor over this button to see stats for locked game.
   After a while, to add this analysis to game, return to the locked position, 
   press Pause, Unlock, and Add Variation.</li>
-  <li> <button tb_coords 32> <b>Show Board</b> displays a small <a Analysis Board>analysis board.</a> (Right-click toggles arrows on the main board).
+  <li> <button tb_coords 32> <b>Show Board</b> displays a small <a Analysis Board>analysis board.</a> (Right-click toggles arrows on the main board - see <a Analysis Board>below</a>).
   If engine is locked the board displays the locked position, otherwise middle-click toggles between display modes.</li>
   <li> <button tb_exclude 32> <b>Exclude Move(s)</b> helps refine the engine's search list (mainly UCI engines only). Hovering mouse shows the current excluded moves.</li>
   <li> <button tb_cpu 32> <b>Low CPU priority</b> 
@@ -2864,10 +2864,13 @@ The default mode and size are set in the <a Analysis List>Engine Configuration</
 <i>Control-wheelmouse resizes this board.</i>
 <br><b>Position</b> is the original mode. It displays the board's position after the engines line has been played.
 <br><b>Arrows</b> will display clickable arrows for the engine's move, or multiple arrows if PV is enabled (Var Numbers toggled by Control-Shift-N).
-<br><b>Sequential</b> will show the line as a numbered sequence of small (unclickable) arrows. The length of moves shown is by default 3 but can be changed in the last spinbox in the engine toolbar. The line colour is selected by Options-<gt>Colours-<gt>EngineArrows.
+<br><b>Sequential</b> will show the line as a numbered sequence of small (unclickable) arrows. The length of moves shown is by default 3 but can be changed in the last spinbox in the engine toolbar. In Sequential mode, there are three submodes (White, Black, Both) changed by simply using wheel mouse over the board.
 </p>
 
-<p>Right clicking <button tb_coords 32> toggles Engine Arrows being displayed on the Main Board! (In this mode, Move Variation arrows will not be shown).</p>
+<p>The line colour is selected by Options-<gt>Colours-<gt>EngineArrows.
+</p>
+
+<p>Right clicking <button tb_coords 32> toggles <b>Engine Arrows being displayed on the Main Board!</b> (In this mode, Move Variation arrows will not be shown).</p>
 
 <p>Beside the board is a black and white Score Bar (toggled via Control-Shift-S), and optionally, a Coloured 'Traffic' Bar (Control-Shift-C) which shows colours for each MultiPV's score - indicating the sharpness of a position. Red means Black is winning, Yellow is even, and Green for White winning."
 </p>
