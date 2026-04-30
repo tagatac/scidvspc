@@ -9201,18 +9201,42 @@ addScoreToList (Tcl_Interp * ti, int moveCounter, const char * comment,
 {
     char buffer[1024];
     if (comment == NULL) { return false; }
-    while (*comment != 0  &&  *comment != '+'  &&  *comment != '-') {
-        comment++;
+
+    float f = 0; // score
+
+    // check first for %eval, as stockfish/lichess use unsigned scores and #Mate S.A.
+
+    int offset = strContainsIndex(comment, "%eval ");
+    if (offset > -1) {
+       comment = comment + offset + 6; // 6 == len("%eval ")
+       if (*comment == 0) return false;
+       if (*comment == '#') {
+         if (*(comment+1) == '-')
+           f = -327.0; // Scid's default mate score. But is reset to min/max (10) below
+         else 
+           f = 327.0;
+       } else {
+	 if (*comment == '+' || *comment == '-') {
+	   if (!isdigit(*(comment+1))) return false; 
+	 } else {
+	   if (!isdigit(*(comment))) return false; 
+	 }
+       }
+    } else {
+      while (*comment != 0  &&  *comment != '+'  &&  *comment != '-') {
+	  comment++;
+      }
+      if (*comment == 0  || ! isdigit(*(comment+1))) { return false; }
+      //Klimmek: ignore game results like 1-0 or 0-1 in a comment
+      if (*comment == '-' && isdigit(*(comment-1))) { return false; }
+      // OK, now we have found "+[digit]" or "-[digit]" in the comment,
+      // so extract its evaluation and add it to our list:
     }
-    if (*comment == 0  || ! isdigit(*(comment+1))) { return false; }
-    //Klimmek: ignore game results like 1-0 or 0-1 in a comment
-    if (*comment == '-' && isdigit(*(comment-1))) { return false; }
-    // OK, now we have found "+[digit]" or "-[digit]" in the comment,
-    // so extract its evaluation and add it to our list:
+
     sprintf (buffer, "%.1f", (float)moveCounter * 0.5 + 0.5);
     Tcl_AppendElement (ti, buffer);
-    float f;
-    sscanf (comment, "%f", &f);
+    if (f == 0)
+      sscanf (comment, "%f", &f);
     if (negate) { f = -f; }
     if (f < min) { f = min; } // min is -10
     if (f > max) { f = max; }
