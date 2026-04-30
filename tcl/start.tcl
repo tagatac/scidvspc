@@ -452,7 +452,7 @@ set ::board::arrowLength 0.6
 set ::board::enableMPVTls 0	;# enable Hanish's MPV traffic-light bar
 set engineLineColor $maincolor  ;# Engine arrows
 set whiteLineColor white
-set blackLineColor grey40
+set blackLineColor grey50
 set rowcolor    lightsteelblue1 ;# Tree/Crosstab/Book line/row bg color
 set highlightcolor gray85       ;# Nameditor /playerinfo/ crosstable player name highlight colour
 set switchercolor lightsteelblue3 ;# DB switcher
