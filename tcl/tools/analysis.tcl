@@ -2619,10 +2619,17 @@ proc findEngine {} {
 proc setBoardEngine {n} {
   if {$::analysis(boardEngine) != $n} {
     .main.board.bd delete var
+
+    # reset previous button colours, if any
+    catch {.analysisWin$::analysis(boardEngine).b.showboard configure -bg #d9d9d9 -relief flat -activebackground #ececec}
+
     set ::analysis(boardEngine) $n
+    # try to mimic checkbutton colours 
+    .analysisWin$n.b.showboard configure -bg #b0c0d0 -relief sunken -activebackground #ced6de
   } else {
     .main.board.bd delete engine
     set ::analysis(boardEngine) 0
+    .analysisWin$n.b.showboard configure -bg #d9d9d9 -relief flat -activebackground #ececec
   }
 }
 

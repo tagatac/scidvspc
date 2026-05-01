@@ -2859,18 +2859,16 @@ with the format "stat01: time nodes ply mvleft mvtot mvname". The results can be
 
   <h3><name Board>Analysis Board</h3>
 
-  <p>Clicking <button tb_coords 32> will toggle a small board which can take on three modes, Arrows, Sequential and Position.
+<p>Right clicking <button tb_coords 32> toggles Engine Arrows being displayed on the Main Board! The button will turn blue, and Move Variation arrows will not be shown. The line colour is selected by Options-<gt>Colours-<gt>EngineArrows.</p>
+
+<p>Clicking <button tb_coords 32> normally will toggle a small board which can take on three modes - Arrows, Sequential and Position.
 The default mode and size are set in the <a Analysis List>Engine Configuration</a> window, and can also be toggled by pressing the middle mouse button.
 <i>Control-wheelmouse resizes this board.</i>
+<br>
 <br><b>Position</b> is the original mode. It displays the board's position after the engines line has been played.
-<br><b>Arrows</b> will display clickable arrows for the engine's move, or multiple arrows if PV is enabled (Var Numbers toggled by Control-Shift-N).
+<br><b>Arrows</b> will display clickable arrows for the engine's move, or multiple arrows if PV is enabled (Variation numbers toggled by Control-Shift-N).
 <br><b>Sequential</b> will show the line as a numbered sequence of small (unclickable) arrows. The length of moves shown is by default 3 but can be changed in the last spinbox in the engine toolbar. In Sequential mode, there are three submodes (White, Black, Both) changed by simply using wheel mouse over the board.
 </p>
-
-<p>The line colour is selected by Options-<gt>Colours-<gt>EngineArrows.
-</p>
-
-<p>Right clicking <button tb_coords 32> toggles <b>Engine Arrows being displayed on the Main Board!</b> (In this mode, Move Variation arrows will not be shown).</p>
 
 <p>Beside the board is a black and white Score Bar (toggled via Control-Shift-S), and optionally, a Coloured 'Traffic' Bar (Control-Shift-C) which shows colours for each MultiPV's score - indicating the sharpness of a position. Red means Black is winning, Yellow is even, and Green for White winning."
 </p>
@@ -3024,7 +3022,7 @@ The <b>Log Size</b> is the max number of lines in the log. Setting it to zero di
   <p>The default UCI command for <button tb_play> is "go infinite", but this may be altered by changing <b>::uci::goCommand</b> in ScidvsPC's <a Console>Console</a> (for example "set ::uci::goCommand {go depth 20}" or {go movetime 10000}).
 </p>
 
-  <p><footer>Updated: Scid vs. PC 4.27, Mar 2026</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.27, May 2026</footer></p>
 }
 
 set helpTitle(Tourney) "Computer Tournament"
