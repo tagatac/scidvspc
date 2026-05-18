@@ -1,17 +1,106 @@
-A:link {text-decoration: none}
-A:visited {text-decoration: none}
-A:active {text-decoration: none}
+/* Style file for scid HTML export
+ */
 
-/* Current move */
-.currentMove
-{
+/* WARNING:
+ * Do not change the order of elements in this sheet
+ * The exported Javascript may or may not depend on it (using document.styleSheets[0].cssRules[index])
+ */
+
+/* The background color for the current move
+ */
+#highlight{
+    color: #e9aa5d;
+}
+
+
+/* The background color for other moves
+ */
+#lowlight{
+    color: #ffffff;
+}    
+
+/* Black square
+ */
+.bs{
+    background-color: #7389b6;
+}
+
+/* White square
+ */
+.ws{
+    background-color: #f3f3f3;
+}
+
+
+/* Board rim
+ */
+.coordinates
+{ 
 	font-family:"Courier New", Arial;
 	font-style:normal;
 	text-decoration:none;
-	font-weight:normal;
-	font-size:12pt;
-	color:#e9aa5d;
+	font-weight:bold;
+	font-size:10pt;
+	color:#2e2ebf;
+	background-color: #cccccc;
+	width: 1em;
 }
+
+/* Indentation of variations
+ */
+div.var{
+    text-indent: -1em;
+    margin-left: 3em;
+}
+
+
+a:link {text-decoration: none}
+a:visited {text-decoration: none}
+a:active {text-decoration: none}
+
+body{
+margin: 0;
+padding: 0;
+border: 0;
+overflow: hidden;
+height: 100%; 
+max-height: 100%; 
+background: #fff;
+color: #000;
+}
+
+#framecontent{
+position: absolute;
+top: 0;
+bottom: 0; 
+left: 0;
+width: 380px; /*Width of frame div*/
+height: 100%;
+overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
+}
+
+#maincontent{
+position: fixed;
+top: 0; 
+left: 380px; /*Set left value to WidthOfFrameDiv*/
+right: 0;
+bottom: 0;
+overflow: auto; 
+}
+
+.innertube{
+margin: 15px; /*Margins for inner DIV inside each DIV (to provide padding)*/
+}
+
+* html body{ /*IE6 hack*/
+padding: 0 0 0 200px; /*Set value to (0 0 0 WidthOfFrameDiv)*/
+}
+
+* html #maincontent{ /*IE6 hack*/
+height: 100%; 
+width: 100%; 
+}
+
 
 /* Header: Event, Site, Date */
 .hEvent
@@ -65,7 +154,7 @@ A:active {text-decoration: none}
 	text-decoration:none;
 	font-weight:normal;
 	font-size:12pt;
-	color:#860c0c;
+	color:#800000;
 }
 
 /* moves */
@@ -101,13 +190,56 @@ A:active {text-decoration: none}
 	color:#000000;
 }
 
-/* board coordinates */
-.coordinates
-{ 
-	font-family:"Courier New", Arial;
-	font-style:normal;
-	text-decoration:none;
-	font-weight:bold;
-	font-size:10pt;
-	color:#2e2ebf;
+/* diagram */
+#diagramTable {
+	border: 0;
+	border-collapse: collapse;
+	}
+
+#diagramTable td {
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+	}
+
+img {border: 0}
+
+/* Print styles to ensure board squares are visible when printing */
+@media print {
+	/* Force background colors to print */
+	.bs {
+		background-color: #7389b6 !important;
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		color-adjust: exact;
+	}
+	
+	.ws {
+		background-color: #f3f3f3 !important;
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		color-adjust: exact;
+	}
+	
+	.coordinates {
+		background-color: #cccccc !important;
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		color-adjust: exact;
+	}
+	
+	/* Ensure the layout works for printing */
+	#framecontent {
+		position: relative;
+		width: 100%;
+		height: auto;
+	}
+	
+	#maincontent {
+		position: relative;
+		left: 0;
+		top: 0;
+		width: 100%;
+	}
 }

@@ -333,7 +333,9 @@ proc addVerticalRule {w {xpadding 5} {relief sunken}} {
 
 proc progressWindow {args} {
   set w .progressWin
-  if {[winfo exists $w]} { return }
+  if {[winfo exists $w]} {
+    return
+  }
   toplevel $w
   wm withdraw $w
   wm resizable $w 0 0
@@ -370,6 +372,7 @@ proc progressWindow {args} {
     pack [frame $w.b] -side bottom -fill x
     button $w.b.cancel -text $button -command $command
     pack $w.b.cancel -side right -padx 5 -pady 2
+    wm protocol $w WM_DELETE_WINDOW $command
   } else {
     wm protocol $w WM_DELETE_WINDOW {puts {progressWindow Destroy caught}}
   }
@@ -425,7 +428,9 @@ proc resetProgressWindow {} {
 
 proc updateProgressWindow {done total} {
   set w .progressWin
-  if {! [winfo exists $w]} { return }
+  if {! [winfo exists $w]} {
+    return
+  }
   set elapsed [expr {[clock seconds] - $::progressWin_time}]
   set width 401
   if {$total > 0} {
@@ -732,6 +737,7 @@ namespace eval html {
 
 
   ### Export filter to HTML and Javascript
+  #   Adopted from Scid/scidcommunity by S.A 2026
 
   proc exportCurrentFilter {} {
     # Check that we have some games to export:
@@ -752,45 +758,60 @@ namespace eval html {
     set idir $::initialDir(html)
     set fName [tk_getSaveFile -initialdir $idir -filetypes $ftype -defaultextension ".html" -title "Create an HTML file"]
     if {$fName == ""} { return }
+    if {[file extension $fName] != ".html" } {
+      append fName ".html"
+    }
     set prefix [file rootname [file tail $fName] ]
     set dirtarget [file dirname $fName]
     set sourcedir [file join $::scidShareDir html]
     ### catch copies to ignore overwrite directory errors
     catch { copyBitmapsDir [file join $sourcedir bitmaps] $dirtarget }
-    catch { file copy -force [file join $sourcedir scid.js] $dirtarget }
-    catch { file copy -force [file join $sourcedir scid.css] $dirtarget }
-    writeIndex "[file join $dirtarget $prefix].html" $prefix
+    catch {file copy -force [file join $sourcedir scid.js] $dirtarget}
+    catch {file copy -force [file join $sourcedir scid.css] $dirtarget}
+    # writeIndex "[file join $dirtarget $prefix].html" $prefix
     progressWindow Scid "Exporting games..." $::tr(Stop) sc_progressBar
     busyCursor .
     set savedGameNum [sc_game number]
     set gn [sc_filter first]
     set players {}
     set ::html::cancelHTML 0
-    set idx 1
     set total [sc_filter count]
 
+    # build the list of matches
+    set idx 1
+    while {$gn != 0 && ! $::html::cancelHTML} {
+      updateProgressWindow $idx $total
+      sc_game load $gn
+      set pl "[sc_game tags get White] - [sc_game tags get Black]"
+      lappend players $pl
+      set gn [sc_filter next]
+      incr idx
+    }
+
+    set idx 1
+    set gn [sc_filter first]
     while {$gn != 0 && ! $::html::cancelHTML} {
       updateProgressWindow $idx $total
       sc_game load $gn
       fillData
       set pl "[sc_game tags get White] - [sc_game tags get Black]"
-      lappend players $pl
-      toHtml $::html::data $idx $dirtarget $prefix $pl [sc_game tags get "Event"] [sc_game tags get "ECO"] [sc_game info result] [sc_game tags get "Date"]
+      toHtml $::html::data $idx $dirtarget $prefix $players $pl [sc_game tags get "Event"] [sc_game tags get "ECO"] [sc_game info result] [sc_game tags get "Date"]
       set gn [sc_filter next]
       incr idx
     }
 
-    navhtml $dirtarget $players $prefix
     closeProgressWindow
     unbusyCursor .
     exportPGN "[file join $dirtarget $prefix].pgn" "filter"
-    if {$savedGameNum > 0} {
-      sc_game load $savedGameNum
-    } else {
-      sc_game new
+    sc_game load $savedGameNum
+    
+    # Open the first game's HTML file in the default browser
+    if {!$::html::cancelHTML && [sc_filter count] > 0} {
+      set firstGameHtml "[file join $dirtarget $prefix]_1.html"
+      openURL "file://$firstGameHtml"
     }
   }
-  ################################################################################
+
   proc sc_progressBar {} {
     set ::html::cancelHTML 1
   }
@@ -805,6 +826,9 @@ namespace eval html {
     }
     set idir $::initialDir(html)
     set fName [tk_getSaveFile -initialdir $idir -filetypes $ftype -defaultextension ".html" -title "Create an HTML file"]
+    if {[file extension $fName] != ".html" && [file extension $fName] != ".htm" } {
+      append fName ".html"
+    }
     if {$fName == ""} { return }
     set prefix [file rootname [file tail $fName] ]
     set dirtarget [file dirname $fName]
@@ -813,34 +837,96 @@ namespace eval html {
     catch { copyBitmapsDir [file join $sourcedir bitmaps] $dirtarget }
     catch { file copy -force [file join $sourcedir scid.js] $dirtarget }
     catch { file copy -force [file join $sourcedir scid.css] $dirtarget }
-    writeIndex "[file join $dirtarget $prefix].html" $prefix
 
     fillData
     set players [list "[sc_game tags get White] - [sc_game tags get Black]"]
-    navhtml $dirtarget $players $prefix
-    toHtml $::html::data 1 $dirtarget $prefix $players \
+    toHtml $::html::data -1 $dirtarget $prefix $players [lindex $players 0] \
         [sc_game tags get "Event"] [sc_game tags get "ECO"] \
         [sc_game info result] [sc_game tags get "Date"]
     exportPGN "[file join $dirtarget $prefix].pgn" "current"
+    
+    # Open the exported HTML file in the default browser
+    openURL "file://$fName"
   }
-
   ################################################################################
-  proc toHtml { dt game dirtarget prefix {players ""} {event ""} {eco "ECO"} {result "*"} {date ""} } {
-    set f [open "[file join $dirtarget $prefix]_${game}.html" w]
+  # Dictionary mapping from special characters to their entities. (from tcllib)
+  variable entities {
+    \xa0 &nbsp; \xa1 &iexcl; \xa2 &cent; \xa3 &pound; \xa4 &curren;
+    \xa5 &yen; \xa6 &brvbar; \xa7 &sect; \xa8 &uml; \xa9 &copy;
+    \xaa &ordf; \xab &laquo; \xac &not; \xad &shy; \xae &reg;
+    \xaf &macr; \xb0 &deg; \xb1 &plusmn; \xb2 &sup2; \xb3 &sup3;
+    \xb4 &acute; \xb5 &micro; \xb6 &para; \xb7 &middot; \xb8 &cedil;
+    \xb9 &sup1; \xba &ordm; \xbb &raquo; \xbc &frac14; \xbd &frac12;
+    \xbe &frac34; \xbf &iquest; \xc0 &Agrave; \xc1 &Aacute; \xc2 &Acirc;
+    \xc3 &Atilde; \xc4 &Auml; \xc5 &Aring; \xc6 &AElig; \xc7 &Ccedil;
+    \xc8 &Egrave; \xc9 &Eacute; \xca &Ecirc; \xcb &Euml; \xcc &Igrave;
+    \xcd &Iacute; \xce &Icirc; \xcf &Iuml; \xd0 &ETH; \xd1 &Ntilde;
+    \xd2 &Ograve; \xd3 &Oacute; \xd4 &Ocirc; \xd5 &Otilde; \xd6 &Ouml;
+    \xd7 &times; \xd8 &Oslash; \xd9 &Ugrave; \xda &Uacute; \xdb &Ucirc;
+    \xdc &Uuml; \xdd &Yacute; \xde &THORN; \xdf &szlig; \xe0 &agrave;
+    \xe1 &aacute; \xe2 &acirc; \xe3 &atilde; \xe4 &auml; \xe5 &aring;
+    \xe6 &aelig; \xe7 &ccedil; \xe8 &egrave; \xe9 &eacute; \xea &ecirc;
+    \xeb &euml; \xec &igrave; \xed &iacute; \xee &icirc; \xef &iuml;
+    \xf0 &eth; \xf1 &ntilde; \xf2 &ograve; \xf3 &oacute; \xf4 &ocirc;
+    \xf5 &otilde; \xf6 &ouml; \xf7 &divide; \xf8 &oslash; \xf9 &ugrave;
+    \xfa &uacute; \xfb &ucirc; \xfc &uuml; \xfd &yacute; \xfe &thorn;
+    \xff &yuml; \u192 &fnof; \u391 &Alpha; \u392 &Beta; \u393 &Gamma;
+    \u394 &Delta; \u395 &Epsilon; \u396 &Zeta; \u397 &Eta; \u398 &Theta;
+    \u399 &Iota; \u39A &Kappa; \u39B &Lambda; \u39C &Mu; \u39D &Nu;
+    \u39E &Xi; \u39F &Omicron; \u3A0 &Pi; \u3A1 &Rho; \u3A3 &Sigma;
+    \u3A4 &Tau; \u3A5 &Upsilon; \u3A6 &Phi; \u3A7 &Chi; \u3A8 &Psi;
+    \u3A9 &Omega; \u3B1 &alpha; \u3B2 &beta; \u3B3 &gamma; \u3B4 &delta;
+    \u3B5 &epsilon; \u3B6 &zeta; \u3B7 &eta; \u3B8 &theta; \u3B9 &iota;
+    \u3BA &kappa; \u3BB &lambda; \u3BC &mu; \u3BD &nu; \u3BE &xi;
+    \u3BF &omicron; \u3C0 &pi; \u3C1 &rho; \u3C2 &sigmaf; \u3C3 &sigma;
+    \u3C4 &tau; \u3C5 &upsilon; \u3C6 &phi; \u3C7 &chi; \u3C8 &psi;
+    \u3C9 &omega; \u3D1 &thetasym; \u3D2 &upsih; \u3D6 &piv;
+    \u2022 &bull; \u2026 &hellip; \u2032 &prime; \u2033 &Prime;
+    \u203E &oline; \u2044 &frasl; \u2118 &weierp; \u2111 &image;
+    \u211C &real; \u2122 &trade; \u2135 &alefsym; \u2190 &larr;
+    \u2191 &uarr; \u2192 &rarr; \u2193 &darr; \u2194 &harr; \u21B5 &crarr;
+    \u21D0 &lArr; \u21D1 &uArr; \u21D2 &rArr; \u21D3 &dArr; \u21D4 &hArr;
+    \u2200 &forall; \u2202 &part; \u2203 &exist; \u2205 &empty;
+    \u2207 &nabla; \u2208 &isin; \u2209 &notin; \u220B &ni; \u220F &prod;
+    \u2211 &sum; \u2212 &minus; \u2217 &lowast; \u221A &radic;
+    \u221D &prop; \u221E &infin; \u2220 &ang; \u2227 &and; \u2228 &or;
+    \u2229 &cap; \u222A &cup; \u222B &int; \u2234 &there4; \u223C &sim;
+    \u2245 &cong; \u2248 &asymp; \u2260 &ne; \u2261 &equiv; \u2264 &le;
+    \u2265 &ge; \u2282 &sub; \u2283 &sup; \u2284 &nsub; \u2286 &sube;
+    \u2287 &supe; \u2295 &oplus; \u2297 &otimes; \u22A5 &perp;
+    \u22C5 &sdot; \u2308 &lceil; \u2309 &rceil; \u230A &lfloor;
+    \u230B &rfloor; \u2329 &lang; \u232A &rang; \u25CA &loz;
+    \u2660 &spades; \u2663 &clubs; \u2665 &hearts; \u2666 &diams;
+    \x22 &quot; \x26 &amp; \x3C &lt; \x3E &gt; \u152 &OElig;
+    \u153 &oelig; \u160 &Scaron; \u161 &scaron; \u178 &Yuml;
+    \u2C6 &circ; \u2DC &tilde; \u2002 &ensp; \u2003 &emsp; \u2009 &thinsp;
+    \u200C &zwnj; \u200D &zwj; \u200E &lrm; \u200F &rlm; \u2013 &ndash;
+    \u2014 &mdash; \u2018 &lsquo; \u2019 &rsquo; \u201A &sbquo;
+    \u201C &ldquo; \u201D &rdquo; \u201E &bdquo; \u2020 &dagger;
+    \u2021 &Dagger; \u2030 &permil; \u2039 &lsaquo; \u203A &rsaquo;
+    \u20AC &euro;
+  }
+  proc html_entities {s} {
+    variable entities
+    return [string map $entities $s]
+  }
+  ################################################################################
+  proc toHtml { dt game dirtarget prefix {players ""} {this_players ""} {event ""} {eco "ECO"} {result "*"} {date ""} } {
+
+    if { $game != -1 } {
+      set f [open "[file join $dirtarget $prefix]_${game}.html" w]
+    } else  {
+      set f [open "[file join $dirtarget $prefix].html" w]
+    }
     # header
-    puts $f "<html>"
+    puts $f "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
+    puts $f "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">"
     puts $f "<head>"
-    puts $f "<meta content=\"text/html; charset=ISO-8859-1\" http-equiv=\"content-type\">"
-    puts $f "<title>Scid</title>"
-    puts $f "<meta content=\"Scid\" name=\"author\">"
-    puts $f "<link rel=\"stylesheet\" type=\"text/css\" href=\"scid.css\">"
-    puts $f "<script SRC=\"scid.js\" LANGUAGE=\"JavaScript1.1\"></script>"
-    puts $f "</head>"
-    puts $f "<body ONLOAD=\"doinit()\" TEXT=\"#000000\" LINK=\"#000000\" VLINK=\"#000000\" ALINK=\"#000000\" BGCOLOR=\"#ECECEC\" onKeyDown=\"handlekey(event)\">"
-    puts $f "<p>"
-    puts $f "<font COLOR=\"#000000\">"
-    puts $f "<script LANGUAGE=\"JavaScript1.1\">"
-    puts $f "<!--"
+    puts $f "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />"
+    puts $f "<link rel=\"stylesheet\" type=\"text/css\" href=\"scid.css\" />"
+    puts $f "<script src=\"scid.js\" type=\"text/javascript\"></script>"
+    puts $f "<script type=\"text/javascript\">"
+    puts $f "// <!\[CDATA\["
     puts $f "movesArray = new Array("
     for {set i 0} {$i<[llength $dt]} {incr i} {
       array set elt [lindex $dt $i]
@@ -850,62 +936,100 @@ namespace eval html {
     puts $f ");"
     puts $f "var current = 0;"
     puts $f "var prefix = \"$prefix\";"
-    puts $f "//-->"
+    puts $f "// \]\]>"
     puts $f "</script>"
-    puts $f "<NOSCRIPT>You need to have Javascript enabled in your browser to see this page.</NOSCRIPT>"
-    # game header
-    puts $f "<span class=\"hPlayers\">$players</span>"
-    puts $f "<br>"
-    puts $f "<span class=\"hEvent\"><br>$event \($date\)</span>"
-    if {[sc_game startBoard]} {
-      puts $f "<br>"
-      puts $f "[sc_game startPos]"
+    puts $f "<title>Scid</title>"
+    puts $f "</head>"
+    puts $f "<body onload=\"doinit()\" onkeydown=\"handlekey(event)\">"
+    puts $f "<div id=\"framecontent\">"
+    puts $f "<div class=\"innertube\">"
+    # diagram
+    puts $f "<div id=\"diagram\"><!-- diagram goes here --></div>"
+    # navigation
+    puts $f "<div id=\"nav\" style=\"text-align: center\"><!-- navigation goes here -->"
+    puts $f "<form action=\"#\">"
+    puts $f "<p>"
+    puts $f "<input type='button' value=' &darr;&uarr; ' onclick='rotate()' /> <input type='button' value=' |&lt; ' onclick='jump(0)' /> <input type='button' value=' &lt; ' onclick='moveForward(0)' /> <input type='button' value=' &gt; ' onclick='moveForward(1)' /> <input type='button' value=' &gt;| ' onclick='jump(1)' /> "
+    puts $f "</p><p>"
+    # other games navigation
+    puts $f "<select name=\"gameselect\" id=\"gameselect\" size=\"1\" onchange=\"gotogame()\">"
+    set i 1
+    foreach l $players {
+      if { $game == $i } {
+        puts $f "<option  selected=\"selected\">$i. [html_entities $l]</option>"
+      } else  {
+        puts $f "<option>$i. [html_entities $l]</option>"
+      }
+      incr i
     }
-    puts $f "<br><br>"
-
+    puts $f "</select>"
+    puts $f "</p><p>"
+    puts $f "<input type=\"button\" value=\"&lt;--\" onclick=\"gotoprevgame()\" /> &nbsp; <input type=\"button\" value=\"--&gt;\" onclick=\"gotonextgame()\" />"
+    puts $f "</p><p>"
+    puts $f "<a href=\"${prefix}.pgn\">${prefix}.pgn</a>"
+    puts $f "</p>"
+    puts $f "</form>"
+    puts $f "</div>"
+    puts $f "</div>"
+    puts $f "</div>"
+    puts $f "<div id=\"maincontent\">"
+    puts $f "<div class=\"innertube\">"
+    puts $f "<div id=\"moves\"><!-- moves go here -->"
+    # game header
+    puts $f "<span class=\"hPlayers\"> [html_entities $this_players]</span>"
+    puts $f "<span class=\"hEvent\"><br /> [html_entities $event]</span>"
+    puts $f "<span class=\"hEvent\"><br />\[$date\]</span>"
+    puts $f "<span class=\"hAnnot\"><br />\[$eco\]</span>"
+    puts $f "<p>"
     # link moves
     set prevdepth 0
     set prevvarnumber 0
-
-    # These 'dots' are purely for use with diagrams
-    set dots 0
-
     for {set i 0} {$i<[llength $dt]} {incr i} {
       array set elt [lindex $dt $i]
       if {$elt(depth) == 0} {
         set class "V0"
       } elseif {$elt(depth) == 1} {
         set class "V1"
-      } else  {
+      } else {
         set class "V2"
       }
-      if {$prevdepth != $elt(depth) || $prevvarnumber != $elt(var)} {
-        if {$prevdepth != 0} { puts $f "\]" }
-        puts $f "<br>"
-        for {set j 0} {$j<$elt(depth)} {incr j} {puts $f "&nbsp; &nbsp; "}
-        if {$elt(depth) != 0} { puts $f "\[" }
-      }
-      set prevdepth $elt(depth)
-      set prevvarnumber $elt(var)
-      if {$dots > 0} {
-	puts $f "<a href=\"javascript:gotoMove($elt(idx))\" ID=\"$elt(idx)\" class=\"$class\">$dots. ... $elt(move)</a>$elt(nag) <span class=\"VC\">$elt(comment)</span>"
-        set dots 0
+      if { $prevdepth == $elt(depth) && $prevvarnumber != $elt(var) } {
+        puts $f "<span class=\"VC\">\]</span></div>"
+        puts $f "<div class=\"var\"><span class=\"VC\">\[</span>"
       } else {
-	puts $f "<a href=\"javascript:gotoMove($elt(idx))\" ID=\"$elt(idx)\" class=\"$class\">$elt(move)</a>$elt(nag) <span class=\"VC\">$elt(comment)</span>"
+        while { $prevdepth > $elt(depth) } {
+            puts $f "<span class=\"VC\">\]</span></div>"
+            set prevdepth [expr $prevdepth - 1]
+        }
+        while { $prevdepth < $elt(depth) } {
+            puts $f "<div class=\"var\"><span class=\"VC\">\[</span>"
+            set prevdepth [expr $prevdepth + 1]
+        }
       }
+      set prevvarnumber $elt(var)
+      # id = "mv1" not "id=1" now
+      set nag [html_entities $elt(nag)]
+      set comment [html_entities $elt(comment)]
+      puts $f "<a href=\"javascript:gotoMove($elt(idx))\" id=\"mv$elt(idx)\" class=\"$class\">$elt(move)$nag</a>"
       if {$elt(diag)} {
         insertMiniDiag $elt(fen) $f
-	set dots 0
-	scan $elt(move) %i. dots
+      }
+      if {$comment != ""} {
+        puts $f "<span class=\"VC\">$comment</span>"
       }
     }
-    if {$prevdepth != 0} {puts $f "\]"}
+    while { $prevdepth > 0 } {
+        puts $f "<span class=\"VC\">\]</span></div>"
+        set prevdepth [expr $prevdepth - 1]
+    }
 
-    # <a href="javascript:gotoMove(1)" ID="1" class="V0">1.Rd8</a>
-    puts $f "<br><class=\"VH\">$result"
-    puts $f "</font>"
-    puts $f "</p>"
+    puts $f "<br /><span class=\"VH\">$result</span>"
+    puts $f "<p>"
     puts $f "<font size=-2><a href=\"http://scid.sourceforge.net/\" target=_blank>Created with $::scidName - $::scidVersion</a></font>"
+
+    puts $f "</div>"
+    puts $f "</div>"
+    puts $f "</div>"
     puts $f "</body>"
     puts $f "</html>"
     close $f
