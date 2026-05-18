@@ -423,15 +423,14 @@ namespace eval tactics {
     }
     $w.fconfig.flist.lb selection set $cs
   }
+
   ################################################################################
   # cancel score reset loading
-  ################################################################################
+
   proc sc_progressBar {} {
     set ::tactics::cancelScoreReset 1
   }
-  ################################################################################
-  #
-  ################################################################################
+
   proc loadNextGame {} {
     ::tactics::resetValues
     setInfoEngine $::tr(LoadingGame)
@@ -982,21 +981,16 @@ namespace eval opening {
     # This progressWindow is broken for big databases S.A
     # Maybe it's just cpu busy because of "lsort -unique $hashList" below
 
-    set ::interrupt 0
-    progressWindow Scid $::tr(Loadingrepertoire) $::tr(Cancel) "set ::interrupt 1"
+    progressWindow Scid $::tr(Loadingrepertoire) $::tr(Cancel) ::opening::sc_progressBar
+    set ::opening::interrupt 0
     busyCursor .
-    update idletasks
+    update 
 
     set numGames [sc_filter count]
     set g [sc_filter first]
-    while {$g > 0} {
-      if {$::interrupt} {
-        set ::interupt 0
-        break
-      } ; # broke?
-      changeProgressWindow "$::tr(Movesloaded) $movesLoaded"
-      updateProgressWindow $g $numGames
-
+    set idx 1
+    while {$g > 0 && ! $::opening::interrupt} {
+      updateProgressWindow $idx $numGames
       if {$onlyFlaggedLines && ![sc_game flag WhiteOpFlag $g] && ![sc_game flag BlackOpFlag $g]} {
         continue
       }
@@ -1009,10 +1003,15 @@ namespace eval opening {
       set hashList [lsort -unique $hashList]
       lappend allLinesHashList $hashList
       set g [sc_filter next]
+      incr idx
     }
 
     closeProgressWindow
     unbusyCursor .
+  }
+
+  proc sc_progressBar {} {
+    set ::opening::interrupt 1
   }
 
   ################################################################################

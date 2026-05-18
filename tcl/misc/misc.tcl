@@ -377,8 +377,6 @@ proc progressWindow {args} {
     wm protocol $w WM_DELETE_WINDOW {puts {progressWindow Destroy caught}}
   }
 
-  sc_progressBar $w.c bar 401 21 time
-
   # proc busyCursor is kindof broken , and has been set by file::Open, so go direct
   catch {$w configure -cursor watch}
 
@@ -445,7 +443,7 @@ proc updateProgressWindow {done total} {
       [expr {$elapsed / 60}] [expr {$elapsed % 60}] \
       [expr {$estimated / 60}] [expr {$estimated % 60}]]
   $w.c itemconfigure time -text $t
-  update idletasks
+  update
 }
 
 proc closeProgressWindow {} {
@@ -764,11 +762,11 @@ namespace eval html {
     set dirtarget [file dirname $fName]
     set sourcedir [file join $::scidShareDir html]
     ### catch copies to ignore overwrite directory errors
-    catch { copyBitmapsDir [file join $sourcedir bitmaps] $dirtarget }
+    catch {copyBitmapsDir [file join $sourcedir bitmaps] $dirtarget}
     catch {file copy -force [file join $sourcedir scid.js] $dirtarget}
     catch {file copy -force [file join $sourcedir scid.css] $dirtarget}
     # writeIndex "[file join $dirtarget $prefix].html" $prefix
-    progressWindow Scid "Exporting games..." $::tr(Stop) sc_progressBar
+    progressWindow Scid "Exporting games..." $::tr(Stop) ::html::sc_progressBar
     busyCursor .
     set savedGameNum [sc_game number]
     set gn [sc_filter first]
