@@ -735,9 +735,8 @@ namespace eval html {
   set black_square "#7389b6"
   set white_square "#f3f3f3"
 
-
   ### Export filter to HTML and Javascript
-  #   Adopted from Scid/scidcommunity by S.A 2026
+  #   Adopted from Scid/scidCommunity by S.A 2026
 
   proc exportCurrentFilter {} {
     # Check that we have some games to export:
@@ -979,7 +978,7 @@ namespace eval html {
     puts $f "<span class=\"hPlayers\"> [html_entities $this_players]</span>"
     puts $f "<span class=\"hEvent\"><br /> [html_entities $event]</span>"
     puts $f "<span class=\"hEvent\"><br />\[$date\]</span>"
-    puts $f "<span class=\"hAnnot\"><br />\[$eco\]</span>"
+    # puts $f "<span class=\"hAnnot\"><br />\[$eco\]</span>"
     puts $f "<p>"
     # link moves
     set prevdepth 0
@@ -1137,7 +1136,6 @@ namespace eval html {
   proc parseGame { {prev -2} {dots unknown} } {
     global ::html::data ::html::idx
 
-
     while {1} {
 
     if {$dots == "unknown"} {
@@ -1179,7 +1177,7 @@ namespace eval html {
     }
   }
   ################################################################################
-  proc recordElt { {prev -2} {dots 0} } {
+  proc recordElt {{prev -2} {dots 0}} {
     global ::html::data ::html::idx
 
     array set elt {}
@@ -1203,8 +1201,8 @@ namespace eval html {
     set nag [regsub -all "D " $nag "" ]
     set nag [regsub -all "# " $nag "" ]
     set elt(nag) $nag
-    set comment [sc_pos getComment]
-    set comment [regsub -all "\[\x5B\]%draw (.)+\[\x5D\]" $comment ""]
+    set comment [sc_pos getCleanComment]
+    # set comment [regsub -all "\[\x5B\]%draw (.)+\[\x5D\]" $comment ""]
     set elt(comment) $comment
     set elt(depth) [sc_var level]
     set elt(var) [sc_var number]
