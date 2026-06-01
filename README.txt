@@ -118,21 +118,21 @@
 
   3.  download
 
-  Source scid_vs_pc-4.26.tgz
-  <http://sourceforge.net/projects/scidvspc/files/source/scid_vs_pc-4.26.tgz/download>
+  Source scid_vs_pc-4.27.tgz
+  <http://sourceforge.net/projects/scidvspc/files/source/scid_vs_pc-4.27.tgz/download>
 
-  Windows Scid vs PC-4.26.exe
-  <http://sourceforge.net/projects/scidvspc/files/windows/Scid%20vs%20PC-4.26.exe/download>
+  Windows Scid vs PC-4.27.exe
+  <http://sourceforge.net/projects/scidvspc/files/windows/Scid%20vs%20PC-4.27.exe/download>
 
-  Windows 64 bit Scid vs PC-4.26.x64.exe
-  <http://sourceforge.net/projects/scidvspc/files/windows-64bit/Scid%20vs%20PC-4.26.x64.exe/download>
+  Windows 64 bit Scid vs PC-4.27.x64.exe
+  <http://sourceforge.net/projects/scidvspc/files/windows-64bit/Scid%20vs%20PC-4.27.x64.exe/download>
 
-  Mac ScidvsMac-4.26.dmg
-  <http://sourceforge.net/projects/scidvspc/files/mac/ScidvsMac-4.26.dmg/download>
+  Mac ScidvsMac-4.27.dmg
+  <http://sourceforge.net/projects/scidvspc/files/mac/ScidvsMac-4.27.dmg/download>
 
-  Mac 64bit (beta) ScidvsMac-4.26.x64.dmg
+  Mac 64bit (beta) ScidvsMac-4.27.x64.dmg
   <https://sourceforge.net/projects/scidvspc/files/mac-64bit-
-  unsupported/ScidvsMac-4.26.x64.dmg/download>
+  unsupported/ScidvsMac-4.27.x64.dmg/download>
 
   3.0.1.  Other resources
 
@@ -162,8 +162,8 @@
   Installing from source:
 
   ______________________________________________________________________
-  tar -xzf scid_vs_pc-4.26.tgz
-  cd scid_vs_pc-4.26
+  tar -xzf scid_vs_pc-4.27.tgz
+  cd scid_vs_pc-4.27
   ./configure
   make
   sudo make install
@@ -205,7 +205,7 @@
 
   4.0.3.  Mac OS X
 
-  The ``ScidvsMac-4.26 app'' should include everything you need. Simply
+  The ``ScidvsMac-4.27 app'' should include everything you need. Simply
   drag and drop the App into /Applications (or similar). It cannot be
   run from the dmg disk image.
 
@@ -511,6 +511,37 @@
   variants.
 
   7.  changes
+
+  Scid vs. PC 4.27
+
+    Engine Arrows can now be displayed on the main board by right-clicking the board button
+    Include and improve Pascal's Opening Trainer
+    Scorebar fixes, including making it configurable - re Scale and Show-ticks
+    Fix/update our broken Export to HTML/Javascript (from scidCommunity project, with some tweaks)
+    Some Latex fixes from Christian
+    Handle new Chessbase colors/comments, and Stockfish/Lichess %eval comments (re the score graph)
+    Custom flags now show the first descriptive letter in lowercase (if any) in the Gamelist instead of 1-6
+    Chinese language translation from Zhuge Prajna
+
+    Disable annoying wheelmouse bindings in Comboboxes
+    Some improvements to Header Search and saved searches
+    Properly handle engines not sending PV, only 'bestmove'
+    Player Info - FIDE Player webpage links have changed
+    Reorganise the Annotation Init widget a little
+    Support for k4it.de online Nalimov (6 piece) tablebases (from Mike)
+    Make PGN board popups more persistant
+
+    Link to Lumbra's Gigabase, as Caissabase seems dead. 
+    Some Tcl Progressbar fixes
+    Export gamelist fixes - wasn't checking for tree open
+    Harden/fix sc_game_list regards processing nextMoves
+    Disable engines' OwnBook for annotation
+    Handle custom photos for aliased player names
+    Stockfish 17 throws a hissy if sent an OwnBook. FMD
+    Recursive annotation was getting broken by vars ending in mate
+    Seed random number generator (for tree training)
+    Store FEN parsing errors as game comments
+    Disable Fics ping notifications on macOS, which is buggy/slow
 
   Scid vs. PC 4.26
 

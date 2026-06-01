@@ -2859,7 +2859,7 @@ with the format "stat01: time nodes ply mvleft mvtot mvname". The results can be
 
   <h3><name Board>Analysis Board</h3>
 
-<p>Right clicking <button tb_coords 32> toggles Engine Arrows being displayed on the Main Board! The button will turn blue, and Move Variation arrows will not be shown. The line colour is selected by Options-<gt>Colours-<gt>EngineArrows.</p>
+<p>Right clicking <button tb_coords 32> toggles Engine Arrows being displayed on the Main Board! The button will turn blue (except on Macs), and Move Variation arrows will not be shown. The line colour is selected by Options-<gt>Colours-<gt>EngineArrows.</p>
 
 <p>Clicking <button tb_coords 32> normally will toggle a small board which can take on three modes - Arrows, Sequential and Position.
 The default mode and size are set in the <a Analysis List>Engine Configuration</a> window, and can also be toggled by pressing the middle mouse button.
@@ -6446,6 +6446,38 @@ set helpText(Sound) {<h1>Sound</h1>
 
 set helpTitle(Changelog) "Scid vs PC Changelog"
 set helpText(Changelog) {<h1>Changelog</h1>
+<h4>4.27 (May 20, 2026)</h4>
+<ul>
+<li>Engine Arrows can now be displayed on the main board by right-clicking the board button</li>
+<li>Include and improve Pascal's Opening Trainer</li>
+<li>Scorebar fixes, including making it configurable - re Scale and Show-ticks</li>
+<li>Fix/update our broken Export to HTML/Javascript (from scidCommunity project, with some tweaks)</li>
+<li>Some Latex fixes from Christian</li>
+<li>Handle new Chessbase colors/comments, and Stockfish/Lichess %eval comments (re the score graph)</li>
+<li>Custom flags now show the first descriptive letter in lowercase (if any) in the Gamelist instead of 1-6</li>
+<li>Chinese language translation from Zhuge Prajna</li>
+<br>
+<li>Disable annoying wheelmouse bindings in Comboboxes</li>
+<li>Some improvements to Header Search and saved searches</li>
+<li>Properly handle engines not sending PV, only 'bestmove'</li>
+<li>Player Info - FIDE Player webpage links have changed</li>
+<li>Reorganise the Annotation Init widget a little</li>
+<li>Support for k4it.de online Nalimov (6 piece) tablebases (from Mike)</li>
+<li>Make PGN board popups more persistant</li>
+<br>
+<li>Link to Lumbra's Gigabase, as Caissabase seems dead. </li>
+<li>Some Tcl Progressbar fixes</li>
+<li>Export gamelist fixes - wasn't checking for tree open</li>
+<li>Harden/fix sc_game_list regards processing nextMoves</li>
+<li>Disable engines' OwnBook for annotation</li>
+<li>Handle custom photos for aliased player names</li>
+<li>Stockfish 17 throws a hissy if sent an OwnBook. FMD</li>
+<li>Recursive annotation was getting broken by vars ending in mate</li>
+<li>Seed random number generator (for tree training)</li>
+<li>Store FEN parsing errors as game comments</li>
+<li>Disable Fics ping notifications on macOS, which is buggy/slow</li>
+</ul>
+
 <h4>4.26 (Feb 10, 2025)</h4>
 <ul>
 <li>Scorebar for the Main board, and also Browser windows and Fics observed games</li>
@@ -7211,16 +7243,6 @@ Game move/reorder feature:
 <h4>4.9.2 (June 19, 2013)</h4>
 <ul>
 <li>OS X changes, including docked mode fixes</li>
-</ul>
-
-<h4>4.9.1 (May 4, 2013)</h4>
-<ul>
-<li>Fix promotion bug in non-docked mode</li>
-<li>Small pictures allign top/bottom in game info</li>
-<li>Clickable crosstable columns</li>
-<li>Make an undo point with Setup Board, and disable undo for Trial mode</li>
-<li>Add Tournament lookup to Player Info window</li>
-<li>PGN import window was not getting mapped</li>
 </ul>
 }
 
