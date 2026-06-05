@@ -376,6 +376,13 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
     incr column
   }
 
+  # a bit of messing around for macs +2 canvas offset
+  set zero 0
+  if {$::macOS} {
+    incr psize 2
+    incr p2size 2
+  }
+
   set f $w.select
   foreach row {0 0 1 1 0 1 2 2 2} column {0 2 0 2 4 4 0 2 4} c {
     lite dark highcolor bestcolor bgcolor highlightLastMoveColor squarecolor maincolor varcolor
@@ -402,10 +409,10 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
 
       # each 2 by 2 color grid is a unique canvas
       canvas $f -height $psize -width $psize
-      $f create rectangle 0 0 $p2size $p2size -tag dark -fill $c1 -outline $c1
+      $f create rectangle $zero $zero $p2size $p2size -tag dark -fill $c1 -outline $c1
       $f create rectangle $p2size $p2size $psize $psize -tag dark -fill $c1 -outline $c1
-      $f create rectangle 0 $p2size $p2size $psize -tag lite -fill $c2 -outline $c2
-      $f create rectangle $p2size 0 $psize $p2size -tag lite -fill $c2 -outline $c2
+      $f create rectangle $zero $p2size $p2size $psize -tag lite -fill $c2 -outline $c2
+      $f create rectangle $p2size $zero $psize $p2size -tag lite -fill $c2 -outline $c2
       pack $f -side left -padx 10 -pady 5
 
       bind $f <Button-1> "
@@ -434,9 +441,9 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
     canvas $f -width $psize -height $psize
     grid $f -row $row -column $col -padx 10 -pady 5
 
-    $f create image 0 0 -image ${tex}-l -anchor nw
-    $f create image [expr $p2size + 1] 0 -image ${tex}-d -anchor nw
-    $f create image 0 [expr $p2size + 1] -image ${tex}-d -anchor nw
+    $f create image $zero $zero -image ${tex}-l -anchor nw
+    $f create image [expr $p2size + 1] $zero -image ${tex}-d -anchor nw
+    $f create image $zero [expr $p2size + 1] -image ${tex}-d -anchor nw
     $f create image [expr $p2size + 1] [expr $p2size + 1] -image ${tex}-l -anchor nw
     bind $f <Button-1> "chooseBoardTextures $count"
     # pack $f -side top -fill x
@@ -452,11 +459,15 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
   foreach i {0 1 2 3} {
     if {$i != 0} { pack [frame $f.gap$i -width $p2size] -side left -padx 1 }
     set c $f.c$i
-    canvas $c -height $psize -width $psize -background black
-    $c create rectangle 0 0 [expr {$p2size - $i}] [expr {$p2size - $i}] -tag dark
-    $c create rectangle [expr {$p2size + $i}] [expr {$p2size + $i}] $psize $psize -tag dark
-    $c create rectangle 0 [expr {$p2size + $i}] [expr $p2size - $i] $psize -tag lite
-    $c create rectangle [expr {$p2size + $i}] 0 $psize [expr {$p2size - $i}] -tag lite
+    if {$::macOS} {
+      canvas $c -height [expr $psize-2] -width [expr $psize-2] -background $::bgcolor
+    } else {
+      canvas $c -height $psize -width $psize -background $::bgcolor
+    }
+    $c create rectangle $zero $zero [expr {$p2size - $i}] [expr {$p2size - $i}] -tag lite
+    $c create rectangle [expr {$p2size + $i}] [expr {$p2size + $i}] $psize $psize -tag lite
+    $c create rectangle $zero [expr {$p2size + $i}] [expr $p2size - $i] $psize -tag dark
+    $c create rectangle [expr {$p2size + $i}] $zero $psize [expr {$p2size - $i}] -tag dark
     pack $c -side left -padx 2 -pady 5
     bind $c <Button-1> "applyBorderWidth $i"
 
