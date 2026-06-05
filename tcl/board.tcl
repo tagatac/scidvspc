@@ -184,11 +184,14 @@ proc applyBoardColors {} {
 
   ### too noisy to always change the border width widget
 
-  # foreach i {0 1 2 3} {
-  #  set c $w.border.c$i
-  #  $c itemconfigure dark -fill $newColors(dark) -outline $newColors(dark)
-  #  $c itemconfigure lite -fill $newColors(lite) -outline $newColors(lite)
-  # }
+  foreach i {0 1 2 3} {
+    set c $w.border.c$i
+    $c configure -background $bgcolor
+    $c itemconfigure dark -fill $newColors(dark) -outline $newColors(dark)
+    $c itemconfigure lite -fill $newColors(lite) -outline $newColors(lite)
+  }
+
+
 
   ### use this command if you want a third color to be used instead of black
   # .main.board.bd configure -background $newColors(dark)
