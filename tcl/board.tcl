@@ -362,7 +362,7 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
   addHorizontalRule $w
   pack [frame $w.buttons] -side top -fill x
 
-  set psize [boardSize_plus_n -5]
+  set psize [boardSize_plus_n -4]
   set p2size [expr $psize / 2]
 
   ### Chess pieces at top of screen - packed above
