@@ -297,10 +297,10 @@ proc initBoardColors {} {
 
   ### Piece type and size ###
 
-  label  $w.sizes.label -text [tr PgnOptChess] -font font_Regular
+  label  $w.sizes.label -text [tr PgnOptChess] -font font_Small
 
 if { $::docking::USE_DOCKING && $::autoResizeBoard} {
-  pack $w.sizes.label -pady 5
+  pack $w.sizes.label -pady 3
 } else {
   pack $w.sizes.label -side left
   frame $w.sizes.frame
@@ -308,10 +308,8 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
   label  $w.sizes.frame.label -text [tr OptionsFicsSize] -font font_Regular
   pack   $w.sizes.frame.label -side left -anchor center
 
-  button $w.sizes.frame.smaller -text - -font font_Small -borderwidth 1 \
-    -command {::board::resize .main.board -1}
-  button $w.sizes.frame.larger -text + -font font_Small -borderwidth 1 \
-    -command {::board::resize .main.board +1}
+  button $w.sizes.frame.smaller -text - -font font_Small -borderwidth 1 -command {::board::resize .main.board -1}
+  button $w.sizes.frame.larger -text + -font font_Small -borderwidth 1 -command {::board::resize .main.board +1}
   pack $w.sizes.frame.larger $w.sizes.frame.smaller -side right
 }
 
@@ -322,9 +320,7 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
     if {[winfo exists $w.pieces$row.$j]} {
       continue
     }
-    button $w.pieces$row.$j -text $i -font font_Small -borderwidth 1 \
-      -command "setPieceFont $i $w.pieces$row.$j"
-
+    button $w.pieces$row.$j -text $i -font font_Small -borderwidth 1 -command "setPieceFont $i $w.pieces$row.$j"
 
     pack $w.pieces$row.$j -side left
     if {$i == $boardStyle} {
@@ -348,8 +344,6 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
   # pack [label $w.l1 -text Colours -font font_H4]
   pack [frame $w.select] -side top -padx 5
 
-  # addHorizontalRule $w
-
   ### Two rows of Color schemes
 
   pack [frame $w.preset1] -side top
@@ -368,7 +362,7 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
   addHorizontalRule $w
   pack [frame $w.buttons] -side top -fill x
 
-  set psize [boardSize_plus_n -2]
+  set psize [boardSize_plus_n -5]
   set p2size [expr $psize / 2]
 
   ### Chess pieces at top of screen - packed above
@@ -388,7 +382,7 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
   } n {
     LightSquares DarkSquares SelectedSquares SuggestedSquares Grid Previous SelectedOutline ArrowMain ArrowVar
   } {
-    label $f.b$c -width 2 -background [set $c]
+    label $f.b$c -width 2 -background [set $c] -font font_Small
     bind  $f.b$c <Button-1> "chooseAColor $w $c"
 
     button $f.l$c -text "$::tr($n)  " -command "chooseAColor $w $c" -relief flat -font font_Small
@@ -412,7 +406,7 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
       $f create rectangle $p2size $p2size $psize $psize -tag dark -fill $c1 -outline $c1
       $f create rectangle 0 $p2size $p2size $psize -tag lite -fill $c2 -outline $c2
       $f create rectangle $p2size 0 $psize $p2size -tag lite -fill $c2 -outline $c2
-      pack $f -side left -padx 10 -pady 10
+      pack $f -side left -padx 10 -pady 5
 
       bind $f <Button-1> "
         setBoardColor $i $count
@@ -438,7 +432,7 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
     ### Grids are required to easily allign in rows of five
 
     canvas $f -width $psize -height $psize
-    grid $f -row $row -column $col -padx 10 -pady 10
+    grid $f -row $row -column $col -padx 10 -pady 5
 
     $f create image 0 0 -image ${tex}-l -anchor nw
     $f create image [expr $p2size + 1] 0 -image ${tex}-d -anchor nw
@@ -463,7 +457,7 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
     $c create rectangle [expr {$p2size + $i}] [expr {$p2size + $i}] $psize $psize -tag dark
     $c create rectangle 0 [expr {$p2size + $i}] [expr $p2size - $i] $psize -tag lite
     $c create rectangle [expr {$p2size + $i}] 0 $psize [expr {$p2size - $i}] -tag lite
-    pack $c -side left -padx 2 -pady 10
+    pack $c -side left -padx 2 -pady 5
     bind $c <Button-1> "applyBorderWidth $i"
 
     $c itemconfigure dark -fill $dark -outline $dark
@@ -473,7 +467,7 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
 
   ### Button
 
-  dialogbutton $w.buttons.ok -text "OK" -command "destroy $w"
+  dialogbutton $w.buttons.ok -text OK -font font_Small -command "destroy $w"
 
   bind $w <Escape> "destroy $w"
   packbuttons top $w.buttons.ok

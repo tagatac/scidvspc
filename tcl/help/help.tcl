@@ -7441,6 +7441,7 @@ The window manager may interfere with some shortcuts.
 
 set helpTitle(Board) "Board Customisation"
 set helpText(Board) {<h1>Board Customisation</h1>
+<p><i>If the Chess-Pieces window is too big, reducing the size of the Small Font may help</i><p>
 <h3><name Textures>Custom Textures</name></h3>
 <p>
    Up to ten custom board textures can be loaded.

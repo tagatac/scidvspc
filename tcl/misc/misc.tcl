@@ -309,10 +309,9 @@ proc unbusyCursor {w} {
 set horizRuleCounter 0
 set vertRuleCounter 0
 
-proc addHorizontalRule {w {ypadding 5} {relief sunken} {height 2} } {
+proc addHorizontalRule {w {ypadding 5} {height 2} {relief sunken}} {
   global horizRuleCounter
-  set f [ frame $w.line$horizRuleCounter -height $height -borderwidth 2 \
-      -relief $relief  ]
+  set f [frame $w.line$horizRuleCounter -height $height -borderwidth 2 -relief $relief]
   pack $f -fill x -pady $ypadding
   incr horizRuleCounter
   return $f
