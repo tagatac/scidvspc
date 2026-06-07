@@ -308,7 +308,7 @@ if { $::docking::USE_DOCKING && $::autoResizeBoard} {
   pack $w.sizes.label -side left
   frame $w.sizes.frame
   pack $w.sizes.frame -side right
-  label  $w.sizes.frame.label -text [tr OptionsFicsSize] -font font_Regular
+  label  $w.sizes.frame.label -text [tr OptionsFicsSize] -font font_Small
   pack   $w.sizes.frame.label -side left -anchor center
 
   button $w.sizes.frame.smaller -text - -font font_Small -borderwidth 1 -command {::board::resize .main.board -1}
