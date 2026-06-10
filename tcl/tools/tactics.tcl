@@ -945,6 +945,8 @@ namespace eval opening {
 
     if {$::opening::movesLoaded == 0} {
       tk_messageBox -title $::tr(Repertoirenotfound) -type ok -icon error -message "No moves loaded."
+      sc_base switch $repBase
+      return
     }
 
     # add a blank game for training in clipbase
@@ -992,6 +994,7 @@ namespace eval opening {
     while {$g > 0 && ! $::opening::interrupt} {
       updateProgressWindow $idx $numGames
       if {$onlyFlaggedLines && ![sc_game flag WhiteOpFlag $g] && ![sc_game flag BlackOpFlag $g]} {
+        set g [sc_filter next $g]
         continue
       }
       set fenMovesEvalList {}

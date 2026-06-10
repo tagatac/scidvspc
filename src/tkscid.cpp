@@ -5592,7 +5592,7 @@ sc_filter_next (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         uint nextNumber = db->gameNumber + 1;
 
 	if (argc > 2)
-	    nextNumber = strGetUnsigned (argv[2]) + 1;
+	    nextNumber = strGetUnsigned (argv[2]);
 
         while (nextNumber < db->numGames) {
             if (db->filter->Get(nextNumber) > 0) {
@@ -5616,7 +5616,7 @@ sc_filter_prev (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         int prevNumber = db->gameNumber - 1;
 
 	if (argc > 2)
-	    prevNumber = strGetUnsigned (argv[2]) - 1;
+	    prevNumber = strGetUnsigned (argv[2]) - 2;
 
         while (prevNumber >= 0) {
             if (db->filter->Get(prevNumber) > 0) {

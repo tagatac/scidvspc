@@ -293,11 +293,11 @@ proc ::gbrowser::load {w base gnum ply n} {
       }
       -1 {
 	 if {$gnum > 1} {
-	   set newgame [sc_filter prev [expr $gnum - 1]]
+	   set newgame [sc_filter prev $gnum]
 	 }
       }
       +1 {
-	 set newgame [sc_filter next [expr $gnum - 1]]
+	 set newgame [sc_filter next $gnum]
       }
       end {
 	 set newgame [sc_filter last]
