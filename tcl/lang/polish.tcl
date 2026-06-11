@@ -419,6 +419,8 @@ translate P AutoPlay {Autoplay}
 translate P TrialMode {Trial mode}
 # ====== TODO To be translated ======
 translate P KeepOpen {Keep open after startup}
+# ====== TODO To be translated ======
+translate P BigIcons {Big Icons}
 
 # General buttons:
 translate P Apply {Zastosuj}

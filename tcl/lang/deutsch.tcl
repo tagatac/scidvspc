@@ -393,6 +393,8 @@ translate D RaiseWindows {Fenster vergrößern}
 translate D AutoPlay {Abspielen}
 translate D TrialMode {Züge ausprobieren}
 translate D KeepOpen {Nach Programmstart geöffnet halten}
+# ====== TODO To be translated ======
+translate D BigIcons {Big Icons}
 
 # General buttons:
 # todo

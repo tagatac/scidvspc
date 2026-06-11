@@ -482,6 +482,8 @@ translate B AutoPlay {Autojogo}
 translate B TrialMode {Modo Experimentar}
 
 translate B KeepOpen {Manter aberto apos iniciar}
+# ====== TODO To be translated ======
+translate B BigIcons {Big Icons}
 
 # General buttons:
 

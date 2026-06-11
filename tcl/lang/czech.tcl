@@ -450,6 +450,8 @@ translate C AutoPlay {Autoplay}
 translate C TrialMode {Trial mode}
 # ====== TODO To be translated ======
 translate C KeepOpen {Keep open after startup}
+# ====== TODO To be translated ======
+translate C BigIcons {Big Icons}
 
 # General buttons:
 # ====== TODO To be translated ======

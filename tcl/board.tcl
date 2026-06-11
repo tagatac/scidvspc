@@ -957,7 +957,7 @@ proc configToolbar {} {
     foreach i [array names toolbar_temp] { set toolbar_temp($i) 0 }
     changeToolbar 0
   }
-  checkbutton $w.big -text "Big Icons" -variable ::bigToolbar -command toggleBigToolbar
+  checkbutton $w.big -textvar ::tr(BigIcons) -variable ::bigToolbar -command toggleBigToolbar
 
   dialogbutton $w.ok -text OK -command {
     array set toolbar [array get toolbar_temp]
@@ -984,16 +984,18 @@ proc toggleBigToolbar {} {
 
   if {$bigToolbar} {
     createBigToolbarIcons
+    resizeButtonBar +
   } else {
     foreach i $::toolbarButtons {
       image delete tb_$i
     }
     initToolbarIcons
+    resizeButtonBar -
   }
 
   # Have to reinit config to repad the buttons
-    destroy .tbconfig
-    configToolbar
+  destroy .tbconfig
+  configToolbar
 }
 
 proc redrawToolbar {} {

@@ -375,6 +375,8 @@ translate U RaiseWindows {Ativar janelas}
 translate U AutoPlay {Jogo automático}
 translate U TrialMode {Modo de Teste}
 translate U KeepOpen {Manter aberto depois do início}
+# ====== TODO To be translated ======
+translate U BigIcons {Big Icons}
 
 # General buttons:
 translate U Apply {Aplicar}

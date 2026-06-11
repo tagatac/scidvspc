@@ -401,6 +401,8 @@ translate O RaiseWindows {Vinduer til forgrunnen}
 translate O AutoPlay {Spill automatisk}
 translate O TrialMode {Prøvemodus}
 translate O KeepOpen {Åpne ved oppstart}
+# ====== TODO To be translated ======
+translate O BigIcons {Big Icons}
 
 # General buttons:
 translate O Apply {Bruk}

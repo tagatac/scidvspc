@@ -375,6 +375,7 @@ translate E RaiseWindows {Raise windows}
 translate E AutoPlay {Autoplay}
 translate E TrialMode {Trial mode}
 translate E KeepOpen {Keep open after startup}
+translate E BigIcons {Big Icons}
 
 # General buttons:
 translate E Apply {Apply}

@@ -454,6 +454,8 @@ translate H AutoPlay {Autoplay}
 translate H TrialMode {Trial mode}
 # ====== TODO To be translated ======
 translate H KeepOpen {Keep open after startup}
+# ====== TODO To be translated ======
+translate H BigIcons {Big Icons}
 
 # General buttons:
 # ====== TODO To be translated ======

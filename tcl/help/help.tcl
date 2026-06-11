@@ -560,6 +560,7 @@ set helpText(MainWindow) {<h1>Scid vs. PC's Main Window</h1>
   shown is done in <green>Options-<gt>Toolbar</green>.
   Right-clicking the Replace Game icon does a quick save.
   </p>
+  <p><i>Selecting 'Big Icons' will double the size of Toolbar and Buttonbar icons.</i></p>
 
   <h4><name GameInfo>Game Information Window</name></h4>
 

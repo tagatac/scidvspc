@@ -301,27 +301,6 @@ Ow==
 # image create photo finish_on -data ....
 ### Replaced by autoplay_
 
-# Change the size of the button bar, but is disabled as it looks awful.
-# We'll have to recompose the images with the gimp if we want to change the size
-if {0} {
-  image create photo tempimage
-  foreach i {tb_flip tb_gameinfo autoplay_off autoplay_on tb_trial \
-         tb_trial_on tb_start tb_prev tb_next tb_end tb_invar tb_outvar tb_addvar tb_windows} {
-    # puts [$i cget -height]
-    tempimage blank
-    if {1} {
-      ### half size
-      tempimage copy $i -subsample 2
-      # tempimage copy $i -from 10 10 26 26
-      $i configure -height 16 -width 16
-    } else {
-      ### twice size
-      tempimage copy $i -zoom 2
-    }
-    $i blank
-    $i copy tempimage
-  }
-}
 
 ###### Main Button Bar ########
 
@@ -406,6 +385,37 @@ pack $bb.start $bb.back $bb.forward $bb.end \
      $bb.space $bb.exitVar $bb.intoVar $bb.addVar \
      $bb.autoplay $bb.trial $bb.flip $bb.windows \
         -side left -pady 1 -padx 0 -ipadx 2 -ipady 2
+
+### Change the size of the button bar, but looks kindof awful
+
+proc resizeButtonBar {{s +}} {
+  image create photo tempimage
+  set height [image height tb_prev]
+  if {$s != "+"} {
+      set height [expr $height / 2]
+  } else {
+      set height [expr $height * 2]
+  }
+  foreach i {tb_flip tb_gameinfo autoplay_off autoplay_on tb_trial \
+         tb_trial_on tb_start tb_prev tb_next tb_end tb_invar tb_outvar tb_addvar tb_windows} {
+    tempimage blank
+    if {$s != "+"} {
+      ### half size
+      tempimage copy $i -subsample 2
+      # tempimage copy $i -from 10 10 26 26
+    } else {
+      ### twice size
+      tempimage copy $i -zoom 2
+    }
+    $i configure -height $height -width $height
+    $i blank
+    $i copy tempimage
+  }
+}
+
+if {$bigToolbar} {
+  resizeButtonBar +
+}
 
 ### Main Board Init
 

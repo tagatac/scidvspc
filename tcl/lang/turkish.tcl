@@ -371,6 +371,8 @@ translate T RaiseWindows {Gizle-göster}
 translate T AutoPlay {otamatik oynat}
 translate T TrialMode {Deneme modu}
 translate T KeepOpen {Başlatma sonrasında açık tutun}
+# ====== TODO To be translated ======
+translate T BigIcons {Big Icons}
 
 # General buttons:
 translate T Apply {Uygula}

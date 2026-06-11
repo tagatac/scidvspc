@@ -378,6 +378,8 @@ translate F RaiseWindows {Fenêtre d'arbitrage}
 translate F AutoPlay {Lecture automatique}
 translate F TrialMode {Mode d'essai}
 translate F KeepOpen {Afficher au démarrage}
+# ====== TODO To be translated ======
+translate F BigIcons {Big Icons}
 
 # General buttons:
 translate F Apply {Appliquer}

@@ -361,6 +361,8 @@ translate Y RaiseWindows "Podigni prozore"
 translate Y AutoPlay "Automatska reprodukcija"
 translate Y TrialMode "Probni režim"
 translate Y KeepOpen "Ostavi otvoreno posle pokretanja"
+# ====== TODO To be translated ======
+translate Y BigIcons {Big Icons}
 
 # General buttons:
 translate Y Apply "Primeni"

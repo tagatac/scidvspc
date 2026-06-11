@@ -351,6 +351,8 @@ translate Z RaiseWindows {置顶窗口}
 translate Z AutoPlay {自动播放}
 translate Z TrialMode {试走模式}
 translate Z KeepOpen {启动后保持打开}
+# ====== TODO To be translated ======
+translate Z BigIcons {Big Icons}
 
 # General buttons:
 translate Z Apply {应用}

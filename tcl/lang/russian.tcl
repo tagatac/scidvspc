@@ -408,6 +408,8 @@ translate R AutoPlay {Автоигра}
 translate R TrialMode {Пробный режим}
 # ====== TODO To be translated ======
 translate R KeepOpen {Keep open after startup}
+# ====== TODO To be translated ======
+translate R BigIcons {Big Icons}
 
 # General buttons:
 translate R Apply {Принять}

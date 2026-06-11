@@ -373,6 +373,8 @@ translate L AutoPlay {Automaattinen peli}
 translate L TrialMode {Kokeilumoodi}
 # ====== TODO To be translated ======
 translate L KeepOpen {Keep open after startup}
+# ====== TODO To be translated ======
+translate L BigIcons {Big Icons}
 
 # General buttons:
 translate L Apply {Sovella}

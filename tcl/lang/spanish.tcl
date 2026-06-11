@@ -419,6 +419,8 @@ translate S AutoPlay {Reproducción automática}
 translate S TrialMode {Modo de prueba}
 
 translate S KeepOpen {Mantener abierto después del inicio}
+# ====== TODO To be translated ======
+translate S BigIcons {Big Icons}
 
 # General buttons:
 translate S Apply {Aplicar}

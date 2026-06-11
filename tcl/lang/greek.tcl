@@ -436,6 +436,8 @@ translate G AutoPlay {Autoplay}
 translate G TrialMode {Trial mode}
 # ====== TODO To be translated ======
 translate G KeepOpen {Keep open after startup}
+# ====== TODO To be translated ======
+translate G BigIcons {Big Icons}
 
 # General buttons:
 translate G Apply {Εφαρμογή}
