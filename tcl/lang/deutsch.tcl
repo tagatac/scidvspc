@@ -393,8 +393,7 @@ translate D RaiseWindows {Fenster vergrößern}
 translate D AutoPlay {Abspielen}
 translate D TrialMode {Züge ausprobieren}
 translate D KeepOpen {Nach Programmstart geöffnet halten}
-# ====== TODO To be translated ======
-translate D BigIcons {Big Icons}
+translate D BigIcons {Große Symbole}
 
 # General buttons:
 # todo
@@ -2634,6 +2633,8 @@ set helpText(D,MainWindow) {<h1>Hauptfenster von Scid vs. PC</h1>
   Ein Rechtsklick auf das Symbol "Partie ersetzen..." bewirkt ein
   sofortiges Speichern.
   </p>
+  <p><i>Auswählen von 'Große Symbole' verdoppelt die Größe der Symbole in der
+  Werkzeug- und Schalterleiste.</i></p>
 
   <h4><name GameInfo>Das Partieinformationsfenster</name></h4>
 
@@ -5232,9 +5233,10 @@ Debugging>Fehlersuche</a> durchgesehen werden.
   zurück, drücken Pause, entsperren die Analyse und fügen die Variante hinzu.
   </li>
   <li> <button tb_coords 32> <b>Analysebrett anzeigen</b> zeigt ein kleines
-  Analysebrett (Rechtsklick wechselt die Pfeile auf dem Hauptbrett). Wenn das
-  Schachprogramm angehalten ist, zeigt dieses Brett die gesperrte Stellung. Ein
-  Klick mit der mittleren Maustaste schaltet zwischen den Anzeigemodi um.</li>
+  Analysebrett (Rechtsklick wechselt die Pfeile auf dem Hauptbrett -
+  siehe <a Analysebrett> unten</a>). Wenn das Schachprogramm angehalten ist,
+  zeigt dieses Brett die gesperrte Stellung. Ein Klick mit der mittleren
+  Maustaste schaltet zwischen den Anzeigemodi um.</li>
   <li> <button tb_exclude 32> <b>Zug ausschließen</b> hilft, die
   Suchliste des Schachprogramms zu verfeinern (hauptsächlich nur
   UCI-Programme). Ein Bewegen des Mauszeigers über diese Schaltfläche
@@ -5305,34 +5307,34 @@ Debugging>Fehlersuche</a> durchgesehen werden.
 
 <h3><name Board>Analysebrett</h3>
 
-<p>Klicken auf <button tb_coords 32> schaltet auf ein kleines Brett um, das drei
-Modi einnehmen kann: Pfeile, Sequentiell und Position. Der Standardmodus und
-die Standardgröße werden im <a Analysis List>Analyse-Engine</a>-Fenster
-eingestellt und können auch durch Drücken der mittleren Maustaste umgeschaltet
-werden. <i>Durch Drücken von Strg-mittlere Maustaste kann die Größe dieses
-Brettes geändert werden.</i>
+<p>Ein Rechtsklick auf <button tb_coords 32> schaltet die Anzeige von
+Engine-Pfeilen auf dem Hauptbrett! Die Schaltfläche wird blau und die
+Pfeile „Variante verschieben“ werden nicht angezeigt. Die Linienfarbe wird
+durch Optionen-<gt>Farben-<gt>Engine-Pfeile ausgewählt.</p>
+
+<p>Durch Klicken auf die Schaltfläche <tb_coords 32> wird normalerweise auf ein
+kleines Brett umgeschaltet, das drei Modi annehmen kann: Pfeile, Sequenz und
+Position.  Der Standardmodus und die Standardgröße werden im <a Analysis
+List>Analyse-Engine</a>-Fenster eingestellt und können auch durch Drücken der
+mittleren Maustaste umgeschaltet werden. <i>Durch Drücken von Strg-mittlere
+Maustaste kann die Größe dieses Brettes geändert werden.</i>
 <br><b>Position</b> ist der ursprüngliche Modus. Es zeigt die Stellung des
   Bretts, nachdem der Engine-Züg gespielt wurde.
 <br><b>Arrows</b> zeigt anklickbare Pfeile für den Engine-Zug oder mehrere
 Pfeile an, wenn PV aktiviert ist (Variantenzahlen werden durch Strg-Umschalt-N
 umgeschaltet).
+
 <br><b>Sequentiell</b> zeigt die Zeile als nummerierte Folge kleiner (nicht
 anklickkbarer) Pfeile an. Die Länge der angezeigten Züge beträgt standardmäßig
 3, kann jedoch in der letzten Spinbox in der Engine-Symbolleiste geändert
-werden. Die Linienfarbe wird ausgewählt mittels
-Optionen-<gt>Farben-<gt>Engine-Pfeile.
-</p>
+werden. Im sequentiellen Modus gibt es drei Untermodi (Weiß, Schwarz, Beide),
+die durch einfaches Bewegen der Maus über das Brett geändert werden.</p>
 
-<p>Rechtsklick <button tb_coords 32> wechselt die auf dem Hauptbrett angezeigten
-  Engine-Pfeile (in diesem Modus werden Variantenpfeile nicht angezeigt)!</p>
-
-<p>
-  Neben dem Brett befindet sich ein schwarz-weißer Bewertungsbalken (über
-  Strg-S umschaltbar) und optional eine farbige „Ampelleiste“
-  (Strg-C). Diese zeigt die Farben für die einzelnen Multipv-Bewertungszahlen
-  an, welche die Gewichtung einer Position darstellen. Rot bedeutet, dass Schwarz
-  gewinnt, gelb bedeutet ausgeglichen und grün ist Gewinn für Weiß.
-  </p>
+<p>Neben dem Brett befindet sich ein schwarz-weißer Bewertungsbalken (über
+Strg-S umschaltbar) und optional eine farbige „Ampelleiste“ (Strg-C). Diese
+zeigt die Farben für die einzelnen Multipv-Bewertungszahlen an, welche die
+Gewichtung einer Position darstellen. Rot bedeutet, dass Schwarz gewinnt, gelb
+bedeutet ausgeglichen und grün ist Gewinn für Weiß.</p>
 
   <h1>Weitere Funktionen</h1>
 
@@ -9267,6 +9269,38 @@ set helpText(D,Sound) {<h1>Ton</h1>
 
 set helpTitle(D,Changelog) "Scid vs PC Änderungshistorie"
 set helpText(D,Changelog) {<h1>Änderungshistorie</h1>
+
+<h4>4.27 (May 20, 2026)</h4>
+<ul>
+<li>Engine Arrows can now be displayed on the main board by right-clicking the board button</li>
+<li>Include and improve Pascal's Opening Trainer</li>
+<li>Scorebar fixes, including making it configurable - re Scale and Show-ticks</li>
+<li>Fix/update our broken Export to HTML/Javascript (from scidCommunity project, with some tweaks)</li>
+<li>Some Latex fixes from Christian</li>
+<li>Handle new Chessbase colors/comments, and Stockfish/Lichess %eval comments (re the score graph)</li>
+<li>Custom flags now show the first descriptive letter in lowercase (if any) in the Gamelist instead of 1-6</li>
+<li>Chinese language translation from Zhuge Prajna</li>
+<br>
+<li>Disable annoying wheelmouse bindings in Comboboxes</li>
+<li>Some improvements to Header Search and saved searches</li>
+<li>Properly handle engines not sending PV, only 'bestmove'</li>
+<li>Player Info - FIDE Player webpage links have changed</li>
+<li>Reorganise the Annotation Init widget a little</li>
+<li>Support for k4it.de online Nalimov (6 piece) tablebases (from Mike)</li>
+<li>Make PGN board popups more persistant</li>
+<br>
+<li>Link to Lumbra's Gigabase, as Caissabase seems dead. </li>
+<li>Some Tcl Progressbar fixes</li>
+<li>Export gamelist fixes - wasn't checking for tree open</li>
+<li>Harden/fix sc_game_list regards processing nextMoves</li>
+<li>Disable engines' OwnBook for annotation</li>
+<li>Handle custom photos for aliased player names</li>
+<li>Stockfish 17 throws a hissy if sent an OwnBook. FMD</li>
+<li>Recursive annotation was getting broken by vars ending in mate</li>
+<li>Seed random number generator (for tree training)</li>
+<li>Store FEN parsing errors as game comments</li>
+<li>Disable Fics ping notifications on macOS, which is buggy/slow</li>
+</ul>
 
 <h4>4.26 (Feb 10, 2025)</h4>
 <ul>
