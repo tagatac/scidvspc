@@ -154,6 +154,8 @@
   Example packages required include "tcl, tk, tcl-dev, tk-dev" and
   "gcc, g++ , libstdc++"; but will vary with your distribution.
 
+  Wayland desktops may see some minor font and window-manager bugs. Xorg is preferred.
+
   The default installation directory is /usr/local, which is generally
   empty, but any version of Scid here will be overwritten. To install
   into /usr (for eg) use ./configure BINDIR=/usr/bin/
@@ -186,6 +188,7 @@
   *severe* memory leaks.  To avoid many of these leaks, or simply for a
   performance boost, compile with Gregor's tk::text
   (patches/gregors_tktext_inline.patch).
+
 
   4.0.2.  Windows
 
