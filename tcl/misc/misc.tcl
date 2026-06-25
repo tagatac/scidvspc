@@ -375,7 +375,7 @@ proc progressWindow {args} {
   } else {
     wm protocol $w WM_DELETE_WINDOW {puts {progressWindow Destroy caught}}
   }
-
+  sc_progressBar $w.c bar 401 21 time
   # proc busyCursor is kindof broken , and has been set by file::Open, so go direct
   catch {$w configure -cursor watch}
 
