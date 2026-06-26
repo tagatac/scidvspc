@@ -127,9 +127,9 @@ project is authored by
 <A HREF="http://sourceforge.net/projects/scidvspc/files/windows/Scid%20vs%20PC-4.27.exe/download">Scid vs PC-4.27.exe</A></P>
 <P>Windows 64 bit 
 <A HREF="http://sourceforge.net/projects/scidvspc/files/windows-64bit/Scid%20vs%20PC-4.27.x64.exe/download">Scid vs PC-4.27.x64.exe</A></P>
-<P>Mac 
+<P>Mac Intel 32 bit
 <A HREF="http://sourceforge.net/projects/scidvspc/files/mac/ScidvsMac-4.27.dmg/download">ScidvsMac-4.27.dmg</A></P>
-<P>Mac 64bit (beta) 
+<P>Mac Intel 64 bit (beta) 
 <A HREF="https://sourceforge.net/projects/scidvspc/files/mac-64bit-unsupported/ScidvsMac-4.27.x64.dmg/download">ScidvsMac-4.27.x64.dmg</A></P>
 <P>
 <H3>Other resources</H3>
@@ -188,12 +188,12 @@ C:\Users\[USERNAME]\AppData\Local\VirtualStore\Program Files\Scid vs PC</P>
 <P>Our main windows build system is MinGW and Makefile.mingw. We also have a Makefile.vc for visual studio, but it does not get updated too often.</P>
 <H3>Mac OS X </H3>
 
-
+<P>Macs are not well supported due to Apple's poor support for Tcl/Tk, and hobby programmers in general.
+  Only Intel cpus are currently supported, but 64 bit support is buggy.
+  The recommended platform is the 32 bit app installed natively, or via some virtual machine/platform.
+</P>
 <P>The 
 <A HREF="#download_">ScidvsMac-4.27 app</A> should include everything you need. Simply drag and drop the App into /Applications (or similar). It cannot be run from the dmg disk image.</P>
-<P>  Due to technical build reasons, only Mac OSX 10.10 and later
-  are supported. Previous versions (including Snow Leopard) should install Scid vs Mac 4.16).
-  Additionally, Newer macOS have removed 32-bit app support, and are only supported by our beta ScidvsMac-x64 app, which is not as robust as the 32 bit version.</P>
 <P>To compile from source - once you have XCode installed - please read <B>ScidvsMac-HowTo.rtfd</B> in the source tarball for some older information.</P>
 <P><EM>Users upgrading may have to remove (or edit) <B>$HOME/.scidvspc/config/engines.dat</B>
 to properly configure the chess engines.</EM></P>

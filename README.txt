@@ -207,14 +207,14 @@
   often.
 
   4.0.3.  Mac OS X
+  
+  Macs are not well supported due to Apple's poor support for Tcl/Tk, and hobby programmers in general.
+  Only Intel cpus are currently supported, but 64 bit support is buggy.
+  The recommended platform is the 32 bit app installed natively, or via some virtual machine/platform.
 
   The ``ScidvsMac-4.27 app'' should include everything you need. Simply
   drag and drop the App into /Applications (or similar). It cannot be
   run from the dmg disk image.
-
-  Due to technical build reasons, only Mac OSX 10.10 and later
-  are supported. Previous versions (including Snow Leopard) should install Scid vs Mac 4.16).
-  Additionally, Newer macOS have removed 32-bit app support, and are only supported by our beta ScidvsMac-x64 app, which is not as robust as the 32 bit version.
 
   To compile from source - once you have XCode installed - please read
   ScidvsMac-HowTo.rtfd in the source tarball for some older information.
