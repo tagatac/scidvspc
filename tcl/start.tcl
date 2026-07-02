@@ -725,7 +725,7 @@ if {$::windowsOS} {
   set lookTheme default
 }
 
-foreach i {tilegtk tileq keramik keramik_alt plastik dark} {
+foreach i {tilegtk tileqt keramik keramik_alt plastik dark} {
   catch {package require ttk::theme::$i}
 }
 
