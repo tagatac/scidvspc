@@ -725,7 +725,8 @@ if {$::windowsOS} {
   set lookTheme default
 }
 
-foreach i {tilegtk tileqt keramik keramik_alt plastik dark} {
+# Time to load is ~ .1 second if all themes present, .05 second otherwise - S.A.
+foreach i {tilegtk tileqt keramik keramik_alt plastik dark aquativo blue BlueElegance clearlooks radiance WinXP-Blue} {
   catch {package require ttk::theme::$i}
 }
 

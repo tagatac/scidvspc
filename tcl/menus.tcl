@@ -1324,7 +1324,7 @@ set helpMessage($m,1) OptionsWindowsFullScreen
 
 set m .menu.options.theme
 menu $m -tearoff -1
-foreach i [ttk::style theme names] {
+foreach i [lsort -nocase [ttk::style theme names]] {
   $m add radiobutton -label "$i" -value $i -variable ::lookTheme -command changeTheme
 }
 
