@@ -692,17 +692,15 @@ proc ::docking::layout_save { slot } {
 
   set layout [layout_save_pw .pw]
 
-  set tree_count [regexp -all {fdocktreeWin([0-9]*)}  $layout tree1 tree2]
-  set best_count [regexp -all {fdocktreeBest([0-9]*)} $layout best1 best2]
-
-  if {$tree_count > 1} {
-    tk_messageBox -title Scid -icon question -type ok -message "Cannot save layout with multiple Trees."
-    return 0
-  }
-
-  if {$best_count && [string first fdocktreeBest $layout] < [string first fdocktreeWin $layout]} {
-    tk_messageBox -title Scid -icon question -type ok -message "Cannot save layout: Tree must precede Best Games."
-    return 0
+  # Check all tree windows precede bestgames in layout
+  set treeWins [regexp -all -inline {fdocktreeWin([0-9]*)}  $layout]
+  foreach {tree N} $treeWins {
+    set treePos [string first $tree $layout]
+    set bestPos [string first fdocktreeBest$N $layout]
+    if {$bestPos > -1 && $bestPos < $treePos} {
+      tk_messageBox -title Scid -icon question -type ok -message "Cannot save layout: Tree $N must precede Best Games."
+      return 0
+    }
   }
 
   set ::docking::layout_list($slot) [list [list "MainWindowGeometry" $geometry] ]
