@@ -182,7 +182,7 @@ menuText D ToolsMaintWin "Wartungfenster" 0 \
   {Datenbank-Wartungsfenster öffnen/schließen}
 menuText D ToolsMaintExtra "Extramarkierungen" 0 {Extramarkierungen}
 menuText D ToolsMaintCompact "Datenbank komprimieren..." 10 \
-  {Datenbank komprimieren, gelöschte Spiele und unbenutzte Namen entfernen}
+  {Datenbank komprimieren, gelöschte Partien und unbenutzte Namen entfernen}
 menuText D ToolsMaintClass "Partien ECO-klassifizieren..." 8 \
 {Neuklassifizierung aller Partien nach dem ECO-Code}
 menuText D ToolsMaintSort "Sortieren..." 0 \
@@ -514,8 +514,8 @@ translate D GameEnd {Partieende}
 translate D LineEnd {Ende der Zugfolge}
 
 # Player information:
-translate D PInfoAll {Alle Spiele}
-translate D PInfoFilter {Filterspiele}
+translate D PInfoAll {Alle Partien}
+translate D PInfoFilter {Filterpartien}
 translate D PInfoAgainst {Ergebnisse gegen}
 translate D PInfoMostWhite {Häufigste Eröffnungen mit Weiß}
 translate D PInfoMostBlack {Häufigste Eröffnungen mit Schwarz}
@@ -1227,7 +1227,7 @@ translate D OprepWRating {ELO Weiß}
 translate D OprepBRating {ELO Schwarz}
 translate D OprepWPerf {Performance Weiß}
 translate D OprepBPerf {Performance Schwarz}
-translate D OprepHighRating {Spiele mit dem höchsten ELO-Durchschnitt}
+translate D OprepHighRating {Partien mit dem höchsten ELO-Durchschnitt}
 translate D OprepTrends {Ergebnistrend}
 translate D OprepResults {Ergebnis nach Längen und Häufigkeiten}
 translate D OprepLength {Partielänge}
@@ -1279,7 +1279,7 @@ translate D PReportColorBlack {mit den schwarzen Steinen}
 translate D PReportBeginning {Beginnt mit}
 translate D PReportMoves {nach %s}
 translate D PReportOpenings {Eröffnungen}
-translate D PReportClipbase {Leere Zwischenablage und kopiere gefundene Spiele}
+translate D PReportClipbase {Leere Zwischenablage und kopiere gefundene Partien}
 
 # Piece Tracker window:
 translate D TrackerSelectSingle {Linke Maustaste wählt diese Figur.}
@@ -1305,7 +1305,7 @@ translate D SelectOlderGames {Nur ältere Partien}
 # Delete Twins window:
 translate D TwinsNote {Damit zwei Partien Dubletten sind, müssen diese mindestens die beiden selben Spieler haben und die folgenden Kriterien, die Sie auswählen können, erfüllen. Wenn zwei Dubletten gefunden werden, so wird die kürzere der beiden Partien gelöscht. Tip: am besten führt man erst eine Schreibkorrektur durch, da dadurch das Finden von Dubletten verbessert wird.}
 translate D TwinsCriteria {Kriterium: Dubletten müssen haben ...}
-translate D TwinsWhich {Überprüfe, welche Spiele}
+translate D TwinsWhich {Überprüfe, welche Partien}
 translate D TwinsColors {die gleichen Spielerfarben?}
 translate D TwinsEvent {die gleiche Veranstaltung?}
 translate D TwinsSite {den gleichen Ort?}
@@ -1323,17 +1323,17 @@ translate D TwinsWhen {Beim Löschen der Dubletten}
 translate D TwinsSkipShort {Partien unter fünf Zügen ignorieren?}
 translate D TwinsUndelete {Zuerst alle Partien entlöschen?}
 translate D TwinsSetFilter {Filter auf Dubletten setzen?}
-translate D TwinsComments {Spiele mit Kommentar immer behalten?}
-translate D TwinsVars {Spiele mit Varianten immer behalten?}
+translate D TwinsComments {Partien mit Kommentar immer behalten?}
+translate D TwinsVars {Partien mit Varianten immer behalten?}
 translate D TwinsDeleteWhich {Welche Partie löschen:}
 translate D TwinsDeleteShorter {Kürzere Partie}
 translate D TwinsDeleteOlder {Kleinere Partienummer}
 translate D TwinsDeleteNewer {Größere Partienummer}
-translate D TwinsDelete {Lösche Spiele}
+translate D TwinsDelete {Lösche Partien}
 
 # Name editor window:
 translate D NameEditType {Namen ändern von}
-translate D NameEditSelect {Welche Spiele sollen geändert werden?}
+translate D NameEditSelect {Welche Partien sollen geändert werden?}
 translate D NameEditReplace {Ersetze}
 translate D NameEditWith {durch}
 translate D NameEditMatches {Entsprechungen: Drücke Strg+1 bis Strg+9 zum Auswählen}
@@ -1344,10 +1344,10 @@ translate D MatchPattern {Regulären Ausdruck abgleichen}
 # Classify window:
 translate D Classify {Klassifiziere}
 translate D ClassifyWhich {ECO-klassifizieren}
-translate D ClassifyAll {Alle Spiele (überschreibe alte ECO-Codes)}
-translate D ClassifyYear {Alle Spiele  aus dem letzten Jahr}
-translate D ClassifyMonth {Alle Spiele aus dem letzten Monat}
-translate D ClassifyNew {Nur Spiele ohne ECO-Code}
+translate D ClassifyAll {Alle Partien (überschreibe alte ECO-Codes)}
+translate D ClassifyYear {Alle Partien  aus dem letzten Jahr}
+translate D ClassifyMonth {Alle Partien aus dem letzten Monat}
+translate D ClassifyNew {Nur Partien ohne ECO-Code}
 translate D ClassifyCodes {Verwende}
 translate D ClassifyBasic {Normale ECO-Codes ("B12", ...)}
 translate D ClassifyExtended {ECO-Codes mit Scid-Erweiterung ("B12j", ...)}
@@ -1387,22 +1387,22 @@ translate D ExportStripMarks \
 translate D ExportFlags {Scid-Markierungen exportieren}
 
 # Goto game/move dialogs:
-translate D LoadGameNumber {Geben Sie die zu ladende Spielnr. ein:}
+translate D LoadGameNumber {Geben Sie die zu ladende Partienr. ein:}
 translate D GotoMoveNumber {Gehe zu Zugnr.:}
 
 # Copy games dialog:
-translate D CopyGames {Kopiere Spiele}
+translate D CopyGames {Kopiere Partien}
 translate D CopyConfirm {
  Möchten Sie wirklich die [::utils::thousands $nGamesToCopy]
- Spiele aus dem Filter
+ Partien aus dem Filter
  in der Datenbank "$fromName"
  in die Datenbank "$targetName"
  kopieren?
 }
-translate D CopyErr {Kann Spiele nicht kopieren}
+translate D CopyErr {Kann Partien nicht kopieren}
 translate D CopyErrSource {Die Quelldatenbank}
 translate D CopyErrTarget {Die Zieldatenbank}
-translate D CopyErrNoGames {hat keine Spiele im Filter}
+translate D CopyErrNoGames {hat keine Partien im Filter}
 translate D CopyErrReadOnly {ist schreibgeschützt}
 translate D CopyErrNotOpen {ist nicht geöffnet}
 
@@ -1547,7 +1547,7 @@ translate D MateFound {Matt gefunden}
 translate D BestSolutionNotFound {Beste Lösung NICHT gefunden!}
 translate D MateNotFound {Matt nicht gefunden}
 translate D ShorterMateExists {Kürzeres Matt existiert}
-translate D ScorePlayed {Bewertung gepielt}
+translate D ScorePlayed {Bewertung gespielt}
 translate D Expected {erwartet}
 translate D ChooseTrainingBase {Trainingsdatenbank auswählen}
 translate D Thinking {Denke...}
@@ -1711,8 +1711,8 @@ translate D TourEnd {Ende Computer}
 translate D TourWinner {Gewinner}
 translate D TourGame {Partie}
 translate D TourMove {Zug}
-translate D TourBase {Basis}
-translate D TourInc {Ink}
+translate D TourBase {Basis }
+translate D TourInc {Inkrement }
 translate D TourSecs {Sek}
 
 # Correspondence Chess Dialogs:
