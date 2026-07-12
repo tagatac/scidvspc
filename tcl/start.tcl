@@ -726,7 +726,7 @@ if {$::windowsOS} {
 }
 
 # Time to load is ~ .1 second if all themes present, .05 second otherwise - S.A.
-foreach i {tilegtk tileqt keramik keramik_alt plastik dark aquativo blue BlueElegance clearlooks radiance winxpblue} {
+foreach i {aquativo clearlooks keramik plastik winxpblue elegance radiance blue itft1} {
   catch {package require ttk::theme::$i}
 }
 
