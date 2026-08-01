@@ -51,6 +51,14 @@
 #include <X11/Xatom.h>
 #include <X11/keysym.h>
 
+#ifndef TCL_SIZE_MAX
+typedef int Tcl_Size;
+#endif
+
+#if TCL_MAJOR_VERSION < 9
+#define Tcl_BackgroundError Tk_BackgroundError
+#endif
+
 #define XDND_VERSION 5
 
 #define GNOME_SUPPORT
@@ -123,7 +131,7 @@ TkDND_Eval(Tcl_Interp* interp, int objc, Tcl_Obj* const* objv)
     Tcl_IncrRefCount(objv[i]);
   status = Tcl_EvalObjv(interp, objc, objv, TCL_EVAL_GLOBAL);
   if (status != TCL_OK)
-    Tk_BackgroundError(interp);
+    Tcl_BackgroundError(interp);
   for (i = 0; i < objc; ++i)
     Tcl_DecrRefCount(objv[i]);
   return status;
@@ -247,7 +255,8 @@ CoordsToWindow(int rootX, int rootY, Tk_Window tkwin) {
     Tcl_Interp* interp = Tk_Interp(tkwin);
     Tcl_Obj* objv[3];
     Tcl_Obj* result;
-    int length, i;
+    Tcl_Size length;
+    int i;
 
     objv[0] = Tcl_NewStringObj("winfo", -1);
     objv[1] = Tcl_NewStringObj("children", -1);
@@ -475,7 +484,7 @@ void TkDND_Dict_Put(Tcl_Interp* interp, Tcl_Obj* dict, char const* key, char con
 }
 
 int TkDND_RegisterWrapperObjCmd(ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[]) {
+                              int objc, Tcl_Obj *const objv[]) {
 #ifdef SUPPORT_EMBEDDED_TOPLEVEL
   Tk_Window tkwin;
   if (objc != 3) {
@@ -489,7 +498,7 @@ int TkDND_RegisterWrapperObjCmd(ClientData clientData, Tcl_Interp *interp,
   if (wrapperList.size == wrapperList.capacity) {
     Wrapper* targets = wrapperList.targets;
     wrapperList.capacity = wrapperList.capacity ? 2*wrapperList.capacity : 1;
-    wrapperList.targets = malloc(wrapperList.capacity*sizeof(Wrapper));
+    wrapperList.targets = (Wrapper*) malloc(wrapperList.capacity*sizeof(Wrapper));
     if (targets) {
       memcpy(wrapperList.targets, targets, wrapperList.size*sizeof(Wrapper));
       free(targets);
@@ -509,33 +518,9 @@ int TkDND_RegisterWrapperObjCmd(ClientData clientData, Tcl_Interp *interp,
   return TCL_OK;
 }
 
-#if 0
-int TkDND_UnregisterWrapperObjCmd(ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[]) {
-#ifdef SUPPORT_EMBEDDED_TOPLEVEL
-  Tk_Window tkwin;
-  unsigned i;
-  if (objc != 2) {
-    Tcl_WrongNumArgs(interp, 1, objv, "path");
-    return TCL_ERROR;
-  }
-  Window wmFrame = GetWmFrame(TkDND_TkWin(interp, objv[1]));
-  for (i = 0; i < wrapperList.size; ++i) {
-    if (wrapperList.targets[i].win == wmFrame) {
-      memcpy(wrapperList.targets + i*sizeof(Wrapper),
-             wrapperList.targets + (i + 1)*sizeof(Wrapper),
-             (wrapperList.size - i - 1)*sizeof(Wrapper));
-      wrapperList.size -= 1;
-      SetPossiblyWmFrameUnaware(tkwin, wmFrame);
-    }
-  }
-#endif
-  return TCL_OK;
-}
-#endif
 
 int TkDND_RegisterTypesObjCmd(ClientData clientData, Tcl_Interp *interp,
-                              int objc, Tcl_Obj *CONST objv[]) {
+                              int objc, Tcl_Obj *const objv[]) {
 
   Tk_Window path;
 
@@ -573,7 +558,8 @@ int TkDND_HandleXdndEnter(Tk_Window tkwin, Tk_Window target, XClientMessageEvent
   Tcl_Interp *interp = Tk_Interp(tkwin);
   Atom *typelist;
   const long *l = cm->data.l;
-  int i, version = (int)(((unsigned long)(l[1])) >> 24);
+  int version = (int)(((unsigned long)(l[1])) >> 24);
+  unsigned long i;
   Window drag_source;
   Tcl_Obj* objv[4], *element;
 
@@ -1005,7 +991,7 @@ static int TkDND_XDNDHandler(Tk_Window tkwin, XEvent *xevent) {
 #ifdef USE_CURSORS
 
 int TkDND_SetPointerCursorObjCmd(ClientData clientData, Tcl_Interp *interp,
-                            int objc, Tcl_Obj *CONST objv[]) {
+                            int objc, Tcl_Obj *const objv[]) {
   Tk_Window path;
   Tk_Cursor cursor;
 
@@ -1021,7 +1007,7 @@ int TkDND_SetPointerCursorObjCmd(ClientData clientData, Tcl_Interp *interp,
 
   cursor = TkDND_GetCursor(interp, objv[2]);
   if (cursor == None) {
-    Tcl_SetResult(interp, "invalid cursor name: ", TCL_STATIC);
+    Tcl_SetResult(interp, (char *)("invalid cursor name: "), TCL_STATIC);
     Tcl_AppendResult(interp, Tcl_GetString(objv[2]));
     return TCL_ERROR;
   }
@@ -1129,15 +1115,11 @@ int TkDND_HandleGenericEvent(ClientData clientData, XEvent *eventPtr) {
       TkDND_Dict_Put(interp, dict,     "keysym",   XKeysymToString(sym));
       break;
     case EnterNotify:
+      Tcl_DecrRefCount(dict);
       return 0;
-      TkDND_Dict_Put(interp, dict, "type", "EnterNotify");
-      TkDND_Dict_PutLong(interp, dict, "time", eventPtr->xcrossing.time);
-      break;
     case LeaveNotify:
+      Tcl_DecrRefCount(dict);
       return 0;
-      TkDND_Dict_Put(interp, dict, "type", "LeaveNotify");
-      TkDND_Dict_PutLong(interp, dict, "time", eventPtr->xcrossing.time);
-      break;
     case SelectionRequest:
       main_window = Tk_MainWindow(interp);
       TkDND_Dict_Put(interp, dict, "type", "SelectionRequest");
@@ -1173,7 +1155,7 @@ int TkDND_HandleGenericEvent(ClientData clientData, XEvent *eventPtr) {
 }; /* TkDND_HandleGenericEvent */
 
 int TkDND_RegisterGenericEventHandlerObjCmd(ClientData clientData,
-                         Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+                         Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
   if (objc != 1) {
     Tcl_WrongNumArgs(interp, 1, objv, "");
     return TCL_ERROR;
@@ -1183,7 +1165,7 @@ int TkDND_RegisterGenericEventHandlerObjCmd(ClientData clientData,
 }; /* TkDND_RegisterGenericEventHandlerObjCmd */
 
 int TkDND_UnregisterGenericEventHandlerObjCmd(ClientData clientData,
-                         Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+                         Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
   if (objc != 1) {
     Tcl_WrongNumArgs(interp, 1, objv, "");
     return TCL_ERROR;
@@ -1193,10 +1175,10 @@ int TkDND_UnregisterGenericEventHandlerObjCmd(ClientData clientData,
 }; /* TkDND_UnegisterGenericEventHandlerObjCmd */
 
 int TkDND_AnnounceTypeListObjCmd(ClientData clientData, Tcl_Interp *interp,
-                         int objc, Tcl_Obj *CONST objv[]) {
+                         int objc, Tcl_Obj *const objv[]) {
   Tk_Window path;
   Tcl_Obj **type;
-  int status, i, types;
+  int status, i; Tcl_Size types;
   Atom *typelist;
 
   if (objc != 3) {
@@ -1224,10 +1206,10 @@ int TkDND_AnnounceTypeListObjCmd(ClientData clientData, Tcl_Interp *interp,
 }; /* TkDND_AnnounceTypeListObjCmd */
 
 int TkDND_AnnounceActionListObjCmd(ClientData clientData, Tcl_Interp *interp,
-                         int objc, Tcl_Obj *CONST objv[]) {
+                         int objc, Tcl_Obj *const objv[]) {
   Tk_Window path;
   Tcl_Obj **action, **description;
-  int status, i, k, actions, descriptions;
+  int status, i; unsigned long k; Tcl_Size actions, descriptions;
   int count = 0;
   Atom actionlist[10], descriptionlist[10];
 
@@ -1246,11 +1228,11 @@ int TkDND_AnnounceActionListObjCmd(ClientData clientData, Tcl_Interp *interp,
     return status;
 
   if (actions != descriptions) {
-    Tcl_SetResult(interp, "number of actions != number of descriptions", TCL_STATIC);
+    Tcl_SetResult(interp, (char *)("number of actions != number of descriptions"), TCL_STATIC);
     return TCL_ERROR;
   }
   if (actions > 10) {
-    Tcl_SetResult(interp, "too many actions/descriptions", TCL_STATIC);
+    Tcl_SetResult(interp, (char *)("too many actions/descriptions"), TCL_STATIC);
     return TCL_ERROR;
   }
 
@@ -1278,7 +1260,7 @@ int TkDND_AnnounceActionListObjCmd(ClientData clientData, Tcl_Interp *interp,
 }; /* TkDND_AnnounceActionListObjCmd */
 
 int TkDND_FetchActionListObjCmd(ClientData clientData, Tcl_Interp *interp,
-                         int objc, Tcl_Obj *CONST objv[]) {
+                         int objc, Tcl_Obj *const objv[]) {
   Tk_Window tkwin;
   Window source;
   Atom actual_type;
@@ -1294,7 +1276,12 @@ int TkDND_FetchActionListObjCmd(ClientData clientData, Tcl_Interp *interp,
   }
 
   tkwin = Tk_MainWindow(interp);
-  source = atoi(Tcl_GetString(objv[1]));
+  {
+    long src;
+    if (Tcl_GetLongFromObj(interp, objv[1], &src) != TCL_OK)
+      return TCL_ERROR;
+    source = (Window) src;
+  }
 
   int result = XGetWindowProperty(Tk_Display(tkwin), source,
                                   Tk_InternAtom(tkwin, "XdndActionList"),
@@ -1304,7 +1291,7 @@ int TkDND_FetchActionListObjCmd(ClientData clientData, Tcl_Interp *interp,
 
   if (result == Success && actual_type != None && data && actual_format == 32) {
     Atom atoms[5];
-    int i, k;
+    unsigned long i, k;
 
     memset(atoms, 0, sizeof(atoms));
 
@@ -1327,7 +1314,7 @@ int TkDND_FetchActionListObjCmd(ClientData clientData, Tcl_Interp *interp,
 }
 
 int TkDND_FindDropTargetWindowObjCmd(ClientData clientData,
-                         Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+                         Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
   int rootx, rooty;
   Tk_Window path;
   Window root, src, t;
@@ -1385,7 +1372,7 @@ int TkDND_FindDropTargetWindowObjCmd(ClientData clientData,
 }; /* TkDND_FindDropTargetWindowObjCmd */
 
 int TkDND_FindDropTargetProxyObjCmd(ClientData clientData,
-                         Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+                         Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
   Window target, proxy, *proxy_ptr;
   Atom type = None;
   int f;
@@ -1429,12 +1416,12 @@ int TkDND_FindDropTargetProxyObjCmd(ClientData clientData,
 }; /* TkDND_FindDropTargetProxyObjCmd */
 
 int TkDND_SendXdndEnterObjCmd(ClientData clientData,
-                         Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+                         Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
   XEvent event;
   Tk_Window source;
   Window target, proxy;
   Display *display;
-  int types, r, f, *tv, target_version = XDND_VERSION, flags, status, i;
+  int r, f, *tv, target_version = XDND_VERSION, flags, status, i; Tcl_Size types;
   Atom t = None;
   unsigned long n, a;
   unsigned char *retval;
@@ -1463,7 +1450,7 @@ int TkDND_SendXdndEnterObjCmd(ClientData clientData,
   r = XGetWindowProperty(display, proxy, Tk_InternAtom(source, "XdndAware"), 0, 1,
                          False, AnyPropertyType, &t, &f,&n,&a,&retval);
   if (r != Success) {
-    Tcl_SetResult(interp, "cannot retrieve XDND version from target",
+    Tcl_SetResult(interp, (char *)("cannot retrieve XDND version from target"),
                   TCL_STATIC);
     return TCL_ERROR;
   }
@@ -1491,7 +1478,7 @@ int TkDND_SendXdndEnterObjCmd(ClientData clientData,
 }; /* TkDND_SendXdndEnterObjCmd */
 
 int TkDND_SendXdndPositionObjCmd(ClientData clientData,
-                         Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+                         Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
   static const char *DropActions[] = {
     "copy", "move", "link", "ask",  "private", "default",
     (char *) NULL
@@ -1559,7 +1546,7 @@ int TkDND_SendXdndPositionObjCmd(ClientData clientData,
 }; /* TkDND_SendXdndPositionObjCmd */
 
 int TkDND_SendXdndLeaveObjCmd(ClientData clientData,
-                         Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+                         Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
   XEvent event;
   Tk_Window source;
   Window target, proxy;
@@ -1590,7 +1577,7 @@ int TkDND_SendXdndLeaveObjCmd(ClientData clientData,
 }; /* TkDND_SendXdndLeaveObjCmd */
 
 int TkDND_SendXdndDropObjCmd(ClientData clientData,
-                         Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+                         Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
   XEvent event;
   Tk_Window source;
   Window target, proxy;
@@ -1621,11 +1608,11 @@ int TkDND_SendXdndDropObjCmd(ClientData clientData,
 }; /* TkDND_SendXdndDropObjCmd */
 
 int TkDND_XChangePropertyObjCmd(ClientData clientData,
-                         Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {
+                         Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
   XEvent event;
   Window target;
   Atom property = None, type = None;
-  int format, numItems, numFields, i;
+  int format, numItems, i; Tcl_Size numFields;
   Display *display;
   Tk_Window source;
   Time time;
@@ -1650,7 +1637,7 @@ int TkDND_XChangePropertyObjCmd(ClientData clientData,
     return TCL_ERROR;
   }
   if (format != 8 && format != 16 && format != 32) {
-    Tcl_SetResult(interp, "unsupported format: not 8, 16 or 32", TCL_STATIC);
+    Tcl_SetResult(interp, (char *)("unsupported format: not 8, 16 or 32"), TCL_STATIC);
     return TCL_ERROR;
   }
   if (Tcl_GetIntFromObj(interp, objv[5], &format) != TCL_OK) {
@@ -1688,7 +1675,7 @@ int TkDND_XChangePropertyObjCmd(ClientData clientData,
       }
       for (i = 0; i < numItems; i++) {
         char *dummy;
-        propPtr[i] = (short) strtol(Tcl_GetString(field[i]), &dummy, 0);
+        propPtr[i] = strtol(Tcl_GetString(field[i]), &dummy, 0);
       }
       break;
     }
@@ -1723,31 +1710,12 @@ int Tkdnd_SafeInit(Tcl_Interp *interp);
 int Tkdnd_Init(Tcl_Interp *interp) {
   int major, minor, patchlevel;
 
-  if (
-#ifdef USE_TCL_STUBS
-      Tcl_InitStubs(interp, "8.3", 0)
-#else
-      Tcl_PkgRequire(interp, "Tcl", "8.3", 0)
-#endif /* USE_TCL_STUBS */
-            == NULL) {
-            return TCL_ERROR;
-  }
-  if (
-#ifdef USE_TK_STUBS
-       Tk_InitStubs(interp, "8.3", 0)
-#else
-       Tcl_PkgRequire(interp, "Tk", "8.3", 0)
-#endif /* USE_TK_STUBS */
-            == NULL) {
-            return TCL_ERROR;
-  }
-
   /*
    * Get the version, because we really need 8.3.3+.
    */
   Tcl_GetVersion(&major, &minor, &patchlevel, NULL);
   if ((major == 8) && (minor == 3) && (patchlevel < 3)) {
-    Tcl_SetResult(interp, "tkdnd requires Tk 8.3.3 or greater", TCL_STATIC);
+    Tcl_SetResult(interp, (char *)("tkdnd requires Tk 8.3.3 or greater"), TCL_STATIC);
     return TCL_ERROR;
   }
 

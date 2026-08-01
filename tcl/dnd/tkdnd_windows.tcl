@@ -77,6 +77,17 @@ proc olednd::_HandleDragEnter { drop_target typelist actionlist pressedkeys
 
   ## Does the new drop target support any of our new types? 
   variable _types; set _types [bind $drop_target <<DropTargetTypes>>]
+  if {![llength $_types]} {
+    set w $drop_target
+    while {[winfo toplevel $w] ne $w && [winfo parent $w] ne ""} {
+      set w [winfo parent $w]
+      set _types [bind $w <<DropTargetTypes>>]
+      if {[llength $_types]} {
+        set drop_target $w
+        break
+      }
+    }
+  }
   if {[llength $_types]} {
     ## Examine the drop target types, to find at least one match with the drag
     ## source types...

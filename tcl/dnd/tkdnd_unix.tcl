@@ -88,7 +88,7 @@ proc xdnd::_HandleXdndEnter { path drag_source typelist } {
 # ----------------------------------------------------------------------------
 #  Command xdnd::_HandleXdndPosition
 # ----------------------------------------------------------------------------
-proc xdnd::_HandleXdndPosition { drop_target rootX rootY drag_source } {
+proc xdnd::_HandleXdndPosition { drop_target rootX rootY {drag_source ""} } {
   variable _types
   variable _typelist
   variable _actionlist
@@ -118,8 +118,19 @@ proc xdnd::_HandleXdndPosition { drop_target rootX rootY drag_source } {
     set _fetch_action_list 0
   }
 
-  ## Does the new drop target support any of our new types? 
+  ## Does the new drop target support any of our new types?
   set _types [bind $drop_target <<DropTargetTypes>>]
+  if {![llength $_types]} {
+    set w $drop_target
+    while {[winfo toplevel $w] ne $w && [winfo parent $w] ne ""} {
+      set w [winfo parent $w]
+      set _types [bind $w <<DropTargetTypes>>]
+      if {[llength $_types]} {
+        set drop_target $w
+        break
+      }
+    }
+  }
   # debug ">> Accepted types: $drop_target $_types"
   if {[llength $_types]} {
     ## Examine the drop target types, to find at least one match with the drag
@@ -282,7 +293,7 @@ proc xdnd::_HandleXdndDrop { time } {
   if {![llength $_common_drag_source_types]} {return refuse_drop}
 
   if {$_fetch_action_list} {
-    set actions [_fetch_action_list $drag_source]
+    set actions [_fetch_action_list $_drag_source]
     if {[llength $actions]} { set _actionlist $actions }
     set _fetch_action_list 0
   }
@@ -439,13 +450,24 @@ proc xdnd::_platform_specific_types { types } {
 # ----------------------------------------------------------------------------
 proc xdnd::_normalise_data { type data } {
   switch $type {
-    text/uri-list - text/x-moz-url {
+    text/uri-list {
       set list {}
       foreach file [split $data \n] {
         set file [string trim $file "\n\r"]
-        if {[string length $file] > 0} {
-          lappend list $file
-        }
+        if {[string length $file] == 0} { continue }
+        if {[string index $file 0] eq "#"} { continue }
+        lappend list $file
+      }
+      return $list
+    }
+    text/x-moz-url {
+      set list {}
+      foreach line [split $data \n] {
+        set line [string trim $line "\n\r"]
+        if {[string length $line] == 0} { continue }
+        if {[string index $line 0] eq "#"} { continue }
+        set url [lindex [split $line " "] 0]
+        if {[string length $url] > 0} { lappend list $url }
       }
       return $list
     }
@@ -991,7 +1013,7 @@ proc xdnd::_convert_to_unsigned {data format} {
   switch $format {
     8  { set mask 0xff }
     16 { set mask 0xffff }
-    32 { set mask 0xffffff }
+    32 { set mask 0xffffffff }
     default {error "unsupported format $format"}
   }
   ## Convert signed integer into unsigned...
@@ -1019,7 +1041,7 @@ proc xdnd::_SendData {type offset bytes args} {
       STRING                  -
       TEXT                    -
       COMPOUND_TEXT           {
-        return $_dodragdrop_data
+        binary scan $_dodragdrop_data c* _dodragdrop_transfer_data
       }
       text/uri-list {
         set files {}
@@ -1030,7 +1052,7 @@ proc xdnd::_SendData {type offset bytes args} {
             lappend files "file://$file"
           }
         }
-        return "[join $files \r\n]\r\n"
+        binary scan "[join $files \r\n]\r\n" c* _dodragdrop_transfer_data
       }
       application/x-color {
         set format 16
