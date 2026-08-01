@@ -2320,6 +2320,7 @@ proc initDragDrop {} {
   after idle { RegisterDropEvents .main.gameInfoFrame }
   after idle { RegisterDropEvents .main.gameInfo }
   after idle { RegisterDropEvents .main.board.bd}
+  after idle { RegisterDropEvents .main.board}
 }
 
 if { $::docking::USE_DOCKING } {

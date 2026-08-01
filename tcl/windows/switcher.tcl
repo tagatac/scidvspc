@@ -984,6 +984,7 @@ proc ::windows::switcher::Open {} {
 
   ::windows::switcher::Refresh
 
+  # Only for undocked mode
   after idle [list RegisterDropEvents $w.c]
 }
 

@@ -4047,11 +4047,10 @@ ScidvsPC does not make extensive use of the themes features, prefering instead t
 mature (though boring) default Tk widgets; though there are some good extra themes available in our "support files" downloads.
   </p>
 <p>
-Theme installation is not quite trivial:
-    Copy the theme(s) to one of Tk library directories (eg, on linux /usr/lib/tk8.6 or /usr/local/lib).
-    If the theme is one of "tilegtk tileq keramik keramik_alt plastik dark", it will appear in the Themes Menu upon restart.
-</p><p>
-    Otherwise, add the theme name to the above names (in the gui), or issue these commands from ScidvsPC's startup window command line.
+Theme installation is not quite trivial.
+Copy the theme(s) to the Tk library directory (which can be found by typing "set tk_library" into the startup-window command box).
+If the theme is one of "tilegtk tileqt keramik keramik_alt plastik dark aquativo blue BlueElegance clearlooks radiance winxpblue",
+it will appear in the Themes Menu upon restart. Otherwise, add the theme name to the above names (in the gui), or issue these commands from ScidvsPC's startup window command line.
 <ul>
     <li>"source myThemes.tcl"</li>
     <li>"package require ttk::theme::MyTheme"</li>
@@ -4059,7 +4058,7 @@ Theme installation is not quite trivial:
 </ul>
   </p>
 
-  <p><footer>Updated: Scid vs. PC 4.24 Oct 2022</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.28 Jul 2026</footer></p>
 }
 
 set helpTitle(NAGs) "NAG values"
