@@ -2702,7 +2702,7 @@ namespace eval fics {
   proc disableEngines {} {
     for {set i 0} {$i < [llength $::engines(list)]} {incr i} {
       if {[winfo exists .analysisWin$i]} {
-	if {$::analysis(analyzeMode$i)} {
+	if {$::analysis(analyzeMode$i) && !$::analysis(eboard$i)} {
 	  toggleEngineAnalysis $i
 	 }
 	.analysisWin$i.b.startStop configure -state disabled
