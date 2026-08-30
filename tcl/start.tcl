@@ -447,7 +447,7 @@ set maincolor   black		;# Main line arrow color
 set varcolor    grey80		;# Variation arrow colors
 set squarecolor black           ;# box alternative to highcolor
 # arrowWidth/Length is no longer under ::mark namespace to avoid version conflict when sourcing options.dat
-set ::board::arrowWidth 2
+set ::board::arrowWidth 5
 set ::board::arrowLength 0.6
 set ::board::enableMPVTls 0	;# enable Hanish's MPV traffic-light bar
 set engineLineColor $maincolor  ;# Engine arrows

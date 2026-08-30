@@ -241,7 +241,7 @@ proc ::commenteditor::Open {} {
 
   ### A small board
 
-  set board [::board::new $insertBoard.board 35]
+  set board [::board::new $insertBoard.board 30]
   if {[::board::isFlipped]} {
     ::board::flip  $insertBoard.board
   }

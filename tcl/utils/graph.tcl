@@ -468,7 +468,7 @@ proc ::utils::graph::plot_data {graph} {
         }
         incr y $dy
         catch {
-          set citem [$canvas create text $x $y -fill $color -tag $tag -text [::utils::string::Surname $key] -font $_data($graph,font) -anchor $anchor]
+          set citem [$canvas create text $x $y -fill $color -tag $tag -text $key -font $_data($graph,font) -anchor $anchor]
           $canvas bind $citem <Button-1> [list playerInfo $key 1]
           $canvas bind $citem <Enter> "$canvas configure -cursor hand2"
           $canvas bind $citem <Leave> "$canvas configure -cursor {}"

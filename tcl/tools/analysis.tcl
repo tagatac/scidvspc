@@ -3783,7 +3783,7 @@ proc boardVisualizeMoves {board n moves} {
       if {!$small} {
         # same numbers as in tcl/board.tcl , ::board::mark::DrawVar
         $board create line $coord -fill [expr {($im+$ply) % 2 ? $::blackLineColor : $::whiteLineColor}] -arrow last -width $::board::arrowWidth \
-           -arrowshape "[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * sqrt (6.25 + 2.25)] [expr int($::board::arrowWidth * 1.5)]" -tag bvm
+           -arrowshape "[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * 2.5)] $::board::arrowWidth" -tag bvm
         $board create text $xmid $ymid -fill $analysis(boardSeqNumColor) -font $analysis(boardSeqFont) -text $mc -anchor c -tag bvm
         # -font {{courier 10 pitch} 15 bold}
       } else {

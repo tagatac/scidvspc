@@ -2041,7 +2041,7 @@ proc ::board::mark::DrawArrow {pathName from to color} {
   }
   set coord [GetArrowCoords $pathName $from $to $::board::arrowLength]
   if {$pathName == ".main.board.bd"} {
-    set arrowshape "-width $::board::arrowWidth -arrowshape {[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * sqrt (6.25 + 2.25)] [expr int($::board::arrowWidth * 1.5)]}"
+    set arrowshape "-width $::board::arrowWidth -arrowshape {[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * 2.5] $::board::arrowWidth}"
   } else {
     set arrowshape "-width [expr $::board::arrowWidth / 2]"
   }
@@ -2068,11 +2068,11 @@ proc ::board::mark::DrawVar {pathName from to color varnum {move {}}} {
   if {!$small} {
     set arrow [
     $pathName create line $coord -fill $color -arrow last -width $::board::arrowWidth \
-      -arrowshape "[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * sqrt (6.25 + 2.25)] [expr int($::board::arrowWidth * 1.5)]" -activewidth 8
+      -arrowshape "[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * 2.5] $::board::arrowWidth" -activewidth 8
     ]
   } else {
     set arrow [
-    $pathName create line $coord -fill $color -arrow last -width 3 -arrowshape {9 12 3} -activewidth 5
+    $pathName create line $coord -fill $color -arrow last -width 4 -arrowshape {8 11 3} -activewidth 5
     ]
   }
   if {$move == {}} {
