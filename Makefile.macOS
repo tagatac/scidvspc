@@ -409,18 +409,17 @@ mac_rename:
 	install_name_tool -change /Library/Frameworks/Tcl.framework/Versions/8.6/Tcl \
 	@executable_path/../Frameworks/Tcl.framework/Versions/8.6/Tcl tcscid
 mac_buttons:
-	@# mac_buttons is called by mac_install_gui, so dont fail if patch fails
+	@# mac_buttons is called by mac_gui, so dont fail if patch fails
 	@if ! patch -f -p0 scid <patches/swap_buttons-2-3.patch ; then echo 0 ; fi ;
 
-mac_install_gui: scid mac_buttons
+mac_gui: scid mac_buttons
 	install -m 755 scid /Applications/ScidvsMac.app/Contents/MacOS/
 	@if [ "$(LANGUAGES)" != "" ]; then \
-		cp $(LANGUAGES) /Applications/ScidvsMac.app/Contents/Resources/lang/ ; \
+		rsync -auv $(LANGUAGES) /Applications/ScidvsMac.app/Contents/Resources/lang/ ; \
 	fi
-	/Applications/ScidvsMac.app/Contents/MacOS/scid
 
 mac:
-	@echo "mac_app, mac_install, mac_dmg, mac_menus, mac_rename, mac_buttons, mac_install_gui"
+	@echo "mac_app, mac_install, mac_dmg, mac_menus, mac_rename, mac_buttons, mac_gui"
 
 sc_addmove: scripts/sc_addmove.tcl
 	cp scripts/sc_addmove.tcl ./sc_addmove
