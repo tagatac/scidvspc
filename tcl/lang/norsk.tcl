@@ -267,6 +267,14 @@ menuText O OptionsBackColourGlobal "Global" 0 {Global background color}
 menuText O OptionsMainLineColour "Hovedlinje piler" 0 {}
 menuText O OptionsVarLineColour "Variant piler" 0 {}
 menuText O OptionsEngineLineColour "Motorpiler" 0 {Motorpiler}
+# ====== TODO To be translated ======
+menuText O OptionsArrows "Arrows" 0 {Arrow options}
+# ====== TODO To be translated ======
+menuText O OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
+# ====== TODO To be translated ======
+menuText O OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
+# ====== TODO To be translated ======
+menuText O OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
 menuText O OptionsRowColour "Rader" 0 {}
 # ====== TODO To be translated ======
 menuText O OptionsHighlightColour "Highlight" 0 {Default text highlight color}

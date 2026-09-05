@@ -250,6 +250,14 @@ menuText Y OptionsBackColourGlobal "Globalno" 0 {Globalna boja pozadine}
 menuText Y OptionsMainLineColour "Glavna linija strelica" 0 {Boja strelica glavne linije}
 menuText Y OptionsVarLineColour "Varijante strelica" 0 {Boja strelica varijanti}
 menuText Y OptionsEngineLineColour "Strelice motora" 0 {Boja strelica motora}
+# ====== TODO To be translated ======
+menuText Y OptionsArrows "Arrows" 0 {Arrow options}
+# ====== TODO To be translated ======
+menuText Y OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
+# ====== TODO To be translated ======
+menuText Y OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
+# ====== TODO To be translated ======
+menuText Y OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
 menuText Y OptionsRowColour "Redovi" 0 {Podrazumevana boja redova u stablu/knjizi}
 menuText Y OptionsHighlightColour "Isticanje" 0 {Podrazumevana boja isticanja teksta}
 menuText Y OptionsSwitcherColour "Biraè baza" 0 {Boja biraèa baza}

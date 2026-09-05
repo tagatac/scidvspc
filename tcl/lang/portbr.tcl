@@ -309,6 +309,14 @@ menuText B OptionsMainLineColour "Setas da Linha Principal" 0 {Setas da linha pr
 
 menuText B OptionsVarLineColour "Setas de Variantes" 0 {Setas de Variantes}
 menuText B OptionsEngineLineColour "Setas do motor" 0 {Setas do motor}
+# ====== TODO To be translated ======
+menuText B OptionsArrows "Arrows" 0 {Arrow options}
+# ====== TODO To be translated ======
+menuText B OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
+# ====== TODO To be translated ======
+menuText B OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
+# ====== TODO To be translated ======
+menuText B OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
 
 menuText B OptionsRowColour "Linhas" 0 {Cor padrao da linha para arvore/livro}
 menuText B OptionsHighlightColour "Destaque" 0 {Default text highlight color}

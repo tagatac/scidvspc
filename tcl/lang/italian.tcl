@@ -269,6 +269,14 @@ menuText I OptionsVarLineColour "Variation Arrows" 0 {Variation arrows}
 # ====== TODO To be translated ======
 menuText I OptionsEngineLineColour "Engine Arrows" 0 {Engine arrows}
 # ====== TODO To be translated ======
+menuText I OptionsArrows "Arrows" 0 {Arrow options}
+# ====== TODO To be translated ======
+menuText I OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
+# ====== TODO To be translated ======
+menuText I OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
+# ====== TODO To be translated ======
+menuText I OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
+# ====== TODO To be translated ======
 menuText I OptionsRowColour "Rows" 0 {Default tree/book row color}
 # ====== TODO To be translated ======
 menuText I OptionsHighlightColour "Highlight" 0 {Default text highlight color}

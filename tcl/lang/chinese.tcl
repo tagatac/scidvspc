@@ -227,6 +227,14 @@ menuText Z OptionsBackColourGlobal "全局(G)" 3 {全局背景颜色}
 menuText Z OptionsMainLineColour "主线箭头(M)" 5 {主线箭头}
 menuText Z OptionsVarLineColour "变着箭头(V)" 5 {变着箭头}
 menuText Z OptionsEngineLineColour "引擎箭头(E)" 5 {引擎箭头}
+# ====== TODO To be translated ======
+menuText Z OptionsArrows "Arrows" 0 {Arrow options}
+# ====== TODO To be translated ======
+menuText Z OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
+# ====== TODO To be translated ======
+menuText Z OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
+# ====== TODO To be translated ======
+menuText Z OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
 menuText Z OptionsRowColour "行颜色(R)" 4 {默认树状图/开局库行颜色}
 menuText Z OptionsHighlightColour "高亮颜色(H)" 5 {默认文本高亮颜色}
 menuText Z OptionsSwitcherColour "切换器(S)" 4 {默认数据库切换器颜色}

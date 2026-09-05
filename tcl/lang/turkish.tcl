@@ -234,6 +234,14 @@ menuText T OptionsMainLineColour "Ana Hamle Okları" 0 {Ana oklar}
 menuText T OptionsVarLineColour "Varyasyant Okları" 0 {Variation arrows}
 # ====== TODO To be translated ======
 menuText T OptionsEngineLineColour "Engine Arrows" 0 {Engine arrows}
+# ====== TODO To be translated ======
+menuText T OptionsArrows "Arrows" 0 {Arrow options}
+# ====== TODO To be translated ======
+menuText T OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
+# ====== TODO To be translated ======
+menuText T OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
+# ====== TODO To be translated ======
+menuText T OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
 menuText T OptionsRowColour "Satır rengi" 0 {Varsayılan ağaç / kitap satır rengi}
 # ====== TODO To be translated ======
 menuText T OptionsHighlightColour "Highlight" 0 {Default text highlight color}

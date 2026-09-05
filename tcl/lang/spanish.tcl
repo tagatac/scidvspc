@@ -283,6 +283,14 @@ menuText S OptionsBackColourGlobal "Global" 0 {Color de fondo global}
 menuText S OptionsMainLineColour "Flechas principales" 0 {Flechas principales}
 menuText S OptionsVarLineColour "Flechas de variación" 0 {Flechas de variación}
 menuText S OptionsEngineLineColour "Flechas del motor" 0 {Flechas del motor}
+# ====== TODO To be translated ======
+menuText S OptionsArrows "Arrows" 0 {Arrow options}
+# ====== TODO To be translated ======
+menuText S OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
+# ====== TODO To be translated ======
+menuText S OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
+# ====== TODO To be translated ======
+menuText S OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
 menuText S OptionsRowColour "Filas" 0 {Color predeterminado de la columna de árbol/libro}
 menuText S OptionsHighlightColour "Resaltado" 0 {Color por defecto del texto resaltado}
 menuText S OptionsSwitcherColour "Conmutador" 0 {Color del conmutador db predeterminado}

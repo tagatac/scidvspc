@@ -785,8 +785,8 @@ if {$windowsOS} {
 ### Options menu:
 
 set m .menu.options
-set optMenus {windows theme colour entry fonts evalbar ginfo fics startup language numbers export}
-set optLabels {Windows Theme Colour Moves Fonts Evalbar GInfo Fics Startup Language Numbers Export}
+set optMenus {windows theme colour entry fonts arrows evalbar ginfo fics startup language numbers export}
+set optLabels {Windows Theme Colour Moves Fonts Arrows Evalbar GInfo Fics Startup Language Numbers Export}
 set menuindex 0
 
 $m add command -label OptionsBoard -command chooseBoardColors
@@ -817,7 +817,7 @@ set helpMessage($m,[incr menuindex]) OptionsSpell
 
 $m add command -label OptionsTable -command setTableBaseDir
 set helpMessage($m,[incr menuindex]) OptionsTable
-if {![sc_info tb]} { $m entryconfigure 13 -state disabled }
+if {![sc_info tb]} { $m entryconfigure 21 -state disabled }
 
 # setTableBaseDir:
 #    Prompt user to select a tablebase file; all the files in its
@@ -1011,7 +1011,7 @@ $m add command -label OptionsSave -command {
     ::tools::graphs::showbar ::tools::graphs::type ::tools::graphs::rating::elo ::tools::graphs::rating::year
     maintFlag useGraphFigurine photosMinimized bookmarks(gamehistory) playerInfoHistory defaultDBs tbOnline
     glistSize glexport glistColOrder glistColWidth glistColAnchor addRatings(overwrite) addRatings(filter)
-    ::board::arrowWidth ::board::arrowLength ::board::enableMPVTls
+    ::board::arrowWidth ::board::arrowLength ::board::enableMPVTls ::engineArrowGradient
     blistColOrder blistColWidth blistColAnchor macWheelMouse epdAnnotateMode epdDelay evalTime evalScale evalUseLog evalTicks
     ::tactics::analysisTime ::opening::DisplayCMValue ::opening::displayCM ::opening::displayOpeningStats ::opening::maxDepth ::opening::removeGames} {
 
@@ -1350,6 +1350,43 @@ proc changeTheme {} {
 
 }
 
+# Arrows menu: arrow colours (moved from Colour menu) plus width/length
+# (same ::board::arrowWidth/arrowLength variables as the comment editor)
+set m .menu.options.arrows
+menu $m -tearoff -1
+
+$m add command -label OptionsMainLineColour -command SetMainLineColour
+set helpMessage($m,1) OptionsMainLineColour
+$m add command -label OptionsVarLineColour -command SetVarLineColour
+set helpMessage($m,2) OptionsVarLineColour
+$m add command -label OptionsEngineLineColour -command SetEngineLineColour
+set helpMessage($m,3) OptionsEngineLineColour
+
+menu $m.width -tearoff 1
+$m add cascade -label OptionsArrowsWidth -menu $m.width
+set helpMessage($m,4) OptionsArrowsWidth
+foreach w {1 2 3 4 5 6 7 8 9 10 12 14} {
+  $m.width add radiobutton -label $w -variable ::board::arrowWidth -value $w -command {
+    updateBoard
+    if {[::move::checkVarArrows]} { ::move::showVarArrows }
+  }
+}
+
+menu $m.length -tearoff 1
+$m add cascade -label OptionsArrowsLength -menu $m.length
+set helpMessage($m,5) OptionsArrowsLength
+foreach l {0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9} {
+  $m.length add radiobutton -label $l -variable ::board::arrowLength -value $l -command {
+    updateBoard
+    if {[::move::checkVarArrows]} { ::move::showVarArrows }
+  }
+}
+
+$m add checkbutton -label OptionsArrowsColourise -variable ::engineArrowGradient -command {
+  catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
+}
+set helpMessage($m,6) OptionsArrowsColourise
+
 set m .menu.options.colour
 menu $m -tearoff -1
 
@@ -1385,13 +1422,6 @@ $m.fore add checkbutton -label OptionsFicsColour -variable enableForeground
 $m add command -label OptionsHighlightColour -command SetHighlightColour
 set helpMessage($m,1) OptionsHighlightColour
 
-$m add separator
-$m add command -label OptionsMainLineColour -command SetMainLineColour
-set helpMessage($m,1) OptionsMainLineColour
-$m add command -label OptionsVarLineColour -command SetVarLineColour
-set helpMessage($m,1) OptionsVarLineColour
-$m add command -label OptionsEngineLineColour -command SetEngineLineColour
-set helpMessage($m,1) OptionsEngineLineColour
 $m add command -label OptionsRowColour -command SetRowBackgroundColour
 set helpMessage($m,1) OptionsRowColour
 $m add command -label OptionsSwitcherColour -command SetSwitcherColour
@@ -1835,7 +1865,7 @@ proc setLanguageMenus {{lang ""}} {
   }
   .menu.tools.exportfilter entryconfig 4 -label "[tr ToolsExpFilterLaTeX] ([tr OprepViewLaTeX])"
 
-  foreach tag {Board Colour Toolbar Names Recent Fonts Evalbar GInfo Fics Moves Startup Language
+  foreach tag {Board Colour Toolbar Names Recent Fonts Arrows Evalbar GInfo Fics Moves Startup Language
     Numbers Windows Theme Export ECO Spell Table BooksDir TacticsBasesDir Informant Sounds SaveBases Save AutoSave} {
     configMenuText .menu.options [tr Options$tag $oldLang] Options$tag $lang
   }
@@ -1843,8 +1873,14 @@ proc setLanguageMenus {{lang ""}} {
     configMenuText .menu.options.evalbar [tr OptionsEval$tag $oldLang] OptionsEval$tag $lang
   }
 
-  foreach tag {BackColour MainLineColour VarLineColour EngineLineColour RowColour HighlightColour SwitcherColour ProgressColour} {
+  foreach tag {BackColour RowColour HighlightColour SwitcherColour ProgressColour} {
     configMenuText .menu.options.colour [tr Options$tag $oldLang] Options$tag $lang
+  }
+  foreach tag {MainLineColour VarLineColour EngineLineColour} {
+    configMenuText .menu.options.arrows [tr Options$tag $oldLang] Options$tag $lang
+  }
+  foreach tag {Width Length Colourise} {
+    configMenuText .menu.options.arrows [tr OptionsArrows$tag $oldLang] OptionsArrows$tag $lang
   }
   configMenuText .menu.options.colour [tr OptionsFicsColour $oldLang] OptionsFicsColour $lang
   configMenuText .menu.options.colour.back [tr OptionsMovesHighlightLastMoveColor $oldLang] OptionsMovesHighlightLastMoveColor $lang

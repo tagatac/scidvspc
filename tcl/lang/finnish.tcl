@@ -234,6 +234,14 @@ menuText L OptionsMainLineColour "P‰‰muunnelman nuolet" 0 {P‰‰muunnelman nuolet}
 menuText L OptionsVarLineColour "Muunnelman nuolet" 0 {Muunnelman nuolet}
 # ====== TODO To be translated ======
 menuText L OptionsEngineLineColour "Engine Arrows" 0 {Engine arrows}
+# ====== TODO To be translated ======
+menuText L OptionsArrows "Arrows" 0 {Arrow options}
+# ====== TODO To be translated ======
+menuText L OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
+# ====== TODO To be translated ======
+menuText L OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
+# ====== TODO To be translated ======
+menuText L OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
 menuText L OptionsRowColour "Rivit" 0 {Oletus puu/kirja-rivin v‰ri}
 # ====== TODO To be translated ======
 menuText L OptionsHighlightColour "Highlight" 0 {Default text highlight color}

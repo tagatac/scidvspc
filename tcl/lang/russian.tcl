@@ -261,6 +261,14 @@ menuText R OptionsVarLineColour "Variation Arrows" 0 {Variation arrows}
 # ====== TODO To be translated ======
 menuText R OptionsEngineLineColour "Engine Arrows" 0 {Engine arrows}
 # ====== TODO To be translated ======
+menuText R OptionsArrows "Arrows" 0 {Arrow options}
+# ====== TODO To be translated ======
+menuText R OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
+# ====== TODO To be translated ======
+menuText R OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
+# ====== TODO To be translated ======
+menuText R OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
+# ====== TODO To be translated ======
 menuText R OptionsRowColour "Rows" 0 {Default tree/book row color}
 # ====== TODO To be translated ======
 menuText R OptionsHighlightColour "Highlight" 0 {Default text highlight color}

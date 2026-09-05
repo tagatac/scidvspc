@@ -3783,7 +3783,7 @@ proc boardVisualizeMoves {board n moves} {
       if {!$small} {
         # same numbers as in tcl/board.tcl , ::board::mark::DrawVar
         $board create line $coord -fill [expr {($im+$ply) % 2 ? $::blackLineColor : $::whiteLineColor}] -arrow last -width $::board::arrowWidth \
-           -arrowshape "[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * 2.5)] $::board::arrowWidth" -tag bvm
+           -arrowshape "[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * 2.5] $::board::arrowWidth" -tag bvm
         $board create text $xmid $ymid -fill $analysis(boardSeqNumColor) -font $analysis(boardSeqFont) -text $mc -anchor c -tag bvm
         # -font {{courier 10 pitch} 15 bold}
       } else {
@@ -3882,7 +3882,14 @@ proc updateAnalysisBoard {n {moves {}}} {
           if {$movecount == 2} {
             set varnum -1
           }
-          ::board::mark::add $bd varComment$varnum-$m $sq_start $sq_end $::varcolor
+          # Fade from the engine line colour (rank 1) via its
+          # full-strength colour to varcolor for the last rank,
+          # scaled by the PV count:
+          set col $::varcolor
+          if {$::engineArrowGradient} {
+            set col [tint $::engineLineColor [expr {($varnum == -1 ? 1 : $varnum) / double($movecount - 1)}]]
+          }
+          ::board::mark::add $bd varComment$varnum-$m $sq_start $sq_end $col
         }
         incr varnum
       }

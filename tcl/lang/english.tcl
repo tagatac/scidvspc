@@ -251,6 +251,10 @@ menuText E OptionsBackColourGlobal "Global" 0 {Global background color}
 menuText E OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
 menuText E OptionsVarLineColour "Variation Arrows" 0 {Variation arrows}
 menuText E OptionsEngineLineColour "Engine Arrows" 0 {Engine arrows}
+menuText E OptionsArrows "Arrows" 0 {Arrow options}
+menuText E OptionsArrowsWidth "Width" 5 {Thickness of board arrows}
+menuText E OptionsArrowsLength "Length" 6 {Length of board arrows}
+menuText E OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
 menuText E OptionsRowColour "Rows" 0 {Default tree/book row color}
 menuText E OptionsHighlightColour "Highlight" 0 {Default text highlight color}
 menuText E OptionsSwitcherColour "Switcher" 0 {Default db switcher color}

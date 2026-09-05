@@ -444,21 +444,22 @@ set bgcolor     grey20		;# board (canvas) bg color, appears as the lines between
 set progcolor   rosybrown	;# progress bar
 set buttoncolor #b0c0d0		;# (below)
 set maincolor   black		;# Main line arrow color
-set varcolor    grey80		;# Variation arrow colors
+set varcolor    grey80	        ;# Variation arrow colors
 set squarecolor black           ;# box alternative to highcolor
 # arrowWidth/Length is no longer under ::mark namespace to avoid version conflict when sourcing options.dat
 set ::board::arrowWidth 5
 set ::board::arrowLength 0.6
-set ::board::enableMPVTls 0	;# enable Hanish's MPV traffic-light bar
+set ::board::enableMPVTls 0     ;# enable Hanish's MPV traffic-light bar
 set engineLineColor $maincolor  ;# Engine arrows
+set engineArrowGradient 0       ;# Colourise EnginePV - fade engine arrow colours towards varcolor per MultiPV rank
 set whiteLineColor white
 set blackLineColor grey50
 set rowcolor    lightsteelblue1 ;# Tree/Crosstab/Book line/row bg color
 set highlightcolor gray85       ;# Nameditor /playerinfo/ crosstable player name highlight colour
 set switchercolor lightsteelblue3 ;# DB switcher
-set crosscolor  grey80		;# Crosstable line colouring
-set scorecolor  steelblue	;# Score Graph bars
-set scorebarcolor  grey10	;# Score Graph current move
+set crosscolor  grey80          ;# Crosstable line colouring
+set scorecolor  steelblue       ;# Score Graph bars
+set scorebarcolor  grey10       ;# Score Graph current move
 
 set borderwidth 1
 
@@ -1654,6 +1655,12 @@ if {$::docking::USE_DOCKING} {
 #    window  - a window name; used internally as an argument to
 #              [winfo rgb]; defaults to "."
 
+# S.A. - Patrick reckons 
+# "gradient mis-scales for black: winfo rgb returns 16-bit values, but the (r >
+#  255) heuristic picks the 8-bit path whenever all channels are <= 255, so
+#  "gradient black 0.5" returns almost black. Probably never triggered, since
+#  gradient was never called with black"
+
 proc gradient {rgb factor {window .}} {
 
     foreach {r g b} [winfo rgb $window $rgb] {break}
@@ -1696,6 +1703,74 @@ proc gradient {rgb factor {window .}} {
     ### Return the new rgb string
     return $rgb
 }
+
+#   Colour for successive MultiPV ranks between engineLineColor (t = 0)
+#   and varcolor (t = 1). Blends in HSL along the long way around the
+#   hue wheel, so the middle of the ramp gets a clearly different hue.
+#   The midpoint lightness mirrors the average of the two anchors
+#   (light anchors darken in the middle, dark ones lighten), and the
+#   midpoint saturation is at least 0.45 so grey anchors still yield
+#   colourful ramps. Deterministic and continuous in t.
+proc tint {rgb t} {
+  foreach {r g b} [winfo rgb . $rgb] {break}
+  foreach {tr tg tb} [winfo rgb . $::varcolor] {break}
+  lassign [tintRgbToHsl [expr {$r/65535.0}] [expr {$g/65535.0}] [expr {$b/65535.0}]] h0 s0 l0
+  lassign [tintRgbToHsl [expr {$tr/65535.0}] [expr {$tg/65535.0}] [expr {$tb/65535.0}]] h1 s1 l1
+  if {$s0 < 0.05} { set h0 $h1 }
+  if {$s1 < 0.05} { set h1 $h0 }
+  # Take the long way around the hue wheel.
+  set d [expr {fmod($h1 - $h0 + 1.5, 1.0) - 0.5}]
+  if {abs($d) > 1e-9} { set d [expr {$d > 0 ? $d - 1.0 : $d + 1.0}] }
+  set h [expr {fmod($h0 + $d * $t + 1.0, 1.0)}]
+  set lMid [expr {min(0.8, max(0.2, 1.0 - ($l0 + $l1) / 2.0))}]
+  set sMid [expr {max(0.45, ($s0 + $s1) / 2.0)}]
+  if {$t <= 0.5} {
+    set f [expr {$t * 2.0}]
+    set s1 $sMid; set l1 $lMid
+  } else {
+    set f [expr {($t - 0.5) * 2.0}]
+    set s0 $sMid; set l0 $lMid
+  }
+  lassign [tintHslToRgb $h [expr {$s0 + $f * ($s1 - $s0)}] [expr {$l0 + $f * ($l1 - $l0)}]] r g b
+  return [format #%02x%02x%02x [expr {round($r*255)}] [expr {round($g*255)}] [expr {round($b*255)}]]
+}
+
+# Helpers for tint: RGB <-> HSL conversion (channels 0..1).
+
+proc tintRgbToHsl {r g b} {
+  set mx [expr {max($r, $g, $b)}]
+  set mn [expr {min($r, $g, $b)}]
+  set l [expr {($mx + $mn) / 2.0}]
+  if {$mx == $mn} { return [list 0.0 0.0 $l] }
+  set d [expr {$mx - $mn}]
+  set s [expr {$l > 0.5 ? $d / (2.0 - $mx - $mn) : $d / ($mx + $mn)}]
+  if {$mx == $r} {
+    set h [expr {fmod(($g - $b) / $d + 6.0, 6.0)}]
+  } elseif {$mx == $g} {
+    set h [expr {($b - $r) / $d + 2.0}]
+  } else {
+    set h [expr {($r - $g) / $d + 4.0}]
+  }
+  return [list [expr {$h / 6.0}] $s $l]
+}
+
+proc tintHue2rgb {p q t} {
+  set t [expr {$t - floor($t)}]
+  if {$t < 1.0/6.0} { return [expr {$p + ($q - $p) * 6.0 * $t}] }
+  if {$t < 0.5} { return $q }
+  if {$t < 2.0/3.0} { return [expr {$p + ($q - $p) * (2.0/3.0 - $t) * 6.0}] }
+  return $p
+}
+
+proc tintHslToRgb {h s l} {
+  if {$s <= 0.001} { return [list $l $l $l] }
+  set q [expr {$l < 0.5 ? $l * (1.0 + $s) : $l + $s - $l * $s}]
+  set p [expr {2.0 * $l - $q}]
+  return [list [tintHue2rgb $p $q [expr {$h + 1.0/3.0}]] \
+               [tintHue2rgb $p $q $h] \
+               [tintHue2rgb $p $q [expr {$h - 1.0/3.0}]]]
+}
+
 
 if {$enableForeground == 1} {
   # Text foreground only

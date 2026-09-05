@@ -270,6 +270,14 @@ menuText D OptionsBackColourGlobal "Global" 0 {Globale Hintergrundfarbe}
 menuText D OptionsMainLineColour "Pfeilfarbe für Partiezug" 0 {Partiezugpfeilfarbe}
 menuText D OptionsVarLineColour "Pfeilfarbe für Variante" 0 {Variantenpfeilfarbe}
 menuText D OptionsEngineLineColour "Engine-Pfeile" 0 {Engine-Pfeile}
+# ====== TODO To be translated ======
+menuText D OptionsArrows "Arrows" 0 {Arrow options}
+# ====== TODO To be translated ======
+menuText D OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
+# ====== TODO To be translated ======
+menuText D OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
+# ====== TODO To be translated ======
+menuText D OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
 menuText D OptionsRowColour "Farbe für eine Zeile" 0 {Standardfarbe für Zeilen im Baum/Buch}
 menuText D OptionsHighlightColour "Hervorhebung" 0 {Standardfarbe für Texthervorhebungen}
 menuText D OptionsSwitcherColour "Datenbankwechselfarbe" 0 {Standardfarbe für Datenbankwechsel}

@@ -252,6 +252,14 @@ menuText F OptionsBackColourGlobal "Couleur de fond" 0 {Global background color}
 menuText F OptionsMainLineColour "Flèche coup principal" 0 {Mainline arrows}
 menuText F OptionsVarLineColour "Flèche coup variante" 0 {Variation arrows}
 menuText F OptionsEngineLineColour "Flèche moteur" 0 {Flèche moteur}
+# ====== TODO To be translated ======
+menuText F OptionsArrows "Arrows" 0 {Arrow options}
+# ====== TODO To be translated ======
+menuText F OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
+# ====== TODO To be translated ======
+menuText F OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
+# ====== TODO To be translated ======
+menuText F OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
 menuText F OptionsRowColour "Surlignage coup bibliothèque" 0 {Default tree/book row color}
 menuText F OptionsHighlightColour "Surbrillance" 0 {Default text highlight color}
 menuText F OptionsSwitcherColour "Surlignage db switcher" 0 {Default db switcher color}

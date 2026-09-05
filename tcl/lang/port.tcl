@@ -248,6 +248,14 @@ menuText U OptionsBackColourGlobal "Global" 0 {Cor global para fundo}
 menuText U OptionsMainLineColour "Setas da Linha Principal" 0 {Mainline arrows}
 menuText U OptionsVarLineColour "Setas da Variante" 0 {Variation arrows}
 menuText U OptionsEngineLineColour "Setas do Programa" 0 {Engine arrows}
+# ====== TODO To be translated ======
+menuText U OptionsArrows "Arrows" 0 {Arrow options}
+# ====== TODO To be translated ======
+menuText U OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
+# ====== TODO To be translated ======
+menuText U OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
+# ====== TODO To be translated ======
+menuText U OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
 menuText U OptionsRowColour "Linhas" 0 {Default tree/book row color}
 menuText U OptionsHighlightColour "Destaque" 0 {Default text highlight color}
 menuText U OptionsSwitcherColour "Alternador" 0 {Default db switcher color}
