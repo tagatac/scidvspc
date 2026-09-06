@@ -111,6 +111,7 @@ proc resetEngine {n} {
   set analysis(boardSeqLengthSeen$n) 0  ;# used to decide when to update the visualisation
   set analysis(boardSeqDepthSeen$n) 0   ;# used to decide when to update the visualisation
   set analysis(boardSeqMode$n) 2
+  set analysis(bdPending$n) {}
   set annotate(Button$n)  0 ; # annotate checkbutton value
 }
 
@@ -2041,9 +2042,8 @@ proc destroyAnalysisWin {n} {
   }
 
   # Cancel scheduled commands
-  if {$analysis(after$n) != ""} {
-      after cancel $analysis(after$n)
-  }
+  after cancel $analysis(after$n)
+  after cancel $analysis(bdPending$n)
 
   trace remove variable analysis(exclude$n) write "excludeToolTip $n"
 
@@ -2121,6 +2121,8 @@ proc sendMoveToEngine {n move} {
   # standard for sending moves in coordinate notation:
   set move [string tolower $move]
 
+  after cancel $analysis(after$n)
+  after cancel $analysis(bdPending$n)
   if {$::analysis(uci$n)} {
     # This proc is never called for UCI engines, and so below command is redundant
     sendToEngine $n "position fen [sc_pos fen] moves $move"
@@ -3351,11 +3353,9 @@ proc stopAnalyzeMode { {n 0} } {
   global analysis
   if {! $analysis(analyzeMode$n)} { return }
   set analysis(analyzeMode$n) 0
+  after cancel $analysis(bdPending$n)
   if { $analysis(uci$n) } {
-    if {$analysis(after$n) != ""} {
-      after cancel $analysis(after$n)
-      set analysis(after$n) ""
-    }
+    after cancel $analysis(after$n)
     sendToEngine $n stop
     set analysis(go$n) 0
   } else  {
@@ -3433,7 +3433,7 @@ proc multipv_scores {n} {
 proc updateAnalysisText {n} {
   global analysis
 
-  if {!$analysis(movesDisplay$n)} {
+  if {!$analysis(movesDisplay$n) || ![winfo exists .analysisWin$n]} {
     return
   }
 
@@ -3799,7 +3799,33 @@ proc boardVisualizeMoves {board n moves} {
 
 ### Update the small analysis board in the analysis window,
 
+# Throttle board redraws: engine output updates at most every 200 ms.
+# Manual redraw calls are never delayed.
 proc updateAnalysisBoard {n {moves {}}} {
+  global analysis
+
+  if {![winfo exists .analysisWin$n]} { return }
+  if {$moves eq "redraw"} {
+    after cancel $analysis(bdPending$n)
+    set analysis(bdPending$n) {}
+    updateAnalysisBoardNow $n redraw
+    return
+  }
+  set analysis(thrMoves$n) $moves
+  if {$analysis(bdPending$n) eq ""} {
+    set analysis(bdPending$n) [after 200 updateAnalysisBoardDelayed $n]
+  }
+  return
+}
+
+proc updateAnalysisBoardDelayed {n} {
+  global analysis
+  set analysis(bdPending$n) {}
+  if {![winfo exists .analysisWin$n]} { return }
+  updateAnalysisBoardNow $n $analysis(thrMoves$n)
+}
+
+proc updateAnalysisBoardNow {n {moves {}}} {
   global analysis annotate
 
   if {(!$analysis(showBoard$n) && ($analysis(boardEngine) != $n || $analysis(boardType$n) == "Position")) || $annotate(Engine) > -1} {
