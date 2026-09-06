@@ -2626,6 +2626,8 @@ proc setBoardEngine {n} {
     set ::analysis(boardEngine) $n
     # try to mimic checkbutton colours 
     .analysisWin$n.b.showboard configure -bg #b0c0d0 -relief sunken -activebackground #ced6de
+    # redraw now, else the arrows wait for the engine's next output line
+    updateAnalysisBoard $n redraw
   } else {
     .main.board.bd delete engine
     set ::analysis(boardEngine) 0
@@ -3716,6 +3718,8 @@ proc initAnalysisBoard {n} {
     $w.hist.text see end
     $w.text configure -setgrid 1
   }
+  # redraw now, else the arrows wait for the engine's next output line
+  updateAnalysisBoard $n redraw
 }
 
 proc nextBoardType {n} {
@@ -3745,7 +3749,6 @@ proc toggleEngineInfo {n} {
 
 
 ### author C Hanish Menon, hacked by S.A.
-
 # Visualise moves sequence on a board
 
 proc boardVisualizeMoves {board n moves} {
@@ -3894,7 +3897,7 @@ proc updateAnalysisBoard {n {moves {}}} {
         incr varnum
       }
     } else {
-      # Hanish's feature
+      # Hanish's feature, Sequential
       if {[sc_pos moves] == {}} {
         set analysis(boardSeqLengthSeen$n) 0
         set analysis(boardSeqDepthSeen$n) 0

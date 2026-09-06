@@ -255,11 +255,11 @@ menuText R OptionsBackColour "Background" 0 {Default text widget color}
 # ====== TODO To be translated ======
 menuText R OptionsBackColourGlobal "Global" 0 {Global background color}
 # ====== TODO To be translated ======
-menuText R OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
+menuText R OptionsMainLineColour "Mainline Colour" 0 {Mainline arrows}
 # ====== TODO To be translated ======
-menuText R OptionsVarLineColour "Variation Arrows" 0 {Variation arrows}
+menuText R OptionsVarLineColour "Variation Colour" 0 {Variation arrows}
 # ====== TODO To be translated ======
-menuText R OptionsEngineLineColour "Engine Arrows" 0 {Engine arrows}
+menuText R OptionsEngineLineColour "Engine Colour" 0 {Engine arrows}
 # ====== TODO To be translated ======
 menuText R OptionsArrows "Arrows" 0 {Arrow options}
 # ====== TODO To be translated ======

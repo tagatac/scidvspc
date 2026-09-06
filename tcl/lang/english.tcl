@@ -248,9 +248,9 @@ menuText E OptionsBoard "Chessboard/Pieces" 0 {Chess board appearance}
 menuText E OptionsColour "Colors" 0 {Default text widget color}
 menuText E OptionsBackColour "Background" 0 {Default text widget color}
 menuText E OptionsBackColourGlobal "Global" 0 {Global background color}
-menuText E OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
-menuText E OptionsVarLineColour "Variation Arrows" 0 {Variation arrows}
-menuText E OptionsEngineLineColour "Engine Arrows" 0 {Engine arrows}
+menuText E OptionsMainLineColour "Mainline Colour" 0 {Mainline arrows}
+menuText E OptionsVarLineColour "Variation Colour" 0 {Variation arrows}
+menuText E OptionsEngineLineColour "Engine Colour" 0 {Engine arrows}
 menuText E OptionsArrows "Arrows" 0 {Arrow options}
 menuText E OptionsArrowsWidth "Width" 5 {Thickness of board arrows}
 menuText E OptionsArrowsLength "Length" 6 {Length of board arrows}
@@ -310,7 +310,7 @@ menuText E OptionsShowVarPopup "Show Variation Window" 0 {Turn on/off the displa
 menuText E OptionsMovesSpace "Add Spaces after Move Number" 0 {Add spaces after move number}  
 menuText E OptionsMovesKey "Keyboard Completion" 0 \
   {Turn on/off keyboard move auto-completion}
-menuText E OptionsMovesShowVarArrows "Show Variation Arrows" 0 {Turn on/off arrows showing moves in variations}
+menuText E OptionsMovesShowVarArrows "Show Variation Colour" 0 {Turn on/off arrows showing moves in variations}
 menuText E OptionsNumbers "Number Format" 0 {Select the number format}
 menuText E OptionsStartup "Startup" 3 {Select windows to open at startup}
 menuText E OptionsTheme "Theme" 0 {Ttk theme}

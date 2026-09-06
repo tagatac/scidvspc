@@ -1384,7 +1384,7 @@ set helpText(Comment) {<h1>The Comment Editor</h1>
   <h4>Drawing Arrows</h4>
   <p>
   Arrows can be drawn in two ways - In the Main Board, hold Control then click on the start square and then end square.
-  Or in the Comment Editor, arrows can be drawn (and erased) by dragging between two squares. The arrow width and length can be altered in the Comment Editor.
+  Or in the Comment Editor, arrows can be drawn (and erased) by dragging between two squares. The arrow width and length can be altered in the Comment Editor, or via the Options-<gt>Arrows menu.
   </p>
   <h4>Colouring Squares</h4>
   <p>
@@ -2860,7 +2860,7 @@ with the format "stat01: time nodes ply mvleft mvtot mvname". The results can be
 
   <h3><name Board>Analysis Board</h3>
 
-<p>Right clicking <button tb_coords 32> toggles Engine Arrows being displayed on the Main Board! The button will turn blue (except on Macs), and Move Variation arrows will not be shown. The line colour is selected by Options-<gt>Colours-<gt>EngineArrows.</p>
+<p>Right clicking <button tb_coords 32> toggles Engine Arrows being displayed on the Main Board! The button will turn blue (except on Macs), and Move Variation arrows will not be shown. The line colours are selected in Options-<gt>Arrows.</p>
 
 <p>Clicking <button tb_coords 32> normally will toggle a small board which can take on three modes - Arrows, Sequential and Position.
 The default mode and size are set in the <a Analysis List>Engine Configuration</a> window, and can also be toggled by pressing the middle mouse button.
@@ -2868,7 +2868,7 @@ The default mode and size are set in the <a Analysis List>Engine Configuration</
 <br>
 <br><b>Position</b> is the original mode. It displays the board's position after the engines line has been played.
 <br><b>Arrows</b> will display clickable arrows for the engine's move, or multiple arrows if PV is enabled (Variation numbers toggled by Control-Shift-N).
-<br><b>Sequential</b> will show the line as a numbered sequence of small (unclickable) arrows. The length of moves shown is by default 3 but can be changed in the last spinbox in the engine toolbar. In Sequential mode, there are three submodes (White, Black, Both) changed by simply using wheel mouse over the board.
+<br><b>Sequential</b> will show the line as a numbered sequence of small (unclickable) arrows. The number of moves shown (Seq Count) is by default 3 but can be changed in the Tools-<gt>Analysis-Engines window. In Sequential mode, there are three submodes (White, Black, Both) changed by using wheel mouse over the board.
 </p>
 
 <p>Beside the board is a black and white Score Bar (toggled via Control-Shift-S), and optionally, a Coloured 'Traffic' Bar (Control-Shift-C) which shows colours for each MultiPV's score - indicating the sharpness of a position. Red means Black is winning, Yellow is even, and Green for White winning."

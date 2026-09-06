@@ -277,11 +277,11 @@ menuText H OptionsBackColour "Background" 0 {Default text widget color}
 # ====== TODO To be translated ======
 menuText H OptionsBackColourGlobal "Global" 0 {Global background color}
 # ====== TODO To be translated ======
-menuText H OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
+menuText H OptionsMainLineColour "Mainline Colour" 0 {Mainline arrows}
 # ====== TODO To be translated ======
-menuText H OptionsVarLineColour "Variation Arrows" 0 {Variation arrows}
+menuText H OptionsVarLineColour "Variation Colour" 0 {Variation arrows}
 # ====== TODO To be translated ======
-menuText H OptionsEngineLineColour "Engine Arrows" 0 {Engine arrows}
+menuText H OptionsEngineLineColour "Engine Colour" 0 {Engine arrows}
 # ====== TODO To be translated ======
 menuText H OptionsArrows "Arrows" 0 {Arrow options}
 # ====== TODO To be translated ======
@@ -374,7 +374,7 @@ menuText H OptionsShowVarPopup "Show Variation Window" 0 {Turn on/off the displa
 menuText H OptionsMovesSpace "Add spaces after move number" 0 {Add spaces after move number}  
 menuText H OptionsMovesKey "Billentyû-kiegészítés" 0 \
   {Be/kikapcsolja a billentyûzettel részlegesen bevitt lépések automatikus kiegészítését.}
-menuText H OptionsMovesShowVarArrows "Show Variation Arrows" 0 {Turn on/off arrows showing moves in variations}
+menuText H OptionsMovesShowVarArrows "Show Variation Colour" 0 {Turn on/off arrows showing moves in variations}
 menuText H OptionsNumbers "Számformátum" 1 {Számformátum kiválasztása}
 menuText H OptionsStartup "Indítás" 0 {Az indításkor kinyitandó ablakok kiválasztása}
 menuText H OptionsTheme "Téma" 0 {A program megjelenésének megváltoztatása}

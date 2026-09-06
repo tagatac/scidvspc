@@ -263,11 +263,11 @@ menuText I OptionsBackColour "Background" 0 {Default text widget color}
 # ====== TODO To be translated ======
 menuText I OptionsBackColourGlobal "Global" 0 {Global background color}
 # ====== TODO To be translated ======
-menuText I OptionsMainLineColour "Mainline Arrows" 0 {Mainline arrows}
+menuText I OptionsMainLineColour "Mainline Colour" 0 {Mainline arrows}
 # ====== TODO To be translated ======
-menuText I OptionsVarLineColour "Variation Arrows" 0 {Variation arrows}
+menuText I OptionsVarLineColour "Variation Colour" 0 {Variation arrows}
 # ====== TODO To be translated ======
-menuText I OptionsEngineLineColour "Engine Arrows" 0 {Engine arrows}
+menuText I OptionsEngineLineColour "Engine Colour" 0 {Engine arrows}
 # ====== TODO To be translated ======
 menuText I OptionsArrows "Arrows" 0 {Arrow options}
 # ====== TODO To be translated ======

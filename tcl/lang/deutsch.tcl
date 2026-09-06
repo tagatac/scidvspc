@@ -9280,7 +9280,7 @@ set helpText(D,Changelog) {<h1>Änderungshistorie</h1>
 
 <h4>4.27 (May 20, 2026)</h4>
 <ul>
-<li>Engine Arrows can now be displayed on the main board by right-clicking the board button</li>
+<li>Engine Colour can now be displayed on the main board by right-clicking the board button</li>
 <li>Include and improve Pascal's Opening Trainer</li>
 <li>Scorebar fixes, including making it configurable - re Scale and Show-ticks</li>
 <li>Fix/update our broken Export to HTML/Javascript (from scidCommunity project, with some tweaks)</li>

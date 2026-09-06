@@ -233,7 +233,7 @@ menuText T OptionsBackColourGlobal "Global" 0 {Global background color}
 menuText T OptionsMainLineColour "Ana Hamle Okları" 0 {Ana oklar}
 menuText T OptionsVarLineColour "Varyasyant Okları" 0 {Variation arrows}
 # ====== TODO To be translated ======
-menuText T OptionsEngineLineColour "Engine Arrows" 0 {Engine arrows}
+menuText T OptionsEngineLineColour "Engine Colour" 0 {Engine arrows}
 # ====== TODO To be translated ======
 menuText T OptionsArrows "Arrows" 0 {Arrow options}
 # ====== TODO To be translated ======

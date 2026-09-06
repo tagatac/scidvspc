@@ -233,7 +233,7 @@ menuText L OptionsBackColourGlobal "Global" 0 {Global background color}
 menuText L OptionsMainLineColour "P‰‰muunnelman nuolet" 0 {P‰‰muunnelman nuolet}
 menuText L OptionsVarLineColour "Muunnelman nuolet" 0 {Muunnelman nuolet}
 # ====== TODO To be translated ======
-menuText L OptionsEngineLineColour "Engine Arrows" 0 {Engine arrows}
+menuText L OptionsEngineLineColour "Engine Colour" 0 {Engine arrows}
 # ====== TODO To be translated ======
 menuText L OptionsArrows "Arrows" 0 {Arrow options}
 # ====== TODO To be translated ======
