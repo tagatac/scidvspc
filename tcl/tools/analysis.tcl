@@ -2113,27 +2113,19 @@ proc sendToEngine {n text} {
   catch {puts $::analysis(pipe$n) $text}
 }
 
-### Send a move to a running analysis engine
+### Send a move to a running Xboard engine (without setboard)
 
-proc sendMoveToEngine {n move} {
+proc sendMoveToXboardEngine {n move} {
 
   # Convert "e7e8Q" into "e7e8q" since that is the XBoard/WinBoard
   # standard for sending moves in coordinate notation:
   set move [string tolower $move]
-
-  after cancel $analysis(after$n)
-  after cancel $analysis(bdPending$n)
-  if {$::analysis(uci$n)} {
-    # This proc is never called for UCI engines, and so below command is redundant
-    sendToEngine $n "position fen [sc_pos fen] moves $move"
-  } else  {
-    if {$::analysis(wants_usermove$n)} {
-      #  If the engine has indicated (with "usermove=1" on a "feature" line)
-      #  that it wants it, send with "usermove " before the move.
-      sendToEngine $n "usermove $move"
-    } else {
-      sendToEngine $n $move
-    }
+  if {$::analysis(wants_usermove$n)} {
+    #  If the engine has indicated (with "usermove=1" on a "feature" line)
+    #  that it wants it, send with "usermove " before the move.
+    sendToEngine $n "usermove $move"
+  } else {
+    sendToEngine $n $move
   }
 }
 
@@ -2619,20 +2611,25 @@ proc findEngine {} {
 }
 
 proc setBoardEngine {n} {
-  if {$::analysis(boardEngine) != $n} {
+  global analysis
+  if {$analysis(boardEngine) != $n} {
     .main.board.bd delete var
 
     # reset previous button colours, if any
-    catch {.analysisWin$::analysis(boardEngine).b.showboard configure -bg #d9d9d9 -relief flat -activebackground #ececec}
+    catch {.analysisWin$analysis(boardEngine).b.showboard configure -bg #d9d9d9 -relief flat -activebackground #ececec}
 
-    set ::analysis(boardEngine) $n
+    set analysis(boardEngine) $n
     # try to mimic checkbutton colours 
     .analysisWin$n.b.showboard configure -bg #b0c0d0 -relief sunken -activebackground #ced6de
     # redraw now, else the arrows wait for the engine's next output line
-    updateAnalysisBoard $n redraw
+    if {$analysis(prevmoves$n) == {}} {
+      updateAnalysisBoard $n $analysis(moves$n)
+    } else {
+      updateAnalysisBoard $n redraw
+    }
   } else {
     .main.board.bd delete engine
-    set ::analysis(boardEngine) 0
+    set analysis(boardEngine) 0
     .analysisWin$n.b.showboard configure -bg #d9d9d9 -relief flat -activebackground #ececec
   }
 }
@@ -3524,7 +3521,7 @@ proc updateAnalysisText {n} {
   }
 
   if { $analysis(uci$n) } {
-    set moves [ lindex [ lindex $analysis(multiPV$n) 0 ] 2 ]
+    set moves [lindex [lindex $analysis(multiPV$n) 0] 2]
   } else  {
     set moves $analysis(moves$n)
   }
@@ -3965,11 +3962,10 @@ proc sendPosToEngineUCI {n  {delay 0}} {
 
     global analysis ::uci::uciInfo tr
 
-    if {$analysis(after$n) != ""} {
-	after cancel $analysis(after$n)
-	set analysis(after$n) ""
-    }
-
+    after cancel $analysis(after$n)
+    after cancel $analysis(bdPending$n)
+    set analysis(after$n) ""
+    set analysis(bdPending$n) ""
 
     if {$analysis(waitForReadyOk$n) } {
         # If too slow something is wrong: give up
@@ -4200,7 +4196,7 @@ proc updateAnalysis {{n 0} {reset 1}} {
       # Send just the new move if possible (if the new move list is exactly
       # the same as the previous move list, with one extra move):
       if {($newlen == $oldlen + 1) && ($old_movelist == [lrange $movelist 0 [expr {$oldlen - 1} ]])} {
-	sendMoveToEngine $n [lindex $movelist $oldlen]
+	sendMoveToXboardEngine $n [lindex $movelist $oldlen]
 	
       } elseif {($newlen + 1 == $oldlen) && ($movelist == [lrange $old_movelist 0 [expr {$newlen - 1} ]])} {
 	# Here the new move list is the same as the old list but with one
@@ -4218,7 +4214,7 @@ proc updateAnalysis {{n 0} {reset 1}} {
 	  sendToEngine $n undo
 	}
 	foreach m $movelist {
-	  sendMoveToEngine $n $m
+	  sendMoveToXboardEngine $n $m
 	}
 	
       }
@@ -4249,7 +4245,7 @@ proc updateAnalysis {{n 0} {reset 1}} {
 	sendToEngine $n "setboard [sc_pos fen]"
       } else  {
 	foreach m $movelist {
-	  sendMoveToEngine $n $m
+	  sendMoveToXboardEngine $n $m
 	}
 	# No setboard. Set engine to be white or black:
 	sendToEngine $n $analysis(side$n)
