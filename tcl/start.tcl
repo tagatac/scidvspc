@@ -417,7 +417,7 @@ createFont Fixed
 
 # Analysis command: to start chess analysis engine.
 set analysisCommand ""
-set analysis(boardEngine) 0
+set analysis(boardEngine) -1
 
 # Maximum number of lines to be saved in a log file
 # (setting it to 0 also stops log file being created)

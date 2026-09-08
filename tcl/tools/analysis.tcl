@@ -2039,7 +2039,7 @@ proc destroyAnalysisWin {n} {
   }
 
   if {$analysis(boardEngine) == $n} {
-    set analysis(boardEngine) 0
+    set analysis(boardEngine) -1
   }
 
   # Cancel scheduled commands
@@ -2500,7 +2500,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   pack $w.hist -side top -expand 1 -fill both
   initAnalysisBoard $n ; # Init board early to accomodate early engine startups
   # Option: always show the engine's arrows on the Main Board
-  if {$::analysis(mainboardArrows)  &&  $::analysis(boardEngine) == 0} {
+  if {$::analysis(mainboardArrows)  &&  $::analysis(boardEngine) == -1} {
     setBoardEngine $n
   }
   pack $w.hist.ybar -side right -fill y
@@ -2608,6 +2608,9 @@ proc makeAnalysisWin {{n 0} {options {}}} {
 
 
 proc findEngine {} {
+  if {$::analysis(boardEngine) > -1} {
+    return $::analysis(boardEngine)
+  }
   for {set i 0} {$i < [llength $::engines(list)]} {incr i} {
     if {[winfo exists .analysisWin$i]} {
       return $i
@@ -2617,27 +2620,27 @@ proc findEngine {} {
 }
 
 proc toggleMainboardArrows {} {
+  global analysis
   # If arrows are shown, remember whose they were and toggle off.
   # (Not via setBoardEngine 0: that proc assumes $n is an open window.)
   # Delete 'bvm' as well: the Sequential board type draws its numbered
   # arrows with that tag, which would otherwise linger on the board.
-  if {$::analysis(boardEngine) != 0} {
+  if {$analysis(boardEngine) > -1} {
     .main.board.bd delete bvm engine
-    if {[winfo exists .analysisWin$::analysis(boardEngine)]} {
-      .analysisWin$::analysis(boardEngine).b.showboard configure \
-          -bg #d9d9d9 -relief flat -activebackground #ececec
+    if {[winfo exists .analysisWin$analysis(boardEngine)]} {
+      .analysisWin$analysis(boardEngine).b.showboard configure -bg #d9d9d9 -relief flat -activebackground #ececec
     }
-    set ::analysis(lastBoardEngine) $::analysis(boardEngine)
-    set ::analysis(boardEngine) 0
+    set analysis(lastBoardEngine) $analysis(boardEngine)
+    set analysis(boardEngine) -1
     return
   }
   # Otherwise toggle back on the engine that was shown last, if it's
   # still open. With a single engine open and nothing shown yet, show
   # its arrows right away; with several open, do nothing (the user
   # chooses once, as with the right click).
-  if {[info exists ::analysis(lastBoardEngine)]
-      && [winfo exists .analysisWin$::analysis(lastBoardEngine)]} {
-    setBoardEngine $::analysis(lastBoardEngine)
+  if {[info exists analysis(lastBoardEngine)]
+      && [winfo exists .analysisWin$analysis(lastBoardEngine)]} {
+    setBoardEngine $analysis(lastBoardEngine)
     return
   }
   set open {}
@@ -2666,7 +2669,7 @@ proc setBoardEngine {n} {
     }
   } else {
     .main.board.bd delete engine
-    set analysis(boardEngine) 0
+    set analysis(boardEngine) -1
     .analysisWin$n.b.showboard configure -bg #d9d9d9 -relief flat -activebackground #ececec
   }
 }

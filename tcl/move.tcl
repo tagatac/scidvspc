@@ -6,7 +6,7 @@ namespace eval ::move {}
 proc ::move::checkVarArrows {} {
   global analysis
   # also check Engine is not drawing arrows on main board
-  if {($analysis(boardEngine) && $analysis(analyzeMode$analysis(boardEngine))) || !$::showVarArrows || $::autoplayMode} {
+  if {($analysis(boardEngine) != -1 && $analysis(analyzeMode$analysis(boardEngine))) || !$::showVarArrows || $::autoplayMode} {
     return 0
   }
 
