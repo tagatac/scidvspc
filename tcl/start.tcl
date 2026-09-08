@@ -425,6 +425,7 @@ set analysis(logMax) 5000
 set analysis(logName) 1
 set analysis(maxPly) 0
 set analysis(lowPriority) $::windowsOS
+set analysis(mainboardArrows) 0
 set analysis(wrapPV) 0
 set analysis(showBoard) 0
 set analysis(showEngineInfo) 0

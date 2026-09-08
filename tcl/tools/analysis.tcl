@@ -438,6 +438,7 @@ proc ::enginelist::choose {} {
   entry $w.buttons2.logmax            -textvar analysis(logMax) -width 6
   label $w.buttons2.ply               -textvar tr(MaxPly)
   spinbox $w.buttons2.maxply -width 4 -textvar analysis(maxPly) -from 0 -to 50 -increment 1
+  checkbutton $w.buttons2.lowpriority -variable analysis(lowPriority) -textvar tr(LowPriority)
   checkbutton $w.buttons2.wrap -text [tr GInfoWrap] -variable analysis(wrapPV)
   checkbutton $w.buttons2.logname -variable analysis(logName) -textvar tr(LogName)
   dialogbutton $w.buttons2.start -textvar tr(Start) -command {
@@ -456,8 +457,8 @@ proc ::enginelist::choose {} {
   ::utils::tooltip::Set $w.buttons3.seqCount "MainPV visualisation length"
 
   checkbutton $w.buttons3.trafficlights -variable ::board::enableMPVTls -text "Colour Bar"
-
-  checkbutton $w.buttons3.lowpriority -variable analysis(lowPriority) -textvar tr(LowPriority)
+  checkbutton $w.buttons3.mainboard -variable analysis(mainboardArrows) -text "Mainboard"
+  ::utils::tooltip::Set $w.buttons3.mainboard "Show the engine's arrows on the Main Board"
 
   # Right-click inits engine but doesn't start
   bind $w.buttons2.start <Button-3> {
@@ -471,10 +472,10 @@ proc ::enginelist::choose {} {
   pack $w.buttons.up $w.buttons.down $w.buttons.log $w.buttons.uci $w.buttons.edit $w.buttons.add $w.buttons.copy $w.buttons.delete -side left -expand yes
 
   pack $w.buttons3.info $w.buttons3.showBoard $w.buttons3.space $w.buttons3.sizeLabel $w.buttons3.size $w.buttons3.showVar \
-       $w.buttons3.seqLabel $w.buttons3.seqCount $w.buttons3.trafficlights $w.buttons3.lowpriority -side left -padx 5
+       $w.buttons3.mainboard $w.buttons3.seqLabel $w.buttons3.seqCount $w.buttons3.trafficlights -side left -padx 5
 
   pack $w.buttons2.close $w.buttons2.start -side right -padx 5
-  pack $w.buttons2.logengines $w.buttons2.logmax $w.buttons2.ply $w.buttons2.maxply $w.buttons2.wrap $w.buttons2.logname -side left -padx 5
+  pack $w.buttons2.logengines $w.buttons2.logmax $w.buttons2.ply $w.buttons2.maxply $w.buttons2.lowpriority $w.buttons2.wrap $w.buttons2.logname -side left -padx 5
 
   focus $w.buttons2.start
   # Focus is now set to listbox (in ::enginelist::listEngines) for keyboard shortcuts
@@ -2405,6 +2406,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   "
   ::utils::tooltip::Set $w.b.showboard $tr(ShowAnalysisBoard)
   bind $w.b.showboard <Button-3> "setBoardEngine $n"
+  bind $w <s> toggleMainboardArrows
 
   button $w.b.exclude -image tb_exclude -command "excludeMovePopup $n" -relief $relief
   ::utils::tooltip::Set $w.b.exclude $tr(ExcludeMove)
@@ -2497,6 +2499,10 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   }
   pack $w.hist -side top -expand 1 -fill both
   initAnalysisBoard $n ; # Init board early to accomodate early engine startups
+  # Option: always show the engine's arrows on the Main Board
+  if {$::analysis(mainboardArrows)  &&  $::analysis(boardEngine) == 0} {
+    setBoardEngine $n
+  }
   pack $w.hist.ybar -side right -fill y
   pack $w.hist.xbar -side bottom -expand 0 -fill x
   pack $w.hist.text -side left -expand 1 -fill both
@@ -2608,6 +2614,37 @@ proc findEngine {} {
     }
   }
   return -1
+}
+
+proc toggleMainboardArrows {} {
+  # If arrows are shown, remember whose they were and toggle off.
+  # (Not via setBoardEngine 0: that proc assumes $n is an open window.)
+  # Delete 'bvm' as well: the Sequential board type draws its numbered
+  # arrows with that tag, which would otherwise linger on the board.
+  if {$::analysis(boardEngine) != 0} {
+    .main.board.bd delete bvm engine
+    if {[winfo exists .analysisWin$::analysis(boardEngine)]} {
+      .analysisWin$::analysis(boardEngine).b.showboard configure \
+          -bg #d9d9d9 -relief flat -activebackground #ececec
+    }
+    set ::analysis(lastBoardEngine) $::analysis(boardEngine)
+    set ::analysis(boardEngine) 0
+    return
+  }
+  # Otherwise toggle back on the engine that was shown last, if it's
+  # still open. With a single engine open and nothing shown yet, show
+  # its arrows right away; with several open, do nothing (the user
+  # chooses once, as with the right click).
+  if {[info exists ::analysis(lastBoardEngine)]
+      && [winfo exists .analysisWin$::analysis(lastBoardEngine)]} {
+    setBoardEngine $::analysis(lastBoardEngine)
+    return
+  }
+  set open {}
+  for {set i 0} {$i < [llength $::engines(list)]} {incr i} {
+    if {[winfo exists .analysisWin$i]} { lappend open $i }
+  }
+  if {[llength $open] == 1} { setBoardEngine [lindex $open 0] }
 }
 
 proc setBoardEngine {n} {

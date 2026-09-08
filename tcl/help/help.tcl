@@ -108,6 +108,29 @@ but could do so by tweaking the string matches in "fics.tcl". FICS and ICC have
   <p><footer>Updated: Scid vs. PC 4.7 Febuary 2012</footer></p>
 }
 
+set helpTitle(Arrows) "Arrow Options"
+set helpText(Arrows) {<h1>Arrow Options</h1>
+<p>
+The <b>Options-<gt>Arrows</b> menu is where various arrow options are set. The
+Main Line and Variation colours are for the game's move arrows.
+The Engine Colour is for the Analysis engine's arrows. <i>These can also be shown on the main board by right-clicking the engine's <button tb_coords> button, by the <b>S</b> key,
+or via the "Mainboard" checkbox in the <a Analysis List>engines configuration dialog</a></i>
+</p>
+
+<p>
+The "Colourise Engine PV" option enables MultiPV to be shaded between the Engine Line and the Variation Line Colours.
+When disabled, all MultiPV arrows are shown as one colour.
+</p>
+
+<p>
+The Width and Length menus apply to both the Engine arrows and those drawn in the comment editor.
+</p>
+
+<p>See <a Comment Diagrams>here</a> for info about the Comment Editor's drawables/arrows.
+
+<p><footer>Updated: Scid vs. PC 4.28 Sept 2026</footer></p>
+}
+
 set helpTitle(BrowsingPGN) "PGN"
 set helpText(BrowsingPGN) {<h1>PGN Files and Scid</h1>
 
@@ -231,7 +254,7 @@ append helpText(Index) {
   <li><a Comment Annotation>Annotation symbols</a></li>
   <li><a NAGs>Annotation symbols</a> (NAGs)</li>
   <li>Entering <a Moves Informant>annotation symbols</a></li>
-  <li><a Comment Diagrams>Arrows</a></li>
+  <li><a Arrows>Arrows</a> (Options-<gt>Arrows)</li>
   <li><a Author>Author, contacting</a></li>
   <li><a Maintenance Autoload>Autoloading</a> a game</li>
   <li><a MainWindow Autoplay>Autoplay mode</a></li>
@@ -1384,7 +1407,8 @@ set helpText(Comment) {<h1>The Comment Editor</h1>
   <h4>Drawing Arrows</h4>
   <p>
   Arrows can be drawn in two ways - In the Main Board, hold Control then click on the start square and then end square.
-  Or in the Comment Editor, arrows can be drawn (and erased) by dragging between two squares. The arrow width and length can be altered in the Comment Editor, or via the Options-<gt>Arrows menu.
+  Or in the Comment Editor, arrows can be drawn (and erased) by dragging between two squares.
+  The arrow width and length can be altered via Options-<gt>Arrows menu.
   </p>
   <h4>Colouring Squares</h4>
   <p>
@@ -2860,7 +2884,9 @@ with the format "stat01: time nodes ply mvleft mvtot mvname". The results can be
 
   <h3><name Board>Analysis Board</h3>
 
-<p>Right clicking <button tb_coords 32> toggles Engine Arrows being displayed on the Main Board! The button will turn blue (except on Macs), and Move Variation arrows will not be shown. The line colours are selected in Options-<gt>Arrows.</p>
+<p>Right clicking <button tb_coords 32> (or 's' key) toggles Engine Arrows being displayed on the Main Board.
+The button will turn blue (except on Macs), and Move Variation arrows will not be shown.
+</p>
 
 <p>Clicking <button tb_coords 32> normally will toggle a small board which can take on three modes - Arrows, Sequential and Position.
 The default mode and size are set in the <a Analysis List>Engine Configuration</a> window, and can also be toggled by pressing the middle mouse button.
@@ -7307,6 +7333,7 @@ The window manager may interfere with some shortcuts.
 <li><b>F4</b> - Toggle engine 3</li>
 <li><b>enter</b> - Add move from chess engine</li>
 <li><b>space</b> - Start/stop chess engine</li>
+<li><b>s</b> - Toggle engine arrows on the Main Board</li>
 <li><b>control-enter</b> - Add line from chess engine</li>
 <li><b>control-space</b> - Toggle trial mode</li>
 </ul>
@@ -7418,6 +7445,7 @@ The window manager may interfere with some shortcuts.
 <li><b>space</b> - Start/stop chess engine</li>
 <li><b>delete</b> - Delete trailing moves from game or variation</li>
 <li><b>v</b> - Enter variation</li>
+<li><b>s</b> - Toggle engine arrows on the Main Board</li>
 <li><b>z</b> - Exit variation</li>
 <li><b>left</b> - Back one move</li>
 <li><b>right</b> - Forward one move</li>

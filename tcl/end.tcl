@@ -1633,6 +1633,7 @@ bind .main <KP_Enter> addAnalysisMove
 bind .main <Control-Return>   addAnalysisVariation
 bind .main <Control-KP_Enter> addAnalysisVariation
 bind .main <space>  toggleEngineAnalysis
+bind .main <s> toggleMainboardArrows ; # hmmm S.A.
 
 bind .main <v> showVars
 bind .main <z> {.main.button.exitVar invoke}

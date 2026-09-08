@@ -983,7 +983,7 @@ $m add command -label OptionsSave -command {
     gameInfo(show) gameInfo(photos) gameInfo(wrap) gameInfo(showStatus)
     gameInfo(fullComment) gameInfo(showMarks) gameInfo(showMenu) gameInfo(showTool)
     gameInfo(showMaterial) gameInfo(showFEN) gameInfo(showButtons) gameInfo(showTB) gameInfo(showEval)
-    engines(F2) engines(F3) engines(F4) analysis(logMax) analysis(logName) analysis(maxPly) analysis(lowPriority) analysis(boardSize) analysis(boardType) analysis(showBoard) analysis(showEngineInfo) analysis(wrapPV) analysis(boardSeqNumColor) analysis(boardSeqCount) analysis(numberPVArrows)
+    engines(F2) engines(F3) engines(F4) analysis(logMax) analysis(logName) analysis(maxPly) analysis(lowPriority) analysis(mainboardArrows) analysis(boardSize) analysis(boardType) analysis(showBoard) analysis(showEngineInfo) analysis(wrapPV) analysis(boardSeqNumColor) analysis(boardSeqCount) analysis(numberPVArrows)
 
     scidBooksDir scidBasesDir
     ::book::lastBook1 ::book::lastBook2 ::book::lastTuning ::book::sortAlpha
@@ -1375,8 +1375,9 @@ foreach w {1 2 3 4 5 6 7 8 9 10 12 14} {
 menu $m.length -tearoff 1
 $m add cascade -label OptionsArrowsLength -menu $m.length
 set helpMessage($m,5) OptionsArrowsLength
-foreach l {0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9} {
-  $m.length add radiobutton -label $l -variable ::board::arrowLength -value $l -command {
+
+foreach l {0.9 0.8 0.7 0.6 0.5 0.4 0.3 0.2 0.1 0.0} {
+  $m.length add radiobutton -label [expr {int(10 - $l*10)}] -variable ::board::arrowLength -value $l -command {
     updateBoard
     if {[::move::checkVarArrows]} { ::move::showVarArrows }
   }
