@@ -418,6 +418,7 @@ createFont Fixed
 # Analysis command: to start chess analysis engine.
 set analysisCommand ""
 set analysis(boardEngine) -1
+set analysis(lastBoardEngine) -1
 
 # Maximum number of lines to be saved in a log file
 # (setting it to 0 also stops log file being created)
@@ -433,7 +434,6 @@ set analysis(boardSize) 2
 set analysis(boardType) Arrows
 set analysis(boardSeqNumColor) black
 set analysis(boardSeqCount) 3
-set analysis(numberPVArrows) 1
 
 # Colors
 
@@ -452,7 +452,9 @@ set ::board::arrowWidth 5
 set ::board::arrowLength 0.6
 set ::board::enableMPVTls 0     ;# enable Hanish's MPV traffic-light bar
 set engineLineColor $maincolor  ;# Engine arrows
-set engineArrowGradient 0       ;# Colourise EnginePV - fade engine arrow colours towards varcolor per MultiPV rank
+set engineArrowMode 0         ;# Engine arrow colour mode: 0 fixed, 1 traffic light (relative), 2 traffic light (absolute)
+set engineArrowLabels 1       ;# Engine arrow numbers: 0 off, 1 rank, 2 score diff, 3 absolute
+set engineArrowThick 0        ;# Engine arrows: thicker lines for better ranks
 set whiteLineColor white
 set blackLineColor grey50
 set rowcolor    lightsteelblue1 ;# Tree/Crosstab/Book line/row bg color
@@ -1619,6 +1621,31 @@ if {[catch {source $optionsFile} ]} {
 if {[string match *pstricks-add* $exportStartFile(Latex)]} {
   set exportStartFile(Latex) $default_exportStartFile(Latex)
 }
+
+# Migrate old Engine-arrow settings to the Engine submenu (0 fixed,
+# 1 traffic light relative, 2 traffic light absolute; labels 0 off,
+# 1 rank, 2 score diff). Old gradients become relative traffic light.
+if {[info exists ::engineArrowGradient]} {
+  if {$::engineArrowGradient && (![info exists ::engineArrowMode] || $::engineArrowMode == 0)} {
+    set ::engineArrowMode 1
+  }
+  unset ::engineArrowGradient
+}
+if {[info exists ::engineArrowEvalColor]} {
+  if {$::engineArrowEvalColor && (![info exists ::engineArrowMode] || $::engineArrowMode == 0)} {
+    set ::engineArrowMode 2
+  }
+  unset ::engineArrowEvalColor
+}
+if {[info exists analysis(numberPVArrows)]} {
+  if {$analysis(numberPVArrows) > 2} { set analysis(numberPVArrows) 2 }
+  if {$analysis(numberPVArrows) < 0} { set analysis(numberPVArrows) 0 }
+  if {![info exists ::engineArrowLabels]} { set ::engineArrowLabels $analysis(numberPVArrows) }
+  unset analysis(numberPVArrows)
+}
+if {![info exists ::engineArrowMode]} { set ::engineArrowMode 0 }
+if {![info exists ::engineArrowLabels]} { set ::engineArrowLabels 1 }
+if {![info exists ::engineArrowThick]} { set ::engineArrowThick 0 }
 
 if { [string first "-dock" [lindex $argv 0]] > -1} {
   set windowsDock 1

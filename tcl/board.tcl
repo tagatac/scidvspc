@@ -1884,6 +1884,15 @@ proc ::board::mark::clear {win} {
 #	destination arguments, creates the proper canvas object.
 
 proc ::board::mark::add {win args} {
+  # Optional trailing engine-arrow thickness flag (0/1), used only for
+  # varComment engine arrows. Kept off the ::board::_mark list so old
+  # saved marks stay compatible.
+  set engineThick 0
+  if {[llength $args] >= 6 && [string match {varComment*} [lindex $args 0]] \
+      && [regexp {^[01]$} [lindex $args end]]} {
+    set engineThick [lindex $args end]
+    set args [lrange $args 0 end-1]
+  }
   # Rearrange list if "type" is simple character:
   if {[string length [lindex $args 0]] == 1} {
     # ... e.g.,  {c e4 red} --> {text e4 c red}
@@ -1943,7 +1952,7 @@ proc ::board::mark::add {win args} {
               if {$varnum == 0} {
                 $board delete engine
               }
-              DrawVar $board $square $dest $color $varnum $move
+              DrawVar $board $square $dest $color $varnum $move $engineThick
             }
     var*    {
               scan $type var%i varnum
@@ -2053,9 +2062,11 @@ proc ::board::mark::DrawArrow {pathName from to color} {
   $pathName raise p$from all
 }
 
-proc ::board::mark::DrawVar {pathName from to color varnum {move {}}} {
+proc ::board::mark::DrawVar {pathName from to color varnum {move {}} {engineThick 0}} {
   # main     board arrows come with varnum integer
   # analysis board arrows come with varnum and move, to allow for clickable moves
+  # engineThick (engine arrows only): step the width down per rank so the
+  # best line is thickest. Non-engine arrows ($move == {}) are untouched.
 
   if {$from < 0 || $from > 63 || $to < 0 || $to > 63} {
     return
@@ -2064,11 +2075,24 @@ proc ::board::mark::DrawVar {pathName from to color varnum {move {}}} {
   # set small [expr {$move != {}}]
   set small [expr {$pathName != ".main.board.bd"}]
 
+  # rank for the thickness steps: best line (varnum 0) is rank 0
+  set rank 0
+  if {$varnum == -1} {
+    set rank 1
+  } elseif {$varnum > 0} {
+    set rank $varnum
+  }
+  set thickFactor 1.0
+  if {$engineThick && $move != {}} {
+    set thickFactor [expr {max(0.55, 1.0 - 0.15 * $rank)}]
+  }
+
   set coord [GetArrowCoords $pathName $from $to $::board::arrowLength]
   if {!$small} {
+    set w [expr {$::board::arrowWidth * $thickFactor}]
     set arrow [
-    $pathName create line $coord -fill $color -arrow last -width $::board::arrowWidth \
-      -arrowshape "[expr $::board::arrowWidth * 2.5] [expr $::board::arrowWidth * 2.5] $::board::arrowWidth" -activewidth 8
+    $pathName create line $coord -fill $color -arrow last -width $w \
+      -arrowshape "[expr $w * 2.5] [expr $w * 2.5] $w" -activewidth 8
     ]
   } else {
     set arrow [
@@ -2081,20 +2105,58 @@ proc ::board::mark::DrawVar {pathName from to color varnum {move {}}} {
     $pathName itemconfigure $arrow -tag [list mark engine "mark${from}:${to}" var$move]
   }
 
-  ### And a midpoint number if desired 
+  ### And a midpoint number if desired
   # -1 is sent if only 2 lines found, when we don't need to number the arrow because it's color is different S.A.
-  if {$move != {} && $varnum > 0 && $::analysis(numberPVArrows)} {
-    incr varnum
+  # In fixed colour mode the svn behaviour is kept: never a "1", and no
+  # "2" when there are only two lines. The scored modes keep all labels.
+  # --- Group 2: engine arrow numbers (off / rank / score diff / absolute) ---
+  # The best line (varnum 0) is labelled too: rank 1, diff "+", absolute score.
+  if {$move != {} && $varnum >= -1 && $::engineArrowLabels} {
+    # In fixed colour mode the svn behaviour is kept for rank numbers
+    # only: never a "1", and no "2" when there are only two lines.
+    # Score modes keep their informative labels ("+", diff, absolute)
+    # even here. The varnum -1 case only happens with exactly two lines,
+    # so no count is needed here.
+    if {$::engineArrowMode == 0 && $::engineArrowLabels < 2 && $varnum <= 0} {
+      set mark {}
+    } else {
+    if {$varnum == 0} {
+      set text 1
+    } elseif {$varnum == -1} {
+      set text 2
+    } else {
+      incr varnum
+      set text $varnum
+    }
+    # Mode 2 shows the eval difference to the best line, mode 3 the absolute
+    # score in tenths (both set per move in analysis.tcl, mate scores passed
+    # through, eg "M7"). Missing entries (stale rows, Xboard, single PV)
+    # fall back to the rank number, so no arrow is left without a label.
+    if {$::engineArrowLabels == 2 && [info exists ::board::varLabel($move)]} {
+      set text $::board::varLabel($move)
+    } elseif {$::engineArrowLabels > 2 && [info exists ::board::varAbsLabel($move)]} {
+      set text $::board::varAbsLabel($move)
+    }
     set xmid [expr ([lindex $coord 0] + [lindex $coord 2]) / 2]
     set ymid [expr ([lindex $coord 1] + [lindex $coord 3]) / 2]
     set mark [
-      $pathName create text $xmid $ymid -fill $::analysis(boardSeqNumColor) -font $::analysis(boardSeqFont) -text $varnum -anchor c -tag [list mark engine "mark${from}:${to}" var$move]
+      $pathName create text $xmid $ymid -fill $::analysis(boardSeqNumColor) -font $::analysis(boardSeqFont) -text $text -anchor c -tag [list mark engine "mark${from}:${to}" var$move]
     ]
+    }
   }
 
   $pathName raise $arrow all
   $pathName raise p$from all
   catch {$pathName raise $mark all}
+  if {$move != {}} {
+    # Engine arrows are drawn best-first; each worse arrow sinks below the
+    # previous one so the best ends on top. Numbers stay above all arrows.
+    if {[info exists ::board::_engineArrowLast($pathName)]} {
+      catch {$pathName lower $arrow $::board::_engineArrowLast($pathName)}
+    }
+    set ::board::_engineArrowLast($pathName) $arrow
+    catch {$pathName raise $mark all}
+  }
 
   # Create arrow binding
   if {$move == {}} {
@@ -3368,13 +3430,13 @@ proc eval2tlcolor {eval} {
   return $color
 }
 
-proc ::board::update_mpvtls {w evals} {
+proc ::board::update_mpvtls {w rows {side white}} {
   if {! $::board::_showMPVTls($w)} {
     $w.mpvtls delete mpvtls
     return
   }
 
-  set numEvals [llength $evals]
+  set numEvals [llength $rows]
   if {$numEvals <= 0} { return }
 
   set height [$w.mpvtls cget -height]
@@ -3386,9 +3448,22 @@ proc ::board::update_mpvtls {w evals} {
   $w.mpvtls delete mpvtls
   set y2 0
   set icnt 0
-  foreach eval $evals {
+  foreach row $rows {
+    # rows are {depth score moves scoremate}; stored mates are
+    # white-perspective, so "good" means mate for the side to move
+    # (saturated green, the best possible), being mated is magenta
     incr icnt
-    set color [eval2tlcolor $eval]
+    set eval [lindex $row 1]
+    set mate [lindex $row 3]
+    if {$mate != 0 && $mate != ""} {
+      if {($side == "black" && $mate < 0) || ($side != "black" && $mate > 0)} {
+        set color [eval2tlcolor 5.0]
+      } else {
+        set color #d000a0
+      }
+    } else {
+      set color [eval2tlcolor $eval]
+    }
     set y1 $y2
     set y2 [expr $icnt*$unitLen]
     if {$::macOS} {

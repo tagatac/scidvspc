@@ -983,7 +983,7 @@ $m add command -label OptionsSave -command {
     gameInfo(show) gameInfo(photos) gameInfo(wrap) gameInfo(showStatus)
     gameInfo(fullComment) gameInfo(showMarks) gameInfo(showMenu) gameInfo(showTool)
     gameInfo(showMaterial) gameInfo(showFEN) gameInfo(showButtons) gameInfo(showTB) gameInfo(showEval)
-    engines(F2) engines(F3) engines(F4) analysis(logMax) analysis(logName) analysis(maxPly) analysis(lowPriority) analysis(mainboardArrows) analysis(boardSize) analysis(boardType) analysis(showBoard) analysis(showEngineInfo) analysis(wrapPV) analysis(boardSeqNumColor) analysis(boardSeqCount) analysis(numberPVArrows)
+    engines(F2) engines(F3) engines(F4) analysis(logMax) analysis(logName) analysis(maxPly) analysis(lowPriority) analysis(mainboardArrows) analysis(boardSize) analysis(boardType) analysis(showBoard) analysis(showEngineInfo) analysis(wrapPV) analysis(boardSeqNumColor) analysis(boardSeqCount)
 
     scidBooksDir scidBasesDir
     ::book::lastBook1 ::book::lastBook2 ::book::lastTuning ::book::sortAlpha
@@ -1011,7 +1011,7 @@ $m add command -label OptionsSave -command {
     ::tools::graphs::showbar ::tools::graphs::type ::tools::graphs::rating::elo ::tools::graphs::rating::year
     maintFlag useGraphFigurine photosMinimized bookmarks(gamehistory) playerInfoHistory defaultDBs tbOnline
     glistSize glexport glistColOrder glistColWidth glistColAnchor addRatings(overwrite) addRatings(filter)
-    ::board::arrowWidth ::board::arrowLength ::board::enableMPVTls ::engineArrowGradient
+    ::board::arrowWidth ::board::arrowLength ::board::enableMPVTls ::engineArrowMode ::engineArrowLabels ::engineArrowThick
     blistColOrder blistColWidth blistColAnchor macWheelMouse epdAnnotateMode epdDelay evalTime evalScale evalUseLog evalTicks
     ::tactics::analysisTime ::opening::DisplayCMValue ::opening::displayCM ::opening::displayOpeningStats ::opening::maxDepth ::opening::removeGames} {
 
@@ -1359,13 +1359,61 @@ $m add command -label OptionsMainLineColour -command SetMainLineColour
 set helpMessage($m,1) OptionsMainLineColour
 $m add command -label OptionsVarLineColour -command SetVarLineColour
 set helpMessage($m,2) OptionsVarLineColour
-$m add command -label OptionsEngineLineColour -command SetEngineLineColour
-set helpMessage($m,3) OptionsEngineLineColour
+# Engine arrow submenu: colour mode, numbers on the arrows, thickness.
+# (Kept as one flat menu with separators, so Steven can drop any group.)
+# The -label values are raw tags; setLanguageMenus translates them via
+# configMenuText once english.tcl has set the menuLabel table.
+menu $m.engine -tearoff 1
+$m add cascade -label OptionsArrowsEngineColour -menu $m.engine
+set helpMessage($m,3) OptionsArrowsEngineColour
+
+# --- Group 1: arrow colour mode (exclusive radio group) ---
+$m.engine add radiobutton -label OptionsArrowsEngineFixed -variable ::engineArrowMode -value 0 -command {
+  catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
+}
+$m.engine add radiobutton -label OptionsArrowsEngineRelative -variable ::engineArrowMode -value 1 -command {
+  catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
+}
+$m.engine add radiobutton -label OptionsArrowsEngineAbsolute -variable ::engineArrowMode -value 2 -command {
+  catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
+}
+$m.engine add command -label OptionsArrowsEngineChange -command SetEngineLineColour
+$m.engine add separator
+
+# --- Group 2: numbers on the arrows (exclusive radio group) ---
+$m.engine add radiobutton -label OptionsArrowsEngineLabelsOff -variable ::engineArrowLabels -value 0 -command {
+  catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
+}
+$m.engine add radiobutton -label OptionsArrowsEngineLabelsRank -variable ::engineArrowLabels -value 1 -command {
+  catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
+}
+$m.engine add radiobutton -label OptionsArrowsEngineLabelsDiff -variable ::engineArrowLabels -value 2 -command {
+  catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
+}
+$m.engine add radiobutton -label OptionsArrowsEngineLabelsAbs -variable ::engineArrowLabels -value 3 -command {
+  catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
+}
+$m.engine add separator
+
+# --- Group 3: arrow thickness ---
+$m.engine add checkbutton -label OptionsArrowsEngineThick -variable ::engineArrowThick -command {
+  catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
+}
+
+set helpMessage($m.engine,0) OptionsArrowsEngineFixed
+set helpMessage($m.engine,1) OptionsArrowsEngineRelative
+set helpMessage($m.engine,2) OptionsArrowsEngineAbsolute
+set helpMessage($m.engine,3) OptionsArrowsEngineChange
+set helpMessage($m.engine,5) OptionsArrowsEngineLabelsOff
+set helpMessage($m.engine,6) OptionsArrowsEngineLabelsRank
+set helpMessage($m.engine,7) OptionsArrowsEngineLabelsDiff
+set helpMessage($m.engine,8) OptionsArrowsEngineLabelsAbs
+set helpMessage($m.engine,10) OptionsArrowsEngineThick
 
 menu $m.width -tearoff 1
 $m add cascade -label OptionsArrowsWidth -menu $m.width
 set helpMessage($m,4) OptionsArrowsWidth
-foreach w {1 2 3 4 5 6 7 8 9 10 12 14} {
+foreach w {1 2 3 4 5 6 7 8 9 10 12 14 16 18 20} {
   $m.width add radiobutton -label $w -variable ::board::arrowWidth -value $w -command {
     updateBoard
     if {[::move::checkVarArrows]} { ::move::showVarArrows }
@@ -1382,11 +1430,6 @@ foreach l {0.9 0.8 0.7 0.6 0.5 0.4 0.3 0.2 0.1 0.0} {
     if {[::move::checkVarArrows]} { ::move::showVarArrows }
   }
 }
-
-$m add checkbutton -label OptionsArrowsColourise -variable ::engineArrowGradient -command {
-  catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
-}
-set helpMessage($m,6) OptionsArrowsColourise
 
 set m .menu.options.colour
 menu $m -tearoff -1
@@ -1877,11 +1920,15 @@ proc setLanguageMenus {{lang ""}} {
   foreach tag {BackColour RowColour HighlightColour SwitcherColour ProgressColour} {
     configMenuText .menu.options.colour [tr Options$tag $oldLang] Options$tag $lang
   }
-  foreach tag {MainLineColour VarLineColour EngineLineColour} {
+  foreach tag {MainLineColour VarLineColour} {
     configMenuText .menu.options.arrows [tr Options$tag $oldLang] Options$tag $lang
   }
-  foreach tag {Width Length Colourise} {
+  foreach tag {Width Length} {
     configMenuText .menu.options.arrows [tr OptionsArrows$tag $oldLang] OptionsArrows$tag $lang
+  }
+  configMenuText .menu.options.arrows [tr OptionsArrowsEngineColour $oldLang] OptionsArrowsEngineColour $lang
+  foreach tag {EngineFixed EngineRelative EngineAbsolute EngineChange EngineLabelsOff EngineLabelsRank EngineLabelsDiff EngineLabelsAbs EngineThick} {
+    configMenuText .menu.options.arrows.engine [tr OptionsArrows$tag $oldLang] OptionsArrows$tag $lang
   }
   configMenuText .menu.options.colour [tr OptionsFicsColour $oldLang] OptionsFicsColour $lang
   configMenuText .menu.options.colour.back [tr OptionsMovesHighlightLastMoveColor $oldLang] OptionsMovesHighlightLastMoveColor $lang

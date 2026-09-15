@@ -2040,6 +2040,7 @@ proc destroyAnalysisWin {n} {
 
   if {$analysis(boardEngine) == $n} {
     set analysis(boardEngine) -1
+    set analysis(lastBoardEngine) -1
   }
 
   # Cancel scheduled commands
@@ -2608,7 +2609,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
 
 
 proc findEngine {} {
-  if {$::analysis(boardEngine) > -1} {
+  if {$::analysis(boardEngine) > -1 && [winfo exists .analysisWin$::analysis(boardEngine)]} {
     return $::analysis(boardEngine)
   }
   for {set i 0} {$i < [llength $::engines(list)]} {incr i} {
@@ -2634,29 +2635,28 @@ proc toggleMainboardArrows {} {
     set analysis(boardEngine) -1
     return
   }
-  # Otherwise toggle back on the engine that was shown last, if it's
-  # still open. With a single engine open and nothing shown yet, show
-  # its arrows right away; with several open, do nothing (the user
-  # chooses once, as with the right click).
-  if {[info exists analysis(lastBoardEngine)]
-      && [winfo exists .analysisWin$analysis(lastBoardEngine)]} {
+  # Otherwise toggle back on the engine that was shown last if it's running
+  if {$analysis(lastBoardEngine) > -1 && $analysis(analyzeMode$analysis(lastBoardEngine))} {
     setBoardEngine $analysis(lastBoardEngine)
-    return
+  } else {
+    # or try any running engine/mainEngine
+    setBoardEngine $::mainEngine
   }
-  set open {}
-  for {set i 0} {$i < [llength $::engines(list)]} {incr i} {
-    if {[winfo exists .analysisWin$i]} { lappend open $i }
-  }
-  if {[llength $open] == 1} { setBoardEngine [lindex $open 0] }
 }
 
 proc setBoardEngine {n} {
   global analysis
+
+  if {$n == -1 || ![winfo exists .analysisWin$n]} {
+    return
+  }
   if {$analysis(boardEngine) != $n} {
     .main.board.bd delete var
 
-    # reset previous button colours, if any
-    catch {.analysisWin$analysis(boardEngine).b.showboard configure -bg #d9d9d9 -relief flat -activebackground #ececec}
+    if {$analysis(boardEngine) > -1} {
+      # reset previous button colours, if any
+      .analysisWin$analysis(boardEngine).b.showboard configure -bg #d9d9d9 -relief flat -activebackground #ececec
+    }
 
     set analysis(boardEngine) $n
     # try to mimic checkbutton colours 
@@ -2665,7 +2665,9 @@ proc setBoardEngine {n} {
     if {$analysis(prevmoves$n) == {}} {
       updateAnalysisBoard $n $analysis(moves$n)
     } else {
-      updateAnalysisBoard $n redraw
+     if {$analysis(analyzeMode$n)} {
+       updateAnalysisBoard $n redraw
+     }
     }
   } else {
     .main.board.bd delete engine
@@ -3454,15 +3456,105 @@ proc toggleLockEngine {n} {
   updateAnalysis $n
 }
 
-### Retrieve Scores of all PVs' in MultiPV
+### Retrieve full MultiPV rows (depth score moves scoremate, raw UCI moves)
 
-proc multipv_scores {n} {
+proc multipv_rows {n} {
   global analysis
-  set pvEvals {}
-  foreach pv $analysis(multiPVraw$n) {
-    lappend pvEvals [lindex $pv 1]
+  if {[info exists analysis(multiPVraw$n)]} {
+    return $analysis(multiPVraw$n)
   }
-  return $pvEvals
+  return {}
+}
+
+# Maps the score drop to the best line (pawn units, >= 0) onto Steven's
+# eval2tlcolor scale, so relative arrows and colour bar share one renderer:
+# best line = saturated green, inaccuracy = yellow, mistake/blunder = red.
+
+proc drop2tl {drop} {
+  if {$drop <= 0.1} { return 5.0 }
+  if {$drop <= 0.2} { return 1.0 }
+  if {$drop < 0.3} { return [expr {1.0 - ($drop - 0.2) * 8.0}] }
+  if {$drop <= 0.9} { return [expr {0.2 - ($drop - 0.3) / 0.6 * 0.39}] }
+  if {$drop < 1.0} { return [expr {-0.19 - ($drop - 0.9) * 23.1}] }
+  if {$drop <= 3.0} { return [expr {-2.5 - ($drop - 1.0) / 2.0 * 2.5}] }
+  return -5.0
+}
+
+# Engine arrow colour from the score drop to the best line. Stored mates
+# are white-perspective, so "good" means mate for the side to move: that
+# is always saturated green (the best possible move), while being mated is
+# single magenta (worse than red). The non-double guard is only a safety
+# net for malformed/transient input; stored UCI rows carry a score.
+
+proc drop2color {drop mate side} {
+  if {$mate != 0 && $mate != {}} {
+    if {($side == "black" && $mate < 0) || ($side != "black" && $mate > 0)} {
+      return [eval2tlcolor 5.0]
+    }
+    return #d000a0
+  }
+  if {![string is double -strict $drop]} { return $::varcolor }
+  return [eval2tlcolor [drop2tl $drop]]
+}
+
+# Per-move labels for the score-diff and absolute arrow numbers: the eval
+# difference to the best line in tenths of a pawn (best line gets "+"),
+# or the absolute engine score in tenths (eg "0.3", "-1.2"); the engine's
+# mate score is passed through, eg "M7" (capped at M99). Empty when there
+# are no usable UCI MultiPV scores (rank numbers are shown instead).
+
+proc engineArrowTenth {score n} {
+  # one decimal, no trailing ".0"; keeps the arrow label short.
+  # Stored rows are white-perspective; show side-to-move perspective,
+  # like the analysis window scores.
+  if {$::analysis(side$n) == "black"} {
+    set score [expr {0.0 - $score}]
+  }
+  set t [expr {round(10 * $score) / 10.0}]
+  if {$t == int($t)} { return [expr {int($t)}] }
+  return [format %.1f $t]
+}
+
+proc engineArrowDiffLabels {n rows} {
+  global analysis
+  array unset ::board::varLabel
+  array set ::board::varLabel {}
+  array unset ::board::varAbsLabel
+  array set ::board::varAbsLabel {}
+  if {!$analysis(uci$n)} { return }
+  # Absolute labels are useful even with a single line; the diff needs
+  # at least two rows to compare against the best line.
+  if {[llength $rows] < 1} { return }
+  if {$analysis(multiPVCount$n) == 1 && $::engineArrowLabels != 3} { return }
+  set baseScore {}
+  foreach pv $rows {
+    set score [lindex $pv 1]
+    set mate  [lindex $pv 3]
+    set m     [lindex [lindex $pv 2] 0]
+    if {$m == ""} { continue }
+    # First write wins: MultiPV first moves are unique, so this only guards
+    # transient/stale rows while the engine is updating.
+    if {[info exists ::board::varLabel($m)]} { continue }
+    if {$mate != 0 && $mate != ""} {
+      # stored mates are white-perspective; show side-to-move perspective
+      if {$analysis(side$n) == "black"} { set mate [expr {0 - $mate}] }
+      set ::board::varLabel($m) [expr {$mate < 0 ? "-M[expr {min(abs($mate),99)}]" : "M[expr {min(abs($mate),99)}]"}]
+      set ::board::varAbsLabel($m) $::board::varLabel($m)
+      continue
+    }
+    if {$score == ""} { continue }
+    set ::board::varAbsLabel($m) [engineArrowTenth $score $n]
+    # With a single line there is no best-line reference and no diff;
+    # the absolute label above is all there is to show.
+    if {[llength $rows] < 2} { continue }
+    if {$baseScore == ""} {
+      # first line with a proper score is the reference
+      set baseScore $score
+      set ::board::varLabel($m) "+"
+      continue
+    }
+    set ::board::varLabel($m) [expr {abs(round(10 * ($score - $baseScore)))}]
+  }
 }
 
 ### Update the text in an analysis window.
@@ -3720,9 +3812,6 @@ proc initAnalysisBoard {n} {
     pack $bd $w.frame.close -side left -anchor n
     bind $w <Control-S> "::board::toggleeval $bd"
     bind $w <Control-C> "::board::togglempvtls $bd"
-    bind $w <Control-N> {
-      set analysis(numberPVArrows) [expr !$analysis(numberPVArrows)]
-    }
 
     bind $bd.bd <Button-2> "
       $bd.bd delete var bvm engine
@@ -3878,7 +3967,7 @@ proc updateAnalysisBoardNow {n {moves {}}} {
 
   ::board::update_evalbar $bd $analysis(score$n)
   if {$::board::_showMPVTls($bd) && $moves != {}} {
-    ::board::update_mpvtls $bd [multipv_scores $n]
+    ::board::update_mpvtls $bd [multipv_rows $n] $analysis(side$n)
   }
 
   set ::board::_coords($bd) $::boardCoords
@@ -3930,13 +4019,38 @@ proc updateAnalysisBoardNow {n {moves {}}} {
     } else {
       $bd.bd delete var
     }
+    # Fresh stacking order for the engine arrows drawn below.
+    catch {unset ::board::_engineArrowLast($bd.bd)}
 
     if {$analysis(boardType$n) == "Arrows"} {
+      # --- Group 1: engine arrow colour mode (fixed / TL relative / TL absolute) ---
+      # --- Group 2: engine arrow numbers (off / rank / score diff / absolute) ---
+      # Scores/mates come per drawn PV row; ranks follow the PV order.
+      # Drawn best-first, so varnum 0 wipes stale engine marks before the
+      # rest accumulate (DrawVar re-stacks better arrows towards the top).
+      set rows [multipv_rows $n]
+      set useScores [expr {$::engineArrowMode > 0 && $analysis(uci$n)}]
+      engineArrowDiffLabels $n $rows
       set m [lindex $move 0]
       if {$m != ""} {
         set sq_start [::board::sq [string range $m 0 1]]
         set sq_end   [::board::sq [string range $m 2 3]]
-        ::board::mark::add $bd varComment0-$m $sq_start $sq_end $::engineLineColor
+        set col $::engineLineColor
+        if {$useScores && [llength $rows] >= 1} {
+          set row0 [lindex $rows 0]
+          set score0 [lindex $row0 1]
+          set mate0 [lindex $row0 3]
+          if {$::engineArrowMode == 2} {
+            if {$mate0 != 0 && $mate0 != ""} {
+              set col [drop2color 0 $mate0 $analysis(side$n)]
+            } elseif {$score0 != ""} {
+              set col [eval2tlcolor $score0]
+            }
+          } else {
+            set col [drop2color 0 $mate0 $analysis(side$n)]
+          }
+        }
+        ::board::mark::add $bd varComment0-$m $sq_start $sq_end $col 1 $::engineArrowThick
       }
       set varnum 1
       set movecount [llength $move]
@@ -3948,14 +4062,34 @@ proc updateAnalysisBoardNow {n {moves {}}} {
           if {$movecount == 2} {
             set varnum -1
           }
-          # Fade from the engine line colour (rank 1) via its
-          # full-strength colour to varcolor for the last rank,
-          # scaled by the PV count:
+          # Score index follows the PV order: 0 was the first (best) line
+          set scoreidx [expr {$varnum == -1 ? 1 : $varnum}]
           set col $::varcolor
-          if {$::engineArrowGradient} {
-            set col [tint $::engineLineColor [expr {($varnum == -1 ? 1 : $varnum) / double($movecount - 1)}]]
+          if {$useScores && [llength $rows] == $movecount} {
+            set row [lindex $rows $scoreidx]
+            set score [lindex $row 1]
+            set mate [lindex $row 3]
+            if {$::engineArrowMode == 2} {
+              if {$mate != 0 && $mate != ""} {
+                set col [drop2color 0 $mate $analysis(side$n)]
+              } elseif {$score != ""} {
+                set col [eval2tlcolor $score]
+              }
+            } else {
+              set row0 [lindex $rows 0]
+              set baseScore [lindex $row0 1]
+              if {$mate != 0 && $mate != ""} {
+                set col [drop2color 0 $mate $analysis(side$n)]
+              } elseif {$score != "" && $baseScore != ""} {
+                set col [drop2color [expr {abs($baseScore - $score)}] 0 $analysis(side$n)]
+              }
+              # Otherwise retain the default grey for transient/stale rows.
+            }
+          } elseif {$::engineArrowMode == 0 && $scoreidx == 0} {
+            # single best line keeps the engine colour in fixed mode
+            set col $::engineLineColor
           }
-          ::board::mark::add $bd varComment$varnum-$m $sq_start $sq_end $col
+          ::board::mark::add $bd varComment$varnum-$m $sq_start $sq_end $col 1 $::engineArrowThick
         }
         incr varnum
       }
