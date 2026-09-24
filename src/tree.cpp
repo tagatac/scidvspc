@@ -29,8 +29,8 @@
 //    The four-byte identifier at the start of a tree-cache file.
 //    This value is updated whenever a non-backward-compatible
 //    change is made to the tree file format.
-//    Last change: version 2.4.
-const uint TREEFILE_MAGIC = ('s' << 24) | ('t' << 16) | ('c' << 8) | 24;
+//    Last change: ScidvsPC 4.28
+const uint TREEFILE_MAGIC = ('s' << 24) | ('t' << 16) | ('c' << 8) | 25;
 
 
 void
@@ -317,11 +317,15 @@ TreeCache::WriteFile (const char * fname)
             writeFourBytes (fp, tnode->score);
             writeTwoBytes (fp, tnode->ecoCode);
             writeFourBytes (fp, tnode->eloCount);
-            writeFourBytes (fp, tnode->eloSum);
+            writeFourBytes (fp, (uint)(tnode->eloSum >> 32));
+            writeFourBytes (fp, (uint)(tnode->eloSum & 0xffffffffULL));
             writeFourBytes (fp, tnode->perfCount);
-            writeFourBytes (fp, tnode->perfSum);
-            writeFourBytes (fp, tnode->yearCount);
-            writeFourBytes (fp, tnode->yearSum);
+            writeFourBytes (fp, (uint)(tnode->perfSum >> 32));
+            writeFourBytes (fp, (uint)(tnode->perfSum & 0xffffffffULL));
+            writeFourBytes (fp, (uint)(tnode->yearCount >> 32));
+            writeFourBytes (fp, (uint)(tnode->yearCount & 0xffffffffULL));
+            writeFourBytes (fp, (uint)(tnode->yearSum >> 32));
+            writeFourBytes (fp, (uint)(tnode->yearSum & 0xffffffffULL));
         }
         // Write the compressed filter:
         ctree->cfilter->WriteToFile (fp);
@@ -386,10 +390,14 @@ TreeCache::ReadFile (const char * fname)
             tnode->ecoCode = readTwoBytes (fp);
             tnode->eloCount = readFourBytes (fp);
             tnode->eloSum = readFourBytes (fp);
+            tnode->eloSum = (tnode->eloSum << 32) | readFourBytes (fp);
             tnode->perfCount = readFourBytes (fp);
             tnode->perfSum = readFourBytes (fp);
+            tnode->perfSum = (tnode->perfSum << 32) | readFourBytes (fp);
             tnode->yearCount = readFourBytes (fp);
+            tnode->yearCount = (tnode->yearCount << 32) | readFourBytes (fp);
             tnode->yearSum = readFourBytes (fp);
+            tnode->yearSum = (tnode->yearSum << 32) | readFourBytes (fp);
         }
 
         // Read the compressed filter:

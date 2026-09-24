@@ -15405,7 +15405,7 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     treeT* tree = &(base->tree);
     treeNodeT* node = tree->node;
     for (uint i=0; i < tree->moveCount; i++, node++) {
-        node->score = (node->freq[RESULT_White] * 2 + node->freq[RESULT_Draw] + node->freq[RESULT_None])
+        node->score = (unsigned long long)(node->freq[RESULT_White] * 2 + node->freq[RESULT_Draw] + node->freq[RESULT_None])
 		* 500 / node->total;
 
         node->ecoCode = 0;
@@ -15577,6 +15577,7 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     if (tree->moveCount > 0) {
         int totalScore = 0;
+        unsigned long long scoreSum = 0;
         unsigned long long eloSum = 0;
         unsigned long long eloCount = 0;
         unsigned long long perfSum = 0;
@@ -15586,8 +15587,8 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         uint nDraws = 0;
         node = tree->node;
         for (uint count=0; count < tree->moveCount; count++, node++) {
-            totalScore += node->freq[RESULT_White] * 2;
-            totalScore += node->freq[RESULT_Draw] + node->freq[RESULT_None];
+            scoreSum += node->freq[RESULT_White] * 2;
+            scoreSum += node->freq[RESULT_Draw] + node->freq[RESULT_None];
             eloCount += node->eloCount;
             eloSum += node->eloSum;
             perfCount += node->perfCount;
@@ -15596,7 +15597,7 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             yearSum += node->yearSum;
             nDraws += node->freq[RESULT_Draw];
         }
-        totalScore = totalScore * 500 / tree->totalCount;
+        totalScore = scoreSum * 500 / tree->totalCount;
         unsigned long long avgElo = 0;
         if (eloCount >= 10) {
             avgElo = eloSum / eloCount;

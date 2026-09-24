@@ -45,9 +45,9 @@ struct treeNodeT {
                             // 55.1% would be a score of 551.
     ecoT        ecoCode;
     uint        eloCount;   // Count of games with an Elo.
-    uint        eloSum;     // Sum of Elos.
+    unsigned long long        eloSum; // Sum of Elos (64-bit: overflows 32-bit on big DBs).
     uint        perfCount;  // Count of games with an opponent Elo.
-    uint        perfSum;    // Sum of opponent Elos.
+    unsigned long long        perfSum; // Sum of opponent Elos (64-bit: see above).
     unsigned long long        yearCount;  // Count of games with year != 0.
     unsigned long long        yearSum;    // Sum of years.
 };
