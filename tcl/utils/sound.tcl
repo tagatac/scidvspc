@@ -6,6 +6,9 @@
 namespace eval ::utils::sound {}
 
 set ::utils::sound::hasSnackPackage 0
+set ::utils::sound::hasCmdPlayer 0
+set ::utils::sound::cmdPipe ""
+set ::utils::sound::cmdPid ""
 set ::utils::sound::isPlayingSound 0
 set ::utils::sound::soundQueue {}
 set ::utils::sound::soundFiles "King Queen Rook Bishop Knight CastleQ CastleK Back Mate Promote Check a b c d e f g h x 1 2 3 4 5 6 7 8 move start end"
@@ -23,34 +26,51 @@ array set ::utils::sound::soundMap {
 
 proc ::utils::sound::Setup {} {
   variable hasSnackPackage
+  variable hasCmdPlayer
   variable soundFiles
   variable soundFolder
+  variable soundCommand
 
   ::splash::add "Initializing Sound..."
 
-  if {[catch {package require snack 2.0}]} {
-    set hasSnackPackage 0
-    ::splash::add "   Snack sound package not found."
-    ### undefine procs
-    proc ::utils::sound::AnnounceMove {move} {}
-    proc ::utils::sound::PlayMove {sound} {}
-    return
+  # Expand "~" in a user-set folder so file joins below work
+  if {$soundFolder ne ""} {
+    set soundFolder [file normalize $soundFolder]
   }
 
-  ::splash::add "   Snack sound package found: Move speech enabled."
-  set devices [snack::audio outputDevices]
-  ::splash::add "   Available output devices are: $devices"
+  if {![catch {package require snack 2.0}]} {
+    set hasSnackPackage 1
+    ::splash::add "   Snack sound package found."
+    set devices [snack::audio outputDevices]
+    ::splash::add "   Available output devices are: $devices"
 
-  if {$::utils::sound::device != {}} {
-    ::utils::sound::SetDevice
+    if {$::utils::sound::device != {}} {
+      ::utils::sound::SetDevice
+    } else {
+      set ::utils::sound::device [lindex $devices 0]
+    }
+
+    # Set up sounds. Each sound will be empty until a WAV file for it is found.
+    foreach soundFile $soundFiles {
+      ::snack::sound sound_$soundFile
+    }
   } else {
-    set ::utils::sound::device [lindex $devices 0]
+    ::splash::add "   Snack sound package not found."
+    set hasSnackPackage 0
   }
-  set hasSnackPackage 1
 
-  # Set up sounds. Each sound will be empty until a WAV file for it is found.
-  foreach soundFile $soundFiles {
-    ::snack::sound sound_$soundFile
+  # Alternative backend: play the sound files via an external command
+  # (Default is PulseAudio "paplay")
+  set hasCmdPlayer [expr {[auto_execok $soundCommand]  != ""}]
+
+  if {!$hasSnackPackage} {
+    ::splash::add "   Snack sound package not found."
+    # proc ::utils::sound::AnnounceMove {move} {}
+    # proc ::utils::sound::PlayMove {sound} {}
+    # return
+  }
+  if {$hasCmdPlayer} {
+    ::splash::add "   Sound player $soundCommand found."
   }
 
   set numSounds [::utils::sound::ReadFolder]
@@ -100,34 +120,125 @@ proc ::utils::sound::AnnounceMove {move} {
 # Plays a sound or list of sounds representing a move
 
 proc ::utils::sound::PlayMove {soundlist} {
-  # What is the best location for this update
   update idletasks
-  ::snack::audio stop
+
+  if {$::utils::sound::useCmd == 0} {return}
+  if {$::utils::sound::useCmd == 1} {::snack::audio stop}
+  if {$::utils::sound::useCmd == 2} {::utils::sound::StopCmd}
   set ::utils::sound::isPlayingSound 0
   set ::utils::sound::soundQueue $soundlist
   after cancel ::utils::sound::PlaySoundQueue
   after idle ::utils::sound::PlaySoundQueue
 }
 
+# External-command backend: sounds of one move are chained through
+# fileevent ( each player process starts the next on completion ), so a
+# whole phrase like "Queen d4 check" plays in order. A new move stops
+# the running chain ( like snack::audio stop ), so rapid play never
+# blocks and never overlaps across moves.
+
+proc ::utils::sound::PlayCmd {player files} {
+  variable cmdPipe
+  variable cmdFiles
+  variable cmdPlayer
+  ::utils::sound::StopCmd
+  set cmdFiles $files
+  set cmdPlayer $player
+  ::utils::sound::StartCmdSound
+}
+
+proc ::utils::sound::StartCmdSound {} {
+  variable cmdPipe
+  variable cmdPid
+  variable cmdFiles
+  variable cmdPlayer
+  if {[llength $cmdFiles] == 0} {
+    set ::utils::sound::isPlayingSound 0
+    return
+  }
+  set f [lindex $cmdFiles 0]
+  set cmdFiles [lrange $cmdFiles 1 end]
+  if {[catch {open "|$cmdPlayer [list $f]" r} pipe]} {
+    # Player failed for this file: continue with the next one.
+    ::utils::sound::StartCmdSound
+    return
+  }
+  set cmdPipe $pipe
+  # Remember the player PID so a new move can really truncate
+  # the running file (close alone would let paplay play on).
+  catch {set cmdPid [pid $cmdPipe]}
+  fconfigure $cmdPipe -blocking 0
+  fileevent $cmdPipe readable [list ::utils::sound::CmdDone]
+}
+
+proc ::utils::sound::CmdDone {} {
+  variable cmdPipe
+  variable cmdPid
+  if {![info exists cmdPipe] || $cmdPipe == ""} { return }
+  set pipe $cmdPipe
+  set cmdPipe ""
+  set cmdPid ""
+  catch {close $pipe}
+  ::utils::sound::StartCmdSound
+}
+
+proc ::utils::sound::StopCmd {} {
+  variable cmdPipe
+  variable cmdPid
+  variable cmdFiles
+  if {[info exists cmdPipe] && $cmdPipe != ""} {
+    # Truncate like snack::audio stop: kill the running player first,
+    # close alone would let the current file play to the end.
+    catch {fileevent $cmdPipe readable {}}
+    if {[info exists cmdPid] && $cmdPid != ""} {
+      catch {exec -- kill $cmdPid}
+    }
+    catch {close $cmdPipe}
+    set cmdPipe ""
+    set cmdPid ""
+  }
+  set cmdFiles {}
+}
+
 proc ::utils::sound::PlaySoundQueue {} {
+  if {$::utils::sound::useCmd == 2} {
+    # External-command backend
+    # Collect this move's wav files and hand the whole list to the chaining player (see PlayCmd above)
+    set player [auto_execok $::utils::sound::soundCommand]
+    if {$player == ""} { return }
+    set files {}
+    while {[llength $::utils::sound::soundQueue] > 0} {
+      set sound [lindex $::utils::sound::soundQueue 0]
+      set ::utils::sound::soundQueue [lrange $::utils::sound::soundQueue 1 end]
+      set fname [string range $sound 6 end]
+      set f [file join $::utils::sound::soundFolder $fname.wav]
+      if {![file readable $f]} { continue }
+      lappend files $f
+    }
+    if {[llength $files] > 0} {
+      incr ::utils::sound::isPlayingSound
+      ::utils::sound::PlayCmd $player $files
+    }
+  } else {
+    # Snack
+    set ::utils::sound::isPlayingSound 0
 
-  set ::utils::sound::isPlayingSound 0
-
-  while {[llength $::utils::sound::soundQueue] > 0} {
-    set sound [lindex $::utils::sound::soundQueue 0]
-    set ::utils::sound::soundQueue [lrange $::utils::sound::soundQueue 1 end]
-    incr ::utils::sound::isPlayingSound
-    $sound play -blocking 0 -command "incr ::utils::sound::isPlayingSound -1"
-    if {[llength $::utils::sound::soundQueue] > 0} {
-      vwait ::utils::sound::isPlayingSound
+    while {[llength $::utils::sound::soundQueue] > 0} {
+      set sound [lindex $::utils::sound::soundQueue 0]
+      set ::utils::sound::soundQueue [lrange $::utils::sound::soundQueue 1 end]
+      incr ::utils::sound::isPlayingSound
+      $sound play -blocking 0 -command "incr ::utils::sound::isPlayingSound -1"
+      if {[llength $::utils::sound::soundQueue] > 0} {
+	vwait ::utils::sound::isPlayingSound
+      }
     }
   }
 }
 
 
-#   TODO: language translations for this dialog.
-
 proc ::utils::sound::OptionsDialog {} {
+  variable hasCmdPlayer
+
   set w .soundOptions
 
   if {[winfo exists $w]} {
@@ -154,6 +265,50 @@ proc ::utils::sound::OptionsDialog {} {
 
   set f $w.f
   set r 0
+
+  ### Sound system: snack or an external command ( PulseAudio paplay )
+
+  label $f.sysLabel -text "Sound System" -font font_Bold
+  grid $f.sysLabel -row $r -column 0 -columnspan 3 -pady 4
+  incr r
+
+  radiobutton $f.noSound  -text None    -variable ::utils::sound::useCmd -value 0 -command ::utils::sound::checkUseCmd
+  radiobutton $f.useSnack -text Snack   -variable ::utils::sound::useCmd -value 1 -command ::utils::sound::checkUseCmd
+  radiobutton $f.useCmd   -text Command -variable ::utils::sound::useCmd -value 2 -command ::utils::sound::checkUseCmd
+  grid $f.useSnack -row $r -column 0 -sticky w -pady 4
+  grid $f.useCmd   -row $r -column 1 -sticky w -pady 4
+  grid $f.noSound  -row $r -column 2 -sticky w -pady 4
+  incr r
+
+  ### snack device combobox
+
+  label $f.deviceLabel -text "Snack Sound Device" 
+  grid  $f.deviceLabel -row $r -column 0  -sticky w -pady 2
+  set tmp $::utils::sound::device
+  if {$::utils::sound::hasSnackPackage} {
+    set devices [::snack::audio outputDevices]
+  } else {
+    $f.useSnack configure -state disabled
+    set tmp 0
+    set devices {}
+  }
+  ttk::combobox $f.device -width 20 -textvariable ::utils::sound::device
+  bind $f.device <<ComboboxSelected>> ::utils::sound::SetDevice
+
+  $f.device configure -values $devices
+  set ::utils::sound::device $tmp
+
+  grid $f.device -row $r -column 1 -pady 2
+  incr r
+
+  ## soundCommand
+  label $f.cmdLabel -text "Sound Command"
+  entry $f.cmdEntry -width 12 -textvariable ::utils::sound::soundCommand -state [expr {$::utils::sound::useCmd ? "normal" : "disabled"}]
+  grid $f.cmdLabel -row $r -column 0 -sticky w -pady 2
+  grid $f.cmdEntry -row $r -column 1 -sticky w -pady 2
+  incr r
+
+  ::utils::sound::checkUseCmd
 
   label $f.ftitle -text $::tr(SoundsFolder) -font font_Bold
   grid $f.ftitle -row $r -column 0 -columnspan 3 -pady 4
@@ -202,30 +357,9 @@ proc ::utils::sound::OptionsDialog {} {
   incr r
 
   grid [frame $f.gap$r -height 5] -row $r -column -0; incr r
-
-  ### device combobox
-
-  label $f.deviceLabel -text "Sound Device" -font font_Bold
-  grid  $f.deviceLabel -row $r -column 0 -columnspan 3 -pady 4
-  incr r
-
-  set devices [::snack::audio outputDevices]
-
-  set tmp $::utils::sound::device
-  ttk::combobox $f.device -width 20 -textvariable ::utils::sound::device
-  bind $f.device <<ComboboxSelected>> ::utils::sound::SetDevice
-
-  # set i [lsearch $devices $::utils::sound::device]
-  $f.device configure -values $devices
-  set ::utils::sound::device $tmp
-  # $f.device current $i
-
-  grid $f.device -row $r -column 0 -columnspan 3
-  incr r
-
   dialogbutton $w.b.help -text $::tr(Help) -command {helpWindow Sound}
   dialogbutton $w.b.ok -text OK -command "
-    ::utils::sound::ReadFolder
+    ::utils::sound::Setup
     destroy $w"
   packbuttons right $w.b.ok $w.b.help
   bind $w <Escape> "destroy $w"
@@ -234,7 +368,25 @@ proc ::utils::sound::OptionsDialog {} {
   wm state $w normal
 }
 
+proc ::utils::sound::checkUseCmd {} {
+  global ::utils::sound::useCmd
 
+  set f .soundOptions.f
+
+  $f.cmdEntry    configure -state disabled
+  $f.cmdLabel    configure -state disabled
+  $f.deviceLabel configure -state disabled
+  $f.device      configure -state disabled
+  if {$::utils::sound::useCmd == 1} {
+    $f.deviceLabel configure -state normal
+    $f.device      configure -state normal
+    return
+  }
+  if {$::utils::sound::useCmd == 2} {
+    $f.cmdEntry    configure -state normal
+    $f.cmdLabel    configure -state normal
+  }
+}
 
 proc ::utils::sound::ChooseFolder {} {
   if {[file isdirectory $::utils::sound::soundFolder]} {
@@ -269,11 +421,12 @@ proc ::utils::sound::ReadFolder {} {
   foreach soundFile $soundFiles {
     set f [file join $soundFolder $soundFile.wav]
     if {[file readable $f]} {
-      sound_$soundFile configure -file $f
+      if {$::utils::sound::hasSnackPackage} {
+        sound_$soundFile configure -file $f
 
-      ### alternatively, store file in memory
-      # sound_$soundFile read $f
-
+        ### alternatively, store file in memory
+        # sound_$soundFile read $f
+      }
       incr count
     }
   }

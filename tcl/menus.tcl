@@ -992,6 +992,7 @@ $m add command -label OptionsSave -command {
     crosstab(deleted) crosstab(colors) crosstab(cnumbers) crosstab(groups) crosstab(sort) crosstab(tallies) crosstab(tiewin) crosstab(tiehead)
     ::utils::sound::soundFolder ::utils::sound::announceNew ::utils::sound::announceTock
     ::utils::sound::announceForward ::utils::sound::announceBack ::utils::sound::device
+    ::utils::sound::useCmd ::utils::sound::soundCommand
     ::tacgame::threshold ::tacgame::levelMin  ::tacgame::levelMax  ::tacgame::levelFixed ::tacgame::randomLevel
     ::tacgame::showblunder ::tacgame::showblundervalue
     ::tacgame::showblunderfound ::tacgame::showmovevalue ::tacgame::showevaluation

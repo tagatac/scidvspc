@@ -6445,18 +6445,16 @@ set helpText(Sound) {<h1>Sound</h1>
    also play a tock sound to announce your opponents move.
    </p>
    <p>
-   The feature relies on a slow and poorly maintained Tcl package, <b>Snack</b>,
-   which should be installed by default on Windows and OSX. On Linux this package
-   is known as "libsnack" and "tcl-snack". For more info, see below.
+   The feature uses either the old Tcl package, <b>Snack</b>, or the PulseAudio external player.
+   Snack should be installed by default on Windows and OSX. On Linux this package
+   is known as "libsnack" or "tcl-snack". For more info, see below.
    </p>
    <p>
    To see if sound is enabled, examine the <green><run raiseSplashWindow>Startup Window</run></green>.
    The sound options are configured from the 
-   <run ::utils::sound::OptionsDialog><green>Options--<gt>Sounds</green></run> menu.
+   <run ::utils::sound::OptionsDialog><green>Options--<gt>Sounds</green></run>.
    </p>
    <p>
-   Sound may be disabled by selecting an invalid folder.
-   </p>
    <h2>Linux Snack Issues</h2><p>
    If Scid only plays every second move, you have a buggy
    libsnack, and should compile snack-2.2.10 from
@@ -6467,7 +6465,7 @@ set helpText(Sound) {<h1>Sound</h1>
    <li>* If you get a compilation error in file generic/jkFormatMP3.c,
    move the "#include <lt>math.h<gt>" line in this file to above "#define roundf(x)".</li>
    </ul>
-   <p><footer>Updated: Scid vs. PC 4.12 December 2013</footer></p>
+   <p><footer>Updated: Scid vs. PC 4.28 Sept 2026</footer></p>
 }
 
 set helpTitle(Changelog) "Scid vs PC Changelog"
