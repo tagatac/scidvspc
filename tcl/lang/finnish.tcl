@@ -1429,7 +1429,6 @@ translate L NoveltyHelp {Löydä ensimmäinen ainutlaatuinen siirto valitussa tieto
 
 # Sounds configuration:
 translate L SoundsFolder {Äänikansio}
-translate L SoundsFolderHelp {Kansion pitää sisältää tiedostot Kuningas.wav, 1.wav, jne}
 translate L SoundsAnnounceOptions {Siirron ilmoitukset}
 translate L SoundsAnnounceNew {Ilmoita uudet siirrot}
 translate L SoundsAnnounceForward {Ilmoita siirryttäessä eteenpäin}

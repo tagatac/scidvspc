@@ -2194,6 +2194,9 @@ namespace eval fics {
 	    sc_pos setComment "\[%emt $moveTime\]"
           }
 
+	  if {$::fics::sound} {
+	    ::utils::sound::PlayMove sound_move
+	  }
 	  if {$::fics::premove != {}} {
 	    ### Send premove
 	    if {$fen == [sc_pos fen]} {
@@ -2232,9 +2235,6 @@ namespace eval fics {
 	    }
 	    set ::fics::premove {}
 	    return
-	  }
-	  if {$::fics::sound} {
-	    ::utils::sound::PlayMove sound_move
 	  }
           if { $::novag::connected } {
             set m $verbose_move

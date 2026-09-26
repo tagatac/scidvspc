@@ -1601,7 +1601,6 @@ Scid cerchera' la prima mossa della partita corrente che raggiungera' una posizi
 
 # Sounds configuration:
 translate I SoundsFolder {Sound Files Folder} ;# ***
-translate I SoundsFolderHelp {The folder should contain the files King.wav, a.wav, 1.wav, etc} ;# ***
 translate I SoundsAnnounceOptions {Move Announcement Options} ;# ***
 translate I SoundsAnnounceNew {Announce new moves as they are made} ;# ***
 translate I SoundsAnnounceForward {Announce moves when moving forward one move} ;# ***

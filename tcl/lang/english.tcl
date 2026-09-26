@@ -1403,7 +1403,6 @@ translate E NoveltyHelp {Find the first unique move in the selected base}
 
 # Sounds configuration:
 translate E SoundsFolder {Sounds Folder}
-translate E SoundsFolderHelp {The folder should contain the files King.wav, 1.wav, etc}
 translate E SoundsAnnounceOptions {Move Announcement}
 translate E SoundsAnnounceNew {Announce new moves}
 translate E SoundsAnnounceForward {Announce when moving forward}

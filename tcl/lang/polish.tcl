@@ -1511,7 +1511,6 @@ Scid znajdzie pierwsze posunięcie w partii, po którym powstanie pozycja niewys
 
 # Sounds configuration:
 translate P SoundsFolder {Katalog plików dźwiękowych}
-translate P SoundsFolderHelp {Katalog powinien zawierać pliki King.wav, a.wav, 1.wav itd.}
 translate P SoundsAnnounceOptions {Ustawienia ogłaszania posunięć}
 translate P SoundsAnnounceNew {Ogłaszaj nowe posunięcia}
 translate P SoundsAnnounceForward {Ogłaszaj posunięcia przy przeglądaniu}

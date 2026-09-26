@@ -1375,7 +1375,6 @@ translate Z NoveltyHelp {在所选数据库中查找首个独特着法}
 
 # Sounds configuration:
 translate Z SoundsFolder {声音文件夹}
-translate Z SoundsFolderHelp {该文件夹应包含 King.wav、1.wav 等文件}
 translate Z SoundsAnnounceOptions {着法播报}
 translate Z SoundsAnnounceNew {播报新着}
 translate Z SoundsAnnounceForward {向前移动时播报着法}

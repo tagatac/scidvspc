@@ -1546,7 +1546,6 @@ translate G NoveltyHelp {
 
 # Sounds configuration:
 translate G SoundsFolder {Κατάλογος Αρχείων Ήχων}
-translate G SoundsFolderHelp {TΟ Κατάλογος πρέπει να περιέχει τα αρχεία King.wav, a.wav, 1.wav, κλπ}
 translate G SoundsAnnounceOptions {Ρυθμίσεις Αναγγελίας Κινήσεων}
 translate G SoundsAnnounceNew {Αναγγελία νέων κινήσεων όταν γίνονται}
 translate G SoundsAnnounceForward {Αναγγελία κινήσεων κατά την μετακίνηση προς τα εμπρός}

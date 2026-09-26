@@ -1398,7 +1398,6 @@ Scid buscará o primeiro movimento do jogo atual que alcança uma posição nao enco
 
 # Sounds configuration:
 translate U SoundsFolder {Pasta de Ficheiros de Som} ;# ***
-translate U SoundsFolderHelp {A pasta deve conter os ficheiros King.wav, a.wav, 1.wav, etc} ;# ***
 translate U SoundsAnnounceOptions {Opções para Anunciar Movimento} ;# ***
 translate U SoundsAnnounceNew {Anunciar novos movimentos quando são feitos} ;# ***
 translate U SoundsAnnounceForward {Anunciar movimentos quando avançar um movimento} ;# ***

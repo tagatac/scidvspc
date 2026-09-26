@@ -6452,9 +6452,10 @@ set helpText(Sound) {<h1>Sound</h1>
    <p>
    To see if sound is enabled, examine the <green><run raiseSplashWindow>Startup Window</run></green>.
    The sound options are configured from the 
-   <run ::utils::sound::OptionsDialog><green>Options--<gt>Sounds</green></run>. If not installed, the sound wavs can be found at
+   <run ::utils::sound::OptionsDialog><green>Options--<gt>Sounds</green></run>.
+</p><p>
+If not installed, the sound wavs (and other contributed, alternative sounds) can be found at
 <url https://sourceforge.net/projects/scidvspc/files/support files/>other files</url>.
-
    </p>
    <p>
    <h2>Linux Snack Issues</h2><p>

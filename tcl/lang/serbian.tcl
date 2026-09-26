@@ -1378,7 +1378,6 @@ Scid æe pronaæi prvi potez tekuæe partije koji dostiže poziciju koja nije pronað
 
 # Sounds configuration:
 translate Y SoundsFolder {Folder sa zvucima}
-translate Y SoundsFolderHelp {Folder treba da sadrži fajlove King.wav, a.wav, 1.wav, itd.}
 translate Y SoundsAnnounceOptions {Opcije za najavu poteza}
 translate Y SoundsAnnounceNew {Najavi nove poteze èim se odigraju}
 translate Y SoundsAnnounceForward {Najavi poteze pri pomeranju napred za jedan potez}

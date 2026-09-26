@@ -1537,7 +1537,6 @@ ScidvsPC zal de eerste zet vinden in de huidige partij, waarna een stelling onts
 
 # Sounds configuration:
 translate N SoundsFolder {Geluidsbestanden map} ;
-translate N SoundsFolderHelp {De map moet de bestanden King.wav, a.wav, 1.wav, enz. bevatten} ;
 translate N SoundsAnnounceOptions {Zet signalering opties} ;
 translate N SoundsAnnounceNew {Signaleer als een nieuwe zet gedaan wordt} ;
 translate N SoundsAnnounceForward {Signaleer als een zet vooruit gedaan wordt} ;

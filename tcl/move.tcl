@@ -158,12 +158,11 @@ proc ::move::Forward {{count 1}} {
     } else  {
       if {!$bArrows} {
         sc_move forward
+        ::utils::sound::AnnounceForward $move
       }
     }
 
-    # Animate and speak this move:
     updateBoard -animate
-    ::utils::sound::AnnounceForward $move
   } else {
     if {!$bArrows} {sc_move forward $count}
     updateBoard

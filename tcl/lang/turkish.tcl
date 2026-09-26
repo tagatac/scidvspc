@@ -1432,7 +1432,6 @@ translate T NoveltyHelp {Seçilen veride ilk benzersiz hamleyi bulun}
 
 # Sounds configuration:
 translate T SoundsFolder {Sesler Klasörü}
-translate T SoundsFolderHelp {Klasör, King.wav, 1.wav vb. Dosyaları içermelidir}
 translate T SoundsAnnounceOptions {Hamle anonsu}
 translate T SoundsAnnounceNew {Yeni hamle ilan et}
 translate T SoundsAnnounceForward {Hamle yaptığında anons et}

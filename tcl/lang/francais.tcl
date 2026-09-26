@@ -1403,7 +1403,6 @@ Scid va trouver le premier coup de la partie en cours qui atteint une position q
 
 # Sounds configuration:
 translate F SoundsFolder {Répertoire des fichiers sonores}
-translate F SoundsFolderHelp {Le répertoire devrait contenir les fichiers King.wav, a.wav, 1.wav, etc}
 translate F SoundsAnnounceOptions {Options d'annonce des coups}
 translate F SoundsAnnounceNew {Annoncer les coups joués}
 translate F SoundsAnnounceForward {Annoncer les coups quand avance d'un coup}

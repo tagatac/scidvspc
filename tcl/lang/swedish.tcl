@@ -1533,7 +1533,6 @@ Scid kommer att försöka hitta det första draget som leder till en position som i
 
 # Sounds configuration:
 translate W SoundsFolder {Ljudfilskatalog}
-translate W SoundsFolderHelp {Katalogen ska ha filerna King.wav, a.wav, 1.wav, etc}
 translate W SoundsAnnounceOptions {Inställningar för Dragannonsering}
 translate W SoundsAnnounceNew {Annonsera nya drag när de görs}
 translate W SoundsAnnounceForward {Annonsera drag när du går fram ett drag}

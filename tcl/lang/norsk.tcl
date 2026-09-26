@@ -1445,7 +1445,6 @@ translate O NoveltyHelp {Scid vil finne det første trekket i det gjeldende part
 
 # Sounds configuration:
 translate O SoundsFolder {Mappe med lydfiler}
-translate O SoundsFolderHelp {Mappen bør inneholde filene king.wav, a.vaw, 1.wav osv}
 translate O SoundsAnnounceOptions {Innstillinger for opplesing av trekk}
 translate O SoundsAnnounceNew {Les trekk når de gjøres}
 translate O SoundsAnnounceForward {Les trekk når du blar ett trekk frem}

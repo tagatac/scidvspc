@@ -1441,7 +1441,6 @@ Scid wird den ersten Zug aus der aktuellen Partie finden, welcher zu einer Posit
 
 # Sounds configuration:
 translate D SoundsFolder {Sound-Dateienverzeichnis}
-translate D SoundsFolderHelp {Das Verzeichnis sollte enthalten: King.wav, a.wav, 1.wav etc.}
 translate D SoundsAnnounceOptions {Optionen für Zugankündigung}
   # *** Ist das so gemeint? Ich kann's nicht ausprobieren (keine Soundkarte...).
 translate D SoundsAnnounceNew {Kündige neue Züge an, wenn sie ausgeführt werden}

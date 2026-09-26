@@ -1504,7 +1504,6 @@ Scid найдёт первый ход в текущей партии, котор
 
 # Sounds configuration:
 translate R SoundsFolder {Директория звуковых файлов}
-translate R SoundsFolderHelp {Каталог должен содержать файлы King.wav, a.wav, 1.wav и т. п.}
 translate R SoundsAnnounceOptions {Опции уведомления о ходе}
 translate R SoundsAnnounceNew {Уведомлять о новых ходах, когда они сделаны}
 translate R SoundsAnnounceForward {Уведомлять о ходе, когда сделан один ход вперёд}

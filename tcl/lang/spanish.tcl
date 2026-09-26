@@ -1459,7 +1459,6 @@ Scid encontrará el primer movimiento de la actual partida que alcanza una posici
 
 # Sounds configuration:
 translate S SoundsFolder {Directorio de los archivos de sonido}
-translate S SoundsFolderHelp {El directorio debe contener los archivos King.wav, a.wav, 1.wav, etc}
 translate S SoundsAnnounceOptions {Opciones de anunciamiento de movimientos}
 translate S SoundsAnnounceNew {Anunciar nuevos movimientos cuando sean hechos}
 translate S SoundsAnnounceForward {Anunciar movimientos cuando avancemos un movimiento}

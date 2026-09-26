@@ -76,24 +76,24 @@ proc ::utils::sound::Setup {} {
   set numSounds [::utils::sound::ReadFolder]
 }
 
-
-
 proc ::utils::sound::AnnounceNewMove {move} {
-  if {$::utils::sound::announceNew || ($::fics::sound && ($::fics::playing == 1 || $::fics::playing == -1))} { AnnounceMove $move }
+  if {$::utils::sound::useCmd && $::utils::sound::announceNew || ($::fics::sound && ($::fics::playing == 1 || $::fics::playing == -1))} { AnnounceMove $move }
 }
 
 proc ::utils::sound::AnnounceForward {move} {
-  if {$::utils::sound::announceForward} { AnnounceMove $move }
+  if {$::utils::sound::useCmd && $::utils::sound::announceForward} { AnnounceMove $move }
 }
 
 
 proc ::utils::sound::AnnounceBack {} {
-  if {$::utils::sound::announceBack} { AnnounceMove U }
+  if {$::utils::sound::useCmd && $::utils::sound::announceBack} { AnnounceMove U }
 }
 
 proc ::utils::sound::AnnounceMove {move} {
   variable soundMap
   variable announceTock
+
+  if {$::utils::sound::useCmd == 0} {return}
 
   if {$announceTock || ($::fics::sound && ($move == "tock" || $::fics::playing == 1 || $::fics::playing == -1))} {
     PlayMove sound_move
@@ -118,8 +118,6 @@ proc ::utils::sound::AnnounceMove {move} {
 # Plays a sound or list of sounds representing a move
 
 proc ::utils::sound::PlayMove {soundlist} {
-  update idletasks
-
   if {$::utils::sound::useCmd == 0} {return}
   if {$::utils::sound::useCmd == 1} {::snack::audio stop}
   if {$::utils::sound::useCmd == 2} {::utils::sound::StopCmd}
@@ -314,10 +312,6 @@ proc ::utils::sound::OptionsDialog {} {
   grid $f.folderEntry -row $r -column 0 -columnspan 2 -sticky we -padx 3
   button $f.folderBrowse -text " $::tr(Browse)" -command ::utils::sound::ChooseFolder
   grid $f.folderBrowse -row $r -column 2 -padx 3
-  incr r
-
-  label $f.folderHelp -text $::tr(SoundsFolderHelp)
-  grid $f.folderHelp -row $r -column 0 -columnspan 3
   incr r
 
   grid [frame $f.gap$r -height 5] -row $r -column -0; incr r

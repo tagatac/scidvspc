@@ -1632,7 +1632,6 @@ Scid bude hledat první tah aktuální partie, který dosáhne pozice, která se nevys
 
 # Sounds configuration:
 translate C SoundsFolder {Sound Files Folder} ;# ***
-translate C SoundsFolderHelp {The folder should contain the files King.wav, a.wav, 1.wav, etc} ;# ***
 translate C SoundsAnnounceOptions {Move Announcement Options} ;# ***
 translate C SoundsAnnounceNew {Announce new moves as they are made} ;# ***
 translate C SoundsAnnounceForward {Announce moves when moving forward one move} ;# ***
