@@ -277,7 +277,26 @@ menuText D OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
 # ====== TODO To be translated ======
 menuText D OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
 # ====== TODO To be translated ======
-menuText D OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
+menuText D OptionsArrowsEngineColour "Engine arrows" 0 {Engine arrow options}
+# ====== TODO To be translated ======
+menuText D OptionsArrowsEngineFixed "Fixed colour" 0 {Best engine arrow in the engine colour, other ranks in grey}
+# ====== TODO To be translated ======
+menuText D OptionsArrowsEngineRelative "Traffic Light (relative)" 0 {Colour the engine arrows by score drop to the best line: green, yellow, orange, red}
+# ====== TODO To be translated ======
+menuText D OptionsArrowsEngineAbsolute "Traffic Light (absolute)" 0 {Colour the engine arrows by absolute score, like the MultiPV colour bar}
+# ====== TODO To be translated ======
+menuText D OptionsArrowsEngineChange "Change Colour..." 0 {Choose the engine arrow colour}
+# ====== TODO To be translated ======
+menuText D OptionsArrowsEngineLabelsOff "Off" 0 {No numbers on the engine arrows}
+# ====== TODO To be translated ======
+menuText D OptionsArrowsEngineLabelsRank "Rank" 0 {Show the MultiPV rank on each engine arrow}
+# ====== TODO To be translated ======
+menuText D OptionsArrowsEngineLabelsDiff "Score Diff" 0 {Show the score difference to the best line on each engine arrow}
+# ====== TODO To be translated ======
+menuText D OptionsArrowsEngineLabelsAbs "Absolute" 0 {Show the engine score in tenths of a pawn on each engine arrow}
+# ====== TODO To be translated ======
+menuText D OptionsArrowsEngineThick "Thicker arrows for better lines" 0 {Draw better engine lines with thicker arrows}
+# ====== TODO To be translated ======
 menuText D OptionsRowColour "Farbe für eine Zeile" 0 {Standardfarbe für Zeilen im Baum/Buch}
 menuText D OptionsHighlightColour "Hervorhebung" 0 {Standardfarbe für Texthervorhebungen}
 menuText D OptionsSwitcherColour "Datenbankwechselfarbe" 0 {Standardfarbe für Datenbankwechsel}

@@ -255,7 +255,26 @@ menuText U OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
 # ====== TODO To be translated ======
 menuText U OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
 # ====== TODO To be translated ======
-menuText U OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
+menuText U OptionsArrowsEngineColour "Engine arrows" 0 {Engine arrow options}
+# ====== TODO To be translated ======
+menuText U OptionsArrowsEngineFixed "Fixed colour" 0 {Best engine arrow in the engine colour, other ranks in grey}
+# ====== TODO To be translated ======
+menuText U OptionsArrowsEngineRelative "Traffic Light (relative)" 0 {Colour the engine arrows by score drop to the best line: green, yellow, orange, red}
+# ====== TODO To be translated ======
+menuText U OptionsArrowsEngineAbsolute "Traffic Light (absolute)" 0 {Colour the engine arrows by absolute score, like the MultiPV colour bar}
+# ====== TODO To be translated ======
+menuText U OptionsArrowsEngineChange "Change Colour..." 0 {Choose the engine arrow colour}
+# ====== TODO To be translated ======
+menuText U OptionsArrowsEngineLabelsOff "Off" 0 {No numbers on the engine arrows}
+# ====== TODO To be translated ======
+menuText U OptionsArrowsEngineLabelsRank "Rank" 0 {Show the MultiPV rank on each engine arrow}
+# ====== TODO To be translated ======
+menuText U OptionsArrowsEngineLabelsDiff "Score Diff" 0 {Show the score difference to the best line on each engine arrow}
+# ====== TODO To be translated ======
+menuText U OptionsArrowsEngineLabelsAbs "Absolute" 0 {Show the engine score in tenths of a pawn on each engine arrow}
+# ====== TODO To be translated ======
+menuText U OptionsArrowsEngineThick "Thicker arrows for better lines" 0 {Draw better engine lines with thicker arrows}
+# ====== TODO To be translated ======
 menuText U OptionsRowColour "Linhas" 0 {Default tree/book row color}
 menuText U OptionsHighlightColour "Destaque" 0 {Default text highlight color}
 menuText U OptionsSwitcherColour "Alternador" 0 {Default db switcher color}

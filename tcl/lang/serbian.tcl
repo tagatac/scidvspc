@@ -257,7 +257,26 @@ menuText Y OptionsArrowsWidth "Arrow Width" 5 {Thickness of board arrows}
 # ====== TODO To be translated ======
 menuText Y OptionsArrowsLength "Arrow Length" 6 {Length of board arrows}
 # ====== TODO To be translated ======
-menuText Y OptionsArrowsColourise "Colourise EnginePV" 0 {Fade the engine arrow colours per MultiPV rank}
+menuText Y OptionsArrowsEngineColour "Engine arrows" 0 {Engine arrow options}
+# ====== TODO To be translated ======
+menuText Y OptionsArrowsEngineFixed "Fixed colour" 0 {Best engine arrow in the engine colour, other ranks in grey}
+# ====== TODO To be translated ======
+menuText Y OptionsArrowsEngineRelative "Traffic Light (relative)" 0 {Colour the engine arrows by score drop to the best line: green, yellow, orange, red}
+# ====== TODO To be translated ======
+menuText Y OptionsArrowsEngineAbsolute "Traffic Light (absolute)" 0 {Colour the engine arrows by absolute score, like the MultiPV colour bar}
+# ====== TODO To be translated ======
+menuText Y OptionsArrowsEngineChange "Change Colour..." 0 {Choose the engine arrow colour}
+# ====== TODO To be translated ======
+menuText Y OptionsArrowsEngineLabelsOff "Off" 0 {No numbers on the engine arrows}
+# ====== TODO To be translated ======
+menuText Y OptionsArrowsEngineLabelsRank "Rank" 0 {Show the MultiPV rank on each engine arrow}
+# ====== TODO To be translated ======
+menuText Y OptionsArrowsEngineLabelsDiff "Score Diff" 0 {Show the score difference to the best line on each engine arrow}
+# ====== TODO To be translated ======
+menuText Y OptionsArrowsEngineLabelsAbs "Absolute" 0 {Show the engine score in tenths of a pawn on each engine arrow}
+# ====== TODO To be translated ======
+menuText Y OptionsArrowsEngineThick "Thicker arrows for better lines" 0 {Draw better engine lines with thicker arrows}
+# ====== TODO To be translated ======
 menuText Y OptionsRowColour "Redovi" 0 {Podrazumevana boja redova u stablu/knjizi}
 menuText Y OptionsHighlightColour "Isticanje" 0 {Podrazumevana boja isticanja teksta}
 menuText Y OptionsSwitcherColour "Biraè baza" 0 {Boja biraèa baza}
