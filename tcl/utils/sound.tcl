@@ -1,7 +1,7 @@
 ### sound.tcl
 # Scid vs. PC sound procedures
-# Copyright (C) Shane Hudson 2004, Stevenaaus 2013
-# Requires the Tcl/Tk sound package "Snack"
+# Copyright (C) Shane Hudson 2004, Stevenaaus 2013, 2026
+# Requires the Tcl/Tk sound package Snack , Pulse Audio or similar
 
 namespace eval ::utils::sound {}
 
@@ -74,8 +74,6 @@ proc ::utils::sound::Setup {} {
   }
 
   set numSounds [::utils::sound::ReadFolder]
-  set numSought [llength $soundFiles]
-  ::splash::add "   Found $numSounds of $numSought sound files in $soundFolder"
 }
 
 
@@ -207,13 +205,11 @@ proc ::utils::sound::PlaySoundQueue {} {
     set player [auto_execok $::utils::sound::soundCommand]
     if {$player == ""} { return }
     set files {}
-    while {[llength $::utils::sound::soundQueue] > 0} {
-      set sound [lindex $::utils::sound::soundQueue 0]
-      set ::utils::sound::soundQueue [lrange $::utils::sound::soundQueue 1 end]
-      set fname [string range $sound 6 end]
-      set f [file join $::utils::sound::soundFolder $fname.wav]
-      if {![file readable $f]} { continue }
-      lappend files $f
+    foreach sound $::utils::sound::soundQueue {
+	set fname [string range $sound 6 end]
+	set f [file join $::utils::sound::soundFolder $fname.wav]
+	if {![file readable $f]} { continue }
+	lappend files $f
     }
     if {[llength $files] > 0} {
       incr ::utils::sound::isPlayingSound
@@ -358,10 +354,9 @@ proc ::utils::sound::OptionsDialog {} {
 
   grid [frame $f.gap$r -height 5] -row $r -column -0; incr r
   dialogbutton $w.b.help -text $::tr(Help) -command {helpWindow Sound}
-  dialogbutton $w.b.ok -text OK -command "
-    ::utils::sound::Setup
-    destroy $w"
-  packbuttons right $w.b.ok $w.b.help
+  dialogbutton $w.b.ok -text OK -command " ::utils::sound::Setup ; destroy $w"
+  dialogbutton $w.b.apply -textvar ::tr(Apply) -command ::utils::sound::Setup
+  packbuttons right $w.b.ok $w.b.apply $w.b.help
   bind $w <Escape> "destroy $w"
   bind $w <F1> {helpWindow Sound}
   placeWinCenter $w
@@ -418,6 +413,9 @@ proc ::utils::sound::ReadFolder {} {
   variable soundFolder
 
   set count 0
+  set missing {}
+  set numSought [llength $soundFiles]
+
   foreach soundFile $soundFiles {
     set f [file join $soundFolder $soundFile.wav]
     if {[file readable $f]} {
@@ -428,7 +426,13 @@ proc ::utils::sound::ReadFolder {} {
         # sound_$soundFile read $f
       }
       incr count
+    } else {
+      lappend missing $soundFile
     }
+  }
+  ::splash::add "   Found $count of $numSought sound files in $soundFolder"
+  if {$count > 0} {
+    ::splash::add "   Missing Sound files are: $missing"
   }
   return $count
 }

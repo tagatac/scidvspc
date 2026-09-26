@@ -6440,9 +6440,9 @@ set helpText(InputEngine) {<h1>DGT / Input Engine console</h1>
 set helpTitle(Sound) "Sound"
 set helpText(Sound) {<h1>Sound</h1>
    <p>
-   Scid vs PC has limited sound capabilities, It can speak moves in English,
-   or play a tock sound with every move. Alternatively, <a FICS>FICS</a> can 
-   also play a tock sound to announce your opponents move.
+   Scid vs PC has limited sound capabilities. It can announce moves in English,
+   or play a tock sound with every move. If enabled, <a FICS>FICS</a> can 
+   also play game-start/end/move sounds.
    </p>
    <p>
    The feature uses either the old Tcl package, <b>Snack</b>, or the PulseAudio external player.
@@ -6452,7 +6452,9 @@ set helpText(Sound) {<h1>Sound</h1>
    <p>
    To see if sound is enabled, examine the <green><run raiseSplashWindow>Startup Window</run></green>.
    The sound options are configured from the 
-   <run ::utils::sound::OptionsDialog><green>Options--<gt>Sounds</green></run>.
+   <run ::utils::sound::OptionsDialog><green>Options--<gt>Sounds</green></run>. If not installed, the sound wavs can be found at
+<url https://sourceforge.net/projects/scidvspc/files/support files/>other files</url>.
+
    </p>
    <p>
    <h2>Linux Snack Issues</h2><p>
