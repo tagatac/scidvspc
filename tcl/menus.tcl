@@ -588,7 +588,7 @@ set helpMessage($m,[incr menuindex]) ToolsBookTuning
 $m add command -label ToolsPlayerReport -command ::preport::preportDlg
 set helpMessage($m,[incr menuindex]) ToolsPlayerReport
 
-$m add command -label ToolsOpReport -command ::optable::makeReportWin
+$m add command -label ToolsOpReport -command ::optable::OpReport
 set helpMessage($m,[incr menuindex]) ToolsOpReport
 
 $m add command -label ToolsTracker -command ::ptrack::make

@@ -61,6 +61,17 @@ proc ::optable::ConfigMenus {{lang ""}} {
   }
 }
 
+# Opening Report menu command: if no report window exists yet, present
+# the options window first (its OK button generates the report).
+proc ::optable::OpReport {} {
+  if {![winfo exists .oprepWin]} {
+    set ::optable(UseFilter) 0 ; # unset stored variable from previous use
+    ::optable::setOptions
+  } else {
+    ::optable::makeReportWin
+  }
+}
+
 proc ::optable::makeReportWin {{showProgress 1} {showDisplay 1}} {
   if {! [sc_base inUse]} { return }
   set ::optable::opReportBase [sc_base current]
@@ -93,8 +104,15 @@ proc ::optable::makeReportWin {{showProgress 1} {showDisplay 1}} {
     sc_progressBar $w.c1 bar 401 21 time
     busyCursor .
   }
-  sc_search board RESET Exact false 0
-  set newTreeData [sc_tree search -time 0 -epd 0 -adjust 1]
+  if {$::optable(UseFilter)} {
+    # Only the games in the user's filter that reach the current position:
+    sc_search board AND Exact false 0
+    set newTreeData [sc_tree search -time 0 -epd 0 -adjust 1 -filter 1]
+  } else {
+    sc_search board RESET Exact false 0
+    set newTreeData [sc_tree search -time 0 -epd 0 -adjust 1]
+  }
+
   if {$showProgress} {
     # This is ugly.. Handle the (two possible) interrupts, but continue on to main window regardless
     # as we may wish to process a favourite, or change an option, and there is no other way to do so. &%$#@ S.A.
@@ -368,8 +386,21 @@ proc ::optable::setOptions {} {
     grid rowconfigure $w.f $row -pad 2
     if {$i != "col"} { incr row }
   }
+
+  frame $w.f.fsep$row$left -height 2 -borderwidth 2 -relief sunken
+  grid $w.f.fsep$row$left -row $row -column $left -sticky we -columnspan 4 -pady 10
+  incr row
+
+  # Process all games reaching the position, or only filtered games:
+  radiobutton $w.f.allGames    -textvar ::tr(SelectAllGames)    -variable ::optable(UseFilter) -value 0
+  radiobutton $w.f.filterGames -textvar ::tr(SelectFilterGames) -variable ::optable(UseFilter) -value 1
+
+  grid $w.f.allGames    -row $row -column 0 -columnspan 2 -sticky w -padx 30
+  grid $w.f.filterGames -row $row -column 2 -columnspan 2 -sticky w -padx 30
+  incr row
+
   addHorizontalRule $w
-  pack [frame $w.b] -side bottom -fill x
+  pack [frame $w.b] -side bottom -fill x -pady 10
   dialogbutton $w.b.defaults -textvar ::tr(Defaults) -command {
     array set ::optable [array get ::optableDefaults]
   }
@@ -390,7 +421,11 @@ proc ::optable::setOptions {} {
   bind $w <F1> {helpWindow Reports Opening}
 
   update
-  placeWinOverParent $w .oprepWin
+  if {[winfo exists .oprepWin]} {
+    placeWinOverParent $w .oprepWin
+  } else {
+    placeWinCenter $w
+  }
   wm deiconify $w
 }
 

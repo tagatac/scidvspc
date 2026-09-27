@@ -819,6 +819,7 @@ array set optable {
   MaxTableGames 500
   MaxGames 10000
   ExtraMoves 1
+  UseFilter 0
 }
 array set optableDefaults [array get optable]
 
@@ -1623,31 +1624,6 @@ if {[catch {source $optionsFile} ]} {
 if {[string match *pstricks-add* $exportStartFile(Latex)]} {
   set exportStartFile(Latex) $default_exportStartFile(Latex)
 }
-
-# Migrate old Engine-arrow settings to the Engine submenu (0 fixed,
-# 1 traffic light relative, 2 traffic light absolute; labels 0 off,
-# 1 rank, 2 score diff). Old gradients become relative traffic light.
-if {[info exists ::engineArrowGradient]} {
-  if {$::engineArrowGradient && (![info exists ::engineArrowMode] || $::engineArrowMode == 0)} {
-    set ::engineArrowMode 1
-  }
-  unset ::engineArrowGradient
-}
-if {[info exists ::engineArrowEvalColor]} {
-  if {$::engineArrowEvalColor && (![info exists ::engineArrowMode] || $::engineArrowMode == 0)} {
-    set ::engineArrowMode 2
-  }
-  unset ::engineArrowEvalColor
-}
-if {[info exists analysis(numberPVArrows)]} {
-  if {$analysis(numberPVArrows) > 2} { set analysis(numberPVArrows) 2 }
-  if {$analysis(numberPVArrows) < 0} { set analysis(numberPVArrows) 0 }
-  if {![info exists ::engineArrowLabels]} { set ::engineArrowLabels $analysis(numberPVArrows) }
-  unset analysis(numberPVArrows)
-}
-if {![info exists ::engineArrowMode]} { set ::engineArrowMode 0 }
-if {![info exists ::engineArrowLabels]} { set ::engineArrowLabels 1 }
-if {![info exists ::engineArrowThick]} { set ::engineArrowThick 0 }
 
 if { [string first "-dock" [lindex $argv 0]] > -1} {
   set windowsDock 1

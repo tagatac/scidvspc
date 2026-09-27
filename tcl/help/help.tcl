@@ -3384,6 +3384,12 @@ set helpText(Reports) {<h1>Reports</h1>
   When saving the report to a file, you can choose to save just the table, a compact
   report without the table, or the whole report. The hyper-links (in red) reference diverging games.
   </p>
+  <p>
+  It is also possible to only process games in the filter - though some
+  statistics are not quite as expected. If so, copying filter games to the
+  clipbase and running Opening Report is a better solution.
+  NB - Running the Opening Report actually changes the filter itself, so Report re-runs may need tweaking.
+  </p>
   <p><i>
   The Theory Table has a game limit of 500 by default (but configurable in Report Options).
   If the report position occurs more often, only games with the highest
@@ -3438,7 +3444,7 @@ set helpText(Reports) {<h1>Reports</h1>
   or for games matching the current position.
   </p>
 
-  <p><footer>Updated: Scid vs. PC 4.25, August 2023</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.28, August 2026</footer></p>
 }
 
 

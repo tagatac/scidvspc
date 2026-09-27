@@ -15097,7 +15097,7 @@ int
 sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
     static const char * usageStr =
-	"Usage: sc_tree search [-hideMoves <0|1>] [-sort alpha|eco|frequency|score] [-time <0|1>] [-epd <0|1>] [-list <0|1>] [-fastmode <0|1>] [-adjust <0|1>] [-short <0|1>] [-base <baseNumber>]";
+	"Usage: sc_tree search [-hideMoves <0|1>] [-sort alpha|eco|frequency|score] [-time <0|1>] [-epd <0|1>] [-list <0|1>] [-fastmode <0|1>] [-adjust <0|1>] [-short <0|1>] [-filter <0|1>] [-base <baseNumber>]";
 
       // Sort options: these should match the moveSortE enumerated type.
       static const char * sortOptions[] = {
@@ -15113,6 +15113,7 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
       bool listMode = false;
       bool adjustMode = false;
       bool fastMode = false;
+      bool filterMode = false;  // Restrict the search to games in dbFilter (user filter)
       int sortMethod = SORT_FREQUENCY; // default move order: frequency
 
       scidBaseT * base = db;
@@ -15148,6 +15149,8 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             adjustMode = strGetBoolean (argv[arg+1]);
         } else if (strIsPrefix (argv[arg], "-fastmode")) {
             fastMode = strGetBoolean (argv[arg+1]);
+        } else if (strIsPrefix (argv[arg], "-filter")) {
+            filterMode = strGetBoolean (argv[arg+1]);
         } else if (strIsPrefix (argv[arg], "-cancel")) {
             search_pool.clear();
             return TCL_OK;
@@ -15182,6 +15185,9 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     base->treeCache->ReadFile (base->fileName);
 
     // Lookup the cache before searching
+
+  if (! filterMode) {
+    // (skip in filterMode as cached results are unfiltered)
     pct = base->treeCache->Lookup (db->game->GetCurrentPos());
     if (pct != NULL) {
     	// It was in the cache! Use it to save time:
@@ -15206,6 +15212,7 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 	    }
 	}
     }
+  }  // end of unfiltered cache lookup
 
     // we went back before the saved filter data
     if (base->treeFilter->oldDataTreePly > db->game->GetCurrentPly()) {
@@ -15277,6 +15284,12 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 		    continue;
 	    }
 	    if (ply > 0) foundMatch = true;
+
+	    // In filterMode, only count games that are in dbFilter (user filter):
+	    if (filterMode  &&  base->dbFilter->Get(i) == 0) {
+		    skipcount++;
+		    continue;
+	    }
 
 	    pieceT * bd = pos->GetBoard();
 	    bool isStartPos =
@@ -15425,7 +15438,8 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     sortTreeMoves (tree, sortMethod, db->game->GetCurrentPos()->GetToMove());
 
     // If it wasn't in the cache, maybe it belongs there, but only add to the cache if not in fastmode
-    if (!foundInCache  && !fastMode) {
+    // (and never in filterMode: those results only count games in dbFilter)
+    if (!foundInCache  && !fastMode  && !filterMode) {
     	base->treeCache->Add   (db->game->GetCurrentPos(), tree, base->treeFilter);
     	base->backupCache->Add (db->game->GetCurrentPos(), tree, base->treeFilter);
         base->treeFilter->saveFilterForFastMode(db->game->GetCurrentPly());
