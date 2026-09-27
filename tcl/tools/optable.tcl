@@ -351,7 +351,11 @@ proc ::optable::setOptions {} {
     } elseif {$i == "sep"} {
       frame $w.f.fsep$row$left -height 2 -borderwidth 2 -relief sunken
       # frame $w.f.tsep$row$left -height 2 -borderwidth 2 -relief sunken
-      grid $w.f.fsep$row$left -row $row -column $left -sticky we -columnspan 4 -pady 2
+      if {$::macOS} {
+	grid $w.f.fsep$row$left -row $row -column $left -sticky we -columnspan 4
+      } else {
+	grid $w.f.fsep$row$left -row $row -column $left -sticky we -columnspan 4 -pady 2
+      }
     } elseif {[info exists yesno($i)]} {
       checkbutton $w.f.f$i -variable ::optable($i) -onvalue 1 -offvalue 0
       label $w.f.t$i -textvar ::tr(Oprep$i)
@@ -387,9 +391,13 @@ proc ::optable::setOptions {} {
     if {$i != "col"} { incr row }
   }
 
-  frame $w.f.fsep$row$left -height 2 -borderwidth 2 -relief sunken
-  grid $w.f.fsep$row$left -row $row -column $left -sticky we -columnspan 4 -pady 10
-  incr row
+  # Bit crowded on Macs, so save space
+  if {!$::macOS} {
+    frame $w.f.fsep$row$left -height 2 -borderwidth 2 -relief sunken
+    grid $w.f.fsep$row$left -row $row -column $left -sticky we -columnspan 4 -pady 10
+    incr row
+    addHorizontalRule $w
+  }
 
   # Process all games reaching the position, or only filtered games:
   radiobutton $w.f.allGames    -textvar ::tr(SelectAllGames)    -variable ::optable(UseFilter) -value 0
@@ -399,7 +407,6 @@ proc ::optable::setOptions {} {
   grid $w.f.filterGames -row $row -column 2 -columnspan 2 -sticky w -padx 30
   incr row
 
-  addHorizontalRule $w
   pack [frame $w.b] -side bottom -fill x -pady 10
   dialogbutton $w.b.defaults -textvar ::tr(Defaults) -command {
     array set ::optable [array get ::optableDefaults]

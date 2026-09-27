@@ -1306,7 +1306,13 @@ set ::utils::sound::announceTock 0
 set ::utils::sound::soundFolder {} ;# disabled by default
 set ::utils::sound::device {}
 set ::utils::sound::useCmd 0 ;# 0 no sound, 1 Snack, 2 external command
-set ::utils::sound::soundCommand "paplay"
+if {$::macOS} {
+  set ::utils::sound::soundCommand afplay
+} elseif {$::windowsOS} {
+  set ::utils::sound::soundCommand wmplayer ;# todo
+} else {
+  set ::utils::sound::soundCommand paplay
+}
 
 set ::book::lastBook1 {} ; # book name without extension (.bin)
 set ::book::lastBook2 {}

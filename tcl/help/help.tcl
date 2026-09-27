@@ -6451,7 +6451,7 @@ set helpText(Sound) {<h1>Sound</h1>
    also play game-start/end/move sounds.
    </p>
    <p>
-   The feature uses either the old Tcl package, <b>Snack</b>, or the PulseAudio external player.
+   The feature uses either the old Tcl package, <b>Snack</b>, or an external player such as Pulse Audio's "paplay", or Mac's "afplay".
    Snack should be installed by default on Windows and OSX. On Linux this package
    is known as "libsnack" or "tcl-snack". For more info, see below.
    </p>
