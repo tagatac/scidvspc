@@ -113,17 +113,12 @@ set helpText(Arrows) {<h1>Arrow Options</h1>
 <p>
 The <b>Options-<gt>Arrows</b> menu is where various arrow options are set. The
 Main Line and Variation colours are for the game's move arrows.
-The Engine Colour is for the Analysis engine's arrows. <i>These can also be shown on the main board by right-clicking the engine's <button tb_coords> button, by the <b>S</b> key,
-or via the "Mainboard" checkbox in the <a Analysis List>engines configuration dialog</a></i>
+The Engine Colour is for the Analysis engine's arrows. <i>These can also be shown on the main board by right-clicking the engine's <button tb_coords> button, by the "s" key.
 </p>
 
 <p>
-The "Colourise Engine PV" option enables MultiPV to be shaded between the Engine Line and the Variation Line Colours.
-When disabled, all MultiPV arrows are shown as one colour.
-</p>
-
-<p>
-The Width and Length menus apply to both the Engine arrows and those drawn in the comment editor.
+Other Engine Arrow options include colours, labels and dimensions (and more can be found in the <a Analysis List>engines configuration dialog</a>).
+The Width and Length menus apply to both the Engine Arrows and those drawn in the Comment Editor.
 </p>
 
 <p>See <a Comment Diagrams>here</a> for info about the Comment Editor's drawables/arrows.
@@ -246,7 +241,7 @@ append helpText(Index) {
 <br>
 <a Index A>  A</a> <a Index B>  B</a> <a Index C>  C</a> <a Index D>  D</a> <a Index  E> E</a> <a Index F>  F</a> <a Index G>  G</a> <a Index H>  H</a> <a Index I>  I</a> <a Index  J> J</a> <a Index K>  K</a> <a Index L>  L</a> <a Index M>  M</a> <a Index N>  N</a> <a Index O>  O</a> <a Index P>  P</a> <a Index Q>  Q</a> <a Index R>  R</a> <a Index S>  S</a> <a Index T>  T</a> <a Index U>  U</a> <a Index V>  V</a> <a Index W>  W</a> <a Index X>  X</a> <a Index Y>  Y</a> <a Index Z>  Z</a>
 <br>
-  <h4><name A>A </name></h4>
+  <h4><name A>A</name></h4>
   <ul>
   <li><a Analysis>Analysis</a> window</li>
   <li><a Comment>Annotating games</a></li>
@@ -254,7 +249,7 @@ append helpText(Index) {
   <li><a Comment Annotation>Annotation symbols</a></li>
   <li><a NAGs>Annotation symbols</a> (NAGs)</li>
   <li>Entering <a Moves Informant>annotation symbols</a></li>
-  <li><a Arrows>Arrows</a> (Options-<gt>Arrows)</li>
+  <li><a Arrows>Arrows</a></li>
   <li><a Author>Author, contacting</a></li>
   <li><a Maintenance Autoload>Autoloading</a> a game</li>
   <li><a MainWindow Autoplay>Autoplay mode</a></li>
@@ -2831,7 +2826,7 @@ making for easier <a Analysis Debugging>Debugging</a>.
   Hover cursor over this button to see stats for locked game.
   After a while, to add this analysis to game, return to the locked position, 
   press Pause, Unlock, and Add Variation.</li>
-  <li> <button tb_coords 32> <b>Show Board</b> displays a small <a Analysis Board>analysis board.</a> (Right-click toggles arrows on the main board - see <a Analysis Board>below</a>).
+  <li> <button tb_coords 32> <b>Show Board</b> displays a small <a Analysis Board>analysis board.</a> (Right-click/'s' toggles arrows on the main board - see <a Analysis Board>below</a>).
   If engine is locked the board displays the locked position, otherwise middle-click toggles between display modes.</li>
   <li> <button tb_exclude 32> <b>Exclude Move(s)</b> helps refine the engine's search list (mainly UCI engines only). Hovering mouse shows the current excluded moves.</li>
   <li> <button tb_cpu 32> <b>Low CPU priority</b> 
@@ -2892,9 +2887,11 @@ The button will turn blue (except on Macs), and Move Variation arrows will not b
 The default mode and size are set in the <a Analysis List>Engine Configuration</a> window, and can also be toggled by pressing the middle mouse button.
 <i>Control-wheelmouse resizes this board.</i>
 <br>
-<br><b>Position</b> is the original mode. It displays the board's position after the engines line has been played.
+(More engine-arrow options can be found in the global <b>Options-<gt>Arrows-<gt>Engine arrows</b> menu.)
+<br>
 <br><b>Arrows</b> will display clickable arrows for the engine's move, or multiple arrows if PV is enabled (Variation numbers toggled by Control-Shift-N).
 <br><b>Sequential</b> will show the line as a numbered sequence of small (unclickable) arrows. The number of moves shown (Seq Count) is by default 3 but can be changed in the Tools-<gt>Analysis-Engines window. In Sequential mode, there are three submodes (White, Black, Both) changed by using wheel mouse over the board.
+<br><b>Position</b> is the original mode. It displays the board's position after the engines line has been played.
 </p>
 
 <p>Beside the board is a black and white Score Bar (toggled via Control-Shift-S), and optionally, a Coloured 'Traffic' Bar (Control-Shift-C) which shows colours for each MultiPV's score - indicating the sharpness of a position. Red means Black is winning, Yellow is even, and Green for White winning."

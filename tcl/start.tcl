@@ -415,14 +415,9 @@ createFont Small
 createFont Tiny
 createFont Fixed
 
-# Analysis command: to start chess analysis engine.
-set analysisCommand ""
 set analysis(boardEngine) -1
 set analysis(lastBoardEngine) -1
-
-# Maximum number of lines to be saved in a log file
-# (setting it to 0 also stops log file being created)
-set analysis(logMax) 5000
+set analysis(logMax) 5000       ;# Max number of lines to be saved in a log file. Setting it to 0 stops log file being created
 set analysis(logName) 1
 set analysis(maxPly) 0
 set analysis(lowPriority) $::windowsOS
@@ -447,6 +442,7 @@ set buttoncolor #b0c0d0		;# (below)
 set maincolor   black		;# Main line arrow color
 set varcolor    grey80	        ;# Variation arrow colors
 set squarecolor black           ;# box alternative to highcolor
+
 # arrowWidth/Length is no longer under ::mark namespace to avoid version conflict when sourcing options.dat
 set ::board::arrowWidth 5
 set ::board::arrowLength 0.6

@@ -246,11 +246,11 @@ menuText Z OptionsArrowsEngineChange "Change Colour..." 0 {Choose the engine arr
 # ====== TODO To be translated ======
 menuText Z OptionsArrowsEngineLabelsOff "Off" 0 {No numbers on the engine arrows}
 # ====== TODO To be translated ======
-menuText Z OptionsArrowsEngineLabelsRank "Rank" 0 {Show the MultiPV rank on each engine arrow}
+menuText Z OptionsArrowsEngineLabelsPV "Rank" 0 {Show the MultiPV rank on each engine arrow}
 # ====== TODO To be translated ======
 menuText Z OptionsArrowsEngineLabelsDiff "Score Diff" 0 {Show the score difference to the best line on each engine arrow}
 # ====== TODO To be translated ======
-menuText Z OptionsArrowsEngineLabelsAbs "Absolute" 0 {Show the engine score in tenths of a pawn on each engine arrow}
+menuText Z OptionsArrowsEngineLabelsScore "Absolute" 0 {Show the engine score in tenths of a pawn on each engine arrow}
 # ====== TODO To be translated ======
 menuText Z OptionsArrowsEngineThick "Thicker arrows for better lines" 0 {Draw better engine lines with thicker arrows}
 # ====== TODO To be translated ======

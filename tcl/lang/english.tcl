@@ -254,15 +254,15 @@ menuText E OptionsEngineLineColour "Engine Colour" 0 {Engine arrows}
 menuText E OptionsArrows "Arrows" 0 {Arrow options}
 menuText E OptionsArrowsWidth "Width" 5 {Thickness of board arrows}
 menuText E OptionsArrowsLength "Length" 6 {Length of board arrows}
-menuText E OptionsArrowsEngineColour "Engine arrows" 0 {Engine arrow options}
-menuText E OptionsArrowsEngineFixed "Fixed colour" 0 {Best engine arrow in the engine colour, other ranks in grey}
+menuText E OptionsArrowsEngineColour "Engine Arrows" 0 {Engine arrow options}
+menuText E OptionsArrowsEngineFixed "Normal Colour" 0 {Best engine arrow in the engine colour, other ranks in grey}
 menuText E OptionsArrowsEngineRelative "Traffic Light (relative)" 0 {Colour the engine arrows by score drop to the best line: green, yellow, orange, red}
 menuText E OptionsArrowsEngineAbsolute "Traffic Light (absolute)" 0 {Colour the engine arrows by absolute score, like the MultiPV colour bar}
 menuText E OptionsArrowsEngineChange "Change Colour..." 0 {Choose the engine arrow colour}
-menuText E OptionsArrowsEngineLabelsOff "Off" 0 {No numbers on the engine arrows}
-menuText E OptionsArrowsEngineLabelsRank "Rank" 0 {Show the MultiPV rank on each engine arrow}
-menuText E OptionsArrowsEngineLabelsDiff "Score Diff" 0 {Show the score difference to the best line on each engine arrow}
-menuText E OptionsArrowsEngineLabelsAbs "Absolute" 0 {Show the engine score in tenths of a pawn on each engine arrow}
+menuText E OptionsArrowsEngineLabelsOff "Labels Off" 0 {No numbers on the engine arrows}
+menuText E OptionsArrowsEngineLabelsPV "Label PV" 0 {Show the MultiPV rank on each engine arrow}
+menuText E OptionsArrowsEngineLabelsDiff "Label Score Diff" 0 {Show the score difference to the best line on each engine arrow}
+menuText E OptionsArrowsEngineLabelsScore "Label Score" 0 {Show the engine score in tenths of a pawn on each engine arrow}
 menuText E OptionsArrowsEngineThick "Thicker arrows for better lines" 0 {Draw better engine lines with thicker arrows}
 menuText E OptionsRowColour "Rows" 0 {Default tree/book row color}
 menuText E OptionsHighlightColour "Highlight" 0 {Default text highlight color}

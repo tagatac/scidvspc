@@ -1360,17 +1360,23 @@ $m add command -label OptionsMainLineColour -command SetMainLineColour
 set helpMessage($m,1) OptionsMainLineColour
 $m add command -label OptionsVarLineColour -command SetVarLineColour
 set helpMessage($m,2) OptionsVarLineColour
+
 # Engine arrow submenu: colour mode, numbers on the arrows, thickness.
-# (Kept as one flat menu with separators, so Steven can drop any group.)
-# The -label values are raw tags; setLanguageMenus translates them via
-# configMenuText once english.tcl has set the menuLabel table.
+#   Use of global vars here for colours instead of analysis(someVar) is a bit confusing
+#   but is how contributors (Hanish, Patrick) sent the patches, and has been kept as-is - S.A
 menu $m.engine -tearoff 1
 $m add cascade -label OptionsArrowsEngineColour -menu $m.engine
 set helpMessage($m,3) OptionsArrowsEngineColour
 
-# --- Group 1: arrow colour mode (exclusive radio group) ---
-$m.engine add radiobutton -label OptionsArrowsEngineFixed -variable ::engineArrowMode -value 0 -command {
+$m.engine add command -label OptionsArrowsEngineChange -command SetEngineLineColour
+$m.engine add checkbutton -label OptionsArrowsEngineThick -variable ::engineArrowThick -command {
   catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
+}
+$m.engine add separator
+
+# --- Radiobuttons 1: arrow colour mode
+$m.engine add radiobutton -label OptionsArrowsEngineFixed -variable ::engineArrowMode -value 0 -command {
+  updateAnalysisBoard $::analysis(boardEngine) redraw
 }
 $m.engine add radiobutton -label OptionsArrowsEngineRelative -variable ::engineArrowMode -value 1 -command {
   catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
@@ -1378,38 +1384,31 @@ $m.engine add radiobutton -label OptionsArrowsEngineRelative -variable ::engineA
 $m.engine add radiobutton -label OptionsArrowsEngineAbsolute -variable ::engineArrowMode -value 2 -command {
   catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
 }
-$m.engine add command -label OptionsArrowsEngineChange -command SetEngineLineColour
 $m.engine add separator
 
-# --- Group 2: numbers on the arrows (exclusive radio group) ---
+# --- Radiobuttons 2: numbers on the arrows
 $m.engine add radiobutton -label OptionsArrowsEngineLabelsOff -variable ::engineArrowLabels -value 0 -command {
   catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
 }
-$m.engine add radiobutton -label OptionsArrowsEngineLabelsRank -variable ::engineArrowLabels -value 1 -command {
+$m.engine add radiobutton -label OptionsArrowsEngineLabelsPV -variable ::engineArrowLabels -value 1 -command {
+  catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
+}
+$m.engine add radiobutton -label OptionsArrowsEngineLabelsScore -variable ::engineArrowLabels -value 3 -command {
   catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
 }
 $m.engine add radiobutton -label OptionsArrowsEngineLabelsDiff -variable ::engineArrowLabels -value 2 -command {
   catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
 }
-$m.engine add radiobutton -label OptionsArrowsEngineLabelsAbs -variable ::engineArrowLabels -value 3 -command {
-  catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
-}
-$m.engine add separator
 
-# --- Group 3: arrow thickness ---
-$m.engine add checkbutton -label OptionsArrowsEngineThick -variable ::engineArrowThick -command {
-  catch {updateAnalysisBoard $::analysis(boardEngine) redraw}
-}
-
-set helpMessage($m.engine,0) OptionsArrowsEngineFixed
-set helpMessage($m.engine,1) OptionsArrowsEngineRelative
-set helpMessage($m.engine,2) OptionsArrowsEngineAbsolute
-set helpMessage($m.engine,3) OptionsArrowsEngineChange
-set helpMessage($m.engine,5) OptionsArrowsEngineLabelsOff
-set helpMessage($m.engine,6) OptionsArrowsEngineLabelsRank
-set helpMessage($m.engine,7) OptionsArrowsEngineLabelsDiff
-set helpMessage($m.engine,8) OptionsArrowsEngineLabelsAbs
-set helpMessage($m.engine,10) OptionsArrowsEngineThick
+set helpMessage($m.engine,0) OptionsArrowsEngineChange
+set helpMessage($m.engine,1) OptionsArrowsEngineThick
+set helpMessage($m.engine,3) OptionsArrowsEngineFixed
+set helpMessage($m.engine,4) OptionsArrowsEngineRelative
+set helpMessage($m.engine,5) OptionsArrowsEngineAbsolute
+set helpMessage($m.engine,6) OptionsArrowsEngineLabelsOff
+set helpMessage($m.engine,8) OptionsArrowsEngineLabelsPV
+set helpMessage($m.engine,9) OptionsArrowsEngineLabelsScore
+set helpMessage($m.engine,10) OptionsArrowsEngineLabelsDiff
 
 menu $m.width -tearoff 1
 $m add cascade -label OptionsArrowsWidth -menu $m.width
@@ -1928,7 +1927,7 @@ proc setLanguageMenus {{lang ""}} {
     configMenuText .menu.options.arrows [tr OptionsArrows$tag $oldLang] OptionsArrows$tag $lang
   }
   configMenuText .menu.options.arrows [tr OptionsArrowsEngineColour $oldLang] OptionsArrowsEngineColour $lang
-  foreach tag {EngineFixed EngineRelative EngineAbsolute EngineChange EngineLabelsOff EngineLabelsRank EngineLabelsDiff EngineLabelsAbs EngineThick} {
+  foreach tag {EngineFixed EngineRelative EngineAbsolute EngineChange EngineLabelsOff EngineLabelsPV EngineLabelsDiff EngineLabelsScore EngineThick} {
     configMenuText .menu.options.arrows.engine [tr OptionsArrows$tag $oldLang] OptionsArrows$tag $lang
   }
   configMenuText .menu.options.colour [tr OptionsFicsColour $oldLang] OptionsFicsColour $lang
