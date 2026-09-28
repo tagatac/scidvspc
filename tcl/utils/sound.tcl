@@ -425,8 +425,8 @@ proc ::utils::sound::ReadFolder {} {
     }
   }
   ::splash::add "   Found $count of $numSought sound files in $soundFolder"
-  if {$count > 0} {
-    ::splash::add "   Missing Sound files are: $missing"
+  if {$missing != {} && $count > 0} {
+    ::splash::add "   Missing Sound files [join $missing]"
   }
   return $count
 }
