@@ -1029,9 +1029,6 @@ $m add command -label OptionsSave -command {
       puts $optionF "set winX($i)  [expr $winX($i)]"
       puts $optionF "set winY($i)  [expr $winY($i)]"
     }
-    puts $optionF ""
-    puts $optionF "set analysisCommand [list $analysisCommand]"
-    puts $optionF ""
     foreach i {lite dark highcolor bestcolor bgcolor maincolor varcolor squarecolor engineLineColor whiteLineColor blackLineColor \
           rowcolor highlightcolor progcolor crosscolor scorecolor scorebarcolor switchercolor borderwidth \
           pgnColor(Header) pgnColor(Main) pgnColor(Var) pgnColor(Nag) pgnColor(Comment) pgnColor(Background) pgnColor(Current) pgnColor(NextMove) } {
