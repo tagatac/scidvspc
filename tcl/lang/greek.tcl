@@ -808,7 +808,7 @@ menuText G GraphOptionsBlack "Μαύρα" 0
 # ====== TODO To be translated ======
 menuText G GraphOptionsDots "Show Dots" 0
 # ====== TODO To be translated ======
-menuText G GraphOptionsSpelling "Elo from Spelling File" 0
+menuText G GraphOptionsSpelling "Ratings from Spelling File" 0
 # ====== TODO To be translated ======
 menuText G GraphOptionsBar "Highlight Current Move" 0
 menuText G GraphOptionsBoth "Αμφότεροι" 1

@@ -831,7 +831,7 @@ menuText C GraphOptionsBlack "Èerný" 1
 # ====== TODO To be translated ======
 menuText C GraphOptionsDots "Show Dots" 0
 # ====== TODO To be translated ======
-menuText C GraphOptionsSpelling "Elo from Spelling File" 0
+menuText C GraphOptionsSpelling "Ratings from Spelling File" 0
 # ====== TODO To be translated ======
 menuText C GraphOptionsBar "Highlight Current Move" 0
 menuText C GraphOptionsBoth "Oba" 0

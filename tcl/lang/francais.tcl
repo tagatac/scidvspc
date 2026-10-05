@@ -718,7 +718,7 @@ menuText F GraphOptions "Options" 0
 menuText F GraphOptionsWhite "Blancs" 0
 menuText F GraphOptionsBlack "Noirs" 0
 menuText F GraphOptionsDots "Montrer les points connus" 0
-menuText F GraphOptionsSpelling "Elo from Spelling File" 0
+menuText F GraphOptionsSpelling "Ratings from Spelling File" 0
 menuText F GraphOptionsBar "Surbrillance de la position actuelle" 0
 menuText F GraphOptionsBoth "Les deux" 4
 menuText F GraphOptionsPInfo "Informations joueurs" 0

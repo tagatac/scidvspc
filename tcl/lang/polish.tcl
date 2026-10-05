@@ -783,7 +783,7 @@ menuText P GraphOptionsBlack "Czarne" 0
 # ====== TODO To be translated ======
 menuText P GraphOptionsDots "Show Dots" 0
 # ====== TODO To be translated ======
-menuText P GraphOptionsSpelling "Elo from Spelling File" 0
+menuText P GraphOptionsSpelling "Ratings from Spelling File" 0
 # ====== TODO To be translated ======
 menuText P GraphOptionsBar "Highlight Current Move" 0
 menuText P GraphOptionsBoth "Oba kolory" 1

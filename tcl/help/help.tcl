@@ -181,7 +181,7 @@ set helpText(Scid) {<h1>Databases and General Use</h1>
   </i></p>
 
   <p><i>
- Lumbra's Gigabase <url https://lumbrasgigabase.com/en/>https://lumbrasgigabase.com/en/</url>
+ Free databases are hard to maintain. Previously we have linked to Caissabase, Kingbase and Millbase, but all have their problems. The last linked (Lumbrabase) is just too bloated really - nearly 5 million Computer Tournament games alone. Currently we have no recommendation for a decent free database.
   </i></p>
 
   <h4>Using Databases</h4>
@@ -3586,13 +3586,13 @@ set helpText(Graphs) {<h1>Graph Windows</h1>
   <h3><name Rating>Player Rating Graph</name></h3>
   <p>
   The <green><run ::tools::graphs::rating::Refresh both>Rating
-Graph</run></green> shows the ELO history of one, or many, players.
+Graph</run></green> shows the ELO history of one or many players.
 You can access the graph by pressing the "Rating Graph" button
 in the <a PInfo>Player Information</a> window, or by selecting "Player Ratings"
 from the Tools menu. Right-clicking the graph shows a Recent Players context menu. Left-clicking refreshes the graph.
   </p>
   <p>
-  There are several options in the Graph menus, including the ability to use Elo from the <a Maintenance Spellfile>ratings.ssp</a> file,
+  There are several options in the Graph menus, including the ability to use Elo/Ratings from the <a Maintenance Spellfile>ratings.ssp</a> file,
   which is handy when the database doesn't contain many games, or when blitz/rapid games are showing conflicting ratings.
   </p>
 
@@ -4483,7 +4483,6 @@ set helpText(Related) {<h1>Links</h1>
   <li>Project page  <url http://sourceforge.net/projects/scidvspc>http://sourceforge.net/projects/scidvspc</url></li>
   <li>Online documentation <url http://scidvspc.sourceforge.net/doc/Contents.htm>http://scidvspc.sourceforge.net/doc/Contents.htm</url></li>
   <br>
- <li>Lumbra's Gigabase <url https://lumbrasgigabase.com/en/>https://lumbrasgigabase.com/en/</url></li>
   <li>Player Information resources  <url http://sourceforge.net/projects/scid/files/Player Data/>http://sourceforge.net/projects/scid/files/Player Data/</url></li>
   <li>FICS <url http://www.freechess.org>www.freechess.org</url></li>
   <li>FICS game archives <url http://ficsgames.org>http://ficsgames.org</url></li>

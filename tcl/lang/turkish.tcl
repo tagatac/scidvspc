@@ -722,7 +722,7 @@ menuText T GraphOptionsWhite "Ters çevir beyaz" 0
 menuText T GraphOptionsBlack "ters çevir Siyah " 0
 menuText T GraphOptionsDots "Noktaları Göster" 0
 # ====== TODO To be translated ======
-menuText T GraphOptionsSpelling "Elo from Spelling File" 0
+menuText T GraphOptionsSpelling "Ratings from Spelling File" 0
 menuText T GraphOptionsBar "Grafik Seçenekleri Çubuğu" 0
 menuText T GraphOptionsBoth "Her ikisi de" 1
 menuText T GraphOptionsPInfo "Oyuncu bilgisi" 0
