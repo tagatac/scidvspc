@@ -2837,7 +2837,6 @@ struct tourneyPlayerT {
     idNumberT id;
     uint elo;
     int score;
-    tourneyPlayerT * next;
 };
 
 class Tourney
@@ -2855,7 +2854,9 @@ class Tourney
     dateT     EventDate;
     uint      NumGames;
     uint      NumPlayers;
-    tourneyPlayerT * PlayerList;
+    // Kept together in memory: searching a linked list for every game
+    // was very slow for tourneys with thousands of players.
+    std::vector<tourneyPlayerT> Players;
     uint      EloSum;
     uint      EloCount;
     gameNumberT FirstGame;
@@ -2863,13 +2864,13 @@ class Tourney
 
     Tourney(IndexEntry * ie, NameBase * nb);
     Tourney(uint eventID, uint siteID);
-    ~Tourney();
 
     static uint HashKey (uint eventID, uint siteID) {
 	return (eventID + siteID) % TOURNEY_HASH_SIZE;
     }
 
-    void AddGame (IndexEntry * ie, gameNumberT g);
+    void AddGame (IndexEntry * ie, gameNumberT g, uint maxPlayers);
+    void AddPlayerScore (idNumberT id, uint elo, int score);
     void Dump (Tcl_DString * ds) const;
     void PrepareBestPlayers ();
     uint MeanElo() const {
@@ -2887,7 +2888,6 @@ Tourney::Tourney (uint eventID_, uint siteID_)
     :SiteID(eventID_)
     ,EventID(siteID_)
     ,NB(NULL)
-    ,PlayerList(NULL)
 {
 }
 
@@ -2902,7 +2902,6 @@ Tourney::Tourney (IndexEntry * ie, NameBase * nb)
     ,EventDate(ie->GetEventDate())
     ,NumGames(0)
     ,NumPlayers(0)
-    ,PlayerList(NULL)
     ,EloSum(0)
     ,EloCount(0)
 {
@@ -2910,19 +2909,8 @@ Tourney::Tourney (IndexEntry * ie, NameBase * nb)
     Best[0] = Best[1] = NULL;
 }
 
-Tourney::~Tourney()
-{
-    tourneyPlayerT *p, *next;
-    p = PlayerList;
-    while (p != NULL) {
-        next = p->next;
-        free(p);
-        p = next;
-    }
-}
-
 void
-Tourney::AddGame (IndexEntry * ie, gameNumberT g)
+Tourney::AddGame (IndexEntry * ie, gameNumberT g, uint maxPlayers)
 {
     ASSERT(NB); // fails if this is only a key
 
@@ -2936,45 +2924,11 @@ Tourney::AddGame (IndexEntry * ie, gameNumberT g)
     if (result == RESULT_White) { wScore = 2; bScore = 0; }
     if (result == RESULT_Black) { wScore = 0; bScore = 2; }
 
-    tourneyPlayerT * p = PlayerList;
-    bool playerFound = false;
-    while (p != NULL) {
-        if (p->id == whiteID) {
-            playerFound = true;
-            if (wElo > p->elo) { p->elo = wElo; }
-            p->score += wScore;
-            break;
-        }
-        p = p->next;
-    }
-    if (! playerFound) {
-        p = new tourneyPlayerT;
-        p->id = whiteID;
-        p->elo = wElo;
-        p->score = wScore;
-        p->next = PlayerList;
-        PlayerList = p;
-        NumPlayers++;
-    }
-    p = PlayerList;
-    playerFound = false;
-    while (p != NULL) {
-        if (p->id == blackID) {
-            playerFound = true;
-            if (bElo > p->elo) { p->elo = bElo; }
-            p->score += bScore;
-            break;
-        }
-        p = p->next;
-    }
-    if (! playerFound) {
-        p = new tourneyPlayerT;
-        p->id = blackID;
-        p->elo = bElo;
-        p->score = bScore;
-        p->next = PlayerList;
-        PlayerList = p;
-        NumPlayers++;
+    // A tourney with more than maxPlayers players is never shown, so
+    // its players need not be counted any more:
+    if (NumPlayers <= maxPlayers) {
+        AddPlayerScore (whiteID, wElo, wScore);
+        AddPlayerScore (blackID, bElo, bScore);
     }
 
     if (wElo != 0) {
@@ -2994,6 +2948,25 @@ Tourney::AddGame (IndexEntry * ie, gameNumberT g)
     NumGames++;
 }
 
+// Add Player to Tourney if not found. Add their game score, and update their max elo if applicable
+void
+Tourney::AddPlayerScore (idNumberT id, uint elo, int score)
+{
+    for (uint i=0; i < Players.size(); i++) {
+        if (Players[i].id == id) {
+            if (elo > Players[i].elo) { Players[i].elo = elo; }
+            Players[i].score += score;
+            return;
+        }
+    }
+    tourneyPlayerT p;
+    p.id = id;
+    p.elo = elo;
+    p.score = score;
+    Players.push_back (p);
+    NumPlayers++;
+}
+
 void
 Tourney::PrepareBestPlayers()
 {
@@ -3003,9 +2976,10 @@ Tourney::PrepareBestPlayers()
         uint bestElo = 0;
         int bestScore = -1;
 	tourneyPlayerT * best = NULL;
-        tourneyPlayerT * p = PlayerList;
 
-        while (p != NULL) {
+        // Newest player first, as in the former linked list:
+        for (uint k = Players.size(); k-- > 0; ) {
+            tourneyPlayerT * p = &(Players[k]);
             if (p->score > bestScore || (p->score == bestScore && p->elo > bestElo)) {
                 if (!(i == 1 && Best[0] == p)) {
 		  best = p;
@@ -3013,7 +2987,6 @@ Tourney::PrepareBestPlayers()
 		  bestElo = p->elo;
                }
             }
-            p = p->next;
         }
 
 	if (best) {
@@ -3068,12 +3041,10 @@ Tourney::HasPlayer (const char * playerStr) const
     ASSERT(NB); // fails if this is only a key
 
     if (playerStr == NULL) { return true; }
-    tourneyPlayerT *p = PlayerList;
-    while (p != NULL) {
-        if (strAlphaContains (NB->GetName (NAME_PLAYER, p->id), playerStr)) {
+    for (uint i=0; i < Players.size(); i++) {
+        if (strAlphaContains (NB->GetName (NAME_PLAYER, Players[i].id), playerStr)) {
             return true;
         }
-        p = p->next;
     }
     return false;
 }
@@ -3382,7 +3353,7 @@ sc_base_tournaments (ClientData cd, Tcl_Interp * ti, int argc, const char ** arg
 
 	// We need a const cast, because the set only provides const elements,
 	// but AddGame() does not change the key, so it's okay.
-	const_cast<Tourney *>(thisTourney)->AddGame(ie, i);
+	const_cast<Tourney *>(thisTourney)->AddGame(ie, i, maxPlayers);
     }
 
     // Now gather all tourneys from the hash table into a set for sorting.
