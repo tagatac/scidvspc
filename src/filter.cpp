@@ -49,6 +49,16 @@ Filter::Clone ()
 }
 
 void
+Filter::SetData (const byte * values, uint count)
+{
+    ASSERT (FilterSize <= Capacity);
+    CachedFilteredCount = 0;
+    CachedIndex = 0;
+    FilterCount = count;
+    memcpy (Data, values, FilterSize);
+}
+
+void
 Filter::Fill (byte value)
 {
     ASSERT (FilterSize <= Capacity);

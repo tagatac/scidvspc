@@ -2141,8 +2141,8 @@ set helpText(Tree) {<h1>Tree Window</h1>
   white-wins, draws, and black-wins.
   </p>
   <p><i>
-  Scid's Tree search is fast because of a novel idea - we
-search for games that do not reach this position!
+  Scid's Tree search is fast because of a novel idea - we search for games that do not reach this position!
+  And from ScidvsPC 4.28, the tree search is also multithreaded.
   </i></p>
   <h3>Opening a Tree</h3>
   <p>One can open a database and then select <b>Windows--<gt>Tree Window</b>,

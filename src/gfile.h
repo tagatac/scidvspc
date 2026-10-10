@@ -56,6 +56,7 @@ class GFile
 
   public:
     GFile()      { Init(); }
+    ~GFile();
 
     void      Init ();
     

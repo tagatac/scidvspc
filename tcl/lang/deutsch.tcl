@@ -611,6 +611,7 @@ menuText D TreeOpt "Optionen" 0
 menuText D TreeOptSlowmode "Gründliche Suche" 0 {Update mit hoher Genauigkeit, langsamer}
 menuText D TreeOptFastmode "Schneller Modus" 0 {Schnelles Update (ignoriert Zugumstellungen)}
 menuText D TreeOptFastAndSlowmode "Gründlicher und schneller Modus" 0 {Zunächst schneller Updatemodus, dann Nacharbeit im gründlichen Modus}
+menuText D TreeOptMultiCore "Mehrere CPU-Kerne nutzen" 0 {Den Baum auf mehreren CPU-Kernen berechnen}
 menuText D TreeOptStartStop "Automatisch aktualisieren" 0 {Schaltet das automatische Aktualisieren ein/aus}
 menuText D TreeOptLock "Anbinden" 0 \
   {Zugbaum an aktive Datenbank anbinden(/lösen)}

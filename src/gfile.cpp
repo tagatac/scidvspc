@@ -66,6 +66,22 @@ GFile::GetFileSize() {
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// GFile::~GFile(): closes the file WITHOUT flushing it (call Close()
+//      first to write a dirty block) and frees the block cache.
+GFile::~GFile ()
+{
+    if (Handle != NULL) {
+        Handle->Close ();
+        delete Handle;
+    }
+    for (uint i=0; i < CacheSize; i++) {
+        delete Cache[i];
+    }
+    delete[] Cache;
+}
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // GFile::Close(): close the GFile.
 errorT
 GFile::Close ()

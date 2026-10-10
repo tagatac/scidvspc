@@ -24,7 +24,7 @@ proc ::tree::doConfigMenus { baseNumber  { lang "" } } {
   foreach idx {0 1 2 3} tag {Alpha ECO Freq Score } {
     configMenuText $m.sort $idx TreeSort$tag $lang
   }
-  foreach idx {1 2 4 5 6 7 9 10 11 13 14 15} tag {Lock Training SortBest Short ShowBar ShowFrame Automask Autosave CacheSize Slowmode Fastmode FastAndSlowmode} {
+  foreach idx {1 2 4 5 6 7 9 10 11 13 14 15 16} tag {Lock Training SortBest Short ShowBar ShowFrame Automask Autosave CacheSize Slowmode Fastmode FastAndSlowmode MultiCore} {
     configMenuText $m.opt $idx TreeOpt$tag $lang
   }
   $m.opt entryconfig 8 -label "[tr Auto]-[tr TreeAdjust]"
@@ -215,6 +215,7 @@ proc ::tree::Open {{baseNumber 0}} {
   $w.menu.opt add radiobutton -label TreeOptSlowmode -value 0 -variable tree(fastmode$baseNumber)
   $w.menu.opt add radiobutton -label TreeOptFastmode -value 1 -variable tree(fastmode$baseNumber)
   $w.menu.opt add radiobutton -label TreeOptFastAndSlowmode -value 2 -variable tree(fastmode$baseNumber)
+  $w.menu.opt add checkbutton -label TreeOptMultiCore -variable ::tree::multiCore
   set tree(fastmode$baseNumber) 0
   $w.menu.help add command -label TreeHelpTree -accelerator F1 -command {helpWindow Tree}
   $w.menu.help add command -label TreeHelpIndex -command {helpWindow Index}

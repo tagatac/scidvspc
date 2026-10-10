@@ -54,6 +54,7 @@ class Filter
     void    Set (uint index, byte value);   // Sets the value at index.
     byte    Get (uint index);               // Gets the value at index.
     void    Fill (byte value);              // Sets all values.
+    void    SetData (const byte * values, uint count);  // memcpy threaded search results to treeFilter and set FilterCount
     void    Append (byte value);            // Appends one value.
     void    SetCapacity(uint size);
     void    SetFilterSize(uint size);

@@ -17,6 +17,9 @@ exec tcscid "$0" "$@"
 
 # Here is the list of standard positions searched for:
 
+# Patrick's multithreading 0/1 - S.A.
+namespace eval tree { set multiCore 1 }
+
 set standardLines {
     {}
     {1.c4}

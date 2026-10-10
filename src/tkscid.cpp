@@ -29,6 +29,12 @@
 #include <vector>
 #include <set>
 #include <unordered_set>
+#ifndef SCID_NO_THREADS
+#include <chrono>
+#include <condition_variable>
+#include <mutex>
+#include <thread>
+#endif
 
 #include "charsetconverter.h"
 
@@ -43,6 +49,10 @@ static Position * scratchPos = NULL;   // temporary "scratch" position.
 static Game * scratchGame = NULL;      // "scratch" game for searches, etc.
 static PBook * ecoBook = NULL;         // eco classification pbook.
 static SpellChecker * spellChecker [NUM_NAME_TYPES] = {NULL};  // Name correction.
+
+// Tree search: redraw the progress bar (and service Tk events) at most
+// this often. Short enough for smooth piece animation.
+static const int TREE_UPDATE_MS = 10;
 
 static progressBarT progBar;
 
@@ -15062,6 +15072,421 @@ sortTreeMoves (treeT * tree, int sortMethod, colorT toMove)
     return;
 }
 
+// AI coded feature contributed by Patrick to speedup tree search using multithreadings. Gah! - S.A.
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Tree search helpers.
+//
+// treeMatchGame(), treeFindNode() and treeAddGame() are the body of the
+// old search loop in sc_tree_search, moved out unchanged so that the
+// serial loop and the worker threads (treeSearchThreads) share them and
+// always find the same games.
+
+struct treeSearchT {
+    scidBaseT *  base;
+    Position *   pos;          // the search position
+    StoredLine * storedLine;
+    matSigT      msig;
+    uint         hpSig;
+    bool         isStartPos;   // pos is the standard start position
+    const byte * oldFilter;    // fast mode: only games in this filter, else NULL
+    Filter *     userFilter;   // filter mode: only games in this filter, else NULL
+};
+
+// treeMatchGame:
+//    Returns the ply (1..255) at which game i reaches the search position
+//    and sets *sm to the move played there, 0 if the game does not reach
+//    it, or -1 if the game could not be read.
+static int
+treeMatchGame (treeSearchT * ts, uint i, GFile * gfile, ByteBuffer * bbuf,
+               Game * game, simpleMoveT * sm)
+{
+    // if the game is not already in the filter, continue
+    if (ts->oldFilter != NULL  &&  ts->oldFilter[i] == 0) { return 0; }
+
+    IndexEntry * ie = ts->base->idx->FetchEntry (i);
+    if (ie->GetLength() == 0) { return 0; }
+
+    // We do not skip deleted games.
+    // if (ie->GetDeleteFlag()) { skipcount++; continue; }
+
+    // Check the stored line result for this game:
+    uint ply = 0;
+    if (! ts->storedLine->CanMatch (ie->GetStoredLineCode(), &ply, sm)) {
+        return 0;
+    }
+    bool foundMatch = (ply > 0);
+
+    // filterMode only counts dbFilter games (Only used by new OpeningReport filter option)
+    if (ts->userFilter != NULL  &&  ts->userFilter->Get(i) == 0) { return 0; }
+
+    if (!ts->isStartPos  &&  ie->GetNumHalfMoves() == 0) { return 0; }
+
+    if (!foundMatch  &&  ! ie->GetStartFlag()) {
+        // Speedups that only apply to standard start games:
+        if (ts->hpSig != HPSIG_StdStart  && ! hpSig_PossibleMatch (ts->hpSig, ie->GetHomePawnData())) {
+            return 0;
+        }
+    }
+
+    if (!foundMatch  &&  ts->msig != MATSIG_StdStart
+            &&  !matsig_isReachable (ts->msig, ie->GetFinalMatSig(),
+                                     ie->GetPromotionsFlag(),
+                                     ie->GetUnderPromoFlag())) {
+        return 0;
+    }
+
+    if (! foundMatch) {
+        if (gfile->ReadGame (bbuf, ie->GetOffset(), ie->GetLength()) != OK) {
+            return -1;
+        }
+        if (! game->ExactMatch (ts->pos, bbuf, sm)) { return 0; }
+        ply = game->GetCurrentPly() + 1;
+    }
+    return (ply > 255) ? 255 : ply;
+}
+
+// treeFindNode:
+//    Returns the index of the node for move sm, or count if there is none.
+static uint
+treeFindNode (treeNodeT * node, uint count, simpleMoveT * sm)
+{
+    for (uint n = 0; n < count; n++, node++) {
+        if (sm->from == node->sm.from  &&  sm->to == node->sm.to
+                &&  sm->promote == node->sm.promote) {
+            return n;
+        }
+    }
+    return count;
+}
+
+// treeAddGame:
+//    Adds the result, Elo and year of a matching game to a tree node.
+static void
+treeAddGame (treeNodeT * node, IndexEntry * ie, colorT toMove)
+{
+    eloT elo = (toMove == WHITE) ? ie->GetWhiteElo() : ie->GetBlackElo();
+    eloT oppElo = (toMove == WHITE) ? ie->GetBlackElo() : ie->GetWhiteElo();
+    uint year = ie->GetYear();
+    node->total++;
+    node->freq[ie->GetResult()]++;
+    if (elo > 0) {
+        node->eloSum += elo;
+        node->eloCount++;
+    }
+    if (oppElo > 0) {
+        node->perfSum += oppElo;
+        node->perfCount++;
+    }
+    if (year != 0) {
+        node->yearSum += year;
+        node->yearCount++;
+    }
+}
+
+enum {
+    TREE_MT_SERIAL,       // not done: run the serial loop
+    TREE_MT_DONE,         // base->tree and base->treeFilter are set
+    TREE_MT_INTERRUPTED,
+    TREE_MT_CANCELED,     // a newer search, or the base was changed
+    TREE_MT_ERROR         // error message is in the Tcl result
+};
+
+#ifndef SCID_NO_THREADS
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// treeSearchThreads:
+//    Runs the tree search on several CPU cores.
+//
+//    The games are handed out in chunks of TREE_CHUNK games. A worker
+//    only reads shared data (the index, the stored lines and filters) and
+//    has its own game file handle, Game, ByteBuffer and copy of the search
+//    position. Its moves are counted in its own node table, and the ply of
+//    each matching game goes to job.ply[], where each worker writes only
+//    its own chunks.
+//
+//    Every TREE_UPDATE_MS the main thread pauses the workers between two
+//    chunks and calls updateProgressBar(), exactly like the serial loop.
+//    So Tcl code never runs while a worker is searching: an event handler
+//    may close the base, add games or start another search.
+//
+//    At the end the node tables are merged in the order of the first
+//    matching game, so the tree is identical to the serial one.
+
+//    NB ::tree::multiCore is still defined in the gui irrespectively - S.A.
+
+static const uint TREE_CHUNK = 1024;              // games per hand-out
+static const uint TREE_GAMES_PER_THREAD = 65536;  // fewer: not worth a thread
+
+struct treeJobT {
+    std::mutex mutex;              // guards everything below except ply
+    std::condition_variable wake;  // workers wait here while paused
+    std::condition_variable idle;  // the main thread waits here
+    uint numGames;
+    uint next;                     // first game of the next chunk
+    uint done;                     // games searched, for the progress bar
+    uint busy;                     // workers searching a chunk
+    uint running;                  // workers that have not finished
+    bool pause;                    // main thread is running Tcl code
+    bool stop;                     // stop the search
+    byte * ply;                    // ply[i]: treeMatchGame() of game i
+};
+
+struct treeWorkerT {
+    std::thread  thread;
+    treeSearchT  ts;               // copy of the search, with its own pos
+    Position *   pos;
+    GFile *      gfile;            // own handle: a GFile caches a block
+    ByteBuffer * bbuf;
+    Game *       game;
+    treeNodeT    node [MAX_TREE_NODES];
+    uint         firstGame [MAX_TREE_NODES];  // first match of each move
+    uint         moveCount;
+    bool         tooManyMoves;
+    uint         readError;        // number of an unreadable game, or 0
+
+    treeWorkerT (treeSearchT * search) {
+        pos = new Position;
+        pos->CopyFrom (search->pos);
+        ts = *search;
+        ts.pos = pos;
+        gfile = new GFile;
+        bbuf = new ByteBuffer;
+        bbuf->SetBufferSize (BBUF_SIZE);
+        game = new Game;
+        moveCount = 0;
+        tooManyMoves = false;
+        readError = 0;
+    }
+    ~treeWorkerT () {
+        delete game;
+        delete bbuf;
+        delete gfile;
+        delete pos;
+    }
+};
+
+static void
+treeSearchWorker (treeJobT * job, treeWorkerT * w)
+{
+    std::unique_lock<std::mutex> lock (job->mutex);
+    while (true) {
+        while (job->pause  &&  !job->stop) { job->wake.wait (lock); }
+        if (job->stop  ||  job->next >= job->numGames) { break; }
+        uint start = job->next;
+        uint end = std::min (start + TREE_CHUNK, job->numGames);
+        job->next = end;
+        job->busy++;
+        lock.unlock();
+
+        bool failed = false;
+        for (uint i = start; i < end; i++) {
+            simpleMoveT sm;
+            int ply = treeMatchGame (&w->ts, i, w->gfile, w->bbuf, w->game, &sm);
+            if (ply == 0) { continue; }
+            if (ply < 0) {
+                w->readError = i + 1;
+                failed = true;
+                break;
+            }
+            job->ply[i] = (byte) ply;
+            uint n = treeFindNode (w->node, w->moveCount, &sm);
+            if (n >= MAX_TREE_NODES) {
+                w->tooManyMoves = true;
+                failed = true;
+                break;
+            }
+            if (n == w->moveCount) {
+                initTreeNode (&w->node[n]);
+                w->node[n].sm = sm;
+                w->firstGame[n] = i;
+                w->moveCount++;
+            }
+            treeAddGame (&w->node[n], w->ts.base->idx->FetchEntry (i),
+                         w->pos->GetToMove());
+        }
+
+        lock.lock();
+        if (failed) { job->stop = true; }
+        job->busy--;
+        job->done += end - start;
+        if (job->busy == 0) { job->idle.notify_one(); }
+    }
+    job->running--;
+    job->idle.notify_one();
+}
+
+static int
+treeSearchThreads (Tcl_Interp * ti, treeSearchT * ts, bool showProgress,
+                   std::set<scidBaseT**> & search_pool, scidBaseT ** poolToken)
+{
+    scidBaseT * base = ts->base;
+    uint numGames = base->numGames;
+
+    // One core is left for the GUI and chess engines.
+    uint nThreads = std::thread::hardware_concurrency();
+    if (nThreads > 1) { nThreads--; }
+    nThreads = std::min (nThreads, numGames / TREE_GAMES_PER_THREAD);
+    if (nThreads < 2  ||  base->memoryOnly
+            ||  base->treeFilter->Size() != numGames) {
+        return TREE_MT_SERIAL;
+    }
+
+    // The workers read the game file through their own handles, so games
+    // in the write buffer must reach the file first. The index must be
+    // in memory before they start (FetchEntry() would load it).
+    base->gfile->FlushAll();
+    base->idx->FetchEntry (0);
+
+    treeJobT job;
+    job.numGames = numGames;
+    job.next = job.done = job.busy = job.running = 0;
+    job.pause = job.stop = false;
+    job.ply = new byte [numGames];
+    memset (job.ply, 0, numGames);
+
+    std::vector<treeWorkerT *> workers;
+    bool ok = true;
+    for (uint t = 0; t < nThreads; t++) {
+        treeWorkerT * w = new treeWorkerT (ts);
+        workers.push_back (w);
+        if (w->gfile->Open (base->fileName, FMODE_ReadOnly) != OK) { ok = false; }
+    }
+    if (ok) {
+        job.running = nThreads;
+        for (uint t = 0; t < nThreads; t++) {
+            workers[t]->thread = std::thread (treeSearchWorker, &job, workers[t]);
+        }
+    }
+
+    // Do what the serial loop does every TREE_UPDATE_MS. Only called
+    // while no worker is searching.
+    auto serviceEvents = [&] (uint done) -> int {
+        // updateProgressBar does a full update here to keep UI responsive
+        updateProgressBar (ti, done, numGames);
+        if (interruptedProgress()) { return TREE_MT_INTERRUPTED; }
+        if (search_pool.count (poolToken) == 0  ||  !base->inUse ||  base->numGames != numGames) {
+            return TREE_MT_CANCELED;
+        }
+        return TREE_MT_DONE;
+    };
+
+    int result = ok ? TREE_MT_DONE : TREE_MT_SERIAL;
+    {
+        std::unique_lock<std::mutex> lock (job.mutex);
+        int lastUpdate = progBar.timer.MilliSecs() - TREE_UPDATE_MS;
+        while (job.running > 0) {
+            int wait = TREE_UPDATE_MS - (progBar.timer.MilliSecs() - lastUpdate);
+            if (!showProgress  ||  job.stop  ||  wait > 0) {
+                if (wait < 1) { wait = TREE_UPDATE_MS; }
+                job.idle.wait_for (lock, std::chrono::milliseconds (wait));
+                continue;
+            }
+            lastUpdate = progBar.timer.MilliSecs();
+
+            // Pause the workers until no chunk is being searched:
+            job.pause = true;
+            while (job.busy > 0) { job.idle.wait (lock); }
+            uint done = job.done;
+            lock.unlock();
+            result = serviceEvents (done);
+            lock.lock();
+            if (result != TREE_MT_DONE) { job.stop = true; }
+            job.pause = false;
+            job.wake.notify_all();
+        }
+    }
+    for (uint t = 0; t < nThreads; t++) {
+        if (workers[t]->thread.joinable()) { workers[t]->thread.join(); }
+    }
+    if (result == TREE_MT_DONE  &&  showProgress) {
+        result = serviceEvents (numGames);
+    }
+
+    if (result == TREE_MT_DONE) {
+        uint readError = 0;
+        for (uint t = 0; t < nThreads; t++) {
+            treeWorkerT * w = workers[t];
+            if (w->tooManyMoves) {
+                errorResult (ti, "Too many moves.");
+                result = TREE_MT_ERROR;
+            }
+            if (w->readError != 0  &&  (readError == 0  ||  w->readError < readError)) {
+                readError = w->readError;
+            }
+        }
+        if (result == TREE_MT_DONE  &&  readError != 0) {
+            char errorStr[100];
+            sprintf (errorStr, "Tree search: error reading game %u.", readError);
+            errorResult (ti, errorStr);
+            result = TREE_MT_ERROR;
+        }
+    }
+
+    if (result == TREE_MT_DONE) {
+        // (Re)set the results here: a search started by an event handler
+        // may have used base->tree and base->treeFilter meanwhile.
+        treeT * tree = &(base->tree);
+        tree->moveCount = tree->totalCount = 0;
+        uint matches = 0;
+        for (uint t = 0; t < nThreads; t++) {
+            for (uint n = 0; n < workers[t]->moveCount; n++) {
+                matches += workers[t]->node[n].total;
+            }
+        }
+        base->treeFilter->SetData (job.ply, matches);
+
+        // Merge the moves in the order of their first game, which is the
+        // order of the serial search:
+        std::vector< std::pair<uint, treeNodeT *> > found;
+        for (uint t = 0; t < nThreads; t++) {
+            treeWorkerT * w = workers[t];
+            for (uint n = 0; n < w->moveCount; n++) {
+                found.push_back (std::make_pair (w->firstGame[n], &(w->node[n])));
+            }
+        }
+        std::sort (found.begin(), found.end());
+        for (uint f = 0; f < found.size(); f++) {
+            treeNodeT * src = found[f].second;
+            uint n = treeFindNode (tree->node, tree->moveCount, &(src->sm));
+            if (n >= MAX_TREE_NODES) {
+                errorResult (ti, "Too many moves.");
+                result = TREE_MT_ERROR;
+                break;
+            }
+            treeNodeT * node = &(tree->node[n]);
+            if (n == tree->moveCount) {
+                // A new move to add:
+                initTreeNode (node);
+                node->sm = src->sm;
+                if (src->sm.from == NULL_SQUARE) {
+                    strCopy (node->san, "[end]");
+                } else {
+                    workers[0]->pos->MakeSANString (&(src->sm), node->san, SAN_CHECKTEST);
+                }
+                tree->moveCount++;
+            }
+            node->total += src->total;
+            for (uint r = 0; r < NUM_RESULT_TYPES; r++) {
+                node->freq[r] += src->freq[r];
+            }
+            node->eloCount += src->eloCount;
+            node->eloSum += src->eloSum;
+            node->perfCount += src->perfCount;
+            node->perfSum += src->perfSum;
+            node->yearCount += src->yearCount;
+            node->yearSum += src->yearSum;
+            tree->totalCount += src->total;
+        }
+    }
+
+    for (uint t = 0; t < nThreads; t++) { delete workers[t]; }
+    delete[] job.ply;
+    return result;
+}
+
+#endif  // #ifndef SCID_NO_THREADS
+
 // Returns the tree for the current position
 
 int
@@ -15206,64 +15631,21 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     	simpleMoveT sm;
     	base->treeFilter->Fill (0); // Reset the filter to be empty
     	skipcount = 0;
-    	uint updateStart = 5000;  // Update progress bar every 5000 games
+    	uint updateStart = 5000;  // Check the clock every 5000 games
     	uint update = 1;
+    	int lastUpdate = -TREE_UPDATE_MS;  // so the first check redraws
 
     	// 3. Set up the stored line code matches
     	StoredLine stored_line(pos);
 
-    	// 4. Search through each game
-    	for (uint i=0; i < base->numGames; i++) {
-	    if (showProgress) {
-		    update--;
-		    if (update == 0) {
-			    update = updateStart;
-			    // updateProgressBar does a full update here to keep UI responsive
-			    updateProgressBar (ti, i, base->numGames);
-			    if (interruptedProgress()) {
-				    Tcl_SetResult (ti, (char *) "interrupted", TCL_STATIC);
-				    return TCL_OK;
-			    }
-			    if (search_pool.count(&base) == 0) {
-				    Tcl_SetResult (ti, (char *) "canceled", TCL_STATIC);
-				    return TCL_OK;
-			    }
-		    }
-	    }
-
-	    const byte * oldFilterData = base->treeFilter->GetOldDataTree();
-
-	    // if the game is not already in the filter, continue
-	    if (fastMode && base->treeFilter->isValidOldDataTree && oldFilterData[i] == 0)
-		continue;
-
-	    IndexEntry* ie = base->idx->FetchEntry (i);
-	    if (ie->GetLength() == 0) {
-		skipcount++;
-		continue;
-	    }
-
-	    // We do not skip deleted games, so next line is commented out:
-	    // if (ie->GetDeleteFlag()) { skipcount++; continue; }
-
-	    bool foundMatch = false;
-	    uint ply = 0;
-
-	    // Check the stored line result for this game:
-	    if (! stored_line.CanMatch(ie->GetStoredLineCode(), &ply, &sm)) {
-		    skipcount++;
-		    continue;
-	    }
-	    if (ply > 0) foundMatch = true;
-
-	    // In filterMode, only count games that are in dbFilter (user filter):
-	    if (filterMode  &&  base->dbFilter->Get(i) == 0) {
-		    skipcount++;
-		    continue;
-	    }
-
-	    pieceT * bd = pos->GetBoard();
-	    bool isStartPos =
+    	pieceT * bd = pos->GetBoard();
+    	treeSearchT ts;
+    	ts.base = base;
+    	ts.pos = pos;
+    	ts.storedLine = &stored_line;
+    	ts.msig = msig;
+    	ts.hpSig = hpSig;
+    	ts.isStartPos =
 		   (bd[A1]==WR  &&  bd[B1]==WN  &&  bd[C1]==WB  &&  bd[D1]==WQ  &&
 		    bd[E1]==WK  &&  bd[F1]==WB  &&  bd[G1]==WN  &&  bd[H1]==WR  &&
 		    bd[A2]==WP  &&  bd[B2]==WP  &&  bd[C2]==WP  &&  bd[D2]==WP  &&
@@ -15272,105 +15654,96 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 		    bd[E7]==BP  &&  bd[F7]==BP  &&  bd[G7]==BP  &&  bd[H7]==BP  &&
 		    bd[A8]==BR  &&  bd[B8]==BN  &&  bd[C8]==BB  &&  bd[D8]==BQ  &&
 		    bd[E8]==BK  &&  bd[F8]==BB  &&  bd[G8]==BN  &&  bd[H8]==BR);
+    	ts.oldFilter = (fastMode && base->treeFilter->isValidOldDataTree)
+    	             ? base->treeFilter->GetOldDataTree() : NULL;
+    	ts.userFilter = filterMode ? base->dbFilter : NULL;
 
-	    if (!isStartPos  &&  ie->GetNumHalfMoves() == 0) {
+    	// 4. Search through each game. With the tree option "Use Multiple
+    	// CPU Cores" the search is done by treeSearchThreads(); it returns
+    	// TREE_MT_SERIAL when it can not be used (small or memory-only
+    	// base), and then the serial loop below does the search.
+    	int mt = TREE_MT_SERIAL;
+#ifndef SCID_NO_THREADS
+    	const char * multiCore = Tcl_GetVar (ti, "::tree::multiCore", TCL_GLOBAL_ONLY);
+    	if (multiCore != NULL  &&  strGetBoolean (multiCore)) {
+    	    mt = treeSearchThreads (ti, &ts, showProgress, search_pool, &base);
+    	}
+#endif
+    	if (mt == TREE_MT_INTERRUPTED) {
+		Tcl_SetResult (ti, (char *) "interrupted", TCL_STATIC);
+		return TCL_OK;
+    	}
+    	if (mt == TREE_MT_CANCELED) {
+		Tcl_SetResult (ti, (char *) "canceled", TCL_STATIC);
+		return TCL_OK;
+    	}
+    	if (mt == TREE_MT_ERROR) {
+		search_pool.erase(&base);
+		return TCL_ERROR;
+    	}
+
+    	for (uint i=0; mt == TREE_MT_SERIAL  &&  i < base->numGames; i++) {
+	    if (showProgress) {
+		    update--;
+		    if (update == 0) {
+			    update = updateStart;
+			    // A full "update" every 5000 games costs more than the
+			    // search itself. Redraw by time instead: often enough for
+			    // smooth piece animation and a live Stop button.
+			    int now = progBar.timer.MilliSecs();
+			    if (now - lastUpdate >= TREE_UPDATE_MS) {
+			    lastUpdate = now;
+			    // updateProgressBar does a full update here to keep UI responsive
+			    updateProgressBar (ti, i, base->numGames);
+			    if (interruptedProgress()) {
+				    Tcl_SetResult (ti, (char *) "interrupted", TCL_STATIC);
+				    return TCL_OK;
+			    }
+			    // (an event handler may also have closed the base)
+			    if (search_pool.count(&base) == 0  ||  !base->inUse) {
+				    Tcl_SetResult (ti, (char *) "canceled", TCL_STATIC);
+				    return TCL_OK;
+			    }
+			    }
+		    }
+	    }
+
+	    int ply = treeMatchGame (&ts, i, base->gfile, base->bbuf, scratchGame, &sm);
+	    if (ply < 0) {
+		    search_pool.erase(&base);
+		    char errorStr[100];
+		    sprintf (errorStr, "Tree search: error reading game %u.", i+1);
+		    return errorResult (ti, errorStr);
+	    }
+	    if (ply == 0) {
 		    skipcount++;
 		    continue;
 	    }
 
-	    if (!foundMatch  &&  ! ie->GetStartFlag()) {
-		    // Speedups that only apply to standard start games:
-		    if (hpSig != HPSIG_StdStart) { // Not the start mask
-			    if (! hpSig_PossibleMatch(hpSig, ie->GetHomePawnData())) {
-				    skipcount++;
-				    continue;
-			    }
-		    }
+	    // A match was found: add it to the list of found moves
+	    base->treeFilter->Set (i, (byte) ply);
+	    uint search = treeFindNode (tree->node, tree->moveCount, &sm);
+
+	    // Check for exceeding max number of nodes:
+	    if (search >= MAX_TREE_NODES) {
+		    search_pool.erase(&base);
+		    return errorResult (ti, "Too many moves.");
 	    }
 
-	    if (!foundMatch  &&  msig != MATSIG_StdStart
-		   &&  !matsig_isReachable (msig, ie->GetFinalMatSig(),
-					    ie->GetPromotionsFlag(),
-					    ie->GetUnderPromoFlag()))
-	    {
-		    skipcount++;
-		    continue;
-	    }
-
-	    char errorStr[100];
-	    if (! foundMatch) {
-		    if (base->gfile->ReadGame (base->bbuf, ie->GetOffset(), ie->GetLength()) != OK) {
-			    search_pool.erase(&base);
-			    sprintf (errorStr, "Tree search: error reading game %u.", i+1);
-			    return errorResult (ti, errorStr);
-		    }
-		    Game *g = scratchGame;
-		    if (g->ExactMatch (pos, base->bbuf, &sm)) {
-			    ply = g->GetCurrentPly() + 1;
-			    //if (ply > 255) { ply = 255; }
-			    foundMatch = true;
-			    //base->filter->Set (i, (byte) ply);
-		    }
-	    }
-
-	    // If match was found, add it to the list of found moves
-	    if (foundMatch) {
-		    if (ply > 255) { ply = 255; }
-		    base->treeFilter->Set (i, (byte) ply);
-		    uint search;
-		    treeNodeT* node = tree->node;
-		    for (search = 0; search < tree->moveCount; search++, node++) {
-			    if (sm.from == node->sm.from
-				&&  sm.to == node->sm.to
-				&&  sm.promote == node->sm.promote) {
-				    break;
-			    }
-		    }
-
-		    // Now node is the node to update or add.
-		    // Check for exceeding max number of nodes:
-		    if (search >= MAX_TREE_NODES) {
-			    search_pool.erase(&base);
-			    return errorResult (ti, "Too many moves.");
-		    }
-
-		    if (search == tree->moveCount) {
-			    // A new move to add:
-			    initTreeNode (node);
-			    node->sm = sm;
-			    if (sm.from == NULL_SQUARE) {
-				    strCopy(node->san, "[end]");
-			    } else {
-				    pos->MakeSANString (&sm, node->san, SAN_CHECKTEST);
-			    }
-			    tree->moveCount++;
-		    }
-		    node->total++;
-		    node->freq[ie->GetResult()]++;
-		    eloT elo = 0;
-		    eloT oppElo = 0;
-		    uint year = ie->GetYear();
-		    if (pos->GetToMove() == WHITE) {
-			    elo = ie->GetWhiteElo();
-			    oppElo = ie->GetBlackElo();
+	    treeNodeT* node = &(tree->node[search]);
+	    if (search == tree->moveCount) {
+		    // A new move to add:
+		    initTreeNode (node);
+		    node->sm = sm;
+		    if (sm.from == NULL_SQUARE) {
+			    strCopy(node->san, "[end]");
 		    } else {
-			    elo = ie->GetBlackElo();
-			    oppElo = ie->GetWhiteElo();
+			    pos->MakeSANString (&sm, node->san, SAN_CHECKTEST);
 		    }
-		    if (elo > 0) {
-			    node->eloSum += elo;
-			    node->eloCount++;
-		    }
-		    if (oppElo > 0) {
-			    node->perfSum += oppElo;
-			    node->perfCount++;
-		    }
-		    if (year != 0) {
-			    node->yearSum += year;
-			    node->yearCount++;
-		    }
-		    tree->totalCount++;
-	    } // end: if (foundMatch) ...
+		    tree->moveCount++;
+	    }
+	    treeAddGame (node, base->idx->FetchEntry (i), pos->GetToMove());
+	    tree->totalCount++;
     	} // end: for
     }
 
