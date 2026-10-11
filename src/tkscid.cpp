@@ -2158,7 +2158,8 @@ sc_base_ecoStats (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     if (result->count > 0) {
         uint score = result->results[RESULT_White] * 2
             + result->results[RESULT_Draw] + result->results[RESULT_None];
-        score = score * 500 / result->count;
+        // 64-bit: with more than ~4 million games this overflows a 32-bit uint
+        score = score * 500ULL / result->count;
         char str[10];
         sprintf (str, "%u.%u", score / 10, score % 10);
         Tcl_AppendElement (ti, str);
@@ -5780,7 +5781,8 @@ sc_filter_stats (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     char temp[80];
     uint percentScore = results[RESULT_White] * 2 + results[RESULT_Draw] +
         results[RESULT_None];
-    percentScore = total ? percentScore * 500 / total : 0;
+    // 64-bit: with more than ~4 million games this overflows a 32-bit uint
+    percentScore = total ? percentScore * 500ULL / total : 0;
     sprintf (temp, "%7u %7u %7u %7u   %3u%c%u%%",
              total,
              results[RESULT_White],
@@ -14376,8 +14378,8 @@ sc_report (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         } else {
             resultT result = strGetResult (argv[3]);
             appendUintElement (ti, report->PercentFreq (result));
-            uint freq = db->stats.nResults[result] * 1000;
-            freq = freq / db->numGames;
+            // 64-bit: with more than ~4 million games this overflows a 32-bit uint
+            uint freq = db->stats.nResults[result] * 1000ULL / db->numGames;
             appendUintElement (ti, freq);
         }
         break;
@@ -14453,7 +14455,8 @@ sc_report (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     case OPT_SCORE:
         appendUintElement (ti, report->PercentScore());
         {
-            uint percent = db->stats.nResults[RESULT_White] * 2;
+            // 64-bit: with more than ~4 million games this overflows a 32-bit uint
+            unsigned long long percent = db->stats.nResults[RESULT_White] * 2;
             percent += db->stats.nResults[RESULT_Draw];
             percent = percent * 500;
             uint sum = (db->stats.nResults[RESULT_White] +
@@ -15847,6 +15850,7 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         strcpy(tempTrans, node->san);
         transPieces(tempTrans);
 
+        // 64-bit below: 1000 * node->total overflows a 32-bit uint for moves with more than 4.29 million games
         if (listMode) {
             if (ecoStr[0] == 0) { strCopy (ecoStr, "{}"); }
             sprintf (temp, "%2u %-6s%7u %3d%c%1d %3d%c%1d",
@@ -15855,7 +15859,7 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
                      node->total,
                      100 * node->total / tree->totalCount,
                      decimalPointChar,
-                     (1000 * node->total / tree->totalCount) % 10,
+                     (uint) (1000ULL * node->total / tree->totalCount % 10),
                      node->score / 10,
                      decimalPointChar,
                      node->score % 10);
@@ -15867,13 +15871,13 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
                      node->total,
                      100 * node->total / tree->totalCount,
                      decimalPointChar,
-                     (1000 * node->total / tree->totalCount) % 10,
+                     (uint) (1000ULL * node->total / tree->totalCount % 10),
                      node->score / 10,
                      decimalPointChar,
                      node->score % 10);
             output->Append (temp);
         }
-        uint pctDraws = node->freq[RESULT_Draw] * 1000 / node->total;
+        uint pctDraws = node->freq[RESULT_Draw] * 1000ULL / node->total;
         sprintf (temp, " %3d%%", (pctDraws + 5) / 10);
         output->Append (temp);
 
@@ -15992,7 +15996,7 @@ sc_tree_search (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
                      totalScore / 10, decimalPointChar, totalScore % 10);
             output->Append (temp);
         }
-        uint pctDraws = nDraws * 1000 / tree->totalCount;
+        uint pctDraws = nDraws * 1000ULL / tree->totalCount;
         sprintf (temp, " %3d%%", (pctDraws + 5) / 10);
         output->Append (temp);
 

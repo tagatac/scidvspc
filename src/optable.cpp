@@ -616,7 +616,8 @@ OpTable::SetFormat (const char * str)
 uint
 OpTable::PercentScore (void)
 {
-    uint percent = Results[RESULT_White] * 2;
+    // 64-bit: with more than ~4 million games this overflows a 32-bit uint
+    unsigned long long percent = Results[RESULT_White] * 2;
     percent += Results[RESULT_Draw];
     percent = percent * 500;
     uint total = Results[RESULT_White] + Results[RESULT_Draw]
@@ -631,7 +632,8 @@ OpTable::PercentScore (void)
 //    games except those excluded from the theory table.
 uint
 OpTable::TheoryPercent (void) {
-    uint percent = TheoryResults[RESULT_White] * 2;
+    // 64-bit: with more than ~4 million games this overflows a 32-bit uint
+    unsigned long long percent = TheoryResults[RESULT_White] * 2;
     percent += TheoryResults[RESULT_Draw];
     percent = percent * 500;
     uint total = TheoryResults[RESULT_White] + TheoryResults[RESULT_Draw]
@@ -658,7 +660,7 @@ OpTable::TheoryScore (void)
 uint
 OpTable::PercentFreq (resultT result)
 {
-    uint percent = Results[result] * 1000;
+    unsigned long long percent = Results[result] * 1000ULL;
     uint total = Results[RESULT_White] + Results[RESULT_Draw] +
         Results[RESULT_Black] + Results[RESULT_None];
     if (total > 0) { percent = percent / total; }
