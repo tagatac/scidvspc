@@ -636,6 +636,16 @@ namespace eval fics {
       }
   }
 
+  # Resize all boards from a wheel event, Gah! 
+  proc changeScaleSizeWheel {board} {
+    # This board has already been resized by bindControlMouseWheelResizeBoard, which chains here
+    set size [::board::size $board]
+    set ::fics::size [expr ($size-20)/5]
+    if {$::fics::size < 1} {set ::fics::size 1}
+    if {$::fics::size > 5} {set ::fics::size 5}
+    ::fics::changeScaleSize
+}
+
   proc recordFicsSize {} {
     set w .fics
     variable logged
@@ -1578,6 +1588,7 @@ namespace eval fics {
       }
       frame $w.bottom.game$game
       ::board::new $w.bottom.game$game.bd [expr {$::fics::size * 5 + 20}] 1 0 1 $::fics::showEval
+      bindControlMouseWheelResizeBoard $w.bottom.game$game.bd.bd  $w.bottom.game$game.bd "::fics::changeScaleSizeWheel $w.bottom.game$game.bd"
       # At bottom we have White and game number
       # (note whiteElo, blackElo labels are not packed, only used for data should we load game
       # data for these labels is read next line from fics
