@@ -2175,13 +2175,15 @@ proc ::board::mark::DrawVar {pathName from to color varnum {move {}} {engineThic
   }
 }
 
-# ::board::mark::DrawRectangle --
-# Draws a rectangle surrounding the square
+# Draws a rectangle surrounding the square (Last Move)
+
 proc ::board::mark::DrawRectangle { pathName square color pattern } {
   if {$square < 0 || $square > 63} { puts "error square = $square" ; return }
   set box [::board::mark::GetBox $pathName $square 1.0 1]
-  $pathName create rectangle $box \
-      -outline $color -width $::highlightLastMoveWidth -dash $pattern -tag highlightLastMove
+  set id [
+   $pathName create rectangle $box -outline $color -width $::highlightLastMoveWidth -dash $pattern -tag highlightLastMove
+  ]
+  catch {$pathName lower $id arrows}
 }
 
 image create photo tux16x16 -data {
