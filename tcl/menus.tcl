@@ -1327,7 +1327,7 @@ foreach i [lsort -nocase [ttk::style theme names]] {
 }
 
 proc changeTheme {} {
-    global lookTheme defaultBackground enableForeground enableBackground
+    global lookTheme defaultForeground defaultBackground enableForeground enableBackground
 
     ::ttk::style theme use $lookTheme
     if {$enableBackground} {
