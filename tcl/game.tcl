@@ -288,7 +288,12 @@ proc ::game::LoadMenu {w base gnum x y} {
     $m add command -label $::tr(LoadGame)
     $m add command -label $::tr(MergeGame)
   }
-  $m entryconfigure 0 -command "::gbrowser::new $base $gnum"
+  $m entryconfigure 0 -command "
+    if {\[info exists ::browse(ply$gnum)\]} {
+      ::gbrowser::new $base $gnum \$::browse(ply$gnum)
+    } else {
+      ::gbrowser::new $base $gnum
+    }"
 
   $m entryconfigure 1 -command "
     if {!\[checkBaseInUse $base $w\]} {
@@ -300,7 +305,16 @@ proc ::game::LoadMenu {w base gnum x y} {
       ::plist::refresh
       ::tourney::refresh
     }
-    ::game::Load $gnum"
+    ::game::Load $gnum 0
+    # check if called from multigame browser
+    if {\[info exists ::browse(ply$gnum)\]} {
+       sc_move ply \$::browse(ply$gnum)
+       if {\[winfo exists .preview.game$gnum\]} {
+         ::board::flip .main.board \[::board::isFlipped .preview.game$gnum.bd\]
+       }
+    }
+    updateBoard -pgn"
+
 
   $m entryconfigure 2 -command "mergeGame $base $gnum"
 
