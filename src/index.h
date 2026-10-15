@@ -291,7 +291,10 @@ class IndexEntry
     inline ecoT    GetEcoCode ()  { return EcoCode; }
     inline ushort  GetNumHalfMoves () { return NumHalfMoves; }
 
-//     inline uint GetFlags ()          { return Flags; }
+    // All IDX_NUM_FLAGS flags as one bit mask (bit n = GetFlag (1 << n)):
+    inline uint GetAllFlags () {
+      return Flags | ((uint) (Length_High & 0x3F) << 16);
+    }
     inline bool GetFlag (uint mask)  {
       if (mask & 0xFFFF)
         return Flags & mask;

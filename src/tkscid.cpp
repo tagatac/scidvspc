@@ -230,6 +230,21 @@ recalcFlagCounts (scidBaseT * basePtr)
         stats->ecoCount4[i].results[RESULT_Draw] = 0;
         stats->ecoCount4[i].results[RESULT_None] = 0;
     }
+    // Player Elo and date ranges are collected in one flat array first;
+    // updating the scattered name nodes for every game is slow.
+    struct playerT { dateT first, last; eloT elo; };
+    std::vector<playerT> players (basePtr->nb->GetNumNames (NAME_PLAYER),
+                                  playerT { ZERO_DATE, ZERO_DATE, 0 });
+    auto addElo = [&players] (idNumberT id, eloT elo) {
+        if (id < players.size()  &&  elo > players[id].elo) { players[id].elo = elo; }
+    };
+    auto addDate = [&players] (idNumberT id, dateT date) {
+        if (id >= players.size()) { return; }
+        playerT & p = players[id];
+        if (p.first == ZERO_DATE  ||  date < p.first) { p.first = date; }
+        if (date > p.last) { p.last = date; }
+    };
+
     // Read stats from index entry of each game:
     for (uint gnum=0; gnum < basePtr->numGames; gnum++) {
         IndexEntry * ie = basePtr->idx->FetchEntry (gnum);
@@ -241,7 +256,7 @@ recalcFlagCounts (scidBaseT * basePtr)
             if (stats->minRating == 0) { stats->minRating = elo; }
             if (elo < stats->minRating) { stats->minRating = elo; }
             if (elo > stats->maxRating) { stats->maxRating = elo; }
-            basePtr->nb->AddElo (ie->GetWhite(), elo);
+            addElo (ie->GetWhite(), elo);
         }
         elo = ie->GetBlackElo();
         if (elo > 0) {
@@ -250,7 +265,7 @@ recalcFlagCounts (scidBaseT * basePtr)
             if (stats->minRating == 0) { stats->minRating = elo; }
             if (elo < stats->minRating) { stats->minRating = elo; }
             if (elo > stats->maxRating) { stats->maxRating = elo; }
-            basePtr->nb->AddElo (ie->GetBlack(), elo);
+            addElo (ie->GetBlack(), elo);
         }
         dateT date = ie->GetDate();
         if (gnum == 0) {
@@ -261,15 +276,13 @@ recalcFlagCounts (scidBaseT * basePtr)
             if (date > stats->maxDate) { stats->maxDate = date; }
             stats->nYears++;
             stats->sumYears += date_GetYear (date);
-            basePtr->nb->AddDate (ie->GetWhite(), date);
-            basePtr->nb->AddDate (ie->GetBlack(), date);
+            addDate (ie->GetWhite(), date);
+            addDate (ie->GetBlack(), date);
         }
 
+        uint flags = ie->GetAllFlags();
         for (uint flag = 0; flag < IDX_NUM_FLAGS; flag++) {
-            bool value = ie->GetFlag (1 << flag);
-            if (value) {
-                stats->flagCount[flag]++;
-            }
+            stats->flagCount[flag] += (flags >> flag) & 1;
         }
 
         ecoT eco = ie->GetEcoCode();
@@ -297,6 +310,12 @@ recalcFlagCounts (scidBaseT * basePtr)
             }
         }
     }
+
+    for (idNumberT id = 0; id < players.size(); id++) {
+        basePtr->nb->AddElo (id, players[id].elo);
+        basePtr->nb->AddDate (id, players[id].first);
+        basePtr->nb->AddDate (id, players[id].last);
+    }
 }
 
 void
@@ -320,9 +339,14 @@ recalcEstimatedRatings (NameBase * nb)
 void
 recalcNameFrequencies (NameBase * nb, Index * idx)
 {
+    // Count in flat arrays first, then store each name's count once.
+    std::vector<uint> freq [NUM_NAME_TYPES];
     for (nameT nt = NAME_FIRST; nt <= NAME_LAST; nt++) {
-        nb->ZeroAllFrequencies (nt);
+        freq[nt].assign (nb->GetNumNames (nt), 0);
     }
+    auto inc = [&freq] (nameT nt, idNumberT id) {
+        if (id < freq[nt].size()) { freq[nt][id]++; }
+    };
     IndexEntry iE;
     for (uint i=0; i < idx->GetNumGames(); i++) {
         IndexEntry * ie = &iE;
@@ -331,11 +355,16 @@ recalcNameFrequencies (NameBase * nb, Index * idx)
         } else {
             idx->ReadEntries (&iE, i, 1);
         }
-        nb->IncFrequency (NAME_PLAYER, ie->GetWhite(), 1);
-        nb->IncFrequency (NAME_PLAYER, ie->GetBlack(), 1);
-        nb->IncFrequency (NAME_EVENT, ie->GetEvent(), 1);
-        nb->IncFrequency (NAME_SITE, ie->GetSite(), 1);
-        nb->IncFrequency (NAME_ROUND, ie->GetRound(), 1);
+        inc (NAME_PLAYER, ie->GetWhite());
+        inc (NAME_PLAYER, ie->GetBlack());
+        inc (NAME_EVENT, ie->GetEvent());
+        inc (NAME_SITE, ie->GetSite());
+        inc (NAME_ROUND, ie->GetRound());
+    }
+    for (nameT nt = NAME_FIRST; nt <= NAME_LAST; nt++) {
+        for (idNumberT id = 0; id < freq[nt].size(); id++) {
+            nb->SetFrequency (nt, id, freq[nt][id]);
+        }
     }
 }
 
