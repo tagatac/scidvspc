@@ -439,6 +439,7 @@ class IndexEntry
     // Other IndexEntry methods:
 
     errorT Read (MFile * fp, versionT version);
+    void   Unpack (const byte * p);
     errorT Write (MFile * fp, versionT version);
 
     void PrintGameInfo (char * outStr, gameNumberT gnFiltered, gameNumberT gnReal, NameBase * nb, const char * format, const char * moveStr);

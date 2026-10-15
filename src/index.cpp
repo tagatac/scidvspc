@@ -174,61 +174,61 @@ IndexEntry::Read (MFile * fp, versionT version)
 {
     ASSERT (fp != NULL);
 
-    version = 0; // We dont have any other version-specific code.
+    byte buf [INDEX_ENTRY_SIZE];
+    fp->ReadNBytes ((char *) buf, INDEX_ENTRY_SIZE);
+    Unpack (buf);
+    return OK;
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// IndexEntry::Unpack():
+//      Decodes a single index entry from INDEX_ENTRY_SIZE bytes.
+void
+IndexEntry::Unpack (const byte * p)
+{
+    #define GET2(p) ((uint)(p)[0] << 8 | (p)[1])
+    #define GET4(p) ((uint)(p)[0] << 24 | (uint)(p)[1] << 16 | (uint)(p)[2] << 8 | (p)[3])
 
     // Length of each gamefile record and its offset.
-    Offset = fp->ReadFourBytes ();
-    Length_Low = fp->ReadTwoBytes ();
-    Length_High = fp->ReadOneByte();
-    Flags = fp->ReadTwoBytes (); 
+    Offset = GET4(p);               p += 4;
+    Length_Low = GET2(p);           p += 2;
+    Length_High = *p++;
+    Flags = GET2(p);                p += 2;
 
     // White and Black player names:
-    WhiteBlack_High = fp->ReadOneByte ();
-    WhiteID_Low = fp->ReadTwoBytes ();
-    BlackID_Low = fp->ReadTwoBytes ();
+    WhiteBlack_High = *p++;
+    WhiteID_Low = GET2(p);          p += 2;
+    BlackID_Low = GET2(p);          p += 2;
 
     // Event, Site and Round names:
-    EventSiteRnd_High = fp->ReadOneByte ();
-    EventID_Low = fp->ReadTwoBytes ();
-    SiteID_Low = fp->ReadTwoBytes ();
-    RoundID_Low = fp->ReadTwoBytes ();
+    EventSiteRnd_High = *p++;
+    EventID_Low = GET2(p);          p += 2;
+    SiteID_Low = GET2(p);           p += 2;
+    RoundID_Low = GET2(p);          p += 2;
 
-    VarCounts = fp->ReadTwoBytes();
-    EcoCode = fp->ReadTwoBytes ();
+    VarCounts = GET2(p);            p += 2;
+    EcoCode = GET2(p);              p += 2;
 
     // Date and EventDate are stored in four bytes.
-    Dates = fp->ReadFourBytes();
+    Dates = GET4(p);                p += 4;
 
     // The two ELO ratings and rating types take 2 bytes each.
-    WhiteElo = fp->ReadTwoBytes ();
-    BlackElo = fp->ReadTwoBytes ();
+    WhiteElo = GET2(p);             p += 2;
+    BlackElo = GET2(p);             p += 2;
     if (GetWhiteElo() > MAX_ELO) { SetWhiteElo(MAX_ELO); }
     if (GetBlackElo() > MAX_ELO) { SetBlackElo(MAX_ELO); }
 
-    FinalMatSig = fp->ReadFourBytes ();
-    NumHalfMoves = fp->ReadOneByte ();
+    FinalMatSig = GET4(p);          p += 4;
+    NumHalfMoves = *p++;
 
-    // Read the 9-byte homePawnData array:
-    byte * pb = HomePawnData;
-    // The first byte of HomePawnData has high bits of the NumHalfMoves
-    // counter in its top two bits:
-    uint pb0 = fp->ReadOneByte();
-    *pb = (pb0 & 63);
-    pb++;
-    NumHalfMoves = NumHalfMoves | ((pb0 >> 6) << 8);
-    for (uint i2 = 1; i2 < HPSIG_SIZE; i2++) {
-        *pb = fp->ReadOneByte ();
-        pb++;
-    }
-
-    // Top 2 bits of HomePawnData[0] are for NumHalfMoves:
-    uint numMoves_High = HomePawnData[0];
+    // The 9-byte homePawnData array. The top 2 bits of its first
+    // byte are the high bits of the NumHalfMoves counter.
+    for (uint i = 0; i < HPSIG_SIZE; i++) { HomePawnData[i] = p[i]; }
+    NumHalfMoves = NumHalfMoves | ((HomePawnData[0] >> 6) << 8);
     HomePawnData[0] = HomePawnData[0] & 63;
-    numMoves_High >>= 6;
-    numMoves_High <<= 8;
-    NumHalfMoves = NumHalfMoves | numMoves_High;
 
-    return OK;
+    #undef GET2
+    #undef GET4
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1179,28 +1179,27 @@ Index::ReadEntries (IndexEntry * ie, gameNumberT start, uint count)
 
     if (FileMode == FMODE_WriteOnly) { return ERROR_FileMode; }
 
-    uint fpos = IndexEntrySize * start + INDEX_HEADER_SIZE;
-    if (!InMemory) { // We may need to seek:
-        if (FilePos != fpos) {
-            FilePtr->Seek (fpos);
-            FilePos = fpos;
-        }
+    if (InMemory) {
+        // It is already in memory, so copy the entries:
+        ASSERT (Entries != NULL);
+        for (uint i=0; i < count; i++) { ie[i] = *FetchEntry (start + i); }
+        return OK;
     }
 
-    for (uint i=start; i < start + count; i++) {
-        if (InMemory) {
-            // It is already in memory, so fetch the entry:
-            ASSERT (Entries != NULL);
-            IndexEntry * ieTemp = FetchEntry(i);
-            // Copy the entry to the provided array:
-            *ie = *ieTemp;
-            ie++;
-            continue;
-        }
-        ie->Read (FilePtr, Header.version);
-        ie++;
-        FilePos += IndexEntrySize;
+    uint fpos = IndexEntrySize * start + INDEX_HEADER_SIZE;
+    if (FilePos != fpos) {  // We may need to seek:
+        FilePtr->Seek (fpos);
+        FilePos = fpos;
     }
+
+    // Read all the entries at once, then decode them from memory:
+    byte * buf = new byte [count * INDEX_ENTRY_SIZE];
+    FilePtr->ReadNBytes ((char *) buf, count * INDEX_ENTRY_SIZE);
+    for (uint i=0; i < count; i++) {
+        ie[i].Unpack (buf + i * INDEX_ENTRY_SIZE);
+    }
+    delete[] buf;
+    FilePos += count * IndexEntrySize;
     return OK;
 }
 

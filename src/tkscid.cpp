@@ -325,12 +325,17 @@ recalcNameFrequencies (NameBase * nb, Index * idx)
     }
     IndexEntry iE;
     for (uint i=0; i < idx->GetNumGames(); i++) {
-        idx->ReadEntries (&iE, i, 1);
-        nb->IncFrequency (NAME_PLAYER, iE.GetWhite(), 1);
-        nb->IncFrequency (NAME_PLAYER, iE.GetBlack(), 1);
-        nb->IncFrequency (NAME_EVENT, iE.GetEvent(), 1);
-        nb->IncFrequency (NAME_SITE, iE.GetSite(), 1);
-        nb->IncFrequency (NAME_ROUND, iE.GetRound(), 1);
+        IndexEntry * ie = &iE;
+        if (idx->AllInMemory()) {
+            ie = idx->FetchEntry (i);
+        } else {
+            idx->ReadEntries (&iE, i, 1);
+        }
+        nb->IncFrequency (NAME_PLAYER, ie->GetWhite(), 1);
+        nb->IncFrequency (NAME_PLAYER, ie->GetBlack(), 1);
+        nb->IncFrequency (NAME_EVENT, ie->GetEvent(), 1);
+        nb->IncFrequency (NAME_SITE, ie->GetSite(), 1);
+        nb->IncFrequency (NAME_ROUND, ie->GetRound(), 1);
     }
 }
 
@@ -898,6 +903,14 @@ sc_base_inUse (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
 void
 base_progress (void * data, uint count, uint total) {
+    // A full update every few thousand games can cost more than the
+    // work itself, so redraw by time instead.
+    static int lastUpdate = 0;
+    int now = progBar.timer.MilliSecs();
+    if (count < total  &&  now >= lastUpdate  &&  now - lastUpdate < TREE_UPDATE_MS) {
+        return;
+    }
+    lastUpdate = now;
     updateProgressBar ((Tcl_Interp *)data, count, total);
 }
 
