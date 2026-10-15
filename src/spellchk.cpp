@@ -22,16 +22,10 @@
 inline uint
 spellHash (const char * str)
 {
-    uint hash = (byte) *str;
-    if (*str == 0) { return hash; }
-    str++;
-    hash = (hash << 8 | hash) + (byte)*str;
-    if (*str == 0) { return hash; }
-    str++;
-    hash = (hash << 8 | hash) + (byte)*str;
-    if (*str == 0) { return hash; }
-    str++;
-    hash = (hash << 8 | hash) + (byte)*str;
+    // FNV-1a over the whole name. Hashing only the first four
+    // characters put e.g. all "Kasp..." players in one long chain.
+    uint hash = 2166136261u;
+    while (*str) { hash = (hash ^ (byte) *str++) * 16777619u; }
     return hash;
 }
 
