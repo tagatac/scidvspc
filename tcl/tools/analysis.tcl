@@ -2531,7 +2531,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   bind $w <Control-Return>   "addAnalysisVariation $n"
   bind $w <Control-KP_Enter> "addAnalysisVariation $n"
   bind $w <space>  "$w.b.startStop invoke"
-  foreach i {1 2 3 4 5} {
+  foreach i {1 2 3 4 5 6 7 8 9} {
     bind $w <Key-$i>    "set analysis(multiPVCount$n) $i ; changePVSize $n"
     bind $w <Key-KP_$i> "set analysis(multiPVCount$n) $i ; changePVSize $n"
   }
@@ -3395,6 +3395,7 @@ proc stopAnalyzeMode { {n 0} } {
   after cancel $analysis(bdPending$n)
   if { $analysis(uci$n) } {
     after cancel $analysis(after$n)
+    set analysis(after$n) ""
     sendToEngine $n stop
     set analysis(go$n) 0
   } else  {

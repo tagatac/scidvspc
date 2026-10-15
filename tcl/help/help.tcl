@@ -2797,7 +2797,7 @@ making for easier <a Analysis Debugging>Debugging</a>.
   <p>
   <b>Space Bar</b> makes the engine start/stop. Pressing <b>Enter</b> will
   add the engine's current best move, and <b>Control+Enter</b>, the whole line.
-  Keys <b>1 to 5</b> will set the engine's variation count (MultiPV).
+  Keys <b>1 to 9</b> will set the engine's variation count (MultiPV).
   </p>
   <p>
   At the top of the window are some useful buttons. Below them,
@@ -6722,7 +6722,7 @@ Game move/reorder feature:
 <li>Minor Book Window fixes - enable undo, remove the arrow buttons (use wheelmouse instead), and properly name and document the 'Other Moves' button</li>
 <br>
 
-<li>Analysis Engines: pressing keys 1 to 5 sets PV</li>
+<li>Analysis Engines: pressing keys 1 to 9 sets PV</li>
 <li>Set undo point when marking squares</li>
 <li>Remove Suggested Moves feature</li>
 <li>Update Gregors tktext patch to current (2018-08-13)</li>
