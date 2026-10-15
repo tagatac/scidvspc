@@ -270,12 +270,10 @@ MFile::ReadLine (char * str, uint maxLength)
         }
         *str = 0;
     } else {
-        fgets (str, (int) maxLength, Handle);
-        #ifdef _WIN32
-        Location = _ftelli64 (Handle);
-        #else
-        Location = ftell (Handle);
-        #endif
+        // Count the bytes read: calling ftell() for every line was slow.
+        if (fgets (str, (int) maxLength, Handle) != NULL) {
+            Location += strLength (str);
+        }
     }
     return OK;
 }

@@ -509,27 +509,13 @@ strTrimLeft (const char * target, const char * trimChars)
 uint
 strTrimRight (char * target, const char * trimChars)
 {
-    uint trimCount = 0;
-    char * s = target;
-    char * lastNonTrim = NULL;
-    while (*s) {
-        if (strContainsChar (trimChars, *s)) {
-            trimCount++;
-        } else {
-            lastNonTrim = s;
-            trimCount = 0;
-        }
-        s++;
-    }
-    if (lastNonTrim != NULL) {
-        // End the string after the last nontrimmable char:
-        lastNonTrim++;
-        *lastNonTrim = 0;
-    } else {
-       // The string only contained trimmable characters:
-        *target = 0;
-    }
-    return trimCount;
+    // Go back from the end instead of checking every character
+    // (slow when reading the millions of lines of ratings.ssp).
+    char * end = target + strLength (target);
+    char * s = end;
+    while (s > target  &&  strContainsChar (trimChars, s[-1])) { s--; }
+    *s = 0;
+    return end - s;
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
