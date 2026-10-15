@@ -18,10 +18,12 @@
 #include "misc.h"
 #include "stralloc.h"
 #include "namebase.h"
+#include <vector>
 
 const uint SPELL_HASH_SIZE = 65536;
 
 struct spellReadStateT;
+struct spellIndexT;
 
 struct bioNoteT {
     char * text;
@@ -69,6 +71,7 @@ class SpellChecker
 
     spellCheckNodeT * Names [256];
     spellCheckNodeT * HashNames [SPELL_HASH_SIZE];
+    spellIndexT * Index;   // Names sorted for prefix searches, built when needed
            // HashNames[] gives fast access to correct names only.
     presuffixNodeT * Prefixes;  // Prefix substitutions
     presuffixNodeT * Suffixes;  // Suffix substitutions
@@ -76,6 +79,7 @@ class SpellChecker
 
     void Init (void);
     void Destroy (void);
+    void PrefixMatches (const char * searchName, std::vector<spellCheckNodeT *> * matches);
 
   public:
     SpellChecker ()  { Init(); }

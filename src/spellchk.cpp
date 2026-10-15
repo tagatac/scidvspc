@@ -15,6 +15,8 @@
 
 #include "spellchk.h"
 #include <vector>
+#include <algorithm>
+#include <cstring>
 #include "date.h"
 #include "mfile.h"
 #include <ctype.h>
@@ -44,6 +46,7 @@ SpellChecker::Init (void)
     Prefixes = NULL;
     Suffixes = NULL;
     Infixes = NULL;
+    Index = NULL;
 }
 
 void
@@ -59,6 +62,8 @@ SpellChecker::Destroy (void)
     delete[] ExcludeChars;
     delete StrAlloc;
     StrAlloc = NULL;
+    delete Index;
+    Index = NULL;
     for (uint i=0; i < 256; i++) {
         spellCheckNodeT * node = Names[i];
         while (node != NULL) {
@@ -278,20 +283,65 @@ spellingT countryTable[] = {
 {"",""}
 };
 
+// For each first character, the nodes of the Names[] list sorted by name,
+// with their position in the list. All names that start with the same
+// prefix are then next to each other and can be found by binary search
+// instead of going through the whole list for every lookup.
+typedef std::pair<spellCheckNodeT *, uint> spellIndexEntryT;
+struct spellIndexT {
+    std::vector<spellIndexEntryT> names [256];
+};
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// SpellChecker::PrefixMatches:
+//    Finds the nodes whose name starts with searchName, in the order of
+//    the Names[] list, i.e. the order in which going through the list
+//    would find them.
+void
+SpellChecker::PrefixMatches (const char * searchName,
+                             std::vector<spellCheckNodeT *> * matches)
+{
+    if (Index == NULL) {
+        Index = new spellIndexT;
+        for (uint b = 0; b < 256; b++) {
+            std::vector<spellIndexEntryT> & v = Index->names[b];
+            uint pos = 0;
+            for (spellCheckNodeT * node = Names[b]; node != NULL; node = node->next) {
+                v.push_back (spellIndexEntryT (node, pos++));
+            }
+            std::sort (v.begin(), v.end(),
+                       [] (const spellIndexEntryT & x, const spellIndexEntryT & y) {
+                return strcmp (x.first->name, y.first->name) < 0;
+            });
+        }
+    }
+    std::vector<spellIndexEntryT> & v = Index->names[(byte) *searchName];
+    auto it = std::lower_bound (v.begin(), v.end(), searchName,
+                                [] (const spellIndexEntryT & x, const char * name) {
+        return strcmp (x.first->name, name) < 0;
+    });
+    std::vector< std::pair<uint, spellCheckNodeT *> > found;
+    for ( ; it != v.end()  &&  strIsPrefix (searchName, it->first->name); ++it) {
+        found.push_back (std::make_pair (it->second, it->first));
+    }
+    std::sort (found.begin(), found.end());
+    matches->clear();
+    for (uint i = 0; i < found.size(); i++) { matches->push_back (found[i].second); }
+}
+
 const char *
 SpellChecker::GetComment (const char * name)
 {
     const char * returnStr = NULL;
     char searchName [1024];
     strCopyExclude (searchName, name, ExcludeChars);
-    spellCheckNodeT * node = Names[(byte) *searchName];
-    while (node != NULL) {
-        if (strIsPrefix (searchName, node->name)) {
-            returnStr = node->comment;
-        }
+    std::vector<spellCheckNodeT *> matches;
+    PrefixMatches (searchName, &matches);
+    for (uint i = 0; i < matches.size(); i++) {
+        spellCheckNodeT * node = matches[i];
+        returnStr = node->comment;
         // If the match is exact, return immediately:
         if (strEqual (searchName, node->name)) { break; }
-        node = node->next;
     }
     return returnStr;
 }
@@ -388,24 +438,23 @@ SpellChecker::Corrections (const char * name, const char ** corrections,
     const char * prevCorrection = "";
     uint correctionCount = 0;
     strCopyExclude (searchName, name, ExcludeChars);
-    spellCheckNodeT * node = Names[(byte) *searchName];
-    while (node != NULL) {
-        if (strIsPrefix (searchName, node->name)) {
-            // Found a correction:
-            if (! strEqual (prevCorrection, node->correctName)) {
-                if (correctionCount < maxCorrections) {
-                    corrections[correctionCount] = node->correctName;
-                    correctionCount++;
-                }
-                prevCorrection = node->correctName;
+    std::vector<spellCheckNodeT *> matches;
+    PrefixMatches (searchName, &matches);
+    for (uint i = 0; i < matches.size(); i++) {
+        spellCheckNodeT * node = matches[i];
+        // Found a correction:
+        if (! strEqual (prevCorrection, node->correctName)) {
+            if (correctionCount < maxCorrections) {
+                corrections[correctionCount] = node->correctName;
+                correctionCount++;
             }
-            // If the correction is exact, return *only* this correction:
-            if (strEqual (searchName, node->name)) {
-                corrections[0] = node->correctName;
-                return 1;
-            }
+            prevCorrection = node->correctName;
         }
-        node = node->next;
+        // If the correction is exact, return *only* this correction:
+        if (strEqual (searchName, node->name)) {
+            corrections[0] = node->correctName;
+            return 1;
+        }
     }
     return correctionCount;
 }
