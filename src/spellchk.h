@@ -21,6 +21,8 @@
 
 const uint SPELL_HASH_SIZE = 65536;
 
+struct spellReadStateT;
+
 struct bioNoteT {
     char * text;
     bioNoteT * next;
@@ -100,6 +102,10 @@ class SpellChecker
     const char * GetComment (const char * name);
     const char * GetCommentExact (const char * name);
     errorT ReadSpellCheckFile (const char * filename, bool checkPlayerOrder);
+    static errorT ReadSpellCheckFiles (const char * filename, bool checkPlayerOrder,
+                                       SpellChecker ** checkers, uint count);
+    errorT ProcessLine (char * name, char * comment, spellReadStateT * st,
+                        bool checkPlayerOrder);
     errorT AddPrefixSuffix (char * str);
     void AddBioData (spellCheckNodeT * node, const char * str);
     const bioNoteT * GetBioData (const char * name);

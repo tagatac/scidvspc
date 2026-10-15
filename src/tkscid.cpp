@@ -13998,23 +13998,23 @@ sc_name_read (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         checkPlayerOrder = strGetBoolean (argv[4]);
     }
 
+    // Read the file once for all name types:
+    SpellChecker * temp_spellChecker [NUM_NAME_TYPES];
     for (nameT nt = NAME_FIRST; nt <= NAME_LAST; nt++) {
-        SpellChecker * temp_spellChecker = new SpellChecker;
-        temp_spellChecker->SetNameType (nt);
-
-        // ReadSpellCheckFile gets called four times for some reason S.A &&&
-        // But it doesn't seem too bad, as the OS caches the file after the first open.
-        //
-        // src/spellchk.cpp(sc_name_read): if (fp.Open (filename, FMODE_ReadOnly)
-        // src/mfile.cpp: Handle = fopen (name, modeStr);
-
-        if (temp_spellChecker->ReadSpellCheckFile (filename, checkPlayerOrder) != OK) {
-            delete temp_spellChecker;
-            Tcl_ResetResult (ti);
-            return errorResult (ti, "Error reading name spellcheck file.");
+        temp_spellChecker[nt] = new SpellChecker;
+        temp_spellChecker[nt]->SetNameType (nt);
+    }
+    if (SpellChecker::ReadSpellCheckFiles (filename, checkPlayerOrder,
+                                           temp_spellChecker, NUM_NAME_TYPES) != OK) {
+        for (nameT nt = NAME_FIRST; nt <= NAME_LAST; nt++) {
+            delete temp_spellChecker[nt];
         }
+        Tcl_ResetResult (ti);
+        return errorResult (ti, "Error reading name spellcheck file.");
+    }
+    for (nameT nt = NAME_FIRST; nt <= NAME_LAST; nt++) {
         if (spellChecker[nt] != NULL) { delete spellChecker[nt]; }
-        spellChecker[nt] = temp_spellChecker;
+        spellChecker[nt] = temp_spellChecker[nt];
         appendUintElement (ti, spellChecker[nt]->NumCorrectNames());
     }
     return TCL_OK;

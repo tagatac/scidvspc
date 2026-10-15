@@ -14,6 +14,7 @@
 
 
 #include "spellchk.h"
+#include <vector>
 #include "date.h"
 #include "mfile.h"
 #include <ctype.h>
@@ -433,17 +434,35 @@ getNameAndComment (char * line, char ** name, char ** comment)
     *name = s;
 }
 
+// The state of a SpellChecker while it reads a spellcheck file:
+struct spellReadStateT {
+    spellCheckNodeT * lastCorrectNode;
+    char * prevCorrectName;
+    char * lastCorrectName;
+    char * lastRenderName;
+    char * lastComment;
+    nameT nameType;
+};
+
 errorT
 SpellChecker::ReadSpellCheckFile (const char * filename, bool checkPlayerOrder)
 {
+    SpellChecker * checker = this;
+    return ReadSpellCheckFiles (filename, checkPlayerOrder, &checker, 1);
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// SpellChecker::ReadSpellCheckFiles:
+//    Reads a spellcheck file once for several spellcheckers (one for
+//    each name type). Each line is passed to each of them, so they get
+//    exactly what reading the file separately would give.
+errorT
+SpellChecker::ReadSpellCheckFiles (const char * filename, bool checkPlayerOrder,
+                                   SpellChecker ** checkers, uint count)
+{
     char line [1024];
-    char strippedName [1024];
-    spellCheckNodeT * lastCorrectNode = NULL;
-    char * prevCorrectName = NULL;
-    char * lastCorrectName = NULL;
-    char * lastRenderName = NULL;
-    char * lastComment = NULL;
-    nameT nameType = NAME_INVALID;
+    std::vector<spellReadStateT> state (count,
+        spellReadStateT { NULL, NULL, NULL, NULL, NULL, NAME_INVALID });
 
     MFile fp;
     if (fp.Open (filename, FMODE_ReadOnly) != OK) { return ERROR_FileOpen; }
@@ -455,108 +474,120 @@ SpellChecker::ReadSpellCheckFile (const char * filename, bool checkPlayerOrder)
         char * name = NULL;
         char * comment = NULL;
         getNameAndComment (line, &name, &comment);
-
-        // Now s contains just the name, no extra space or comment.
-        if (*name == 0) {
-            // Empty or comment-only line; do nothing.
-        } else if (*name == '>') {
-            // Old biography line: do nothing with it.
-        } else if (*name == '%') {
-            // Elo data, biography or other unknown info line:
-            if (lastCorrectNode != NULL  &&  strIsPrefix ("%Elo ", name)) {
-                EloDataSeen = true;
-                AddEloData (lastCorrectNode, name);
-            }
-            if (lastCorrectNode != NULL  &&  strIsPrefix ("%Bio ", name)) {
-                AddBioData (lastCorrectNode, name+5);
-            }
-            if (lastCorrectNode != NULL  &&  strIsPrefix ("%Render ", name)) {
-                SetRenderName (lastCorrectNode, name+8);
-            }
-            // Prefix or Suffix correction:
-            if (nameType == NameType) {
-                if (strIsPrefix ("%Prefix ", name)) { AddPrefixSuffix (name); }
-                if (strIsPrefix ("%Suffix ", name)) { AddPrefixSuffix (name); }
-                if (strIsPrefix ("%Infix ", name))  { AddPrefixSuffix (name); }
-            }
-        } else if (*name == '@') {
-            // Name type line: "@PLAYER", "@SITE", "@EVENT" or "@ROUND"
-            // Hmmm... maybe add a COUNTRY parsing round S.A &&&
-            nameType = NameBase::NameTypeFromString (name+1);
-            if (! NameBase::IsValidNameType(NameType)) {
-                return ERROR_Corrupt;
-            }
-            if (nameType == NameType) {
-                // Now check if there is a list of characters to exclude from
-                // comparisons, e.g:   @PLAYER ", .-"
-                // would indicate to exclude dots, commas, spaces and dashes.
-                char * start = strchr (name, '"');
-                if (start != NULL) {
-                    char * end = strchr (start + 1, '"');
-                    if (end != NULL) {
-                        *end = 0;
-                        SetExcludeChars (start + 1);
-                    } else {
-                        return ERROR_Corrupt;
-                    }
-                }
-            }
-        } else if (*name == '='  &&  nameType == NameType) {
-            // Incorrect spelling of name. Skip over "=" and spaces:
-            name++;
-            while (*name == ' ') { name++; }
-            if (lastCorrectName != NULL) {
-                spellCheckNodeT * node = new spellCheckNodeT;
-                strCopyExclude (strippedName, name, ExcludeChars);
-                node->name = StrAlloc->Duplicate (strippedName);
-                node->correctName = lastCorrectName;
-                node->comment = lastComment;
-                node->correction = true;
-                node->nextHash = NULL;
-                node->eloData = NULL;
-                node->bioData = NULL;
-                node->renderName = lastRenderName;
-                byte b = (byte) *strippedName;
-                node->next = Names[b];
-                node->alias = lastCorrectNode;
-                Names[b] = node;
-                IncorrectNameCount++;
-            }
-        } else if (nameType == NameType) {
-            // Correctly spelt name; add to the list:
-            spellCheckNodeT * node = new spellCheckNodeT;
-
-            strCopyExclude (strippedName, name, ExcludeChars);
-            node->correctName = StrAlloc->Duplicate (name);
-            node->name = StrAlloc->Duplicate (strippedName);
-            node->comment = StrAlloc->Duplicate (comment);
-            node->renderName = NULL;
-            node->correction = false;
-            uint hash = spellHash(name) % SPELL_HASH_SIZE;
-            node->nextHash = HashNames[hash];
-            HashNames[hash] = node;
-            prevCorrectName = lastCorrectName;
-            lastCorrectName = node->correctName;
-            lastRenderName = node->renderName;
-            lastCorrectNode = node;
-            lastComment = node->comment;
-            node->eloData = NULL;
-            node->bioData = NULL;
-            byte b = (byte) *strippedName;
-            node->next = Names[b];
-            node->alias = NULL; // node ??
-            Names[b] = node;
-            CorrectNameCount++;
-
-            // If requested, verify that player names are in correct order:
-            if (NameType == NAME_PLAYER  &&  checkPlayerOrder  &&
-                prevCorrectName != NULL  &&
-                strCompare (prevCorrectName, lastCorrectName) > 0) {
-                printf ("\"%s\" is out of place.\n", lastCorrectName);
-            }
+        for (uint i = 0; i < count; i++) {
+            errorT err = checkers[i]->ProcessLine (name, comment, &state[i], checkPlayerOrder);
+            if (err != OK) { fp.Close(); return err; }
         }
     }
     fp.Close();
+    return OK;
+}
+
+errorT
+SpellChecker::ProcessLine (char * name, char * comment, spellReadStateT * st,
+                           bool checkPlayerOrder)
+{
+    char strippedName [1024];
+
+    // Now s contains just the name, no extra space or comment.
+    if (*name == 0) {
+        // Empty or comment-only line; do nothing.
+    } else if (*name == '>') {
+        // Old biography line: do nothing with it.
+    } else if (*name == '%') {
+        // Elo data, biography or other unknown info line:
+        if (st->lastCorrectNode != NULL  &&  strIsPrefix ("%Elo ", name)) {
+            EloDataSeen = true;
+            AddEloData (st->lastCorrectNode, name);
+        }
+        if (st->lastCorrectNode != NULL  &&  strIsPrefix ("%Bio ", name)) {
+            AddBioData (st->lastCorrectNode, name+5);
+        }
+        if (st->lastCorrectNode != NULL  &&  strIsPrefix ("%Render ", name)) {
+            SetRenderName (st->lastCorrectNode, name+8);
+        }
+        // Prefix or Suffix correction:
+        if (st->nameType == NameType) {
+            if (strIsPrefix ("%Prefix ", name)) { AddPrefixSuffix (name); }
+            if (strIsPrefix ("%Suffix ", name)) { AddPrefixSuffix (name); }
+            if (strIsPrefix ("%Infix ", name))  { AddPrefixSuffix (name); }
+        }
+    } else if (*name == '@') {
+        // Name type line: "@PLAYER", "@SITE", "@EVENT" or "@ROUND"
+        // Hmmm... maybe add a COUNTRY parsing round S.A &&&
+        st->nameType = NameBase::NameTypeFromString (name+1);
+        if (! NameBase::IsValidNameType(NameType)) {
+            return ERROR_Corrupt;
+        }
+        if (st->nameType == NameType) {
+            // Now check if there is a list of characters to exclude from
+            // comparisons, e.g:   @PLAYER ", .-"
+            // would indicate to exclude dots, commas, spaces and dashes.
+            char * start = strchr (name, '"');
+            if (start != NULL) {
+                char * end = strchr (start + 1, '"');
+                if (end != NULL) {
+                    *end = 0;
+                    SetExcludeChars (start + 1);
+                } else {
+                    return ERROR_Corrupt;
+                }
+            }
+        }
+    } else if (*name == '='  &&  st->nameType == NameType) {
+        // Incorrect spelling of name. Skip over "=" and spaces:
+        name++;
+        while (*name == ' ') { name++; }
+        if (st->lastCorrectName != NULL) {
+            spellCheckNodeT * node = new spellCheckNodeT;
+            strCopyExclude (strippedName, name, ExcludeChars);
+            node->name = StrAlloc->Duplicate (strippedName);
+            node->correctName = st->lastCorrectName;
+            node->comment = st->lastComment;
+            node->correction = true;
+            node->nextHash = NULL;
+            node->eloData = NULL;
+            node->bioData = NULL;
+            node->renderName = st->lastRenderName;
+            byte b = (byte) *strippedName;
+            node->next = Names[b];
+            node->alias = st->lastCorrectNode;
+            Names[b] = node;
+            IncorrectNameCount++;
+        }
+    } else if (st->nameType == NameType) {
+        // Correctly spelt name; add to the list:
+        spellCheckNodeT * node = new spellCheckNodeT;
+
+        strCopyExclude (strippedName, name, ExcludeChars);
+        node->correctName = StrAlloc->Duplicate (name);
+        node->name = StrAlloc->Duplicate (strippedName);
+        node->comment = StrAlloc->Duplicate (comment);
+        node->renderName = NULL;
+        node->correction = false;
+        uint hash = spellHash(name) % SPELL_HASH_SIZE;
+        node->nextHash = HashNames[hash];
+        HashNames[hash] = node;
+        st->prevCorrectName = st->lastCorrectName;
+        st->lastCorrectName = node->correctName;
+        st->lastRenderName = node->renderName;
+        st->lastCorrectNode = node;
+        st->lastComment = node->comment;
+        node->eloData = NULL;
+        node->bioData = NULL;
+        byte b = (byte) *strippedName;
+        node->next = Names[b];
+        node->alias = NULL; // node ??
+        Names[b] = node;
+        CorrectNameCount++;
+
+        // If requested, verify that player names are in correct order:
+        if (NameType == NAME_PLAYER  &&  checkPlayerOrder  &&
+            st->prevCorrectName != NULL  &&
+            strCompare (st->prevCorrectName, st->lastCorrectName) > 0) {
+            printf ("\"%s\" is out of place.\n", st->lastCorrectName);
+        }
+    }
     return OK;
 }
 
