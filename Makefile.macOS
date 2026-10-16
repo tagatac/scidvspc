@@ -63,7 +63,7 @@ WARNINGS = -Wall
 
 CFLAGS = -O2 -fno-exceptions $(WARNINGS) $(DEBUG)
 
-CXXFLAGS =  $(CFLAGS) $(SCIDFLAGS)
+CXXFLAGS =  $(CFLAGS) $(SCIDFLAGS) -std=c++11 
 
 LDFLAGS = -F$(TCL_DIR)
 
@@ -498,11 +498,11 @@ scidt: src/scidt.o $(OBJS) $(CHARSETCONVOBJS)
 
 tkscid: src/tkscid.o $(OBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS) src/tree.o src/filter.o src/pbook.o src/crosstab.o \
           src/spellchk.o src/probe.o src/optable.o src/engine.o src/recog.o
-	$(LINK) $(LDFLAGS) -o tkscid src/tkscid.o $(OBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS) src/tree.o src/filter.o src/pbook.o src/crosstab.o src/spellchk.o src/probe.o src/optable.o src/engine.o src/recog.o $(ZLIB) $(TK_LIBRARY)
+	$(LINK) $(LDFLAGS) -pthread -o tkscid src/tkscid.o $(OBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS) src/tree.o src/filter.o src/pbook.o src/crosstab.o src/spellchk.o src/probe.o src/optable.o src/engine.o src/recog.o $(ZLIB) $(TK_LIBRARY)
 
 tcscid: src/tcscid.o $(OBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS) src/tree.o src/filter.o src/pbook.o src/crosstab.o \
           src/spellchk.o src/probe.o src/optable.o src/engine.o src/recog.o
-	$(LINK) $(LDFLAGS) -o tcscid src/tcscid.o $(OBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS) src/tree.o src/filter.o src/pbook.o src/crosstab.o src/spellchk.o src/probe.o src/optable.o src/engine.o src/recog.o $(ZLIB) $(TCL_LIBRARY)
+	$(LINK) $(LDFLAGS) -pthread -o tcscid src/tcscid.o $(OBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS) src/tree.o src/filter.o src/pbook.o src/crosstab.o src/spellchk.o src/probe.o src/optable.o src/engine.o src/recog.o $(ZLIB) $(TCL_LIBRARY)
 
 scql: $(CQLOBJS_S) $(CHARSETCONVOBJS)
 	$(LINK) $(LDFLAGS) -o scql $(CQLOBJS_S) $(CHARSETCONVOBJS) $(ZLIB) $(TCL_LIBRARY)
@@ -515,10 +515,10 @@ eco2epd: src/eco2epd.o $(OBJS) src/pbook.o $(CHARSETCONVOBJS)
 ### Rules to create .o files from .cpp files:
 
 src/tcscid.o: src/tkscid.cpp
-	$(BASH_ENV) $(CXX) $(CXXFLAGS) -std=c++11 $(TCL_INCLUDE) -DTCL_ONLY -o src/tcscid.o -c src/tkscid.cpp
+	$(BASH_ENV) $(CXX) $(CXXFLAGS) $(TCL_INCLUDE) -DTCL_ONLY -o src/tcscid.o -c src/tkscid.cpp
 
 src/tkscid.o: src/tkscid.cpp
-	$(BASH_ENV) $(CXX) $(CXXFLAGS) -std=c++11 $(TCL_INCLUDE) -o src/tkscid.o -c src/tkscid.cpp
+	$(BASH_ENV) $(CXX) $(CXXFLAGS) $(TCL_INCLUDE) -o src/tkscid.o -c src/tkscid.cpp
 
 ### The endgame tablebase code in the egtb/ subdirectory (not written by me)
 
@@ -531,10 +531,10 @@ src/probe.o: src/probe.cpp src/egtb/tbindex.cpp src/egtb/tbdecode.c
 	$(BASH_ENV) $(CXX) $(CXXFLAGS) $(TCL_INCLUDE) -o $@ -c $<
 
 src/cql/s_%.o: src/cql/%.cpp
-	$(BASH_ENV) $(CXX) $(CXXFLAGS) -std=c++11 -Wall -Wno-write-strings -Wno-char-subscripts  -Wno-parentheses -Wno-sign-compare -fdiagnostics-show-option -DSTANDALONE $(CQL_INCLUDE) $(TCL_INCLUDE) -o $@ -c $<
+	$(BASH_ENV) $(CXX) $(CXXFLAGS) -Wall -Wno-write-strings -Wno-char-subscripts  -Wno-parentheses -Wno-sign-compare -fdiagnostics-show-option -DSTANDALONE $(CQL_INCLUDE) $(TCL_INCLUDE) -o $@ -c $<
 
 src/cql/i_%.o: src/cql/%.cpp
-	$(BASH_ENV) $(CXX) $(CXXFLAGS) -std=c++11 -Wall -Wno-write-strings -Wno-char-subscripts  -Wno-parentheses -Wno-sign-compare -fdiagnostics-show-option -DINTEGRATED $(CQL_INCLUDE) $(TCL_INCLUDE) -o $@ -c $<
+	$(BASH_ENV) $(CXX) $(CXXFLAGS) -Wall -Wno-write-strings -Wno-char-subscripts  -Wno-parentheses -Wno-sign-compare -fdiagnostics-show-option -DINTEGRATED $(CQL_INCLUDE) $(TCL_INCLUDE) -o $@ -c $<
 
 
 ### Rule for compiling zlib source files:
