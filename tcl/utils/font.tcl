@@ -277,6 +277,7 @@ proc FontDialogRegular {parent} {
     font configure font_Figurine(normal) -family $graphFigurineFamily(normal) -weight $graphFigurineWeight(normal) -size $fontsize
     font configure font_Figurine(bold) -family $graphFigurineFamily(bold) -weight $graphFigurineWeight(bold) -size $fontsize
   }
+  setDialogWidth
   ::pgn::configTabs
 }
 

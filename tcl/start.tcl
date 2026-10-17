@@ -377,6 +377,15 @@ proc configureFont {name} {
       -weight [lindex $opts 2] -slant [lindex $opts 3]
 }
 
+# Message boxes (tk_messageBox and tk_dialog) about 40 characters wide in the regular font.
+# (With the Tk default of 3 inches, long messages and translations are tall and narrow)
+proc setDialogWidth {} {
+  set width [expr {40 * [font measure font_Regular 0]}]
+  option add *Dialog.msg.wrapLength $width
+  # set max [expr {[winfo screenwidth .] * 3 / 4}]
+  # option add *Dialog.msg.wrapLength [expr {$width < $max ? $width : $max}]
+}
+
 proc reinitFont {name} {
   set ::fontOptions($name) $::fontOptions(old$name)
   configureFont $name
@@ -1820,6 +1829,7 @@ foreach i {Regular Menu Small Tiny Fixed} {
 
 set fd_size [font actual font_Regular -size]
 option add *Font font_Regular
+setDialogWidth
 option add *Menu*Font font_Menu
 # option add *Menubutton*Font font_Menu
 if {$unixOS} {

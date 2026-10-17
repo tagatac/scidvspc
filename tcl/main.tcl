@@ -1260,10 +1260,6 @@ proc confirmReplaceMove {} {
   if {! $askToReplaceMoves} { return replace }
   if {$trialMode} { return replace }
 
-  # http://wiki.tcl.tk/1062
-  option add *Dialog.msg.wrapLength 5i interactive
-  # option add *Dialog.msg.font {Helvetica 10}
-
 after 1 {
   # hack tk_dialog toplevel... Only way besides rewriting/customising the whole procedure
   if {$::macOS} {
@@ -1281,7 +1277,6 @@ after 1 {
         $::tr(ReplaceMove) $::tr(NewMainLine) \
         $::tr(AddNewVar) [tr EditTrial] \
         $::tr(Cancel)} answer
-  option add *Dialog.msg.wrapLength 3i interactive
   if {$answer == 0} { set ::selectedSq -1 ; return replace }
   if {$answer == 1} { set ::selectedSq -1 ; return mainline }
   if {$answer == 2} { set ::selectedSq -1 ; return var }
