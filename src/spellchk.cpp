@@ -33,6 +33,15 @@ spellHash (const char * str)
 }
 
 
+// For each first character, the nodes of the Names[] list sorted by name,
+// with their position in the list. All names that start with the same
+// prefix are then next to each other and can be found by binary search
+// instead of going through the whole list for every lookup.
+typedef std::pair<spellCheckNodeT *, uint> spellIndexEntryT;
+struct spellIndexT {
+    std::vector<spellIndexEntryT> names [256];
+};
+
 void
 SpellChecker::Init (void)
 {
@@ -281,15 +290,6 @@ spellingT countryTable[] = {
 {"FIJ","Fiji"},
 {"YUG","Yugoslavia"},
 {"",""}
-};
-
-// For each first character, the nodes of the Names[] list sorted by name,
-// with their position in the list. All names that start with the same
-// prefix are then next to each other and can be found by binary search
-// instead of going through the whole list for every lookup.
-typedef std::pair<spellCheckNodeT *, uint> spellIndexEntryT;
-struct spellIndexT {
-    std::vector<spellIndexEntryT> names [256];
 };
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
