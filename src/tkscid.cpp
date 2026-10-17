@@ -172,6 +172,24 @@ interruptedProgress () {
 }
 
 
+// Elo and date range of a player, for recalcFlagCounts():
+struct statsPlayerT { dateT first, last; eloT elo; };
+
+static inline void
+statsAddElo (std::vector<statsPlayerT> & players, idNumberT id, eloT elo)
+{
+    if (id < players.size()  &&  elo > players[id].elo) { players[id].elo = elo; }
+}
+
+static inline void
+statsAddDate (std::vector<statsPlayerT> & players, idNumberT id, dateT date)
+{
+    if (id >= players.size()) { return; }
+    statsPlayerT & p = players[id];
+    if (p.first == ZERO_DATE  ||  date < p.first) { p.first = date; }
+    if (date > p.last) { p.last = date; }
+}
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // recalcFlagCounts:
 //    Updates all precomputed stats about the database: flag counts,
@@ -232,18 +250,8 @@ recalcFlagCounts (scidBaseT * basePtr)
     }
     // Player Elo and date ranges are collected in one flat array first;
     // updating the scattered name nodes for every game is slow.
-    struct playerT { dateT first, last; eloT elo; };
-    std::vector<playerT> players (basePtr->nb->GetNumNames (NAME_PLAYER),
-                                  playerT { ZERO_DATE, ZERO_DATE, 0 });
-    auto addElo = [&players] (idNumberT id, eloT elo) {
-        if (id < players.size()  &&  elo > players[id].elo) { players[id].elo = elo; }
-    };
-    auto addDate = [&players] (idNumberT id, dateT date) {
-        if (id >= players.size()) { return; }
-        playerT & p = players[id];
-        if (p.first == ZERO_DATE  ||  date < p.first) { p.first = date; }
-        if (date > p.last) { p.last = date; }
-    };
+    statsPlayerT noPlayer = { ZERO_DATE, ZERO_DATE, 0 };
+    std::vector<statsPlayerT> players (basePtr->nb->GetNumNames (NAME_PLAYER), noPlayer);
 
     // Read stats from index entry of each game:
     for (uint gnum=0; gnum < basePtr->numGames; gnum++) {
@@ -256,7 +264,7 @@ recalcFlagCounts (scidBaseT * basePtr)
             if (stats->minRating == 0) { stats->minRating = elo; }
             if (elo < stats->minRating) { stats->minRating = elo; }
             if (elo > stats->maxRating) { stats->maxRating = elo; }
-            addElo (ie->GetWhite(), elo);
+            statsAddElo (players, ie->GetWhite(), elo);
         }
         elo = ie->GetBlackElo();
         if (elo > 0) {
@@ -265,7 +273,7 @@ recalcFlagCounts (scidBaseT * basePtr)
             if (stats->minRating == 0) { stats->minRating = elo; }
             if (elo < stats->minRating) { stats->minRating = elo; }
             if (elo > stats->maxRating) { stats->maxRating = elo; }
-            addElo (ie->GetBlack(), elo);
+            statsAddElo (players, ie->GetBlack(), elo);
         }
         dateT date = ie->GetDate();
         if (gnum == 0) {
@@ -276,8 +284,8 @@ recalcFlagCounts (scidBaseT * basePtr)
             if (date > stats->maxDate) { stats->maxDate = date; }
             stats->nYears++;
             stats->sumYears += date_GetYear (date);
-            addDate (ie->GetWhite(), date);
-            addDate (ie->GetBlack(), date);
+            statsAddDate (players, ie->GetWhite(), date);
+            statsAddDate (players, ie->GetBlack(), date);
         }
 
         uint flags = ie->GetAllFlags();
@@ -336,6 +344,12 @@ recalcEstimatedRatings (NameBase * nb)
     }
 }
 
+static inline void
+incFrequency (std::vector<uint> * freq, nameT nt, idNumberT id)
+{
+    if (id < freq[nt].size()) { freq[nt][id]++; }
+}
+
 void
 recalcNameFrequencies (NameBase * nb, Index * idx)
 {
@@ -344,9 +358,6 @@ recalcNameFrequencies (NameBase * nb, Index * idx)
     for (nameT nt = NAME_FIRST; nt <= NAME_LAST; nt++) {
         freq[nt].assign (nb->GetNumNames (nt), 0);
     }
-    auto inc = [&freq] (nameT nt, idNumberT id) {
-        if (id < freq[nt].size()) { freq[nt][id]++; }
-    };
     IndexEntry iE;
     for (uint i=0; i < idx->GetNumGames(); i++) {
         IndexEntry * ie = &iE;
@@ -355,11 +366,11 @@ recalcNameFrequencies (NameBase * nb, Index * idx)
         } else {
             idx->ReadEntries (&iE, i, 1);
         }
-        inc (NAME_PLAYER, ie->GetWhite());
-        inc (NAME_PLAYER, ie->GetBlack());
-        inc (NAME_EVENT, ie->GetEvent());
-        inc (NAME_SITE, ie->GetSite());
-        inc (NAME_ROUND, ie->GetRound());
+        incFrequency (freq, NAME_PLAYER, ie->GetWhite());
+        incFrequency (freq, NAME_PLAYER, ie->GetBlack());
+        incFrequency (freq, NAME_EVENT, ie->GetEvent());
+        incFrequency (freq, NAME_SITE, ie->GetSite());
+        incFrequency (freq, NAME_ROUND, ie->GetRound());
     }
     for (nameT nt = NAME_FIRST; nt <= NAME_LAST; nt++) {
         for (idNumberT id = 0; id < freq[nt].size(); id++) {
@@ -3374,10 +3385,8 @@ sc_base_tournaments (ClientData cd, Tcl_Interp * ti, int argc, const char ** arg
 	    uint bucketIndex = hashTable.bucket(Tourney(eventID, siteID));
 
 	    // iterate over a bucket
-	    // C++: 'auto' will deduce the correct type from assigned value. In this
-	    // C++: case it will be a iterator (concrete type is TourneyHash::const_iterator).
-	    auto tp = hashTable.cbegin(bucketIndex);
-	    auto end = hashTable.cend(bucketIndex);
+	    TourneyHash::const_local_iterator tp = hashTable.cbegin(bucketIndex);
+	    TourneyHash::const_local_iterator end = hashTable.cend(bucketIndex);
 
 	    for ( ; tp != end; ++tp) {
 		if (tp->EventID == eventID
@@ -3416,14 +3425,14 @@ sc_base_tournaments (ClientData cd, Tcl_Interp * ti, int argc, const char ** arg
     // sort on best scores. Because we will dump the best players anyway,
     // we have to do the preparation even if we do not sort on best scores.
 
-    for (auto tp = hashTable.cbegin(), e = hashTable.cend(); tp != e; ++tp) {
+    for (TourneyHash::const_iterator tp = hashTable.cbegin(), e = hashTable.cend(); tp != e; ++tp) {
 	// It's unavoidable to cast the constness away, because hash objects
 	// are always const. But our operation will not change the key, so
 	// it's no problem.
 	const_cast<Tourney &>(*tp).PrepareBestPlayers();
     }
 
-    auto comp = SortTourney::compNewest;
+    SortTourney::Comp comp = SortTourney::compNewest;
 
     if (!strCompare(sortStr,"Games"))   comp = SortTourney::compGames;
     if (!strCompare(sortStr,"Elo"))     comp = SortTourney::compElo;
@@ -3439,7 +3448,7 @@ sc_base_tournaments (ClientData cd, Tcl_Interp * ti, int argc, const char ** arg
     SortTourney sortOp(comp);	// the comparison operator
     TourneySet tset(sortOp);	// a set sorting with given comparison operator
 
-    for (auto tp = hashTable.cbegin(), e = hashTable.cend(); tp != e; ++tp) {
+    for (TourneyHash::const_iterator tp = hashTable.cbegin(), e = hashTable.cend(); tp != e; ++tp) {
 	uint meanElo = tp->MeanElo();
 
 	if ( meanElo >= minMeanElo
@@ -3459,7 +3468,7 @@ sc_base_tournaments (ClientData cd, Tcl_Interp * ti, int argc, const char ** arg
     maxTourneys = std::min(maxTourneys, uint(tset.size()));
     uint count = 0;
 
-    for (auto tp = tset.cbegin(), e = tset.cend(); tp != e; ++tp) {
+    for (TourneySet::const_iterator tp = tset.cbegin(), e = tset.cend(); tp != e; ++tp) {
 	(*tp)->Dump(&ds);
 
 	// Don't return more tourney results than requested.
@@ -13709,8 +13718,7 @@ sc_name_plist (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 
     if (arg != argc) { return errorResult (ti, usage); }
 
-    // C++: 'auto' will deduce the correct type from assigned value.
-    auto comp = SortNamebaseNodes::compareNewest;
+    SortNamebaseNodes::Comp comp = SortNamebaseNodes::compareNewest;
 
     switch (sortMode) {
         case SORT_ELO:    comp = SortNamebaseNodes::compareElo;    break;
@@ -13778,13 +13786,11 @@ sc_name_plist (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     maxListSize = std::min(maxListSize, uint(pset.size()));
     uint count = 0;
 
-    // C++: 'auto' will deduce the correct type from assigned value. In this
-    // C++: case it will be a iterator (concrete type is NamebaseNodeSet::const_iterator).
     // C++: Note that in C++ pre-increment is preferred over post-increment, this means
     // C++: '++i' is better than 'i++' (pre-increment returns the modified object, but
     // C++: post-increment must return a copy of the object before modification).
 
-    for (auto i = pset.cbegin(), e = pset.cend(); i != e; ++i) {
+    for (NamebaseNodeSet::const_iterator i = pset.cbegin(), e = pset.cend(); i != e; ++i) {
         Tcl_DStringStartSublist (ds);
         namebaseNodeT node = *i; // C++: '*' is dereferencing the object from iterator
         sprintf (tmp, "%u", node->data.frequency);
@@ -15361,6 +15367,22 @@ treeSearchWorker (treeJobT * job, treeWorkerT * w)
     job->idle.notify_one();
 }
 
+// treeServiceEvents:
+//    Does what the serial loop does every TREE_UPDATE_MS. Only called
+//    while no worker is searching.
+static int
+treeServiceEvents (Tcl_Interp * ti, uint done, uint numGames, scidBaseT * base,
+                   std::set<scidBaseT**> & search_pool, scidBaseT ** poolToken)
+{
+    // updateProgressBar does a full update here to keep UI responsive
+    updateProgressBar (ti, done, numGames);
+    if (interruptedProgress()) { return TREE_MT_INTERRUPTED; }
+    if (search_pool.count (poolToken) == 0  ||  !base->inUse ||  base->numGames != numGames) {
+        return TREE_MT_CANCELED;
+    }
+    return TREE_MT_DONE;
+}
+
 static int
 treeSearchThreads (Tcl_Interp * ti, treeSearchT * ts, bool showProgress,
                    std::set<scidBaseT**> & search_pool, scidBaseT ** poolToken)
@@ -15404,18 +15426,6 @@ treeSearchThreads (Tcl_Interp * ti, treeSearchT * ts, bool showProgress,
         }
     }
 
-    // Do what the serial loop does every TREE_UPDATE_MS. Only called
-    // while no worker is searching.
-    auto serviceEvents = [&] (uint done) -> int {
-        // updateProgressBar does a full update here to keep UI responsive
-        updateProgressBar (ti, done, numGames);
-        if (interruptedProgress()) { return TREE_MT_INTERRUPTED; }
-        if (search_pool.count (poolToken) == 0  ||  !base->inUse ||  base->numGames != numGames) {
-            return TREE_MT_CANCELED;
-        }
-        return TREE_MT_DONE;
-    };
-
     int result = ok ? TREE_MT_DONE : TREE_MT_SERIAL;
     {
         std::unique_lock<std::mutex> lock (job.mutex);
@@ -15434,7 +15444,7 @@ treeSearchThreads (Tcl_Interp * ti, treeSearchT * ts, bool showProgress,
             while (job.busy > 0) { job.idle.wait (lock); }
             uint done = job.done;
             lock.unlock();
-            result = serviceEvents (done);
+            result = treeServiceEvents (ti, done, numGames, base, search_pool, poolToken);
             lock.lock();
             if (result != TREE_MT_DONE) { job.stop = true; }
             job.pause = false;
@@ -15445,7 +15455,7 @@ treeSearchThreads (Tcl_Interp * ti, treeSearchT * ts, bool showProgress,
         if (workers[t]->thread.joinable()) { workers[t]->thread.join(); }
     }
     if (result == TREE_MT_DONE  &&  showProgress) {
-        result = serviceEvents (numGames);
+        result = treeServiceEvents (ti, numGames, numGames, base, search_pool, poolToken);
     }
 
     if (result == TREE_MT_DONE) {

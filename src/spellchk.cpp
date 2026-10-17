@@ -316,7 +316,7 @@ SpellChecker::PrefixMatches (const char * searchName,
         }
     }
     std::vector<spellIndexEntryT> & v = Index->names[(byte) *searchName];
-    auto it = std::lower_bound (v.begin(), v.end(), searchName,
+    std::vector<spellIndexEntryT>::iterator it = std::lower_bound (v.begin(), v.end(), searchName,
                                 [] (const spellIndexEntryT & x, const char * name) {
         return strcmp (x.first->name, name) < 0;
     });
