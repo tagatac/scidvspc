@@ -437,7 +437,7 @@ proc ::enginelist::choose {} {
   label $w.buttons2.logengines        -textvar tr(LogEngines)
   entry $w.buttons2.logmax            -textvar analysis(logMax) -width 6
   label $w.buttons2.ply               -textvar tr(MaxPly)
-  spinbox $w.buttons2.maxply -width 4 -textvar analysis(maxPly) -from 0 -to 50 -increment 1
+  spinbox $w.buttons2.maxply -width 4 -textvar analysis(maxPly) -from 0 -to 99 -increment 1
   checkbutton $w.buttons2.lowpriority -variable analysis(lowPriority) -textvar tr(LowPriority)
   checkbutton $w.buttons2.wrap -text [tr GInfoWrap] -variable analysis(wrapPV)
   checkbutton $w.buttons2.logname -variable analysis(logName) -textvar tr(LogName)
@@ -2532,8 +2532,8 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   bind $w <Control-KP_Enter> "addAnalysisVariation $n"
   bind $w <space>  "$w.b.startStop invoke"
   foreach i {1 2 3 4 5 6 7 8 9} {
-    bind $w <Key-$i>    "set analysis(multiPVCount$n) $i ; changePVSize $n"
-    bind $w <Key-KP_$i> "set analysis(multiPVCount$n) $i ; changePVSize $n"
+    bind $w <Key-$i>    "multiPVDigit $n $i"
+    bind $w <Key-KP_$i> "multiPVDigit $n $i"
   }
   wm minsize $w 25 0
   # bindMouseWheel $w $w.hist.text
@@ -2805,6 +2805,27 @@ proc changePVSize { n } {
   }
 }
 
+### Select MultiPV via number keys
+#   First digit applies at once. A second digit typed within 1 second turns it into a two-digit value (e.g. 1 2 -> 12).
+
+proc multiPVDigit { n d } {
+  global analysis
+ set now [clock milliseconds]
+  if {[info exists analysis(pvFirst$n)] && $analysis(pvFirst$n) != "" && \
+      $now - $analysis(pvTime$n) < 1000} {
+    set v [expr {$analysis(pvFirst$n) * 10 + $d}]
+    set analysis(pvFirst$n) ""
+  } else {
+    if {$d == 0} { return }
+    set v $d
+    set analysis(pvFirst$n) $d
+    set analysis(pvTime$n) $now
+  }
+  set max [expr int([.analysisWin$n.b.multipv cget -to])]
+  if {$v > $max} { set v $max }
+  set analysis(multiPVCount$n) $v
+  changePVSize $n
+}
 
 proc excludeMovePopup {n} {
 

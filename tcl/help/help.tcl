@@ -1607,7 +1607,7 @@ For more info about Searches and Filters, <a Searches>see here</a> or below.
 </i></p>
 <h3>Sorting the Game List</h3>
 <p>The database can be <b>permanently sorted</b> by clicking column titles.
-Sorting is not undoable, and may (marginally) affect search and tree performance. For more details see <a Sorting>Sorting Database</a>.
+Sorting is not undoable, and search and tree performance will be worse until the Database is <a Compact>compacted</a>. For more details see <a Sorting>Sorting Database</a>.
 </p>
 
   <h3><name Del>Filtered and Deleted Games</name></h3>
@@ -2797,7 +2797,7 @@ making for easier <a Analysis Debugging>Debugging</a>.
   <p>
   <b>Space Bar</b> makes the engine start/stop. Pressing <b>Enter</b> will
   add the engine's current best move, and <b>Control+Enter</b>, the whole line.
-  Keys <b>1 to 9</b> will set the engine's variation count (MultiPV).
+  Number keys will set the engine's variation count (MultiPV).
   </p>
   <p>
   At the top of the window are some useful buttons. Below them,
@@ -6722,7 +6722,7 @@ Game move/reorder feature:
 <li>Minor Book Window fixes - enable undo, remove the arrow buttons (use wheelmouse instead), and properly name and document the 'Other Moves' button</li>
 <br>
 
-<li>Analysis Engines: pressing keys 1 to 9 sets PV</li>
+<li>Analysis Engines: pressing number keys sets PV</li>
 <li>Set undo point when marking squares</li>
 <li>Remove Suggested Moves feature</li>
 <li>Update Gregors tktext patch to current (2018-08-13)</li>
