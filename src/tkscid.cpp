@@ -7,7 +7,7 @@
 //
 //  Notice:     Copyright (c) 1999-2004 Shane Hudson.  All rights reserved.
 //              Copyright (c) 2006-2007 Pascal Georges
-//              Copyright (c) 2009-2013 Stevenaaus
+//              Copyright (c) 2009-2026 Stevenaaus, Gregor, Patrick
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -11973,6 +11973,12 @@ int
 sc_progressBar (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
     switch (argc) {
+
+    case 1:  // No arguments, just reset progress bar:
+        progBar.state = false;
+        progBar.interrupt = true;
+        break;
+
     case 5:
     case 6:
         progBar.state = true;
@@ -11987,14 +11993,8 @@ sc_progressBar (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         progBar.timeName = strDuplicate (argc > 5 ? argv[5] : "");
         break;
 
-    case 1:  // No arguments, just reset progress bar:
-        progBar.state = false;
-        progBar.interrupt = true;
-        break;
-
     default:
-        return errorResult (ti,
-                "Usage: sc_progressBar [canvas tagName width height]");
+        return errorResult (ti, "Usage: sc_progressBar [canvas tagName width height]");
     }
     return TCL_OK;
 }
