@@ -3042,7 +3042,7 @@ because implementation is very problematic.</p>
   If an engine fails to start, or crashes, one may examine its log file.
   These are kept in the Scidvspc's log directory and can be viewed by right-clicking the <button tb_help> button,
 or via the <button tb_annotate> button in the <run ::enginelist::choose><green>engine configuration</green></run> widget.
-The <b>Log Size</b> is the max number of lines in the log. Setting it to zero disables logging altogether.</p>
+The <b>Log Size</b> is the max number of lines in the log. Setting it to zero disables logging altogether, and "none" allows infinite logging.</p>
   <p>The default UCI command for <button tb_play> is "go infinite", but this may be altered by changing <b>::uci::goCommand</b> in ScidvsPC's <a Console>Console</a> (for example "set ::uci::goCommand {go depth 20}" or {go movetime 10000}).
 </p>
 

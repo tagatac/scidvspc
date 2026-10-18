@@ -2154,9 +2154,9 @@ proc logEngine {n text} {
 
     # Close the log file if the limit is reached:
     incr analysis(logCount$n)
+    # NB setting analysis(logMax) to "none" to be considered. Seems to work ok! S.A.
     if {$analysis(logCount$n) >= $analysis(logMax)} {
-      puts $analysis(log$n) \
-          "Note  : Log file size limit ($analysis(logMax) lines) reached."
+      puts $analysis(log$n) "Note  : Log file size limit ($analysis(logMax) lines) reached."
       close $analysis(log$n)
       unset analysis(log$n)
     }
