@@ -7475,18 +7475,13 @@ The window manager may interfere with some shortcuts.
 
 set helpTitle(Board) "Board Customisation"
 set helpText(Board) {<h1>Board Customisation</h1>
-<p><i>If the Chess-Pieces window is too big, reducing the size of the Small Font may help</i><p>
-<h3><name Textures>Custom Textures</name></h3>
-<p>
-   Up to ten custom board textures can be loaded.
-   These must be placed in the directory <b>Scid vs PC/bin/textures</b> (windows) or <b>$HOME/.scidvspc/textures</b>,
-   and be of the form <b>wood_l.gif</b> / <b>wood_d.gif</b>  or <b>steel_l.png</b> / <b>steel_d.png</b> , for example.
-</p>
+<p><i>If the Chess-Pieces window is too big, reducing the size of the Small Font may help</i></p>
 <h3><name Textures>Custom Pieces</name></h3>
 <p>
-<i>The Merida1 pieces now have high-quality larger sizes.</i>
+<i>Not all included piece-sets scale well. For higher resolution displays it is recommended to install the optional
+<url https://sourceforge.net/projects/scidvspc/files/support files/chess pieces/HiRes_standard_pieces.zip/download>HiRes_standard_pieces</url>.</i>
 </p><p>
-Place custom piece sets in the directory <b>$HOME/.scidvspc/pieces</b>, and they will be added to the 
+Place custom piece sets in the directory <b>$HOME/.scidvspc/pieces</b> (or <b>Scid vs PC/bin/pieces</b> on Windows), and they will be added to the 
 Board Options window. These can be found at our 
 <url https://sourceforge.net/projects/scidvspc/files/support files/chess pieces/>pieces page</url>.
 </p>
@@ -7509,7 +7504,13 @@ Examine the <a Console>Splash Window</a> for the status of loading user textures
    but it is also possible to compile and install TkImg from the
    <url https://sourceforge.net/projects/scidvspc/files/support files/tkimg1.3.scidvspc.tar.bz2/download>source tarball</url>
 </i></p>
-<p><footer>Updated: Scid vs. PC 4.21 Jan 2019</footer></p>
+<h3><name Textures>Custom Textures</name></h3>
+<p>
+   Up to ten custom board textures can be loaded.
+   These must be placed in the directory <b>Scid vs PC/bin/textures</b> (windows) or <b>$HOME/.scidvspc/textures</b>,
+   and be of the form <b>wood_l.gif</b> / <b>wood_d.gif</b>  or <b>steel_l.png</b> / <b>steel_d.png</b> , for example.
+</p>
+<p><footer>Updated: Scid vs. PC 4.28 Oct 2026</footer></p>
 }
 
 set helpTitle(Console) "Startup Window / Console"
