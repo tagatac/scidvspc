@@ -231,7 +231,7 @@ TCLS= \
   tcl/utils.tcl \
     tcl/utils/date.tcl tcl/utils/font.tcl tcl/utils/graph.tcl tcl/utils/history.tcl \
     tcl/utils/pane.tcl tcl/utils/sound.tcl tcl/utils/string.tcl tcl/utils/tooltip.tcl \
-    tcl/utils/validate.tcl tcl/utils/win.tcl \
+    tcl/utils/validate.tcl tcl/utils/win.tcl tcl/utils/selectcolor.tcl \
   tcl/misc/misc.tcl tcl/htext.tcl \
   tcl/file.tcl \
     tcl/file/finder.tcl tcl/file/bookmark.tcl tcl/file/recent.tcl tcl/file/epd.tcl \

@@ -4025,7 +4025,10 @@ set helpText(Options) {<h1>Options and Preferences</h1>
 
   <h4>Custom Linux Colour Selector</h4>
   <p>
-  The standard Unix colour selector, tk_chooseColor, is very poor. If the tcl package 'BWidget' is found, it's great ::SelectColor widget will be used instead. To install BWidget, try 'apt install BWidget'.
+  ScidvsPC has replaced the poor Linux tk_chooseColor with an in-lined version of BWidget's SelectColor.
+  It includes pre-defined and user-defined colours, and a nice gradient widget.
+  Additionally, <b>Pick from screen</b> uses a fancy script to select a colour from anywhere on the desktop.
+  On Wayland this feature requires python3-gi (or KDE), and on X - ImageMagick's 'import'.
   </p>
 
   <h3><name MyPlayerNames>My Player Names</name></h3>

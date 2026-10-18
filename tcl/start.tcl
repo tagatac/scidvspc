@@ -118,7 +118,7 @@ set ::MAX_GAMES [sc_info limit games]
 set ::pause 0
 set ::defaultBackground white
 set ::defaultForeground black
-# custom SelectColor colors (if available)
+# User colours for in-lined BWidget SelectColor (tcl/utils/selectcolor.tcl)
 set ::bwidgetBackgrounds {#ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff #ffffff}
 set ::defaultGraphBackground white
 set ::enableBackground 0
