@@ -2518,10 +2518,10 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   $w.hist.text tag configure gray -foreground $color -lmargin2 [font measure font_Small xxxxxxxxxxxxxxxxxx]
 
   $w.hist.text tag configure blue -foreground darkblue
-  $w.text insert end "Please wait a few seconds for engine initialisation \
-      (with some engines, you will not see any analysis until the board \
-      changes. So if you see this message, try changing the board \
-      by moving backward or forward or making a new move.)"
+  $w.text insert end "Please wait a few seconds for engine initialisation
+(with some engines, you will not see any analysis until the board \
+changes. So if you see this message, try changing the board \
+by moving backward or forward or making a new move.)"
   $w.text configure -state disabled
   bind $w <Destroy> "if {\"%W\" == \"$w\"} {destroyAnalysisWin $n}"
   bind $w <Escape> "focus .main ; destroy $w"
@@ -2531,7 +2531,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   bind $w <Control-Return>   "addAnalysisVariation $n"
   bind $w <Control-KP_Enter> "addAnalysisVariation $n"
   bind $w <space>  "$w.b.startStop invoke"
-  foreach i {1 2 3 4 5 6 7 8 9} {
+  foreach i {0 1 2 3 4 5 6 7 8 9} {
     bind $w <Key-$i>    "multiPVDigit $n $i"
     bind $w <Key-KP_$i> "multiPVDigit $n $i"
   }
