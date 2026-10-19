@@ -2901,23 +2901,14 @@ The default mode and size are set in the <a Analysis List>Engine Configuration</
 
   <h3><name Annotating>Annotating Games</name></h3>
   <p>
-  Games can be automatically analyzed using
-  the Annotate Button <button tb_annotate> (in the <a Analysis>Analysis Engine</a> toolbar).
-  This feature adds Scores, <a Comment>Comments</a>, <a Moves Informant>Informants</a>,
-  Bestlines to games. </p>
+  Games can be automatically analyzed using the Annotate Button <button tb_annotate> (in the <a Analysis>Analysis Engine</a> toolbar).
+  This feature adds Scores, <a Comment>Comments</a>, <a Moves Informant>Informants</a>, Bestlines to games. </p>
+ 
+  <p><i>Right-clicking the Annotate Button makes a quick pass through the main line
+  (UCI only), and shows the scores in the <a Graphs Score>Score Graph</a> without changing the game.
+  For Time-move-control, the first pass takes 10 ms per move, the second a tenth of the time per move
+  (or 4 plies less depth). For Depth-move-control, subsequent right-clicks repeat the preview at higher depths.</i></p>
 
-  <p>
-  There is also a new option to add <b>Missed Mates</b>. This adds all missed
-  and shorter mates which are at least a few ply shorter of the 'Depth per move'
-  setting (- at higher ply, the engine's PV aren't always reliable).
-  Additionally, the added line may not be complete - ie. it may not end in mate.
-  This is due to the engine reporting "Mate in n", but not actually giving the
-  whole line/PV, which is a common UCI engine oddity.
-  </p>
-
-  <p><i>
-  The Annotate button is only shown in the </i><b>first</b><i> engine window.
-  </i></p>
 
   <p>After configuring the options and pressing OK, Autoplay
   Mode is enabled, tree updating is disabled, and the engine starts its analysis.
@@ -2929,6 +2920,7 @@ The default mode and size are set in the <a Analysis List>Engine Configuration</
   Pressing the Annotate Button a second time cancels annotation.
   </p>
 
+
   <p><b>Options</b>
   <ul>
      <li><b>Move Control</b> Whether to process each move for a fixed time, or fixed depth (UCI only).</li>
@@ -2937,25 +2929,32 @@ The default mode and size are set in the <a Analysis List>Engine Configuration</
      <li><b>Blunder Threshold</b> A Score which determines whether it's a bad move or not,
      representing pawns (i.e. 0.5 means an evaluation drop of half a pawn).  </li>
      <li><b>Cut Off Threshold</b> Above this score, dont worry about adding variations, as game is won.</li>
+     <li><b>Score format</b> Select how single scores will be formatted. The square bracket options will hide comments in the PGN window if PGN-<gt>Options-<gt>Hide-Codes is selected.</li>
 <br>
      <li><b>Add Scores/Variations</b> Choose when to add Scores and Variations.
      (Scores can then be utilized by the <a Graphs Score>Score Graph</a>)</li>
      <li><b>Which Side</b> Select which side(s) should be annotated.</li>
 <br>
-     <li><b>Score format</b> Select how single scores will be formatted. The square bracket options will hide comments in the PGN window if PGN-<gt>Options-<gt>Hide-Codes is selected.</li>
-     <li><b>Add annotator tag</b>
-     Store engine name as an "Annotator" tag in the PGN header.</li>
+     <li><b>Batch annotation</b> Automatically process all filter games (from current one), saving them as we go.</li>
+     <li><b>Use book</b> Moves that are contained in this opening book are skipped , and annotation starts after the book moves.</li>
+     <li><b>Analyze backwards</b> Annotate from the end of the game (or the current position) back to the start.
+     The engine's hash table then already holds the analysis of the moves that follow, so mistakes are found more reliably.</li>
+     <li><b>Opening errors only</b> Only check for opening errors.  (up to the move specified).</li>
+     <li><b>Add annotator tag</b> Store engine name as an "Annotator" tag in the PGN header.</li>
      <li><b>Process variations</b> Recursively process variations.</li>
-     <li><b>Use book</b> Moves that are contained in this opening book are skipped
-     , and annotation starts after the book moves.</li>
-     <li><b>Batch annotation</b> 
-     Automatically process all filter games (from current one), saving them as we go.</li>
-     <li><b>Opening errors only</b> Only check for opening errors.
-     (up to the move specified).</li>
      <li><b>Mark tactical exercises</b> This can be used to
      generate exercises for the training function <a FindBestMove>Find
      Best Move</a>. (UCI only).</li>
   </ul>
+
+  <p>
+  There is also a new option to add <b>Missed Mates</b>. This adds all missed
+  and shorter mates which are at least a few ply shorter of the 'Depth per move'
+  setting (- at higher ply, the engine's PV aren't always reliable).
+  Additionally, the added line may not be complete - ie. it may not end in mate.
+  This is due to the engine reporting "Mate in n", but not actually giving the
+  whole line/PV, which is a common UCI engine oddity.
+  </p>
 <p><i>
   Informant values are also <run configInformant><green>configurable</green></run>.                     
 </i></p>
@@ -3046,7 +3045,7 @@ The <b>Log Size</b> is the max number of lines in the log. Setting it to zero di
   <p>The default UCI command for <button tb_play> is "go infinite", but this may be altered by changing <b>::uci::goCommand</b> in ScidvsPC's <a Console>Console</a> (for example "set ::uci::goCommand {go depth 20}" or {go movetime 10000}).
 </p>
 
-  <p><footer>Updated: Scid vs. PC 4.27, May 2026</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.28, Oct 2026</footer></p>
 }
 
 set helpTitle(Tourney) "Computer Tournament"
@@ -3600,7 +3599,7 @@ from the Tools menu. Right-clicking the graph shows a Recent Players context men
   <p>
   The <green><run ::tools::graphs::score::Raise>Score/Time Graph</run></green> (Control-Shift-Z)
   shows the Move Evaluations or Move Times (stored as comments in the current game) as a graph. </p>
-  <p>The graph type is changed in Graph-<gt>Options or by right-clicking the in-graph title. Data for the graphs is found/gathered in the standard PGN comments or "commands" as <b>%eval</b> (scores) and <b>%emt</b> (move times).</p>
+  <p>The graph type is changed in Graph-<gt>Options or by clicking the in-graph title. Data for the graphs is found/gathered in the standard PGN comments or "commands" as <b>%eval</b> (scores) and <b>%emt</b> (move times).</p>
   <p><b>%clk</b> datas are also supported, but they are recalculated and displayed as %emt. Additionally, they do not properly calculate time totals because of (generally) unknown time-increments, and the common 40-move time top-ups.</p>
   <p>Alternatively, Scid vs PC can add scores using the <a Analysis Annotating>annotation feature</a>.
   These scores have one of the formats +0.25, [% +0.25] , or the standard [%eval +0.25]. The later two formats allow these scores to be hidden in  the PGN window by enabling PGN-<gt>Options-<gt>Hide-Codes.
@@ -3612,15 +3611,12 @@ from the Tools menu. Right-clicking the graph shows a Recent Players context men
 
   <p>Left Click positionally in the graph to go to the corresponding move.</p>
 
-  <p>Right Clicking anywhere in the score graph will perform a refresh.</p>
+  <p>Right Clicking anywhere in the score graph performs a refresh.</p>
 
-  <p>The current move is now highlighted a different colour, though for performance reasons (on OS X mainly), this can be disabled.
-  It is also possible to change the Graph colour via
-<green><run SetScoreColour>Options-<gt>Colors-<gt>Score Graph</run></green> and
-<green><run SetScoreBarColour>Options-<gt>Colors-<gt>Score Graph current</run></green>.
+  <p>The current move is now highlighted a different colour, and there's an option to show the red line+score as well.
+  The Graph colour, and current move colour, can be set from the Options menu.</p>
   
-
-  <p><footer>Updated: Scid vs. PC 4.20 June 2018</footer></p>
+  <p><footer>Updated: Scid vs. PC 4.28 Oct 2026</footer></p>
 }
 
 set helpTitle(TB) "Tablebases"

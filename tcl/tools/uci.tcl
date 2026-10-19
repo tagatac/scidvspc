@@ -102,6 +102,7 @@ namespace eval uci {
     logEngine $n "Engine: $line"
 
     if {[string match "bestmove*" $line]} {
+      set analysis(stopped$n) 0
       if {$annotate(Engine) == $n} {
         set ::pause 0
         return
@@ -330,6 +331,10 @@ namespace eval uci {
         set analysis(time$n) [expr {double($uciInfo(time$n)) / 1000.0} ]
         set analysis(nodesraw$n) $uciInfo(nodes$n)
         set analysis(nodes$n) [calculateNodes $uciInfo(nodes$n)]
+        # remove $::autoplayMode for dyanmic previewing! but it messes with the Progressively deeper overviews S.A.
+        if {$::autoplayMode && [array size ::annotatePreview]} {
+          previewEngineScore $n
+        }
       }
 
       set pvRaw $uciInfo(pv$n)

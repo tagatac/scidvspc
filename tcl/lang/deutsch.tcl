@@ -745,6 +745,7 @@ menuText D GraphOptionsBlack "Schwarz invertieren" 0
 menuText D GraphOptionsDots "Zeige Punkte" 0
 menuText D GraphOptionsSpelling "Elo aus der Rechtschreibdatei" 0
 menuText D GraphOptionsBar "Aktuellen Zug hervorheben" 0
+menuText D GraphOptionsLine "Aktuellen Zug bewerten" 0
 menuText D GraphOptionsBoth "Beide" 0
 menuText D GraphOptionsPInfo "Spielerinfo" 1
 translate D GraphFilterTitle "Filtergrafik: Häufigkeit pro 1000 Partien"
@@ -1620,6 +1621,8 @@ translate D Hash {Hash-Speicher}
 translate D OwnBook {Engine-Buch verwenden}
 translate D BookFile {Eröffnungsbuch}
 translate D AnnotateVariations {Varianten kommentieren}
+translate D AnnotateBackward {Rückwärts analysieren}
+translate D AnnotateQuickPasses {Rechtsklick: schnelle Bewertungsgrafik}
 translate D ShortAnnotations {Kurze Kommentare}
 translate D addAnnotatorTag {Kommentarmarkierung hinzufügen}
 translate D AddScoreToShortAnnotations {Bewertung hinzufügen}

@@ -93,6 +93,8 @@ proc resetEngine {n} {
   set analysis(eboard$n) 0            ;# Engine is a hardware device driver written by Graham ONeill
   set analysis(processInput$n) 0      ;# the time of the last processed event
   set analysis(waitForBestMove$n) 0
+  set analysis(stopped$n) 0           ;# search stopped, but no bestmove yet
+  set analysis(ply$n) {}              ;# main line ply of the position sent to the engine
   set analysis(waitForReadyOk$n) 0
   set analysis(waitForUciOk$n) 0
   set analysis(lastHistory$n) {}      ;# last best line
@@ -1001,64 +1003,17 @@ proc initAnnotation {n} {
   pack $w.cutoff.label -side left
   pack $w.cutoff.spBlunder -side right -padx 5
 
-  addHorizontalRule $w
-
-  ### Annotate Scores
-
-  label $w.scoreslabel -textvar tr(AddScores)
-  radiobutton $w.scores_allmoves -textvar tr(AnnotateAllMoves) -variable annotate(WithScore) -value allmoves -anchor w
-  radiobutton $w.scores_blunders -textvar tr(BlundersNotBest) -variable annotate(WithScore) -value blunders -anchor w
-  radiobutton $w.scores_var -textvar tr(GlistVariations) -variable annotate(WithScore) -value var -anchor w
-  radiobutton $w.scores_none -textvar tr(No) -variable annotate(WithScore) -value no -anchor w
-  # previously  annotateType
-
-  pack $w.scoreslabel -side top
-  pack $w.scores_allmoves $w.scores_blunders $w.scores_var $w.scores_none -side top -fill x
-
-  addHorizontalRule $w
-
-  ### Annotate Variations
-
-  label $w.anlabel -textvar tr(AddVars)
-  radiobutton $w.blunders -textvar tr(AnnotateBlundersOnly) -variable annotate(WithVars) -value blunders -anchor w
-  radiobutton $w.notbest -textvar tr(AnnotateNotBest) -variable annotate(WithVars) -value notbest -anchor w
-  radiobutton $w.allmoves -textvar tr(AnnotateAllMoves) -variable annotate(WithVars) -value allmoves -anchor w
-  radiobutton $w.none -textvar tr(No) -variable annotate(WithVars) -value no -anchor w
-
-  pack $w.anlabel -side top
-  pack $w.blunders $w.notbest -side top -fill x
-  pack $w.allmoves $w.none -side top -fill x
-
-  checkbutton $w.missedmates -textvar tr(AnnotateMissedMates) -variable annotate(MissedMates) -anchor w
-  checkbutton $w.varAtEnd -textvar tr(AnnotateEnd) -variable annotate(VarAtEnd) -anchor w
-
-  pack $w.missedmates -side top -anchor w
-  pack $w.varAtEnd -side top -anchor w
-
-  addHorizontalRule $w
-
-  ### Which side
-
-  label $w.avlabel -textvar tr(AnnotateWhich)
-  radiobutton $w.all -textvar tr(AnnotateAll) -variable annotate(Moves) -value all -anchor w
-  radiobutton $w.white -textvar tr(AnnotateWhite) -variable annotate(Moves) -value white -anchor w
-  radiobutton $w.black -textvar tr(AnnotateBlack) -variable annotate(Moves) -value black -anchor w
-
-  pack $w.avlabel -side top
-  pack $w.all $w.white $w.black -side top -fill x
-
-  addHorizontalRule $w
-
-  ### General options frame
-
   frame $w.scoreType
-  label $w.scoreType.label -textvar tr(ScoreFormat)
-  ttk::combobox $w.scoreType.values -width 12 -textvar annotate(scoreType) \
+  pack $w.scoreType -side top -padx 5
+
+  label $w.scoreType.label -textvar tr(ScoreFormat) -width 20
+  ttk::combobox $w.scoreType.values -width 10 -textvar annotate(scoreType) \
     -state readonly  -values {{+1.5} {[% +1.5]} {[%eval +1.5]}}
 
-  pack $w.scoreType -fill x
-  pack $w.scoreType.label -side left -padx 10
-  pack $w.scoreType.values -side right
+  pack $w.scoreType.label -side left 
+  pack $w.scoreType.values -side right 
+
+  addHorizontalRule $w
 
   # Batch annotation
   checkbutton $w.cbBatch -textvar tr(AnnotateSeveralGames) -variable annotate(isBatch)
@@ -1067,6 +1022,10 @@ proc initAnnotation {n} {
   # Book
   frame $w.usebook
   pack  $w.usebook -side top -fill x
+
+  # Direction
+  checkbutton $w.backward -textvar tr(AnnotateBackward) -variable annotate(Backward)
+  pack $w.backward -anchor w
 
   checkbutton $w.usebook.cbBook  -textvar tr(UseBook) -variable ::useAnalysisBook -command "
     if {!\$::useAnalysisBook} {
@@ -1136,6 +1095,52 @@ proc initAnnotation {n} {
     $w.missedmates configure -state disabled
   }
 
+
+  addHorizontalRule $w
+
+  ### Annotate Scores
+
+  label $w.scoreslabel -textvar tr(AddScores)
+  radiobutton $w.scores_allmoves -textvar tr(AnnotateAllMoves) -variable annotate(WithScore) -value allmoves -anchor w
+  radiobutton $w.scores_blunders -textvar tr(BlundersNotBest) -variable annotate(WithScore) -value blunders -anchor w
+  radiobutton $w.scores_var -textvar tr(GlistVariations) -variable annotate(WithScore) -value var -anchor w
+  radiobutton $w.scores_none -textvar tr(No) -variable annotate(WithScore) -value no -anchor w
+  # previously  annotateType
+
+  pack $w.scoreslabel -side top
+  pack $w.scores_allmoves $w.scores_blunders $w.scores_var $w.scores_none -side top -fill x
+
+  addHorizontalRule $w
+
+  ### Annotate Variations
+
+  label $w.anlabel -textvar tr(AddVars)
+  radiobutton $w.blunders -textvar tr(AnnotateBlundersOnly) -variable annotate(WithVars) -value blunders -anchor w
+  radiobutton $w.notbest -textvar tr(AnnotateNotBest) -variable annotate(WithVars) -value notbest -anchor w
+  radiobutton $w.allmoves -textvar tr(AnnotateAllMoves) -variable annotate(WithVars) -value allmoves -anchor w
+  radiobutton $w.none -textvar tr(No) -variable annotate(WithVars) -value no -anchor w
+
+  pack $w.anlabel -side top
+  pack $w.blunders $w.notbest -side top -fill x
+  pack $w.allmoves $w.none -side top -fill x
+
+  checkbutton $w.missedmates -textvar tr(AnnotateMissedMates) -variable annotate(MissedMates) -anchor w
+  checkbutton $w.varAtEnd -textvar tr(AnnotateEnd) -variable annotate(VarAtEnd) -anchor w
+
+  pack $w.missedmates -side top -anchor w
+  pack $w.varAtEnd -side top -anchor w
+
+  addHorizontalRule $w
+
+  ### Which side
+
+  label $w.avlabel -textvar tr(AnnotateWhich)
+  radiobutton $w.all -textvar tr(AnnotateAll) -variable annotate(Moves) -value all -anchor w
+  radiobutton $w.white -textvar tr(AnnotateWhite) -variable annotate(Moves) -value white -anchor w
+  radiobutton $w.black -textvar tr(AnnotateBlack) -variable annotate(Moves) -value black -anchor w
+
+  pack $w.avlabel -side top
+  pack $w.all $w.white $w.black -side top -fill x
   set w .configAnnotation
 
   addHorizontalRule $w
@@ -1164,6 +1169,56 @@ proc initAnnotation {n} {
     toggleEngineAnalysis $n
   }
   update
+}
+
+### Right-click on the annotate button: quick passes through the main line,
+### which only fill the score graph. The game is not changed.
+
+proc annotateQuickPasses {n} {
+  global annotate analysis autoplayDelay autoplayMode
+
+  if {$annotate(Engine) > -1 || $autoplayMode || !$analysis(uci$n) || [sc_var level] > 0} {
+    return
+  }
+  ::tools::graphs::score::Raise
+
+  # nothing to do if game is already scored
+  set ply [sc_pos location]
+  sc_move end
+  set scored [expr {double([llength [sc_game scores 0 0]]) / ([sc_pos location] + 1) >= 0.85}] ;# 85% moves scored
+  sc_move ply $ply
+  if {$scored} {
+    return
+  }
+
+  if {$annotate(Depth)} {
+    # Progressively deeper previews
+    if {[catch {
+      set depth [expr $::annotateDepth(1) + 1]
+       }]} {
+      set depth [expr $annotate(WantedDepth) - 6]
+    }
+    if {$depth < 4} {set depth 4}
+    set annotate(passes) [list "go depth $depth"]
+  } else {
+    # todo , check this behaviour S.A.
+    set annotate(passes) [list "go movetime 10"]
+    if {$autoplayDelay / 10 > 10} {
+      lappend annotate(passes) "go movetime [expr {$autoplayDelay / 10}]"
+    }
+  }
+
+  # Leaving these set makes for a progressive refinement S.A. Side-effects ??
+  # array unset ::annotatePreview
+  # array unset ::annotateDepth
+
+  set annotate(game) [list [sc_base current] [sc_game number]]
+  set annotate(Engine) $n
+  set annotate(Button$n) 1
+  foreach b {startStop move line alllines exclude lockengine training finishGame} {
+    .analysisWin$n.b.$b configure -state disabled
+  }
+  toggleAutoplay
 }
 
 ### Start Annotation
@@ -1218,6 +1273,14 @@ proc okAnnotation {n} {
   } else {
     set ::wentOutOfBook 1
   }
+  if {$annotate(Backward)} {
+    # book is handled by startBackward
+    set ::wentOutOfBook 2
+    set annotate(next) init
+  }
+  set annotate(game) [list [sc_base current] [sc_game number]]
+  array unset ::annotatePreview
+  array unset ::annotateDepth
 
   set annotate(Engine) $n
 
@@ -2395,6 +2458,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
 
   checkbutton $w.b.annotatebut -image tb_annotate -indicatoron false -width 32 -height 32 \
     -variable annotate(Button$n) -command "initAnnotation $n" -relief $relief
+  bind $w.b.annotatebut <Button-3> "annotateQuickPasses $n"
   ::utils::tooltip::Set $w.b.annotatebut $tr(Annotate)
 
   checkbutton $w.b.lockengine -image tb_lockengine -indicatoron false -width 32 -height 32 \
@@ -4223,7 +4287,9 @@ proc sendPosToEngineUCI {n  {delay 0}} {
 	#  As the engine's reaction to "ucinewgame" can take some time the GUI should always send "isready"
 	#  after "ucinewgame" to wait for the engine to finish its operation.
 
-	if {$n == $::annotate(Engine) && $::pause} {
+	# Engines may answer isready before the bestmove of the stopped search. Its last infos come
+	# after this and would be taken for the new position, so wait for the bestmove (in uci.tcl)
+	if {$n == $::annotate(Engine) && $::pause && !$analysis(stopped$n)} {
 	  set ::pause 0
 	}
     }
@@ -4250,7 +4316,14 @@ proc updateAnalysis {{n 0} {reset 1}} {
 
   global analysis analysisWin windowsOS
 
-  if {$analysis(lockEngine$n)} {
+  # another game has been loaded while annotating
+  if {$n == $::annotate(Engine) && ![isAnnotatedGame]} {
+    toggleEngineAnalysis $n
+    cancelAutoplay
+    return inactive
+  }
+
+  if {$analysis(lockEngine$n) || ($n == $::annotate(Engine) && $::annotate(passes) != {})} {
     return
   }
 
@@ -4293,6 +4366,11 @@ proc updateAnalysis {{n 0} {reset 1}} {
   # puts $movelist
   set analysis(movelist$n) $movelist
   set analysis(nonStdStart$n) $nonStdStart
+  if {[sc_var level]} {
+    set analysis(ply$n) {}
+  } else {
+    set analysis(ply$n) [sc_pos location]
+  }
 
   if {$n == $::annotate(Engine)} {
     # update engine annotation
@@ -4313,6 +4391,7 @@ proc updateAnalysis {{n 0} {reset 1}} {
        if { $analysis(startpos$n) != "" && $analysis(go$n)} {
          sendToEngine $n "stop"
 	 set analysis(go$n) 0
+	 set analysis(stopped$n) 1
        }
        set analysis(waitForReadyOk$n) 1
        sendToEngine $n "isready"

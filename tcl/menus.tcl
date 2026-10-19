@@ -970,7 +970,7 @@ $m add command -label OptionsSave -command {
     ::pgn::symbolicNags ::pgn::moveNumberSpaces ::pgn::columnFormat ::pgn::showScrollbar
     myPlayerNames optionsAutoSave ::tree::mask::recentMask ::tree::mask::autoLoadMask ::tree::showBar ::tree::multiCore ::tree::short ::tree::sortBest ::tree::autoAdjust ::tree::mask::showMarkers ::tree::mask::tooltips
     ::tree::autoSave ::tree::order ::tree::showFrame ecoFile suggestMoves showVarPopup showVarArrows colorActiveSquare
-    annotate(blunder) annotate(addTag) annotate(Moves) annotate(WithVars) annotate(WithScore) useAnalysisBook annotate(isVar) annotate(scoreType) annotate(cutoff) annotate(MissedMates) annotate(VarAtEnd)
+    annotate(blunder) annotate(addTag) annotate(Moves) annotate(WithVars) annotate(WithScore) useAnalysisBook annotate(isVar) annotate(scoreType) annotate(cutoff) annotate(MissedMates) annotate(VarAtEnd) annotate(Backward)
     annotate(WantedDepth) annotate(Depth) autoplayDelay animateDelay boardCoords boardSTM
     moveEntry(AutoExpand) moveEntry(Coord)
     translatePieces highlightLastMove highlightLastMoveWidth highlightLastMoveColor
@@ -1009,7 +1009,7 @@ $m add command -label OptionsSave -command {
     comp(timecontrol) comp(seconds) comp(base) comp(incr) comp(timeout) comp(name) comp(usebook) comp(book)
     comp(rounds) comp(showclock) comp(debug) comp(animate) comp(type) comp(ponder) comp(scoreType)
     ::tools::graphs::filter::type  ::tools::graphs::absfilter::type ::tools::graphs::showpoints ::tools::graphs::spelling
-    ::tools::graphs::showbar ::tools::graphs::type ::tools::graphs::rating::elo ::tools::graphs::rating::year
+    ::tools::graphs::showbar ::tools::graphs::showline ::tools::graphs::type ::tools::graphs::rating::elo ::tools::graphs::rating::year
     maintFlag useGraphFigurine photosMinimized bookmarks(gamehistory) playerInfoHistory defaultDBs tbOnline
     glistSize glexport glistColOrder glistColWidth glistColAnchor addRatings(overwrite) addRatings(filter)
     ::board::arrowWidth ::board::arrowLength ::board::enableMPVTls ::engineArrowMode ::engineArrowLabels ::engineArrowThick

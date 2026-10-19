@@ -531,10 +531,44 @@ proc ::utils::graph::updateMove {} {
 
   set canvas .sgraph.c
 
-  if {!$::tools::graphs::showbar || ![winfo exists $canvas] || ![info exists _data(score,plyList)]} {
+  if {!($::tools::graphs::showbar || $::tools::graphs::showline) || ![winfo exists $canvas] || ![info exists _data(score,plyList)]} {
     return
   }
 
+  # vertical line at the current move, with its score next to it
+  if {$::tools::graphs::showline} {
+    $canvas delete curline
+    # the start position at the left end
+    if {[sc_pos location] == 0} {
+      set x [xmap score $_data(score,axmin)]
+    } else {
+      set x [xmap score [expr {[sc_pos location] * 0.5 + 0.5}]]
+    }
+    if {[sc_var level] || $_data(score,data,coords) == {} || $x < [xmap score $_data(score,axmin)] || $x > [xmap score $_data(score,axmax)]} {
+      # continue
+    } else {
+      set ytop [ymap score $_data(score,aymax)]
+      $canvas create line $x $ytop $x [ymap score $_data(score,aymin)] -fill red -width 2 -tags {gscore curline}
+      set i [lsearch -exact $_data(score,plyList) [sc_pos location]]
+      if {$i > -1 && [string match "[tr Score]*" $::tools::graphs::score::title]} {
+	set score [format %+.2f [lindex $_data(score,data,coords) [expr {2 * $i + 1}]]]
+	# below the graph menu title
+	set t [$canvas create text [expr {$x + 3}] [expr {$ytop + 24}] -text $score -anchor nw -fill red -font font_Small -tags {gscore curline}]
+	if {[lindex [$canvas bbox $t] 2] > [xmap score $_data(score,axmax)]} {
+	  # no room on the right
+	  $canvas itemconfigure $t -anchor ne
+	  $canvas coords $t [expr {$x - 2}] [expr {$ytop + 24}]
+	}
+	# Blank box around score doesn't look great S.A.
+	# $canvas create rectangle [$canvas bbox $t] -fill $_data(score,background) -outline {} -tags {gscore curline}
+	$canvas raise $t
+      }
+    }
+  }
+
+  if {!$::tools::graphs::showbar} {
+    return
+  }
   # Restore colours of 'current' score bar.  Is it a little slow doing this ?
   # NB - there is no easy way to highlight (eg book) moves without a datum in $_data(score,data,coords)
   if {[info exists ::utils::graph::prevMove]} {

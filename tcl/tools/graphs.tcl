@@ -401,6 +401,20 @@ proc ::tools::graphs::score::Raise {} {
   }
 }
 
+### Scores of the quick passes, as returned by sc_game scores
+
+proc ::tools::graphs::score::Preview {} {
+  set values {}
+  foreach ply [lsort -integer [array names ::annotatePreview]] {
+    set score [expr {max(-10.0, min(10.0, $::annotatePreview($ply)))}]
+    if {$ply % 2 ? $::tools::graphs::score::invertBlack : $::tools::graphs::score::invertWhite} {
+      set score [expr {-$score}]
+    }
+    lappend values [expr {$ply * 0.5 + 0.5}] $score
+  }
+  return $values
+}
+
 proc ::tools::graphs::score::Init {} {
   ::tools::graphs::score::Refresh2 1
 }
@@ -453,8 +467,8 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
 
     $w.menu.options add separator
 
-    $w.menu.options add checkbutton -label GraphOptionsBar \
-      -variable ::tools::graphs::showbar -command ::tools::graphs::score::Refresh
+    $w.menu.options add checkbutton -label GraphOptionsBar -variable ::tools::graphs::showbar -command {::tools::graphs::score::Refresh}
+    $w.menu.options add checkbutton -label GraphOptionsLine -variable ::tools::graphs::showline -command {::tools::graphs::score::Refresh}
 
     foreach i {White Black} {
       $w.menu.options add checkbutton -label GraphOptions$i \
@@ -508,6 +522,15 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
 
   if {[string match Score* $type] || $type == "Auto"} {
     set scoreValues [sc_game scores $::tools::graphs::score::invertWhite $::tools::graphs::score::invertBlack]
+    # scores of the quick passes
+    if {[array size ::annotatePreview]} {
+      if {[isAnnotatedGame]} {
+        set scoreValues [::tools::graphs::score::Preview]
+      } else {
+        array unset ::annotatePreview
+        array unset ::annotateDepth
+      }
+    }
   } 
   set emtValues {}
   if {$type != "Score" } {
@@ -777,11 +800,11 @@ proc ::tools::graphs::score::ConfigMenus {{lang ""}} {
     configMenuText $m.file $idx GraphFile$tag $lang
   }
 
-  foreach idx {7 8 9} tag {Bar White Black} {
+  foreach idx {7 8 9 10} tag {Bar Line White Black} {
     configMenuText $m.options $idx GraphOptions$tag $lang
   }
   # todo - fix
-  foreach idx {11 12} tag {Colour BarColour} {
+  foreach idx {12 13} tag {Colour BarColour} {
     configMenuText $m.options $idx OptionsScore$tag $lang
   }
 }

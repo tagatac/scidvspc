@@ -1694,6 +1694,23 @@ proc autoplay {} {
 
   ### Engine Annotation feature
 
+  # stop if another game has been loaded
+  if {![isAnnotatedGame]} {
+    toggleEngineAnalysis $n
+    cancelAutoplay
+    return
+  }
+
+  if {$annotate(passes) != {}} {
+    startPasses $n
+    return
+  }
+
+  if {$annotate(Backward)} {
+    autoplayBackward $n
+    return
+  }
+
   if { ![sc_pos isAt start] } {
     addAnnotation [sc_pos side]
   }
@@ -1717,20 +1734,7 @@ proc autoplay {} {
       nextgameAutoplay $n
       return
     }
-    set move_done [sc_game info previousMoveNT]
-    if {$annotate(VarAtEnd) && [string index $move_done end] != "#" && $annotate(WithVars) != "no" && $annotate(WithVars) != "allmoves"} {
-      # Add a variation for the last move of the game
-      set text [format "%d:%+.2f" $analysis(depth$n) $analysis(score$n)]
-      set moves $analysis(moves$n)
-      sc_move back
-      sc_var create
-      sc_move addSan $move_done
-      sc_pos setComment "[sc_pos getComment] $text"
-      moveAdd $moves $n
-      # exit var and move to end
-      sc_move end
-      updateBoard -pgn
-    }
+    addVarAtEnd $n
     if {$annotate(isBatch) && [sc_game number] != 0} {
       nextgameAutoplay $n
     } else {
@@ -1800,6 +1804,329 @@ proc autoplay {} {
   }
 }
 
+### Add a variation for the last move of the game
+
+proc addVarAtEnd {n} {
+  global analysis annotate
+
+  set move_done [sc_game info previousMoveNT]
+  if {$annotate(VarAtEnd) && [string index $move_done end] != "#" && $annotate(WithVars) != "no" && $annotate(WithVars) != "allmoves"} {
+    set text [format "%d:%+.2f" $analysis(depth$n) $analysis(score$n)]
+    set moves $analysis(moves$n)
+    sc_move back
+    sc_var create
+    sc_move addSan $move_done
+    sc_pos setComment "[sc_pos getComment] $text"
+    moveAdd $moves $n
+    # exit var and move to end
+    sc_move end
+    updateBoard -pgn
+  }
+}
+
+### Annotate backwards, from the end of the game to the start.
+# The engine's hash table then already holds the analysis of the moves that follow.
+#
+# annotate(next)  - analysis of the next position {score mate moves multiPV depth}
+# annotate(stack) - analysis of the branch points of the variations being processed
+
+proc autoplayBackward {n} {
+  global annotate
+
+  if {$annotate(next) == "init"} {
+    startBackward $n
+    return
+  }
+
+  # the current position has been analysed
+  set data [getAnalysisData $n]
+
+  while {1} {
+    # variations are alternatives to the next move. Count them before annotating it adds one
+    set nvars [sc_var count]
+    annotateNextMove $n $data
+
+    if {$annotate(isVar) && $nvars > 0} {
+      lappend annotate(stack) [list $data $nvars]
+      enterVarBackward
+      return
+    }
+
+    # at the start of a variation, continue with the next variation or the parent line
+    while {[sc_var level] > 0 && [sc_pos isAt vstart]} {
+      sc_var exit
+      if {[lindex $annotate(stack) end 1] > 0} {
+        enterVarBackward
+        return
+      }
+      set annotate(stack) [lrange $annotate(stack) 0 end-1]
+    }
+
+    if {[sc_var level] == 0 && [sc_pos location] <= $annotate(stop)} {
+      if {$annotate(isBatch) && [sc_game number] != 0} {
+        nextgameAutoplay $n
+      } else {
+        toggleEngineAnalysis $n
+        updateBoard -pgn
+        ::tools::graphs::score::Refresh
+        cancelAutoplay
+      }
+      return
+    }
+
+    ::move::Back
+    if {[sc_var level] == 0 || ![sc_pos isAt vstart]} {
+      waitAnalysis
+      return
+    }
+    # the start of a variation is its branch point, which has been analysed
+    set data [lindex $annotate(stack) end 0]
+  }
+}
+
+proc startBackward {n} {
+  global annotate
+
+  after cancel autoplay
+  set annotate(next) {}
+  set annotate(stack) {}
+  set annotate(stop) 0
+
+  while {[sc_var level] > 0} {
+    sc_var exit
+  }
+  set ply [sc_pos location]
+
+  if {$::useAnalysisBook} {
+    # stop at the last book move
+    sc_move start
+    bookAnnotation $n
+    set ::wentOutOfBook 2
+    set annotate(stop) [sc_pos location]
+  }
+
+  if {$::isOpeningOnly} {
+    sc_move start
+    while {[sc_pos moveNumber] <= $::isOpeningOnlyMoves && ![sc_pos isAt end]} {
+      sc_move forward
+    }
+  } elseif {$ply == 0} {
+    sc_move end
+  } else {
+    sc_move ply $ply
+  }
+  updateBoard -pgn
+  waitAnalysis
+}
+
+### Process the variations from last to first, each from its end
+
+proc enterVarBackward {} {
+  global annotate
+
+  set i [expr {[lindex $annotate(stack) end 1] - 1}]
+  lset annotate(stack) end 1 $i
+  sc_var enter $i
+  sc_move endVar
+  set annotate(next) {}
+  updateBoard -pgn
+  waitAnalysis
+}
+
+proc waitAnalysis {} {
+  global annotate autoplayDelay
+
+  set ::pause 1
+  if {[sc_pos moves] == {}} {
+    # mate or stalemate, nothing to analyse
+    after idle autoplay
+  } elseif {!$annotate(Depth)} {
+    # in depth mode, the engine calls autoplay
+    after $autoplayDelay autoplay
+  }
+}
+
+### Quick passes (see annotateQuickPasses). They talk to the engine directly,
+# without the usual board and analysis window updates.
+#
+# annotate(passes) - "go" commands of the remaining passes
+
+proc startPasses {n} {
+  global annotate analysis
+
+  # the main line, as "position" commands for the engine
+  set ply [sc_pos location]
+  sc_move end
+  set annotate(qMoves) [sc_game moves coord]
+  set annotate(qLast) [sc_pos location]
+  if {[sc_pos moves] == {}} {
+    set ::annotatePreview($annotate(qLast)) [getScoreNoMoves]
+    incr annotate(qLast) -1
+  }
+  sc_move start
+  set annotate(qBlack) [expr {[sc_pos side] == "black"}]
+  if {[sc_game startBoard]} {
+    set annotate(qStart) "fen [sc_game startPos]"
+  } else {
+    set annotate(qStart) startpos
+  }
+  set annotate(qStartPly) $ply
+  sc_move ply $ply
+  puts "sc_move ply $ply"
+  setPassPlies
+
+  # take over the engine, once it has answered isready and stopped
+  after cancel $analysis(after$n)
+  set analysis(after$n) {}
+  set annotate(qReady) [expr {$analysis(waitForReadyOk$n) + 1}]
+  set annotate(qStop) [expr {$analysis(go$n) || $analysis(stopped$n)}]
+  set analysis(waitForReadyOk$n) 0
+  set analysis(go$n) 0
+  set analysis(stopped$n) 0
+  fileevent $analysis(pipe$n) readable [list readPasses $n]
+  sendToEngine $n stop
+  sendToEngine $n isready
+}
+
+### Backwards, so the hash table holds the analysis of the moves that follow
+
+proc setPassPlies {} {
+  global annotate
+
+  set annotate(qPlies) {}
+  for {set i $annotate(qLast)} {$i > 0} {incr i -1} {
+    lappend annotate(qPlies) $i
+  }
+  if {!$annotate(Backward)} {
+    set annotate(qPlies) [lreverse $annotate(qPlies)]
+  }
+}
+
+proc nextPassPly {n} {
+  global annotate analysis
+
+  # another game has been loaded, updateAnalysis cancels
+  if {![isAnnotatedGame]} {
+    return
+  }
+
+  if {$annotate(qPlies) == {}} {
+    if {[llength $annotate(passes)] == 1} {
+      # done
+      cancelAutoplay
+      return
+    }
+    set annotate(passes) [lrange $annotate(passes) 1 end]
+    setPassPlies
+  }
+  set annotate(qPly) [lindex $annotate(qPlies) 0]
+  set annotate(qPlies) [lrange $annotate(qPlies) 1 end]
+  set annotate(qScore) 0
+  set annotate(qDepth) 0
+  sc_move ply $annotate(qPly)
+  ::board::update .main.board [sc_pos board]
+  sendToEngine $n "position $annotate(qStart) moves [lrange $annotate(qMoves) 0 [expr {$annotate(qPly) - 1}]]"
+  sendToEngine $n [lindex $annotate(passes) 0]
+  set analysis(go$n) 1
+}
+
+proc readPasses {n} {
+  global annotate analysis
+
+  if {[gets $analysis(pipe$n) line] < 0} {
+    if {[eof $analysis(pipe$n)]} {
+      endPasses $n
+      ::uci::processAnalysisInput $n
+    }
+    return
+  }
+  if {$annotate(qReady) > 0 || $annotate(qStop)} {
+    if {$line == "readyok"} {
+      incr annotate(qReady) -1
+    } elseif {[string match bestmove* $line]} {
+      set annotate(qStop) 0
+    }
+    if {$annotate(qReady) == 0 && !$annotate(qStop)} {
+      nextPassPly $n
+    }
+    return
+  }
+  if {[regexp { score (cp|mate) (-?[0-9]+)} $line -> type score] && ![regexp { multipv [2-9]} $line]} {
+    regexp { depth ([0-9]+)} $line -> annotate(qDepth)
+    if {$type == "mate"} {
+      set score [expr {$score > 0 ? 32700 : -32700}]
+    }
+    # engine scores are from the side to move
+    if {($annotate(qPly) + $annotate(qBlack)) % 2} {
+      set score [expr {-$score}]
+    }
+    set annotate(qScore) [expr {$score / 100.0}]
+  } elseif {[string match bestmove* $line]} {
+    set analysis(go$n) 0
+    set ::annotatePreview($annotate(qPly)) $annotate(qScore)
+    set ::annotateDepth($annotate(qPly)) $annotate(qDepth)
+    ::tools::graphs::score::Refresh
+    nextPassPly $n
+  }
+}
+
+### After the quick passes, deeper scores of the analysis engines go into the score graph
+
+proc previewEngineScore {n} {
+  global annotate analysis
+
+  set ply $analysis(ply$n)
+  if {$annotate(Engine) > -1 || $analysis(stopped$n) || $ply == {} || $ply == 0 || ![isAnnotatedGame]} {
+    return
+  }
+  if {![info exists ::annotateDepth($ply)] || $analysis(depth$n) > $::annotateDepth($ply)} {
+    set ::annotatePreview($ply) $analysis(score$n)
+    set ::annotateDepth($ply) $analysis(depth$n)
+    ::tools::graphs::score::Refresh
+  }
+}
+
+proc endPasses {n} {
+  global annotate analysis
+
+  set annotate(passes) {}
+  fileevent $analysis(pipe$n) readable [list ::uci::processAnalysisInput $n]
+}
+
+proc getAnalysisData {n} {
+  global analysis
+  return [list $analysis(score$n) $analysis(scoremate$n) $analysis(moves$n) $analysis(multiPV$n) $analysis(depth$n)]
+}
+
+proc setAnalysisData {n data} {
+  global analysis
+  lassign $data analysis(score$n) analysis(scoremate$n) analysis(moves$n) analysis(multiPV$n) analysis(depth$n)
+}
+
+### Annotate the move to the next position. addAnnotation expects to be there,
+# with the analysis of the previous position in analysis(prev*)
+
+proc annotateNextMove {n data} {
+  global analysis annotate
+
+  if {$annotate(next) != {}} {
+    lassign $data analysis(prevscore$n) analysis(prevmate$n) analysis(prevmoves$n)
+    setAnalysisData $n $annotate(next)
+    sc_move forward
+    if {[sc_pos moves] == {}} {
+      # mate or stalemate, only add the score as autoplay does
+      addScore $n single 1
+    } else {
+      addAnnotation [sc_pos side]
+      if {[sc_var level] == 0 && [sc_pos isAt end]} {
+        addVarAtEnd $n
+      }
+    }
+    sc_move back
+    setAnalysisData $n $data
+  }
+  set annotate(next) $data
+}
 
 proc nextgameAutoplay {n} {
   global autoplayDelay analysis annotate stack
@@ -1827,6 +2154,11 @@ proc nextgameAutoplay {n} {
       }
     }
     set ::wentOutOfBook [sc_pos isAt end]
+    if {$annotate(Backward)} {
+      set ::wentOutOfBook 2
+      set annotate(next) init
+    }
+    set annotate(game) [list [sc_base current] [sc_game number]]
     updateMenuStates
     updateStatusBar
     updateTitle
@@ -1851,11 +2183,24 @@ proc nextgameAutoplay {n} {
   }
 }
 
+### Is the current game the one being annotated ?
+
+proc isAnnotatedGame {} {
+  return [expr {$::annotate(game) == [list [sc_base current] [sc_game number]]}]
+}
+
 proc cancelAutoplay {} {
   global autoplayMode annotate
 
   set autoplayMode 0
   set n $annotate(Engine)
+  if {$annotate(passes) != {}} {
+    endPasses $n
+    if {[isAnnotatedGame]} {
+      sc_move ply $annotate(qStartPly)
+    }
+    updateBoard -pgn
+  }
   if {$n > -1} {
     if {[winfo exists .analysisWin$n.b.startStop]} {
       set disableButtons {startStop move line alllines exclude lockengine alllines training finishGame}

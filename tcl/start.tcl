@@ -170,6 +170,7 @@ set ::tools::graphs::filter::type year
 set ::tools::graphs::showpoints 1
 set ::tools::graphs::spelling 0
 set ::tools::graphs::showbar [expr ! $::macOS] ; # too slow on macs
+set ::tools::graphs::showline 0
 set ::tools::graphs::type Auto
 set ::tools::graphs::rating::year 1900
 set ::tools::graphs::rating::elo 0
@@ -184,6 +185,8 @@ set annotate(WantedDepth) 13
 set annotate(Depth) 1
 set useAnalysisBook 0
 set annotate(isVar) 0
+set annotate(Backward) 0
+set annotate(passes) {}
 set annotate(scoreType) {+ 1.5}
 set annotate(blunder) 1.0
 set annotate(cutoff) 5.0

@@ -704,6 +704,7 @@ menuText E GraphOptionsBlack "Invert Black" 0
 menuText E GraphOptionsDots "Show Dots" 0
 menuText E GraphOptionsSpelling "Ratings from Spelling File" 0
 menuText E GraphOptionsBar "Highlight Current Move" 0
+menuText E GraphOptionsLine "Score Current Move" 0
 menuText E GraphOptionsBoth "Both" 1
 menuText E GraphOptionsPInfo "Player Info player" 0
 translate E GraphFilterTitle "Frequency per 1000 Games"
@@ -1557,6 +1558,8 @@ translate E Hash {Hash memory}
 translate E OwnBook {Use engine book}
 translate E BookFile {Opening book}
 translate E AnnotateVariations {Process variations}
+translate E AnnotateBackward {Analyze backwards}
+translate E AnnotateQuickPasses {Right-click: quick score graph}
 translate E ShortAnnotations {Short annotations}
 translate E addAnnotatorTag {Add annotator tag}
 translate E AddScoreToShortAnnotations {Add score to annotations}
