@@ -220,6 +220,16 @@ proc ::utils::graph::redraw {graph} {
     $_data(score,canvas) delete title
     $_data(score,canvas) create image [expr {$_data(score,xtop) + 10}] 50 -image arrow_down -tag title
     $_data(score,canvas) create text [expr {$_data(score,xtop) + 18}] 50 -text $::tools::graphs::score::title -font font_Small -anchor w -tag title
+    # depth or time of the running quick pass (annotateQuickPasses)
+    if {[array size ::annotatePreview] && [info exists ::annotate(lastPass)]} {
+      lassign $::annotate(lastPass) go type value
+      if {$type == "depth"} {
+        set text "[tr Depth] $value"
+      } else {
+        set text "[expr {$value / 1000.0}] s"
+      }
+      $_data(score,canvas) create text [expr {[lindex [$_data(score,canvas) bbox title] 2] + 12}] 50 -text $text -font font_Small -anchor w -tag title
+    }
   }
 }
 

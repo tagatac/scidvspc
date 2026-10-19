@@ -528,7 +528,6 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
         set scoreValues [::tools::graphs::score::Preview]
       } else {
         array unset ::annotatePreview
-        array unset ::annotateDepth
       }
     }
   } 

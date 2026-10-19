@@ -2906,8 +2906,9 @@ The default mode and size are set in the <a Analysis List>Engine Configuration</
  
   <p><i>Right-clicking the Annotate Button makes a quick pass through the main line
   (UCI only), and shows the scores in the <a Graphs Score>Score Graph</a> without changing the game.
-  For Time-move-control, the first pass takes 10 ms per move, the second a tenth of the time per move
-  (or 4 plies less depth). For Depth-move-control, subsequent right-clicks repeat the preview at higher depths.</i></p>
+  For Time-move-control, the first pass takes 10 ms per move, the second an eighth of the time per move.
+  For Depth-move-control, subsequent right-clicks repeat the preview one ply deeper,
+  for Time-move-control with twice the time.</i></p>
 
 
   <p>After configuring the options and pressing OK, Autoplay

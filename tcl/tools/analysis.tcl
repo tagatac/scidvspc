@@ -95,7 +95,6 @@ proc resetEngine {n} {
   set analysis(processInput$n) 0      ;# the time of the last processed event
   set analysis(waitForBestMove$n) 0
   set analysis(stopped$n) 0           ;# search stopped, but no bestmove yet
-  set analysis(ply$n) {}              ;# main line ply of the position sent to the engine
   set analysis(waitForReadyOk$n) 0
   set analysis(waitForUciOk$n) 0
   set analysis(lastHistory$n) {}      ;# last best line
@@ -905,7 +904,8 @@ proc initAnnotation {n} {
     return
   }
   if {!$annotate(Button$n) && $annotate(Engine) == $n} { ; # end annotation
-    toggleAutoplay
+    toggleEngineAnalysis $n
+    cancelAutoplay
     return
   }
 
@@ -1188,6 +1188,9 @@ proc annotateQuickPasses {n} {
     return
   }
   ::tools::graphs::score::Raise
+  if {[string match Time* $::tools::graphs::type]} {
+    set ::tools::graphs::type Auto
+  }
 
   # nothing to do if game is already scored
   set ply [sc_pos location]
@@ -1198,32 +1201,36 @@ proc annotateQuickPasses {n} {
     return
   }
 
+  # Each further click goes one ply deeper, or takes twice the time
+  set again [expr {[array size ::annotatePreview] > 0}]
   if {$annotate(Depth)} {
-    # Progressively deeper previews
-    if {[catch {
-      set depth [expr $::annotateDepth(1) + 1]
-       }]} {
-      set depth [expr $annotate(WantedDepth) - 6]
+    if {$again && [info exists annotate(previewDepth)]} {
+      incr annotate(previewDepth)
+    } else {
+      set annotate(previewDepth) [expr {max(4, $annotate(WantedDepth) - 6)}]
     }
-    if {$depth < 4} {set depth 4}
-    set annotate(passes) [list "go depth $depth"]
+    set annotate(passes) [list "go depth $annotate(previewDepth)"]
   } else {
-    # todo , check this behaviour S.A.
-    set annotate(passes) [list "go movetime 10"]
-    if {$autoplayDelay / 10 > 10} {
-      lappend annotate(passes) "go movetime [expr {$autoplayDelay / 10}]"
+    # first 10 ms and 1/8 of the time
+    if {$again && [info exists annotate(previewTime)]} {
+      set annotate(previewTime) [expr {$annotate(previewTime) * 2}]
+      set annotate(passes) [list "go movetime $annotate(previewTime)"]
+    } else {
+      set annotate(previewTime) [expr {$autoplayDelay / 8}]
+      set annotate(passes) [list "go movetime 10" "go movetime $annotate(previewTime)"]
     }
   }
-
-  # Leaving these set makes for a progressive refinement S.A. Side-effects ??
-  # array unset ::annotatePreview
-  # array unset ::annotateDepth
 
   set annotate(game) [list [sc_base current] [sc_game number]]
   set annotate(Engine) $n
   set annotate(Button$n) 1
+  # show the depth or time now
+  ::tools::graphs::score::Refresh
   foreach b {startStop move line alllines exclude lockengine training finishGame} {
     .analysisWin$n.b.$b configure -state disabled
+  }
+ if {! $analysis(analyzeMode$n)} {
+    toggleEngineAnalysis $n
   }
   toggleAutoplay
 }
@@ -1287,7 +1294,6 @@ proc okAnnotation {n} {
   }
   set annotate(game) [list [sc_base current] [sc_game number]]
   array unset ::annotatePreview
-  array unset ::annotateDepth
 
   set annotate(Engine) $n
 
@@ -4373,11 +4379,6 @@ proc updateAnalysis {{n 0} {reset 1}} {
   # puts $movelist
   set analysis(movelist$n) $movelist
   set analysis(nonStdStart$n) $nonStdStart
-  if {[sc_var level]} {
-    set analysis(ply$n) {}
-  } else {
-    set analysis(ply$n) [sc_pos location]
-  }
 
   if {$n == $::annotate(Engine)} {
     # update engine annotation

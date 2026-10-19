@@ -1972,7 +1972,6 @@ proc startPasses {n} {
   }
   set annotate(qStartPly) $ply
   sc_move ply $ply
-  puts "sc_move ply $ply"
   setPassPlies
 
   # take over the engine, once it has answered isready and stopped
@@ -2013,6 +2012,7 @@ proc nextPassPly {n} {
   if {$annotate(qPlies) == {}} {
     if {[llength $annotate(passes)] == 1} {
       # done
+      toggleEngineAnalysis $n
       cancelAutoplay
       return
     }
@@ -2022,11 +2022,11 @@ proc nextPassPly {n} {
   set annotate(qPly) [lindex $annotate(qPlies) 0]
   set annotate(qPlies) [lrange $annotate(qPlies) 1 end]
   set annotate(qScore) 0
-  set annotate(qDepth) 0
   sc_move ply $annotate(qPly)
   ::board::update .main.board [sc_pos board]
   sendToEngine $n "position $annotate(qStart) moves [lrange $annotate(qMoves) 0 [expr {$annotate(qPly) - 1}]]"
   sendToEngine $n [lindex $annotate(passes) 0]
+  set annotate(lastPass) [lindex $annotate(passes) 0]
   set analysis(go$n) 1
 }
 
@@ -2052,7 +2052,6 @@ proc readPasses {n} {
     return
   }
   if {[regexp { score (cp|mate) (-?[0-9]+)} $line -> type score] && ![regexp { multipv [2-9]} $line]} {
-    regexp { depth ([0-9]+)} $line -> annotate(qDepth)
     if {$type == "mate"} {
       set score [expr {$score > 0 ? 32700 : -32700}]
     }
@@ -2064,25 +2063,8 @@ proc readPasses {n} {
   } elseif {[string match bestmove* $line]} {
     set analysis(go$n) 0
     set ::annotatePreview($annotate(qPly)) $annotate(qScore)
-    set ::annotateDepth($annotate(qPly)) $annotate(qDepth)
     ::tools::graphs::score::Refresh
     nextPassPly $n
-  }
-}
-
-### After the quick passes, deeper scores of the analysis engines go into the score graph
-
-proc previewEngineScore {n} {
-  global annotate analysis
-
-  set ply $analysis(ply$n)
-  if {$annotate(Engine) > -1 || $analysis(stopped$n) || $ply == {} || $ply == 0 || ![isAnnotatedGame]} {
-    return
-  }
-  if {![info exists ::annotateDepth($ply)] || $analysis(depth$n) > $::annotateDepth($ply)} {
-    set ::annotatePreview($ply) $analysis(score$n)
-    set ::annotateDepth($ply) $analysis(depth$n)
-    ::tools::graphs::score::Refresh
   }
 }
 
@@ -2194,6 +2176,7 @@ proc cancelAutoplay {} {
       sc_move ply $annotate(qStartPly)
     }
     updateBoard -pgn
+    ::tools::graphs::score::Refresh
   }
   if {$n > -1} {
     if {[winfo exists .analysisWin$n.b.startStop]} {
