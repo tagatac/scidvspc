@@ -868,7 +868,7 @@ proc ::enginelist::findEngine {key} {
 
 ### Is the current game the one being annotated ?
 
-proc isAnnotatedGame {} {
+proc isCurrentAnnotatedGame {} {
   return [expr {$::annotate(game) == [list [sc_base current] [sc_game number]]}]
 }
 
@@ -4330,7 +4330,7 @@ proc updateAnalysis {{n 0} {reset 1}} {
   global analysis analysisWin windowsOS
 
   # another game has been loaded while annotating
-  if {$n == $::annotate(Engine) && ![isAnnotatedGame]} {
+  if {$n == $::annotate(Engine) && ![isCurrentAnnotatedGame]} {
     toggleEngineAnalysis $n
     cancelAutoplay
     return inactive

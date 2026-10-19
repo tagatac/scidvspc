@@ -3402,7 +3402,7 @@ proc ::board::updateMainEvalBar {{w .main.board}} {
   } else {
     # no engine running, try to get score from comment
     set score [sc_pos getScore]
-    if {$score == "" && ![sc_var level] && [isAnnotatedGame]} {
+    if {$score == "" && ![sc_var level] && [isCurrentAnnotatedGame]} {
       # or from annotatePreview
       catch {
         set score $::annotatePreview([sc_pos location])

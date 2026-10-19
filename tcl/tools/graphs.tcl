@@ -524,7 +524,7 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
     set scoreValues [sc_game scores $::tools::graphs::score::invertWhite $::tools::graphs::score::invertBlack]
     # scores of the quick passes
     if {[array size ::annotatePreview]} {
-      if {[isAnnotatedGame]} {
+      if {[isCurrentAnnotatedGame]} {
         set scoreValues [::tools::graphs::score::Preview]
       } else {
         array unset ::annotatePreview

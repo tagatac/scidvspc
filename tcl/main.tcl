@@ -1695,7 +1695,7 @@ proc autoplay {} {
   ### Engine Annotation feature
 
   # stop if another game has been loaded
-  if {![isAnnotatedGame]} {
+  if {![isCurrentAnnotatedGame]} {
     toggleEngineAnalysis $n
     cancelAutoplay
     return
@@ -2005,7 +2005,7 @@ proc nextPassPly {n} {
   global annotate analysis
 
   # another game has been loaded, updateAnalysis cancels
-  if {![isAnnotatedGame]} {
+  if {![isCurrentAnnotatedGame]} {
     return
   }
 
@@ -2172,7 +2172,7 @@ proc cancelAutoplay {} {
   set n $annotate(Engine)
   if {$annotate(passes) != {}} {
     endPasses $n
-    if {[isAnnotatedGame]} {
+    if {[isCurrentAnnotatedGame]} {
       sc_move ply $annotate(qStartPly)
     }
     updateBoard -pgn
