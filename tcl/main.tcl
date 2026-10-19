@@ -2183,12 +2183,6 @@ proc nextgameAutoplay {n} {
   }
 }
 
-### Is the current game the one being annotated ?
-
-proc isAnnotatedGame {} {
-  return [expr {$::annotate(game) == [list [sc_base current] [sc_game number]]}]
-}
-
 proc cancelAutoplay {} {
   global autoplayMode annotate
 

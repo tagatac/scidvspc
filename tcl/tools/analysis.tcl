@@ -25,6 +25,7 @@ set mainEngine -1
 
 set annotate(isBatch) 0
 set annotate(markExercises) 0
+set annotate(game) {}
 set isOpeningOnly 0
 set isOpeningOnlyMoves 10
 set stack ""
@@ -864,6 +865,12 @@ proc ::enginelist::findEngine {key} {
     $w selection set $i
     $w see $i
   }
+}
+
+### Is the current game the one being annotated ?
+
+proc isAnnotatedGame {} {
+  return [expr {$::annotate(game) == [list [sc_base current] [sc_game number]]}]
 }
 
 proc checkAnnotateControl {w} {
