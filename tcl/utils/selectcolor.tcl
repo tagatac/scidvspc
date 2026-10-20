@@ -1,8 +1,8 @@
 ###
-### selectcolor.tcl
+### selectcolor.tcl 
+### A cut-down version of BWidget's SelectColor dialog (color.tcl) which replaces tk_chooseColor
 ###
-### A colour selector for Linux, which replaces the poor Unix tk_chooseColor.
-### It is a cut-down version of BWidget's SelectColor dialog (color.tcl) 
+### It is not built into the windows and macOS GUIs, but can be so, or sourced, if desired.
 ###
 ### Authors Patrick Götz , Stevenaaus
 ### BWidget ToolKit Copyright (c) 1998-1999 UNIFIX.  Copyright (c) 2001-2002 ActiveState Corp.
@@ -23,21 +23,21 @@ namespace eval ::SelectColor {
   variable result {}
 }
 
-if {$unixOS && !$macOS} {
-  # Redefine the sad Linux color selector procedure to something useful S.A
-  proc tk_chooseColor {args} {
-    set color #ffffff
-    set title Colour
-    set parent .
-    foreach {opt val} $args {
-      switch -- $opt {
-        -initialcolor { set color $val }
-        -title        { set title $val }
-        -parent       { set parent $val }
-      }
+### if {$unixOS && !$macOS} 
+
+# Redefine the sad Linux color selector procedure to something useful S.A
+proc tk_chooseColor {args} {
+  set color #ffffff
+  set title Colour
+  set parent .
+  foreach {opt val} $args {
+    switch -- $opt {
+      -initialcolor { set color $val }
+      -title        { set title $val }
+      -parent       { set parent $val }
     }
-    return [::SelectColor::dialog $color $title $parent]
   }
+  return [::SelectColor::dialog $color $title $parent]
 }
 
 proc ::SelectColor::dialog {initial title parent} {
