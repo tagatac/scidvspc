@@ -26,7 +26,7 @@ S.A.
 
 Index: Makefile.conf
 ===================================================================
---- Makefile.conf	(revision 2901)
+--- Makefile.conf	(revision 3716)
 +++ Makefile.conf	(working copy)
 @@ -215,6 +215,24 @@
    src/spellchk.o src/stored.o src/stralloc.o src/textbuf.o src/tree.o
@@ -61,7 +61,7 @@ Index: Makefile.conf
      tcl/tools/email.tcl \
      tcl/tools/import.tcl \
      tcl/tools/optable.tcl tcl/tools/preport.tcl tcl/tools/pinfo.tcl \
-@@ -382,7 +401,7 @@
+@@ -385,7 +404,7 @@
  	fi
  
  clean:
@@ -70,21 +70,8 @@ Index: Makefile.conf
  	cd engines/phalanx/ && make clean && cd ../../
  	cd engines/toga/src/ && make clean && cd ../../../
  	cd src/tkdnd/ && make clean && cd ../..
-@@ -478,10 +497,10 @@
- scidt: src/scidt.o $(OBJS) $(CHARSETCONVOBJS)
- 	$(LINK) $(LDFLAGS) -o scidt src/scidt.o $(OBJS) $(CHARSETCONVOBJS) $(ZLIB) $(TCL_LIBRARY)
- 
--tkscid: src/tkscid.o $(OBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS) \
-+tkscid: src/tkscid.o $(OBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS) $(TKTEXTOBJS) \
-         src/tree.o src/filter.o src/pbook.o src/crosstab.o src/spellchk.o \
-         src/probe.o src/optable.o src/engine.o src/recog.o src/tkdnd/TkDND_XDND.o src/tk_selection.o
--	$(LINK) $(LDFLAGS) -o tkscid src/tkscid.o $(OBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS) src/tree.o \
-+	$(LINK) $(LDFLAGS) -o tkscid src/tkscid.o $(OBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS) $(TKTEXTOBJS) src/tree.o \
-         src/filter.o src/pbook.o src/crosstab.o src/spellchk.o src/probe.o src/optable.o \
-         src/engine.o src/recog.o src/tkdnd/TkDND_XDND.o src/tk_selection.o $(ZLIB) $(TK_LIBRARY)
- 
-@@ -524,6 +543,16 @@
- 	$(BASH_ENV) $(CXX) $(CXXFLAGS) -std=c++11 -Wall -Wno-write-strings -Wno-char-subscripts  -Wno-parentheses -Wno-sign-compare -fdiagnostics-show-option -DINTEGRATED $(CQL_INCLUDE) $(TCL_INCLUDE) -o $@ -c $<
+@@ -527,6 +546,16 @@
+ 	$(BASH_ENV) $(CXX) $(CXXFLAGS) -Wall -Wno-write-strings -Wno-char-subscripts  -Wno-parentheses -Wno-sign-compare -fdiagnostics-show-option -DINTEGRATED $(CQL_INCLUDE) $(TCL_INCLUDE) -o $@ -c $<
  
  
 +### Rule for compiling TkText source files:
@@ -102,7 +89,7 @@ Index: Makefile.conf
  src/zlib/%.o: src/zlib/%.c
 Index: Makefile.conf.darwin
 ===================================================================
---- Makefile.conf.darwin	(revision 2901)
+--- Makefile.conf.darwin	(revision 3716)
 +++ Makefile.conf.darwin	(working copy)
 @@ -213,6 +213,24 @@
    src/optable.o src/pgnparse.o src/pbook.o src/position.o src/probe.o \
@@ -159,7 +146,7 @@ Index: Makefile.conf.darwin
  tcscid: src/tcscid.o $(OBJS) $(CQLOBJS_I) $(CHARSETCONVOBJS) src/tree.o src/filter.o src/pbook.o src/crosstab.o \
            src/spellchk.o src/probe.o src/optable.o src/engine.o src/recog.o
 @@ -547,6 +566,17 @@
- 	$(BASH_ENV) $(CXX) $(CXXFLAGS) -std=c++11 -Wall -Wno-write-strings -Wno-char-subscripts  -Wno-parentheses -Wno-sign-compare -fdiagnostics-show-option -DINTEGRATED $(CQL_INCLUDE) $(TCL_INCLUDE) -o $@ -c $<
+ 	$(BASH_ENV) $(CXX) $(CXXFLAGS) -Wall -Wno-write-strings -Wno-char-subscripts  -Wno-parentheses -Wno-sign-compare -fdiagnostics-show-option -DINTEGRATED $(CQL_INCLUDE) $(TCL_INCLUDE) -o $@ -c $<
  
  
 +### Rule for compiling TkText source files:
@@ -178,7 +165,7 @@ Index: Makefile.conf.darwin
  src/zlib/%.o: src/zlib/%.c
 Index: Makefile.mingw
 ===================================================================
---- Makefile.mingw	(revision 2901)
+--- Makefile.mingw	(revision 3716)
 +++ Makefile.mingw	(working copy)
 @@ -53,6 +53,23 @@
  STRIP=$(CROSS)strip
@@ -248,9 +235,9 @@ Index: Makefile.mingw
  
 Index: src/tkscid.cpp
 ===================================================================
---- src/tkscid.cpp	(revision 2901)
+--- src/tkscid.cpp	(revision 3716)
 +++ src/tkscid.cpp	(working copy)
-@@ -72,6 +72,8 @@
+@@ -83,6 +83,8 @@
  
  int scid_InitTclTk (Tcl_Interp * interp);
  
@@ -259,9 +246,9 @@ Index: src/tkscid.cpp
  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  // InvalidCommand():
  //    Given a Tcl Interpreter, a major command name (e.g. "sc_base") and
-@@ -510,11 +512,16 @@
-     db = &(dbList[currentBase]);
+@@ -566,11 +568,16 @@
  
+     srandom32 (time(NULL)); // Seed rand num gen. Only used by tree training ? - S.A.
  #ifndef TCL_ONLY
 +
  #ifndef __APPLE__
