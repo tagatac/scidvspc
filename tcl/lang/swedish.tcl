@@ -651,6 +651,8 @@ menuText W TreeOpt "Alternativ" 0
 menuText W TreeOptSlowmode "Långsam mod" 0 {Långsam mod för uppdateringar (hög noggrannhet)}
 menuText W TreeOptFastmode "Snabb mod" 0 {Snabb mod för uppdateringar (ingen dragtranspositionering)}
 menuText W TreeOptFastAndSlowmode "Snabb och långsam mod" 0 {Snabb mod sedan långsam mod för uppdateringar}
+# ====== TODO To be translated ======
+menuText W TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText W TreeOptStartStop "Automatisk uppdatering" 0 {Växlar automatisk uppdatering av trädfönstret}
 menuText W TreeOptLock "Lås" 0 {Lås/ lås upp trädet för den aktuella databasen}
 menuText W TreeOptTraining "Träna" 0 {Starta/ stäng av träningsläge}
@@ -789,6 +791,8 @@ translate W TmtNone "Inga turneringar hittades."
 menuText W GraphFile "Fil" 0
 menuText W GraphFileColor "Spara som Postscript (i färg)" 8
 menuText W GraphFileGrey "Spara som Postscript (i gråskala)" 8
+# ====== TODO To be translated ======
+menuText W GraphFilePreview "Add Preview Scores to Game" 0
 menuText W GraphFileClose "Stäng fönster" 6
 menuText W GraphOptions "Alternativ" 0
 menuText W GraphOptionsWhite "Vit" 0
@@ -799,6 +803,8 @@ menuText W GraphOptionsDots "Show Dots" 0
 menuText W GraphOptionsSpelling "Ratings from Spelling File" 0
 # ====== TODO To be translated ======
 menuText W GraphOptionsBar "Highlight Current Move" 0
+# ====== TODO To be translated ======
+menuText W GraphOptionsLine "Score Current Move" 0
 menuText W GraphOptionsBoth "Båda" 1
 menuText W GraphOptionsPInfo "Spelarinformation" 0
 translate W GraphFilterTitle "Filterdiagram: antal per 1000 partier"
@@ -1729,6 +1735,10 @@ translate W Hash {Hashminne}
 translate W OwnBook {Använd schackmotorbok}
 translate W BookFile {Öppningsbok}
 translate W AnnotateVariations {Kommentera variationer}
+# ====== TODO To be translated ======
+translate W AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate W AnnotateQuickPasses {Right-click: quick score graph}
 translate W ShortAnnotations {Korta kommentarer}
 translate W addAnnotatorTag {Lägg till kommentator-tagg}
 translate W AddScoreToShortAnnotations {Lägg till värdering till korta kommentarer}

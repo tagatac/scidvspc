@@ -717,6 +717,8 @@ menuText B TreeOpt "Opcoes" 0
 menuText B TreeOptSlowmode "Modo Lento" 0 {Modo lento para atualizações (mais acurado)}
 menuText B TreeOptFastmode "Modo Rápido" 0 {Modo rápido para atualizações (sem transsposições de movimentos)}
 menuText B TreeOptFastAndSlowmode "Modo rápido e lento" 0 {Modo rápido e lento para atualizações}
+# ====== TODO To be translated ======
+menuText B TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText B TreeOptStartStop "Atualização automática" 0 {Liga/Desliga a atualização automática da janela de árvore}
 menuText B TreeOptLock "Travar" 0 {Trava/Destrava a arvore para o banco corrente}
 menuText B TreeOptTraining "Treinamento" 0 \
@@ -859,6 +861,8 @@ translate B TmtNone "Nenhum torneio encontrado."
 menuText B GraphFile "Arquivo" 0
 menuText B GraphFileColor "Salvar como Postscript Colorido..." 12
 menuText B GraphFileGrey "Salvar como Postscript Cinza..." 23
+# ====== TODO To be translated ======
+menuText B GraphFilePreview "Add Preview Scores to Game" 0
 menuText B GraphFileClose "Fecha janela" 6
 menuText B GraphOptions "Opcoes" 0
 menuText B GraphOptionsWhite "Branco" 0
@@ -868,6 +872,8 @@ menuText B GraphOptionsDots "Mostrar Pontos" 0
 menuText B GraphOptionsSpelling "ELO do arquivo de ortografia" 0
 
 menuText B GraphOptionsBar "Destacar movimento atual" 0
+# ====== TODO To be translated ======
+menuText B GraphOptionsLine "Score Current Move" 0
 menuText B GraphOptionsBoth "Ambos" 0
 menuText B GraphOptionsPInfo "Informacao do Jogador" 0
 translate B GraphFilterTitle "Gráfico de filtro: frequencia por 1000 jogos" 
@@ -1980,6 +1986,10 @@ translate B OwnBook {Usar livro do engine}
 translate B BookFile {Livro de aberturas}
 
 translate B AnnotateVariations {Anotar variantes}
+# ====== TODO To be translated ======
+translate B AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate B AnnotateQuickPasses {Right-click: quick score graph}
 
 translate B ShortAnnotations {Anotações curtas}
 

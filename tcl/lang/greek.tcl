@@ -665,6 +665,8 @@ menuText G TreeOpt "Ρυθμίσεις" 0
 menuText G TreeOptSlowmode "Αργός ρυθμός" 1 {Αργός ρυθμός ενημερώσεων (Μεγάλη ακρίβεια)}
 menuText G TreeOptFastmode "Γρήγορος ρυθμός" 0 {Γρήγορος ρυθμός ενημερώσεων (χωρίς μεταβατικές κινήσεις)}
 menuText G TreeOptFastAndSlowmode "Συνδυαστικός ρυθμός" 0 {Πρώτα γρήγορος ρυθμός και μετά αργός ρυθμός ενημερώσεων}
+# ====== TODO To be translated ======
+menuText G TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText G TreeOptStartStop "Αυτόματη ανανέωση" 0 {Διακόπτης Αυτόματης Ανανέωσης του Δένδρου Κινήσεων}
 menuText G TreeOptLock "Κλείδωμα" 0 {Διακόπτης Κλειδώματος του Δένδρου Κινήσεων στη τρέχουσα Βάση}
 menuText G TreeOptTraining "Εκπαίδευση" 0 {Διακόπτης Εκπαίδευσης Κινήσεων Δένδρου}
@@ -801,6 +803,8 @@ translate G TmtNone "Δεν βρέθηκαν σχετικά τουρνουά."
 menuText G GraphFile "Αρχείο" 0
 menuText G GraphFileColor "Αποθήκευση Έγχρωμου PostScript" 3
 menuText G GraphFileGrey "Αποθήκευση Γκρίζου PostScript" 4
+# ====== TODO To be translated ======
+menuText G GraphFilePreview "Add Preview Scores to Game" 0
 menuText G GraphFileClose "Κλείσιμο" 0
 menuText G GraphOptions "Ρυθμίσεις" 0
 menuText G GraphOptionsWhite "Λευκά" 0
@@ -811,6 +815,8 @@ menuText G GraphOptionsDots "Show Dots" 0
 menuText G GraphOptionsSpelling "Ratings from Spelling File" 0
 # ====== TODO To be translated ======
 menuText G GraphOptionsBar "Highlight Current Move" 0
+# ====== TODO To be translated ======
+menuText G GraphOptionsLine "Score Current Move" 0
 menuText G GraphOptionsBoth "Αμφότεροι" 1
 menuText G GraphOptionsPInfo "Παίκτης Πληροφορίες" 0
 translate G GraphFilterTitle "Συχνότητα άνα 1000 Παρτίδες"
@@ -1739,6 +1745,10 @@ translate G Hash {Μνήμη Hash}
 translate G OwnBook {Χρήση βιβλίου μηχανής}
 translate G BookFile {Βιβλίο Ανοιγμάτων}
 translate G AnnotateVariations {Επεξεργασία υπο-βαριαντών}
+# ====== TODO To be translated ======
+translate G AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate G AnnotateQuickPasses {Right-click: quick score graph}
 translate G ShortAnnotations {Σύντομος σχολιασμός}
 translate G addAnnotatorTag {Προσθήκη Ετικέτας Σχολιαστή}
 translate G AddScoreToShortAnnotations {Προσθήκη σκορ στο σχολιασμό}

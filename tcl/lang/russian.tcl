@@ -629,6 +629,8 @@ menuText R TreeOpt "Установки" 0
 menuText R TreeOptSlowmode "Медленный режим" 0 {Медленный режим обновлений (большая точность)}
 menuText R TreeOptFastmode "Быстрый режим" 0 {Быстрый режим обновлений (без перестановки ходов)}
 menuText R TreeOptFastAndSlowmode "Быстрый и медленный режим" 0 {Быстрый, а потом медленный режим обновлений}
+# ====== TODO To be translated ======
+menuText R TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText R TreeOptStartStop "Автообновление" 0 {Переключает автообновление в окне дерева}
 menuText R TreeOptLock "Блокировать" 0 {(Раз)блокировать дерево для текущей базы}
 menuText R TreeOptTraining "Тренировка" 0 {Включить/выключить режим тренировки}
@@ -764,6 +766,8 @@ translate R TmtNone "Ни одного турнира не найдено."
 menuText R GraphFile "Файл" 0
 menuText R GraphFileColor "Сохранить как цветной PostScript..." 14
 menuText R GraphFileGrey "Сохранить как чёрно-белый PostScript..." 14
+# ====== TODO To be translated ======
+menuText R GraphFilePreview "Add Preview Scores to Game" 0
 menuText R GraphFileClose "Закрыть окно" 6
 menuText R GraphOptions "Параметры" 0
 menuText R GraphOptionsWhite "Белые" 0
@@ -774,6 +778,8 @@ menuText R GraphOptionsDots "Show Dots" 0
 menuText R GraphOptionsSpelling "Ratings from Spelling File" 0
 # ====== TODO To be translated ======
 menuText R GraphOptionsBar "Highlight Current Move" 0
+# ====== TODO To be translated ======
+menuText R GraphOptionsLine "Score Current Move" 0
 menuText R GraphOptionsBoth "Оба" 0
 menuText R GraphOptionsPInfo "Игрок - информация об игроке" 0
 translate R GraphFilterTitle "Диаграмма фильтра: частота на 1000 партий"
@@ -1700,6 +1706,10 @@ translate R Hash {Хешировать память}
 translate R OwnBook {Использовать книгу движка}
 translate R BookFile {Открытые книги}
 translate R AnnotateVariations {Комментировать варианты}
+# ====== TODO To be translated ======
+translate R AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate R AnnotateQuickPasses {Right-click: quick score graph}
 translate R ShortAnnotations {Показать комментарии}
 translate R addAnnotatorTag {Добавить тег аннотирующего}
 translate R AddScoreToShortAnnotations {Добавить счёт в короткие аннотации}

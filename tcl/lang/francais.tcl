@@ -589,6 +589,8 @@ menuText F TreeOpt "Options" 0
 menuText F TreeOptSlowmode "Mode lent" 0 {Mode lent pour rafraichissement (précis)}
 menuText F TreeOptFastmode "Mode rapide" 0 {Mode rapide pour rafraichissement (pas de transpositions)}
 menuText F TreeOptFastAndSlowmode "Mode rapide puis lent" 0 {Mode rapide puis lent pour rafraichissement}
+# ====== TODO To be translated ======
+menuText F TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText F TreeOptStartStop "Rafraîchissement auto" 0 {Rafraîchissement automatique de la fenêtre}
 menuText F TreeOptLock "Verrouille" 0 {Dé/verrouiller l'arbre à la base en cours}
 menuText F TreeOptTraining "Entraînement" 0 {Démarrer/Arrêter l'arbre du mode d'entraînement}
@@ -713,6 +715,8 @@ translate F TmtNone "Aucun tournoi correspondant n'a été trouvé."
 menuText F GraphFile "Fichier" 0
 menuText F GraphFileColor "Sauver comme Postscript en couleurs..." 27
 menuText F GraphFileGrey "Sauver comme Postscript en niveaux de gris..." 27
+# ====== TODO To be translated ======
+menuText F GraphFilePreview "Add Preview Scores to Game" 0
 menuText F GraphFileClose "Fermer la fenêtre" 0
 menuText F GraphOptions "Options" 0
 menuText F GraphOptionsWhite "Blancs" 0
@@ -720,6 +724,8 @@ menuText F GraphOptionsBlack "Noirs" 0
 menuText F GraphOptionsDots "Montrer les points connus" 0
 menuText F GraphOptionsSpelling "Ratings from Spelling File" 0
 menuText F GraphOptionsBar "Surbrillance de la position actuelle" 0
+# ====== TODO To be translated ======
+menuText F GraphOptionsLine "Score Current Move" 0
 menuText F GraphOptionsBoth "Les deux" 4
 menuText F GraphOptionsPInfo "Informations joueurs" 0
 translate F GraphFilterTitle "Graphique de filtre: fréquence pour 1000 parties"
@@ -1588,6 +1594,10 @@ translate F Hash {Mémoire}
 translate F OwnBook {Utiliser bibliothèque propre}
 translate F BookFile {Bibliothèque d'ouverture}
 translate F AnnotateVariations {Annotater les variantes}
+# ====== TODO To be translated ======
+translate F AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate F AnnotateQuickPasses {Right-click: quick score graph}
 translate F ShortAnnotations {Annotations courtes}
 translate F addAnnotatorTag {Ajouter Annotateur}
 translate F AddScoreToShortAnnotations {Ajouter score aux annotations courtes}

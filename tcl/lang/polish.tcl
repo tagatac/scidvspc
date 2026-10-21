@@ -640,6 +640,8 @@ menuText P TreeOpt "Opcje" 0
 menuText P TreeOptSlowmode "Tryb dokładny" 0 {Wolne uaktualnianie (duża dokładność)}
 menuText P TreeOptFastmode "Tryb szybki" 0 {Tryb szybki (bez transpozycji)}
 menuText P TreeOptFastAndSlowmode "Tryb mieszany" 0 {Tryb szybki, a potem dokładne uaktualnienie}
+# ====== TODO To be translated ======
+menuText P TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText P TreeOptStartStop "Automatyczne odświeżanie" 0 {Włącz/wyłącz automatyczne odświeżanie drzewa}
 menuText P TreeOptLock "Blokada" 0 {Zablokuj/odblokuj drzewo na aktualnej bazie}
 menuText P TreeOptTraining "Trening" 0 {Włącz/wyłącz tryb treningowy}
@@ -776,6 +778,8 @@ translate P TmtNone "Nie znaleziono turniejów."
 menuText P GraphFile "Plik" 0
 menuText P GraphFileColor "Zapisz jako kolorowy PostScript" 12
 menuText P GraphFileGrey "Zapisz jako zwykły PostScript..." 0
+# ====== TODO To be translated ======
+menuText P GraphFilePreview "Add Preview Scores to Game" 0
 menuText P GraphFileClose "Zamknij okno" 6
 menuText P GraphOptions "Opcje" 0
 menuText P GraphOptionsWhite "Białe" 0
@@ -786,6 +790,8 @@ menuText P GraphOptionsDots "Show Dots" 0
 menuText P GraphOptionsSpelling "Ratings from Spelling File" 0
 # ====== TODO To be translated ======
 menuText P GraphOptionsBar "Highlight Current Move" 0
+# ====== TODO To be translated ======
+menuText P GraphOptionsLine "Score Current Move" 0
 menuText P GraphOptionsBoth "Oba kolory" 1
 menuText P GraphOptionsPInfo "Gracz z Informacji o graczu" 0
 translate P GraphFilterTitle "Filtr: częstość na 1000 partii" 
@@ -1708,6 +1714,10 @@ translate P Hash {Pamięć bufora}
 translate P OwnBook {Użyj książki debiutowej programu}
 translate P BookFile {Książka debiutowa}
 translate P AnnotateVariations {Komentuj warianty}
+# ====== TODO To be translated ======
+translate P AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate P AnnotateQuickPasses {Right-click: quick score graph}
 translate P ShortAnnotations {Skrócone komentarze}
 translate P addAnnotatorTag {Dodaj znacznik komentatora}
 translate P AddScoreToShortAnnotations {Dodaj ocenę do skróconych komentarzy}

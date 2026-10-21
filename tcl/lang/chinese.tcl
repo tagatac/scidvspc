@@ -565,6 +565,8 @@ menuText Z TreeOpt "选项(O)" 3
 menuText Z TreeOptSlowmode "慢速模式(S)" 5 {更新时使用慢速模式（高精度）}
 menuText Z TreeOptFastmode "快速模式(F)" 5 {更新时使用快速模式（不处理着法换序）}
 menuText Z TreeOptFastAndSlowmode "快速+慢速模式(F)" 8 {先快速模式后慢速模式进行更新}
+# ====== TODO To be translated ======
+menuText Z TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText Z TreeOptStartStop "自动刷新(A)" 5 {切换树状图窗口的自动刷新}
 menuText Z TreeOptLock "锁定(L)" 3 {锁定/解锁树状图到当前数据库}
 menuText Z TreeOptTraining "训练模式(T)" 5 {开启/关闭树状图训练模式}
@@ -687,6 +689,8 @@ translate Z TmtNone "未找到匹配的赛事。"
 menuText Z GraphFile "文件(F)" 3
 menuText Z GraphFileColor "保存为彩色 PostScript(C)" 17
 menuText Z GraphFileGrey "保存为灰度 PostScript(G)" 17
+# ====== TODO To be translated ======
+menuText Z GraphFilePreview "Add Preview Scores to Game" 0
 menuText Z GraphFileClose "关闭(C)" 3
 menuText Z GraphOptions "选项(O)" 3
 menuText Z GraphOptionsWhite "反转白方(I)" 5
@@ -694,6 +698,8 @@ menuText Z GraphOptionsBlack "反转黑方(I)" 5
 menuText Z GraphOptionsDots "显示点(S)" 4
 menuText Z GraphOptionsSpelling "从拼写文件获取等级分(E)" 11
 menuText Z GraphOptionsBar "高亮当前着法(H)" 7
+# ====== TODO To be translated ======
+menuText Z GraphOptionsLine "Score Current Move" 0
 menuText Z GraphOptionsBoth "双方(O)" 3
 menuText Z GraphOptionsPInfo "棋手信息(P)" 5
 translate Z GraphFilterTitle "每千局频率"
@@ -1547,6 +1553,10 @@ translate Z Hash {哈希内存}
 translate Z OwnBook {使用引擎开局库}
 translate Z BookFile {开局库文件}
 translate Z AnnotateVariations {处理变着}
+# ====== TODO To be translated ======
+translate Z AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate Z AnnotateQuickPasses {Right-click: quick score graph}
 translate Z ShortAnnotations {简短评注}
 translate Z addAnnotatorTag {添加评注者标签}
 translate Z AddScoreToShortAnnotations {在评注中加入比分}

@@ -591,6 +591,8 @@ menuText U TreeOpt "Opções" 0
 menuText U TreeOptSlowmode "Modo Lento" 0 {Modo lento para atualizações (mais acurado)}
 menuText U TreeOptFastmode "Modo Rápido" 0 {Modo rápido para atualizações (sem transsposições de movimentos)}
 menuText U TreeOptFastAndSlowmode "Modo rápido e lento" 0 {Modo rápido e lento para atualizações}
+# ====== TODO To be translated ======
+menuText U TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText U TreeOptStartStop "Atualização automática" 0 {Liga/Desliga a atualização automática da janela de árvore}
 menuText U TreeOptLock "Lock" 0 {Trava/Destrava a arvore para o banco corrente}
 menuText U TreeOptTraining "Treinamento" 0 \
@@ -715,6 +717,8 @@ translate U TmtNone "Nenhum torneio encontrado."
 menuText U GraphFile "Arquivo" 0
 menuText U GraphFileColor "Guardar como Postscript Colorido..." 12
 menuText U GraphFileGrey "Guardar como Postscript Cinza..." 23
+# ====== TODO To be translated ======
+menuText U GraphFilePreview "Add Preview Scores to Game" 0
 menuText U GraphFileClose "Fecha janela" 6
 menuText U GraphOptions "Opções" 0
 menuText U GraphOptionsWhite "Branco" 0
@@ -722,6 +726,8 @@ menuText U GraphOptionsBlack "Preto" 0
 menuText U GraphOptionsDots "Mostrar Pontos" 0
 menuText U GraphOptionsSpelling "Elo do ficheiro de nomes" 0
 menuText U GraphOptionsBar "Destacar Lance atual" 0
+# ====== TODO To be translated ======
+menuText U GraphOptionsLine "Score Current Move" 0
 menuText U GraphOptionsBoth "Ambos" 0
 menuText U GraphOptionsPInfo "Informação do Jogador" 0
 translate U GraphFilterTitle "Filtrar gráfico: frequência por 1000 jogos" ;# ***
@@ -1582,6 +1588,10 @@ translate U Hash {Memória Hash}
 translate U OwnBook {Usar o livro do programa}
 translate U BookFile {Livro de aberturas}
 translate U AnnotateVariations {Anotar variantes}
+# ====== TODO To be translated ======
+translate U AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate U AnnotateQuickPasses {Right-click: quick score graph}
 translate U ShortAnnotations {Anotações Abreviadas}
 translate U addAnnotatorTag {Colocar etiqueta de anotador}
 translate U AddScoreToShortAnnotations {Colocar avaliação nas anotações abreviadas}

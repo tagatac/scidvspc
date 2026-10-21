@@ -616,6 +616,8 @@ menuText O TreeOpt "Innstillinger" 0
 menuText O TreeOptSlowmode "Treg modus" 0 {Oppdaterer tregere, men mer nøyaktig}
 menuText O TreeOptFastmode "Rask modus" 0 {Oppdaterer raskere, men uten transponeringer}
 menuText O TreeOptFastAndSlowmode "Rask og treg modus" 0 {Rask modus, og så treg oppdatering}
+# ====== TODO To be translated ======
+menuText O TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText O TreeOptStartStop "Oppdater automatisk" 0 {Angir om treet skal oppdateres automatisk}
 menuText O TreeOptLock "Lås" 0 {Låser treet til nåværende database}
 menuText O TreeOptTraining "Trening" 0 {Slår av/på treningsmodus}
@@ -743,6 +745,8 @@ translate O TmtNone "Ingen passende turneringer funnet."
 menuText O GraphFile "Fil" 0
 menuText O GraphFileColor "Lagre som farget PostScript..." 0
 menuText O GraphFileGrey "Lagre som gråtonet PostScript..." 0
+# ====== TODO To be translated ======
+menuText O GraphFilePreview "Add Preview Scores to Game" 0
 menuText O GraphFileClose "Lukk vindu" 0
 menuText O GraphOptions "Innstillinger" 0
 menuText O GraphOptionsWhite "Hvit" 0
@@ -751,6 +755,8 @@ menuText O GraphOptionsDots "Vis punkter" 0
 # ====== TODO To be translated ======
 menuText O GraphOptionsSpelling "Ratings from Spelling File" 0
 menuText O GraphOptionsBar "Marker gjeldende trekk" 0
+# ====== TODO To be translated ======
+menuText O GraphOptionsLine "Score Current Move" 0
 menuText O GraphOptionsBoth "Begge" 0
 menuText O GraphOptionsPInfo "Spiller Info spiller" 0
 translate O GraphFilterTitle "Filtergraf: hyppighet per 1000 partier"
@@ -1629,6 +1635,10 @@ translate O Hash {Minne til hash}
 translate O OwnBook {Bruk motors bok}
 translate O BookFile {Åpningsbok}
 translate O AnnotateVariations {Annoter variasjoner}
+# ====== TODO To be translated ======
+translate O AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate O AnnotateQuickPasses {Right-click: quick score graph}
 translate O ShortAnnotations {Kort annotasjon}
 translate O addAnnotatorTag {Legg til tagg for annotator}
 translate O AddScoreToShortAnnotations {Gi poeng til annotasjoner}

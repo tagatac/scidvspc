@@ -575,6 +575,8 @@ menuText Y TreeOpt "Opcije" 0
 menuText Y TreeOptSlowmode "Spori režim" 0 {Spori režim za osvežavanje stabla (visoka taènost)}
 menuText Y TreeOptFastmode "Brzi režim" 0 {Brzi režim za osvežavanje (bez transpozicija poteza)}
 menuText Y TreeOptFastAndSlowmode "Brzi i spori režim" 0 {Prvo brzi, zatim spori režim za osvežavanje}
+# ====== TODO To be translated ======
+menuText Y TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText Y TreeOptStartStop "Automatsko osvežavanje" 0 {Ukljuèi/iskljuèi automatsko osvežavanje prozora stabla}
 menuText Y TreeOptLock "Zakljuèaj" 0 {Zakljuèaj/otkljuèaj stablo za tekuæu bazu}
 menuText Y TreeOptTraining "Trening" 0 {Ukljuèi/iskljuèi režim treninga stabla}
@@ -697,6 +699,8 @@ translate Y TmtNone "Nije pronaðen odgovarajuæi turnir."
 menuText Y GraphFile "Fajl" 0
 menuText Y GraphFileColor "Saèuvaj kao Postscript u boji..." 25
 menuText Y GraphFileGrey "Saèuvaj kao Postscript u sivim nivoima..." 25
+# ====== TODO To be translated ======
+menuText Y GraphFilePreview "Add Preview Scores to Game" 0
 menuText Y GraphFileClose "Zatvori prozor" 6
 menuText Y GraphOptions "Opcije" 0
 menuText Y GraphOptionsWhite "Beli" 0
@@ -704,6 +708,8 @@ menuText Y GraphOptionsBlack "Crni" 0
 menuText Y GraphOptionsDots "Prikaži taèkice" 0
 menuText Y GraphOptionsSpelling "Elo iz fajla za pravopis" 0
 menuText Y GraphOptionsBar "Istakni tekuæi potez" 0
+# ====== TODO To be translated ======
+menuText Y GraphOptionsLine "Score Current Move" 0
 menuText Y GraphOptionsBoth "Oba" 1
 menuText Y GraphOptionsPInfo "Informacije o igraèu" 0
 translate Y GraphFilterTitle "Grafik filtera: uèestalost po 1000 partija"
@@ -1562,6 +1568,10 @@ translate Y Hash {Hash memorija}
 translate Y OwnBook {Koristi motornu knjigu otvaranja}
 translate Y BookFile {Knjiga otvaranja}
 translate Y AnnotateVariations {Oznaèi varijante}
+# ====== TODO To be translated ======
+translate Y AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate Y AnnotateQuickPasses {Right-click: quick score graph}
 translate Y ShortAnnotations {Kratke napomene}
 translate Y addAnnotatorTag {Dodaj oznaku autora napomene}
 translate Y AddScoreToShortAnnotations {Dodaj rezultat kratkim napomenama}

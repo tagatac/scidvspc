@@ -682,6 +682,8 @@ menuText C TreeOpt "Volby" 0
 menuText C TreeOptSlowmode "pomalý re¾im" 0 {Pomalý re¾im aktualizace (vysoká pøesnost)}
 menuText C TreeOptFastmode "Rychlý re¾im" 0 {Rychlý re¾im aktualizace (beze zmìny poøadí tahù)}
 menuText C TreeOptFastAndSlowmode "Rychlý a pomalý re¾im" 0 {Rychlý re¾im a potom pomalý re¾im aktualizace}
+# ====== TODO To be translated ======
+menuText C TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText C TreeOptStartStop "Automatické aktualizace" 0 {Pøepnout automatické aktualizace stromového okna}
 menuText C TreeOptLock "Zamknout" 0 {Zamknout/Odemknout strom k aktuální databázi}
 menuText C TreeOptTraining "Trénink" 0 {Zapnout/Vypnout stromový tréninkový mód}
@@ -824,6 +826,8 @@ translate C TmtNone "®ádné odpovídající turnaje nebyly nalezeny."
 menuText C GraphFile "Soubor" 0
 menuText C GraphFileColor "Ulo¾it jako barevný Postscript..." 12
 menuText C GraphFileGrey "Ulo¾it jako èernobílý Postscript..." 13
+# ====== TODO To be translated ======
+menuText C GraphFilePreview "Add Preview Scores to Game" 0
 menuText C GraphFileClose "Zavøít okno" 0
 menuText C GraphOptions "Volby" 0
 menuText C GraphOptionsWhite "Bílý" 0
@@ -834,6 +838,8 @@ menuText C GraphOptionsDots "Show Dots" 0
 menuText C GraphOptionsSpelling "Ratings from Spelling File" 0
 # ====== TODO To be translated ======
 menuText C GraphOptionsBar "Highlight Current Move" 0
+# ====== TODO To be translated ======
+menuText C GraphOptionsLine "Score Current Move" 0
 menuText C GraphOptionsBoth "Oba" 0
 menuText C GraphOptionsPInfo "Informace o hráèi" 0
 translate C GraphFilterTitle "Graf filtru: èetnost na 1000 partií"
@@ -1929,6 +1935,10 @@ translate C OwnBook {Use engine book}
 translate C BookFile {Opening book}
 # ====== TODO To be translated ======
 translate C AnnotateVariations {Annotate variations}
+# ====== TODO To be translated ======
+translate C AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate C AnnotateQuickPasses {Right-click: quick score graph}
 # ====== TODO To be translated ======
 translate C ShortAnnotations {Short annotations}
 # ====== TODO To be translated ======

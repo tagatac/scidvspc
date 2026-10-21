@@ -645,6 +645,8 @@ menuText S TreeOptFastmode "Modo Rápido" 0 \
   {Movimiento rápido para actualizaciones (no transpone movimientos)}
 menuText S TreeOptFastAndSlowmode "Modo rápido y lento" 0 \
   {Movimiento rápido y modo lento para actualizaciones}
+# ====== TODO To be translated ======
+menuText S TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText S TreeOptStartStop "Auto actualizado" 0 \
   {Actualizado automático de la ventana del árbol}
 menuText S TreeOptLock "Bloquear" 1 \
@@ -772,6 +774,8 @@ translate S TmtNone "No se han encontrado torneos concordantes."
 menuText S GraphFile "Archivo" 0
 menuText S GraphFileColor "Guardar como postscript (color)" 8
 menuText S GraphFileGrey "Guardar como postscript (escala de grises)" 8
+# ====== TODO To be translated ======
+menuText S GraphFilePreview "Add Preview Scores to Game" 0
 menuText S GraphFileClose "Cerrar ventana" 0
 menuText S GraphOptions "Opciones" 0
 menuText S GraphOptionsWhite "Blancas" 0
@@ -780,6 +784,8 @@ menuText S GraphOptionsDots "Mostrar puntos" 0
 # ====== TODO To be translated ======
 menuText S GraphOptionsSpelling "Ratings from Spelling File" 0
 menuText S GraphOptionsBar "Destacar movimiento actual" 0
+# ====== TODO To be translated ======
+menuText S GraphOptionsLine "Score Current Move" 0
 menuText S GraphOptionsBoth "Ambos" 0
 menuText S GraphOptionsPInfo "Información jugador" 0
 translate S GraphFilterTitle "Filtro gráfico: frecuencia por 1000 partidas"
@@ -1645,6 +1651,10 @@ translate S Hash {Memoria Hash}
 translate S OwnBook {Usar libro (book) del motor}
 translate S BookFile {Libro de aperturas}
 translate S AnnotateVariations {Procesar variantes}
+# ====== TODO To be translated ======
+translate S AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate S AnnotateQuickPasses {Right-click: quick score graph}
 translate S ShortAnnotations {Anotaciones cortas}
 translate S addAnnotatorTag {Añadir etiqueta de anotador}
 translate S AddScoreToShortAnnotations {Añadir puntuación para anotaciones cortas}

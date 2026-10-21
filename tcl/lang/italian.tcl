@@ -685,6 +685,8 @@ menuText I TreeOptSlowmode "Modalità lenta" 0 {Modalità lenta per l'aggiorname
 menuText I TreeOptFastmode "Modalità veloce" 0 {Modalità veloce per l'aggiornamento (nessuna trasposizione di mosse)}
 menuText I TreeOptFastAndSlowmode "Modalità lenta e veloce" 0 {Modalità lenta e veloce per l'aggiornamento}
 # ====== TODO To be translated ======
+menuText I TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
+# ====== TODO To be translated ======
 menuText I TreeOptStartStop "Auto refreshing" 0 {Toggles automatic refreshing of the tree window}
 menuText I TreeOptLock "Blocca" 0 {Blocca/sblocca l'albero al database corrente}
 menuText I TreeOptTraining "Training" 0 {Attiva/disattiva la modalita' di esercizio dell'albero}
@@ -857,6 +859,8 @@ translate I TmtNone "Non e' stato trovato nessun torneo."
 menuText I GraphFile "File" 0
 menuText I GraphFileColor "Salva come Color Postscript..." 8
 menuText I GraphFileGrey "Salva come Greyscale Postscript..." 8
+# ====== TODO To be translated ======
+menuText I GraphFilePreview "Add Preview Scores to Game" 0
 menuText I GraphFileClose "Chiudi la finestra" 6
 menuText I GraphOptions "Opzioni" 0
 menuText I GraphOptionsWhite "Bianco" 0
@@ -867,6 +871,8 @@ menuText I GraphOptionsDots "Show Dots" 0
 menuText I GraphOptionsSpelling "Ratings from Spelling File" 0
 # ====== TODO To be translated ======
 menuText I GraphOptionsBar "Highlight Current Move" 0
+# ====== TODO To be translated ======
+menuText I GraphOptionsLine "Score Current Move" 0
 menuText I GraphOptionsBoth "Entrambi" 1
 menuText I GraphOptionsPInfo "Info sul giocatore" 0
 translate I GraphFilterTitle "Filter Graph: frequenza ogni 1000 partite"
@@ -1811,6 +1817,10 @@ translate I Hash {Memoria Hash}
 translate I OwnBook {Use il libro del motore}
 translate I BookFile {Libro delle aperture}
 translate I AnnotateVariations {Annota le varianti}
+# ====== TODO To be translated ======
+translate I AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate I AnnotateQuickPasses {Right-click: quick score graph}
 translate I ShortAnnotations {Annotazione breve}
 translate I addAnnotatorTag {Aggiungi il tag dell'annotazione}
 translate I AddScoreToShortAnnotations {Aggiungi il punteggio alle annotazioni brevi}

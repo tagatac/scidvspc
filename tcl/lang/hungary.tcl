@@ -689,6 +689,8 @@ menuText H TreeOpt "Beállítások" 0
 menuText H TreeOptSlowmode "Lassú üzemmód" 0 {Lassú frissítés (nagy pontosság)}
 menuText H TreeOptFastmode "Gyors üzemmód" 0 {Gyors frissítés (nincsenek lépéscserék)}
 menuText H TreeOptFastAndSlowmode "Gyors és lassú üzemmód" 1 {Gyors majd lassú frissítés}
+# ====== TODO To be translated ======
+menuText H TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText H TreeOptStartStop "Automatikus frissítés" 0 {Átváltja a faszerkezet-ablak automatikus frissítését.}
 menuText H TreeOptLock "Rögzítés" 0 {A fát az aktuális adatbázishoz köti ill. a kötést feloldja.}
 menuText H TreeOptTraining "Edzés" 0 {Edzésüzemmód be- vagy kikapcsolása}
@@ -831,6 +833,8 @@ translate H TmtNone "Nem találtam hozzá versenyt."
 menuText H GraphFile "Fájl" 0
 menuText H GraphFileColor "Mentés Color PostScript-ként..." 7
 menuText H GraphFileGrey "Mentés Greyscale PostScript-ként..." 7
+# ====== TODO To be translated ======
+menuText H GraphFilePreview "Add Preview Scores to Game" 0
 menuText H GraphFileClose "Ablak bezárása" 8
 menuText H GraphOptions "Beállítások" 0
 menuText H GraphOptionsWhite "Világos" 0
@@ -841,6 +845,8 @@ menuText H GraphOptionsDots "Show Dots" 0
 menuText H GraphOptionsSpelling "Ratings from Spelling File" 0
 # ====== TODO To be translated ======
 menuText H GraphOptionsBar "Highlight Current Move" 0
+# ====== TODO To be translated ======
+menuText H GraphOptionsLine "Score Current Move" 0
 menuText H GraphOptionsBoth "Mindkettõ" 1
 menuText H GraphOptionsPInfo "A játékosinformáció játékosa" 0
 translate H GraphFilterTitle "Szûrõgrafikon: gyakoriság 1000 játszmánként"
@@ -1937,6 +1943,10 @@ translate H OwnBook {Use engine book}
 translate H BookFile {Opening book}
 # ====== TODO To be translated ======
 translate H AnnotateVariations {Annotate variations}
+# ====== TODO To be translated ======
+translate H AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate H AnnotateQuickPasses {Right-click: quick score graph}
 # ====== TODO To be translated ======
 translate H ShortAnnotations {Short annotations}
 # ====== TODO To be translated ======

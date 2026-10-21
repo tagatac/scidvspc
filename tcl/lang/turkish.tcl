@@ -585,6 +585,8 @@ menuText T TreeOpt "Seçenekler" 0
 menuText T TreeOptSlowmode "Yavaş mod" 0 {Güncellemeler için yavaş mod (yüksek doğruluk)}
 menuText T TreeOptFastmode "Hızlı mod" 0 {Güncellemeler için hızlı mod (geçiş hareketi yok)}
 menuText T TreeOptFastAndSlowmode "Hızlı ve yavaş mod" 0 {Hızlı mod sonra güncellemeler için yavaş mod}
+# ====== TODO To be translated ======
+menuText T TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText T TreeOptStartStop "Otomatik yenileme" 0 {Ağaç penceresinin otomatik olarak yenilenmesini açar veya kapatır}
 menuText T TreeOptLock "Kilit" 0 {Ağacın geçerli veritabanına kilitlenmesi / kilidini açma}
 menuText T TreeOptTraining "Eğitim" 0 {Ağaç eğitimi modunu açma / kapatma}
@@ -716,6 +718,8 @@ translate T TmtNone "Eşleşen turnuva bulunamadı."
 menuText T GraphFile "Dosya" 0
 menuText T GraphFileColor "renk sonrası komut dosyası olarak kaydet" 8
 menuText T GraphFileGrey "gri ölçekli yazım metni olarak kaydedin" 8
+# ====== TODO To be translated ======
+menuText T GraphFilePreview "Add Preview Scores to Game" 0
 menuText T GraphFileClose "Kapat" 0
 menuText T GraphOptions "Seçenekler" 0
 menuText T GraphOptionsWhite "Ters çevir beyaz" 0
@@ -724,6 +728,8 @@ menuText T GraphOptionsDots "Noktaları Göster" 0
 # ====== TODO To be translated ======
 menuText T GraphOptionsSpelling "Ratings from Spelling File" 0
 menuText T GraphOptionsBar "Grafik Seçenekleri Çubuğu" 0
+# ====== TODO To be translated ======
+menuText T GraphOptionsLine "Score Current Move" 0
 menuText T GraphOptionsBoth "Her ikisi de" 1
 menuText T GraphOptionsPInfo "Oyuncu bilgisi" 0
 translate T GraphFilterTitle "1000 Oyun sıklığında Baştan"
@@ -1620,6 +1626,10 @@ translate T Hash {Karma bellek}
 translate T OwnBook {Motor kitabı kullan}
 translate T BookFile {Açılış kitabı}
 translate T AnnotateVariations {varyasyonlara açıklama yapmak}
+# ====== TODO To be translated ======
+translate T AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate T AnnotateQuickPasses {Right-click: quick score graph}
 translate T ShortAnnotations {Kısa açıklamalar}
 translate T addAnnotatorTag {Ek açıklayıcı etiketi ekle}
 translate T AddScoreToShortAnnotations {Ek açıklamalara Skor ekle}

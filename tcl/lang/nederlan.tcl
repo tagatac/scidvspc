@@ -657,6 +657,8 @@ menuText N TreeOpt "Opties" 0
 menuText N TreeOptSlowmode "Trage modus" 0 {Trage modus voor updates (hoge nauwkeurigheid)}
 menuText N TreeOptFastmode "Snelle modus" 0 {Snelle modus voor updates (geen omwisselingen van zetten)}
 menuText N TreeOptFastAndSlowmode "Snelle en trage modus" 0 {Eerst snelle modus en daarna trage modus voor updates}
+# ====== TODO To be translated ======
+menuText N TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText N TreeOptStartStop "Automatisch verversen" 0 {Zet automatisch verversen van het boomvenster aan/uit}
 menuText N TreeOptLock "Vergrendelen" 0 {Vergrendelen/Ontgrendelen van de boom bij de huidige database}
 menuText N TreeOptTraining "Training" 0 {Aan/Uit zetten training modus}
@@ -794,6 +796,8 @@ translate N TmtNone "Geen toernooien gevonden."
 menuText N GraphFile "Bestand" 0
 menuText N GraphFileColor "Bewaren als kleuren Postscript..." 8
 menuText N GraphFileGrey "Bewaren als grijze Postscript..." 8
+# ====== TODO To be translated ======
+menuText N GraphFilePreview "Add Preview Scores to Game" 0
 menuText N GraphFileClose "Venster sluiten" 0
 menuText N GraphOptions "Opties" 0
 menuText N GraphOptionsWhite "Wit" 0
@@ -804,6 +808,8 @@ menuText N GraphOptionsDots "Show Dots" 0
 menuText N GraphOptionsSpelling "Ratings from Spelling File" 0
 # ====== TODO To be translated ======
 menuText N GraphOptionsBar "Highlight Current Move" 0
+# ====== TODO To be translated ======
+menuText N GraphOptionsLine "Score Current Move" 0
 menuText N GraphOptionsBoth "Beide" 1
 menuText N GraphOptionsPInfo "Speler informatie" 0
 translate N GraphFilterTitle "Filtergrafiek: frequentie per 1000 partijen"
@@ -1765,6 +1771,10 @@ translate N OwnBook {Gebruik engineboek}
 translate N BookFile {Opening boek}
 
 translate N AnnotateVariations {Becommentarieer varianten}
+# ====== TODO To be translated ======
+translate N AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate N AnnotateQuickPasses {Right-click: quick score graph}
 translate N ShortAnnotations {Korte annotaties}
 translate N addAnnotatorTag {Annotator label toevoegen}
 translate N AddScoreToShortAnnotations {Voeg de score toe aan de korte annotaties}

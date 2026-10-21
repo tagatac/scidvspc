@@ -588,6 +588,8 @@ menuText L TreeOpt "Vaihtoehdot" 0
 menuText L TreeOptSlowmode "Hidas moodi" 0 {Hidas moodi p‰ivityksi‰ varten (korkea tarkkuus)}
 menuText L TreeOptFastmode "Nopea moodi" 0 {Nopea moodi p‰ivityksi‰ varten (ei siirtovaihtoa)}
 menuText L TreeOptFastAndSlowmode "Nopea ja hidas moodi" 0 {Nopea moodi ja sitten hidas moodi p‰ivityksi‰ varten}
+# ====== TODO To be translated ======
+menuText L TreeOptMultiCore "Use Multiple CPU Cores" 4 {Search the tree on several CPU cores}
 menuText L TreeOptStartStop "Automaattinen virkist‰minen" 0 {Vaihtelee puuikkunan automaattista virkist‰mist‰}
 menuText L TreeOptLock "Lukitse" 0 {Lukitse/vapauta puu nykyiseen tietokantaan}
 menuText L TreeOptTraining "Harjoitus" 0 {K‰‰nn‰ p‰‰lle/pois puuharjoitusmoodi}
@@ -718,6 +720,8 @@ translate L TmtNone "Sopivia turnauksia ei lˆytynyt."
 menuText L GraphFile "Tiedosto" 0
 menuText L GraphFileColor "Tallenna PostScript-v‰rin‰" 8
 menuText L GraphFileGrey "Tallenna mustavalkoisena PostScriptin‰" 8
+# ====== TODO To be translated ======
+menuText L GraphFilePreview "Add Preview Scores to Game" 0
 menuText L GraphFileClose "Sulje" 0
 menuText L GraphOptions "Vaihtoehdot" 0
 menuText L GraphOptionsWhite "Valkoinen" 0
@@ -726,6 +730,8 @@ menuText L GraphOptionsDots "N‰yt‰ pisteet" 0
 # ====== TODO To be translated ======
 menuText L GraphOptionsSpelling "Ratings from Spelling File" 0
 menuText L GraphOptionsBar "Korosta nykyinen siirto" 0
+# ====== TODO To be translated ======
+menuText L GraphOptionsLine "Score Current Move" 0
 menuText L GraphOptionsBoth "Molemmat" 1
 menuText L GraphOptionsPInfo "Pelaaja Tieto pelaaja" 0
 translate L GraphFilterTitle "Yleisyys 1000:ssa peliss‰"
@@ -1617,6 +1623,10 @@ translate L Hash {Hash-muisti}
 translate L OwnBook {K‰yt‰ ohjelman avauskirjastoa}
 translate L BookFile {Avauskirjasto}
 translate L AnnotateVariations {Prosessoi muunnelmat}
+# ====== TODO To be translated ======
+translate L AnnotateBackward {Analyze backwards}
+# ====== TODO To be translated ======
+translate L AnnotateQuickPasses {Right-click: quick score graph}
 translate L ShortAnnotations {Lyhyet huomautukset}
 translate L addAnnotatorTag {Lis‰‰ huomautuksen tekij‰n merkki}
 translate L AddScoreToShortAnnotations {Lis‰‰ tulos huomautuksiin}
