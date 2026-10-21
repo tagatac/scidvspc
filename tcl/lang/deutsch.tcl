@@ -735,9 +735,10 @@ translate D TmtMeanElo "Unterster ELO-Durchschnitt"
 translate D TmtNone "Keine zutreffenden Turniere gefunden."
 
 # Graph windows:
-menuText D GraphFile "Datei" 0
+menuText D GraphFile "Grafik" 0
 menuText D GraphFileColor "Als Farb-Postscript speichern..." 4
 menuText D GraphFileGrey "Als Graustufen-Postscript speichern..." 4
+menuText D GraphFilePreview "Vorschau-Bewertungen in Partie übernehmen" 0
 menuText D GraphFileClose "Fenster schließen" 0
 menuText D GraphOptions "Optionen" 0
 menuText D GraphOptionsWhite "Weiß invertieren" 0
@@ -5253,7 +5254,7 @@ Debugging>Fehlersuche</a> durchgesehen werden.
   <li> <button tb_addallvars 32> <b>MultiPV</b> fügt alle Varianten hinzu, wobei
   die Anzahl durch die angrenzende Spinbox bestimmt wird.</li>
 
-  <li> <button tb_annotate 32> <b>Automatisch kommentieren</b>
+  <li> <button tb_annotategraph 32> <b>Automatisch kommentieren</b>
   (siehe <a Analysis Annotating>unten</a>).</li>
   <li> <button tb_lockengine 32> <b>Analyse anbinden</b> an aktuelle
   Stellung. Bewegen Sie den Mauszeiger über diese Schaltfläche, um für
@@ -5369,7 +5370,7 @@ bedeutet ausgeglichen und grün ist Gewinn für Weiß.</p>
   <h1>Weitere Funktionen</h1>
 
   <h3><name Annotating>Partien kommentieren</name></h3>
-  <p>Mit der Schaltfläche <button tb_annotate> (in der Werkzeugleiste
+  <p>Mit der Schaltfläche <button tb_annotategraph> (in der Werkzeugleiste
   des Analysefensters) können Partien automatisch analysiert
   werden. Diese Funktion fügt den Partien
   Bewertungen, <a Comment>Kommentare</a>, <a Moves

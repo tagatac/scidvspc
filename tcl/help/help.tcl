@@ -2819,9 +2819,10 @@ making for easier <a Analysis Debugging>Debugging</a>.
   <li> <button tb_addmove 32> <b>Add Move</b> 
   adds the engine's best move to the current game. (Right-click adds the engine score).</li>
   <li> <button tb_addvar 32> <b>Add Variation</b>  adds the whole main line.  (Right-click adds the second variation if MultiPV enabled)</li>
-  <li> <button tb_addallvars 32> <b>MultiPV</b>  adds all variations, the number being defined by the adjoining spinbox. (Right-click adds all first moves).</li>
+  <li> <button tb_addallvars 32> <b>MultiPV</b>  adds all variations, the number being defined by the adjoining spinbox. (Right-click adds all first moves).
+  Right-clicking the spinbox also shows the earlier depths below the lines, latest first, with the time of each line.</li>
 
-  <li> <button tb_annotate 32> <b>Annotate Game</b> (see <a Analysis Annotating>below</a>).</li>
+  <li> <button tb_annotategraph 32> <b>Annotate Game</b> (see <a Analysis Annotating>below</a>).</li>
   <li> <button tb_lockengine 32> <b>Lock Analysis</b> to a certain position.
   Hover cursor over this button to see stats for locked game.
   After a while, to add this analysis to game, return to the locked position, 
@@ -2905,7 +2906,7 @@ These moves are navigable with the wheel mouse, thus allowing an easy way to per
 
   <h3><name Annotating>Annotating Games</name></h3>
   <p>
-  Games can be automatically analyzed using the Annotate Button <button tb_annotate> (in the <a Analysis>Analysis Engine</a> toolbar).
+  Games can be automatically analyzed using the Annotate Button <button tb_annotategraph> (in the <a Analysis>Analysis Engine</a> toolbar).
   This feature adds Scores, <a Comment>Comments</a>, <a Moves Informant>Informants</a>, Bestlines to games. </p>
  
   <p><i>Right-clicking the Annotate Button makes a quick pass through the main line
@@ -3614,9 +3615,13 @@ from the Tools menu. Right-clicking the graph shows a Recent Players context men
   </p>
   <h4>Features</h4>
 
-  <p>Left Click positionally in the graph to go to the corresponding move.</p>
-
-  <p>Right Clicking anywhere in the score graph performs a refresh.</p>
+  <p>
+  * Left Click in the graph to go to the corresponding move.
+  <br>
+  * Right Clicking anywhere in the score graph performs a refresh.
+  <br>
+  * Control-p pastes an Engine's Score Preview into the game. (Control-z undo).
+  </p>
 
   <p>The current move is now highlighted a different colour, and there's an option to show the red line+score as well.
   The Graph colour, and current move colour, can be set from the Options menu.</p>

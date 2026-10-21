@@ -415,6 +415,32 @@ proc ::tools::graphs::score::Preview {} {
   return $values
 }
 
+### Write the scores of the quick passes into the game, as annotation does
+
+proc ::tools::graphs::score::AddPreview {} {
+  if {![array size ::annotatePreview] || ![isCurrentAnnotatedGame]} {
+    return
+  }
+  sc_game undoPoint
+  set ply [sc_pos location]
+  while {[sc_var level] > 0} {
+    sc_var exit
+  }
+  foreach i [lsort -integer [array names ::annotatePreview]] {
+    sc_move ply $i
+    set text [format "%+.2f" $::annotatePreview($i)]
+    switch $::annotate(scoreType) {
+      {[% +1.5]} { set text "\[% $text\]" }
+      {[%eval +1.5]} { set text "\[%eval $text\]" }
+    }
+    sc_pos setComment [string trim "$text [sc_pos getComment]"]
+  }
+  sc_move ply $ply
+  # the game has the scores now
+  array unset ::annotatePreview
+  updateBoard -pgn
+}
+
 proc ::tools::graphs::score::Init {} {
   ::tools::graphs::score::Refresh2 1
 }
@@ -448,10 +474,9 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
 
     $w.menu add cascade -label GraphFile -menu $w.menu.file
     menu $w.menu.file
-    $w.menu.file add command -label GraphFileColor \
-      -command "::tools::graphs::Save color $w.c"
-    $w.menu.file add command -label GraphFileGrey \
-      -command "::tools::graphs::Save gray $w.c"
+    $w.menu.file add command -label GraphFileColor -command "::tools::graphs::Save color $w.c"
+    $w.menu.file add command -label GraphFileGrey -command "::tools::graphs::Save gray $w.c"
+    $w.menu.file add command -label GraphFilePreview -command ::tools::graphs::score::AddPreview -accelerator "control-p"
     $w.menu.file add separator
     $w.menu.file add command -label GraphFileClose -command "destroy $w"
 
@@ -505,6 +530,8 @@ proc ::tools::graphs::score::Refresh2 {{init 0}} {
     $w.c bind title <ButtonPress-1> "tk_popup $w.menu.options %X %Y"
     bind $w <Escape> "destroy $w"
     bind $w <space>  toggleEngineAnalysis
+    bind $w <Control-p> ::tools::graphs::score::AddPreview
+    bind $w <Control-z> {sc_game undo ; updateBoard -pgn}
     standardWheelMouseBindings $w.c
 
     ::tools::graphs::score::ConfigMenus
@@ -795,7 +822,7 @@ proc ::tools::graphs::score::ConfigMenus {{lang ""}} {
   foreach idx {0 1} tag {File Options} {
     configMenuText $m $idx Graph$tag $lang
   }
-  foreach idx {0 1 3} tag {Color Grey Close} {
+  foreach idx {0 1 2 4} tag {Color Grey Preview Close} {
     configMenuText $m.file $idx GraphFile$tag $lang
   }
 

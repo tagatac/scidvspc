@@ -376,6 +376,7 @@ namespace eval uci {
       #   in which case it does not get added to the list and in analysis.tcl, [lindex $pv 3] is {} - S.A
 
       if { $idx < $analysis(multiPVCount$n) } {
+        set analysis(pvTime$n,$idx) [expr {double($uciInfo(time$n)) / 1000.0}]
         if {$idx < [llength $analysis(multiPV$n)]} {
           lset analysis(multiPV$n) $idx "$uciInfo(depth$n) $uciInfo(tmp_score$n) [list $uciInfo(pv$n)] $uciInfo(scoremate$n)"
           lset analysis(multiPVraw$n) $idx "$uciInfo(depth$n) $uciInfo(tmp_score$n) [list $pvRaw] $uciInfo(scoremate$n)"

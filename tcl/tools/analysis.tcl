@@ -114,7 +114,11 @@ proc resetEngine {n} {
   set analysis(boardSeqDepthSeen$n) 0   ;# used to decide when to update the visualisation
   set analysis(boardSeqMode$n) 2
   set analysis(bdPending$n) {}
-  set analysis(pvPreview$n) 0         ;# small board shows a clicked PV position
+  set analysis(pvPreview$n) 0     ;# small board shows a clicked PV position
+  set analysis(showPVHistory$n) 0 ;# show the finished depths below the MultiPV lines
+  set analysis(PVhistory$n) {}    ;# their text, latest first
+  set analysis(PVhistBlock$n) {}  ;# MultiPV lines as shown last
+  set analysis(PVhistDepth$n) 0   ;# and their depth
   set annotate(Button$n)  0 ; # annotate checkbutton value
 }
 
@@ -2469,11 +2473,13 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   spinbox $w.b.multipv -from 1 -to 8 -increment 1 -textvar analysis(multiPVCount$n) -justify center \
     -width 2 -font font_Small -command "changePVSize $n"
   ::utils::tooltip::Set $w.b.multipv $tr(Lines)
+  # right-click shows the finished depths below the lines
+  bind $w.b.multipv <Button-3> "set analysis(showPVHistory$n) \[expr !\$analysis(showPVHistory$n)\] ; updateAnalysisText $n"
 
-  checkbutton $w.b.annotatebut -image tb_annotate -indicatoron false -width 32 -height 32 \
+  checkbutton $w.b.annotatebut -image tb_annotategraph -indicatoron false -width 32 -height 32 \
     -variable annotate(Button$n) -command "initAnnotation $n" -relief $relief
   bind $w.b.annotatebut <Button-3> "annotateQuickPasses $n"
-  ::utils::tooltip::Set $w.b.annotatebut $tr(Annotate)
+  ::utils::tooltip::Set $w.b.annotatebut "$tr(Annotate)/$tr(Preview)"
 
   checkbutton $w.b.lockengine -image tb_lockengine -indicatoron false -width 32 -height 32 \
     -variable analysis(lockEngine$n) -command "toggleLockEngine $n" -relief $relief
@@ -3786,6 +3792,9 @@ proc updateAnalysisText {n} {
       if {$cleared} {
         set analysis(multiPV$n) {}
         set analysis(multiPVraw$n) {}
+        set analysis(PVhistory$n) {}
+        set analysis(PVhistBlock$n) {}
+        set analysis(PVhistDepth$n) 0
       }
       if {$analysis(multiPVCount$n) == 1} {
 	set newhst [format {%2d [%s]  %s} \
@@ -3797,6 +3806,18 @@ proc updateAnalysisText {n} {
       } else {
 	# MultiPV
 
+	# a new depth has begun, so the lines shown last are finished
+	set top [$h index @0,0]
+	if {$analysis(depth$n) > $analysis(PVhistDepth$n)} {
+	  if {$analysis(PVhistBlock$n) != {}} {
+	    set analysis(PVhistory$n) [linsert $analysis(PVhistory$n) 0 $analysis(PVhistBlock$n)]
+	    # someone reading the history keeps the same lines in view
+	    if {[lindex [split $top .] 0] > [llength $analysis(multiPV$n)]} {
+	      set top "$top + [llength [split $analysis(PVhistBlock$n) \n]] lines"
+	    }
+	  }
+	  set analysis(PVhistDepth$n) $analysis(depth$n)
+	}
 	$h delete 1.0 end
 	# First line is in bold. Other diffs ??
 	set pv [lindex $analysis(multiPV$n) 0]
@@ -3814,6 +3835,27 @@ proc updateAnalysisText {n} {
 	  $h insert end [format "%2d \[%s\]  %s\n" [lindex $pv 0] $score [addMoveNumbers $n [::trans [lindex $pv 2]]] ] gray
 	  incr lineNumber
 	}
+	# keep the lines with their times for the history, and show the times with it
+	set analysis(PVhistBlock$n) {}
+	set i 0
+	foreach l [split [$h get 1.0 end-2c] \n] {
+	  if {[info exists analysis(pvTime$n,$i)]} {
+	    set time [format "(%.2f)" $analysis(pvTime$n,$i)]
+	    append l $time
+	    if {$analysis(showPVHistory$n)} {
+	      $h insert "1.0 + $i lines lineend" $time [$h tag names "1.0 + $i lines lineend - 1c"]
+	    }
+	  }
+	  append analysis(PVhistBlock$n) $l\n
+	  incr i
+	}
+	if {$analysis(showPVHistory$n)} {
+	  foreach block $analysis(PVhistory$n) {
+	    $h insert end \n$block gray
+	  }
+	  # stay where the user scrolled to
+	  $h yview $top
+	}
       }
     } else  {
       # Original Scid xboard analysis display
@@ -3823,7 +3865,7 @@ proc updateAnalysisText {n} {
     $h insert end $line indent
     # $h see end-1c
     set pos [lindex [ .analysisWin$n.hist.ybar get ] 1]
-    if {$pos == 1.0} {
+    if {$pos == 1.0 && !$analysis(showPVHistory$n)} {
       $h yview moveto 1
     }
     updateAnalysisBoard $n $analysis(moves$n)
@@ -4934,6 +4976,37 @@ briRBgQAKGTBCDJsAYsT4jXDzIrKJFOLQjokUYYkoLTSShHPjYNMGmeoscYY
 VbDAgQcpzKDFF1+wIsRz1RQjzDDAGLOLJ4HEAYklpsTSyiqo9PDcJ8H40ssu
 wOTiiiabZBnLLKykUsoNz/lgBRZTSDEFFE0oscQSThRRBBBA5NCAag+JZaih
 DiWq6KIOBQQAOw==
+}
+
+# with a mini score graph, for the quick passes on right-click
+image create photo tb_annotategraph -data {
+R0lGODlhGgAaAPfcAAAAAFxQK2JWN2ZaMmxfNGFXOEdGRkpKSkxMTE1NTU5OTk9P
+T1JHR1JISFZWVmFhYW9rY2pqanx4b7s3GcgeHsgfH8khIcknJ8gpKcspKcssLMkv
+L80zM8s7O887O99CHsFGKsBGK99PLsNMMc9SNcRUO8dXPtxQMNxWOONdP8xGRtFC
+Qt9fQdZYWNhfX8hhSslkS99jRsxtWN9yWN94X+VpTuJrUNVsbNB4Zd16Y996Ys91
+dc96etxyct10dN11dd52dtB9fed7Y+h5YPncOPnfOfrkOvvnO/zpO/zrPYCAf4GA
+f/OvQu+0TfSyRPe1RPe1RfK2TdeQfeeBa+eDbeqMd+KPfYGBgIODgYSDgZeXl5iX
+l5mYkZmYl5uZl5qamZycnJ+enJ6enp+fnqGbj6GckKOdkaOdkqOekqSek6GhoKGh
+oaSko6mppqurqqurq6yrqKyrqa2rqa2sqa+vrrCvrbCvrrGwrrOzs7SzsbSzsrS0
+srW0srW0s7W1s7W1tLW1tba1tLe2tbm3tri4trm4uLm5ubu7ub29vNKZmeKIiOee
+je6rm9S1teigoOK2tsDAwMnJx8rKyM3My83NzdXBwdbIyNLRzdDQz9HR0dPT0tPT
+09bW1tfX19nX1Nza2Nzb2N3c2N7d2dzc2t3c2t/e2t/f3fHFxfLJyfLLy+De2uDf
+2+Hf2+Hf3OHg3OHg3eLh3eDg3+Tj4OXj4OXk4ebl4ufm4+Tk5Ofn5+jn5Onp6evq
+6Ovr6+zr6e3s6u3t6+3t7e/v7vjk5Pnl5frr6/vu7vvv7/Dw7vHw7vDw8PPy8fLy
+8vTz8vT09PX19fb19Pb29vvw8Pj39vj49/n5+Pn5+fr6+fv7+/34+Pz8+/78/P7+
+/v///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAACH5BAEAAAAALAAAAAAaABoAAAj/AAEIHEiwoMGDBSMoVIiw
+IYCFNlCcQEFi4UIFDxpG2AQtAqNFVnLAiMCJmslbtyhFQBgBGrcIVGjkmGHCACdu
+1IDR2cUNz0qDEbi9nBKDRYwRBtZAQvSHjTJu0Nz8JBj0pRARWEFsNKlsjMWpA6tG
+GPKh7IQIYxAhKrRm0JUsDBMKHVv2w1lM0qgpewUqUgQjUcA+5JYtQpUUiEugLVTo
+z589EZI8CSA4KDXDNTK/iDCJmWdlEZA8ISB48DTDOCLgkBHhC6E/ev46KRCXKtQI
+UiJI1SoJma8IRJgIiAChdFBmXyIs0dJF+RbIRJoMiNBFgnFuzJSZikQKGakrCg6I
+2h9PXoGDsNyQOd6zR48eBS6FChUmH6oC9L589dq/K9cBbsL4YAw3p1CASn0HoLfL
+HXfU4SAcBwjjAQWKcOMCBT4IRYwPDaBXy4cfygIKAx540EMGqFCwwgbYcNMCBwyE
+RY0scNQ4RxtjNHBDJZZckMEGjVCQCA8WPJKgQBEA80orr7DyCimYHLALJ5zsQEEQ
+nKjQgQU87HLkQ5uwwgoppIzpyX9CGSMgN45Q0IJQX0bAxRlpnGHnGWSgWR830fhA
+DJxUfaWQnnsi6JBA8BVaHzT3HepAeORFal5AADs=
 }
 
 image create photo tb_play -data {

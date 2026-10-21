@@ -694,9 +694,10 @@ translate E TmtMeanElo "Mean Elo"
 translate E TmtNone "No matching tournaments were found."
 
 # Graph windows:
-menuText E GraphFile "File" 0
+menuText E GraphFile "Graph" 0
 menuText E GraphFileColor "Save as Color PostScript" 8
 menuText E GraphFileGrey "Save as Greyscale PostScript" 8
+menuText E GraphFilePreview "Add Preview Scores to Game" 0
 menuText E GraphFileClose "Close" 0
 menuText E GraphOptions "Options" 0
 menuText E GraphOptionsWhite "Invert White" 0
