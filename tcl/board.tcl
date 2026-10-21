@@ -2180,8 +2180,12 @@ proc ::board::mark::DrawVar {pathName from to color varnum {move {}} {engineThic
 proc ::board::mark::DrawRectangle { pathName square color pattern } {
   if {$square < 0 || $square > 63} { puts "error square = $square" ; return }
   set box [::board::mark::GetBox $pathName $square 1.0 1]
+  set width $::highlightLastMoveWidth
+  if {[string match .analysisWin* $pathName] && $width > 1} {
+    incr width -1
+  }
   set id [
-   $pathName create rectangle $box -outline $color -width $::highlightLastMoveWidth -dash $pattern -tag highlightLastMove
+   $pathName create rectangle $box -outline $color -width $width -dash $pattern -tag highlightLastMove
   ]
   catch {$pathName lower $id arrows}
 }

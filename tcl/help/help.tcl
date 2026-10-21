@@ -2894,6 +2894,10 @@ The default mode and size are set in the <a Analysis List>Engine Configuration</
 <br><b>Position</b> is the original mode. It displays the board's position after the engines line has been played.
 </p>
 
+<p><b>New feature</b>. Clicking any PV move changes the mini-board to a fourth mode. It shows the move's position, and also that line's PV at the side of the board.
+These moves are navigable with the wheel mouse, thus allowing an easy way to peruse each engine line.
+</p>
+
 <p>Beside the board is a black and white Score Bar (toggled via Control-Shift-S), and optionally, a Coloured 'Traffic' Bar (Control-Shift-C) which shows colours for each MultiPV's score - indicating the sharpness of a position. Red means Black is winning, Yellow is even, and Green for White winning."
 </p>
 
@@ -2905,7 +2909,7 @@ The default mode and size are set in the <a Analysis List>Engine Configuration</
   This feature adds Scores, <a Comment>Comments</a>, <a Moves Informant>Informants</a>, Bestlines to games. </p>
  
   <p><i>Right-clicking the Annotate Button makes a quick pass through the main line
-  (UCI only), and shows the scores in the <a Graphs Score>Score Graph</a> without changing the game.
+  (unscored games, UCI engines only), and shows the scores in the <a Graphs Score>Score Graph</a> without changing the game.
   For Time-move-control, the first pass takes 10 ms per move, the second an eighth of the time per move.
   For Depth-move-control, subsequent right-clicks repeat the preview one ply deeper,
   for Time-move-control with twice the time.</i></p>

@@ -114,6 +114,7 @@ proc resetEngine {n} {
   set analysis(boardSeqDepthSeen$n) 0   ;# used to decide when to update the visualisation
   set analysis(boardSeqMode$n) 2
   set analysis(bdPending$n) {}
+  set analysis(pvPreview$n) 0         ;# small board shows a clicked PV position
   set annotate(Button$n)  0 ; # annotate checkbutton value
 }
 
@@ -2585,6 +2586,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   pack $w.hist.xbar -side bottom -expand 0 -fill x
   pack $w.hist.text -side left -expand 1 -fill both
   bind $w.hist.text <ButtonPress-2> "toggleMovesDisplay $n"
+  bind $w.hist.text <ButtonRelease-1> "showPVPosition $n %W @%x,%y"
   $w.text tag configure blue -foreground blue ; # this only seems used in toggleAutomove ???
 
   if {$::enableForeground == 1} {
@@ -2595,6 +2597,8 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   $w.hist.text tag configure gray -foreground $color -lmargin2 [font measure font_Small xxxxxxxxxxxxxxxxxx]
 
   $w.hist.text tag configure blue -foreground darkblue
+  $w.hist.text tag configure pvclick -background [$w.hist.text cget -selectbackground] \
+    -foreground [$w.hist.text cget -selectforeground]
   $w.text insert end "Please wait a few seconds for engine initialisation
 (with some engines, you will not see any analysis until the board \
 changes. So if you see this message, try changing the board \
@@ -3908,13 +3912,27 @@ proc initAnalysisBoard {n} {
       set analysis(showBoard$n) 0
       pack forget $w.frame"
 
+    # a clicked engine line is copied right of the board, the wheel steps through it.
+    # The space left of the board keeps the board centered.
+    frame $w.frame.space
+    text $w.frame.pv -height 1 -width 1 -wrap word -font font_Regular -takefocus 0 \
+      -relief flat -highlightthickness 0 -padx 15 -background [$w.frame cget -background]
+    $w.frame.pv tag configure small -font font_Bold
+    $w.frame.pv tag configure pvclick -background [$w.frame.pv cget -selectbackground] \
+      -foreground [$w.frame.pv cget -selectforeground]
+    bind $w.frame.pv <ButtonRelease-1> "showPVPosition $n %W @%x,%y"
+    bindWheelMouseCommand $w.frame.pv "stepPV $n -1 ; break" "stepPV $n 1 ; break"
+
+    pack $w.frame.space -side left -expand 1
     pack $bd $w.frame.close -side left -anchor n
+    pack $w.frame.pv -side left -expand 1 -fill both
     bind $w <Control-S> "::board::toggleeval $bd"
     bind $w <Control-C> "::board::togglempvtls $bd"
 
     bind $bd.bd <Button-2> "
       $bd.bd delete var bvm engine
       nextBoardType $n"
+    bind $bd.bd <Button-1> "endPVPosition $n"
 
     bindControlMouseWheelResizeBoard $bd.bd $bd "updateAnalysisBoard $n redraw"
 
@@ -3937,7 +3955,7 @@ proc initAnalysisBoard {n} {
     if {[::board::size $bd]  != [expr {$analysis(boardSize) * 5 + 20}]} {
       ::board::resize $bd [expr {$analysis(boardSize) * 5 + 20}]
     }
-    pack $w.frame -side bottom -before $w.hist
+    pack $w.frame -side bottom -before $w.hist -fill x
     update
     $w.hist.text configure -setgrid 1
     $w.hist.text see end
@@ -4022,6 +4040,138 @@ proc boardVisualizeMoves {board n moves} {
   }
 }
 
+### Click on a move of an engine line shows the position after it on the small board.
+# The small board keeps it until the main board changes or the small board is clicked.
+
+proc showPVPosition {n h i} {
+  global analysis
+
+  set w .analysisWin$n
+  set pv $w.frame.pv
+  # don't interfere with selecting text
+  if {[$h tag ranges sel] != {}} {
+    return
+  }
+
+  # text from line start to the end of the clicked move
+  set i [$h index $i]
+  # a click right of the last move counts for it
+  set j [$h search -backwards -regexp {\S} "$i + 1c" "$i linestart"]
+  if {$j != {}} {
+    set i $j
+  }
+  set end [$h search -regexp {\s} $i "$i lineend"]
+  if {$end == {}} {
+    set end [$h index "$i lineend"]
+  }
+  set line [$h get "$i linestart" $end]
+  # in the copy, the moves are on the second line
+  if {$h == $pv} {
+    set line "\][$h get 2.0 $end]"
+  }
+  set start [$h search -backwards -regexp {\s} $i "$i linestart"]
+  if {$start == {}} {
+    set start [$h index "$i linestart"]
+  } else {
+    set start [$h index "$start + 1c"]
+  }
+
+  # moves follow the score, eg: "1. 29 [-3.24]  22...Bf5 23.Rcd1 Qe7"
+  set moves {}
+  set k [string first \] $line]
+  if {$k >= 0} {
+    foreach m [regexp -all -inline {\S+} [string range $line $k+1 end]] {
+      regsub {^[0-9]*\.+} $m {} m
+      if {$m != {}} {
+        lappend moves [::untrans $m]
+      }
+    }
+  }
+  if {$moves == {}} {
+    endPVPosition $n
+    return
+  }
+
+  set analysis(pvPreview$n) 1
+  # mark the move until the engine rewrites the line
+  $w.hist.text tag remove pvclick 1.0 end
+  $pv tag remove pvclick 1.0 end
+  if {$h != $pv} {
+    # copy the line next to the small board, PV number and score small, moves below
+    set l [$h get "$i linestart" "$i lineend"]
+    set m [string trimleft [string range $l $k+1 end]]
+    $pv configure -state normal
+    $pv delete 1.0 end
+    $pv insert end [string range $l 0 $k] small "\n$m" {}
+    $pv configure -state disabled
+    set off [expr {[string length $l] - [string length $m]}]
+    set c1 [expr {[lindex [split $start .] 1] - $off}]
+    set c2 [expr {[lindex [split $end .] 1] - $off}]
+    $pv tag add pvclick 2.$c1 2.$c2
+  }
+  $h tag add pvclick $start $end
+  $pv see pvclick.first
+
+  if {!$analysis(showBoard$n)} {
+    set analysis(showBoard$n) 1
+    # opening the board scrolls the engine lines to the end, so keep the view.
+    # The engine may rewrite its lines meanwhile, so this comes after marking.
+    set view [lindex [$w.hist.text yview] 0]
+    initAnalysisBoard $n
+    $w.hist.text yview moveto $view
+  }
+
+  sc_game push copyfast
+  if {$analysis(lockEngine$n)} {
+    sc_game startBoard $analysis(lockFen$n)
+  }
+  foreach m $moves {
+    if {[catch {sc_move addSan $m}]} {
+      break
+    }
+  }
+  ::board::update $w.frame.bd [sc_pos board]
+  ::board::lastMoveHighlight $w.frame.bd
+  # so the next ::board::update removes it
+  $w.frame.bd.bd addtag mark withtag highlightLastMove
+  sc_game pop
+}
+
+proc endPVPosition {n} {
+  global analysis
+
+  set analysis(pvPreview$n) 0
+  .analysisWin$n.hist.text tag remove pvclick 1.0 end
+  .analysisWin$n.frame.pv tag remove pvclick 1.0 end
+  if {$analysis(lockEngine$n)} {
+    ::board::update .analysisWin$n.frame.bd $analysis(lockPos$n)
+  }
+  updateAnalysisBoard $n redraw
+}
+
+### Wheel over the copied line: show the next or previous move
+
+proc stepPV {n dir} {
+  set pv .analysisWin$n.frame.pv
+  set r [$pv tag ranges pvclick]
+  # moves have letters, move numbers don't. They start on the second line.
+  if {$dir > 0} {
+    # after the marked move, or from the start
+    set i [$pv search -regexp {[[:alpha:]]} [lindex "2.0 $r" end] end]
+  } elseif {$r != {}} {
+    set i [$pv search -backwards -regexp {[[:alpha:]]} [lindex $r 0] 2.0]
+    if {$i == {}} {
+      # before the first move: the live board
+      set i 1.0
+    }
+  } else {
+    return
+  }
+  if {$i != {}} {
+    showPVPosition $n $pv $i
+  }
+}
+
 ### Update the small analysis board in the analysis window,
 
 # Throttle board redraws: engine output updates at most every 200 ms.
@@ -4074,6 +4224,11 @@ proc updateAnalysisBoardNow {n {moves {}}} {
   if {$::board::_flip($bd) != $::board::_flip(.main.board)} {
     ::board::flip $bd
   }
+  # the small board shows a clicked PV position, but main board arrows go on
+  set preview $analysis(pvPreview$n)
+  if {$preview && $analysis(boardEngine) != $n} {
+    return
+  }
 
   if {$analysis(boardType$n) != "Position"} {
     # Board type is Arrows or Sequential
@@ -4107,7 +4262,7 @@ proc updateAnalysisBoardNow {n {moves {}}} {
         }
       }
     }
-    if {!$analysis(lockEngine$n)} {
+    if {!$analysis(lockEngine$n) && !$preview} {
       ::board::update $bd [sc_pos board]
     }
 
@@ -4213,7 +4368,7 @@ proc updateAnalysisBoardNow {n {moves {}}} {
     }
   } else {
     # Board Type shows final position after PV
-    if {$analysis(lockEngine$n)} {
+    if {$analysis(lockEngine$n) || $preview} {
       return
     }
     sc_game push copyfast
@@ -4340,6 +4495,12 @@ proc updateAnalysis {{n 0} {reset 1}} {
     return
   }
 
+  set analysis(pvPreview$n) 0
+  catch {
+    .analysisWin$n.frame.pv configure -state normal
+    .analysisWin$n.frame.pv delete 1.0 end
+    .analysisWin$n.frame.pv configure -state disabled
+  }
   set analysis(side$n) [sc_pos side]
 
   if {$::comp(playing) ||
