@@ -762,6 +762,9 @@ set startup(fics) 0
 
 set myPlayerNames {}
 
+# Rating type preset for unrated players when saving a game (the last one chosen)
+set defaultRatingType Elo
+
 # These new checkbuttons (showMenu, showButtons etc) don't really have anything
 # to do with gameInfo, but are here anyway S.A
 

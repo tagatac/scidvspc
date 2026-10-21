@@ -1126,6 +1126,8 @@ proc gameSave {gnum {focus {}}} {
   set blackElo [sc_game tag get BlackElo]
   set whiteRType [sc_game tag get WhiteRType]
   set blackRType [sc_game tag get BlackRType]
+  if {!$whiteElo} {set whiteRType $::defaultRatingType}
+  if {!$blackElo} {set blackRType $::defaultRatingType}
   set eco [sc_game tag get ECO];  set extraTags [sc_game tag get Extra]
 
   # Use question marks instead of zero values in date:
@@ -1218,6 +1220,8 @@ proc gameSave {gnum {focus {}}} {
   ttk::combobox $f.brtype -values [sc_info ratings] -width 7 \
     -textvariable blackRType -state readonly
   ttk::entry $f.beloentry -width 6 -textvariable blackElo -justify right
+  bind $f.wrtype <<ComboboxSelected>> {set defaultRatingType $whiteRType}
+  bind $f.brtype <<ComboboxSelected>> {set defaultRatingType $blackRType}
 
   grid $f.welolabel -row 8 -column 0 -sticky sw
   grid $f.wrtype -row 8 -column 1 -sticky sw
