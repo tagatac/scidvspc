@@ -2306,7 +2306,7 @@ proc cleanerWin {} {
     radiobutton $w.f.n$i -variable cleaner($i) -value 0 -text $::tr(No)
   }
   set row 0
-  foreach i {players events sites rounds eco elo twins cnames cgames tree} {
+  foreach i {players events sites rounds eco elo twins cgames cnames tree} {
     grid $w.f.$i -row $row -column 0 -sticky w
     grid $w.f.y$i -row $row -column 1 -sticky w
     grid $w.f.n$i -row $row -column 2 -sticky w
@@ -2437,15 +2437,13 @@ proc doCleaner {} {
     $t insert end "   $message.\n"
   }
 
-  if {$cleaner(cnames)} {
-    mtoolAdd $t "$count: $::tr(CompactNames)..."
+  if {$cleaner(cgames)} {
+    mtoolAdd $t "$count: $::tr(CompactGames)..."
     incr count
-    set stats [sc_compact stats names]
-    if {[lindex $stats 1] == 0  &&  [lindex $stats 3] == 0  && \
-          [lindex $stats 5] == 0  &&  [lindex $stats 7] == 0} {
-      $t insert end "   Name file already compacted.\n"
+    if {[compactGamesEmpty]} {
+      $t insert end "   Game file already compacted.\n"
     } else {
-      set err [catch {sc_compact names} result]
+      set err [catch {sc_compact games} result]
       if {$err} {
         $t insert end "   $result\n"
       } else {
@@ -2455,13 +2453,15 @@ proc doCleaner {} {
     $t see end
   }
 
-  if {$cleaner(cgames)} {
-    mtoolAdd $t "$count: $::tr(CompactGames)..."
+  if {$cleaner(cnames)} {
+    mtoolAdd $t "$count: $::tr(CompactNames)..."
     incr count
-    if {[compactGamesEmpty]} {
-      $t insert end "   Game file already compacted.\n"
+    set stats [sc_compact stats names]
+    if {[lindex $stats 1] == 0  &&  [lindex $stats 3] == 0  && \
+          [lindex $stats 5] == 0  &&  [lindex $stats 7] == 0} {
+      $t insert end "   Name file already compacted.\n"
     } else {
-      set err [catch {sc_compact games} result]
+      set err [catch {sc_compact names} result]
       if {$err} {
         $t insert end "   $result\n"
       } else {
