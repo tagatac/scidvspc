@@ -2446,6 +2446,12 @@ set helpText(Compact) {<h1>Database Compaction</h1>
   file (the largest of the three files in a Scid Database). Game File
   compaction removes these deleted games.
   </p>
+
+  <h3>Compact Names and Games</h3>
+  <p>
+  Does both, games first. Names only used by deleted games become unused
+  once these games are removed.
+  </p>
   <p>
   Game File compaction is recommended after a database <a Sorting>sort</a>
   , to keep the order of the Game File consistent with the sorted Index File.

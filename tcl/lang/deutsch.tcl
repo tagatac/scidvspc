@@ -1392,6 +1392,7 @@ translate D CurrentState {Momentaner Stand}
 translate D AfterCompaction {nach Kompression}
 translate D CompactNames {Komprimiere Namen}
 translate D CompactGames {Komprimiere Partien}
+translate D CompactBoth {Komprimiere Namen und Partien}
 translate D NoUnusedNames "Es gibt keine unbenutzten Namen, die Namensdatei ist vollständig komprimiert."
 translate D NoUnusedGames "Die Partiendatei ist vollständig komprimiert."
 translate D NameFileCompacted {Die Namensdatei der Datenbank "[file tail [sc_base filename]]" wurde komprimiert.}

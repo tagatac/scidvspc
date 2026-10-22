@@ -402,6 +402,7 @@ proc ::maint::Refresh {} {
   global maintFlag maintFlags
   updateSortWin
   updateClassifyWin
+  updateCompactWin
 
   set w .maintWin
   if {![winfo exists $w]} { return }
@@ -1607,20 +1608,16 @@ proc makeCompactWin {{parent .}} {
   frame $w.names.h -height 1 -relief solid -bg black
   grid $w.names.h -columnspan 3 -row 2 -column 0 -sticky we
   set row 3
-  set ndata [sc_compact stats names]
-  set idx 0
   foreach n {p e s r} name {Players Events Sites Rounds} {
     label $w.names.t$n -text "$::tr($name)  "
-    label $w.names.n$n -text "  [::utils::thousands [lindex $ndata $idx]]"
-    incr idx
-    label $w.names.u$n -text "  [::utils::thousands [lindex $ndata $idx]]"
-    incr idx
+    label $w.names.n$n
+    label $w.names.u$n
     grid $w.names.t$n -row $row -column 0 -sticky w
     grid $w.names.n$n -row $row -column 1 -sticky e
     grid $w.names.u$n -row $row -column 2 -sticky e
     incr row
   }
-  button $w.names.n -text $::tr(CompactNames) -command compactNames
+  button $w.names.n -text $::tr(CompactNames) -command "compactNames $w"
   grid $w.names.n -row $row -column 0 -columnspan 3 -pady 5
 
   label $w.games.title -text $::tr(GameFile) -font font_Bold
@@ -1632,15 +1629,10 @@ proc makeCompactWin {{parent .}} {
   frame $w.games.h -height 1 -relief solid -bg black
   grid $w.games.h -columnspan 3 -row 2 -column 0 -sticky we
   set row 3
-  set ndata [sc_compact stats games]
-  set idx 0
   foreach g {current compact} name {CurrentState AfterCompaction} {
     label $w.games.t$g -text "$::tr($name)  "
-    label $w.games.g$g -text "  [::utils::thousands [lindex $ndata $idx]]"
-    incr idx
-    set kbytes [expr {int(([lindex $ndata $idx] + 512) / 1024)} ]
-    label $w.games.s$g -text "  [::utils::thousands $kbytes]"
-    incr idx
+    label $w.games.g$g
+    label $w.games.s$g
     grid $w.games.t$g -row $row -column 0 -sticky w
     grid $w.games.g$g -row $row -column 1 -sticky e
     grid $w.games.s$g -row $row -column 2 -sticky e
@@ -1654,59 +1646,93 @@ proc makeCompactWin {{parent .}} {
   button $w.games.g -text $::tr(CompactGames) -command "compactGames $w"
   grid   $w.games.g -row $row -column 0 -columnspan 3 -sticky s -rowspan 4 -pady 5
 
+  button $w.buttons.both -text $::tr(CompactBoth) -command compactBoth
   button $w.buttons.help -text $::tr(Help) -command {helpWindow Compact}
   button $w.buttons.cancel -text $::tr(Close) -command "focus .main ; destroy $w"
+  pack $w.buttons.both -side left -padx 5 -pady 5
   pack $w.buttons.cancel $w.buttons.help -side right -padx 5 -pady 5
 
   bind $w <F1> {helpWindow Compact}
+  updateCompactWin
   placeWinOverParent $w $parent
   wm state $w normal
 }
 
-proc compactNames {} {
+proc updateCompactWin {} {
   set w .compactWin
-  if {$::windowsOS && ![checkAllEnginesClosed $w]} {
+  if {![winfo exists $w]} { return }
+  if {![baseIsCompactable]} {
+    destroy $w
     return
   }
+  wm title $w "$::tr(CompactDatabase): [file tail [sc_base filename]]"
+  set ndata [sc_compact stats names]
+  set idx 0
+  foreach n {p e s r} {
+    $w.names.n$n configure -text "  [::utils::thousands [lindex $ndata $idx]]"
+    incr idx
+    $w.names.u$n configure -text "  [::utils::thousands [lindex $ndata $idx]]"
+    incr idx
+  }
+  set ndata [sc_compact stats games]
+  set idx 0
+  foreach g {current compact} {
+    $w.games.g$g configure -text "  [::utils::thousands [lindex $ndata $idx]]"
+    incr idx
+    set kbytes [expr {int(([lindex $ndata $idx] + 512) / 1024)} ]
+    $w.games.s$g configure -text "  [::utils::thousands $kbytes]"
+    incr idx
+  }
+}
+
+# Games first, as names used only by deleted games become unused
+proc compactBoth {} {
+  set parent .compactWin
+  compactGames $parent
+  compactNames $parent
+}
+
+proc compactNamesUnNeeded {} {
   set stats [sc_compact stats names]
-  if {[lindex $stats 1] == 0  &&  [lindex $stats 3] == 0  && \
-        [lindex $stats 5] == 0  &&  [lindex $stats 7] == 0} {
-    tk_messageBox -type ok -icon info -parent $w -title  "$::tr(CompactNames)" -message $::tr(NoUnusedNames)
-    return
+  return [expr {[lindex $stats 1] == 0  &&  [lindex $stats 3] == 0  && [lindex $stats 5] == 0  &&  [lindex $stats 7] == 0}]
+}
+
+proc compactNames {{parent .}} {
+  if {$::windowsOS && ![checkAllEnginesClosed $parent]} {
+    return 0
+  }
+  if {[compactNamesUnNeeded]} {
+    tk_messageBox -type ok -icon info -parent $parent -title  "$::tr(CompactNames)" -message $::tr(NoUnusedNames)
+    return 1
   }
 
   set confirm [::game::ConfirmDiscard]
-  if {$confirm == 2} { return }
+  if {$confirm == 2} { return 0 }
   if {$confirm == 0} {
     ::game::Save
   }
 
   progressWindow Scid $::tr(CompactNames)
+  wm transient .progressWin $parent
+
   busyCursor .
   set err [catch {sc_compact names} result]
   unbusyCursor .
   closeProgressWindow
-  set w .compactWin
   if {$err} {
-    tk_messageBox -type ok -icon warning -parent $w \
-        -title "Scid: Error compacting file" -message $result
+    tk_messageBox -type ok -icon warning -parent $parent -title "Scid: Error compacting file" -message $result
   } else {
     sc_game new
     updateBoard -pgn
     updateTitle
     updateMenuStates
-    tk_messageBox -type ok -icon info -parent $w \
-        -title [concat "Scid: " $::tr(CompactNames)] \
-        -message [subst $::tr(NameFileCompacted)]
+    tk_messageBox -type ok -icon info -parent $parent -title [concat "Scid: " $::tr(CompactNames)] -message [subst $::tr(NameFileCompacted)]
   }
-  grab release $w
-  destroy $w
   ::windows::gamelist::Refresh
   ::maint::Refresh
   ::plist::refresh
-  if {[winfo exists .maintWin]} {
-    raiseWin .maintWin
-  }
+  raiseWin $parent
+  return [expr {!$err}]
 }
 
 # returns true is no deletions marked or space wasted
@@ -1718,19 +1744,18 @@ proc compactGamesEmpty {} {
 
 proc compactGames {parent} {
   if {[compactGamesEmpty]} {
-    tk_messageBox -type ok -icon info -parent $parent -title [concat "Scid: " $::tr(CompactGames)] \
-        -message $::tr(NoUnusedGames)
-    return
+    tk_messageBox -type ok -icon info -parent $parent -title [concat "Scid: " $::tr(CompactGames)] -message $::tr(NoUnusedGames)
+    return 1
   }
 
   # On windows, compaction will fail if a chess engine has been opened after the database
   # because of the engine locking the file due to file descriptor inheritance
   if {$::windowsOS && ![checkAllEnginesClosed $parent]} {
-    return
+    return 0
   }
 
   set confirm [::game::ConfirmDiscard]
-  if {$confirm == 2} { return }
+  if {$confirm == 2} { return 0 }
   if {$confirm == 0} {
     ::game::Save
   }
@@ -1743,10 +1768,11 @@ proc compactGames {parent} {
   if {[tk_messageBox -title "$::tr(CompactDatabase): [file tail [sc_base filename]]" -parent $parent \
       -icon question -type yesno -message \
       "$numberDeleted games will be permanently deleted.\nAre you sure ?"] != {yes}} {
-    return
+    return 0
   }
 
   progressWindow Scid $::tr(CompactGames) $::tr(Cancel) sc_progressBar
+  wm transient .progressWin $parent
   busyCursor .
   set err [catch {sc_compact games} result]
   unbusyCursor .
@@ -1759,19 +1785,12 @@ proc compactGames {parent} {
     updateBoard -pgn
     updateTitle
     updateMenuStates
-    tk_messageBox -type ok -icon info -parent $parent \
-        -title [concat "Scid: " $::tr(CompactGames)] \
-        -message [subst $::tr(GameFileCompacted)]
+    tk_messageBox -type ok -icon info -parent $parent -title [concat "Scid: " $::tr(CompactGames)] -message [subst $::tr(GameFileCompacted)]
   }
   ::windows::gamelist::Refresh
   ::crosstab::Refresh
   ::maint::Refresh
-  if {$parent == {.compactWin}} {
-    destroy $parent
-    if {[winfo exists .maintWin]} {
-      raiseWin .maintWin
-    }
-  }
+  return [expr {!$err}]
 }
 
 set sortCriteria(real) ""
@@ -2456,9 +2475,7 @@ proc doCleaner {} {
   if {$cleaner(cnames)} {
     mtoolAdd $t "$count: $::tr(CompactNames)..."
     incr count
-    set stats [sc_compact stats names]
-    if {[lindex $stats 1] == 0  &&  [lindex $stats 3] == 0  && \
-          [lindex $stats 5] == 0  &&  [lindex $stats 7] == 0} {
+    if {[compactNamesUnNeeded]} {
       $t insert end "   Name file already compacted.\n"
     } else {
       set err [catch {sc_compact names} result]
