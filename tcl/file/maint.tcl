@@ -1688,8 +1688,9 @@ proc updateCompactWin {} {
 # Games first, as names used only by deleted games become unused
 proc compactBoth {} {
   set parent .compactWin
-  compactGames $parent
-  compactNames $parent
+  if {[compactGames $parent]} {
+    compactNames $parent
+  }
 }
 
 proc compactNamesUnNeeded {} {
@@ -1712,8 +1713,7 @@ proc compactNames {{parent .}} {
     ::game::Save
   }
 
-  progressWindow Scid $::tr(CompactNames)
-  wm transient .progressWin $parent
+  progressWindow Scid $::tr(CompactNames) $parent
 
   busyCursor .
   set err [catch {sc_compact names} result]
@@ -1771,8 +1771,7 @@ proc compactGames {parent} {
     return 0
   }
 
-  progressWindow Scid $::tr(CompactGames) $::tr(Cancel) sc_progressBar
-  wm transient .progressWin $parent
+  progressWindow Scid $::tr(CompactGames) $::tr(Cancel) sc_progressBar $parent
   busyCursor .
   set err [catch {sc_compact games} result]
   unbusyCursor .

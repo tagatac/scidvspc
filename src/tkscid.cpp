@@ -4349,7 +4349,7 @@ sc_compact_games (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         // of the time. So corrupt games are now kept, rather than dropped.
         err = newIdx->AddGame (&newNumGames, &ieNew);
         if (err != OK) {
-            errMsg = "Error in compaction operation; compaction cencelled.";
+            errMsg = "Error in compaction operation; compaction cancelled.";
             interrupted = true;
             break;
         }

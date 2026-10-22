@@ -327,8 +327,9 @@ proc addVerticalRule {w {xpadding 5} {relief sunken}} {
 }
 
 
-#   Creates a window with a label, progress bar, and (if specified),
-#   a cancel button and cancellation command.
+#   Creates a window with a label, progress bar
+#   and optionally a cancel button and cancellation command.
+#   A 3rd or 5th arg is parent
 
 proc progressWindow {args} {
   set w .progressWin
@@ -338,6 +339,14 @@ proc progressWindow {args} {
   toplevel $w
   wm withdraw $w
   wm resizable $w 0 0
+
+  # optional last arg: the window to keep it on top of
+  if {[llength $args] % 2} {
+    set parent [lindex $args end]
+    set args [lrange $args 0 end-1]
+  } else {
+    set parent .main
+  }
 
   if {[llength $args] == 2} {
     set title [lindex $args 0]
@@ -358,7 +367,7 @@ proc progressWindow {args} {
   # This is the best way to keep win on top, but
   # has the effect of raising .main after progressWin closes :(
   # We need a parent arg
-  wm transient $w .main
+  wm transient $w $parent
 
   label $w.t -text $text
   pack $w.t -side top -pady 5
