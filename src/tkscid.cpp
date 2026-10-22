@@ -4345,12 +4345,8 @@ sc_compact_games (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             // Just skip corrupt games:
             continue;
         }
-        db->bbuf->BackToStart();
-        err = scratchGame->Decode (db->bbuf, GAME_DECODE_NONE);
-        if (err != OK) {
-            // Just skip corrupt games:
-            continue;
-        }
+        // Games are copied without decoding them, which would take most
+        // of the time. So corrupt games are now kept, rather than dropped.
         err = newIdx->AddGame (&newNumGames, &ieNew);
         if (err != OK) {
             errMsg = "Error in compaction operation; compaction cencelled.";
@@ -4367,14 +4363,6 @@ sc_compact_games (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
             break;
         }
         ieNew.SetOffset (offset);
-
-        // In 3.2, the maximum value for the game length in half-moves
-        // stored in the Index was raised from 255 (8 bits) to over
-        // 1000 (10 bits). So if the game and index values do not match,
-        // update the index value now:
-        if (scratchGame->GetNumHalfMoves() != ieNew.GetNumHalfMoves()) {
-            ieNew.SetNumHalfMoves (scratchGame->GetNumHalfMoves());
-        }
 
         err = newIdx->WriteEntries (&ieNew, newNumGames, 1);
         if (err != OK) {
