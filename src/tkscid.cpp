@@ -4505,32 +4505,32 @@ sc_compact_names (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
         if (err != OK) { break; }
     }
 
-    // Now correct the name ID numbers in all index entries:
+    // Now correct the name ID numbers in all index entries.
+    // They are written 5000 at a time, as writing them singly is slow.
     if (err == OK) {
-        uint updateStart, update;
-        updateStart = update = 5000;  // Update progress bar every 5000 games
+        const uint batchSize = 5000;
+        IndexEntry * batch = new IndexEntry [batchSize];
+        uint n = 0;
         for (uint i=0; i < db->numGames; i++) {
-            if (showProgress) {
-                update--;
-                if (update == 0) {
-                    update = updateStart;
-                    updateProgressBar (ti, i, db->numGames);
-                    if (interruptedProgress()) break;
-                }
-            }
             IndexEntry * ie = db->idx->FetchEntry (i);
-            IndexEntry ieNew = *ie;
-            ieNew.SetWhite (idMapping [NAME_PLAYER][ie->GetWhite()]);
-            ieNew.SetBlack (idMapping [NAME_PLAYER][ie->GetBlack()]);
-            ieNew.SetEvent (idMapping [NAME_EVENT] [ie->GetEvent()]);
-            ieNew.SetSite  (idMapping [NAME_SITE]  [ie->GetSite()]);
-            ieNew.SetRound (idMapping [NAME_ROUND] [ie->GetRound()]);
-            err = db->idx->WriteEntries (&ieNew, i, 1);
-            if (err != OK) {
-                errorResult (ti, "Error writing index file.");
-                break;
+            IndexEntry * ieNew = &batch[n++];
+            *ieNew = *ie;
+            ieNew->SetWhite (idMapping [NAME_PLAYER][ie->GetWhite()]);
+            ieNew->SetBlack (idMapping [NAME_PLAYER][ie->GetBlack()]);
+            ieNew->SetEvent (idMapping [NAME_EVENT] [ie->GetEvent()]);
+            ieNew->SetSite  (idMapping [NAME_SITE]  [ie->GetSite()]);
+            ieNew->SetRound (idMapping [NAME_ROUND] [ie->GetRound()]);
+            if (n == batchSize  ||  i == db->numGames - 1) {
+                err = db->idx->WriteEntries (batch, i + 1 - n, n);
+                n = 0;
+                if (err != OK) {
+                    errorResult (ti, "Error writing index file.");
+                    break;
+                }
+                if (showProgress) { updateProgressBar (ti, i, db->numGames); }
             }
         }
+        delete[] batch;
     }
 
     if (showProgress) { updateProgressBar (ti, 1, 1); }

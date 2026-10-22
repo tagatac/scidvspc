@@ -53,6 +53,7 @@ GFile::Init ()
     Cache[0]->dirty = 0;
     Cache[0]->length = 0;
     CurrentBlock = Cache[0];    
+    LastReadBlock = -1;
     FileMode = FMODE_None;
 }
 
@@ -159,13 +160,6 @@ GFile::Open (const char * filename, fileModeT fmode, const char * suffix)
         return ERROR_FileOpen;
     }
 
-    // Set the buffer size for buffered I/O on this file to be
-    // GF_BLOCKSIZE for efficiency.
-    // This seems to make tree or position searches on large databases
-    // a little faster (maybe up to 10%) from my observations.
-
-    Handle->SetBufferSize (GF_BLOCKSIZE);
-
     CurrentBlock->blockNum = -1;
     Offset = 0;
     uint fsize = fileSize (filename, suffix);
@@ -262,11 +256,26 @@ errorT
   if (endBlockNum != blockNum  ||  (uint)blockNum >= NumBlocks) {
     return ERROR_CorruptData;
   }
+  if (CurrentBlock->blockNum != blockNum  &&  blockNum != LastReadBlock + 1) {
+    // Not reading in file order (eg a sorted base), so the rest of
+    // the block is probably not needed: read just this game.
+    if (CurrentBlock->dirty) { Flush (CurrentBlock); }
+    if (Handle->Seek (offset) != OK) { return ERROR_FileSeek; }
+    if (Handle->ReadNBytes ((char *)CurrentBlock->data, length) != OK) {
+      return ERROR_FileRead;
+    }
+    Offset = offset + length;
+    CurrentBlock->blockNum = -1;
+    LastReadBlock = blockNum;
+    bb->ProvideExternal (CurrentBlock->data, length);
+    return OK;
+  }
   if (CurrentBlock->blockNum != blockNum) {
     if (Fetch (CurrentBlock, blockNum) != OK) {
       return ERROR_FileRead;
     }
   }
+  LastReadBlock = blockNum;
   bb->ProvideExternal (&(CurrentBlock->data[offset % GF_BLOCKSIZE]),
                          length);
   return OK;

@@ -53,6 +53,7 @@ class GFile
     uint   CacheSize;
     gfBlockT  ** Cache;
     gfBlockT  *  CurrentBlock;
+    int       LastReadBlock;
 
   public:
     GFile()      { Init(); }
