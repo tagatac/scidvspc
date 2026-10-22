@@ -2937,7 +2937,7 @@ These moves are navigable with the wheel mouse, thus allowing an easy way to per
   <ul>
      <li><b>Move Control</b> Whether to process each move for a fixed time, or fixed depth (UCI only).</li>
      <li><b>Depth per move</b> Number of half-moves engine spends on analysing each move (UCI only).</li>
-     <li><b>Seconds per move</b> Number of seconds engine spends on analysing each move.</li>
+     <li><b>Seconds per move</b> Number of seconds engine spends on analysing each move (0.1 to 300).</li>
      <li><b>Blunder Threshold</b> A Score which determines whether it's a bad move or not,
      representing pawns (i.e. 0.5 means an evaluation drop of half a pawn).  </li>
      <li><b>Cut Off Threshold</b> Above this score, dont worry about adding variations, as game is won.</li>

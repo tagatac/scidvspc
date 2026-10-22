@@ -983,7 +983,18 @@ proc initAnnotation {n} {
 
   frame $w.delay
   label $w.delay.label -textvar tr(SecondsPerMove) -width 22
-  spinbox $w.delay.spDelay -width 4 -textvar tempdelay -from 1 -to 300 -increment 1
+  # the arrows go below 1 s to 0.5, 0.2 and 0.1 s
+  set values {0.1 0.2 0.5}
+  for {set i 1} {$i <= 300} {incr i} {
+    lappend values $i
+  }
+  set delay [lindex $values 0]
+  foreach v $values {
+    if {abs($v - $tempdelay) < abs($delay - $tempdelay)} {set delay $v}
+  }
+  spinbox $w.delay.spDelay -width 4 -textvar tempdelay -values $values
+  # -values sets the first value
+  set tempdelay $delay
 
   pack $w.delay -side top
   pack $w.delay.label -side left
