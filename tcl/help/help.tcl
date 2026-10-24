@@ -2800,6 +2800,11 @@ making for easier <a Analysis Debugging>Debugging</a>.
   , F3 or F4 from the Configuration Widget, or via the <b>Tools--<gt>Start Engine</b> menu.
 </p>
 
+  <p>The window's menu (in docked mode, click the engine's tab) can Configure the UCI options,
+  Edit the engine, Restart it, and show its Log and this Help.
+  After saving new settings, a running engine restarts in its tab.
+</p>
+
   <p>
   <b>Space Bar</b> makes the engine start/stop. Pressing <b>Enter</b> will
   add the engine's current best move, and <b>Control+Enter</b>, the whole line.
@@ -2842,7 +2847,6 @@ making for easier <a Analysis Debugging>Debugging</a>.
   On Unix systems the engines priority can not be set back to normal.  </li>
   <li> <button tb_info 32> <b>Show Info</b> show additional information.</li>
   <li> <button autoplay_off 32> <b>Shoot out</b>, or "demo", mode allows the engine to play out the game. (Time delay is the same as for Autoplay).</li>
-  <li> <button tb_help 32> <b>Help</b> button. (Right-click shows the engine log).
   <li> <button tb_training 32> <b>Training</b> feature (see <a Analysis Training>below</a>).</li>
 <br>
   <li> And for Xboard engines only:</li>
@@ -3051,7 +3055,7 @@ because implementation is very problematic.</p>
   <h2><name Debugging>Advanced</name></h2>
   <p>
   If an engine fails to start, or crashes, one may examine its log file.
-  These are kept in the Scidvspc's log directory and can be viewed by right-clicking the <button tb_help> button,
+  These are kept in the Scidvspc's log directory and can be viewed via <b>Log</b> in the engine window menu,
 or via the <button tb_annotate> button in the <run ::enginelist::choose><green>engine configuration</green></run> widget.
 The <b>Log Size</b> is the max number of lines in the log. Setting it to zero disables logging altogether, and "none" allows infinite logging.</p>
   <p>The default UCI command for <button tb_play> is "go infinite", but this may be altered by changing <b>::uci::goCommand</b> in ScidvsPC's <a Console>Console</a> (for example "set ::uci::goCommand {go depth 20}" or {go movetime 10000}).

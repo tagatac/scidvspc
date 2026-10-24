@@ -923,6 +923,10 @@ namespace eval uci {
       set ::engines(list) [lreplace $::engines(list) $n $n $enginedata]
 
       ::enginelist::write
+      # restart a running engine with its new options (Configure Engine does it on OK)
+      if {[winfo exists .analysisWin$n] && ![winfo exists .engineEdit] && !$::comp(playing)} {
+        after idle "restartAnalysisEngine $n"
+      }
     }
     return 1
 }

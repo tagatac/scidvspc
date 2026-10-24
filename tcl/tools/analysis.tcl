@@ -748,6 +748,10 @@ proc ::enginelist::edit {index {copy {}}} {
       destroy .engineEdit
       ::enginelist::listEngines $engines(newIndex)
       ::enginelist::write
+      # restart a running engine with its new settings
+      if {[winfo exists .analysisWin$index] && !$::comp(playing)} {
+        restartAnalysisEngine $index
+      }
     }
   }
   dialogbutton $f.help -textvar tr(Help) -command {helpWindow Analysis List}
@@ -2424,6 +2428,18 @@ proc makeAnalysisWin {{n 0} {options {}}} {
 
   bind $w <F1> { helpWindow Analysis }
 
+  # window menu (docked: the tab's triangle)
+  set m [menu $w.menu -tearoff 0]
+  $m add command -label [tr GlistEditField] -command "::uci::uciConfigN $n $w"
+  if {!$analysis(uci$n)} { $m entryconfigure 0 -state disabled }
+  $m add command -label [tr EngineEdit] -command "::enginelist::edit $n"
+  $m add command -label [tr Restart] -command "restartAnalysisEngine $n"
+  $m add command -label Log -command "engineShowLog $n"
+  $m add separator
+  $m add command -label [tr Help] -command {helpWindow Analysis}
+  $m add command -label [tr Quit] -command "destroyAnalysisWin $n"
+  setMenu $w $m
+
   ### Set initial size of analysis widget
   # not sure why these args seem to be in Char and not Pixels.
   if {![info exists ::winWidth($w)]} {
@@ -2537,15 +2553,9 @@ proc makeAnalysisWin {{n 0} {options {}}} {
     -command "toggleAutomove $n" -variable analysis(automove$n) -relief $relief
   ::utils::tooltip::Set $w.b.training $tr(Training)
 
-  button $w.b.help -image tb_help  -command {helpWindow Analysis} -relief $relief
-  ::utils::tooltip::Set $w.b.help $tr(Help)
-
-  bind $w.b.help <ButtonPress-3> "engineShowLog $n"
-
   if {$::macOS} {
     $w.b.startStop configure -width 30 -height 30
     $w.b.move      configure -width 30 -height 30
-    $w.b.help      configure -width 30 -height 30
   }
 
   pack $w.b.startStop $w.b.move $w.b.line $w.b.alllines \
@@ -2554,8 +2564,6 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   pack $w.b.multipv -fill y -pady 2
   $w.b.multipv configure -state readonly
   pack $w.b.training -side left -pady 2 -padx 1
-
-  pack $w.b.help -side left
 
   button $w.popup -image tb_popup -height 32 -width 16 -command "popupButtonBar $n" -relief flat
   placePopupButton $n
@@ -2702,6 +2710,37 @@ by moving backward or forward or making a new move.)"
    }
 }
 
+
+### Restart engine n in the same tab, eg with new settings
+
+proc restartAnalysisEngine {n} {
+  global analysis
+
+  set board [expr {$analysis(boardEngine) == $n}]
+  set options [expr {$analysis(analyzeMode$n) ? "" : "nostart"}]
+  if {$::mainEngine == $n} { set ::mainEngine -1 }
+
+  set f .fdockanalysisWin$n
+  set nb {}
+  if {[winfo exists $f]} { set nb [::docking::find_tbn $f] }
+  if {$nb != {}} {
+    # a copy of the tab keeps its place (see add_tab)
+    frame .fdockswap
+    $nb insert $f .fdockswap -text [$nb tab $f -text] -image bluetriangle -compound left
+    $nb select .fdockswap
+  }
+  makeAnalysisWin $n
+  # let docking destroy the old frame
+  update idletasks
+  set ::docking::layout_dest_notebook $nb
+  makeAnalysisWin $n $options
+  set ::docking::layout_dest_notebook {}
+  if {$nb != {}} {
+    destroy .fdockswap
+    ::docking::_cleanup_tabs $nb
+  }
+  if {$board && $analysis(boardEngine) != $n} { setBoardEngine $n }
+}
 
 proc findEngine {} {
   if {$::analysis(boardEngine) > -1 && [winfo exists .analysisWin$::analysis(boardEngine)]} {

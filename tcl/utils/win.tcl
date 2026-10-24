@@ -637,6 +637,11 @@ proc ::docking::add_tab {path args} {
     # pathname insert pos subwindow options...
     $dsttab insert [expr [$dsttab index $chummy] + 1] $path
   }
+  # an engine restarting in its tab (restartAnalysisEngine)
+  if {[lsearch [$dsttab tabs] .fdockswap] > -1} {
+    $dsttab insert .fdockswap $path
+    $dsttab hide .fdockswap
+  }
 
   setMenuMark $dsttab $path
   $dsttab select $path
@@ -655,7 +660,8 @@ proc ::docking::setMenuMark { nb tab} {
        $tab == ".fdocksgraph" || \
        $tab == ".fdockrgraph" || \
        $tab == ".fdockplayerInfoWin" || \
-       [string match "\.fdocktreeWin*" $tab] } {
+       [string match "\.fdocktreeWin*" $tab] || \
+       [string match "\.fdockanalysisWin*" $tab] } {
     $nb tab $tab -image bluetriangle -compound left
   }
 }
