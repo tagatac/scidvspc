@@ -143,7 +143,7 @@ proc search::header {} {
 
     set tmp [set s[set color]]
     ttk::combobox $w.c$color.e -textvariable "s$color" -width 40
-    ::utils::history::SetCombobox HeaderSearch$color $w.c$color.e
+    ::utils::history::SetCombobox HeaderSearch$color $w.c$color.e player
     set s$color $tmp
 
     bind $w.c$color.e <Return> { .sh.b.search invoke; break }
@@ -208,7 +208,7 @@ proc search::header {} {
 
     set tmp [set s[set i]]
     ttk::combobox $f.e$i -textvariable s$i -width 25
-    ::utils::history::SetCombobox HeaderSearch$i $f.e$i
+    ::utils::history::SetCombobox HeaderSearch$i $f.e$i [string tolower $i]
     set s$i $tmp
 
     bind $f.e$i <Return> { .sh.b.search invoke ; break }
@@ -583,8 +583,7 @@ proc search::header {} {
     ::windows::stats::Refresh
   }
 
-  button $w.b.cancel -textvar tr(Close) -padx 20 \
-      -command {focus .main ; destroy .sh}
+  button $w.b.cancel -textvar tr(Close) -padx 20 -command {focus .main ; destroy .sh}
 
   foreach i {defaults save help cancel search stop} {
     $w.b.$i configure -font $regular

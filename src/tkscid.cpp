@@ -13512,18 +13512,27 @@ if (db->numGames == db->filter->Count()) {
 //    2nd arg: prefix string to search for.
 //    3rd arg: maximum number of matches to return.
 //    Example: sc_nameMatch player "Speel" 10
+//    Option -elo adds the peak rating (0 if not a player) to each pair,
+//    option -freq returns the most frequent matches instead of the first.
 int
 sc_name_match (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
 {
     const char * usage = \
-        "Usage: sc_name match [-elo] <nameType> <prefix> <maxMatches>";
+        "Usage: sc_name match [-elo] [-freq] <nameType> <prefix> <maxMatches>";
 
     int arg = 2;
     int argsleft = argc - 2;
     bool eloMode = false;  // In elo mode, return player peak ratings.
+    bool freqMode = false;
     if (argsleft < 3) { return errorResult (ti, usage); }
-    if (argv[arg][0] == '-'  &&  strIsPrefix (argv[arg], "-elo")) {
-        eloMode = true;
+    while (argsleft > 3  &&  argv[arg][0] == '-') {
+        if (strIsPrefix (argv[arg], "-elo")) {
+            eloMode = true;
+        } else if (strIsPrefix (argv[arg], "-freq")) {
+            freqMode = true;
+        } else {
+            return errorResult (ti, usage);
+        }
         arg++;
         argsleft--;
     }
@@ -13543,15 +13552,25 @@ sc_name_match (ClientData cd, Tcl_Interp * ti, int argc, const char ** argv)
     const char * prefix = argv[arg++];
     uint maxMatches = strGetUnsigned (argv[arg++]);
     if (maxMatches == 0) { return TCL_OK; }
-    idNumberT * array = new idNumberT [maxMatches];
-    uint matches = db->nb->GetFirstMatches (nt, prefix, maxMatches, array);
+    uint arraySize = freqMode ? db->nb->GetNumNames (nt) : maxMatches;
+    if (arraySize == 0) { return TCL_OK; }
+    idNumberT * array = new idNumberT [arraySize];
+    uint matches = db->nb->GetFirstMatches (nt, prefix, arraySize, array);
+
+    // In freq mode, sort all matches by frequency (alphabetical if equal):
+    std::vector< std::pair<int,uint> > order;
     for (uint i=0; i < matches; i++) {
-        uint freq = db->nb->GetFrequency (nt, array[i]);
-        const char * str = db->nb->GetName (nt, array[i]);
-        appendUintElement (ti, freq);
-        Tcl_AppendElement (ti, str);
-        if (nt == NAME_PLAYER  &&  eloMode) {
-            appendUintElement (ti, db->nb->GetElo (array[i]));
+        int freq = freqMode ? db->nb->GetFrequency (nt, array[i]) : 0;
+        order.push_back (std::make_pair (-freq, i));
+    }
+    if (freqMode) { std::sort (order.begin(), order.end()); }
+
+    for (uint i=0; i < matches  &&  i < maxMatches; i++) {
+        idNumberT id = array[order[i].second];
+        appendUintElement (ti, db->nb->GetFrequency (nt, id));
+        Tcl_AppendElement (ti, db->nb->GetName (nt, id));
+        if (eloMode) {
+            appendUintElement (ti, nt == NAME_PLAYER ? db->nb->GetElo (id) : 0);
         }
     }
     delete[] array;
