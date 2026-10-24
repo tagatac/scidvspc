@@ -539,7 +539,11 @@ StrTree<C>::FindMatches (const char * str, int strLen, nodeT<C> * node,
     if (node == NULL) return;
     if (*matches >= maxMatches) return;
 
-    int result = strncmp (str, node->name, strLen);
+    // Compare with signed chars like strCompare(), the order of the tree:
+    int result = 0;
+    for (int i = 0; i < strLen  &&  result == 0; i++) {
+        result = (int) str[i] - (int) node->name[i];
+    }
     if (result > 0) {
         // str is bigger than this node, we must move to the right:
         FindMatches (str, strLen, node->right, matches, maxMatches, array);
