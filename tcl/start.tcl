@@ -2134,7 +2134,7 @@ proc ::splash::add {text {tag {indent}}} {
 ::splash::add "(C) Steven Atkinson (stevenaaus@yahoo.com) 2008-2026"
 ::splash::add "(C) Pascal Georges 2006-2008"
 ::splash::add "(C) Shane Hudson 1999-2004"
-::splash::add "(C) Gregor Cramer, Fulvio Benini and others."
+::splash::add "(C) Gregor Cramer, Fulvio Benini, Patrick Götz and others."
 ::splash::add "Licenced under the GNU General Public License."
 ::splash::add ""
 

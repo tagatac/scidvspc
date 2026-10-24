@@ -7,7 +7,7 @@
 //
 //  Notice:     Copyright (c) 1999-2004 Shane Hudson.  All rights reserved.
 //              Copyright (c) 2006-2007 Pascal Georges
-//              Copyright (c) 2009-2026 Stevenaaus, Gregor, Patrick
+//              Copyright (c) 2009-2026 Stevenaaus, Gregor, Patrick Götz
 //
 //////////////////////////////////////////////////////////////////////
 
