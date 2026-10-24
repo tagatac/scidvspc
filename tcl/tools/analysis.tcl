@@ -723,7 +723,7 @@ proc ::enginelist::edit {index {copy {}}} {
       set newEntry [list $engines(newName) $engines(newCmd) \
         $engines(newArgs) $engines(newDir) \
           $engines(newElo) $engines(newTime) \
-          $engines(newURL) $engines(newUCI) $::uci::newOptions ]
+          $engines(newURL) $engines(newUCI) $engines(newUCIoptions)]
 
       set index $engines(newIndex)
 
