@@ -73,7 +73,7 @@ proc resetEngine {n} {
   set analysis(invertScore$n) 1       ;# Score is for side to move, not white
   set analysis(automove$n) 0
   set analysis(automoveThinking$n) 0
-  set analysis(automoveTime$n) 3000
+  set analysis(automoveTime$n) 1000
   set analysis(lastClicks$n) 0
   set analysis(after$n) {}
   catch {unset analysis(log$n)}       ;# Log file channel
@@ -2042,7 +2042,7 @@ if {$someMove != {}} {
 
   if {$move == [sc_game info nextMoveUCI]} {
     ::move::Forward
-    return
+    return 1
   }
 
   if {! [sc_pos isAt vend] && ! $comp(playing)} {
@@ -2060,7 +2060,8 @@ if {$someMove != {}} {
   }
 
   if {$action == "cancel"} {
-    return
+    cancelAutomove $n
+    return 0
   }
 
   if {!$comp(playing)} {
@@ -2552,11 +2553,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
        $w.b.update $w.b.finishGame -side left
   pack $w.b.multipv -fill y -pady 2
   $w.b.multipv configure -state readonly
-
-  if {$n == 1 || $n == 2} {
-    # training only works with engines 1 and 2
-    pack $w.b.training -side left -pady 2 -padx 1
-  }
+  pack $w.b.training -side left -pady 2 -padx 1
 
   pack $w.b.help -side left
 
@@ -4838,12 +4835,15 @@ proc automove {n} {
   if {! $analysis(automove$n)} { return }
   after cancel "automove $n"
   set analysis(automoveThinking$n) 1
+  # the engine thinks only on its own move
+  if {!$analysis(analyzeMode$n)} { toggleEngineAnalysis $n }
   after $analysis(automoveTime$n) "automoveGo $n"
 }
 
 proc automoveGo {n} {
   global analysis
   if {$analysis(automove$n)} {
+    if {$analysis(analyzeMode$n)} { toggleEngineAnalysis $n }
     if {[makeAnalysisMove $n]} {
       set analysis(autoMoveThinking$n) 0
       updateBoard -pgn

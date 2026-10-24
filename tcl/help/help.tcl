@@ -2980,12 +2980,12 @@ These moves are navigable with the wheel mouse, thus allowing an easy way to per
 
   <h3><name Training>Training</name></h3>
   <p>
-  Training <button tb_training> is a poorly implemented Engine vs Player
-feature only available for the 2nd and 3rd engines (in the enginelist).
+  Training <button tb_training> is a poorly implemented Engine vs Player feature.
 The <a ComputerGame>Playing against the Computer</a> features are much better supported.
 </p><p>
   From the current position (which must be end-of-game), the engine moves first, and may be stopped by pressing the button again.
   The time for each move is fixed, and analysis results are not updated while training mode is on.
+  The engine only thinks on its own move.
   </p>
 
   <h2><name List>Configuring Engines</name></h2>

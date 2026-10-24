@@ -422,21 +422,18 @@ proc ::tree::refreshTraining { baseNumber } {
 
 ### This proc is used by the training features in TREE , ANALYSIS ENGINES, and TABLEBASE
 ### and isn't exclusive to the tree at all
-### The engine training only works with engines 1 and 2 (not 0, 3, 4, 5 etc)
-### and tablebase and tree training may well be the same &&&
+### Engine training (any engine), tablebase and tree training may well be the same &&&
 ### ... Bit of a fucking undocumented hack mess actually
 
-proc ::tree::doTraining {{n 0}} {
+proc ::tree::doTraining {{n -1}} {
   global tree
 
-  # uses engines 1 and 2 (todo: make work with all engines)
-  if {$n != 1  &&  [winfo exists .analysisWin1]  &&  $::analysis(automove1)} {
-    automove 1
-    return
-  }
-  if {$n != 2  &&  [winfo exists .analysisWin2]  &&  $::analysis(automove2)} {
-    automove 2
-    return
+  # n is the engine that just moved
+  for {set i 0} {$i < [llength $::engines(list)]} {incr i} {
+    if {$i != $n  &&  [winfo exists .analysisWin$i]  &&  $::analysis(automove$i)} {
+      automove $i
+      return
+    }
   }
   if {[::tb::isopen]  &&  $::tbTraining} {
     ::tb::move
