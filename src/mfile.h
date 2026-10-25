@@ -142,7 +142,13 @@ MFile::WriteOneByte (byte value)
     if (Type == MFILE_GZIP) {
         return (gzputc(GzHandle, value) == EOF) ? ERROR_FileWrite : OK;
     }
+    #ifdef _WIN32
+    return (_putc_nolock(value, Handle) == EOF) ? ERROR_FileWrite : OK;
+    #elif defined(__GNUC__)
+    return (putc_unlocked(value, Handle) == EOF) ? ERROR_FileWrite : OK;
+    #else
     return (putc(value, Handle) == EOF) ? ERROR_FileWrite : OK;
+    #endif
 }
 
 inline int
