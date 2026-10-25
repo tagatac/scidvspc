@@ -79,9 +79,7 @@ proc compInit {} {
   incr row
   frame $w.config.timesecs
   label $w.config.timesecs.label -textvar tr(TourPer)
-  set tmp $comp(seconds)
-  spinbox $w.config.timesecs.value -textvar comp(seconds) -from 1 -to 3600 -width 4
-  set comp(seconds) $tmp
+  secondsSpinbox $w.config.timesecs.value comp(seconds) 3600
   label $w.config.timesecs.label2 -textvar tr(TourSecs)
 
   pack $w.config.timesecs.label -side left
@@ -650,7 +648,8 @@ proc compNM {n m k name1 name2} {
         ### Send initial time control
 
         if {$comp(timecontrol) == "permove"} {
-          sendToEngine $current_engine "st $comp(seconds)"
+          # xboard st takes whole seconds
+          sendToEngine $current_engine "st [expr {max(1, round($comp(seconds)))}]"
         } else {
           set secs [expr $comp(wtime)/1000]
           set seconds [expr $secs%60]

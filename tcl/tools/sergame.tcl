@@ -173,8 +173,7 @@ namespace eval sergame {
     grid $w.ftime.nodesvalue -row 2 -column 1 -sticky w
 
     radiobutton $w.ftime.movetimebutton -text $tr(SecondsPerMove) -value "movetime" -variable ::sergame::timeMode
-    spinbox $w.ftime.movetimevalue  -width 7 -from 1 -to 120 -increment 1 -validate all -vcmd {string is int %P}
-    $w.ftime.movetimevalue set $::sergame::movetime
+    secondsSpinbox $w.ftime.movetimevalue ::sergame::movetime 120
 
     grid $w.ftime.movetimebutton -row 3 -column 0 -sticky w
     grid $w.ftime.movetimevalue -row 3 -column 1 -sticky w
@@ -302,7 +301,6 @@ namespace eval sergame {
       set ::sergame::binc [.configSerGameWin.ftime.timebonus.blackspseconds get]
       set ::sergame::fixeddepth [.configSerGameWin.ftime.depthvalue get]
       set ::sergame::fixednodes [.configSerGameWin.ftime.nodesvalue get]
-      set ::sergame::movetime [.configSerGameWin.ftime.movetimevalue get]
 
       ::sergame::play $n
     }
@@ -775,7 +773,7 @@ puts OUTOFBOOK!!!!!!!!!!!!!!!!!!
       } elseif {$timeMode == "depth"} {
         ::sergame::sendToEngine $n "go depth $::sergame::fixeddepth"
       } elseif {$timeMode == "movetime"} {
-        ::sergame::sendToEngine $n "go movetime [expr $::sergame::movetime * 1000]"
+        ::sergame::sendToEngine $n "go movetime [expr {int($::sergame::movetime * 1000)}]"
       } elseif {$timeMode == "nodes"} {
         ::sergame::sendToEngine $n "go nodes $::sergame::fixednodes"
       }
@@ -850,7 +848,7 @@ puts OUTOFBOOK!!!!!!!!!!!!!!!!!!
       } elseif {$timeMode == "depth"} {
         ::sergame::sendToEngine $n "go ponder depth $::sergame::fixeddepth"
       } elseif {$timeMode == "movetime"} {
-        ::sergame::sendToEngine $n "go ponder movetime [expr $::sergame::movetime * 1000]"
+        ::sergame::sendToEngine $n "go ponder movetime [expr {int($::sergame::movetime * 1000)}]"
       } elseif {$timeMode == "nodes"} {
         ::sergame::sendToEngine $n "go ponder nodes $::sergame::fixednodes"
       }

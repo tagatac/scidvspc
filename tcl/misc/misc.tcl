@@ -126,6 +126,26 @@ proc dialogbutton {w args} {
   return retval
 }
 
+# secondsSpinbox:
+#   Spinbox for the seconds per move: 0.1, 0.2, 0.5, then 1 to max.
+#   The global var is set to the nearest of these values.
+#
+proc secondsSpinbox {w var max} {
+  set v [set ::$var]
+  set values {0.1 0.2 0.5}
+  for {set i 1} {$i <= $max} {incr i} {
+    lappend values $i
+  }
+  set near [lindex $values 0]
+  foreach i $values {
+    if {abs($i - $v) < abs($near - $v)} {set near $i}
+  }
+  spinbox $w -width 4 -textvar $var -values $values -validate key -vcmd {string is double %P}
+  # -values sets the first value
+  set ::$var $near
+  return $w
+}
+
 # autoscrollframe
 #   Creates and returns a frame containing a widget which is gridded
 #   with scrollbars that automatically hide themselves when they are

@@ -555,7 +555,7 @@ namespace eval epd {
     frame $w.mode
 
     label $w.seconds.label -text $tr(AnnotateTime)
-    spinbox $w.seconds.spDelay  -width 8 -textvariable ::epdDelay -from 1 -to 300 -increment 1 -validate all -vcmd {string is int %P}
+    secondsSpinbox $w.seconds.spDelay epdDelay 300
 
     set values {}
     foreach e $engines(list) {
@@ -641,7 +641,7 @@ namespace eval epd {
       # ok ?
       update idletasks
       loadEpd $id
-      after [expr $epdDelay * 1000 ] "set epdTimer($id) 1"
+      after [expr {int($epdDelay * 1000)}] "set epdTimer($id) 1"
       vwait epdTimer($id)
       set status {}
       if {$epdAnnotateMode > 0} {

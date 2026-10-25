@@ -1620,7 +1620,7 @@ proc setAutoplayDelay {} {
 
   label $w.label -text $::tr(AnnotateTime)
   pack $w.label -side top -pady 5 -padx 5
-  spinbox $w.spDelay  -width 4 -textvariable tempdelay -from 1 -to 300 -increment 1
+  secondsSpinbox $w.spDelay tempdelay 300
   pack $w.spDelay -side top -pady 5
 
   set b [frame $w.buttons]

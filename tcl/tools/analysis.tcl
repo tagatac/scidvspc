@@ -987,18 +987,7 @@ proc initAnnotation {n} {
 
   frame $w.delay
   label $w.delay.label -textvar tr(SecondsPerMove) -width 22
-  # the arrows go below 1 s to 0.5, 0.2 and 0.1 s
-  set values {0.1 0.2 0.5}
-  for {set i 1} {$i <= 300} {incr i} {
-    lappend values $i
-  }
-  set delay [lindex $values 0]
-  foreach v $values {
-    if {abs($v - $tempdelay) < abs($delay - $tempdelay)} {set delay $v}
-  }
-  spinbox $w.delay.spDelay -width 4 -textvar tempdelay -values $values
-  # -values sets the first value
-  set tempdelay $delay
+  secondsSpinbox $w.delay.spDelay tempdelay 300
 
   pack $w.delay -side top
   pack $w.delay.label -side left
@@ -3429,6 +3418,9 @@ proc toggleFinishGame {n} {
   if { $annotate(Button$n) || $::autoplayMode } {
     return
   }
+  if {!$::finishGameMode && ![setAutomoveTime $n analysis(finishTime)]} {
+    return
+  }
   if {! [sc_pos isAt vend]} {
       sc_var create
   }
@@ -3442,7 +3434,7 @@ proc toggleFinishGame {n} {
     foreach b $disableButtons {
       .analysisWin$n.b.$b configure -state disabled
     }
-    after $::autoplayDelay autoplayFinishGame $n
+    after $analysis(finishTime) autoplayFinishGame $n
   } else  {
     .analysisWin$n.b.finishGame configure -image autoplay_off
     foreach b $disableButtons {
@@ -3459,7 +3451,7 @@ proc autoplayFinishGame {n} {
     toggleFinishGame $n
     return
   }
-  after $::autoplayDelay autoplayFinishGame $n
+  after $::analysis(finishTime) autoplayFinishGame $n
 }
 
 ### Start/stop engine analysis
@@ -4795,10 +4787,13 @@ proc updateAnalysis {{n 0} {reset 1}} {
 set temptime 0
 trace variable temptime w {::utils::validate::Regexp {^[0-9]*\.?[0-9]*$}}
 
-proc setAutomoveTime {{n 0}} {
+### Ask for the engine's time per move (ms) in var, by default the training time
+
+proc setAutomoveTime {{n 0} {var {}}} {
   global analysis temptime dialogResult tr
-  set ::tempn $n
-  set temptime [expr {$analysis(automoveTime$n) / 1000.0} ]
+  if {$var == {}} { set var analysis(automoveTime$n) }
+  set ::tempvar $var
+  set temptime [expr {[set ::$var] / 1000.0} ]
   set w .apdialog
   toplevel $w
   #wm transient $w .analysisWin
@@ -4807,7 +4802,7 @@ proc setAutomoveTime {{n 0}} {
   wm resizable $w 0 0
   label $w.label -textvar tr(AnnotateTime)
   pack $w.label -side top -pady 5 -padx 5
-  entry $w.entry -width 10 -textvar temptime -justify center -relief flat
+  secondsSpinbox $w.entry temptime 300
   pack $w.entry -side top -pady 5
   bind $w.entry <Escape> { .apdialog.buttons.cancel invoke }
   bind $w.entry <Return> { .apdialog.buttons.ok invoke }
@@ -4827,7 +4822,7 @@ proc setAutomoveTime {{n 0}} {
   dialogbutton $b.ok -text OK -command {
     catch {grab release .apdialog}
     if {$temptime < 0.1} { set temptime 0.1 }
-    set analysis(automoveTime$tempn) [expr {int($temptime * 1000)} ]
+    set ::$tempvar [expr {int($temptime * 1000)} ]
     focus .main
     catch {grab release .apdialog}
     destroy .apdialog

@@ -442,6 +442,7 @@ set analysis(boardSize) 2
 set analysis(boardType) Arrows
 set analysis(boardSeqNumColor) black
 set analysis(boardSeqCount) 3
+set analysis(finishTime) 1000   ;# ms per move for Finish Game
 
 # Colors
 

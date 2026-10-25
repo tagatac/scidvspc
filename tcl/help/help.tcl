@@ -2846,7 +2846,7 @@ making for easier <a Analysis Debugging>Debugging</a>.
   scheduling. On Windows, engines are run on low priority by default.
   On Unix systems the engines priority can not be set back to normal.  </li>
   <li> <button tb_info 32> <b>Show Info</b> show additional information.</li>
-  <li> <button autoplay_off 32> <b>Shoot out</b>, or "demo", mode allows the engine to play out the game. (Time delay is the same as for Autoplay).</li>
+  <li> <button autoplay_off 32> <b>Shoot out</b>, or "demo", mode allows the engine to play out the game. (The time per move is asked first).</li>
   <li> <button tb_training 32> <b>Training</b> feature (see <a Analysis Training>below</a>).</li>
 <br>
   <li> And for Xboard engines only:</li>
