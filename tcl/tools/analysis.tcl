@@ -2426,7 +2426,7 @@ proc makeAnalysisWin {{n 0} {options {}}} {
   $m add command -label Log -command "engineShowLog $n"
   $m add separator
   $m add command -label [tr Help] -command {helpWindow Analysis}
-  $m add command -label [tr Quit] -command "destroyAnalysisWin $n"
+  $m add command -label [tr Quit] -command "focus .main ; destroy $w"
   setMenu $w $m
 
   ### Set initial size of analysis widget
