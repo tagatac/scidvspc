@@ -1784,6 +1784,10 @@ proc compactGames {parent} {
     updateBoard -pgn
     updateTitle
     updateMenuStates
+    if {$::macCocoa} {
+      # App crashes without this. Usual pathetic Cocoa stuff (8.6.13 and 8.6.18)
+      update idletasks
+    }
     tk_messageBox -type ok -icon info -parent $parent -title [concat "Scid: " $::tr(CompactGames)] -message [subst $::tr(GameFileCompacted)]
   }
   ::windows::gamelist::Refresh
