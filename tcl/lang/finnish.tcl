@@ -1385,6 +1385,8 @@ translate L CurrentState {Nykyinen tila}
 translate L AfterCompaction {Pakkaamisen jälkeen}
 translate L CompactNames {Pakatun tiedoston nimi}
 translate L CompactGames {Pakatun pelin tiedosto}
+# ====== TODO To be translated ======
+translate L CompactBoth {Compact Names and Games}
 translate L NoUnusedNames "Käyttämättömiä nimiä ei ole joten nimi on jo täysin pakattu."
 translate L NoUnusedGames "Peli on jo täysin pakattu."
 translate L NameFileCompacted {Nimitiedosto "[file tail [sc_base filename]]"a varten pakattiin.}
@@ -1629,6 +1631,8 @@ translate L AnnotateBackward {Analyze backwards}
 translate L AnnotateQuickPasses {Right-click: quick score graph}
 translate L ShortAnnotations {Lyhyet huomautukset}
 translate L addAnnotatorTag {Lisää huomautuksen tekijän merkki}
+# ====== TODO To be translated ======
+translate L addAccuracyTags {Add accuracy tags}
 translate L AddScoreToShortAnnotations {Lisää tulos huomautuksiin}
 translate L Export {Vie}
 translate L BookPartiallyLoaded {Avauskirjasto osittain ladattu}

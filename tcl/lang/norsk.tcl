@@ -1402,6 +1402,8 @@ translate O CurrentState {Nåværende}
 translate O AfterCompaction {Etter komprimering}
 translate O CompactNames {Komrimer navnefil}
 translate O CompactGames {Komprimer partifil}
+# ====== TODO To be translated ======
+translate O CompactBoth {Compact Names and Games}
 translate O NoUnusedNames "Det er ingen ubrukte navn i navnefilen."
 translate O NoUnusedGames "Partifilen er allerede komprimert."
 translate O NameFileCompacted {Navnefilen for "[file tail [sc_base filename]]" ble komprimert.}
@@ -1641,6 +1643,8 @@ translate O AnnotateBackward {Analyze backwards}
 translate O AnnotateQuickPasses {Right-click: quick score graph}
 translate O ShortAnnotations {Kort annotasjon}
 translate O addAnnotatorTag {Legg til tagg for annotator}
+# ====== TODO To be translated ======
+translate O addAccuracyTags {Add accuracy tags}
 translate O AddScoreToShortAnnotations {Gi poeng til annotasjoner}
 translate O Export {Eksport}
 translate O BookPartiallyLoaded {Bok delvis lastet}

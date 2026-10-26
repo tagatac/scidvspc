@@ -1579,6 +1579,8 @@ translate C AfterCompaction {Po kompaktování}
 translate C CompactNames {Kompaktovat jmenný soubor}
 translate C CompactGames {Kompaktovat partiový soubor}
 # ====== TODO To be translated ======
+translate C CompactBoth {Compact Names and Games}
+# ====== TODO To be translated ======
 translate C NoUnusedNames "There are no unused names, so the name file is already fully compacted."
 # ====== TODO To be translated ======
 translate C NoUnusedGames "The game file is already fully compacted."
@@ -1943,6 +1945,8 @@ translate C AnnotateQuickPasses {Right-click: quick score graph}
 translate C ShortAnnotations {Short annotations}
 # ====== TODO To be translated ======
 translate C addAnnotatorTag {Add annotator tag}
+# ====== TODO To be translated ======
+translate C addAccuracyTags {Add accuracy tags}
 # ====== TODO To be translated ======
 translate C AddScoreToShortAnnotations {Add score to short annotations}
 # ====== TODO To be translated ======

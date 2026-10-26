@@ -1455,6 +1455,8 @@ translate R CurrentState {Текущее состояние}
 translate R AfterCompaction {После сжатия}
 translate R CompactNames {Сжатый файл имён}
 translate R CompactGames {Сжатый файл партий}
+# ====== TODO To be translated ======
+translate R CompactBoth {Compact Names and Games}
 translate R NoUnusedNames "Нет неиспользуемых имён, поэтому имя файла уже сжато полностью."
 translate R NoUnusedGames "Файл партии уже полностью сжат."
 translate R NameFileCompacted {Имя файла для базы данных "[file tail [sc_base filename]]" было сжато.}
@@ -1712,6 +1714,8 @@ translate R AnnotateBackward {Analyze backwards}
 translate R AnnotateQuickPasses {Right-click: quick score graph}
 translate R ShortAnnotations {Показать комментарии}
 translate R addAnnotatorTag {Добавить тег аннотирующего}
+# ====== TODO To be translated ======
+translate R addAccuracyTags {Add accuracy tags}
 translate R AddScoreToShortAnnotations {Добавить счёт в короткие аннотации}
 translate R Export {Экспорт}
 translate R BookPartiallyLoaded {Книга частично загружена}

@@ -1488,6 +1488,8 @@ translate N CurrentState {Huidige status}
 translate N AfterCompaction {Na comprimeren}
 translate N CompactNames {Gecomprimeerde namenbestand}
 translate N CompactGames {Gecomprimeerd partijenbestand}
+# ====== TODO To be translated ======
+translate N CompactBoth {Compact Names and Games}
 translate N NoUnusedNames "Er zijn geen overbodige namen, dus het namenbestand is al volledig gecomprimeerd."
 translate N NoUnusedGames "Het partijenbestand is al volledig gecomprimeerd."
 translate N NameFileCompacted {Het namenbestand "[file tail [sc_base filename]]" is gecomprimeerd.}
@@ -1777,6 +1779,8 @@ translate N AnnotateBackward {Analyze backwards}
 translate N AnnotateQuickPasses {Right-click: quick score graph}
 translate N ShortAnnotations {Korte annotaties}
 translate N addAnnotatorTag {Annotator label toevoegen}
+# ====== TODO To be translated ======
+translate N addAccuracyTags {Add accuracy tags}
 translate N AddScoreToShortAnnotations {Voeg de score toe aan de korte annotaties}
 
 translate N Export {Export}

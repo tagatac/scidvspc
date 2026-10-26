@@ -1387,6 +1387,8 @@ translate T CurrentState {Mevcut durum}
 translate T AfterCompaction {Sıkıştırmadan sonra}
 translate T CompactNames {Sıkıştırılmış isimler dosyası}
 translate T CompactGames {Sıkıştırılmış Oyun dosyası}
+# ====== TODO To be translated ======
+translate T CompactBoth {Compact Names and Games}
 translate T NoUnusedNames "Kullanılmayan isimler yok, bu yüzden isim dosyası zaten sıkıştırılmış durumda."
 translate T NoUnusedGames "Oyun dosyası zaten sıkıştırılmış durumda."
 translate T NameFileCompacted {Için isim dosyası"[file tail [sc_base filename]]" sıkıştırıldı.}
@@ -1632,6 +1634,8 @@ translate T AnnotateBackward {Analyze backwards}
 translate T AnnotateQuickPasses {Right-click: quick score graph}
 translate T ShortAnnotations {Kısa açıklamalar}
 translate T addAnnotatorTag {Ek açıklayıcı etiketi ekle}
+# ====== TODO To be translated ======
+translate T addAccuracyTags {Add accuracy tags}
 translate T AddScoreToShortAnnotations {Ek açıklamalara Skor ekle}
 translate T Export {İhracat}
 translate T BookPartiallyLoaded {Kısmen yüklenmiş kitap}

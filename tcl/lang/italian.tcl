@@ -1551,6 +1551,8 @@ translate I CurrentState {Stato Attuale}
 translate I AfterCompaction {Dopo la compattazione}
 translate I CompactNames {Compatta il file di nomi}
 translate I CompactGames {Compatta il file di partite}
+# ====== TODO To be translated ======
+translate I CompactBoth {Compact Names and Games}
 translate I NoUnusedNames "Non ci sono nomi inutilizzati, il file dei nomi è già compresso."
 translate I NoUnusedGames "Il file delle partite è già compresso."
 translate I NameFileCompacted {Il file dei nomi del database "[file tail [sc_base filename]]" è stato compresso.}
@@ -1823,6 +1825,8 @@ translate I AnnotateBackward {Analyze backwards}
 translate I AnnotateQuickPasses {Right-click: quick score graph}
 translate I ShortAnnotations {Annotazione breve}
 translate I addAnnotatorTag {Aggiungi il tag dell'annotazione}
+# ====== TODO To be translated ======
+translate I addAccuracyTags {Add accuracy tags}
 translate I AddScoreToShortAnnotations {Aggiungi il punteggio alle annotazioni brevi}
 translate I Export {Esporta}
 translate I BookPartiallyLoaded {Libro caricato parzialmente}

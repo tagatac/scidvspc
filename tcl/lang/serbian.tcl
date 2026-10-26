@@ -1334,6 +1334,8 @@ translate Y CurrentState {Trenutno stanje}
 translate Y AfterCompaction {Posle komprimacije}
 translate Y CompactNames {Komprimuj fajl imena}
 translate Y CompactGames {Komprimuj fajl partija}
+# ====== TODO To be translated ======
+translate Y CompactBoth {Compact Names and Games}
 translate Y NoUnusedNames {Nema nekorišæenih imena, fajl imena je veæ potpuno komprimovan.}
 translate Y NoUnusedGames {Fajl partija je veæ potpuno komprimovan.}
 translate Y NameFileCompacted {Fajl imena za "[file tail [sc_base filename]]" je komprimovan.}
@@ -1574,6 +1576,8 @@ translate Y AnnotateBackward {Analyze backwards}
 translate Y AnnotateQuickPasses {Right-click: quick score graph}
 translate Y ShortAnnotations {Kratke napomene}
 translate Y addAnnotatorTag {Dodaj oznaku autora napomene}
+# ====== TODO To be translated ======
+translate Y addAccuracyTags {Add accuracy tags}
 translate Y AddScoreToShortAnnotations {Dodaj rezultat kratkim napomenama}
 translate Y Export {Izvoz}
 translate Y BookPartiallyLoaded {Knjiga delimièno uèitana}

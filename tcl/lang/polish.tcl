@@ -1462,6 +1462,8 @@ translate P CurrentState {Status}
 translate P AfterCompaction {Po uporządkowaniu}
 translate P CompactNames {Uporządkuj nazwy}
 translate P CompactGames {Uporządkuj partie}
+# ====== TODO To be translated ======
+translate P CompactBoth {Compact Names and Games}
 translate P NoUnusedNames "Brak nieużywanych nazw, plik nazw jest już uporządkowany."
 translate P NoUnusedGames "Plik partii jest już uporządkowany."
 translate P NameFileCompacted {Plik nazw dla bazy "[file tail [sc_base filename]]" został uporządkowany.}
@@ -1720,6 +1722,8 @@ translate P AnnotateBackward {Analyze backwards}
 translate P AnnotateQuickPasses {Right-click: quick score graph}
 translate P ShortAnnotations {Skrócone komentarze}
 translate P addAnnotatorTag {Dodaj znacznik komentatora}
+# ====== TODO To be translated ======
+translate P addAccuracyTags {Add accuracy tags}
 translate P AddScoreToShortAnnotations {Dodaj ocenę do skróconych komentarzy}
 translate P Export {Eksportuj}
 translate P BookPartiallyLoaded {Książka częściowo wczytana}

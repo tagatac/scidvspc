@@ -1587,6 +1587,8 @@ translate H AfterCompaction {Tömörítés után}
 translate H CompactNames {Névfájl tömörítése}
 translate H CompactGames {Játszmafájl tömörítése}
 # ====== TODO To be translated ======
+translate H CompactBoth {Compact Names and Games}
+# ====== TODO To be translated ======
 translate H NoUnusedNames "There are no unused names, so the name file is already fully compacted."
 # ====== TODO To be translated ======
 translate H NoUnusedGames "The game file is already fully compacted."
@@ -1951,6 +1953,8 @@ translate H AnnotateQuickPasses {Right-click: quick score graph}
 translate H ShortAnnotations {Short annotations}
 # ====== TODO To be translated ======
 translate H addAnnotatorTag {Add annotator tag}
+# ====== TODO To be translated ======
+translate H addAccuracyTags {Add accuracy tags}
 # ====== TODO To be translated ======
 translate H AddScoreToShortAnnotations {Add score to short annotations}
 # ====== TODO To be translated ======

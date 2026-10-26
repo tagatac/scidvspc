@@ -1621,6 +1621,8 @@ translate B CurrentState {Estado Atual}
 translate B AfterCompaction {Apos compactacao}
 translate B CompactNames {Compactar arquivo de nomes}
 translate B CompactGames {Compactar arquivo de nomes}
+# ====== TODO To be translated ======
+translate B CompactBoth {Compact Names and Games}
 translate B NoUnusedNames "Não há nomes não utilizados, então o arquivo já está totalmente compactado."
 
 
@@ -1994,6 +1996,8 @@ translate B AnnotateQuickPasses {Right-click: quick score graph}
 translate B ShortAnnotations {Anotações curtas}
 
 translate B addAnnotatorTag {Adicionar tag do anotador}
+# ====== TODO To be translated ======
+translate B addAccuracyTags {Add accuracy tags}
 
 translate B AddScoreToShortAnnotations {Adicionar o score às anotações curtas}
 

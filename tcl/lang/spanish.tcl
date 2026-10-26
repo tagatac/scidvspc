@@ -1415,6 +1415,8 @@ translate S CurrentState {Estado actual}
 translate S AfterCompaction {Después de la compactación}
 translate S CompactNames {Compactar archivo de nombres}
 translate S CompactGames {Compactar archivo de partidas}
+# ====== TODO To be translated ======
+translate S CompactBoth {Compact Names and Games}
 translate S NoUnusedNames "No hay nombres sin usar, por tanto, el fichero de nombres está ya totalmente compactado."
 translate S NoUnusedGames "El fichero ya está totalmente compactado."
 translate S NameFileCompacted {El fichero de nombre para la base de datos "[file tail [sc_base filename]]" fue compactado.}
@@ -1657,6 +1659,8 @@ translate S AnnotateBackward {Analyze backwards}
 translate S AnnotateQuickPasses {Right-click: quick score graph}
 translate S ShortAnnotations {Anotaciones cortas}
 translate S addAnnotatorTag {Añadir etiqueta de anotador}
+# ====== TODO To be translated ======
+translate S addAccuracyTags {Add accuracy tags}
 translate S AddScoreToShortAnnotations {Añadir puntuación para anotaciones cortas}
 translate S Export {Exportar}
 translate S BookPartiallyLoaded {Libro parcialmente cargado}

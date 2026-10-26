@@ -1484,6 +1484,8 @@ translate W CurrentState {Aktuell status}
 translate W AfterCompaction {Efter komprimering}
 translate W CompactNames {Namn, komprimera namnfil}
 translate W CompactGames {Partier, komprimera partifil}
+# ====== TODO To be translated ======
+translate W CompactBoth {Compact Names and Games}
 translate W NoUnusedNames "Det finns inga oanvända namn, så namnfilen är redan fullt komprimerad."
 translate W NoUnusedGames "Partifilen är redan fullt komprimerad."
 translate W NameFileCompacted {Namnfilen för databasen "[file tail [sc_base filename]]" blev komprimerad.}
@@ -1741,6 +1743,8 @@ translate W AnnotateBackward {Analyze backwards}
 translate W AnnotateQuickPasses {Right-click: quick score graph}
 translate W ShortAnnotations {Korta kommentarer}
 translate W addAnnotatorTag {Lägg till kommentator-tagg}
+# ====== TODO To be translated ======
+translate W addAccuracyTags {Add accuracy tags}
 translate W AddScoreToShortAnnotations {Lägg till värdering till korta kommentarer}
 translate W Export {Exportera}
 translate W BookPartiallyLoaded {Bok delvis öppnad}

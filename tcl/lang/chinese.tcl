@@ -1335,6 +1335,8 @@ translate Z CurrentState {当前状态}
 translate Z AfterCompaction {压缩后}
 translate Z CompactNames {压缩名称文件}
 translate Z CompactGames {压缩对局文件}
+# ====== TODO To be translated ======
+translate Z CompactBoth {Compact Names and Games}
 translate Z NoUnusedNames "没有未使用的名称，名称文件已完全压缩。"
 translate Z NoUnusedGames "对局文件已完全压缩。"
 translate Z NameFileCompacted {数据库“[file tail [sc_base filename]]”的名称文件已压缩。}
@@ -1559,6 +1561,8 @@ translate Z AnnotateBackward {Analyze backwards}
 translate Z AnnotateQuickPasses {Right-click: quick score graph}
 translate Z ShortAnnotations {简短评注}
 translate Z addAnnotatorTag {添加评注者标签}
+# ====== TODO To be translated ======
+translate Z addAccuracyTags {Add accuracy tags}
 translate Z AddScoreToShortAnnotations {在评注中加入比分}
 translate Z Export {导出}
 translate Z BookPartiallyLoaded {开局库部分加载}

@@ -1499,6 +1499,8 @@ translate G CurrentState {Παρούσα Κατάσταση}
 translate G AfterCompaction {Μετά από συμπίεση}
 translate G CompactNames {Συμπίεση Αρχείου Ονομάτων}
 translate G CompactGames {Συμπίεση Αρχείου Παρτίδων}
+# ====== TODO To be translated ======
+translate G CompactBoth {Compact Names and Games}
 translate G NoUnusedNames "Δεν υπάρχουν αχρησιμοποίητα ονόματα, έτσι το αρχείο ονομάτων είναι πλήρως συμπιεσμένο."
 translate G NoUnusedGames "Το αρχείο παρτίδων είναι ήδη συμπιεσμένο."
 translate G NameFileCompacted {Το Αρχείο Ονομάτων για την Βάση "[file tail [sc_base filename]]" συμπιέστηκε.}
@@ -1751,6 +1753,8 @@ translate G AnnotateBackward {Analyze backwards}
 translate G AnnotateQuickPasses {Right-click: quick score graph}
 translate G ShortAnnotations {Σύντομος σχολιασμός}
 translate G addAnnotatorTag {Προσθήκη Ετικέτας Σχολιαστή}
+# ====== TODO To be translated ======
+translate G addAccuracyTags {Add accuracy tags}
 translate G AddScoreToShortAnnotations {Προσθήκη σκορ στο σχολιασμό}
 translate G Export {Εξαγωγή}
 translate G BookPartiallyLoaded {Φόρτωση Βιβλίου μερικώς}
