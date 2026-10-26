@@ -1627,6 +1627,7 @@ translate D AnnotateBackward {Rückwärts analysieren}
 translate D AnnotateQuickPasses {Rechtsklick: schnelle Bewertungsgrafik}
 translate D ShortAnnotations {Kurze Kommentare}
 translate D addAnnotatorTag {Kommentarmarkierung hinzufügen}
+translate D addAccuracyTags {Genauigkeit als Tags hinzufügen}
 translate D AddScoreToShortAnnotations {Bewertung hinzufügen}
 translate D Export {Export}
 translate D BookPartiallyLoaded {Buch teilweise geladen}

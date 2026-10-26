@@ -2957,6 +2957,9 @@ These moves are navigable with the wheel mouse, thus allowing an easy way to per
      The engine's hash table then already holds the analysis of the moves that follow, so mistakes are found more reliably.</li>
      <li><b>Opening errors only</b> Only check for opening errors.  (up to the move specified).</li>
      <li><b>Add annotator tag</b> Store engine name as an "Annotator" tag in the PGN header.</li>
+     <li><b>Add accuracy tags</b> Store each side's accuracy (as lichess computes it) as "WhiteAccuracy" and "BlackAccuracy"
+     tags in the PGN header. This needs scores for nearly all moves. The quick pass shows the accuracy next to the depth,
+     and Control-p in the <a Graphs Score>Score Graph</a> adds the tags too.</li>
      <li><b>Process variations</b> Recursively process variations.</li>
      <li><b>Mark tactical exercises</b> This can be used to
      generate exercises for the training function <a FindBestMove>Find

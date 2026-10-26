@@ -1564,6 +1564,7 @@ translate E AnnotateBackward {Analyze backwards}
 translate E AnnotateQuickPasses {Right-click: quick score graph}
 translate E ShortAnnotations {Short annotations}
 translate E addAnnotatorTag {Add annotator tag}
+translate E addAccuracyTags {Add accuracy tags}
 translate E AddScoreToShortAnnotations {Add score to annotations}
 translate E Export {Export}
 translate E BookPartiallyLoaded {Book partially loaded}

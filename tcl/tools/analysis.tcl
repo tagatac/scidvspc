@@ -25,6 +25,7 @@ set mainEngine -1
 
 set annotate(isBatch) 0
 set annotate(markExercises) 0
+set annotate(accuracyTags) 0
 set annotate(game) {}
 set isOpeningOnly 0
 set isOpeningOnlyMoves 10
@@ -1100,6 +1101,9 @@ proc initAnnotation {n} {
   checkbutton $w.cbAddAnnotatorTag -textvar tr(addAnnotatorTag) -variable annotate(addTag) -anchor w
   pack $w.cbAddAnnotatorTag -anchor w
 
+  checkbutton $w.cbAddAccuracyTags -textvar tr(addAccuracyTags) -variable annotate(accuracyTags) -anchor w
+  pack $w.cbAddAccuracyTags -anchor w
+
   checkbutton $w.cbAnnotateVar -textvar tr(AnnotateVariations) -variable annotate(isVar) -anchor w
   pack $w.cbAnnotateVar -anchor w
 
@@ -1479,6 +1483,108 @@ proc markExercise { prevscore score } {
   sc_game flag T [sc_game number] 1
   sc_pos setComment "****D${difficulty} [format %.1f $prevscore]->[format %.1f $score] [sc_pos getComment]"
   updateBoard
+}
+
+### Accuracy of White and Black as lichess computes it (lila AccuracyPercent.scala): the mean
+# of a volatility weighted mean and the harmonic mean of the accuracies of their moves.
+# scores are White's view in pawns ("" if unknown) of each ply, from the start position
+
+proc gameAccuracy {scores startWhite} {
+  # winning percentage, from at most 1000 centipawns
+  set wps [lmap s $scores {
+    expr {$s eq "" ? "" : 50 + 50 * (2 / (1 + exp(-0.00368208 * max(-1000, min(1000, round($s * 100))))) - 1)}
+  }]
+  set n [llength $wps]
+  set size [expr {max(2, min(8, ($n - 1) / 10))}]
+  set windows {}
+  for {set i 2} {$i < min($size, $n)} {incr i} {
+    lappend windows [lrange $wps 0 $size-1]
+  }
+  for {set i 0} {$i == 0 || $i + $size <= $n} {incr i} {
+    lappend windows [lrange $wps $i [expr {$i + $size - 1}]]
+  }
+  set moves {{} {}}
+  for {set i 0} {$i + 1 < $n} {incr i} {
+    lassign [lrange $wps $i $i+1] p q
+    set window [lindex $windows $i]
+    if {$p eq "" || $q eq "" || "" in $window} {continue}
+    # the weight is the standard deviation of the winning percentages around the move
+    set mean [expr {[tcl::mathop::+ {*}$window] / [llength $window]}]
+    set var [expr {[tcl::mathop::+ {*}[lmap v $window {expr {($v - $mean) ** 2}}]] / [llength $window]}]
+    set white [expr {($i % 2 == 0) == $startWhite}]
+    set loss [expr {$white ? $p - $q : $q - $p}]
+    set acc [expr {$loss <= 0 ? 100 : max(0, min(100, 103.1668100711649 * exp(-0.04354415386753951 * $loss) - 2.166924740191411))}]
+    lset moves [expr {!$white}] end+1 [list $acc [expr {max(0.5, min(12, sqrt($var)))}]]
+  }
+  lmap side $moves {
+    set weights 0
+    set weighted 0
+    set inverse 0
+    foreach move $side {
+      lassign $move acc weight
+      set weights [expr {$weights + $weight}]
+      set weighted [expr {$weighted + $acc * $weight}]
+      set inverse [expr {$inverse + 1.0 / max(1, $acc)}]
+    }
+    expr {$side == {} ? "" : ($weighted / $weights + [llength $side] / $inverse) / 2}
+  }
+}
+
+### Accuracy of the main line, from the quick passes or else from the scores in the comments.
+# Empty if less than 85% of the moves have a score
+
+proc mainLineAccuracy {} {
+  sc_game push copy
+  while {[sc_var level] > 0} {
+    sc_var exit
+  }
+  sc_move end
+  set plies [sc_pos location]
+  sc_move start
+  set startWhite [expr {[sc_pos side] == "white"}]
+  sc_game pop
+  set scores [lrepeat [expr {$plies + 1}] {}]
+  set n 0
+  if {[array size ::annotatePreview] && [isCurrentAnnotatedGame]} {
+    foreach ply [array names ::annotatePreview] {
+      lset scores $ply $::annotatePreview($ply)
+      incr n
+    }
+  } else {
+    foreach {x score} [sc_game scores 0 0] {
+      lset scores [expr {int($x * 2 - 1)}] $score
+      incr n
+    }
+  }
+  if {$n < 2 || $n < 0.85 * $plies} {
+    return {}
+  }
+  # lichess uses +0.15 for the start position
+  if {![sc_game startBoard]} {
+    lset scores 0 0.15
+  }
+  return [gameAccuracy $scores $startWhite]
+}
+
+### Write the accuracy into the header, as WhiteAccuracy and BlackAccuracy tags
+
+proc addAccuracyTags {} {
+  set accuracy [mainLineAccuracy]
+  if {$accuracy == {}} {
+    return
+  }
+  set new {}
+  foreach {t v} [sc_game tags get Extra] {
+    if {$t != "WhiteAccuracy" && $t != "BlackAccuracy"} {
+      lappend new "$t \"$v\""
+    }
+  }
+  foreach t {WhiteAccuracy BlackAccuracy} a $accuracy {
+    if {$a ne ""} {
+      lappend new "$t \"[format %.1f $a]\""
+    }
+  }
+  sc_game tags set -extra $new
 }
 
 proc addScore {n type {novar 0}} {

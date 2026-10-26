@@ -438,6 +438,9 @@ proc ::tools::graphs::score::AddPreview {} {
   sc_move ply $ply
   # the game has the scores now
   array unset ::annotatePreview
+  if {$::annotate(accuracyTags)} {
+    addAccuracyTags
+  }
   updateBoard -pgn
 }
 

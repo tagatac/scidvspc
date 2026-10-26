@@ -2114,6 +2114,9 @@ proc nextgameAutoplay {n} {
   global autoplayDelay analysis annotate stack
 
   toggleEngineAnalysis $n
+  if {$annotate(accuracyTags)} {
+    addAccuracyTags
+  }
   sc_game save [sc_game number]
   set analysis(prevscore$n) 0
 
@@ -2170,6 +2173,11 @@ proc cancelAutoplay {} {
 
   set autoplayMode 0
   set n $annotate(Engine)
+  # end of annotating one game (batch annotation adds them in nextgameAutoplay)
+  if {$n > -1 && $annotate(passes) == {} && $annotate(accuracyTags) && !$annotate(isBatch) && [isCurrentAnnotatedGame]} {
+    addAccuracyTags
+    updateBoard -pgn
+  }
   if {$annotate(passes) != {}} {
     endPasses $n
     if {[isCurrentAnnotatedGame]} {

@@ -228,6 +228,13 @@ proc ::utils::graph::redraw {graph} {
       } else {
         set text "[expr {$value / 1000.0}] s"
       }
+      if {$::annotate(accuracyTags)} {
+        foreach side {White Black} a [mainLineAccuracy] {
+          if {$a ne ""} {
+            append text " / [tr $side] [expr {round($a)}]%"
+          }
+        }
+      }
       $_data(score,canvas) create text [expr {[lindex [$_data(score,canvas) bbox title] 2] + 12}] 50 -text $text -font font_Small -anchor w -tag title
     }
   }
